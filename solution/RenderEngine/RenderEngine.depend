@@ -1,0 +1,714 @@
+# depslib dependency file v1.0
+1439098337 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\rendersystem.cpp
+	<windows.h>
+	<GL/glew.h>
+	<SDL/SDL_opengl.h>
+	<GL/glu.h>
+	<iostream>
+	"RenderSystem.h"
+	<engine/systems/multimedia/MultimediaSystem.h>
+
+1438054282 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\rendersystem.h
+	<engine/util/singleton_macros.h>
+	<engine/math/Transform.h>
+	<engine/nodes/renderables/materials/DiffuseMaterial.h>
+	<engine/nodes/renderables/materials/SpecularMaterial.h>
+	<engine/nodes/renderables/materials/ToonMaterial.h>
+	"TextureManager.h"
+	"ShaderSystem.h"
+	"LightManager.h"
+
+1347521189 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\util\singleton_macros.h
+
+1407894219 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\math\transform.h
+	"Vector.h"
+	"Quaternion.h"
+
+1407905025 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\math\vector.h
+
+1349830534 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\math\quaternion.h
+	"Vector.h"
+
+1440472772 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\diffusematerial.h
+	"Material.h"
+	"textures/Texture.h"
+	<vector>
+
+1440041915 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\material.h
+	"ShaderConsts.h"
+	<vector>
+
+1439697513 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\shaderconsts.h
+	<string>
+
+1439269577 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\textures\texture.h
+
+1439349318 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\specularmaterial.h
+	"DiffuseMaterial.h"
+
+1439349466 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\toonmaterial.h
+	"DiffuseMaterial.h"
+
+1439349217 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\texturemanager.h
+	<engine/util/singleton_macros.h>
+	<engine/nodes/renderables/materials/textures/Texture.h>
+	<string>
+
+1439176069 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\shadersystem.h
+	<string>
+	<engine/util/singleton_macros.h>
+	<stack>
+
+1440045061 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\lightmanager.h
+	<engine/util/singleton_macros.h>
+	<vector>
+
+1437885376 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\multimedia\multimediasystem.h
+	<engine/util/singleton_macros.h>
+	<SDL/SDL.h>
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\renderengine\include\sdl\sdl_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<iconv.h>
+	<sal.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_config.h
+	"SDL_platform.h"
+	"SDL_config_premake.h"
+	"SDL_config_windows.h"
+	"SDL_config_winrt.h"
+	"SDL_config_macosx.h"
+	"SDL_config_iphoneos.h"
+	"SDL_config_android.h"
+	"SDL_config_psp.h"
+	"SDL_config_minimal.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1432673008 c:\users\henrique\projetos\renderengine\include\sdl\begin_code.h
+
+1432646891 c:\users\henrique\projetos\renderengine\include\sdl\close_code.h
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_config_windows.h
+	"SDL_platform.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_config_winrt.h
+	"SDL_platform.h"
+
+1432787451 c:\users\henrique\projetos\renderengine\include\sdl\sdl_config_macosx.h
+	"SDL_platform.h"
+	<AvailabilityMacros.h>
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_config_iphoneos.h
+	"SDL_platform.h"
+
+1434782459 c:\users\henrique\projetos\renderengine\include\sdl\sdl_config_android.h
+	"SDL_platform.h"
+	<stdarg.h>
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_config_psp.h
+	"SDL_platform.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_config_minimal.h
+	"SDL_platform.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	<mbarrier.h>
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1433526289 c:\users\henrique\projetos\renderengine\include\sdl\sdl_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\renderengine\include\sdl\sdl_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<mmintrin.h>
+	<mm3dnow.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\renderengine\include\sdl\sdl_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1433051145 c:\users\henrique\projetos\renderengine\include\sdl\sdl_pixels.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\renderengine\include\sdl\sdl_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1432646891 c:\users\henrique\projetos\renderengine\include\sdl\sdl_scancode.h
+	"SDL_stdinc.h"
+
+1437191933 c:\users\henrique\projetos\renderengine\include\sdl\sdl_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1437076185 c:\users\henrique\projetos\renderengine\include\sdl\sdl_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\renderengine\include\sdl\sdl_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1434560408 c:\users\henrique\projetos\renderengine\include\sdl\sdl_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432931206 c:\users\henrique\projetos\renderengine\include\sdl\sdl_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\renderengine\include\sdl\sdl_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\renderengine\include\sdl\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\renderengine\include\sdl\sdl_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1407903632 source:c:\users\henrique\projetos\renderengine\solution\renderengine\application\events\eventreceiver.cpp
+	"EventReceiver.h"
+	<application/SampleApplication.h>
+
+1407900768 c:\users\henrique\projetos\renderengine\solution\renderengine\application\events\eventreceiver.h
+	<engine/systems/input/InputHandler.h>
+	<engine/nodes/CameraNode.h>
+
+1439350812 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\input\inputhandler.h
+	<SDL/SDL.h>
+	<engine/math/Vector.h>
+	"button_names.h"
+
+1407812092 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\input\button_names.h
+
+1440044755 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\cameranode.h
+	"Node.h"
+	<engine/systems/graphics/RenderManager.h>
+
+1440043694 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\node.h
+	<list>
+	<string>
+	<engine/math/Transform.h>
+
+1405909352 c:\users\henrique\projetos\renderengine\solution\renderengine\application\sampleapplication.h
+	<engine/RenderEngine.h>
+
+1441770047 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\renderengine.h
+	<engine/systems/graphics/RenderManager.h>
+	<engine/systems/graphics/TextureManager.h>
+	<engine/systems/multimedia/MultimediaManager.h>
+	<engine/systems/input/InputHandler.h>
+	<engine/systems/timer/Timer.h>
+	<engine/scene/SceneManager.h>
+	<engine/nodes/renderables/materials/DiffuseMaterial.h>
+
+1439351359 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\timer\timer.h
+
+1440043968 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\scene\scenemanager.h
+	<engine/nodes/CameraNode.h>
+	<engine/nodes/renderables/RenderableNode.h>
+	<engine/nodes/lights/DirectionalLight.h>
+	<engine/nodes/lights/PointLight.h>
+	<engine/util/singleton_macros.h>
+
+1440043439 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\renderablenode.h
+	<engine/nodes/Node.h>
+	"meshes/Mesh.h"
+
+1440122474 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\meshes\mesh.h
+	<vector>
+	<engine/nodes/renderables/materials/Material.h>
+	"VertexData.h"
+
+1440045527 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\lights\directionallight.h
+	"LightNode.h"
+
+1440045660 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\lights\lightnode.h
+	<engine/nodes/Node.h>
+	<string.h>
+
+1440045514 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\lights\pointlight.h
+	"LightNode.h"
+
+1441770173 source:c:\users\henrique\projetos\renderengine\solution\renderengine\application\sampleapplication.cpp
+	"SampleApplication.h"
+	<application/events/EventReceiver.h>
+
+1407894248 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\math\quaternion.cpp
+	"Quaternion.h"
+	"math_util.h"
+
+1405907742 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\math\math_util.h
+	<cmath>
+
+1407894296 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\math\transform.cpp
+	"Transform.h"
+
+1407905103 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\math\vector.cpp
+	"Vector.h"
+	<cmath>
+	<engine/math/math_util.h>
+
+1440044696 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\cameranode.cpp
+	"CameraNode.h"
+
+1440045572 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\lights\directionallight.cpp
+	"DirectionalLight.h"
+
+1440045559 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\lights\lightnode.cpp
+	"LightNode.h"
+
+1440044819 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\node.cpp
+	"Node.h"
+	<engine/scene/SceneManager.h>
+
+1440043416 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\cubenode.cpp
+	"CubeNode.h"
+	<engine/nodes/renderables/meshes/Mesh.h>
+	<engine/scene/SceneManager.h>
+
+1440043395 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\cubenode.h
+	"RenderableNode.h"
+
+1440045593 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\lights\pointlight.cpp
+	"PointLight.h"
+
+1441770101 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\diffusematerial.cpp
+	"DiffuseMaterial.h"
+	<iostream>
+	<engine/systems/graphics/RenderManager.h>
+
+1440043430 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\planenode.cpp
+	"PlaneNode.h"
+	<engine/nodes/renderables/meshes/Mesh.h>
+	<engine/scene/SceneManager.h>
+	<iostream>
+
+1440043422 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\planenode.h
+	"RenderableNode.h"
+
+1440044870 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\renderablenode.cpp
+	"RenderableNode.h"
+	<engine/systems/graphics/LightManager.h>
+
+1440124613 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\lightmanager.cpp
+	"LightManager.h"
+	<engine/nodes/lights/DirectionalLight.h>
+	<engine/nodes/lights/PointLight.h>
+	"ShaderManager.h"
+	<stdio.h>
+
+1422103550 c:\users\henrique\projetos\renderengine\include\gl\glew.h
+	<stddef.h>
+	<inttypes.h>
+	<stdint.h>
+	<inttypes.h>
+	<Availability.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1439349199 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\texturemanager.cpp
+	"TextureManager.h"
+	<exception>
+	<SDL/SDL_image.h>
+	<GL/glew.h>
+
+1376156355 c:\users\henrique\projetos\renderengine\include\sdl\sdl_image.h
+	"SDL.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1439348875 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\material.cpp
+	"Material.h"
+	<engine/systems/graphics/RenderManager.h>
+	<string.h>
+
+1439349327 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\specularmaterial.cpp
+	"SpecularMaterial.h"
+
+1439269608 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\textures\texture.cpp
+	"Texture.h"
+
+1407797264 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\toonmaterialcpp.cpp
+	"ToonMaterial.h"
+
+1440041902 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\meshes\mesh.cpp
+	"Mesh.h"
+	<engine/systems/graphics/RenderManager.h>
+	<engine/nodes/renderables/materials/ColorMaterial.h>
+
+1439351246 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\renderengine.cpp
+	"RenderEngine.h"
+	<iostream>
+	<exception>
+
+1440047275 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\scene\scenemanager.cpp
+	"SceneManager.h"
+	<engine/nodes/renderables/CubeNode.h>
+	<engine/nodes/renderables/PlaneNode.h>
+	<engine/nodes/lights/DirectionalLight.h>
+	<engine/systems/graphics/RenderManager.h>
+
+1439175877 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\shadersystem.cpp
+	<GL/glew.h>
+	"ShaderSystem.h"
+	<fstream>
+	<iostream>
+
+1407812408 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\input\inputhandler.cpp
+	"InputHandler.h"
+
+1439098164 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\multimedia\multimediasystem.cpp
+	"MultimediaSystem.h"
+	<iostream>
+
+1439351434 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\timer\timer.cpp
+	"Timer.h"
+	<SDL/SDL.h>
+
+1439772631 source:c:\users\henrique\projetos\renderengine\solution\renderengine\main.cpp
+	<iostream>
+	<application/SampleApplication.h>
+
+1374502282 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\glew.cpp
+	<GL/glew.h>
+	<GL/wglew.h>
+	<GL/glxew.h>
+	<dlfcn.h>
+	<stdio.h>
+	<stdlib.h>
+	<stdlib.h>
+	<string.h>
+	<AvailabilityMacros.h>
+	<dlfcn.h>
+	<mach-o/dyld.h>
+
+1374502282 c:\users\henrique\projetos\renderengine\include\gl\wglew.h
+	<windows.h>
+
+1374502282 c:\users\henrique\projetos\renderengine\include\gl\glxew.h
+	<X11/Xlib.h>
+	<X11/Xutil.h>
+	<X11/Xmd.h>
+	<GL/glew.h>
+
+1432646890 c:\users\henrique\projetos\renderengine\include\sdl\sdl_opengl.h
+	"SDL_config.h"
+	"gl_mangle.h"
+	<windows.h>
+	"SDL_opengl_glext.h"
+
+1426868708 c:\users\henrique\projetos\renderengine\include\sdl\sdl_opengl_glext.h
+	<windows.h>
+	<stddef.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1440044171 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\rendermanager.h
+	<engine/util/singleton_macros.h>
+	<engine/math/Transform.h>
+	<engine/nodes/renderables/meshes/VertexData.h>
+	"TextureManager.h"
+	"ShaderManager.h"
+	"LightManager.h"
+	<vector>
+
+1440471147 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\shadermanager.h
+	<string>
+	<engine/util/singleton_macros.h>
+	<stack>
+
+1441769785 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\rendermanager.cpp
+	<windows.h>
+	<GL/glew.h>
+	<SDL/SDL_opengl.h>
+	<GL/glu.h>
+	<iostream>
+	"RenderManager.h"
+	<engine/systems/multimedia/MultimediaManager.h>
+	<engine/nodes/renderables/RenderableNode.h>
+	<engine/nodes/renderables/materials/DiffuseMaterial.h>
+
+1440471256 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\graphics\shadermanager.cpp
+	<GL/glew.h>
+	"ShaderManager.h"
+	<fstream>
+	<iostream>
+
+1439263891 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\meshes\vertexdata.h
+	<engine/math/Vector.h>
+
+1439349459 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\toonmaterial.cpp
+	"ToonMaterial.h"
+
+1439351259 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\multimedia\multimediamanager.h
+	<engine/util/singleton_macros.h>
+	<SDL/SDL.h>
+
+1439697684 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\systems\multimedia\multimediamanager.cpp
+	"MultimediaManager.h"
+	<iostream>
+
+1440041941 source:c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\colormaterial.cpp
+	"ColorMaterial.h"
+	<engine/systems/graphics/RenderManager.h>
+
+1440041928 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\colormaterial.h
+	"Material.h"
+
