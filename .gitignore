@@ -2,3 +2,5 @@ references/
 bin/gcc/obj/
 *.exe
 fora/
+bin/vc/obj/
+solution/.vs/
