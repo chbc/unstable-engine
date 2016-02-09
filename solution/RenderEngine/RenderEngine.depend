@@ -712,3 +712,1038 @@
 1440041928 c:\users\henrique\projetos\renderengine\solution\renderengine\engine\nodes\renderables\materials\colormaterial.h
 	"Material.h"
 
+1407903632 source:c:\users\henrique\projetos\sre\solution\renderengine\application\events\eventreceiver.cpp
+	"EventReceiver.h"
+	<application/SampleApplication.h>
+
+1407900768 c:\users\henrique\projetos\sre\solution\renderengine\application\events\eventreceiver.h
+	<engine/systems/input/InputHandler.h>
+	<engine/nodes/CameraNode.h>
+
+1439350812 c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\input\inputhandler.h
+	<SDL/SDL.h>
+	<engine/math/Vector.h>
+	"button_names.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\sre\include\sdl\sdl_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<iconv.h>
+	<sal.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_config.h
+	"SDL_platform.h"
+	"SDL_config_premake.h"
+	"SDL_config_windows.h"
+	"SDL_config_winrt.h"
+	"SDL_config_macosx.h"
+	"SDL_config_iphoneos.h"
+	"SDL_config_android.h"
+	"SDL_config_psp.h"
+	"SDL_config_minimal.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1432673008 c:\users\henrique\projetos\sre\include\sdl\begin_code.h
+
+1432646891 c:\users\henrique\projetos\sre\include\sdl\close_code.h
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_config_windows.h
+	"SDL_platform.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_config_winrt.h
+	"SDL_platform.h"
+
+1432787451 c:\users\henrique\projetos\sre\include\sdl\sdl_config_macosx.h
+	"SDL_platform.h"
+	<AvailabilityMacros.h>
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_config_iphoneos.h
+	"SDL_platform.h"
+
+1434782459 c:\users\henrique\projetos\sre\include\sdl\sdl_config_android.h
+	"SDL_platform.h"
+	<stdarg.h>
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_config_psp.h
+	"SDL_platform.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_config_minimal.h
+	"SDL_platform.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	<mbarrier.h>
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1433526289 c:\users\henrique\projetos\sre\include\sdl\sdl_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\sre\include\sdl\sdl_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<mmintrin.h>
+	<mm3dnow.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\sre\include\sdl\sdl_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1433051145 c:\users\henrique\projetos\sre\include\sdl\sdl_pixels.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\sre\include\sdl\sdl_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1432646891 c:\users\henrique\projetos\sre\include\sdl\sdl_scancode.h
+	"SDL_stdinc.h"
+
+1437191933 c:\users\henrique\projetos\sre\include\sdl\sdl_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1437076185 c:\users\henrique\projetos\sre\include\sdl\sdl_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\sre\include\sdl\sdl_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1434560408 c:\users\henrique\projetos\sre\include\sdl\sdl_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432931206 c:\users\henrique\projetos\sre\include\sdl\sdl_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\sre\include\sdl\sdl_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\sre\include\sdl\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1432646891 c:\users\henrique\projetos\sre\include\sdl\sdl_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1442201353 c:\users\henrique\projetos\sre\solution\renderengine\engine\math\vector.h
+	<glm/vec3.hpp>
+
+1407812092 c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\input\button_names.h
+
+1440044755 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\cameranode.h
+	"Node.h"
+	<engine/systems/graphics/RenderManager.h>
+
+1440043694 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\node.h
+	<list>
+	<string>
+	<engine/math/Transform.h>
+
+1407894219 c:\users\henrique\projetos\sre\solution\renderengine\engine\math\transform.h
+	"Vector.h"
+	"Quaternion.h"
+
+1349830534 c:\users\henrique\projetos\sre\solution\renderengine\engine\math\quaternion.h
+	"Vector.h"
+
+1442290566 c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\graphics\rendermanager.h
+	<engine/util/singleton_macros.h>
+	<engine/math/Transform.h>
+	<engine/nodes/renderables/meshes/VertexData.h>
+	"TextureManager.h"
+	"ShaderManager.h"
+	"LightManager.h"
+	"MatrixManager.h"
+	<vector>
+
+1347521189 c:\users\henrique\projetos\sre\solution\renderengine\engine\util\singleton_macros.h
+
+1439263891 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\meshes\vertexdata.h
+	<engine/math/Vector.h>
+
+1439349217 c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\graphics\texturemanager.h
+	<engine/util/singleton_macros.h>
+	<engine/nodes/renderables/materials/textures/Texture.h>
+	<string>
+
+1439269577 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\textures\texture.h
+
+1442206223 c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\graphics\shadermanager.h
+	<string>
+	<engine/util/singleton_macros.h>
+	<stack>
+
+1440045061 c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\graphics\lightmanager.h
+	<engine/util/singleton_macros.h>
+	<vector>
+
+1405909352 c:\users\henrique\projetos\sre\solution\renderengine\application\sampleapplication.h
+	<engine/RenderEngine.h>
+
+1441770047 c:\users\henrique\projetos\sre\solution\renderengine\engine\renderengine.h
+	<engine/systems/graphics/RenderManager.h>
+	<engine/systems/graphics/TextureManager.h>
+	<engine/systems/multimedia/MultimediaManager.h>
+	<engine/systems/input/InputHandler.h>
+	<engine/systems/timer/Timer.h>
+	<engine/scene/SceneManager.h>
+	<engine/nodes/renderables/materials/DiffuseMaterial.h>
+
+1439351259 c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\multimedia\multimediamanager.h
+	<engine/util/singleton_macros.h>
+	<SDL/SDL.h>
+
+1439351359 c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\timer\timer.h
+
+1440043968 c:\users\henrique\projetos\sre\solution\renderengine\engine\scene\scenemanager.h
+	<engine/nodes/CameraNode.h>
+	<engine/nodes/renderables/RenderableNode.h>
+	<engine/nodes/lights/DirectionalLight.h>
+	<engine/nodes/lights/PointLight.h>
+	<engine/util/singleton_macros.h>
+
+1440043439 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\renderablenode.h
+	<engine/nodes/Node.h>
+	"meshes/Mesh.h"
+
+1440122474 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\meshes\mesh.h
+	<vector>
+	<engine/nodes/renderables/materials/Material.h>
+	"VertexData.h"
+
+1440041915 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\material.h
+	"ShaderConsts.h"
+	<vector>
+
+1439697513 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\shaderconsts.h
+	<string>
+
+1440045527 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\lights\directionallight.h
+	"LightNode.h"
+
+1440045660 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\lights\lightnode.h
+	<engine/nodes/Node.h>
+	<string.h>
+
+1440045514 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\lights\pointlight.h
+	"LightNode.h"
+
+1440472772 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\diffusematerial.h
+	"Material.h"
+	"textures/Texture.h"
+	<vector>
+
+1442289962 source:c:\users\henrique\projetos\sre\solution\renderengine\application\sampleapplication.cpp
+	"SampleApplication.h"
+	<application/events/EventReceiver.h>
+
+1407894248 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\math\quaternion.cpp
+	"Quaternion.h"
+	"math_util.h"
+
+1405907742 c:\users\henrique\projetos\sre\solution\renderengine\engine\math\math_util.h
+	<cmath>
+
+1407894296 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\math\transform.cpp
+	"Transform.h"
+
+1442201394 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\math\vector.cpp
+	"Vector.h"
+	<cmath>
+	<engine/math/math_util.h>
+
+1442286632 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\cameranode.cpp
+	"CameraNode.h"
+
+1440045572 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\lights\directionallight.cpp
+	"DirectionalLight.h"
+
+1440045559 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\lights\lightnode.cpp
+	"LightNode.h"
+
+1440045593 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\lights\pointlight.cpp
+	"PointLight.h"
+
+1440044819 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\node.cpp
+	"Node.h"
+	<engine/scene/SceneManager.h>
+
+1440043416 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\cubenode.cpp
+	"CubeNode.h"
+	<engine/nodes/renderables/meshes/Mesh.h>
+	<engine/scene/SceneManager.h>
+
+1440043395 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\cubenode.h
+	"RenderableNode.h"
+
+1440041941 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\colormaterial.cpp
+	"ColorMaterial.h"
+	<engine/systems/graphics/RenderManager.h>
+
+1440041928 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\colormaterial.h
+	"Material.h"
+
+1441770101 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\diffusematerial.cpp
+	"DiffuseMaterial.h"
+	<iostream>
+	<engine/systems/graphics/RenderManager.h>
+
+1439348875 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\material.cpp
+	"Material.h"
+	<engine/systems/graphics/RenderManager.h>
+	<string.h>
+
+1439349327 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\specularmaterial.cpp
+	"SpecularMaterial.h"
+
+1439349318 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\specularmaterial.h
+	"DiffuseMaterial.h"
+
+1439269608 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\textures\texture.cpp
+	"Texture.h"
+
+1439349459 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\toonmaterial.cpp
+	"ToonMaterial.h"
+
+1439349466 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\materials\toonmaterial.h
+	"DiffuseMaterial.h"
+
+1440041902 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\meshes\mesh.cpp
+	"Mesh.h"
+	<engine/systems/graphics/RenderManager.h>
+	<engine/nodes/renderables/materials/ColorMaterial.h>
+
+1440043430 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\planenode.cpp
+	"PlaneNode.h"
+	<engine/nodes/renderables/meshes/Mesh.h>
+	<engine/scene/SceneManager.h>
+	<iostream>
+
+1440043422 c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\planenode.h
+	"RenderableNode.h"
+
+1440044870 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\nodes\renderables\renderablenode.cpp
+	"RenderableNode.h"
+	<engine/systems/graphics/LightManager.h>
+
+1439351246 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\renderengine.cpp
+	"RenderEngine.h"
+	<iostream>
+	<exception>
+
+1440047275 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\scene\scenemanager.cpp
+	"SceneManager.h"
+	<engine/nodes/renderables/CubeNode.h>
+	<engine/nodes/renderables/PlaneNode.h>
+	<engine/nodes/lights/DirectionalLight.h>
+	<engine/systems/graphics/RenderManager.h>
+
+1440124613 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\graphics\lightmanager.cpp
+	"LightManager.h"
+	<engine/nodes/lights/DirectionalLight.h>
+	<engine/nodes/lights/PointLight.h>
+	"ShaderManager.h"
+	<stdio.h>
+
+1442208764 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\graphics\shadermanager.cpp
+	<GL/glew.h>
+	"ShaderManager.h"
+	<fstream>
+	<iostream>
+
+1422103550 c:\users\henrique\projetos\sre\include\gl\glew.h
+	<stddef.h>
+	<inttypes.h>
+	<stdint.h>
+	<inttypes.h>
+	<Availability.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1439349199 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\graphics\texturemanager.cpp
+	"TextureManager.h"
+	<exception>
+	<SDL/SDL_image.h>
+	<GL/glew.h>
+
+1376156355 c:\users\henrique\projetos\sre\include\sdl\sdl_image.h
+	"SDL.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1407812408 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\input\inputhandler.cpp
+	"InputHandler.h"
+
+1439697684 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\multimedia\multimediamanager.cpp
+	"MultimediaManager.h"
+	<iostream>
+
+1439351434 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\timer\timer.cpp
+	"Timer.h"
+	<SDL/SDL.h>
+
+1439772631 source:c:\users\henrique\projetos\sre\solution\renderengine\main.cpp
+	<iostream>
+	<application/SampleApplication.h>
+
+1442290888 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\graphics\rendermanager.cpp
+	<windows.h>
+	<GL/glew.h>
+	<SDL/SDL_opengl.h>
+	<iostream>
+	"RenderManager.h"
+	<engine/systems/multimedia/MultimediaManager.h>
+	<engine/nodes/renderables/RenderableNode.h>
+	<engine/nodes/renderables/materials/DiffuseMaterial.h>
+
+1432646890 c:\users\henrique\projetos\sre\include\sdl\sdl_opengl.h
+	"SDL_config.h"
+	"gl_mangle.h"
+	<windows.h>
+	"SDL_opengl_glext.h"
+
+1426868708 c:\users\henrique\projetos\sre\include\sdl\sdl_opengl_glext.h
+	<windows.h>
+	<stddef.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\vec3.hpp
+	"detail/type_vec3.hpp"
+
+1441568189 c:\users\henrique\projetos\sre\include\glm\detail\type_vec3.hpp
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec3.inl"
+
+1438465103 c:\users\henrique\projetos\sre\include\glm\detail\type_vec.hpp
+	"precision.hpp"
+	"type_int.hpp"
+
+1441038560 c:\users\henrique\projetos\sre\include\glm\detail\precision.hpp
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\type_int.hpp
+	"setup.hpp"
+	<type_traits>
+	<cstdint>
+
+1441569934 c:\users\henrique\projetos\sre\include\glm\detail\setup.hpp
+	<cassert>
+	<cstddef>
+	<cuda.h>
+	<intrin.h>
+	<immintrin.h>
+	<immintrin.h>
+	<smmintrin.h>
+	<pmmintrin.h>
+	<emmintrin.h>
+	<__config>
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\_swizzle.hpp
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\_swizzle_func.hpp
+
+1441568189 c:\users\henrique\projetos\sre\include\glm\detail\type_vec3.inl
+
+1442206528 c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\graphics\matrixmanager.h
+	<glm/matrix.hpp>
+	<stack>
+	<engine/math/Vector.h>
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\matrix.hpp
+	"detail/func_matrix.hpp"
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\func_matrix.hpp
+	"../detail/precision.hpp"
+	"../detail/setup.hpp"
+	"../detail/type_mat.hpp"
+	"../vec2.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"../mat2x2.hpp"
+	"../mat2x3.hpp"
+	"../mat2x4.hpp"
+	"../mat3x2.hpp"
+	"../mat3x3.hpp"
+	"../mat3x4.hpp"
+	"../mat4x2.hpp"
+	"../mat4x3.hpp"
+	"../mat4x4.hpp"
+	"func_matrix.inl"
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\type_mat.hpp
+	"precision.hpp"
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\vec2.hpp
+	"detail/type_vec2.hpp"
+
+1441568189 c:\users\henrique\projetos\sre\include\glm\detail\type_vec2.hpp
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec2.inl"
+
+1441568189 c:\users\henrique\projetos\sre\include\glm\detail\type_vec2.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\vec4.hpp
+	"detail/type_vec4.hpp"
+
+1441568189 c:\users\henrique\projetos\sre\include\glm\detail\type_vec4.hpp
+	"setup.hpp"
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec4.inl"
+
+1441568189 c:\users\henrique\projetos\sre\include\glm\detail\type_vec4.inl
+	"type_vec4_sse2.inl"
+	"type_vec4_avx.inl"
+	"type_vec4_avx2.inl"
+
+1441038892 c:\users\henrique\projetos\sre\include\glm\detail\type_vec4_sse2.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\type_vec4_avx.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\type_vec4_avx2.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\mat2x2.hpp
+	"detail/type_mat2x2.hpp"
+
+1440864226 c:\users\henrique\projetos\sre\include\glm\detail\type_mat2x2.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_mat.hpp"
+	<limits>
+	<cstddef>
+	"type_mat2x2.inl"
+
+1438464936 c:\users\henrique\projetos\sre\include\glm\fwd.hpp
+	"detail/type_int.hpp"
+	"detail/type_float.hpp"
+	"detail/type_vec.hpp"
+	"detail/type_mat.hpp"
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\type_float.hpp
+	"setup.hpp"
+
+1438470808 c:\users\henrique\projetos\sre\include\glm\detail\type_mat2x2.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\mat2x3.hpp
+	"detail/type_mat2x3.hpp"
+
+1438468469 c:\users\henrique\projetos\sre\include\glm\detail\type_mat2x3.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_mat.hpp"
+	<limits>
+	<cstddef>
+	"type_mat2x3.inl"
+
+1438470737 c:\users\henrique\projetos\sre\include\glm\detail\type_mat2x3.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\mat2x4.hpp
+	"detail/type_mat2x4.hpp"
+
+1438468425 c:\users\henrique\projetos\sre\include\glm\detail\type_mat2x4.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	<cstddef>
+	"type_mat2x4.inl"
+
+1438470573 c:\users\henrique\projetos\sre\include\glm\detail\type_mat2x4.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\mat3x2.hpp
+	"detail/type_mat3x2.hpp"
+
+1438468285 c:\users\henrique\projetos\sre\include\glm\detail\type_mat3x2.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_mat.hpp"
+	<limits>
+	<cstddef>
+	"type_mat3x2.inl"
+
+1438470418 c:\users\henrique\projetos\sre\include\glm\detail\type_mat3x2.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\mat3x3.hpp
+	"detail/type_mat3x3.hpp"
+
+1438468227 c:\users\henrique\projetos\sre\include\glm\detail\type_mat3x3.hpp
+	"../fwd.hpp"
+	"type_vec3.hpp"
+	"type_mat.hpp"
+	<limits>
+	<cstddef>
+	"type_mat3x3.inl"
+
+1438470302 c:\users\henrique\projetos\sre\include\glm\detail\type_mat3x3.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\mat3x4.hpp
+	"detail/type_mat3x4.hpp"
+
+1438468095 c:\users\henrique\projetos\sre\include\glm\detail\type_mat3x4.hpp
+	"../fwd.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	<cstddef>
+	"type_mat3x4.inl"
+
+1438470191 c:\users\henrique\projetos\sre\include\glm\detail\type_mat3x4.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\mat4x2.hpp
+	"detail/type_mat4x2.hpp"
+
+1438468017 c:\users\henrique\projetos\sre\include\glm\detail\type_mat4x2.hpp
+	"../fwd.hpp"
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	<cstddef>
+	"type_mat4x2.inl"
+
+1438470017 c:\users\henrique\projetos\sre\include\glm\detail\type_mat4x2.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\mat4x3.hpp
+	"detail/type_mat4x3.hpp"
+
+1438467958 c:\users\henrique\projetos\sre\include\glm\detail\type_mat4x3.hpp
+	"../fwd.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	<cstddef>
+	"type_mat4x3.inl"
+
+1438470532 c:\users\henrique\projetos\sre\include\glm\detail\type_mat4x3.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\mat4x4.hpp
+	"detail/type_mat4x4.hpp"
+
+1438467899 c:\users\henrique\projetos\sre\include\glm\detail\type_mat4x4.hpp
+	"../fwd.hpp"
+	"type_vec4.hpp"
+	"type_mat.hpp"
+	<limits>
+	<cstddef>
+	"type_mat4x4.inl"
+
+1438469995 c:\users\henrique\projetos\sre\include\glm\detail\type_mat4x4.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\func_matrix.inl
+	"../geometric.hpp"
+	<limits>
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\geometric.hpp
+	"detail/func_geometric.hpp"
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\func_geometric.hpp
+	"type_vec3.hpp"
+	"func_geometric.inl"
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\func_geometric.inl
+	"func_exponential.hpp"
+	"func_common.hpp"
+	"type_vec2.hpp"
+	"type_vec4.hpp"
+	"type_float.hpp"
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\func_exponential.hpp
+	"type_vec1.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	<cmath>
+	"func_exponential.inl"
+
+1441568189 c:\users\henrique\projetos\sre\include\glm\detail\type_vec1.hpp
+	"../fwd.hpp"
+	"type_vec.hpp"
+	"_swizzle.hpp"
+	"_swizzle_func.hpp"
+	<cstddef>
+	"type_vec1.inl"
+
+1441568189 c:\users\henrique\projetos\sre\include\glm\detail\type_vec1.inl
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\func_exponential.inl
+	"func_vector_relational.hpp"
+	"_vectorize.hpp"
+	<limits>
+	<cmath>
+	<cassert>
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\func_vector_relational.hpp
+	"precision.hpp"
+	"setup.hpp"
+	"func_vector_relational.inl"
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\func_vector_relational.inl
+	<limits>
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\_vectorize.hpp
+	"type_vec1.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\func_common.hpp
+	"setup.hpp"
+	"precision.hpp"
+	"type_int.hpp"
+	"_fixes.hpp"
+	"func_common.inl"
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\_fixes.hpp
+	<cmath>
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\detail\func_common.inl
+	"func_vector_relational.hpp"
+	"type_vec2.hpp"
+	"type_vec3.hpp"
+	"type_vec4.hpp"
+	"_vectorize.hpp"
+	<limits>
+
+1442289443 source:c:\users\henrique\projetos\sre\solution\renderengine\engine\systems\graphics\matrixmanager.cpp
+	"MatrixManager.h"
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+
+1441038256 c:\users\henrique\projetos\sre\include\glm\gtc\matrix_transform.hpp
+	"../mat4x4.hpp"
+	"../vec2.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"../gtc/constants.hpp"
+	"matrix_transform.inl"
+
+1441051454 c:\users\henrique\projetos\sre\include\glm\gtc\constants.hpp
+	"../detail/setup.hpp"
+	"constants.inl"
+
+1441052694 c:\users\henrique\projetos\sre\include\glm\gtc\constants.inl
+	<limits>
+
+1426534869 c:\users\henrique\projetos\sre\include\glm\gtc\matrix_transform.inl
+	"../geometric.hpp"
+	"../trigonometric.hpp"
+	"../matrix.hpp"
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\trigonometric.hpp
+	"detail/func_trigonometric.hpp"
+
+1441051837 c:\users\henrique\projetos\sre\include\glm\detail\func_trigonometric.hpp
+	"setup.hpp"
+	"precision.hpp"
+	"func_trigonometric.inl"
+
+1441052446 c:\users\henrique\projetos\sre\include\glm\detail\func_trigonometric.inl
+	"_vectorize.hpp"
+	<cmath>
+	<limits>
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\gtc\type_ptr.hpp
+	"../gtc/quaternion.hpp"
+	"../vec2.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"../mat2x2.hpp"
+	"../mat2x3.hpp"
+	"../mat2x4.hpp"
+	"../mat3x2.hpp"
+	"../mat3x3.hpp"
+	"../mat3x4.hpp"
+	"../mat4x2.hpp"
+	"../mat4x3.hpp"
+	"../mat4x4.hpp"
+	<cstring>
+	"type_ptr.inl"
+
+1438471086 c:\users\henrique\projetos\sre\include\glm\gtc\quaternion.hpp
+	"../mat3x3.hpp"
+	"../mat4x4.hpp"
+	"../vec3.hpp"
+	"../vec4.hpp"
+	"../gtc/constants.hpp"
+	"quaternion.inl"
+
+1438472000 c:\users\henrique\projetos\sre\include\glm\gtc\quaternion.inl
+	"../trigonometric.hpp"
+	"../geometric.hpp"
+	"../exponential.hpp"
+	<limits>
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\exponential.hpp
+	"detail/func_exponential.hpp"
+
+1424014283 c:\users\henrique\projetos\sre\include\glm\gtc\type_ptr.inl
+	<cstring>
+

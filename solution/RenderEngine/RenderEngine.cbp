@@ -28,7 +28,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="-lSDL2main -lSDL2 -lSDL2_image" />
-			<Add option="-lGlew32d -lOpenGL32 -lGLU32" />
+			<Add option="-lGlew32d -lOpenGL32" />
 			<Add directory="../../lib/gcc" />
 		</Linker>
 		<Unit filename="application/SampleApplication.cpp" />
@@ -80,6 +80,8 @@
 		<Unit filename="engine/scene/SceneManager.h" />
 		<Unit filename="engine/systems/graphics/LightManager.cpp" />
 		<Unit filename="engine/systems/graphics/LightManager.h" />
+		<Unit filename="engine/systems/graphics/MatrixManager.cpp" />
+		<Unit filename="engine/systems/graphics/MatrixManager.h" />
 		<Unit filename="engine/systems/graphics/RenderManager.cpp" />
 		<Unit filename="engine/systems/graphics/RenderManager.h" />
 		<Unit filename="engine/systems/graphics/ShaderManager.cpp" />

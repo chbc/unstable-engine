@@ -48,9 +48,6 @@
     <ClCompile Include="engine\nodes\renderables\meshes\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\systems\multimedia\MultimediaSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\nodes\Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,16 +60,10 @@
     <ClCompile Include="engine\nodes\renderables\RenderableNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\systems\graphics\RenderSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="application\SampleApplication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\scene\SceneManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\systems\graphics\ShaderSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\nodes\renderables\materials\textures\Texture.cpp">
@@ -96,10 +87,25 @@
     <ClCompile Include="engine\nodes\renderables\materials\SpecularMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\nodes\renderables\materials\ToonMaterialcpp.cpp">
+    <ClCompile Include="engine\nodes\lights\PointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\nodes\lights\PointLight.cpp">
+    <ClCompile Include="engine\systems\multimedia\MultimediaManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\systems\graphics\MatrixManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\systems\graphics\RenderManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\systems\graphics\ShaderManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\nodes\renderables\materials\ColorMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\nodes\renderables\materials\ToonMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -137,9 +143,6 @@
     <ClInclude Include="engine\nodes\renderables\meshes\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\systems\multimedia\MultimediaSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\nodes\Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -152,9 +155,6 @@
     <ClInclude Include="engine\nodes\renderables\RenderableNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\systems\graphics\RenderSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="application\SampleApplication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -162,9 +162,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\nodes\renderables\materials\ShaderConsts.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\systems\graphics\ShaderSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\util\singleton_macros.h">
@@ -200,5 +197,26 @@
     <ClInclude Include="engine\nodes\lights\PointLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\systems\multimedia\MultimediaManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\MatrixManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\RenderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\ShaderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\nodes\renderables\materials\ColorMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\nodes\renderables\meshes\VertexData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
