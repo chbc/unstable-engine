@@ -1,7 +1,6 @@
 #include <windows.h>
 #include <GL/glew.h>
 #include <SDL/SDL_opengl.h>
-#include <GL/glu.h>
 
 #include <iostream>
 
@@ -20,6 +19,7 @@ RenderManager::RenderManager()
 	this->textureManager = TextureManager::getInstance();
 	this->shaderManager	 = ShaderManager::getInstance();
 	this->lightManager	 = LightManager::getInstance();
+	this->matrixManager = new MatrixManager;
 }
 
 bool RenderManager::init()
@@ -32,19 +32,13 @@ bool RenderManager::init()
 
 	const GLubyte *glVersion = glGetString(GL_VERSION);
 	std::cout << "OpenGL Version: " << glVersion << std::endl;
-	delete glVersion;
 
 	glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
 
-	const float FOV = 80.0f;
-	gluPerspective(FOV, MultimediaManager::WIDTH/MultimediaManager::HEIGHT, 1, 100);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+    const float FOV = 45.0f;
+	this->matrixManager->setProjection(FOV, MultimediaManager::WIDTH/MultimediaManager::HEIGHT, 1, 100);
 
 	glEnable(GL_CULL_FACE);
-
 	glEnable(GL_DEPTH_TEST);
 
 	if (!this->textureManager->init())
@@ -78,6 +72,8 @@ void RenderManager::release()
 
 	this->lightManager->release();
 	delete this->lightManager;
+
+	delete this->matrixManager;
 }
 
 void RenderManager::createBufferObject(Mesh *mesh)
@@ -108,10 +104,6 @@ void RenderManager::createBufferObject(Mesh *mesh)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indCount * sizeof(GLuint), indices, GL_STATIC_DRAW);
 
-    /*
-	delete [] normals;
-	delete [] vertices;
-	*/
 	delete [] indices;
 	delete [] vertexDataArray;
 }
@@ -128,6 +120,8 @@ PointLight *RenderManager::addPointLight()
 
 void RenderManager::render(const std::vector<RenderableNode *> &renderableNodes)
 {
+    // TODO: render children
+
     RenderableNode *item = NULL;
 	int size = renderableNodes.size();
 
@@ -135,16 +129,18 @@ void RenderManager::render(const std::vector<RenderableNode *> &renderableNodes)
 	{
 	    item = renderableNodes[i];
 
-        this->pushTransform(item->getTransform());
+        this->matrixManager->push(item->getTransform()->getMatrix());
+        this->matrixManager->update();
 
         for (unsigned int m = 0; m < item->meshes.size(); m++)
         {
             Mesh *mesh = item->meshes[m];
             mesh->applyMaterial(item->receiveLight);
+
             this->drawMesh(mesh);
         }
 
-        this->popTransform();
+        this->matrixManager->pop();
 	}
 }
 
@@ -174,6 +170,9 @@ void RenderManager::applyMaterial(Material *material, bool receiveLight)
 {
 	unsigned int shaderProgram = material->getShaderProgram();
 	this->shaderManager->enableShader(shaderProgram);
+
+	glm::mat4 mvp = this->matrixManager->getMVP();
+	this->shaderManager->setValue(shaderProgram, "MVP", &mvp[0][0]);
 
 	if (receiveLight)
         this->lightManager->setupLights(shaderProgram);
@@ -228,31 +227,12 @@ struct VertexData
 
 void RenderManager::releaseMaterial(Material *material)
 {
-
-}
-
-void RenderManager::pushTransform(Transform *transform)
-{
-	glPushMatrix();
-
-	float *matrix = transform->getMatrix();
-	glMultMatrixf(matrix);
-}
-
-void RenderManager::popTransform()
-{
-	glPopMatrix();
+    // TODO
 }
 
 void RenderManager::renderCamera(Vector position, Vector lookTarget, Vector up)
 {
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	gluLookAt(	position.x, position.y, position.z,
-				lookTarget.x, lookTarget.y, lookTarget.z,
-				up.x, up.y, up.z
-			  );
+    this->matrixManager->setView(position, lookTarget, up);
 }
 
 Texture *RenderManager::loadTexture(const std::string &fileName)

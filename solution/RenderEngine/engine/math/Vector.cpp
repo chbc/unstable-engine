@@ -80,7 +80,7 @@ float Vector::dot(const Vector &v)
 
 /*
 |i	j	k |
-|x	y	z |	=	|y	z |		-|x	 z |	+|x  y |	
+|x	y	z |	=	|y	z |		-|x	 z |	+|x  y |
 |vx	vy	vz|		|vy	vz|		 |vx vz|	|vx vy|
 */
 Vector Vector::cross(const Vector &v)
@@ -102,7 +102,7 @@ float Vector::distance(const Vector &v)
 }
 
 /*
-M(u, angle) = 
+M(u, angle) =
  __																																			  __	 __	  __
 |	cos(angle) + (1 - cos(angle))u.x^2				u.x*u.y*(1 - cos(angle)) - u.z*sin(angle)		u.x*u.z*(1 - cos(angle)) + u.y*sin(angle)	|	|	x	|
 |	u.y*u.x*(1 - cos(angle)) + u.z*sin(angle)		cos(angle) + u.y^2*(1 - cos(angle))				u.y*u.z*(1 - cos(angle)) - u.x*sin(angle)	|	|	y	|
@@ -136,4 +136,9 @@ void Vector::toArray(float *array)
 	array[0] = this->x;
 	array[1] = this->y;
 	array[2] = this->z;
+}
+
+glm::vec3 Vector::toVec3()
+{
+    return glm::vec3(this->x, this->y, this->z);
 }

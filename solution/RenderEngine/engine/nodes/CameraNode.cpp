@@ -5,7 +5,7 @@ namespace nodes
 
 CameraNode::CameraNode() : Node()
 {
-	this->up.y = 1;
+    this->up = Vector(0.0f, 1.0f, 0.0f);
     this->setPosition(Vector(0.0f, 0.0f, 2.0f));
     this->lookTarget = Vector::ZERO;
 }

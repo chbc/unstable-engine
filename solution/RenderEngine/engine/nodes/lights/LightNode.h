@@ -28,6 +28,7 @@ class LightNode : public Node
 
 	protected:
 		Vector posDir;
+		// ### float range;
 
 		LightNode();
 

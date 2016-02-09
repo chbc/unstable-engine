@@ -7,6 +7,7 @@
 #include "TextureManager.h"
 #include "ShaderManager.h"
 #include "LightManager.h"
+#include "MatrixManager.h"
 #include <vector>
 
 namespace nodes
@@ -36,6 +37,7 @@ class RenderManager
 		TextureManager *textureManager;
 		ShaderManager *shaderManager;
 		LightManager *lightManager;
+        MatrixManager *matrixManager;
 
 		void createBufferObject(Mesh *mesh);
 		DirectionalLight *addDirectionalLight();
@@ -50,9 +52,6 @@ class RenderManager
 		void applyMaterial(DiffuseMaterial *material, std::vector<VertexData> *vertexData, bool receiveLight);
 		void drawMesh(Mesh *mesh);
 		void releaseMaterial(Material *material);
-
-		void pushTransform(Transform *transform);
-		void popTransform();
 
 		void renderCamera(Vector position, Vector lookTarget, Vector up);
 

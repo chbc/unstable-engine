@@ -13,12 +13,3 @@ void main()
 
 	outFragment = vec4(kd, 1.0);
 }
-
-/*
-#version 120
-
-void main()
-{
-	gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
-}
-*/

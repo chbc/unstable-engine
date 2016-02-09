@@ -1,6 +1,8 @@
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
+#include <glm/vec3.hpp>
+
 /*!
 	Class to deal with vector operations.
 */
@@ -27,6 +29,7 @@ class Vector
 		Vector rotate(const Vector &axis, float angle);
 
 		void toArray(float *array);
+		glm::vec3 toVec3();
 };
 
 #endif

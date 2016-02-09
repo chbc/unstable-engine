@@ -24,8 +24,7 @@ bool ShaderManager::loadFile(std::string fileName, std::string &source)
 
 	if (!in.is_open())
 	{
-		std::cout << "Error: " << fileName << " can't be found!" << std::endl;
-		return false;
+		throw "[ShaderManager] - Error: " + fileName + " can't be found!";
 	}
 
 	char temp[300];
@@ -36,7 +35,7 @@ bool ShaderManager::loadFile(std::string fileName, std::string &source)
 		source += '\n';
 	}
 
-	return true;
+	return true;    // TODO: turn to void
 }
 
 unsigned int ShaderManager::compileShader(const std::string &fileName, const std::string &source, unsigned int mode)
@@ -112,7 +111,7 @@ void ShaderManager::setValue(unsigned int program, const std::string &varName, f
 {
     int location = glGetUniformLocation(program, varName.c_str());
     this->checkVariableLocation(location, varName);
-    glUniform1fv(location, 16, matrix);
+    glUniformMatrix4fv(location, 1, GL_FALSE, matrix);
 }
 
 void ShaderManager::setValue(unsigned int program, const std::string &varName, int value)

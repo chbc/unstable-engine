@@ -1,5 +1,7 @@
 #version 140
 
+uniform mat4 MVP;
+
 // Lights
 uniform struct
 {
@@ -13,27 +15,19 @@ uniform int lightCount;
 // Input attributes
 in vec3 vertexPosition;
 in vec3 inputNormal;
-//in vec2 inputUV;
 
 // Varying variables
 out vec3 normal;
 out vec3 lightDir;
 out vec3 lightColor;
 
-void main() 
+void main()
 {
 	int tt = lightCount;
 	
-	normal = (gl_ModelViewProjectionMatrix * vec4(inputNormal, 1.0)).xyz;
+	normal = normalize(inputNormal);
 	lightDir = lights[0].posDir;
 	lightColor = lights[0].color;
 	
-	gl_Position = gl_ModelViewProjectionMatrix * vec4(vertexPosition, 1.0);
+	gl_Position = MVP * vec4(vertexPosition, 1.0);
 }
-
-/*
-void main()
-{
-	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-}
-*/

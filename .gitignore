@@ -4,3 +4,5 @@ bin/gcc/obj/
 fora/
 bin/vc/obj/
 solution/.vs/
+*.sdf
+*.opensdf

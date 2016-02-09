@@ -1,18 +1,16 @@
 #include "ModelNode.h"
 
-#include <QDebug>
-
 namespace nodes
 {
 
-ModelNode::ModelNode(SceneManager *sceneManager, const char *fileName) : RenderableNode(sceneManager)
+ModelNode::ModelNode(SceneManager *sceneManager, const char *fileName) : RenderableNode()
 {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(fileName, aiProcess_GenSmoothNormals | aiProcess_Triangulate | /* XXX aiProcess_CalcTangentSpace |*/ aiProcess_FlipUVs);
 
     if ((scene == NULL) || (scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE) || (scene->mRootNode == NULL))
     {
-        qDebug() << "Could not import: " << fileName;
+        // ### qDebug() << "Could not import: " << fileName;
         return;
     }
 
