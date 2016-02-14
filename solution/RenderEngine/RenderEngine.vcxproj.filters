@@ -27,9 +27,6 @@
     <ClCompile Include="engine\nodes\lights\DirectionalLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="application\events\EventReceiver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\systems\input\InputHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -37,9 +34,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\nodes\lights\LightNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\nodes\renderables\materials\Material.cpp">
@@ -58,9 +52,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\nodes\renderables\RenderableNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="application\SampleApplication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\scene\SceneManager.cpp">
@@ -122,9 +113,6 @@
     <ClInclude Include="engine\nodes\lights\DirectionalLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="application\events\EventReceiver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\systems\input\InputHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -153,9 +141,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\nodes\renderables\RenderableNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="application\SampleApplication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\scene\SceneManager.h">
@@ -215,8 +200,5 @@
     <ClInclude Include="engine\nodes\renderables\meshes\VertexData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

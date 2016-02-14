@@ -17,13 +17,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -41,12 +41,14 @@
     <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>../../bin/vc/</OutDir>
-    <IntDir>$(OutDir)/obj/</IntDir>
+    <OutDir>../../lib/vc/</OutDir>
+    <IntDir>../obj/SRE_d/</IntDir>
+    <TargetName>SRE_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
+    <OutDir>../../lib/vc/</OutDir>
+    <IntDir>../obj/SRE/</IntDir>
+    <TargetName>SRE</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -65,6 +67,13 @@
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Lib>
+      <AdditionalLibraryDirectories>../../lib/vc;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -73,7 +82,8 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <AdditionalIncludeDirectories>../../include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -81,6 +91,13 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Lib>
+      <AdditionalLibraryDirectories>../../lib/vc;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="engine\nodes\CameraNode.cpp" />
@@ -89,7 +106,6 @@
     <ClCompile Include="engine\nodes\renderables\materials\ColorMaterial.cpp" />
     <ClCompile Include="engine\nodes\renderables\materials\DiffuseMaterial.cpp" />
     <ClCompile Include="engine\nodes\lights\DirectionalLight.cpp" />
-    <ClCompile Include="application\events\EventReceiver.cpp" />
     <ClCompile Include="engine\nodes\renderables\materials\SpecularMaterial.cpp" />
     <ClCompile Include="engine\nodes\renderables\materials\ToonMaterial.cpp" />
     <ClCompile Include="engine\systems\graphics\MatrixManager.cpp" />
@@ -99,7 +115,6 @@
     <ClCompile Include="engine\systems\graphics\LightManager.cpp" />
     <ClCompile Include="engine\nodes\lights\LightNode.cpp" />
     <ClCompile Include="engine\systems\multimedia\MultimediaManager.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="engine\nodes\renderables\materials\Material.cpp" />
     <ClCompile Include="engine\nodes\renderables\meshes\Mesh.cpp" />
     <ClCompile Include="engine\nodes\Node.cpp" />
@@ -107,7 +122,6 @@
     <ClCompile Include="engine\math\Quaternion.cpp" />
     <ClCompile Include="engine\nodes\renderables\RenderableNode.cpp" />
     <ClCompile Include="engine\RenderEngine.cpp" />
-    <ClCompile Include="application\SampleApplication.cpp" />
     <ClCompile Include="engine\scene\SceneManager.cpp" />
     <ClCompile Include="engine\nodes\renderables\materials\textures\Texture.cpp" />
     <ClCompile Include="engine\systems\graphics\TextureManager.cpp" />
@@ -122,7 +136,6 @@
     <ClInclude Include="engine\nodes\renderables\materials\ColorMaterial.h" />
     <ClInclude Include="engine\nodes\renderables\materials\DiffuseMaterial.h" />
     <ClInclude Include="engine\nodes\lights\DirectionalLight.h" />
-    <ClInclude Include="application\events\EventReceiver.h" />
     <ClInclude Include="engine\nodes\renderables\materials\SpecularMaterial.h" />
     <ClInclude Include="engine\nodes\renderables\materials\ToonMaterial.h" />
     <ClInclude Include="engine\nodes\renderables\meshes\VertexData.h" />
@@ -142,7 +155,6 @@
     <ClInclude Include="engine\math\Quaternion.h" />
     <ClInclude Include="engine\nodes\renderables\RenderableNode.h" />
     <ClInclude Include="engine\RenderEngine.h" />
-    <ClInclude Include="application\SampleApplication.h" />
     <ClInclude Include="engine\scene\SceneManager.h" />
     <ClInclude Include="engine\nodes\renderables\materials\ShaderConsts.h" />
     <ClInclude Include="engine\util\singleton_macros.h" />
@@ -151,9 +163,6 @@
     <ClInclude Include="engine\systems\timer\Timer.h" />
     <ClInclude Include="engine\math\Transform.h" />
     <ClInclude Include="engine\math\Vector.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

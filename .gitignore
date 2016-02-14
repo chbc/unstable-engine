@@ -1,8 +1,8 @@
 references/
-bin/gcc/obj/
 *.exe
 fora/
-bin/vc/obj/
 solution/.vs/
 *.sdf
 *.opensdf
+solution/obj/
+
