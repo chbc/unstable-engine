@@ -6,3 +6,5 @@ solution/.vs/
 *.opensdf
 solution/obj/
 
+*.iobj
+*.ipdb
