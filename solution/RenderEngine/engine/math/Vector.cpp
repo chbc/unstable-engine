@@ -54,6 +54,11 @@ Vector Vector::operator *(float value)
 // vector operations //
 float Vector::magnitude()
 {
+	return this->length();
+}
+
+float Vector::length()
+{
 	return sqrtf(powf(this->x, 2) + powf(this->y, 2) + powf(this->z, 2));
 }
 

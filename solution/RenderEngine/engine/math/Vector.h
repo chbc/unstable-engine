@@ -22,6 +22,7 @@ class Vector
 		Vector operator *(float value);
 
 		float magnitude();
+		float length();
 		Vector normalize();
 		float dot(const Vector &v);
 		Vector cross(const Vector &v);
