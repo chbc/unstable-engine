@@ -128,6 +128,8 @@
     <ClCompile Include="engine\systems\timer\Timer.cpp" />
     <ClCompile Include="engine\math\Transform.cpp" />
     <ClCompile Include="engine\math\Vector.cpp" />
+    <ClCompile Include="engine\systems\wrappers\graphics\AGraphicsWrapper.cpp" />
+    <ClCompile Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\nodes\CameraNode.h" />
@@ -157,6 +159,10 @@
     <ClInclude Include="engine\RenderEngine.h" />
     <ClInclude Include="engine\scene\SceneManager.h" />
     <ClInclude Include="engine\nodes\renderables\materials\ShaderConsts.h" />
+    <ClInclude Include="engine\systems\wrappers\graphics\AGraphicsWrapper.h" />
+    <ClInclude Include="engine\systems\wrappers\graphics\OpenGLAPI.h" />
+    <ClInclude Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.h" />
+    <ClInclude Include="engine\systems\wrappers\multimedia\SDLAPI.h" />
     <ClInclude Include="engine\util\singleton_macros.h" />
     <ClInclude Include="engine\nodes\renderables\materials\textures\Texture.h" />
     <ClInclude Include="engine\systems\graphics\TextureManager.h" />

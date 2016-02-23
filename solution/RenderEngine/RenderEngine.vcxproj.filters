@@ -99,6 +99,12 @@
     <ClCompile Include="engine\nodes\renderables\materials\ToonMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\systems\wrappers\graphics\AGraphicsWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\nodes\CameraNode.h">
@@ -198,6 +204,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\nodes\renderables\meshes\VertexData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\wrappers\graphics\OpenGLAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\wrappers\multimedia\SDLAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\wrappers\graphics\AGraphicsWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
