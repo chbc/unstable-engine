@@ -129,6 +129,7 @@
     <ClCompile Include="engine\math\Transform.cpp" />
     <ClCompile Include="engine\math\Vector.cpp" />
     <ClCompile Include="engine\systems\wrappers\graphics\AGraphicsWrapper.cpp" />
+    <ClCompile Include="engine\systems\wrappers\graphics\OpenGLAPI.cpp" />
     <ClCompile Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,7 @@
 #include "ShaderManager.h"
 #include <stdio.h>
 
-namespace graphics
+namespace sre
 {
 
 IMPLEMENT_SINGLETON(LightManager);
@@ -70,4 +70,4 @@ void LightManager::setupLights(unsigned int program)
     shaderManager->setValue(program, "lightCount", size);
 }
 
-} // namespace graphics
+} // namespace

@@ -6,6 +6,9 @@
 
 #include <vector>
 
+namespace sre
+{
+
 class DiffuseMaterial : public Material
 {
 	private:
@@ -23,4 +26,5 @@ class DiffuseMaterial : public Material
 		unsigned int getTextureID(int index = 0);
 };
 
+} // namespace
 #endif

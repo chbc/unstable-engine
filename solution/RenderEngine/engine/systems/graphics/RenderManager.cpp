@@ -1,6 +1,4 @@
-#include <windows.h>
-#include <GL/glew.h>
-#include <SDL/SDL_opengl.h>
+#include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
 
 #include <iostream>
 
@@ -9,7 +7,7 @@
 #include <engine/nodes/renderables/RenderableNode.h>
 #include <engine/nodes/renderables/materials/DiffuseMaterial.h>
 
-namespace graphics
+namespace sre
 {
 
 IMPLEMENT_SINGLETON(RenderManager);
@@ -20,26 +18,15 @@ RenderManager::RenderManager()
 	this->shaderManager	 = ShaderManager::getInstance();
 	this->lightManager	 = LightManager::getInstance();
 	this->matrixManager = new MatrixManager;
+	this->graphicsWrapper = AGraphicsWrapper::getInstance();
 }
 
 bool RenderManager::init()
 {
-	using multimedia::MultimediaManager;
+	this->graphicsWrapper->init();
 
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK)
-		return false;
-
-	const GLubyte *glVersion = glGetString(GL_VERSION);
-	std::cout << "OpenGL Version: " << glVersion << std::endl;
-
-	glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
-
-    const float FOV = 45.0f;
+	const float FOV{45.0f};
 	this->matrixManager->setProjection(FOV, MultimediaManager::WIDTH/MultimediaManager::HEIGHT, 1, 100);
-
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
 
 	if (!this->textureManager->init())
 	{
@@ -82,30 +69,8 @@ void RenderManager::createBufferObject(Mesh *mesh)
     mesh->vertexAttribLocation = this->shaderManager->getAttribLocation(program, SHADER_POSITION);
     mesh->normalAttribLocation = this->shaderManager->getAttribLocation(program, SHADER_NORMAL);
 
-    // indices
-    int indCount = mesh->indices->size();
-    GLuint *indices = new GLuint[indCount];
-    for (int i = 0; i < indCount; i++)
-        indices[i] = mesh->indices->at(i);
-
-    // data
-    int ttSize = mesh->vertexData->size();
-    VertexData *vertexDataArray = new VertexData[ttSize];
-    for (int i = 0; i < ttSize; i++)
-        vertexDataArray[i] = mesh->vertexData->at(i);
-
-
-    glGenBuffers(1, &mesh->vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-    glBufferData(GL_ARRAY_BUFFER, mesh->vertexData->size() * sizeof(VertexData), vertexDataArray, GL_STATIC_DRAW);
-
-    //Create IBO
-    glGenBuffers(1, &mesh->indexBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indCount * sizeof(GLuint), indices, GL_STATIC_DRAW);
-
-	delete [] indices;
-	delete [] vertexDataArray;
+	this->graphicsWrapper->createVBO(mesh);
+	this->graphicsWrapper->createIBO(mesh);
 }
 
 DirectionalLight *RenderManager::addDirectionalLight()
@@ -146,24 +111,12 @@ void RenderManager::render(const std::vector<RenderableNode *> &renderableNodes)
 
 void RenderManager::TEST_drawTriangle()
 {
-    GLfloat vertices[] =
-    {
-        -1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,
-        0.0f, 1.0f, -1.0f
-    };
-	GLubyte indices[] = {0, 1, 2};
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-
-	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, indices);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	AGraphicsWrapper::TEST_drawTriangle();
 }
 
 void RenderManager::clearBuffer()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	this->graphicsWrapper->clearBuffer();
 }
 
 void RenderManager::applyMaterial(Material *material, bool receiveLight)
@@ -183,7 +136,8 @@ void RenderManager::applyMaterial(DiffuseMaterial *material, std::vector<VertexD
     this->applyMaterial(material, receiveLight);
 
 	// texture //
-	/* TODO: acertar texCoords
+	// TODO: acertar texCoords
+	/*
 	glEnable(GL_TEXTURE_2D);
 
 	glBindTexture(GL_TEXTURE_2D, material->getTextureID());
@@ -194,34 +148,7 @@ void RenderManager::applyMaterial(DiffuseMaterial *material, std::vector<VertexD
 
 void RenderManager::drawMesh(Mesh *mesh)
 {
-/*
-struct VertexData
-{
-    Vector position;
-    Vector normal;
-    Vector color;
-    float u, v;
-};
-*/
-    glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-
-    int vertexLocation = mesh->vertexAttribLocation;
-    glVertexAttribPointer(vertexLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
-    glEnableVertexAttribArray(vertexLocation);
-
-    int normalLocation = mesh->normalAttribLocation;
-    glVertexAttribPointer(normalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(Vector));
-    glEnableVertexAttribArray(normalLocation);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-    glDrawElements(GL_TRIANGLES, mesh->indices->size(), GL_UNSIGNED_INT, 0);
-
-    // Clear
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glDisableVertexAttribArray(vertexLocation);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
+	this->graphicsWrapper->drawMesh(mesh);
 	this->shaderManager->disableShader();
 }
 
@@ -245,4 +172,4 @@ unsigned int RenderManager::loadShader(const std::string &vertFile, const std::s
 	return this->shaderManager->loadShader(vertFile, fragFile);
 }
 
-} // namespace graphics
+} // namespace

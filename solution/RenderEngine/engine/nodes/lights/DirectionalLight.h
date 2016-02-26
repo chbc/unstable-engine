@@ -3,13 +3,10 @@
 
 #include "LightNode.h"
 
-namespace graphics
+namespace sre
 {
-    class LightManager;
-}
 
-namespace nodes
-{
+class LightManager;
 
 class DirectionalLight : public LightNode
 {
@@ -20,9 +17,8 @@ class DirectionalLight : public LightNode
 		void setDirection(const Vector &direction);
 		ELightType getType();
 
-	friend class graphics::LightManager;
+	friend class LightManager;
 };
 
-} // namespace nodes
-
+} // namespace
 #endif

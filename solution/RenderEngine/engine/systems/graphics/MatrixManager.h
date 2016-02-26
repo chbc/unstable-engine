@@ -5,6 +5,9 @@
 #include <stack>
 #include <engine/math/Vector.h>
 
+namespace sre
+{
+
 /*!
 	Class to manage model, view and projection matrices.
 */
@@ -32,4 +35,5 @@ class MatrixManager
         glm::mat4 getMVP();
 };
 
+} // namespace
 #endif

@@ -10,9 +10,8 @@
 
 #include <engine/nodes/renderables/materials/DiffuseMaterial.h>
 
-using graphics::RenderManager;
-using multimedia::MultimediaManager;
-using input::InputHandler;
+namespace sre
+{
 
 /*!
 	Abstract application class.
@@ -45,4 +44,5 @@ class RenderEngine
 		void quit();
 };
 
+} // namespace
 #endif

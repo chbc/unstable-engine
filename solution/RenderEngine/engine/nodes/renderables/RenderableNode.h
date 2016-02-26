@@ -4,15 +4,11 @@
 #include <engine/nodes/Node.h>
 #include "meshes/Mesh.h"
 
-namespace graphics
+namespace sre
 {
-    class RenderManager;
-}
 
+class RenderManager;
 class SceneManager;
-
-namespace nodes
-{
 
 /*!
 	Base class that represents a renderable node of a scene.
@@ -33,10 +29,10 @@ class RenderableNode : public Node
         void setMaterial(Material *material, unsigned int meshIndex = 0);
 		void setReceiveLight(bool receiveLight);
 
-    friend class graphics::RenderManager;
-    friend class ::SceneManager;
+    friend class RenderManager;
+    friend class SceneManager;
 };
 
-} // namespace nodes
+} // namespace
 
 #endif

@@ -1,7 +1,10 @@
 #ifndef _TIMER_H_
 #define _TIMER_H_
 
-//! Class for Timer issues and FPS control.
+namespace sre
+{
+
+//! Class for Timer stuffs and FPS control.
 class Timer
 {
     private:
@@ -35,4 +38,5 @@ class Timer
 		void delay(unsigned int timeMS);
 };
 
+} // namespace
 #endif

@@ -10,13 +10,10 @@ enum ELightType
     LIGHT_POINT = 1
 };
 
-namespace graphics
+namespace sre
 {
-    class LightManager;
-}
 
-namespace nodes
-{
+class LightManager;
 
 /*!
 	Base class to handle lighting.
@@ -36,9 +33,9 @@ class LightNode : public Node
         void setColor(const Vector &color);
         virtual ELightType getType() =0;
 
-    friend class graphics::LightManager;
+    friend class LightManager;
 };
 
-} // namespace nodes
+} // namespace
 
 #endif

@@ -7,7 +7,8 @@
 #include <engine/nodes/lights/PointLight.h>
 #include <engine/util/singleton_macros.h>
 
-using namespace nodes;
+namespace sre
+{
 
 class RenderEngine;
 
@@ -42,8 +43,9 @@ class SceneManager
 		// camera //
 		CameraNode *getMainCamera();
 
-	friend class nodes::Node;
+	friend class Node;
 	friend class RenderEngine;
 };
 
+} // namespace
 #endif

@@ -2,6 +2,9 @@
 
 #include "SDLAPI.h"
 
+namespace sre
+{
+
 AMultimediaWrapper *AMultimediaWrapper::getInstance()
 {
 	if (instance == nullptr)
@@ -9,3 +12,5 @@ AMultimediaWrapper *AMultimediaWrapper::getInstance()
 
 	return instance.get();
 }
+
+} // namespace sre

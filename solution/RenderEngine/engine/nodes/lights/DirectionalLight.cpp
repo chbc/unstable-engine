@@ -1,6 +1,6 @@
 #include "DirectionalLight.h"
 
-namespace nodes
+namespace sre
 {
 
 DirectionalLight::DirectionalLight() : LightNode()
@@ -17,4 +17,4 @@ ELightType DirectionalLight::getType()
     return LIGHT_DIRECTIONAL;
 }
 
-} // namespace nodes
+} // namespace

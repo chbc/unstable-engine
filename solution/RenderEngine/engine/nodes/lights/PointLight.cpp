@@ -1,6 +1,6 @@
 #include "PointLight.h"
 
-namespace nodes
+namespace sre
 {
 
 PointLight::PointLight() : LightNode()
@@ -17,4 +17,4 @@ ELightType PointLight::getType()
     return LIGHT_POINT;
 }
 
-} // namespace nodes
+} // namespace

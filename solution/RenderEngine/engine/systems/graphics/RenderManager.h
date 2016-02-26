@@ -2,7 +2,6 @@
 #define _RENDER_MANAGER_H_
 
 #include <engine/util/singleton_macros.h>
-#include <engine/math/Transform.h>
 #include <engine/nodes/renderables/meshes/VertexData.h>
 #include "TextureManager.h"
 #include "ShaderManager.h"
@@ -10,21 +9,16 @@
 #include "MatrixManager.h"
 #include <vector>
 
-namespace nodes
+namespace sre
 {
-    class Mesh;
-    class RenderableNode;
-    class LightNode;
-}
 
+class Mesh;
+class RenderableNode;
+class LightNode;
+class AGraphicsWrapper;
 class Material;
 class DiffuseMaterial;
 class SceneManager;
-
-using namespace nodes;
-
-namespace graphics
-{
 
 /*!
 	Singleton Class for low level rendering
@@ -38,6 +32,7 @@ class RenderManager
 		ShaderManager *shaderManager;
 		LightManager *lightManager;
         MatrixManager *matrixManager;
+		AGraphicsWrapper *graphicsWrapper;
 
 		void createBufferObject(Mesh *mesh);
 		DirectionalLight *addDirectionalLight();
@@ -58,10 +53,9 @@ class RenderManager
 		Texture *loadTexture(const std::string &fileName);
 		unsigned int loadShader(const std::string &vertFile, const std::string &fragFile);
 
-    friend class ::SceneManager;
-    friend class nodes::Mesh;
+    friend class SceneManager;
+    friend class Mesh;
 };
 
-} // namespace graphics
-
+} // namespace
 #endif

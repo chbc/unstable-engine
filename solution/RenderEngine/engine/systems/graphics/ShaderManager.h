@@ -5,7 +5,7 @@
 #include <engine/util/singleton_macros.h>
 #include <stack>
 
-namespace graphics
+namespace sre
 {
 
 enum EShaderVariable
@@ -50,6 +50,6 @@ class ShaderManager
 	friend class LightManager;
 };
 
-} // namespace graphics
+} // namespace
 
 #endif

@@ -4,8 +4,7 @@
 #include <engine/systems/input/InputHandler.h>
 #include <engine/nodes/CameraNode.h>
 
-using namespace input;
-using nodes::CameraNode;
+using namespace sre;
 
 // forward Game declaration
 class SampleApplication;

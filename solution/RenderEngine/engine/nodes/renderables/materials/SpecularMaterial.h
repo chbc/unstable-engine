@@ -3,6 +3,9 @@
 
 #include "DiffuseMaterial.h"
 
+namespace sre
+{
+
 class SpecularMaterial : public DiffuseMaterial
 {
 	public:
@@ -10,5 +13,7 @@ class SpecularMaterial : public DiffuseMaterial
 
 		void setShininess(float shininess);
 };
+
+} // namespace
 
 #endif

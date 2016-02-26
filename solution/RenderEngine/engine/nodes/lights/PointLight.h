@@ -3,13 +3,10 @@
 
 #include "LightNode.h"
 
-namespace graphics
+namespace sre
 {
-    class LightManager;
-}
 
-namespace nodes
-{
+class LightManager;
 
 class PointLight : public LightNode
 {
@@ -20,9 +17,9 @@ class PointLight : public LightNode
 		void setPosition(const Vector &position);
 		ELightType getType();
 
-	friend class graphics::LightManager;
+	friend class LightManager;
 };
 
-} // namespace nodes
+} // namespace
 
 #endif

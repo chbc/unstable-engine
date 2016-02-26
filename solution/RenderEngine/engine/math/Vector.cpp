@@ -3,6 +3,9 @@
 #include <cmath>
 #include <engine/math/math_util.h>
 
+namespace sre
+{
+
 const Vector Vector::ZERO(0.0f, 0.0f, 0.0f);
 const Vector Vector::UP(0.0f, 1.0f, 0.0f);
 
@@ -147,3 +150,5 @@ glm::vec3 Vector::toVec3()
 {
     return glm::vec3(this->x, this->y, this->z);
 }
+
+} // namespace

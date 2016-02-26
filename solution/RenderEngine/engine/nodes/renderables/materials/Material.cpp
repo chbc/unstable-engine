@@ -2,7 +2,8 @@
 #include <engine/systems/graphics/RenderManager.h>
 #include <string.h>
 
-using graphics::RenderManager;
+namespace sre
+{
 
 Material::Material()
 {
@@ -50,3 +51,5 @@ void Material::setSpecular(float *specular)
 {
 	this->specular = specular;
 }
+
+} // namespace

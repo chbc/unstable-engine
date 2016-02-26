@@ -2,7 +2,7 @@
 #include <engine/systems/graphics/RenderManager.h>
 #include <engine/nodes/renderables/materials/ColorMaterial.h>
 
-namespace nodes
+namespace sre
 {
 
 Mesh::Mesh(std::vector<VertexData> *vertexData, std::vector<unsigned int> *indices)
@@ -38,4 +38,4 @@ void Mesh::setMaterial(Material *material)
 	this->material = material;
 }
 
-} // namespace nodes
+} // namespace

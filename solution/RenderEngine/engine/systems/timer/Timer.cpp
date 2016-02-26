@@ -1,6 +1,9 @@
 #include "Timer.h"
 #include <SDL/SDL.h>
 
+namespace sre
+{
+
 Timer::Timer()
 {
     this->timeBegin = 0;
@@ -91,3 +94,5 @@ void Timer::delay(unsigned int timeMS)
 {
 	SDL_Delay(timeMS);
 }
+
+} // namespace

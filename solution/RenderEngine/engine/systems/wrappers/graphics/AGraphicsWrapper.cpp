@@ -1,6 +1,11 @@
 #include "AGraphicsWrapper.h"
 #include "OpenGLAPI.h"
 
+namespace sre
+{
+
+std::unique_ptr<AGraphicsWrapper> AGraphicsWrapper::instance = std::unique_ptr<AGraphicsWrapper>{ nullptr };
+
 AGraphicsWrapper *AGraphicsWrapper::getInstance()
 {
 	if (instance == nullptr)
@@ -8,3 +13,10 @@ AGraphicsWrapper *AGraphicsWrapper::getInstance()
 
 	return instance.get();
 }
+
+void AGraphicsWrapper::TEST_drawTriangle()
+{
+	OpenGLAPI::TEST_drawTriangle();
+}
+
+} // namespace

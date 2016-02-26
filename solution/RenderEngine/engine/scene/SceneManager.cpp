@@ -4,6 +4,9 @@
 #include <engine/nodes/lights/DirectionalLight.h>
 #include <engine/systems/graphics/RenderManager.h>
 
+namespace sre
+{
+
 IMPLEMENT_SINGLETON(SceneManager);
 
 SceneManager::SceneManager()
@@ -43,7 +46,7 @@ int SceneManager::generateNodeId()
 
 void SceneManager::render()
 {
-    graphics::RenderManager *renderManager = graphics::RenderManager::getInstance();
+    RenderManager *renderManager = RenderManager::getInstance();
 
     // Camera
 	renderManager->renderCamera(this->mainCamera->getTransform()->getPosition(), this->mainCamera->lookTarget, this->mainCamera->up);
@@ -85,13 +88,13 @@ RenderableNode *SceneManager::addModelNode(const char *fileName)
 // light //
 DirectionalLight *SceneManager::addDirectionalLight()
 {
-    graphics::RenderManager *renderManager = graphics::RenderManager::getInstance();
+    RenderManager *renderManager = RenderManager::getInstance();
     return renderManager->addDirectionalLight();
 }
 
 PointLight *SceneManager::addPointLight()
 {
-    graphics::RenderManager *renderManager = graphics::RenderManager::getInstance();
+    RenderManager *renderManager = RenderManager::getInstance();
     return renderManager->addPointLight();
 }
 
@@ -101,3 +104,4 @@ CameraNode *SceneManager::getMainCamera()
 	return this->mainCamera;
 }
 //
+} // namespace

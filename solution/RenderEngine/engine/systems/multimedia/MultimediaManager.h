@@ -4,7 +4,7 @@
 #include <engine/util/singleton_macros.h>
 #include <SDL/SDL.h>
 
-namespace multimedia
+namespace sre
 {
 
 /*!
@@ -27,6 +27,6 @@ class MultimediaManager
 		void swapBuffers();
 };
 
-} // namespace multimedia
+} // namespace
 
 #endif

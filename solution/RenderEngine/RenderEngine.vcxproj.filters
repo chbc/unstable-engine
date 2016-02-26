@@ -105,6 +105,9 @@
     <ClCompile Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\systems\wrappers\graphics\OpenGLAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\nodes\CameraNode.h">

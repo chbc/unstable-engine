@@ -1,6 +1,6 @@
 #include "LightNode.h"
 
-namespace nodes
+namespace sre
 {
 
 LightNode::LightNode() : Node()
@@ -14,4 +14,4 @@ void LightNode::setColor(const Vector &color)
     this->color = color;
 }
 
-} // namespace nodes
+} // namespace

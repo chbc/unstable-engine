@@ -3,16 +3,20 @@
 
 #include <memory>
 
+namespace sre
+{
+
 class AMultimediaWrapper
 {
-private:
-	static std::unique_ptr<AMultimediaWrapper> instance;
+	private:
+		static std::unique_ptr<AMultimediaWrapper> instance;
 
-protected:
-	AMultimediaWrapper() {}
+	protected:
+		AMultimediaWrapper() {}
 
-public:
-	static AMultimediaWrapper *getInstance();
+	public:
+		static AMultimediaWrapper *getInstance();
 };
 
+} // namespace
 #endif

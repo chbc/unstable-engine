@@ -1,5 +1,8 @@
 #include "Transform.h"
 
+namespace sre
+{
+
 /*
 	Matrix Format
 	0	4	8	12
@@ -63,3 +66,5 @@ Vector Transform::getScale()
 {
 	return Vector(this->matrix[0], this->matrix[5], this->matrix[10]);
 }
+
+} // namespace

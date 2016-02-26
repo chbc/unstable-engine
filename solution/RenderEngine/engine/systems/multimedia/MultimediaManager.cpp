@@ -1,7 +1,7 @@
 #include "MultimediaManager.h"
 #include <iostream>
 
-namespace multimedia
+namespace sre
 {
 
 IMPLEMENT_SINGLETON(MultimediaManager);
@@ -59,4 +59,4 @@ void MultimediaManager::swapBuffers()
 	SDL_GL_SwapWindow(this->window);
 }
 
-} // namespace multimedia
+} // namespace

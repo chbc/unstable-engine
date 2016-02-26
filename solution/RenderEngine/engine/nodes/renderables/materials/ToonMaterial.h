@@ -3,6 +3,9 @@
 
 #include "DiffuseMaterial.h"
 
+namespace sre
+{
+
 class ToonMaterial : public DiffuseMaterial
 {
 	private:
@@ -12,4 +15,5 @@ class ToonMaterial : public DiffuseMaterial
 		ToonMaterial(const std::string &fileName, int layersCount = 3);
 };
 
+} // namespace
 #endif

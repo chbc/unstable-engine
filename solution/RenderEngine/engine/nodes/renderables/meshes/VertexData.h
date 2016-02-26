@@ -3,6 +3,9 @@
 
 #include <engine/math/Vector.h>
 
+namespace sre
+{
+
 struct VertexData
 {
     Vector position;
@@ -10,5 +13,7 @@ struct VertexData
     Vector color;
     float u, v;
 };
+
+} // namespace
 
 #endif // _VERTEX_DATA_H_

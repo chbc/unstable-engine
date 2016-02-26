@@ -3,6 +3,9 @@
 
 #include <glm/vec3.hpp>
 
+namespace sre
+{
+
 /*!
 	Class to deal with vector operations.
 */
@@ -33,4 +36,5 @@ class Vector
 		glm::vec3 toVec3();
 };
 
+} // namespace
 #endif

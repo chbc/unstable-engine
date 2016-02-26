@@ -3,6 +3,8 @@
 
 #include <engine/RenderEngine.h>
 
+using namespace sre;
+
 /*!
 	Concrete application class.
 */

@@ -1,7 +1,7 @@
 #include "RenderableNode.h"
 #include <engine/systems/graphics/LightManager.h>
 
-namespace nodes
+namespace sre
 {
 
 RenderableNode::RenderableNode() : Node()
@@ -34,4 +34,4 @@ void RenderableNode::setReceiveLight(bool receiveLight)
 	this->receiveLight = receiveLight;
 }
 
-} // namespace nodes
+} // namespace

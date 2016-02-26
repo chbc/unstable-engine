@@ -5,10 +5,10 @@
 #include <string>
 #include <engine/math/Transform.h>
 
-class SceneManager;
-
-namespace nodes
+namespace sre
 {
+
+class SceneManager;
 
 /*!
 	Class that represents a node of the scene.
@@ -34,9 +34,9 @@ class Node
 		void setScale(Vector scale);
 		void setRotation(Vector axis, float angle);
 
-	friend class ::SceneManager;
+	friend class SceneManager;
 };
 
-} // namespace node
+} // namespace
 
 #endif

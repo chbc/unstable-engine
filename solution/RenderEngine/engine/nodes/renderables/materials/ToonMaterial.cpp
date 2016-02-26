@@ -1,5 +1,8 @@
 #include "ToonMaterial.h"
 
+namespace sre
+{
+
 ToonMaterial::ToonMaterial(const std::string &fileName, int layersCount) : DiffuseMaterial(fileName)
 {
 	this->loadShader(shaderConsts::TOON_V, shaderConsts::TOON_F);
@@ -7,3 +10,5 @@ ToonMaterial::ToonMaterial(const std::string &fileName, int layersCount) : Diffu
 
 	this->layersCount = layersCount;
 }
+
+} // namespace

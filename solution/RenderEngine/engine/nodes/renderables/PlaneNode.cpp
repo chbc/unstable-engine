@@ -3,7 +3,7 @@
 #include <engine/scene/SceneManager.h>
 #include <iostream>
 
-namespace nodes
+namespace sre
 {
 
 PlaneNode::PlaneNode(float size) : RenderableNode()
@@ -48,4 +48,4 @@ PlaneNode::PlaneNode(float size) : RenderableNode()
     this->meshes.push_back(new Mesh(vertexData, indices));
 }
 
-} // namespace nodes
+} // namespace

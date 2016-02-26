@@ -4,6 +4,9 @@
 #include "Vector.h"
 #include "Quaternion.h"
 
+namespace sre
+{
+
 /*!
 	Class used to apply transform operations to the scene nodes.
 */
@@ -29,5 +32,7 @@ class Transform
 
 		inline float *getMatrix() { return this->matrix; }
 };
+
+} // namespace
 
 #endif

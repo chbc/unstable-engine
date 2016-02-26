@@ -5,15 +5,11 @@
 #include <engine/nodes/renderables/materials/Material.h>
 #include "VertexData.h"
 
-namespace graphics
-{
-    class RenderManager;
-}
-
-namespace nodes
+namespace sre
 {
 
-using namespace graphics;
+class RenderManager;
+class OpenGLAPI;
 
 /*!
 	Class which holds information for rendering.
@@ -41,9 +37,10 @@ class Mesh
 
         void setMaterial(Material *material);
 
-    friend class ::graphics::RenderManager;
+    friend class OpenGLAPI;
+	friend class RenderManager;
 };
 
-} // namespace nodes
+} // namespace
 
 #endif

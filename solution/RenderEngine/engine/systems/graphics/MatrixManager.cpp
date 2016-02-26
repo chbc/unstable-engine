@@ -2,6 +2,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+namespace sre
+{
+
 MatrixManager::MatrixManager()
 {
     this->view = glm::mat4(1.0f);
@@ -67,3 +70,5 @@ glm::mat4 MatrixManager::getMVP()
 {
     return this->mvp;
 }
+
+} // namespace

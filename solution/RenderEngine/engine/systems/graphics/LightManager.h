@@ -4,19 +4,11 @@
 #include <engine/util/singleton_macros.h>
 #include <vector>
 
-namespace nodes
+namespace sre
 {
-    class LightNode;
+	class LightNode;
 	class DirectionalLight;
 	class PointLight;
-}
-
-using nodes::DirectionalLight;
-using nodes::PointLight;
-using nodes::LightNode;
-
-namespace graphics
-{
 
 /*!
 	Class to manage low level lighting.
@@ -36,6 +28,6 @@ class LightManager
 	friend class RenderManager;
 };
 
-} // namespace graphics
+} // namespace
 
 #endif

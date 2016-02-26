@@ -2,6 +2,9 @@
 
 #include "math_util.h"
 
+namespace sre
+{
+
 Quaternion::Quaternion()
 {
 	w = x = y = z = 0;
@@ -44,3 +47,5 @@ void Quaternion::getMatrix(float *matrix)
 	matrix[9] = (2*y*z) + (2*w*x);
 	matrix[10] = 1 - (2*x*x) - (2*y*y);
 }
+
+} // namespace

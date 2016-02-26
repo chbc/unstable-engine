@@ -5,7 +5,7 @@
 #include <engine/math/Vector.h>
 #include "button_names.h"
 
-namespace input
+namespace sre
 {
 
 /*!
@@ -31,6 +31,6 @@ class InputHandler
 		void process();
 };
 
-} // namespace input
+} // namespace
 
 #endif

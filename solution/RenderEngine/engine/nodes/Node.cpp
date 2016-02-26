@@ -1,7 +1,7 @@
 #include "Node.h"
 #include <engine/scene/SceneManager.h>
 
-namespace nodes
+namespace sre
 {
 
 Node::Node()
@@ -42,4 +42,4 @@ void Node::setRotation(Vector axis, float angle)
 	this->transform->setRotation(axis, angle);
 }
 
-} // namespace nodes
+} // namespace

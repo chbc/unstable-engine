@@ -4,22 +4,17 @@
 #include "ShaderConsts.h"
 #include <vector>
 
-namespace graphics
+namespace sre
 {
-	class RenderManager;
-};
-
-namespace nodes
-{
-    class Mesh;
-}
 
 struct VertexData;
+class RenderManager;
+class Mesh;
 
 class Material
 {
 	protected:
-		graphics::RenderManager *renderManager;
+		RenderManager *renderManager;
 		unsigned int shaderProgram;
 		float *ambient, *diffuse, *specular, shininess;
 
@@ -36,8 +31,10 @@ class Material
 		void setDiffuse(float *diffuse);
 		void setSpecular(float *specular);
 
-	friend class graphics::RenderManager;
-	friend class nodes::Mesh;
+	friend class RenderManager;
+	friend class Mesh;
 };
+
+} // namespace
 
 #endif

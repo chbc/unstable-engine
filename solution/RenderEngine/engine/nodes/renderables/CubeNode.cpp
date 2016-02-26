@@ -2,7 +2,7 @@
 #include <engine/nodes/renderables/meshes/Mesh.h>
 #include <engine/scene/SceneManager.h>
 
-namespace nodes
+namespace sre
 {
 
 CubeNode::CubeNode(float size) : RenderableNode()
@@ -62,4 +62,4 @@ CubeNode::CubeNode(float size) : RenderableNode()
     this->meshes.push_back(new Mesh(vertexData, indices));
 }
 
-} // namespace nodes
+} // namespace

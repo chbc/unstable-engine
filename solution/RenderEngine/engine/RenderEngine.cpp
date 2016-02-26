@@ -2,6 +2,9 @@
 #include <iostream>
 #include <exception>
 
+namespace sre
+{
+
 RenderEngine::RenderEngine()
 {
 	this->renderManager = RenderManager::getInstance();
@@ -84,3 +87,5 @@ void RenderEngine::quit()
 {
 	this->running = false;
 }
+
+} // namespace

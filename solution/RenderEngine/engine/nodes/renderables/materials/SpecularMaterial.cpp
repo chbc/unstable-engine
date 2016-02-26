@@ -1,5 +1,8 @@
 #include "SpecularMaterial.h"
 
+namespace sre
+{
+
 SpecularMaterial::SpecularMaterial(const std::string &fileName, float shininess) : DiffuseMaterial(fileName)
 {
 	this->loadShader(shaderConsts::SPECULAR_V, shaderConsts::SPECULAR_F);
@@ -12,3 +15,5 @@ void SpecularMaterial::setShininess(float shininess)
 {
 	this->shininess = shininess;
 }
+
+} // namespace

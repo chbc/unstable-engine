@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 
-namespace graphics
+namespace sre
 {
 
 IMPLEMENT_SINGLETON(ShaderManager);
@@ -200,4 +200,4 @@ void ShaderManager::release()
 	}
 }
 
-} // namespace graphics
+} // namespace

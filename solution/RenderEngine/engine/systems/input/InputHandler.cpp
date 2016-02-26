@@ -1,6 +1,6 @@
 #include "InputHandler.h"
 
-namespace input
+namespace sre
 {
 
 InputHandler::InputHandler()
@@ -32,4 +32,4 @@ void InputHandler::process()
 	}
 }
 
-} // namespace input
+} // namespace

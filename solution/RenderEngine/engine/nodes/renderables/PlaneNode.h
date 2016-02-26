@@ -5,7 +5,7 @@
 
 class SceneManager;
 
-namespace nodes
+namespace sre
 {
 
 class PlaneNode : public RenderableNode
@@ -13,8 +13,8 @@ class PlaneNode : public RenderableNode
 	private:
 		PlaneNode(float size = 1);
 
-	friend class ::SceneManager;
+	friend class SceneManager;
 };
 
-} // namespace nodes
+} // namespace
 #endif

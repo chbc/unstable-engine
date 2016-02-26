@@ -1,6 +1,6 @@
 #include "CameraNode.h"
 
-namespace nodes
+namespace sre
 {
 
 CameraNode::CameraNode() : Node()
@@ -15,4 +15,4 @@ void CameraNode::setLookAt(const Vector &target)
 	this->lookTarget = target;
 }
 
-} // namespace nodes
+} // namespace

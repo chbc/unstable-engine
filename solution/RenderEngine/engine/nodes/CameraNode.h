@@ -4,10 +4,10 @@
 #include "Node.h"
 #include <engine/systems/graphics/RenderManager.h>
 
-class SceneManager;
-
-namespace nodes
+namespace sre
 {
+
+class SceneManager;
 
 /*!
 	Class that handles the camera on the scene.
@@ -23,9 +23,9 @@ class CameraNode : public Node
 	public:
 		void setLookAt(const Vector &target);
 
-	friend class ::SceneManager;
+	friend class SceneManager;
 };
 
-} // namespace nodes
+} // namespace
 
 #endif

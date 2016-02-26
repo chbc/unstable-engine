@@ -3,7 +3,7 @@
 #include <SDL/SDL_image.h>
 #include <GL/glew.h>
 
-namespace graphics
+namespace sre
 {
 
 IMPLEMENT_SINGLETON(TextureManager);
@@ -67,4 +67,4 @@ void TextureManager::deleteTexture(unsigned int id)
     glDeleteTextures(1, &id);
 }
 
-} // namespace graphics
+} // namespace

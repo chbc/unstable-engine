@@ -18,7 +18,7 @@
 #ifndef _BUTTONNAMES_H_
 #define _BUTTONNAMES_H_
 
-namespace input
+namespace sre
 {
 
 typedef unsigned __int8 MouseButton;

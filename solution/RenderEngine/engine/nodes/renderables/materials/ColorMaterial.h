@@ -3,6 +3,9 @@
 
 #include "Material.h"
 
+namespace sre
+{
+
 class ColorMaterial : public Material
 {
 	public:
@@ -11,4 +14,5 @@ class ColorMaterial : public Material
 		void apply(std::vector<VertexData> *vertexData, bool receiveLight);
 };
 
+} // namespace
 #endif // _COLORMATERIAL_H_

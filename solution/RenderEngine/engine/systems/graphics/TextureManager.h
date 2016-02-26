@@ -5,7 +5,7 @@
 #include <engine/nodes/renderables/materials/textures/Texture.h>
 #include <string>
 
-namespace graphics
+namespace sre
 {
 
 /*!
@@ -20,5 +20,5 @@ class TextureManager
 		void deleteTexture(unsigned int id);
 };
 
-} // namespace graphics
+} // namespace
 #endif
