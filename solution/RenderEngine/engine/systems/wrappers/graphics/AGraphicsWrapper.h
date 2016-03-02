@@ -17,9 +17,6 @@ class AGraphicsWrapper
 	protected:
 		AGraphicsWrapper() {}
 
-#ifdef SRE_TESTS
-	public:
-#endif
 		static AGraphicsWrapper *getInstance();
 
 		virtual void init() = 0; // throws std::string

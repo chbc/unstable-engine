@@ -13,7 +13,6 @@ class OpenGLAPI : AGraphicsWrapper
 	protected:
 		OpenGLAPI() {}
 
-	protected:
 		void init() override;
 		void createVBO(Mesh *mesh) override;
 		void createIBO(Mesh *mesh) override;

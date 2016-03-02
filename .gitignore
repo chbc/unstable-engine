@@ -8,3 +8,4 @@ solution/obj/
 
 *.iobj
 *.ipdb
+bin/tests/

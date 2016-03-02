@@ -3,6 +3,7 @@
 #include <engine/math/Vector.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace sre;
 
 namespace SRETests
 {		
