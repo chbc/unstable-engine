@@ -40,7 +40,7 @@ class RenderManager
 		void render(const std::vector<RenderableNode *> &renderableNodes);
 
 	public:
-		static void TEST_drawTriangle();
+		static void DEBUG_drawTriangle();
 		void clearBuffer();
 
 		void applyMaterial(Material *material, bool receiveLight);

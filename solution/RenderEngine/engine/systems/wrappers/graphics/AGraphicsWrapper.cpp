@@ -14,9 +14,9 @@ AGraphicsWrapper *AGraphicsWrapper::getInstance()
 	return instance.get();
 }
 
-void AGraphicsWrapper::TEST_drawTriangle()
+void AGraphicsWrapper::DEBUG_drawTriangle()
 {
-	OpenGLAPI::TEST_drawTriangle();
+	OpenGLAPI::DEBUG_drawTriangle();
 }
 
 } // namespace

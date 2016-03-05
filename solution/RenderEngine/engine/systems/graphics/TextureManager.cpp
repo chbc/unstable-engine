@@ -1,7 +1,7 @@
 #include "TextureManager.h"
 #include <exception>
 #include <SDL/SDL_image.h>
-#include <GL/glew.h>
+#include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
 
 namespace sre
 {
@@ -64,7 +64,8 @@ Texture *TextureManager::loadTexture(const std::string &fileName)
 
 void TextureManager::deleteTexture(unsigned int id)
 {
-    glDeleteTextures(1, &id);
+	AGraphicsWrapper *wrapper = AGraphicsWrapper::getInstance();
+	wrapper->deleteTexture(id);
 }
 
 } // namespace

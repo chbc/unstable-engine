@@ -109,9 +109,9 @@ void RenderManager::render(const std::vector<RenderableNode *> &renderableNodes)
 	}
 }
 
-void RenderManager::TEST_drawTriangle()
+void RenderManager::DEBUG_drawTriangle()
 {
-	AGraphicsWrapper::TEST_drawTriangle();
+	AGraphicsWrapper::DEBUG_drawTriangle();
 }
 
 void RenderManager::clearBuffer()

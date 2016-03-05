@@ -3,16 +3,13 @@
 
 #include <string>
 #include <engine/util/singleton_macros.h>
+#include <engine/util/EShaderVariable.h>
 #include <stack>
 
 namespace sre
 {
 
-enum EShaderVariable
-{
-    SHADER_POSITION,
-    SHADER_NORMAL
-};
+class AGraphicsWrapper;
 
 /*!
 	Class to deal with GLSL API
@@ -26,11 +23,10 @@ class ShaderManager
 		std::stack<unsigned int> fragShaders;
 		std::stack<unsigned int> programs;
 
-		bool loadFile(std::string fileName, std::string &dest);
-		unsigned int compileShader(const std::string &fileName, const std::string &source, unsigned int mode);
+		AGraphicsWrapper *graphicsWrapper;
 
 		// main load function
-		unsigned int loadShader(std::string vertexName, std::string fragmentName);
+		unsigned int loadShader(const std::string &vertexName, const std::string &fragmentName);
 
 		// passing values //
 		void setValue(unsigned int program, const std::string &varName, float x);
@@ -39,7 +35,6 @@ class ShaderManager
 		void setValue(unsigned int program, const std::string &varName, float *matrix);
 
 		void setValue(unsigned int program, const std::string &varName, int value);
-		void checkVariableLocation(int location, const std::string &varName);
 
 		int getAttribLocation(unsigned int program, EShaderVariable shaderVariable);
 
