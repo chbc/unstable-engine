@@ -5,6 +5,8 @@
 namespace sre
 {
 
+std::unique_ptr<AMultimediaWrapper> AMultimediaWrapper::instance{ nullptr };
+
 AMultimediaWrapper *AMultimediaWrapper::getInstance()
 {
 	if (instance == nullptr)

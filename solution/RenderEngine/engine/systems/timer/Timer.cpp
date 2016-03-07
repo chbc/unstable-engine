@@ -1,11 +1,13 @@
 #include "Timer.h"
-#include <SDL/SDL.h>
+#include <engine/systems/wrappers/multimedia/AMultimediaWrapper.h>
 
 namespace sre
 {
 
 Timer::Timer()
 {
+	this->multimediaWrapper = AMultimediaWrapper::getInstance();
+
     this->timeBegin = 0;
 	this->timePaused = 0;
 	this->elapsedTime = 0;
@@ -18,7 +20,7 @@ void Timer::start()
     this->started = true;
     this->paused = false;
 
-	this->timeBegin = SDL_GetTicks();
+	this->timeBegin = this->multimediaWrapper->getTicks();
 }
 
 void Timer::stop()
@@ -32,7 +34,7 @@ void Timer::pause()
     if( ( this->started == true ) && ( this->paused == false ) )
     {
         this->paused = true;
-		this->timePaused = SDL_GetTicks() - this->timeBegin;
+		this->timePaused = this->multimediaWrapper->getTicks() - this->timeBegin;
     }
 }
 
@@ -41,7 +43,7 @@ void Timer::resume()
 	if( this->paused == true )
     {
         this->paused = false;
-		this->timeBegin = SDL_GetTicks() - this->timePaused;
+		this->timeBegin = this->multimediaWrapper->getTicks() - this->timePaused;
         this->timePaused = 0;
     }
 }
@@ -56,7 +58,7 @@ unsigned int Timer::getTime()
         }
         else
         {
-			return SDL_GetTicks() - this->timeBegin;
+			return this->multimediaWrapper->getTicks() - this->timeBegin;
         }
     }
 
@@ -80,19 +82,14 @@ bool Timer::isPaused()
 
 void Timer::updateElapsedTime()
 {
-    this->elapsedTime = SDL_GetTicks() - this->timeBegin;
+    this->elapsedTime = this->multimediaWrapper->getTicks() - this->timeBegin;
 }
 
 void Timer::delay()
 {
 	unsigned int time = this->getTime();
 	if( time < MILISECONDS_PER_FRAME )
-		SDL_Delay( MILISECONDS_PER_FRAME - time );
-}
-
-void Timer::delay(unsigned int timeMS)
-{
-	SDL_Delay(timeMS);
+		this->multimediaWrapper->delay( MILISECONDS_PER_FRAME - time );
 }
 
 } // namespace

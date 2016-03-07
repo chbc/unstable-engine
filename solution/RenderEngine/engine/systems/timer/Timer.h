@@ -4,10 +4,14 @@
 namespace sre
 {
 
+class AMultimediaWrapper;
+
 //! Class for Timer stuffs and FPS control.
 class Timer
 {
     private:
+		AMultimediaWrapper *multimediaWrapper;
+
 		unsigned int timeBegin;
 		unsigned int timePaused;
 
@@ -35,7 +39,6 @@ class Timer
 		void updateElapsedTime();
 
 		void delay();
-		void delay(unsigned int timeMS);
 };
 
 } // namespace

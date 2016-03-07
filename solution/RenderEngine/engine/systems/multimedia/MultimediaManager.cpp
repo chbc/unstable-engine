@@ -1,5 +1,6 @@
 #include "MultimediaManager.h"
-#include <iostream>
+#include <engine/systems/wrappers/multimedia/AMultimediaWrapper.h>
+#include <engine/systems/timer/Timer.h>
 
 namespace sre
 {
@@ -8,55 +9,52 @@ IMPLEMENT_SINGLETON(MultimediaManager);
 
 MultimediaManager::MultimediaManager()
 {
-    this->window = NULL;
 }
 
 bool MultimediaManager::init()
 {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
-		this->displayError();
-		return false;
-	}
+	this->multimediaWrapper = AMultimediaWrapper::getInstance();
+	this->multimediaWrapper->init(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    //SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-    //SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 1 );
-    SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
-
-
-	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
-	this->window = SDL_CreateWindow("SudaRA Render Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, flags);
-
-	if (this->window == NULL)
-	{
-		this->displayError();
-		return false;
-	}
-
-	this->context = SDL_GL_CreateContext(this->window);
-	if (this->context == NULL)
-    {
-        this->displayError();
-        return false;
-    }
+	this->timer = std::unique_ptr<Timer>{ new Timer() };
 
 	return true;
 }
 
 void MultimediaManager::release()
 {
-    SDL_DestroyWindow(this->window);
-	SDL_Quit();
-}
-
-void MultimediaManager::displayError()
-{
-	std::cout << "Error: " << SDL_GetError() << std::endl;
+	this->multimediaWrapper->release();
 }
 
 void MultimediaManager::swapBuffers()
 {
-	SDL_GL_SwapWindow(this->window);
+	this->multimediaWrapper->swapBuffers();
+}
+
+void MultimediaManager::processInput(InputHandler *inputHandler)
+{
+	this->multimediaWrapper->processInput(inputHandler);
+}
+
+bool MultimediaManager::checkClosePressed()
+{
+	return this->multimediaWrapper->checkClosePressed();
+}
+
+void MultimediaManager::onBeginFrame()
+{
+	this->timer->start();
+}
+
+void MultimediaManager::onEndFrame()
+{
+	this->timer->delay();
+	this->timer->updateElapsedTime();
+}
+
+unsigned int MultimediaManager::getElapsedTime()
+{
+	return this->timer->getElapsedTime();
 }
 
 } // namespace

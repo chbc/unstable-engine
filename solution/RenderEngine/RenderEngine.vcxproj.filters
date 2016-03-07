@@ -111,6 +111,9 @@
     <ClCompile Include="engine\util\FileUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\systems\wrappers\multimedia\SDLAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\nodes\CameraNode.h">

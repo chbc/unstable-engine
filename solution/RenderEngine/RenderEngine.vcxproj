@@ -131,6 +131,7 @@
     <ClCompile Include="engine\systems\wrappers\graphics\AGraphicsWrapper.cpp" />
     <ClCompile Include="engine\systems\wrappers\graphics\OpenGLAPI.cpp" />
     <ClCompile Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.cpp" />
+    <ClCompile Include="engine\systems\wrappers\multimedia\SDLAPI.cpp" />
     <ClCompile Include="engine\util\FileUtils.cpp" />
   </ItemGroup>
   <ItemGroup>

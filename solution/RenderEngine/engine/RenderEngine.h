@@ -20,7 +20,6 @@ class RenderEngine
 {
 	private:
 		bool running;
-		Timer timer;
 
 		void processInput();
 		void render();

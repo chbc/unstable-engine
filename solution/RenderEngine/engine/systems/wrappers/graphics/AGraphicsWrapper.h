@@ -27,7 +27,7 @@ class AGraphicsWrapper
 		virtual void init() = 0; // throws std::string
 		virtual void createVBO(Mesh *mesh) =0;
 		virtual void createIBO(Mesh *mesh) =0;
-		virtual void drawMesh(Mesh *mesh) = 0;
+		virtual void drawMesh(Mesh *mesh) =0;
 		virtual void clearBuffer() =0;
 		virtual void deleteTexture(unsigned int id) =0;
 
@@ -35,8 +35,8 @@ class AGraphicsWrapper
 
 		// Shaders
 		virtual unsigned int loadVertexShader(const std::string &vertexFile) =0;
-		virtual unsigned int loadFragmentShader(const std::string &fragmentFile) = 0;
-		virtual unsigned int createProgram(unsigned int vertexShader, unsigned int fragmentShader) = 0;
+		virtual unsigned int loadFragmentShader(const std::string &fragmentFile) =0;
+		virtual unsigned int createProgram(unsigned int vertexShader, unsigned int fragmentShader) =0;
 
 		virtual void setValue(unsigned int program, const std::string &varName, float x) =0;
 		virtual void setValue(unsigned int program, const std::string &varName, float x, float y) =0;

@@ -1,6 +1,5 @@
 #include "TextureManager.h"
 #include <exception>
-#include <SDL/SDL_image.h>
 #include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
 
 namespace sre

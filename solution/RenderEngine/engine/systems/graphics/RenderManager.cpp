@@ -26,7 +26,7 @@ bool RenderManager::init()
 	this->graphicsWrapper->init();
 
 	const float FOV{45.0f};
-	this->matrixManager->setProjection(FOV, MultimediaManager::WIDTH/MultimediaManager::HEIGHT, 1, 100);
+	this->matrixManager->setProjection(FOV, MultimediaManager::SCREEN_WIDTH/MultimediaManager::SCREEN_HEIGHT, 1, 100);
 
 	if (!this->textureManager->init())
 	{

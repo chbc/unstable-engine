@@ -9,7 +9,7 @@ RenderEngine::RenderEngine()
 {
 	this->renderManager = RenderManager::getInstance();
 	this->multimediaManager = MultimediaManager::getInstance();
-	this->inputHandler = NULL;
+	this->inputHandler = nullptr;
 	this->sceneManager = SceneManager::getInstance();
 }
 
@@ -28,14 +28,13 @@ void RenderEngine::run()
 	this->running = true;
 	while(this->running)
 	{
-		this->timer.start();
+		this->multimediaManager->onBeginFrame();
 
 		this->processInput();
-		this->onUpdate(timer.getElapsedTime());
+		this->onUpdate(this->multimediaManager->getElapsedTime());
 		this->render();
 
-		this->timer.delay();
-		this->timer.updateElapsedTime();
+		this->multimediaManager->onEndFrame();
 	}
 
 	this->release();
@@ -49,7 +48,7 @@ void RenderEngine::release()
 	this->renderManager->release();
 	delete this->renderManager;
 
-	if (this->inputHandler != NULL)
+	if (this->inputHandler != nullptr)
 		delete this->inputHandler;
 
 	this->multimediaManager->release();
@@ -59,15 +58,10 @@ void RenderEngine::release()
 void RenderEngine::processInput()
 {
 	if (this->inputHandler != NULL)
-		this->inputHandler->process();
+		this->multimediaManager->processInput(this->inputHandler);
     else
     {
-        SDL_Event e;
-        while (SDL_PollEvent(&e) != 0)
-        {
-            if( e.type == SDL_QUIT )
-                this->running = false;
-        }
+		this->running = !this->multimediaManager->checkClosePressed();
     }
 }
 
