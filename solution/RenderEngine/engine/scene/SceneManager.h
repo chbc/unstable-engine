@@ -1,11 +1,11 @@
 #ifndef _SCENE_MANAGER_H//
 #define _SCENE_MANAGER_H_
 
-#include <engine/nodes/CameraNode.h>
-#include <engine/nodes/renderables/RenderableNode.h>
-#include <engine/nodes/lights/DirectionalLight.h>
-#include <engine/nodes/lights/PointLight.h>
-#include <engine/util/singleton_macros.h>
+#include <engine/entities/CameraNode.h>
+#include <engine/entities/renderables/RenderableNode.h>
+#include <engine/entities/lights/DirectionalLight.h>
+#include <engine/entities/lights/PointLight.h>
+#include <engine/utils/singleton_macros.h>
 
 namespace sre
 {
@@ -20,9 +20,9 @@ class SceneManager
 	DECLARE_SINGLETON(SceneManager);
 
 	private:
-		CameraNode *mainCamera;
+		UPTR(CameraNode) mainCamera;
 
-		std::vector<RenderableNode *> renderableNodes;
+		std::vector<UPTR(RenderableNode)> renderableNodes;
 
 		int nodeCount;
 

@@ -1,43 +1,46 @@
-#include "Node.h"
+#include "Entity.h"
 #include <engine/scene/SceneManager.h>
+#include <engine/math/Transform.h>
 
 namespace sre
 {
 
-Node::Node()
+Entity::Entity()
 {
 	this->parent = NULL;
 	this->id = SceneManager::getInstance()->generateNodeId();
 	this->transform = new Transform;
 }
 
+/*
 Node::~Node()
 {
 	delete this->transform;
 	// TODO: apagar os filhos!
 }
+*/
 
-void Node::addChild(Node *child)
+void Entity::addChild(Entity *child)
 {
 	// TODO: implementar
 }
 
-Transform *Node::getTransform()
+Transform *Entity::getTransform()
 {
 	return this->transform;
 }
 
-void Node::setPosition(Vector position)
+void Entity::setPosition(Vector position)
 {
 	this->transform->setPosition(position);
 }
 
-void Node::setScale(Vector scale)
+void Entity::setScale(Vector scale)
 {
 	this->transform->setScale(scale);
 }
 
-void Node::setRotation(Vector axis, float angle)
+void Entity::setRotation(Vector axis, float angle)
 {
 	this->transform->setRotation(axis, angle);
 }

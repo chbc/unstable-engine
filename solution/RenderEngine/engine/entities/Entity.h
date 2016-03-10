@@ -1,32 +1,36 @@
-#ifndef _NODE_H_
-#define _NODE_H_
+#ifndef _ENTITY_H_
+#define _ENTITY_H_
 
 #include <list>
 #include <string>
-#include <engine/math/Transform.h>
+#include <memory>
 
 namespace sre
 {
 
 class SceneManager;
+class Transform;
+class AEntityComponent;
+
+template<T>
+using UPtr = std::unique_ptr<T>;
 
 /*!
 	Class that represents a node of the scene.
 */
-class Node
+class Entity
 {
 	protected:
-		std::list<Node *> children;
-		Node *parent;
+		std::list<Entity *> children;
+		Entity *parent;
 		int id;
 
 		Transform *transform;
 
-		Node();
-		virtual ~Node();
+		Entity();
 
 	public:
-		void addChild(Node *child);
+		void addChild(Entity *child);
 
 		Transform *getTransform();
 

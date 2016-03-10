@@ -69,49 +69,49 @@
     <ClCompile Include="engine\utils\FileUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\lights\DirectionalLight.cpp">
+    <ClCompile Include="engine\entities\components\lights\DirectionalLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\lights\LightNode.cpp">
+    <ClCompile Include="engine\entities\components\lights\LightNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\lights\PointLight.cpp">
+    <ClCompile Include="engine\entities\components\lights\PointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\renderables\materials\textures\Texture.cpp">
+    <ClCompile Include="engine\entities\components\renderables\materials\textures\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\renderables\materials\ColorMaterial.cpp">
+    <ClCompile Include="engine\entities\components\renderables\materials\ColorMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\renderables\materials\DiffuseMaterial.cpp">
+    <ClCompile Include="engine\entities\components\renderables\materials\DiffuseMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\renderables\materials\Material.cpp">
+    <ClCompile Include="engine\entities\components\renderables\materials\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\renderables\materials\SpecularMaterial.cpp">
+    <ClCompile Include="engine\entities\components\renderables\materials\SpecularMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\renderables\materials\ToonMaterial.cpp">
+    <ClCompile Include="engine\entities\components\renderables\materials\ToonMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\renderables\meshes\Mesh.cpp">
+    <ClCompile Include="engine\entities\components\renderables\meshes\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\renderables\CubeNode.cpp">
+    <ClCompile Include="engine\entities\components\renderables\CubeNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\renderables\PlaneNode.cpp">
+    <ClCompile Include="engine\entities\components\renderables\PlaneNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\renderables\RenderableNode.cpp">
+    <ClCompile Include="engine\entities\components\renderables\RenderableNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\CameraNode.cpp">
+    <ClCompile Include="engine\entities\components\cameras\CameraNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\Node.cpp">
+    <ClCompile Include="engine\entities\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -182,55 +182,58 @@
     <ClInclude Include="engine\utils\singleton_macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\lights\DirectionalLight.h">
+    <ClInclude Include="engine\entities\components\lights\DirectionalLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\lights\LightNode.h">
+    <ClInclude Include="engine\entities\components\lights\LightNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\lights\PointLight.h">
+    <ClInclude Include="engine\entities\components\lights\PointLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\renderables\materials\textures\Texture.h">
+    <ClInclude Include="engine\entities\components\renderables\materials\textures\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\renderables\materials\ColorMaterial.h">
+    <ClInclude Include="engine\entities\components\renderables\materials\ColorMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\renderables\materials\DiffuseMaterial.h">
+    <ClInclude Include="engine\entities\components\renderables\materials\DiffuseMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\renderables\materials\Material.h">
+    <ClInclude Include="engine\entities\components\renderables\materials\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\renderables\materials\ShaderConsts.h">
+    <ClInclude Include="engine\entities\components\renderables\materials\ShaderConsts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\renderables\materials\SpecularMaterial.h">
+    <ClInclude Include="engine\entities\components\renderables\materials\SpecularMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\renderables\materials\ToonMaterial.h">
+    <ClInclude Include="engine\entities\components\renderables\materials\ToonMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\renderables\meshes\Mesh.h">
+    <ClInclude Include="engine\entities\components\renderables\meshes\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\renderables\meshes\VertexData.h">
+    <ClInclude Include="engine\entities\components\renderables\meshes\VertexData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\renderables\CubeNode.h">
+    <ClInclude Include="engine\entities\components\renderables\CubeNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\renderables\PlaneNode.h">
+    <ClInclude Include="engine\entities\components\renderables\PlaneNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\renderables\RenderableNode.h">
+    <ClInclude Include="engine\entities\components\renderables\RenderableNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\CameraNode.h">
+    <ClInclude Include="engine\entities\components\cameras\CameraNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\Node.h">
+    <ClInclude Include="engine\entities\components\AEntityComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,7 @@
 #include "SceneManager.h"
-#include <engine/nodes/renderables/CubeNode.h>
-#include <engine/nodes/renderables/PlaneNode.h>
-#include <engine/nodes/lights/DirectionalLight.h>
+#include <engine/entities/renderables/CubeNode.h>
+#include <engine/entities/renderables/PlaneNode.h>
+#include <engine/entities/lights/DirectionalLight.h>
 #include <engine/systems/graphics/RenderManager.h>
 
 namespace sre
