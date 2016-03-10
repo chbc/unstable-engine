@@ -1,7 +1,7 @@
 #ifndef _LIGHT_MANAGER_H_
 #define _LIGHT_MANAGER_H_
 
-#include <engine/util/singleton_macros.h>
+#include <engine/utils/singleton_macros.h>
 #include <vector>
 
 namespace sre

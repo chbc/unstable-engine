@@ -1,7 +1,7 @@
 #ifndef _TEXTURE_MANAGER_H_
 #define _TEXTURE_MANAGER_H_
 
-#include <engine/util/singleton_macros.h>
+#include <engine/utils/singleton_macros.h>
 #include <engine/nodes/renderables/materials/textures/Texture.h>
 #include <string>
 

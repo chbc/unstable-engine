@@ -2,8 +2,8 @@
 #define _GLSL_SHADER_API_H_
 
 #include <string>
-#include <engine/util/singleton_macros.h>
-#include <engine/util/EShaderVariable.h>
+#include <engine/utils/singleton_macros.h>
+#include <engine/utils/EShaderVariable.h>
 #include <stack>
 
 namespace sre

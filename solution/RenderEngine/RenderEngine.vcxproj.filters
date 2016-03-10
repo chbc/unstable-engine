@@ -108,10 +108,10 @@
     <ClCompile Include="engine\systems\wrappers\graphics\OpenGLAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\util\FileUtils.cpp">
+    <ClCompile Include="engine\systems\wrappers\multimedia\SDLAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\systems\wrappers\multimedia\SDLAPI.cpp">
+    <ClCompile Include="engine\utils\FileUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -162,9 +162,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\nodes\renderables\materials\ShaderConsts.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\util\singleton_macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\nodes\renderables\materials\textures\Texture.h">
@@ -227,10 +224,13 @@
     <ClInclude Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\util\EShaderVariable.h">
+    <ClInclude Include="engine\utils\EShaderVariable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\util\FileUtils.h">
+    <ClInclude Include="engine\utils\FileUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\utils\singleton_macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

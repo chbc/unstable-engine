@@ -1,7 +1,7 @@
 #ifndef _RENDER_MANAGER_H_
 #define _RENDER_MANAGER_H_
 
-#include <engine/util/singleton_macros.h>
+#include <engine/utils/singleton_macros.h>
 #include <engine/nodes/renderables/meshes/VertexData.h>
 #include "TextureManager.h"
 #include "ShaderManager.h"

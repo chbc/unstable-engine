@@ -4,7 +4,7 @@
 #include <memory>
 #include <stack>
 #include <string>
-#include <engine/util/EShaderVariable.h>
+#include <engine/utils/EShaderVariable.h>
 
 namespace sre
 {

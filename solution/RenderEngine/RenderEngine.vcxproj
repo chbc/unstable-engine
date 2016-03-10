@@ -132,7 +132,7 @@
     <ClCompile Include="engine\systems\wrappers\graphics\OpenGLAPI.cpp" />
     <ClCompile Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.cpp" />
     <ClCompile Include="engine\systems\wrappers\multimedia\SDLAPI.cpp" />
-    <ClCompile Include="engine\util\FileUtils.cpp" />
+    <ClCompile Include="engine\utils\FileUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\nodes\CameraNode.h" />
@@ -166,9 +166,9 @@
     <ClInclude Include="engine\systems\wrappers\graphics\OpenGLAPI.h" />
     <ClInclude Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.h" />
     <ClInclude Include="engine\systems\wrappers\multimedia\SDLAPI.h" />
-    <ClInclude Include="engine\util\EShaderVariable.h" />
-    <ClInclude Include="engine\util\FileUtils.h" />
-    <ClInclude Include="engine\util\singleton_macros.h" />
+    <ClInclude Include="engine\utils\EShaderVariable.h" />
+    <ClInclude Include="engine\utils\FileUtils.h" />
+    <ClInclude Include="engine\utils\singleton_macros.h" />
     <ClInclude Include="engine\nodes\renderables\materials\textures\Texture.h" />
     <ClInclude Include="engine\systems\graphics\TextureManager.h" />
     <ClInclude Include="engine\systems\timer\Timer.h" />
