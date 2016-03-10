@@ -2,7 +2,7 @@
 #define _MESH_H_
 
 #include <vector>
-#include <engine/nodes/renderables/materials/Material.h>
+#include <engine/entities/renderables/materials/Material.h>
 #include "VertexData.h"
 
 namespace sre

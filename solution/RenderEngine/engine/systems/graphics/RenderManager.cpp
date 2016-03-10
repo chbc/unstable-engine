@@ -4,8 +4,8 @@
 
 #include "RenderManager.h"
 #include <engine/systems/multimedia/MultimediaManager.h>
-#include <engine/nodes/renderables/RenderableNode.h>
-#include <engine/nodes/renderables/materials/DiffuseMaterial.h>
+#include <engine/entities/renderables/RenderableNode.h>
+#include <engine/entities/renderables/materials/DiffuseMaterial.h>
 
 namespace sre
 {

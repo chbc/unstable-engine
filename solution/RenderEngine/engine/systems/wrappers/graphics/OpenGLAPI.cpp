@@ -2,7 +2,7 @@
 #include <GL/glew.h>
 
 #include "OpenGLAPI.h"
-#include <engine/nodes/renderables/meshes/Mesh.h>
+#include <engine/entities/renderables/meshes/Mesh.h>
 #include <engine/utils/FileUtils.h>
 
 #include <string>

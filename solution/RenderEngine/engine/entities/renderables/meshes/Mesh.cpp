@@ -1,6 +1,6 @@
 #include "Mesh.h"
 #include <engine/systems/graphics/RenderManager.h>
-#include <engine/nodes/renderables/materials/ColorMaterial.h>
+#include <engine/entities/renderables/materials/ColorMaterial.h>
 
 namespace sre
 {

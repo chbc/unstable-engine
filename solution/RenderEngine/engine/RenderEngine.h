@@ -8,7 +8,7 @@
 #include <engine/systems/timer/Timer.h>
 #include <engine/scene/SceneManager.h>
 
-#include <engine/nodes/renderables/materials/DiffuseMaterial.h>
+#include <engine/entities/renderables/materials/DiffuseMaterial.h>
 
 namespace sre
 {

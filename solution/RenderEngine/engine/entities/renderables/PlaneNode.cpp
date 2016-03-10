@@ -1,5 +1,5 @@
 #include "PlaneNode.h"
-#include <engine/nodes/renderables/meshes/Mesh.h>
+#include <engine/entities/renderables/meshes/Mesh.h>
 #include <engine/scene/SceneManager.h>
 #include <iostream>
 

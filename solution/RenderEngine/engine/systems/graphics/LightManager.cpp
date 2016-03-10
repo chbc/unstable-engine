@@ -1,7 +1,7 @@
 #include "LightManager.h"
 
-#include <engine/nodes/lights/DirectionalLight.h>
-#include <engine/nodes/lights/PointLight.h>
+#include <engine/entities/lights/DirectionalLight.h>
+#include <engine/entities/lights/PointLight.h>
 #include "ShaderManager.h"
 #include <stdio.h>
 

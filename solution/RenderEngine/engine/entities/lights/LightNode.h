@@ -1,7 +1,7 @@
 #ifndef _LIGHT_NODE_H_
 #define _LIGHT_NODE_H_
 
-#include <engine/nodes/Node.h>
+#include <engine/entities/Node.h>
 #include <string.h>
 
 enum ELightType

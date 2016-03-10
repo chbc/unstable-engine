@@ -1,7 +1,7 @@
 #ifndef _RENDERABLE_NODE_H_
 #define _RENDERABLE_NODE_H_
 
-#include <engine/nodes/Node.h>
+#include <engine/entities/Node.h>
 #include "meshes/Mesh.h"
 
 namespace sre

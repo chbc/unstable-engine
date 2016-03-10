@@ -2,7 +2,7 @@
 #define _TEXTURE_MANAGER_H_
 
 #include <engine/utils/singleton_macros.h>
-#include <engine/nodes/renderables/materials/textures/Texture.h>
+#include <engine/entities/renderables/materials/textures/Texture.h>
 #include <string>
 
 namespace sre
