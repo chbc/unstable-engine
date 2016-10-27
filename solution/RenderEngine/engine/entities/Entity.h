@@ -1,46 +1,65 @@
 #ifndef _ENTITY_H_
 #define _ENTITY_H_
 
-#include <list>
+#include <array>
 #include <string>
-#include <memory>
+#include "components/transforms/TransformComponent.h"
+#include <engine/utils/memory_aliases.h>
+#include <bitset>
 
 namespace sre
 {
 
-class SceneManager;
-class Transform;
-class AEntityComponent;
-
-template<T>
-using UPtr = std::unique_ptr<T>;
+constexpr std::size_t MAX_COMPONENTS{ 4 };
 
 /*!
 	Class that represents a node of the scene.
 */
 class Entity
 {
-	protected:
-		std::list<Entity *> children;
-		Entity *parent;
-		int id;
+private:
+#ifdef SRE_TESTS
+public:
+#endif
+	Entity *parent;
+	std::vector<Entity *> children;
 
-		Transform *transform;
+	std::bitset<MAX_COMPONENTS> componentsBitset;
+	std::array<AEntityComponent*, MAX_COMPONENTS> componentsArray;
+	VECTOR_UPTR<AEntityComponent> components;
 
-		Entity();
+	TransformComponent *transform;
 
-	public:
-		void addChild(Entity *child);
+	bool alive;
 
-		Transform *getTransform();
+	Entity();
 
-		virtual void setPosition(Vector position);
-		void setScale(Vector scale);
-		void setRotation(Vector axis, float angle);
+public:
+	~Entity();
 
-	friend class SceneManager;
+	void addChild(Entity *child);
+
+	TransformComponent *getTransform();
+
+	void destroy();
+
+	inline bool isAlive() { return this->alive; }
+
+	template <typename T> T *addComponent();
+
+	template <typename T> T *getComponent();
+
+private:
+	template <typename T> bool hasComponent();
+
+	uint16_t generateComponentID();
+
+	template <typename T>
+	std::size_t getComponentID();
 };
 
 } // namespace
+
+#include "Entity.tpp"
 
 #endif

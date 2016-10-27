@@ -15,10 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="VectorTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AGraphicsWrapperTests.cpp">
+    <ClCompile Include="EntityTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

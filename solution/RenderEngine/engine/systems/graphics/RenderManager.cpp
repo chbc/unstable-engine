@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "RenderManager.h"
+#include <engine/entities/components/meshes/MeshComponent.h>
 #include <engine/systems/multimedia/MultimediaManager.h>
 #include <engine/entities/renderables/RenderableNode.h>
 #include <engine/entities/renderables/materials/DiffuseMaterial.h>
@@ -63,7 +64,7 @@ void RenderManager::release()
 	delete this->matrixManager;
 }
 
-void RenderManager::createBufferObject(Mesh *mesh)
+void RenderManager::createBufferObject(MeshComponent *mesh)
 {
     unsigned int program = mesh->material->getShaderProgram();
     mesh->vertexAttribLocation = this->shaderManager->getAttribLocation(program, SHADER_POSITION);

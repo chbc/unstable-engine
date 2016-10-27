@@ -9,6 +9,10 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Test|Win32">
+      <Configuration>Test</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F5878F4F-398D-4B9F-8C29-0B917B6344FC}</ProjectGuid>
@@ -17,6 +21,12 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -33,6 +43,9 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Test|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -46,6 +59,11 @@
     <TargetName>SRE_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>../../lib/vc/</OutDir>
+    <IntDir>../obj/SRE/</IntDir>
+    <TargetName>SRE</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">
     <OutDir>../../lib/vc/</OutDir>
     <IntDir>../obj/SRE/</IntDir>
     <TargetName>SRE</TargetName>
@@ -72,7 +90,7 @@
     </ProjectReference>
     <Lib>
       <AdditionalLibraryDirectories>../../lib/vc;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glew32.lib;</AdditionalDependencies>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glew32.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -99,82 +117,54 @@
       <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glew32.lib;</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <AdditionalIncludeDirectories>../../include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SRE_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Lib>
+      <AdditionalLibraryDirectories>../../lib/vc;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glew32.lib;</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="engine\entities\components\cameras\CameraNode.cpp" />
-    <ClCompile Include="engine\entities\components\lights\PointLight.cpp" />
-    <ClCompile Include="engine\entities\components\renderables\CubeNode.cpp" />
-    <ClCompile Include="engine\entities\components\renderables\materials\ColorMaterial.cpp" />
-    <ClCompile Include="engine\entities\components\renderables\materials\DiffuseMaterial.cpp" />
-    <ClCompile Include="engine\entities\components\lights\DirectionalLight.cpp" />
-    <ClCompile Include="engine\entities\components\renderables\materials\SpecularMaterial.cpp" />
-    <ClCompile Include="engine\entities\components\renderables\materials\ToonMaterial.cpp" />
-    <ClCompile Include="engine\systems\graphics\MatrixManager.cpp" />
-    <ClCompile Include="engine\systems\graphics\RenderManager.cpp" />
-    <ClCompile Include="engine\systems\graphics\ShaderManager.cpp" />
-    <ClCompile Include="engine\systems\input\InputHandler.cpp" />
-    <ClCompile Include="engine\systems\graphics\LightManager.cpp" />
-    <ClCompile Include="engine\entities\components\lights\LightNode.cpp" />
-    <ClCompile Include="engine\systems\multimedia\MultimediaManager.cpp" />
-    <ClCompile Include="engine\entities\components\renderables\materials\Material.cpp" />
-    <ClCompile Include="engine\entities\components\renderables\meshes\Mesh.cpp" />
+    <ClCompile Include="engine\entities\components\cameras\CameraComponent.cpp" />
     <ClCompile Include="engine\entities\Entity.cpp" />
-    <ClCompile Include="engine\entities\components\renderables\PlaneNode.cpp" />
     <ClCompile Include="engine\math\Quaternion.cpp" />
-    <ClCompile Include="engine\entities\components\renderables\RenderableNode.cpp" />
-    <ClCompile Include="engine\RenderEngine.cpp" />
-    <ClCompile Include="engine\scene\SceneManager.cpp" />
-    <ClCompile Include="engine\entities\components\renderables\materials\textures\Texture.cpp" />
-    <ClCompile Include="engine\systems\graphics\TextureManager.cpp" />
-    <ClCompile Include="engine\systems\timer\Timer.cpp" />
-    <ClCompile Include="engine\math\Transform.cpp" />
+    <ClCompile Include="engine\entities\components\transforms\TransformComponent.cpp" />
     <ClCompile Include="engine\math\Vector.cpp" />
-    <ClCompile Include="engine\systems\wrappers\graphics\AGraphicsWrapper.cpp" />
-    <ClCompile Include="engine\systems\wrappers\graphics\OpenGLAPI.cpp" />
-    <ClCompile Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.cpp" />
-    <ClCompile Include="engine\systems\wrappers\multimedia\SDLAPI.cpp" />
     <ClCompile Include="engine\utils\FileUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\components\AEntityComponent.h" />
-    <ClInclude Include="engine\entities\components\cameras\CameraNode.h" />
-    <ClInclude Include="engine\entities\components\lights\PointLight.h" />
-    <ClInclude Include="engine\entities\components\renderables\CubeNode.h" />
-    <ClInclude Include="engine\entities\components\renderables\materials\ColorMaterial.h" />
-    <ClInclude Include="engine\entities\components\renderables\materials\DiffuseMaterial.h" />
-    <ClInclude Include="engine\entities\components\lights\DirectionalLight.h" />
-    <ClInclude Include="engine\entities\components\renderables\materials\SpecularMaterial.h" />
-    <ClInclude Include="engine\entities\components\renderables\materials\ToonMaterial.h" />
-    <ClInclude Include="engine\entities\components\renderables\meshes\VertexData.h" />
-    <ClInclude Include="engine\systems\graphics\MatrixManager.h" />
-    <ClInclude Include="engine\systems\graphics\RenderManager.h" />
-    <ClInclude Include="engine\systems\graphics\ShaderManager.h" />
-    <ClInclude Include="engine\systems\input\button_names.h" />
-    <ClInclude Include="engine\systems\input\InputHandler.h" />
-    <ClInclude Include="engine\systems\graphics\LightManager.h" />
-    <ClInclude Include="engine\entities\components\lights\LightNode.h" />
-    <ClInclude Include="engine\entities\components\renderables\materials\Material.h" />
-    <ClInclude Include="engine\math\math_util.h" />
-    <ClInclude Include="engine\entities\components\renderables\meshes\Mesh.h" />
-    <ClInclude Include="engine\systems\multimedia\MultimediaManager.h" />
+    <ClInclude Include="engine\entities\components\cameras\CameraComponent.h" />
     <ClInclude Include="engine\entities\Entity.h" />
-    <ClInclude Include="engine\entities\components\renderables\PlaneNode.h" />
+    <ClInclude Include="engine\math\math_util.h" />
     <ClInclude Include="engine\math\Quaternion.h" />
-    <ClInclude Include="engine\entities\components\renderables\RenderableNode.h" />
-    <ClInclude Include="engine\RenderEngine.h" />
-    <ClInclude Include="engine\scene\SceneManager.h" />
-    <ClInclude Include="engine\entities\components\renderables\materials\ShaderConsts.h" />
-    <ClInclude Include="engine\systems\wrappers\graphics\AGraphicsWrapper.h" />
-    <ClInclude Include="engine\systems\wrappers\graphics\OpenGLAPI.h" />
-    <ClInclude Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.h" />
-    <ClInclude Include="engine\systems\wrappers\multimedia\SDLAPI.h" />
+    <ClInclude Include="engine\entities\components\transforms\TransformComponent.h" />
+    <ClInclude Include="engine\math\Vector.h" />
     <ClInclude Include="engine\utils\EShaderVariable.h" />
     <ClInclude Include="engine\utils\FileUtils.h" />
+    <ClInclude Include="engine\utils\memory_aliases.h" />
     <ClInclude Include="engine\utils\singleton_macros.h" />
-    <ClInclude Include="engine\entities\components\renderables\materials\textures\Texture.h" />
-    <ClInclude Include="engine\systems\graphics\TextureManager.h" />
-    <ClInclude Include="engine\systems\timer\Timer.h" />
-    <ClInclude Include="engine\math\Transform.h" />
-    <ClInclude Include="engine\math\Vector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="engine\entities\Entity.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

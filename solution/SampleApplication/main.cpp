@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 	{
 		SampleApplication().run();
 	}
-	catch (const std::string &message)
+	catch (const char *message)
 	{
 		std::cout << "Error: " << message << std::endl;
 		result = 1;

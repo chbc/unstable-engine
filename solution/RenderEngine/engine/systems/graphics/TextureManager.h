@@ -2,7 +2,7 @@
 #define _TEXTURE_MANAGER_H_
 
 #include <engine/utils/singleton_macros.h>
-#include <engine/entities/renderables/materials/textures/Texture.h>
+// ### #include <engine/entities/renderables/materials/textures/Texture.h>
 #include <string>
 
 namespace sre
@@ -16,7 +16,7 @@ class TextureManager
 	DECLARE_SINGLETON(TextureManager);
 
 	public:
-		Texture *loadTexture(const std::string &fileName);
+// ###		Texture *loadTexture(const std::string &fileName);
 		void deleteTexture(unsigned int id);
 };
 

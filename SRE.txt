@@ -1,0 +1,13 @@
+SRE
+- atualizar as modificações feitas no inpe [OK]
+- implementar VBO
+- incluir Assimp
+- remover namespaces
+- criar esquema de include sem .h
+- incluir glm
+- fazer iluminação apenas pelo shader
+- acertar a arquitetura para componentes
+- proteger classes internas
+- criar notação para o nome das classes (S...)
+- dividir os shaders em módulos
+- incluir luz ambiente pelo LightManager

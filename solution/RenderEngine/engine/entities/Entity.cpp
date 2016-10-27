@@ -1,48 +1,42 @@
 #include "Entity.h"
-#include <engine/scene/SceneManager.h>
-#include <engine/math/Transform.h>
+//#include "components/cameras/CameraComponent.h"
 
 namespace sre
 {
 
 Entity::Entity()
 {
-	this->parent = NULL;
-	this->id = SceneManager::getInstance()->generateNodeId();
-	this->transform = new Transform;
+	this->transform = this->addComponent<TransformComponent>();
+	this->parent = nullptr;
+	this->alive = true;
 }
 
-/*
-Node::~Node()
+Entity::~Entity()
 {
-	delete this->transform;
 	// TODO: apagar os filhos!
+	this->children.clear();
 }
-*/
 
 void Entity::addChild(Entity *child)
 {
-	// TODO: implementar
+	this->children.push_back(child);
+	child->parent = this;
 }
 
-Transform *Entity::getTransform()
+TransformComponent *Entity::getTransform()
 {
 	return this->transform;
 }
 
-void Entity::setPosition(Vector position)
+void Entity::destroy()
 {
-	this->transform->setPosition(position);
+	this->alive = false;
 }
 
-void Entity::setScale(Vector scale)
+uint16_t Entity::generateComponentID()
 {
-	this->transform->setScale(scale);
-}
-
-void Entity::setRotation(Vector axis, float angle)
-{
-	this->transform->setRotation(axis, angle);
+	static uint16_t result{ 0u };
+	return result++;
 }
 
 } // namespace

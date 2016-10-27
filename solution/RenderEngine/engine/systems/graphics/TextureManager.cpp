@@ -20,6 +20,7 @@ void TextureManager::release()
 {
 }
 
+/* ###
 Texture *TextureManager::loadTexture(const std::string &fileName)
 {
     /*
