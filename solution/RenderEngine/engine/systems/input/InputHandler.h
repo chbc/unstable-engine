@@ -1,7 +1,7 @@
 #ifndef _INPUT_HANDLER_H_
 #define _INPUT_HANDLER_H_
 
-#include <engine/math/Vector.h>
+#include <glm/vec2.hpp>
 #include "button_names.h"
 
 namespace sre
@@ -22,9 +22,9 @@ class InputHandler
 		virtual void onQuit() {}
 		virtual void onKeyPressed(KeyboardButton key) {}
 		virtual void onKeyReleased(KeyboardButton key) {}
-		virtual void onMouseMove(Vector relativePosition) {}
-		virtual void onMouseButtonPressed(MouseButton mouseButton, Vector position) {}
-		virtual void onMouseButtonReleased(MouseButton mouseButton, Vector position) {}
+		virtual void onMouseMove(const glm::vec2 &relativePosition) {}
+		virtual void onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position) {}
+		virtual void onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position) {}
 
 	friend class SDLAPI;
 };

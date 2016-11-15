@@ -23,7 +23,7 @@ class Timer
         static const unsigned int MILISECONDS_PER_FRAME = 1000 / 60;
 
     public:
-		Timer();
+		Timer(AMultimediaWrapper *multimediaWrapper);
 
 		void start();
 		void stop();

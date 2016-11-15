@@ -1,12 +1,13 @@
-#include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
-
-#include <iostream>
-
 #include "RenderManager.h"
+
 #include <engine/entities/components/meshes/MeshComponent.h>
+#include <engine/systems/wrappers/graphics/OpenGLAPI.h>
+
+/* ###
 #include <engine/systems/multimedia/MultimediaManager.h>
 #include <engine/entities/renderables/RenderableNode.h>
 #include <engine/entities/renderables/materials/DiffuseMaterial.h>
+*/
 
 namespace sre
 {
@@ -15,17 +16,21 @@ IMPLEMENT_SINGLETON(RenderManager);
 
 RenderManager::RenderManager()
 {
+	/* ###
 	this->textureManager = TextureManager::getInstance();
 	this->shaderManager	 = ShaderManager::getInstance();
 	this->lightManager	 = LightManager::getInstance();
 	this->matrixManager = new MatrixManager;
-	this->graphicsWrapper = AGraphicsWrapper::getInstance();
+	*/ 
+
+	this->graphicsWrapper = UPTR<AGraphicsWrapper>{ new OpenGLAPI{} };
 }
 
-bool RenderManager::init()
+void RenderManager::init()
 {
 	this->graphicsWrapper->init();
 
+	/* ###
 	const float FOV{45.0f};
 	this->matrixManager->setProjection(FOV, MultimediaManager::SCREEN_WIDTH/MultimediaManager::SCREEN_HEIGHT, 1, 100);
 
@@ -46,12 +51,13 @@ bool RenderManager::init()
 		std::cout << "LightManager error: init" << std::endl;
 		return false;
 	}
+	*/
 
-	return true;
 }
 
 void RenderManager::release()
 {
+	/* ###
 	this->textureManager->release();
 	delete this->textureManager;
 
@@ -62,18 +68,22 @@ void RenderManager::release()
 	delete this->lightManager;
 
 	delete this->matrixManager;
+	*/
 }
 
 void RenderManager::createBufferObject(MeshComponent *mesh)
 {
+	/* ###
     unsigned int program = mesh->material->getShaderProgram();
     mesh->vertexAttribLocation = this->shaderManager->getAttribLocation(program, SHADER_POSITION);
     mesh->normalAttribLocation = this->shaderManager->getAttribLocation(program, SHADER_NORMAL);
 
 	this->graphicsWrapper->createVBO(mesh);
 	this->graphicsWrapper->createIBO(mesh);
+	*/
 }
 
+/* ###
 DirectionalLight *RenderManager::addDirectionalLight()
 {
     return this->lightManager->addDirectionalLight();
@@ -83,7 +93,9 @@ PointLight *RenderManager::addPointLight()
 {
     return this->lightManager->addPointLight();
 }
+*/
 
+/* ###
 void RenderManager::render(const std::vector<RenderableNode *> &renderableNodes)
 {
     // TODO: render children
@@ -109,6 +121,7 @@ void RenderManager::render(const std::vector<RenderableNode *> &renderableNodes)
         this->matrixManager->pop();
 	}
 }
+*/
 
 void RenderManager::DEBUG_drawTriangle()
 {
@@ -120,6 +133,7 @@ void RenderManager::clearBuffer()
 	this->graphicsWrapper->clearBuffer();
 }
 
+/* ###
 void RenderManager::applyMaterial(Material *material, bool receiveLight)
 {
 	unsigned int shaderProgram = material->getShaderProgram();
@@ -138,31 +152,37 @@ void RenderManager::applyMaterial(DiffuseMaterial *material, std::vector<VertexD
 
 	// texture //
 	// TODO: acertar texCoords
-	/*
+	 /* ###
 	glEnable(GL_TEXTURE_2D);
 
 	glBindTexture(GL_TEXTURE_2D, material->getTextureID());
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+	 // /
+}
+*/
+
+void RenderManager::drawMesh(MeshComponent *mesh)
+{
+	/*
+	this->graphicsWrapper->drawMesh(mesh);
+	this->shaderManager->disableShader();
 	*/
 }
 
-void RenderManager::drawMesh(Mesh *mesh)
-{
-	this->graphicsWrapper->drawMesh(mesh);
-	this->shaderManager->disableShader();
-}
-
+/*
 void RenderManager::releaseMaterial(Material *material)
 {
     // TODO
 }
+*/
 
-void RenderManager::renderCamera(Vector position, Vector lookTarget, Vector up)
+void RenderManager::renderCamera(const glm::vec3 &position, const glm::vec3 &lookTarget, const glm::vec3 &up)
 {
-    this->matrixManager->setView(position, lookTarget, up);
+    // ### this->matrixManager->setView(position, lookTarget, up);
 }
 
+/* ###
 Texture *RenderManager::loadTexture(const std::string &fileName)
 {
 	return this->textureManager->loadTexture(fileName);
@@ -172,5 +192,6 @@ unsigned int RenderManager::loadShader(const std::string &vertFile, const std::s
 {
 	return this->shaderManager->loadShader(vertFile, fragFile);
 }
+*/
 
 } // namespace

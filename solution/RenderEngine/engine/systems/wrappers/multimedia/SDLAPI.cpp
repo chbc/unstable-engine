@@ -33,7 +33,7 @@ void SDLAPI::swapBuffers()
 
 void SDLAPI::processInput(InputHandler *inputHandler)
 {
-	Vector position;
+	glm::vec2 position;
 	while (SDL_PollEvent(this->event) != 0)
 	{
 		switch (this->event->type)
@@ -43,17 +43,29 @@ void SDLAPI::processInput(InputHandler *inputHandler)
 			case SDL_KEYUP:		inputHandler->onKeyReleased(this->event->key.keysym.sym); break;
 
 			case SDL_MOUSEMOTION:
-				position = Vector{ static_cast<float>(this->event->motion.xrel), static_cast<float>(this->event->motion.yrel) };
+				position = glm::vec2
+				{
+					static_cast<float>(this->event->motion.xrel), 
+					static_cast<float>(this->event->motion.yrel) 
+				};
 				inputHandler->onMouseMove(position);
 				break;
 
 			case SDL_MOUSEBUTTONDOWN:
-				position = Vector{ static_cast<float>(this->event->button.x), static_cast<float>(this->event->button.y) };
+				position = glm::vec2
+				{ 
+					static_cast<float>(this->event->button.x), 
+					static_cast<float>(this->event->button.y) 
+				};
 				inputHandler->onMouseButtonPressed(this->event->button.button, position);
 				break;
 
 			case SDL_MOUSEBUTTONUP:
-				position = Vector{ static_cast<float>(this->event->button.x), static_cast<float>(this->event->button.y) };
+				position = glm::vec2
+				{ 
+					static_cast<float>(this->event->button.x), 
+					static_cast<float>(this->event->button.y) 
+				};
 				inputHandler->onMouseButtonReleased(this->event->button.button, position);
 				break;
 		}

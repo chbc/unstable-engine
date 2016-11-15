@@ -10,30 +10,27 @@ union SDL_Event;
 namespace sre
 {
 
-class InputHandler;
-
 class SDLAPI : AMultimediaWrapper
 {
-	private:
-		SDL_Window *window;
-		void *context;
-		SDL_Event *event;
+private:
+	SDL_Window *window;
+	void *context;
+	SDL_Event *event;
 
-	protected:
-		SDLAPI() {}
+public:
+	SDLAPI() {}
 
-		void init(int width, int height) override;
-		void swapBuffers() override;
-		void processInput(InputHandler *inputHandler) override;
-		bool checkClosePressed() override;
-		unsigned int getTicks() override;
-		void delay(unsigned int) override;
-		void release() override;
+protected:
+	void init(int width, int height) override;
+	void swapBuffers() override;
+	void processInput(InputHandler *inputHandler) override;
+	bool checkClosePressed() override;
+	unsigned int getTicks() override;
+	void delay(unsigned int) override;
+	void release() override;
 
-	private:
-		std::string getError();
-
-	friend class AMultimediaWrapper;
+private:
+	std::string getError();
 };
 
 } // namespace sre

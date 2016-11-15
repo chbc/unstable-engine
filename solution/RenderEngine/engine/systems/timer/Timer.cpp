@@ -4,9 +4,9 @@
 namespace sre
 {
 
-Timer::Timer()
+Timer::Timer(AMultimediaWrapper *multimediaWrapper)
 {
-	this->multimediaWrapper = AMultimediaWrapper::getInstance();
+	this->multimediaWrapper = multimediaWrapper;
 
     this->timeBegin = 0;
 	this->timePaused = 0;

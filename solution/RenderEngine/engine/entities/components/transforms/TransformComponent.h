@@ -13,25 +13,27 @@ namespace sre
 */
 class TransformComponent : public AEntityComponent
 {
-	private:
-		Quaternion quaternion;
-		float *matrix;
+private:
+	Quaternion quaternion;
+	float *matrix;
 
-		void loadIdentity();
+	void loadIdentity();
 
-	public:
-		TransformComponent(Entity *entity);
-		~TransformComponent();
+	TransformComponent(Entity *entity);
+public:
+	~TransformComponent();
 
-		void setPosition(Vector position);
-		void setScale(Vector scale);
-		void setRotation(Vector axis, float angle);
+	void setPosition(Vector position);
+	void setScale(Vector scale);
+	void setRotation(Vector axis, float angle);
 
-		Vector getPosition();
-		Quaternion getRotation();
-		Vector getScale();
+	Vector getPosition();
+	Quaternion getRotation();
+	Vector getScale();
 
-		inline float *getMatrix() { return this->matrix; }
+	inline float *getMatrix() { return this->matrix; }
+
+friend class Entity;
 };
 
 } // namespace

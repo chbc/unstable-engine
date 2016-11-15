@@ -5,6 +5,7 @@
 namespace sre
 {
 
+/* ### APAGAR
 std::unique_ptr<AMultimediaWrapper> AMultimediaWrapper::instance{ nullptr };
 
 AMultimediaWrapper *AMultimediaWrapper::getInstance()
@@ -15,4 +16,5 @@ AMultimediaWrapper *AMultimediaWrapper::getInstance()
 	return instance.get();
 }
 
+*/
 } // namespace sre

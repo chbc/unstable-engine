@@ -1,5 +1,5 @@
 #include "MultimediaManager.h"
-#include <engine/systems/wrappers/multimedia/AMultimediaWrapper.h>
+#include <engine/systems/wrappers/multimedia/SDLAPI.h>
 #include <engine/systems/timer/Timer.h>
 
 namespace sre
@@ -11,14 +11,11 @@ MultimediaManager::MultimediaManager()
 {
 }
 
-bool MultimediaManager::init()
+void MultimediaManager::init()
 {
-	this->multimediaWrapper = AMultimediaWrapper::getInstance();
+	this->multimediaWrapper = UPTR<AMultimediaWrapper>{ new SDLAPI{} };
 	this->multimediaWrapper->init(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-	this->timer = std::unique_ptr<Timer>{ new Timer() };
-
-	return true;
+	this->timer = UPTR<Timer>{ new Timer{this->multimediaWrapper.get()} };
 }
 
 void MultimediaManager::release()
@@ -55,6 +52,7 @@ void MultimediaManager::onEndFrame()
 unsigned int MultimediaManager::getElapsedTime()
 {
 	return this->timer->getElapsedTime();
+	return 0;
 }
 
 } // namespace

@@ -144,20 +144,40 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="engine\entities\components\cameras\CameraComponent.cpp" />
+    <ClCompile Include="engine\entities\components\meshes\MeshComponent.cpp" />
     <ClCompile Include="engine\entities\Entity.cpp" />
     <ClCompile Include="engine\math\Quaternion.cpp" />
     <ClCompile Include="engine\entities\components\transforms\TransformComponent.cpp" />
     <ClCompile Include="engine\math\Vector.cpp" />
+    <ClCompile Include="engine\RenderEngine.cpp" />
+    <ClCompile Include="engine\systems\graphics\RenderManager.cpp" />
+    <ClCompile Include="engine\systems\multimedia\MultimediaManager.cpp" />
+    <ClCompile Include="engine\systems\timer\Timer.cpp" />
+    <ClCompile Include="engine\systems\wrappers\graphics\AGraphicsWrapper.cpp" />
+    <ClCompile Include="engine\systems\wrappers\graphics\OpenGLAPI.cpp" />
+    <ClCompile Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.cpp" />
+    <ClCompile Include="engine\systems\wrappers\multimedia\SDLAPI.cpp" />
     <ClCompile Include="engine\utils\FileUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\components\AEntityComponent.h" />
     <ClInclude Include="engine\entities\components\cameras\CameraComponent.h" />
+    <ClInclude Include="engine\entities\components\meshes\MeshComponent.h" />
     <ClInclude Include="engine\entities\Entity.h" />
     <ClInclude Include="engine\math\math_util.h" />
     <ClInclude Include="engine\math\Quaternion.h" />
     <ClInclude Include="engine\entities\components\transforms\TransformComponent.h" />
     <ClInclude Include="engine\math\Vector.h" />
+    <ClInclude Include="engine\RenderEngine.h" />
+    <ClInclude Include="engine\systems\graphics\RenderManager.h" />
+    <ClInclude Include="engine\systems\input\button_names.h" />
+    <ClInclude Include="engine\systems\input\InputHandler.h" />
+    <ClInclude Include="engine\systems\multimedia\MultimediaManager.h" />
+    <ClInclude Include="engine\systems\timer\Timer.h" />
+    <ClInclude Include="engine\systems\wrappers\graphics\AGraphicsWrapper.h" />
+    <ClInclude Include="engine\systems\wrappers\graphics\OpenGLAPI.h" />
+    <ClInclude Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.h" />
+    <ClInclude Include="engine\systems\wrappers\multimedia\SDLAPI.h" />
     <ClInclude Include="engine\utils\EShaderVariable.h" />
     <ClInclude Include="engine\utils\FileUtils.h" />
     <ClInclude Include="engine\utils\memory_aliases.h" />

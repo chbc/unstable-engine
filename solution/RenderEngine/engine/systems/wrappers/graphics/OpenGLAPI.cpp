@@ -2,7 +2,7 @@
 #include <GL/glew.h>
 
 #include "OpenGLAPI.h"
-#include <engine/entities/renderables/meshes/Mesh.h>
+#include <engine/entities/components/meshes/MeshComponent.h>
 #include <engine/utils/FileUtils.h>
 
 #include <string>
@@ -26,31 +26,30 @@ void OpenGLAPI::init()
 	glEnable(GL_DEPTH_TEST);
 }
 
-void OpenGLAPI::createVBO(Mesh *mesh)
+void OpenGLAPI::createVBO(MeshComponent *mesh)
 {
 	// data
-	int ttSize = mesh->vertexData->size();
+	int ttSize = mesh->vertexData.size();
 	VertexData *vertexDataArray = new VertexData[ttSize];
 	for (int i = 0; i < ttSize; i++)
-		vertexDataArray[i] = mesh->vertexData->at(i);
+		vertexDataArray[i] = *mesh->vertexData[i].get();	// ###
 
+	// Creates VBO
 	glGenBuffers(1, &mesh->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-	glBufferData(GL_ARRAY_BUFFER, mesh->vertexData->size() * sizeof(VertexData), vertexDataArray, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, mesh->vertexData.size() * sizeof(VertexData), vertexDataArray, GL_STATIC_DRAW);
 	delete[] vertexDataArray;
 }
 
-void OpenGLAPI::createIBO(Mesh *mesh)
+void OpenGLAPI::createIBO(MeshComponent *mesh)
 {
 	// indices
-	int indCount = mesh->indices->size();
-	unsigned int *indices = new unsigned int[indCount];
+	int indCount = mesh->indices.size();
+	uint32_t *indices = new uint32_t[indCount];
 	for (int i = 0; i < indCount; i++)
-		indices[i] = mesh->indices->at(i);
+		indices[i] = *mesh->indices[i].get();
 
-
-
-	//Create IBO
+	// Creates IBO
 	glGenBuffers(1, &mesh->indexBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indCount * sizeof(GLuint), indices, GL_STATIC_DRAW);
@@ -58,7 +57,7 @@ void OpenGLAPI::createIBO(Mesh *mesh)
 	delete[] indices;
 }
 
-void OpenGLAPI::drawMesh(Mesh *mesh)
+void OpenGLAPI::drawMesh(MeshComponent *mesh)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
 
@@ -71,7 +70,7 @@ void OpenGLAPI::drawMesh(Mesh *mesh)
 	glEnableVertexAttribArray(normalLocation);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-	glDrawElements(GL_TRIANGLES, mesh->indices->size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
 
 	// Clear
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -85,7 +84,7 @@ void OpenGLAPI::clearBuffer()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void OpenGLAPI::deleteTexture(unsigned int id)
+void OpenGLAPI::deleteTexture(uint32_t id)
 {
 	glDeleteTextures(1, &id);
 }
@@ -108,19 +107,19 @@ void OpenGLAPI::DEBUG_drawTriangle()
 }
 
 // Shaders
-unsigned int OpenGLAPI::loadVertexShader(const std::string &vertexFile)
+uint32_t OpenGLAPI::loadVertexShader(const std::string &vertexFile)
 {
 	return this->loadShader(vertexFile, GL_VERTEX_SHADER);
 }
 
-unsigned int OpenGLAPI::loadFragmentShader(const std::string &fragmentFile)
+uint32_t OpenGLAPI::loadFragmentShader(const std::string &fragmentFile)
 {
 	return this->loadShader(fragmentFile, GL_FRAGMENT_SHADER);
 }
 
-unsigned int OpenGLAPI::createProgram(unsigned int vertexShader, unsigned int fragmentShader)
+uint32_t OpenGLAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader)
 {
-	unsigned int program = glCreateProgram();
+	uint32_t program = glCreateProgram();
 	glAttachShader(program, vertexShader);
 	glAttachShader(program, fragmentShader);
 
@@ -129,42 +128,42 @@ unsigned int OpenGLAPI::createProgram(unsigned int vertexShader, unsigned int fr
 	return program;
 }
 
-void OpenGLAPI::setValue(unsigned int program, const std::string &varName, float x)
+void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float x)
 {
 	int location = glGetUniformLocation(program, varName.c_str());
 	this->checkVariableLocation(location, varName);
 	glUniform1f(location, x);
 }
 
-void OpenGLAPI::setValue(unsigned int program, const std::string &varName, float x, float y)
+void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float x, float y)
 {
 	int location = glGetUniformLocation(program, varName.c_str());
 	this->checkVariableLocation(location, varName);
 	glUniform2f(location, x, y);
 }
 
-void OpenGLAPI::setValue(unsigned int program, const std::string &varName, float x, float y, float z)
+void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float x, float y, float z)
 {
 	int location = glGetUniformLocation(program, varName.c_str());
 	this->checkVariableLocation(location, varName);
 	glUniform3f(location, x, y, z);
 }
 
-void OpenGLAPI::setValue(unsigned int program, const std::string &varName, float *matrix)
+void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float *matrix)
 {
 	int location = glGetUniformLocation(program, varName.c_str());
 	this->checkVariableLocation(location, varName);
 	glUniformMatrix4fv(location, 1, GL_FALSE, matrix);
 }
 
-void OpenGLAPI::setValue(unsigned int program, const std::string &varName, int value)
+void OpenGLAPI::setValue(uint32_t program, const std::string &varName, int value)
 {
 	int location = glGetUniformLocation(program, varName.c_str());
 	this->checkVariableLocation(location, varName);
 	glUniform1i(location, value);
 }
 
-int OpenGLAPI::getAttribLocation(unsigned int program, EShaderVariable shaderVariable)
+int OpenGLAPI::getAttribLocation(uint32_t program, EShaderVariable shaderVariable)
 {
 	int result = -1;
 	std::string variable = "INVALID";
@@ -182,7 +181,7 @@ int OpenGLAPI::getAttribLocation(unsigned int program, EShaderVariable shaderVar
 	return result;
 }
 
-void OpenGLAPI::enableShader(unsigned int program)
+void OpenGLAPI::enableShader(uint32_t program)
 {
 	glUseProgram(program);
 }
@@ -192,11 +191,11 @@ void OpenGLAPI::disableShader()
 	glUseProgram(0);
 }
 
-void OpenGLAPI::releaseShaders(std::stack<unsigned int> &vertShaders, std::stack<unsigned int> &fragShaders, std::stack<unsigned int> &programs)
+void OpenGLAPI::releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs)
 {
-	unsigned int program = 0;
-	unsigned int vertShader = 0;
-	unsigned int fragShader = 0;
+	uint32_t program = 0;
+	uint32_t vertShader = 0;
+	uint32_t fragShader = 0;
 
 	while (!programs.empty())
 	{
@@ -217,18 +216,18 @@ void OpenGLAPI::releaseShaders(std::stack<unsigned int> &vertShaders, std::stack
 }
 
 // Private methods
-unsigned int OpenGLAPI::loadShader(const std::string &fileName, int shaderType)
+uint32_t OpenGLAPI::loadShader(const std::string &fileName, int shaderType)
 {
-	unsigned int result = 0;
+	uint32_t result = 0;
 	std::string source;
 	FileUtils::loadFile(fileName, source);
 	result = this->compileShader(fileName, source, shaderType);
 	return result;
 }
 
-unsigned int OpenGLAPI::compileShader(const std::string &fileName, const std::string &source, unsigned int mode)
+uint32_t OpenGLAPI::compileShader(const std::string &fileName, const std::string &source, uint32_t mode)
 {
-	unsigned int id = glCreateShader(mode);
+	uint32_t id = glCreateShader(mode);
 	const char *csource = source.c_str();
 
 	glShaderSource(id, 1, &csource, NULL);

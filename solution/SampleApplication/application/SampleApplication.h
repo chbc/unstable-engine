@@ -10,16 +10,12 @@ using namespace sre;
 */
 class SampleApplication : public RenderEngine
 {
-	private:
-		float cubeAngle;
-		RenderableNode *cube;
+public:
+	SampleApplication();
 
-	protected:
-		void onInit();
-		void onUpdate(unsigned int elapsedTime);
-
-		public:
-			SampleApplication();
+protected:
+	void onInit();
+	void onUpdate(unsigned int elapsedTime);
 };
 
 #endif

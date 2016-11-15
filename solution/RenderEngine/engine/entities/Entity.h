@@ -37,6 +37,8 @@ public:
 public:
 	~Entity();
 
+	void update(uint32_t deltaTime);
+
 	void addChild(Entity *child);
 
 	TransformComponent *getTransform();

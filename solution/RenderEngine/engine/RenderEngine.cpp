@@ -1,6 +1,9 @@
 #include "RenderEngine.h"
+
+/* ###
 #include <iostream>
 #include <exception>
+*/
 
 namespace sre
 {
@@ -10,18 +13,15 @@ RenderEngine::RenderEngine()
 	this->renderManager = RenderManager::getInstance();
 	this->multimediaManager = MultimediaManager::getInstance();
 	this->inputHandler = nullptr;
-	this->sceneManager = SceneManager::getInstance();
+
+	// ### this->sceneManager = SceneManager::getInstance();
 }
 
 void RenderEngine::run()
 {
-	if (!this->multimediaManager->init())
-		std::cout << "Error: MultimediaManager - init";
-	if (!this->renderManager->init())
-		std::cout << "Error: RenderManager - init";
-	if (!this->sceneManager->init())
-		std::cout << "Error: SceneManager - init";
-
+	this->multimediaManager->init();
+	this->renderManager->init();
+	// ### this->sceneManager->init();
 
 	this->onInit();
 
@@ -42,39 +42,37 @@ void RenderEngine::run()
 
 void RenderEngine::release()
 {
+	/* ###
 	this->sceneManager->release();
 	delete this->sceneManager;
+	*/
 
 	this->renderManager->release();
-	delete this->renderManager;
-
-	if (this->inputHandler != nullptr)
-		delete this->inputHandler;
-
 	this->multimediaManager->release();
-	delete this->multimediaManager;
 }
 
 void RenderEngine::processInput()
 {
 	if (this->inputHandler != NULL)
-		this->multimediaManager->processInput(this->inputHandler);
+		this->multimediaManager->processInput(this->inputHandler.get());
     else
-    {
 		this->running = !this->multimediaManager->checkClosePressed();
-    }
 }
 
 void RenderEngine::render()
 {
 	this->renderManager->clearBuffer();
+	/* ###
 	this->sceneManager->render();
+	*/
+	RenderManager::DEBUG_drawTriangle();
+
 	this->multimediaManager->swapBuffers();
 }
 
 void RenderEngine::registerEventReceiver(InputHandler *inputHandler)
 {
-	this->inputHandler = inputHandler;
+	this->inputHandler = SPTR<InputHandler>(inputHandler);
 }
 
 void RenderEngine::quit()

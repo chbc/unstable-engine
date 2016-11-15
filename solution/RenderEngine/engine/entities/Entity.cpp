@@ -17,6 +17,12 @@ Entity::~Entity()
 	this->children.clear();
 }
 
+void Entity::update(uint32_t deltaTime)
+{
+	for (auto const &item : this->components)
+		item->update(deltaTime);
+}
+
 void Entity::addChild(Entity *child)
 {
 	this->children.push_back(child);

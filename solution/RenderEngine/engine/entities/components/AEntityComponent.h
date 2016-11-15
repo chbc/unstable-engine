@@ -1,6 +1,8 @@
 #ifndef _H_AENTITY_COMPONENT_H_
 #define _H_AENTITY_COMPONENT_H_
 
+#include <stdint.h>
+
 namespace sre
 {
 
@@ -8,19 +10,19 @@ class Entity;
 
 class AEntityComponent
 {
-	private:
+private:
 #ifdef SRE_TESTS
-	public:
+public:
 #endif
-		Entity *entity;
+	Entity *entity;
 
-	public:
-		AEntityComponent(Entity *entity) { this->entity = entity; }
+protected:
+	AEntityComponent(Entity *entity) { this->entity = entity; }
+	virtual void init() {}
+	virtual void update(uint32_t deltaTime) {}
 
-	protected:
-		virtual void init() {}
+friend class Entity;
 
-	friend class Entity;
 };
 
 } // namespace
