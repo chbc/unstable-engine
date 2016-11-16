@@ -163,15 +163,15 @@ void OpenGLAPI::setValue(uint32_t program, const std::string &varName, int value
 	glUniform1i(location, value);
 }
 
-int OpenGLAPI::getAttribLocation(uint32_t program, EShaderVariable shaderVariable)
+int OpenGLAPI::getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable)
 {
 	int result = -1;
 	std::string variable = "INVALID";
 
 	switch (shaderVariable)
 	{
-		case SHADER_POSITION:   variable = "vertexPosition"; break;
-		case SHADER_NORMAL:     variable = "inputNormal"; break;
+		case EShaderVariable::SHADER_POSITION:   variable = "vertexPosition"; break;
+		case EShaderVariable::SHADER_NORMAL:     variable = "inputNormal"; break;
 		default: break;
 	}
 

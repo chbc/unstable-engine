@@ -4,11 +4,14 @@
 namespace sre
 {
 
-enum EShaderVariable
+namespace EShaderVariable
 {
-	SHADER_POSITION,
-	SHADER_NORMAL
-};
+	enum Type
+	{
+		SHADER_POSITION,
+		SHADER_NORMAL
+	};
+} // namespace
 
 } // namespace
 

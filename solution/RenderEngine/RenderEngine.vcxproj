@@ -150,7 +150,9 @@
     <ClCompile Include="engine\entities\components\transforms\TransformComponent.cpp" />
     <ClCompile Include="engine\math\Vector.cpp" />
     <ClCompile Include="engine\RenderEngine.cpp" />
+    <ClCompile Include="engine\systems\graphics\MatrixManager.cpp" />
     <ClCompile Include="engine\systems\graphics\RenderManager.cpp" />
+    <ClCompile Include="engine\systems\graphics\ShaderManager.cpp" />
     <ClCompile Include="engine\systems\multimedia\MultimediaManager.cpp" />
     <ClCompile Include="engine\systems\timer\Timer.cpp" />
     <ClCompile Include="engine\systems\wrappers\graphics\AGraphicsWrapper.cpp" />
@@ -169,7 +171,9 @@
     <ClInclude Include="engine\entities\components\transforms\TransformComponent.h" />
     <ClInclude Include="engine\math\Vector.h" />
     <ClInclude Include="engine\RenderEngine.h" />
+    <ClInclude Include="engine\systems\graphics\MatrixManager.h" />
     <ClInclude Include="engine\systems\graphics\RenderManager.h" />
+    <ClInclude Include="engine\systems\graphics\ShaderManager.h" />
     <ClInclude Include="engine\systems\input\button_names.h" />
     <ClInclude Include="engine\systems\input\InputHandler.h" />
     <ClInclude Include="engine\systems\multimedia\MultimediaManager.h" />

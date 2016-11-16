@@ -2,20 +2,17 @@
 
 #include "ShaderManager.h"
 
-
 namespace sre
 {
 
-IMPLEMENT_SINGLETON(ShaderManager);
-
-ShaderManager::ShaderManager()
+ShaderManager::ShaderManager(const SPTR<AGraphicsWrapper> &graphicsWrapper)
 {
+	this->graphicsWrapper = graphicsWrapper;
 }
 
-bool ShaderManager::init()
+ShaderManager::~ShaderManager()
 {
-	this->graphicsWrapper = AGraphicsWrapper::getInstance();
-	return true;
+	this->graphicsWrapper->releaseShaders(this->vertShaders, this->fragShaders, this->programs);
 }
 
 unsigned int ShaderManager::loadShader(const std::string &vertexFile, const std::string &fragmentFile)
@@ -58,7 +55,7 @@ void ShaderManager::setValue(unsigned int program, const std::string &varName, i
 	this->graphicsWrapper->setValue(program, varName, value);
 }
 
-int ShaderManager::getAttribLocation(unsigned int program, EShaderVariable shaderVariable)
+int ShaderManager::getAttribLocation(unsigned int program, EShaderVariable::Type shaderVariable)
 {
 	return this->graphicsWrapper->getAttribLocation(program, shaderVariable);
 }
@@ -92,11 +89,6 @@ void ShaderManager::enableShader(unsigned int program)
 void ShaderManager::disableShader()
 {
 	this->graphicsWrapper->disableShader();
-}
-
-void ShaderManager::release()
-{
-	this->graphicsWrapper->releaseShaders(this->vertShaders, this->fragShaders, this->programs);
 }
 
 } // namespace

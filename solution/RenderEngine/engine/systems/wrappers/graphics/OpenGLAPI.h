@@ -6,12 +6,11 @@
 namespace sre
 {
 
-class OpenGLAPI : AGraphicsWrapper
+class OpenGLAPI : public AGraphicsWrapper
 {
-public:
+protected:
 	OpenGLAPI() {}
 
-protected:
 	void init() override;
 	void createVBO(MeshComponent *mesh) override;
 	void createIBO(MeshComponent *mesh) override;
@@ -32,7 +31,7 @@ protected:
 	void setValue(uint32_t program, const std::string &varName, float *matrix) override;
 	void setValue(uint32_t program, const std::string &varName, int value) override;
 
-	int getAttribLocation(uint32_t program, EShaderVariable shaderVariable) override;
+	int getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable) override;
 	void enableShader(uint32_t program) override;
 	void disableShader() override;
 	void releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs) override;
@@ -42,7 +41,7 @@ private:
 	uint32_t compileShader(const std::string &fileName, const std::string &source, uint32_t mode);
 	void checkVariableLocation(int location, const std::string &varName); // throws "invalid variable"
 
-friend class AGraphicsWrapper;
+friend class RenderManager;
 };
 
 } // namespace

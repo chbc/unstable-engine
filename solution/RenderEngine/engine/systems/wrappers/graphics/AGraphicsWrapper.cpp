@@ -4,9 +4,6 @@
 namespace sre
 {
 
-void AGraphicsWrapper::DEBUG_drawTriangle()
-{
-	OpenGLAPI::DEBUG_drawTriangle();
-}
+// ##3 APAGAR
 
 } // namespace

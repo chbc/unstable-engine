@@ -8,14 +8,14 @@
 #include "TextureManager.h"
 #include "ShaderManager.h"
 #include "LightManager.h"
-#include "MatrixManager.h"
-#include <vector>
 */
 
 namespace sre
 {
 class MeshComponent;
 class AGraphicsWrapper;
+class MatrixManager;
+class ShaderManager;
 
 /* ###
 class VertexData;
@@ -36,11 +36,12 @@ DECLARE_SINGLETON(RenderManager);
 private:
 /* ###
 	TextureManager *textureManager;
-	ShaderManager *shaderManager;
 	LightManager *lightManager;
-    MatrixManager *matrixManager;
 */
-	UPTR<AGraphicsWrapper> graphicsWrapper;
+
+	SPTR<AGraphicsWrapper> graphicsWrapper;
+	UPTR<ShaderManager> shaderManager;
+	UPTR<MatrixManager> matrixManager;
 
 private:
 	static void DEBUG_drawTriangle();
@@ -58,8 +59,9 @@ private:
 
 /* ###
 	Texture *loadTexture(const std::string &fileName);
-	unsigned int loadShader(const std::string &vertFile, const std::string &fragFile);
 */
+	unsigned int loadShader(const std::string &vertFile, const std::string &fragFile);
+
 	void createBufferObject(MeshComponent *mesh);
 
 /* ###

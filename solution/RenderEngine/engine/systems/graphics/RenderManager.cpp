@@ -2,9 +2,11 @@
 
 #include <engine/entities/components/meshes/MeshComponent.h>
 #include <engine/systems/wrappers/graphics/OpenGLAPI.h>
+#include <engine/systems/multimedia/MultimediaManager.h>
+#include "MatrixManager.h"
+#include "ShaderManager.h"
 
 /* ###
-#include <engine/systems/multimedia/MultimediaManager.h>
 #include <engine/entities/renderables/RenderableNode.h>
 #include <engine/entities/renderables/materials/DiffuseMaterial.h>
 */
@@ -18,33 +20,29 @@ RenderManager::RenderManager()
 {
 	/* ###
 	this->textureManager = TextureManager::getInstance();
-	this->shaderManager	 = ShaderManager::getInstance();
 	this->lightManager	 = LightManager::getInstance();
-	this->matrixManager = new MatrixManager;
 	*/ 
 
-	this->graphicsWrapper = UPTR<AGraphicsWrapper>{ new OpenGLAPI{} };
+	this->graphicsWrapper	= SPTR<AGraphicsWrapper>{ new OpenGLAPI{} };
+	//this->shaderManager		= UPTR<ShaderManager>{ new ShaderManager{this->graphicsWrapper} };
+	//this->matrixManager		= UPTR<MatrixManager>{ new MatrixManager{} };
 }
 
 void RenderManager::init()
 {
 	this->graphicsWrapper->init();
 
-	/* ###
 	const float FOV{45.0f};
 	this->matrixManager->setProjection(FOV, MultimediaManager::SCREEN_WIDTH/MultimediaManager::SCREEN_HEIGHT, 1, 100);
 
+	/*
 	if (!this->textureManager->init())
 	{
 		std::cout << "TextureManager error: init" << std::endl;
 		return false;
 	}
 
-	if (!this->shaderManager->init())
-	{
-		std::cout << "ShaderManager error: init" << std::endl;
-		return false;
-	}
+
 
 	if (!this->lightManager->init())
 	{
@@ -60,23 +58,19 @@ void RenderManager::release()
 	/* ###
 	this->textureManager->release();
 	delete this->textureManager;
-
-	this->shaderManager->release();
-	delete this->shaderManager;
-
+	
 	this->lightManager->release();
 	delete this->lightManager;
 
-	delete this->matrixManager;
 	*/
 }
 
 void RenderManager::createBufferObject(MeshComponent *mesh)
 {
-	/* ###
+	/*
     unsigned int program = mesh->material->getShaderProgram();
-    mesh->vertexAttribLocation = this->shaderManager->getAttribLocation(program, SHADER_POSITION);
-    mesh->normalAttribLocation = this->shaderManager->getAttribLocation(program, SHADER_NORMAL);
+    mesh->vertexAttribLocation = this->shaderManager->getAttribLocation(program, EShaderVariable::SHADER_POSITION);
+    mesh->normalAttribLocation = this->shaderManager->getAttribLocation(program, EShaderVariable::SHADER_NORMAL);
 
 	this->graphicsWrapper->createVBO(mesh);
 	this->graphicsWrapper->createIBO(mesh);
@@ -125,7 +119,7 @@ void RenderManager::render(const std::vector<RenderableNode *> &renderableNodes)
 
 void RenderManager::DEBUG_drawTriangle()
 {
-	AGraphicsWrapper::DEBUG_drawTriangle();
+	OpenGLAPI::DEBUG_drawTriangle();
 }
 
 void RenderManager::clearBuffer()
@@ -164,10 +158,8 @@ void RenderManager::applyMaterial(DiffuseMaterial *material, std::vector<VertexD
 
 void RenderManager::drawMesh(MeshComponent *mesh)
 {
-	/*
 	this->graphicsWrapper->drawMesh(mesh);
 	this->shaderManager->disableShader();
-	*/
 }
 
 /*
@@ -179,7 +171,7 @@ void RenderManager::releaseMaterial(Material *material)
 
 void RenderManager::renderCamera(const glm::vec3 &position, const glm::vec3 &lookTarget, const glm::vec3 &up)
 {
-    // ### this->matrixManager->setView(position, lookTarget, up);
+    this->matrixManager->setView(position, lookTarget, up);
 }
 
 /* ###
@@ -187,11 +179,11 @@ Texture *RenderManager::loadTexture(const std::string &fileName)
 {
 	return this->textureManager->loadTexture(fileName);
 }
+*/
 
 unsigned int RenderManager::loadShader(const std::string &vertFile, const std::string &fragFile)
 {
 	return this->shaderManager->loadShader(vertFile, fragFile);
 }
-*/
 
 } // namespace

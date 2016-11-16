@@ -12,9 +12,7 @@ namespace sre
 class MeshComponent;
 
 /* ###
-class RenderManager;
 class TextureManager;
-class ShaderManager;
 */
 
 class AGraphicsWrapper
@@ -29,8 +27,6 @@ protected:
 	virtual void clearBuffer() =0;
 	virtual void deleteTexture(uint32_t id) =0;
 
-	static void DEBUG_drawTriangle();
-
 	// Shaders
 	virtual uint32_t loadVertexShader(const std::string &vertexFile) =0;
 	virtual uint32_t loadFragmentShader(const std::string &fragmentFile) =0;
@@ -42,16 +38,16 @@ protected:
 	virtual void setValue(uint32_t program, const std::string &varName, float *matrix) =0;
 	virtual void setValue(uint32_t program, const std::string &varName, int value) =0;
 
-	virtual int getAttribLocation(uint32_t program, EShaderVariable shaderVariable) =0;
+	virtual int getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable) =0;
 	virtual void enableShader(uint32_t program) =0;
 	virtual void disableShader() =0;
 	virtual void releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs) =0;
 
 friend class RenderManager;
+friend class ShaderManager;
 
 /* ###
 friend class TextureManager;
-friend class ShaderManager;
 */
 };
 

@@ -2,7 +2,7 @@
 #define _GLSL_SHADER_API_H_
 
 #include <string>
-#include <engine/utils/singleton_macros.h>
+#include <engine/utils/memory_aliases.h>
 #include <engine/utils/EShaderVariable.h>
 #include <stack>
 
@@ -16,14 +16,17 @@ class AGraphicsWrapper;
 */
 class ShaderManager
 {
-	DECLARE_SINGLETON(ShaderManager);
+	public:
+		~ShaderManager();
 
 	private:
 		std::stack<unsigned int> vertShaders;
 		std::stack<unsigned int> fragShaders;
 		std::stack<unsigned int> programs;
 
-		AGraphicsWrapper *graphicsWrapper;
+		SPTR<AGraphicsWrapper> graphicsWrapper;
+
+		ShaderManager(const SPTR<AGraphicsWrapper> &graphicsWrapper);
 
 		// main load function
 		unsigned int loadShader(const std::string &vertexName, const std::string &fragmentName);
@@ -36,7 +39,7 @@ class ShaderManager
 
 		void setValue(unsigned int program, const std::string &varName, int value);
 
-		int getAttribLocation(unsigned int program, EShaderVariable shaderVariable);
+		int getAttribLocation(unsigned int program, EShaderVariable::Type shaderVariable);
 
 		void enableShader(unsigned int program);
 		void disableShader();

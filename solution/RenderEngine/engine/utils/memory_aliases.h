@@ -16,9 +16,6 @@ using SPTR = std::shared_ptr<T>;
 template<typename T>
 using WPTR = std::weak_ptr<T>;
 
-#define MAKE_UNIQUE std::make_unique
-#define MAKE_SHARED std::make_shared
-
 template<typename T>
 using VECTOR_UPTR = std::vector<std::unique_ptr<T> >;
 
