@@ -144,12 +144,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="engine\entities\components\cameras\CameraComponent.cpp" />
+    <ClCompile Include="engine\entities\components\lights\ALightComponent.cpp" />
+    <ClCompile Include="engine\entities\components\lights\DirectionalLightComponent.cpp" />
+    <ClCompile Include="engine\entities\components\lights\PointLightComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\MeshComponent.cpp" />
     <ClCompile Include="engine\entities\Entity.cpp" />
     <ClCompile Include="engine\math\Quaternion.cpp" />
     <ClCompile Include="engine\entities\components\transforms\TransformComponent.cpp" />
     <ClCompile Include="engine\math\Vector.cpp" />
     <ClCompile Include="engine\RenderEngine.cpp" />
+    <ClCompile Include="engine\systems\graphics\LightManager.cpp" />
     <ClCompile Include="engine\systems\graphics\MatrixManager.cpp" />
     <ClCompile Include="engine\systems\graphics\RenderManager.cpp" />
     <ClCompile Include="engine\systems\graphics\ShaderManager.cpp" />
@@ -164,6 +168,9 @@
   <ItemGroup>
     <ClInclude Include="engine\entities\components\AEntityComponent.h" />
     <ClInclude Include="engine\entities\components\cameras\CameraComponent.h" />
+    <ClInclude Include="engine\entities\components\lights\ALightComponent.h" />
+    <ClInclude Include="engine\entities\components\lights\DirectionalLightComponent.h" />
+    <ClInclude Include="engine\entities\components\lights\PointLightComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\MeshComponent.h" />
     <ClInclude Include="engine\entities\Entity.h" />
     <ClInclude Include="engine\math\math_util.h" />
@@ -171,6 +178,7 @@
     <ClInclude Include="engine\entities\components\transforms\TransformComponent.h" />
     <ClInclude Include="engine\math\Vector.h" />
     <ClInclude Include="engine\RenderEngine.h" />
+    <ClInclude Include="engine\systems\graphics\LightManager.h" />
     <ClInclude Include="engine\systems\graphics\MatrixManager.h" />
     <ClInclude Include="engine\systems\graphics\RenderManager.h" />
     <ClInclude Include="engine\systems\graphics\ShaderManager.h" />
@@ -186,9 +194,6 @@
     <ClInclude Include="engine\utils\FileUtils.h" />
     <ClInclude Include="engine\utils\memory_aliases.h" />
     <ClInclude Include="engine\utils\singleton_macros.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="engine\entities\Entity.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

@@ -1,26 +1,14 @@
 #include "LightManager.h"
 
-#include <engine/entities/lights/DirectionalLight.h>
-#include <engine/entities/lights/PointLight.h>
-#include "ShaderManager.h"
-#include <stdio.h>
+#include <engine/entities/Entity.h>
+// #include "ShaderManager.h"
 
 namespace sre
 {
 
-IMPLEMENT_SINGLETON(LightManager);
-
-LightManager::LightManager()
+LightManager::~LightManager()
 {
-}
-
-bool LightManager::init()
-{
-	return true;
-}
-
-void LightManager::release()
-{
+	/*
 	std::vector<LightNode *>::iterator itLight = this->lightNodes.begin();
 	while(itLight != this->lightNodes.end())
 	{
@@ -28,26 +16,28 @@ void LightManager::release()
 		itLight++;
 	}
 	this->lightNodes.clear();
+	*/
 }
 
-DirectionalLight *LightManager::addDirectionalLight()
+DirectionalLightComponent *LightManager::addDirectionalLight(Entity *entity)
 {
-	DirectionalLight *newLight = new DirectionalLight();
-	this->lightNodes.push_back(newLight);
+	DirectionalLightComponent *newLight = entity->addComponent<DirectionalLightComponent>();
+	// ### this->lightComponents.push_back(UPTR<DirectionalLightComponent>(newLight));
 
 	return newLight;
 }
 
-PointLight *LightManager::addPointLight()
+PointLightComponent *LightManager::addPointLight(Entity *entity)
 {
-	PointLight *newLight = new PointLight();
-	this->lightNodes.push_back(newLight);
+	PointLightComponent *newLight = entity->addComponent<PointLightComponent>();
+	// ### this->lightComponents.push_back(UPTR<PointLightComponent>(newLight));
 
 	return newLight;
 }
 
 void LightManager::setupLights(unsigned int program)
 {
+	/*
     ShaderManager *shaderManager = ShaderManager::getInstance();
 
     char variable[100];
@@ -68,6 +58,7 @@ void LightManager::setupLights(unsigned int program)
     }
 
     shaderManager->setValue(program, "lightCount", size);
+	*/
 }
 
 } // namespace

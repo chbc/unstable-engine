@@ -16,6 +16,11 @@ class MeshComponent;
 class AGraphicsWrapper;
 class MatrixManager;
 class ShaderManager;
+class LightManager;
+
+class Entity;
+class DirectionalLightComponent;
+class PointLightComponent;
 
 /* ###
 class VertexData;
@@ -36,12 +41,12 @@ DECLARE_SINGLETON(RenderManager);
 private:
 /* ###
 	TextureManager *textureManager;
-	LightManager *lightManager;
 */
 
 	SPTR<AGraphicsWrapper> graphicsWrapper;
 	UPTR<ShaderManager> shaderManager;
 	UPTR<MatrixManager> matrixManager;
+	UPTR<LightManager> lightManager;
 
 private:
 	static void DEBUG_drawTriangle();
@@ -64,9 +69,10 @@ private:
 
 	void createBufferObject(MeshComponent *mesh);
 
-/* ###
-	DirectionalLight *addDirectionalLight();
-	PointLight *addPointLight();
+	DirectionalLightComponent *addDirectionalLight(Entity *entity);
+	PointLightComponent *addPointLight(Entity *entity);
+
+/*
 	void render(const std::vector<RenderableNode *> &renderableNodes);
 */
 

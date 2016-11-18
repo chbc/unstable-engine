@@ -1,29 +1,31 @@
 #ifndef _LIGHT_MANAGER_H_
 #define _LIGHT_MANAGER_H_
 
-#include <engine/utils/singleton_macros.h>
-#include <vector>
+#include <engine/utils/memory_aliases.h>
+#include <engine/entities/components/lights/DirectionalLightComponent.h>
+#include <engine/entities/components/lights/PointLightComponent.h>
 
 namespace sre
 {
-	class LightNode;
-	class DirectionalLight;
-	class PointLight;
+class Entity;
 
 /*!
 	Class to manage low level lighting.
 */
 class LightManager
 {
-	DECLARE_SINGLETON(LightManager);
+private:
+    VECTOR_UPTR<ALightComponent> lightComponents;
 
-	private:
-        std::vector<LightNode *> lightNodes;
+	DirectionalLightComponent *addDirectionalLight(Entity *entity);
+	PointLightComponent *addPointLight(Entity *entity);
 
-		DirectionalLight *addDirectionalLight();
-		PointLight *addPointLight();
+public:
+	~LightManager();
 
-		void setupLights(unsigned int program);
+private:
+	LightManager() {}
+	void setupLights(unsigned int program);
 
 	friend class RenderManager;
 };

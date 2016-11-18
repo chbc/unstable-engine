@@ -62,6 +62,6 @@ private:
 
 } // namespace
 
-#include "Entity.tpp"
+// #include "Entity.tpp"
 
 #endif

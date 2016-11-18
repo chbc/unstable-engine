@@ -5,6 +5,7 @@
 #include <engine/systems/multimedia/MultimediaManager.h>
 #include "MatrixManager.h"
 #include "ShaderManager.h"
+#include "LightManager.h"
 
 /* ###
 #include <engine/entities/renderables/RenderableNode.h>
@@ -20,12 +21,12 @@ RenderManager::RenderManager()
 {
 	/* ###
 	this->textureManager = TextureManager::getInstance();
-	this->lightManager	 = LightManager::getInstance();
 	*/ 
 
 	this->graphicsWrapper	= SPTR<AGraphicsWrapper>{ new OpenGLAPI{} };
-	//this->shaderManager		= UPTR<ShaderManager>{ new ShaderManager{this->graphicsWrapper} };
-	//this->matrixManager		= UPTR<MatrixManager>{ new MatrixManager{} };
+	this->shaderManager		= UPTR<ShaderManager>{ new ShaderManager{this->graphicsWrapper} };
+	this->matrixManager		= UPTR<MatrixManager>{ new MatrixManager{} };
+	this->lightManager		= UPTR<LightManager>{ new LightManager{} };
 }
 
 void RenderManager::init()
@@ -41,14 +42,6 @@ void RenderManager::init()
 		std::cout << "TextureManager error: init" << std::endl;
 		return false;
 	}
-
-
-
-	if (!this->lightManager->init())
-	{
-		std::cout << "LightManager error: init" << std::endl;
-		return false;
-	}
 	*/
 
 }
@@ -58,10 +51,6 @@ void RenderManager::release()
 	/* ###
 	this->textureManager->release();
 	delete this->textureManager;
-	
-	this->lightManager->release();
-	delete this->lightManager;
-
 	*/
 }
 
@@ -77,17 +66,15 @@ void RenderManager::createBufferObject(MeshComponent *mesh)
 	*/
 }
 
-/* ###
-DirectionalLight *RenderManager::addDirectionalLight()
+DirectionalLightComponent *RenderManager::addDirectionalLight(Entity *entity)
 {
-    return this->lightManager->addDirectionalLight();
+    return this->lightManager->addDirectionalLight(entity);
 }
 
-PointLight *RenderManager::addPointLight()
+PointLightComponent *RenderManager::addPointLight(Entity *entity)
 {
-    return this->lightManager->addPointLight();
+    return this->lightManager->addPointLight(entity);
 }
-*/
 
 /* ###
 void RenderManager::render(const std::vector<RenderableNode *> &renderableNodes)
