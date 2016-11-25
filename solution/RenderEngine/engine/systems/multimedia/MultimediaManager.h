@@ -2,7 +2,6 @@
 #define _MULTIMEDIA_MANAGER_H_
 
 #include <engine/utils/singleton_macros.h>
-#include <memory>
 
 namespace sre
 {

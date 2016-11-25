@@ -16,12 +16,16 @@ public:
 #endif
 	Entity *entity;
 
-protected:
+public:
+	inline Entity *getEntity() { return this->entity; }
+
+// protected:
 	AEntityComponent(Entity *entity) { this->entity = entity; }
 	virtual void init() {}
 	virtual void update(uint32_t deltaTime) {}
 
 friend class Entity;
+// friend class AComponentsHolder<AEntityComponent>;
 
 };
 

@@ -1,38 +1,35 @@
 #ifndef _MATERIAL_H_
 #define _MATERIAL_H_
 
-#include "ShaderConsts.h"
-#include <vector>
+// ### #include "ShaderConsts.h"
+#include <engine/entities/components/AComponentsHolder.h>
+#include "components/AMaterialComponent.h"
+#include <engine/utils/memory_aliases.h>
 
 namespace sre
 {
 
-struct VertexData;
-class RenderManager;
-class Mesh;
+// ### struct VertexData;
 
-class Material
+class Material : public AComponentsHolder<AMaterialComponent>
 {
-	protected:
-		RenderManager *renderManager;
-		unsigned int shaderProgram;
-		float *ambient, *diffuse, *specular, shininess;
+private:
+	unsigned int shaderProgram;
 
-		inline unsigned int getShaderProgram() { return this->shaderProgram; }
-		void loadShader(const std::string &vertexFile, const std::string &fragmentFile);
+	inline unsigned int getShaderProgram() { return this->shaderProgram; }
+	void loadShader(const std::string &vertexFile, const std::string &fragmentFile);
 
-		virtual void apply(std::vector<VertexData> *vertexData, bool receiveLight) =0;
+	// ### void apply(std::vector<VertexData> *vertexData, bool receiveLight);
 
-	public:
-		Material();
-		virtual ~Material();
+public:
+	Material();
 
-		void setAmbient(float *ambient);
-		void setDiffuse(float *diffuse);
-		void setSpecular(float *specular);
+private:
 
-	friend class RenderManager;
-	friend class Mesh;
+/* ###
+friend class RenderManager;
+friend class Mesh;
+*/
 };
 
 } // namespace

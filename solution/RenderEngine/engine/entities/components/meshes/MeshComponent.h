@@ -17,7 +17,7 @@ class MeshComponent : public AEntityComponent
 private:
 	VECTOR_UPTR<VertexData> vertexData;
 	VECTOR_UPTR<uint32_t> indices;
-    // ### UPTR<Material> material;
+    UPTR<Material> material;
 
     unsigned int vbo;
     unsigned int indexBO;
@@ -25,21 +25,23 @@ private:
     int vertexAttribLocation;
     int normalAttribLocation;
 	
-	// ### bool receiveLight;
+	bool receiveLight;
 
-	MeshComponent(Entity *entity, VECTOR_UPTR<VertexData> &vertexData, VECTOR_UPTR<uint32_t> &indices);
+	MeshComponent
+	(
+		Entity *entity,
+		VECTOR_UPTR<VertexData> &vertexData, 
+		VECTOR_UPTR<uint32_t> &indices
+	);
 
 	// ### void applyMaterial(bool receiveLight);
 
 public:
 	~MeshComponent();
 
-	/* ###
-    void setMaterial(Material *material);
 	void setMaterial(UPTR<Material> &material);
 
 	void setReceiveLight(bool receiveLight);
-	*/
 
 friend class RenderManager;
 friend class OpenGLAPI;

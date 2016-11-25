@@ -78,6 +78,12 @@
     <ClCompile Include="engine\entities\components\lights\PointLightComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\entities\components\meshes\materials\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entities\components\meshes\materials\components\ColorMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\EShaderVariable.h">
@@ -164,5 +170,24 @@
     <ClInclude Include="engine\entities\components\lights\PointLightComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\entities\components\meshes\materials\Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\meshes\materials\components\AMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\meshes\materials\components\ColorMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\AComponentsHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\ComponentsFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="engine\entities\components\AComponentsHolder.tpp" />
+    <None Include="engine\entities\components\ComponentsFactory.tpp" />
   </ItemGroup>
 </Project>

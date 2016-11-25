@@ -49,6 +49,8 @@ private:
 	UPTR<LightManager> lightManager;
 
 private:
+	void render(MeshComponent *mesh);
+
 	static void DEBUG_drawTriangle();
 	void clearBuffer();
 
@@ -57,7 +59,6 @@ private:
 	void applyMaterial(DiffuseMaterial *material, std::vector<VertexData> *vertexData, bool receiveLight);
 */
 
-	void drawMesh(MeshComponent *mesh);
 	// ### void releaseMaterial(Material *material);
 
 	void renderCamera(const glm::vec3 &position, const glm::vec3 &lookTarget, const glm::vec3 &up);
@@ -71,10 +72,6 @@ private:
 
 	DirectionalLightComponent *addDirectionalLight(Entity *entity);
 	PointLightComponent *addPointLight(Entity *entity);
-
-/*
-	void render(const std::vector<RenderableNode *> &renderableNodes);
-*/
 
 // ### friend class SceneManager;
 friend class MeshComponent;

@@ -1,5 +1,6 @@
 #include "RenderManager.h"
 
+#include <engine/entities/Entity.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
 #include <engine/systems/wrappers/graphics/OpenGLAPI.h>
 #include <engine/systems/multimedia/MultimediaManager.h>
@@ -46,12 +47,26 @@ void RenderManager::init()
 
 }
 
-void RenderManager::release()
+void RenderManager::render(MeshComponent *mesh)
 {
-	/* ###
-	this->textureManager->release();
-	delete this->textureManager;
-	*/
+	TransformComponent *transform = mesh->getEntity()->getTransform();
+    this->matrixManager->push(transform->getMatrix());
+    this->matrixManager->update();
+
+	// shader setup
+	unsigned int shaderProgram = material->getShaderProgram();
+	this->shaderManager->enableShader(shaderProgram);
+
+	glm::mat4 mvp = this->matrixManager->getMVP();
+	this->shaderManager->setValue(shaderProgram, "MVP", &mvp[0][0]);
+
+	if (receiveLight)
+        this->lightManager->setupLights(shaderProgram);
+
+	this->graphicsWrapper->drawMesh(mesh);
+	this->shaderManager->disableShader();
+
+	this->matrixManager->pop();
 }
 
 void RenderManager::createBufferObject(MeshComponent *mesh)
@@ -76,34 +91,6 @@ PointLightComponent *RenderManager::addPointLight(Entity *entity)
     return this->lightManager->addPointLight(entity);
 }
 
-/* ###
-void RenderManager::render(const std::vector<RenderableNode *> &renderableNodes)
-{
-    // TODO: render children
-
-    RenderableNode *item = NULL;
-	int size = renderableNodes.size();
-
-	for (int i = 0; i < size; i++)
-	{
-	    item = renderableNodes[i];
-
-        this->matrixManager->push(item->getTransform()->getMatrix());
-        this->matrixManager->update();
-
-        for (unsigned int m = 0; m < item->meshes.size(); m++)
-        {
-            Mesh *mesh = item->meshes[m];
-            mesh->applyMaterial(item->receiveLight);
-
-            this->drawMesh(mesh);
-        }
-
-        this->matrixManager->pop();
-	}
-}
-*/
-
 void RenderManager::DEBUG_drawTriangle()
 {
 	OpenGLAPI::DEBUG_drawTriangle();
@@ -117,14 +104,7 @@ void RenderManager::clearBuffer()
 /* ###
 void RenderManager::applyMaterial(Material *material, bool receiveLight)
 {
-	unsigned int shaderProgram = material->getShaderProgram();
-	this->shaderManager->enableShader(shaderProgram);
 
-	glm::mat4 mvp = this->matrixManager->getMVP();
-	this->shaderManager->setValue(shaderProgram, "MVP", &mvp[0][0]);
-
-	if (receiveLight)
-        this->lightManager->setupLights(shaderProgram);
 }
 
 void RenderManager::applyMaterial(DiffuseMaterial *material, std::vector<VertexData> *vertexData, bool receiveLight)
@@ -142,12 +122,6 @@ void RenderManager::applyMaterial(DiffuseMaterial *material, std::vector<VertexD
 	 // /
 }
 */
-
-void RenderManager::drawMesh(MeshComponent *mesh)
-{
-	this->graphicsWrapper->drawMesh(mesh);
-	this->shaderManager->disableShader();
-}
 
 /*
 void RenderManager::releaseMaterial(Material *material)
@@ -171,6 +145,14 @@ Texture *RenderManager::loadTexture(const std::string &fileName)
 unsigned int RenderManager::loadShader(const std::string &vertFile, const std::string &fragFile)
 {
 	return this->shaderManager->loadShader(vertFile, fragFile);
+}
+
+void RenderManager::release()
+{
+	/* ###
+	this->textureManager->release();
+	delete this->textureManager;
+	*/
 }
 
 } // namespace
