@@ -1,30 +1,19 @@
 #include "AEntityComponent.h"
-#include "ComponentsFactory.h"
 
 namespace sre
 {
 
 template <typename C>
 template <typename T>
-T *AComponentsHolder<C>::addComponent()
+void AComponentsHolder<C>::addComponent(T *newComponent)
 {
-	T *newComponent{ nullptr };
+	UPTR<T> componentUptr{ newComponent };
+	this->components.emplace_back(std::move(componentUptr));
 
-	if (!this->hasComponent<T>())
-	{
-		newComponent = ComponentsFactory::create<T>(this);
-		UPTR<T> componentUptr{ newComponent };
-		this->components.emplace_back(std::move(componentUptr));
+	componentsArray[getComponentID<T>()] = newComponent;
+	componentsBitset[getComponentID<T>()] = true;
 
-		componentsArray[getComponentID<T>()] = newComponent;
-		componentsBitset[getComponentID<T>()] = true;
-
-		newComponent->init();
-	}
-	else
-		throw "Can't add duplicate component!";
-
-	return newComponent;
+	newComponent->init();
 }
 
 template <typename C>

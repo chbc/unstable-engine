@@ -176,7 +176,6 @@
     <ClInclude Include="engine\entities\components\lights\PointLightComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\AMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\ColorMaterialComponent.h" />
-    <ClInclude Include="engine\entities\components\ComponentsFactory.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\Material.h" />
     <ClInclude Include="engine\entities\components\meshes\MeshComponent.h" />
     <ClInclude Include="engine\entities\Entity.h" />
@@ -204,7 +203,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="engine\entities\components\AComponentsHolder.tpp" />
-    <None Include="engine\entities\components\ComponentsFactory.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

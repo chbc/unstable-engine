@@ -182,12 +182,8 @@
     <ClInclude Include="engine\entities\components\AComponentsHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\components\ComponentsFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="engine\entities\components\AComponentsHolder.tpp" />
-    <None Include="engine\entities\components\ComponentsFactory.tpp" />
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@ namespace sre
 Material::Material()
 {
 	this->shaderProgram = 0;
-	this->addComponent<ColorMaterialComponent>();
+	// ### this->addComponent<ColorMaterialComponent>();
 }
 
 void Material::loadShader(const std::string &vertexFile, const std::string &fragmentFile)

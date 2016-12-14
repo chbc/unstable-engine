@@ -21,7 +21,7 @@ LightManager::~LightManager()
 
 DirectionalLightComponent *LightManager::addDirectionalLight(Entity *entity)
 {
-	DirectionalLightComponent *newLight = entity->addComponent<DirectionalLightComponent>();
+	DirectionalLightComponent *newLight = nullptr; // ### entity->addComponent<DirectionalLightComponent>();
 	// ### this->lightComponents.push_back(UPTR<DirectionalLightComponent>(newLight));
 
 	return newLight;
@@ -29,7 +29,7 @@ DirectionalLightComponent *LightManager::addDirectionalLight(Entity *entity)
 
 PointLightComponent *LightManager::addPointLight(Entity *entity)
 {
-	PointLightComponent *newLight = entity->addComponent<PointLightComponent>();
+	PointLightComponent *newLight = nullptr; // ### entity->addComponent<PointLightComponent>();
 	// ### this->lightComponents.push_back(UPTR<PointLightComponent>(newLight));
 
 	return newLight;

@@ -25,8 +25,22 @@ private:
 public:
 	~Entity();
 
-	void update(uint32_t deltaTime);
+	template <typename T> T *addComponent()
+	{
+		T *newComponent{ nullptr };
 
+		if (!AComponentsHolder<AEntityComponent>::hasComponent<T>())
+		{
+			newComponent = new T{ this };
+			AComponentsHolder<AEntityComponent>::addComponent(newComponent);
+		}
+		else
+			throw "Can't add duplicate component!";
+
+		return newComponent;
+	}
+
+	void update(uint32_t deltaTime);
 	void addChild(Entity *child);
 
 	TransformComponent *getTransform();

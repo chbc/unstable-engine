@@ -24,6 +24,21 @@ private:
 public:
 	Material();
 
+	template <typename T> T *addComponent()
+	{
+		T *newComponent{ nullptr };
+
+		if (!AComponentsHolder<AMaterialComponent>::hasComponent<T>())
+		{
+			newComponent = new T{ this };
+			AComponentsHolder<AMaterialComponent>::addComponent(newComponent);
+		}
+		else
+			throw "Can't add duplicate component!";
+
+		return newComponent;
+	}
+
 private:
 
 /* ###

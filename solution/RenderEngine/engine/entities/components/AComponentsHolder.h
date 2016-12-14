@@ -20,12 +20,13 @@ private:
 protected:
 	VECTOR_UPTR<C> components;
 
+	template <typename T> void addComponent(T *newComponent);
+	template <typename T> bool hasComponent();
+
 public:
-	template <typename T> T *addComponent();
 	template <typename T> T *getComponent();
 
 private:
-	template <typename T> bool hasComponent();
 	template <typename T> std::size_t getComponentID();
 	uint16_t generateComponentID();
 };

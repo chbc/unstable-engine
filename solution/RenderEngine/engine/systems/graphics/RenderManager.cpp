@@ -54,6 +54,7 @@ void RenderManager::render(MeshComponent *mesh)
     this->matrixManager->update();
 
 	// shader setup
+	/* ###
 	unsigned int shaderProgram = material->getShaderProgram();
 	this->shaderManager->enableShader(shaderProgram);
 
@@ -62,6 +63,7 @@ void RenderManager::render(MeshComponent *mesh)
 
 	if (receiveLight)
         this->lightManager->setupLights(shaderProgram);
+	*/
 
 	this->graphicsWrapper->drawMesh(mesh);
 	this->shaderManager->disableShader();
