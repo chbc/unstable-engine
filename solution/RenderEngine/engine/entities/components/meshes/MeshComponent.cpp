@@ -8,7 +8,7 @@ MeshComponent::MeshComponent
 (
 	Entity *entity, 
 	VECTOR_UPTR<VertexData> &vertexData, 
-	VECTOR_UPTR<uint32_t> &indices
+	std::vector<uint32_t> &indices
 )
 	: AEntityComponent(entity)
 {

@@ -16,7 +16,7 @@ class MeshComponent : public AEntityComponent
 {
 private:
 	VECTOR_UPTR<VertexData> vertexData;
-	VECTOR_UPTR<uint32_t> indices;
+	std::vector<uint32_t> indices;
     UPTR<Material> material;
 
     unsigned int vbo;
@@ -31,7 +31,7 @@ private:
 	(
 		Entity *entity,
 		VECTOR_UPTR<VertexData> &vertexData, 
-		VECTOR_UPTR<uint32_t> &indices
+		std::vector<uint32_t> &indices
 	);
 
 	// ### void applyMaterial(bool receiveLight);
@@ -43,12 +43,12 @@ public:
 
 	void setReceiveLight(bool receiveLight);
 
+/* ###
 friend class RenderManager;
-friend class OpenGLAPI;
-
-/*
-friend class MeshFactory;
 */
+
+friend class OpenGLAPI;
+friend class MeshFactory;
 };
 
 } // namespace

@@ -44,17 +44,19 @@ void OpenGLAPI::createVBO(MeshComponent *mesh)
 void OpenGLAPI::createIBO(MeshComponent *mesh)
 {
 	// indices
+	/* ###
 	int indCount = mesh->indices.size();
 	uint32_t *indices = new uint32_t[indCount];
 	for (int i = 0; i < indCount; i++)
-		indices[i] = *mesh->indices[i].get();
+		indices[i] = mesh->indices[i];
+	*/
 
 	// Creates IBO
 	glGenBuffers(1, &mesh->indexBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indCount * sizeof(GLuint), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indices.size() * sizeof(GLuint), &mesh->indices, GL_STATIC_DRAW);
 
-	delete[] indices;
+	// ### delete[] indices;
 }
 
 void OpenGLAPI::drawMesh(MeshComponent *mesh)

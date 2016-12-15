@@ -13,15 +13,13 @@ RenderEngine::RenderEngine()
 	this->renderManager = RenderManager::getInstance();
 	this->multimediaManager = MultimediaManager::getInstance();
 	this->inputHandler = nullptr;
-
-	// ### this->sceneManager = SceneManager::getInstance();
 }
 
 void RenderEngine::run()
 {
 	this->multimediaManager->init();
 	this->renderManager->init();
-	// ### this->sceneManager->init();
+	this->sceneManager = UPTR<SceneManager>{ new SceneManager };
 
 	this->onInit();
 
@@ -42,18 +40,13 @@ void RenderEngine::run()
 
 void RenderEngine::release()
 {
-	/* ###
-	this->sceneManager->release();
-	delete this->sceneManager;
-	*/
-
 	this->renderManager->release();
 	this->multimediaManager->release();
 }
 
 void RenderEngine::processInput()
 {
-	if (this->inputHandler != NULL)
+	if (this->inputHandler != nullptr)
 		this->multimediaManager->processInput(this->inputHandler.get());
     else
 		this->running = !this->multimediaManager->checkClosePressed();
@@ -62,15 +55,12 @@ void RenderEngine::processInput()
 void RenderEngine::render()
 {
 	this->renderManager->clearBuffer();
-	/* ###
 	this->sceneManager->render();
-	*/
-	RenderManager::DEBUG_drawTriangle();
-
+	// ### RenderManager::DEBUG_drawTriangle();
 	this->multimediaManager->swapBuffers();
 }
 
-void RenderEngine::registerEventReceiver(InputHandler *inputHandler)
+void RenderEngine::setEventReceiver(InputHandler *inputHandler)
 {
 	this->inputHandler = SPTR<InputHandler>(inputHandler);
 }

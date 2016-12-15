@@ -47,6 +47,8 @@ public:
 
 	void destroy();
 	inline bool isAlive() { return this->alive; }
+
+	friend class SceneManager;
 };
 
 } // namespace

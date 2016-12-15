@@ -1,11 +1,15 @@
 #ifndef _SCENE_MANAGER_H//
 #define _SCENE_MANAGER_H_
 
+/*
 #include <engine/entities/CameraNode.h>
 #include <engine/entities/renderables/RenderableNode.h>
 #include <engine/entities/lights/DirectionalLight.h>
 #include <engine/entities/lights/PointLight.h>
 #include <engine/utils/singleton_macros.h>
+*/
+
+#include <engine/entities/Entity.h>
 
 namespace sre
 {
@@ -17,33 +21,35 @@ class RenderEngine;
 */
 class SceneManager
 {
-	DECLARE_SINGLETON(SceneManager);
+// ### DECLARE_SINGLETON(SceneManager);
 
-	private:
-		UPTR(CameraNode) mainCamera;
+private:
+	UPTR<Entity> mainCamera;
+	VECTOR_UPTR<Entity> entities;
 
-		std::vector<UPTR(RenderableNode)> renderableNodes;
+	int nodeCount;
 
-		int nodeCount;
+	SceneManager();
 
-		int generateNodeId();
-		void render();
+public:
+	~SceneManager();
 
-	public:
-		//Node *addNode();
-		// renderables //
-		RenderableNode *addCubeNode(float size = 1);
-		RenderableNode *addPlaneNode(float size = 1);
-		RenderableNode *addModelNode(const char *fileName);
+	// renderables //
+	Entity *addCubeEntity(float size = 1);
+	Entity *addPlaneEntity(float size = 1);
+	Entity *addModelEntity(const char *fileName);
 
-		// light //
-		DirectionalLight *addDirectionalLight();
-		PointLight *addPointLight();
+	// light //
+	Entity *addDirectionalLight();
+	Entity *addPointLight();
 
-		// camera //
-		CameraNode *getMainCamera();
+	// camera //
+	Entity *getMainCamera();
 
-	friend class Node;
+private:
+	void render();
+	int generateNodeId();
+
 	friend class RenderEngine;
 };
 

@@ -4,9 +4,9 @@
 namespace sre
 {
 
-MeshComponent *MeshFactory::createPlane(float size)
+UPTR<MeshComponent> MeshFactory::createPlane(Entity *entity, float size)
 {
-	MeshComponent *result = nullptr;
+	UPTR<MeshComponent> result{ nullptr };
 
 	float half = size * 0.5f;
 
@@ -23,35 +23,35 @@ MeshComponent *MeshFactory::createPlane(float size)
 	unsigned char planeIndices[] = { 0, 1, 2,
 		2, 3, 0 };
 
-	// TODO: armazenar as coordenadas de textura
+	// ### armazenar as coordenadas de textura
 	float planeTexCoords[] = { 1, 0,
 		0, 0,
 		0, 1,
 		1, 1 };
 
-	std::vector<VertexData> *vertexData = new std::vector<VertexData>();
-	VertexData newData;
+	VECTOR_UPTR<VertexData> vertexData;
+	UPTR<VertexData> newData;
 	for (int i = 0; i < 12; i += 3)
 	{
-		newData.position = Vector(planeVertices[i], planeVertices[i + 1], planeVertices[i + 2]);
-		newData.normal = Vector(planeNormals[i], planeNormals[i + 1], planeNormals[i + 2]);
-		newData.color = Vector(1, 1, 1);
+		newData->position = Vector(planeVertices[i], planeVertices[i + 1], planeVertices[i + 2]);
+		newData->normal = Vector(planeNormals[i], planeNormals[i + 1], planeNormals[i + 2]);
+		newData->color = Vector(1, 1, 1);
 
-		vertexData->push_back(newData);
+		vertexData.push_back(std::move(newData));
 	}
 
-	std::vector<unsigned int> *indices = new std::vector<unsigned int>();
+	std::vector<uint32_t> indices;
 	for (int i = 0; i < 6; i++)
-		indices->push_back(planeIndices[i]);
+		indices.push_back(planeIndices[i]);
 
-	result = new MeshComponent(vertexData, indices);
+	result = UPTR<MeshComponent>{ new MeshComponent{entity, vertexData, indices} };
 
 	return result;
 }
 
-MeshComponent *MeshFactory::createCube(float size)
+UPTR<MeshComponent> MeshFactory::createCube(Entity *entity, float size)
 {
-	MeshComponent *result = nullptr;
+	UPTR<MeshComponent> result{ nullptr };
 
 	float half = size * 0.5f;
 
@@ -96,28 +96,28 @@ MeshComponent *MeshFactory::createCube(float size)
 		0, 1,	1, 1,	1, 0,	0, 0 
 	};
 
-	std::vector<VertexData> *vertexData = new std::vector<VertexData>();
+	VECTOR_UPTR<VertexData> vertexData;
+	UPTR<VertexData> newData;
 	for (int i = 0; i < 72; i += 3)
 	{
-		VertexData newData;
-		newData.position = Vector(cubeVertices[i], cubeVertices[i + 1], cubeVertices[i + 2]);
-		newData.normal = Vector(cubeNormals[i], cubeNormals[i + 1], cubeNormals[i + 2]);
-		newData.color = Vector(1, 1, 1);
+		newData->position = Vector(cubeVertices[i], cubeVertices[i + 1], cubeVertices[i + 2]);
+		newData->normal = Vector(cubeNormals[i], cubeNormals[i + 1], cubeNormals[i + 2]);
+		newData->color = Vector(1, 1, 1);
 
-		vertexData->push_back(newData);
+		vertexData.push_back(std::move(newData));
 	}
 
 	for (int i = 0; i < 24; i++)
 	{
-		vertexData->at(i).u = cubeTexCoords[2 * i];
-		vertexData->at(i).v = cubeTexCoords[(2 * i) + 1];
+		vertexData[i]->u = cubeTexCoords[2 * i];
+		vertexData[i]->v = cubeTexCoords[(2 * i) + 1];
 	}
 
-	std::vector<unsigned int> *indices = new std::vector<unsigned int>();
+	std::vector<uint32_t> indices;
 	for (int i = 0; i < 36; i++)
-		indices->push_back(cubeIndices[i]);
+		indices.push_back(cubeIndices[i]);
 
-	result = new MeshComponent(vertexData, indices);
+	result = UPTR<MeshComponent>{ new MeshComponent{entity, vertexData, indices} };
 
 	return result;
 }
