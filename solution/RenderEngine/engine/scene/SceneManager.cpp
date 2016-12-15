@@ -8,6 +8,7 @@
 */
 
 #include <engine/entities/components/cameras/CameraComponent.h>
+#include <engine/entities/components/meshes/MeshFactory.h>
 
 namespace sre
 {
@@ -28,12 +29,12 @@ SceneManager::~SceneManager()
 
 Entity *SceneManager::addCubeEntity(float size)
 {
-	UPTR<Entity> newEntity = UPTR<Entity>{ new Entity };
-	// ### newEntity->addComponent		new CubeNode(size);
+	Entity *newEntity = new Entity;
+	MeshFactory::createCube(newEntity);
 	
-	this->entities.push_back(std::move(newEntity));
+	this->entities.push_back(UPTR<Entity>{newEntity});
 
-	return newEntity.get();
+	return newEntity;
 }
 
 Entity *SceneManager::addPlaneEntity(float size)

@@ -1,16 +1,16 @@
 #ifndef _VERTEX_DATA_H_
 #define _VERTEX_DATA_H_
 
-#include <engine/math/Vector.h>
+#include <glm/vec3.hpp>
 
 namespace sre
 {
 
 struct VertexData
 {
-    Vector position;
-    Vector normal;
-    Vector color;
+    glm::vec3 position;
+    glm::vec3 normal;
+    glm::vec3 color;
     float u, v;
 };
 

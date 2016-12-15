@@ -12,8 +12,8 @@ class Entity;
 class MeshFactory
 {
 	public:
-		static UPTR<MeshComponent> createPlane(Entity *entity, float size = 1.0f);
-		static UPTR<MeshComponent> createCube(Entity *entity, float size = 1.0f);
+		static MeshComponent *createPlane(Entity *entity, float size = 1.0f);
+		static MeshComponent *createCube(Entity *entity, float size = 1.0f);
 };
 
 } // namespace

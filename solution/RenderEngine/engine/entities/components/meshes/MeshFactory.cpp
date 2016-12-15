@@ -1,12 +1,13 @@
 #include "MeshFactory.h"
+#include <engine/entities/Entity.h>
 #include "MeshComponent.h"
 
 namespace sre
 {
 
-UPTR<MeshComponent> MeshFactory::createPlane(Entity *entity, float size)
+MeshComponent * MeshFactory::createPlane(Entity *entity, float size)
 {
-	UPTR<MeshComponent> result{ nullptr };
+	MeshComponent *result{ nullptr };
 
 	float half = size * 0.5f;
 
@@ -30,28 +31,29 @@ UPTR<MeshComponent> MeshFactory::createPlane(Entity *entity, float size)
 		1, 1 };
 
 	VECTOR_UPTR<VertexData> vertexData;
-	UPTR<VertexData> newData;
+	VertexData *newData;
 	for (int i = 0; i < 12; i += 3)
 	{
-		newData->position = Vector(planeVertices[i], planeVertices[i + 1], planeVertices[i + 2]);
-		newData->normal = Vector(planeNormals[i], planeNormals[i + 1], planeNormals[i + 2]);
-		newData->color = Vector(1, 1, 1);
+		newData = new VertexData;
+		newData->position = glm::vec3(planeVertices[i], planeVertices[i + 1], planeVertices[i + 2]);
+		newData->normal = glm::vec3(planeNormals[i], planeNormals[i + 1], planeNormals[i + 2]);
+		newData->color = glm::vec3(1.0f, 1.0f, 1.0f);
 
-		vertexData.push_back(std::move(newData));
+		vertexData.emplace_back(newData);
 	}
 
 	std::vector<uint32_t> indices;
 	for (int i = 0; i < 6; i++)
 		indices.push_back(planeIndices[i]);
 
-	result = UPTR<MeshComponent>{ new MeshComponent{entity, vertexData, indices} };
+	result = entity->addComponent<MeshComponent>(vertexData, indices);
 
 	return result;
 }
 
-UPTR<MeshComponent> MeshFactory::createCube(Entity *entity, float size)
+MeshComponent *MeshFactory::createCube(Entity *entity, float size)
 {
-	UPTR<MeshComponent> result{ nullptr };
+	MeshComponent *result{ nullptr };
 
 	float half = size * 0.5f;
 
@@ -97,14 +99,15 @@ UPTR<MeshComponent> MeshFactory::createCube(Entity *entity, float size)
 	};
 
 	VECTOR_UPTR<VertexData> vertexData;
-	UPTR<VertexData> newData;
+	VertexData *newData;
 	for (int i = 0; i < 72; i += 3)
 	{
-		newData->position = Vector(cubeVertices[i], cubeVertices[i + 1], cubeVertices[i + 2]);
-		newData->normal = Vector(cubeNormals[i], cubeNormals[i + 1], cubeNormals[i + 2]);
-		newData->color = Vector(1, 1, 1);
+		newData = new VertexData;
+		newData->position = glm::vec3(cubeVertices[i], cubeVertices[i + 1], cubeVertices[i + 2]);
+		newData->normal = glm::vec3(cubeNormals[i], cubeNormals[i + 1], cubeNormals[i + 2]);
+		newData->color = glm::vec3(1.0f, 1.0f, 1.0f);
 
-		vertexData.push_back(std::move(newData));
+		vertexData.emplace_back(newData);
 	}
 
 	for (int i = 0; i < 24; i++)
@@ -117,7 +120,7 @@ UPTR<MeshComponent> MeshFactory::createCube(Entity *entity, float size)
 	for (int i = 0; i < 36; i++)
 		indices.push_back(cubeIndices[i]);
 
-	result = UPTR<MeshComponent>{ new MeshComponent{entity, vertexData, indices} };
+	result = entity->addComponent<MeshComponent>(vertexData, indices);
 
 	return result;
 }

@@ -47,6 +47,7 @@ public:
 friend class RenderManager;
 */
 
+friend class Entity;
 friend class OpenGLAPI;
 friend class MeshFactory;
 };

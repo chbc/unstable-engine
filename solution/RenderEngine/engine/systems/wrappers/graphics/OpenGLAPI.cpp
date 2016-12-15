@@ -68,7 +68,7 @@ void OpenGLAPI::drawMesh(MeshComponent *mesh)
 	glEnableVertexAttribArray(vertexLocation);
 
 	int normalLocation = mesh->normalAttribLocation;
-	glVertexAttribPointer(normalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(Vector));
+	glVertexAttribPointer(normalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
 	glEnableVertexAttribArray(normalLocation);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);

@@ -25,13 +25,14 @@ private:
 public:
 	~Entity();
 
-	template <typename T> T *addComponent()
+	template <typename T, typename... TArgs>
+	T *addComponent(TArgs&&... mArgs)
 	{
 		T *newComponent{ nullptr };
 
 		if (!AComponentsHolder<AEntityComponent>::hasComponent<T>())
 		{
-			newComponent = new T{ this };
+			newComponent = new T{ this, std::forward<TArgs>(mArgs)... };
 			AComponentsHolder<AEntityComponent>::addComponent(newComponent);
 		}
 		else

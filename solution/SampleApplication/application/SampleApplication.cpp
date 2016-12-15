@@ -17,13 +17,9 @@ void SampleApplication::onInit()
 	// planeNode->setRotation(Vector(1, 0, 0), 90);
 
 	// cube //
-	/*
-	this->cube = this->sceneManager->addCubeNode();
-	this->cube->setPosition(Vector(0, 0.5f, 0));
+	Entity *cube = this->sceneManager->addCubeEntity();
+	cube->getTransform()->setPosition(Vector(0, 0.5f, 0));
 
-	RenderableNode *cube = this->sceneManager->addCubeNode(0.5f);
-	cube->setPosition(Vector(1, 0.5f, 0));
-	*/
 /*
 	Material *cubeMaterial = new SpecularMaterial("../media/crate.jpg");
 	this->cube->setMaterial(cubeMaterial);
