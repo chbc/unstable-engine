@@ -7,11 +7,7 @@
 #include "MatrixManager.h"
 #include "ShaderManager.h"
 #include "LightManager.h"
-
-/* ###
-#include <engine/entities/renderables/RenderableNode.h>
-#include <engine/entities/renderables/materials/DiffuseMaterial.h>
-*/
+#include <engine/entities/components/meshes/materials/Material.h>
 
 namespace sre
 {
@@ -47,20 +43,26 @@ void RenderManager::init()
 
 }
 
-void RenderManager::render(MeshComponent *mesh)
+void RenderManager::render(const UPTR<Entity> &entity)
 {
-	TransformComponent *transform = mesh->getEntity()->getTransform();
+	// Matrix setup
+	TransformComponent *transform = entity->getTransform();
     this->matrixManager->push(transform->getMatrix());
     this->matrixManager->update();
 
-	// shader setup
-	/* ###
-	unsigned int shaderProgram = material->getShaderProgram();
+	// Shader setup
+	MeshComponent *mesh = entity->getComponent<MeshComponent>();
+	uint32_t shaderProgram = mesh->material->getShaderProgram();
 	this->shaderManager->enableShader(shaderProgram);
 
 	glm::mat4 mvp = this->matrixManager->getMVP();
 	this->shaderManager->setValue(shaderProgram, "MVP", &mvp[0][0]);
 
+	ColorMaterialComponent *colorMaterial = mesh->material->getComponent<ColorMaterialComponent>();
+	glm::vec4 color = colorMaterial->getColor();
+	this->shaderManager->setValue(shaderProgram, "materialColor", color.r, color.g, color.b, color.a);
+
+	/* ###
 	if (receiveLight)
         this->lightManager->setupLights(shaderProgram);
 	*/
@@ -71,16 +73,14 @@ void RenderManager::render(MeshComponent *mesh)
 	this->matrixManager->pop();
 }
 
-void RenderManager::createBufferObject(MeshComponent *mesh)
+void RenderManager::createVBO(MeshComponent *mesh)
 {
-	/*
     unsigned int program = mesh->material->getShaderProgram();
     mesh->vertexAttribLocation = this->shaderManager->getAttribLocation(program, EShaderVariable::SHADER_POSITION);
     mesh->normalAttribLocation = this->shaderManager->getAttribLocation(program, EShaderVariable::SHADER_NORMAL);
 
 	this->graphicsWrapper->createVBO(mesh);
 	this->graphicsWrapper->createIBO(mesh);
-	*/
 }
 
 DirectionalLightComponent *RenderManager::addDirectionalLight(Entity *entity)
@@ -128,7 +128,7 @@ void RenderManager::applyMaterial(DiffuseMaterial *material, std::vector<VertexD
 /*
 void RenderManager::releaseMaterial(Material *material)
 {
-    // TODO
+    // ### TODO
 }
 */
 

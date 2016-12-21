@@ -5,6 +5,7 @@
 #include <engine/entities/components/AComponentsHolder.h>
 #include "components/AMaterialComponent.h"
 #include <engine/utils/memory_aliases.h>
+#include "components/ColorMaterialComponent.h"
 
 namespace sre
 {
@@ -14,23 +15,19 @@ namespace sre
 class Material : public AComponentsHolder<AMaterialComponent>
 {
 private:
-	unsigned int shaderProgram;
-
-	inline unsigned int getShaderProgram() { return this->shaderProgram; }
-	void loadShader(const std::string &vertexFile, const std::string &fragmentFile);
-
-	// ### void apply(std::vector<VertexData> *vertexData, bool receiveLight);
+	uint32_t shaderProgram;
 
 public:
 	Material();
 
-	template <typename T> T *addComponent()
+	template <typename T, typename... TArgs>
+	T *addComponent(TArgs&&... mArgs)
 	{
 		T *newComponent{ nullptr };
 
 		if (!AComponentsHolder<AMaterialComponent>::hasComponent<T>())
 		{
-			newComponent = new T{ this };
+			newComponent = new T{ this, std::forward<TArgs>(mArgs)... };
 			AComponentsHolder<AMaterialComponent>::addComponent(newComponent);
 		}
 		else
@@ -40,11 +37,17 @@ public:
 	}
 
 private:
+	inline uint32_t getShaderProgram() { return this->shaderProgram; }
+	void loadShader(const std::string &vertexFile, const std::string &fragmentFile);
+
+	// ### void apply(std::vector<VertexData> *vertexData, bool receiveLight);
 
 /* ###
-friend class RenderManager;
 friend class Mesh;
 */
+
+friend class RenderManager;
+friend class ColorMaterialComponent;
 };
 
 } // namespace

@@ -13,7 +13,7 @@ Quaternion::Quaternion()
 /*
 	q = cos(angle/2) + axis * sin(angle/2)
 */
-void Quaternion::setRotation(Vector axis, float angle)
+void Quaternion::setRotation(const glm::vec3 &axis, float angle)
 {
 	this->w = cosf(DEG2RAD(angle/2.0f));
 

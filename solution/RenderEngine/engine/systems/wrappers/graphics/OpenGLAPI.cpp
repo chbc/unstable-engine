@@ -44,39 +44,40 @@ void OpenGLAPI::createVBO(MeshComponent *mesh)
 void OpenGLAPI::createIBO(MeshComponent *mesh)
 {
 	// indices
-	/* ###
 	int indCount = mesh->indices.size();
 	uint32_t *indices = new uint32_t[indCount];
 	for (int i = 0; i < indCount; i++)
 		indices[i] = mesh->indices[i];
-	*/
 
 	// Creates IBO
 	glGenBuffers(1, &mesh->indexBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indices.size() * sizeof(GLuint), &mesh->indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indices.size() * sizeof(uint32_t), indices, GL_STATIC_DRAW);
 
-	// ### delete[] indices;
+	delete[] indices;
 }
 
 void OpenGLAPI::drawMesh(MeshComponent *mesh)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
 
+	// vertex
 	int vertexLocation = mesh->vertexAttribLocation;
 	glVertexAttribPointer(vertexLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
 	glEnableVertexAttribArray(vertexLocation);
 
+	// normal
 	int normalLocation = mesh->normalAttribLocation;
 	glVertexAttribPointer(normalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
 	glEnableVertexAttribArray(normalLocation);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, NULL);
 
 	// Clear
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisableVertexAttribArray(vertexLocation);
+	glDisableVertexAttribArray(normalLocation);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
@@ -105,6 +106,8 @@ void OpenGLAPI::DEBUG_drawTriangle()
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, indices);
+	glDisableClientState(GL_VERTEX_ARRAY);
+
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
@@ -151,6 +154,13 @@ void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float x, 
 	glUniform3f(location, x, y, z);
 }
 
+void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float x, float y, float z, float w)
+{
+	int location = glGetUniformLocation(program, varName.c_str());
+	this->checkVariableLocation(location, varName);
+	glUniform4f(location, x, y, z, w);
+}
+
 void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float *matrix)
 {
 	int location = glGetUniformLocation(program, varName.c_str());
@@ -165,6 +175,7 @@ void OpenGLAPI::setValue(uint32_t program, const std::string &varName, int value
 	glUniform1i(location, value);
 }
 
+/*
 int OpenGLAPI::getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable)
 {
 	int result = -1;
@@ -182,6 +193,7 @@ int OpenGLAPI::getAttribLocation(uint32_t program, EShaderVariable::Type shaderV
 
 	return result;
 }
+*/
 
 void OpenGLAPI::enableShader(uint32_t program)
 {

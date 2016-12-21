@@ -1,16 +1,12 @@
 #ifndef _RENDER_ENGINE_H_
 #define _RENDER_ENGINE_H_
 
-#include <engine/systems/multimedia/MultimediaManager.h>
-#include <engine/systems/graphics/RenderManager.h>
 #include <engine/systems/input/InputHandler.h>
 #include <engine/scene/SceneManager.h>
-#include <engine/utils/memory_aliases.h>
+#include <engine/systems/multimedia/MultimediaManager.h>
+#include <engine/systems/graphics/RenderManager.h>
 
-/*
-#include <engine/systems/graphics/TextureManager.h>
-#include <engine/systems/timer/Timer.h>
-*/
+class MultimediaManager;
 
 namespace sre
 {

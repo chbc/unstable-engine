@@ -1,9 +1,5 @@
 #include "RenderEngine.h"
 
-/* ###
-#include <iostream>
-#include <exception>
-*/
 
 namespace sre
 {
@@ -55,8 +51,7 @@ void RenderEngine::processInput()
 void RenderEngine::render()
 {
 	this->renderManager->clearBuffer();
-	this->sceneManager->render();
-	// ### RenderManager::DEBUG_drawTriangle();
+	this->sceneManager->render(this->renderManager.get());
 	this->multimediaManager->swapBuffers();
 }
 

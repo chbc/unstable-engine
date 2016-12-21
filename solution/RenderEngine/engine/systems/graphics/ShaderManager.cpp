@@ -45,6 +45,11 @@ void ShaderManager::setValue(unsigned int program, const std::string &varName, f
 	this->graphicsWrapper->setValue(program, varName, x, y, z);
 }
 
+void ShaderManager::setValue(unsigned int program, const std::string &varName, float x, float y, float z, float w)
+{
+	this->graphicsWrapper->setValue(program, varName, x, y, z, w);
+}
+
 void ShaderManager::setValue(unsigned int program, const std::string &varName, float *matrix)
 {
 	this->graphicsWrapper->setValue(program, varName, matrix);
@@ -57,7 +62,16 @@ void ShaderManager::setValue(unsigned int program, const std::string &varName, i
 
 int ShaderManager::getAttribLocation(unsigned int program, EShaderVariable::Type shaderVariable)
 {
-	return this->graphicsWrapper->getAttribLocation(program, shaderVariable);
+	int result = -1;
+
+	switch (shaderVariable)
+	{
+		case EShaderVariable::SHADER_POSITION:   result = 0; break;
+		case EShaderVariable::SHADER_NORMAL:     result = 1; break;
+		default: break;
+	}
+
+	return result;
 }
 
 // attributes

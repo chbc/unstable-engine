@@ -32,29 +32,29 @@ void TransformComponent::loadIdentity()
 	}
 }
 
-void TransformComponent::setPosition(Vector position)
+void TransformComponent::setPosition(const glm::vec3 &position)
 {
 	this->matrix[12] = position.x;
 	this->matrix[13] = position.y;
 	this->matrix[14] = position.z;
 }
 
-void TransformComponent::setScale(Vector scale)
+void TransformComponent::setScale(const glm::vec3 &scale)
 {
 	this->matrix[0] = scale.x;
 	this->matrix[5] = scale.y;
 	this->matrix[10] = scale.z;
 }
 
-void TransformComponent::setRotation(Vector axis, float angle)
+void TransformComponent::setRotation(const glm::vec3 &axis, float angle)
 {
 	this->quaternion.setRotation(axis, angle);
 	this->quaternion.getMatrix(this->matrix);
 }
 
-Vector TransformComponent::getPosition()
+glm::vec3 TransformComponent::getPosition()
 {
-	return Vector(this->matrix[12], this->matrix[13], this->matrix[14]);
+	return glm::vec3(this->matrix[12], this->matrix[13], this->matrix[14]);
 }
 
 Quaternion TransformComponent::getRotation()
@@ -62,9 +62,9 @@ Quaternion TransformComponent::getRotation()
 	return this->quaternion;
 }
 
-Vector TransformComponent::getScale()
+glm::vec3 TransformComponent::getScale()
 {
-	return Vector(this->matrix[0], this->matrix[5], this->matrix[10]);
+	return glm::vec3(this->matrix[0], this->matrix[5], this->matrix[10]);
 }
 
 } // namespace

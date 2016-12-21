@@ -21,6 +21,7 @@ protected:
 	AGraphicsWrapper() {}
 
 	virtual void init() = 0; // throws std::string
+	virtual void createVAO(MeshComponent *mesh) =0;
 	virtual void createVBO(MeshComponent *mesh) =0;
 	virtual void createIBO(MeshComponent *mesh) =0;
 	virtual void drawMesh(MeshComponent *mesh) =0;
@@ -35,10 +36,11 @@ protected:
 	virtual void setValue(uint32_t program, const std::string &varName, float x) =0;
 	virtual void setValue(uint32_t program, const std::string &varName, float x, float y) =0;
 	virtual void setValue(uint32_t program, const std::string &varName, float x, float y, float z) =0;
+	virtual void setValue(uint32_t program, const std::string &varName, float x, float y, float z, float w) =0;
 	virtual void setValue(uint32_t program, const std::string &varName, float *matrix) =0;
 	virtual void setValue(uint32_t program, const std::string &varName, int value) =0;
 
-	virtual int getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable) =0;
+	// ### virtual int getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable) =0;
 	virtual void enableShader(uint32_t program) =0;
 	virtual void disableShader() =0;
 	virtual void releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs) =0;

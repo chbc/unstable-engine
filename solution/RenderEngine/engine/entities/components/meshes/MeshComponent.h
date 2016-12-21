@@ -19,6 +19,7 @@ private:
 	std::vector<uint32_t> indices;
     UPTR<Material> material;
 
+	uint32_t vao;
     unsigned int vbo;
     unsigned int indexBO;
 	
@@ -40,16 +41,13 @@ public:
 	~MeshComponent();
 
 	void setMaterial(UPTR<Material> &material);
-
 	void setReceiveLight(bool receiveLight);
 
-/* ###
 friend class RenderManager;
-*/
-
 friend class Entity;
 friend class OpenGLAPI;
 friend class MeshFactory;
+
 };
 
 } // namespace

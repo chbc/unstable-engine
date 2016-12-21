@@ -1,7 +1,7 @@
 #ifndef _QUATERNION_H_
 #define _QUATERNION_H_
 
-#include "Vector.h"
+#include<glm/vec3.hpp>
 
 namespace sre
 {
@@ -17,7 +17,7 @@ class Quaternion
 	public:
 		Quaternion();
 
-		void setRotation(Vector axis, float angle);
+		void setRotation(const glm::vec3 &axis, float angle);
 		void getMatrix(float *matrix);
 };
 

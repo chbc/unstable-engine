@@ -35,6 +35,7 @@ class ShaderManager
 		void setValue(unsigned int program, const std::string &varName, float x);
 		void setValue(unsigned int program, const std::string &varName, float x, float y);
 		void setValue(unsigned int program, const std::string &varName, float x, float y, float z);
+		void setValue(unsigned int program, const std::string &varName, float x, float y, float z, float w);
 		void setValue(unsigned int program, const std::string &varName, float *matrix);
 
 		void setValue(unsigned int program, const std::string &varName, int value);

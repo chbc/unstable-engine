@@ -26,7 +26,6 @@ class PointLightComponent;
 class VertexData;
 class RenderableNode;
 class LightNode;
-class Material;
 class DiffuseMaterial;
 class SceneManager;
 */
@@ -49,7 +48,7 @@ private:
 	UPTR<LightManager> lightManager;
 
 private:
-	void render(MeshComponent *mesh);
+	void render(const UPTR<Entity> &entity);
 
 	static void DEBUG_drawTriangle();
 	void clearBuffer();
@@ -68,14 +67,15 @@ private:
 */
 	unsigned int loadShader(const std::string &vertFile, const std::string &fragFile);
 
-	void createBufferObject(MeshComponent *mesh);
+	void createVBO(MeshComponent *mesh);
 
 	DirectionalLightComponent *addDirectionalLight(Entity *entity);
 	PointLightComponent *addPointLight(Entity *entity);
 
-// ### friend class SceneManager;
+friend class SceneManager;
 friend class MeshComponent;
 friend class RenderEngine;
+friend class Material;
 };
 
 } // namespace

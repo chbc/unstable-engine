@@ -1,16 +1,19 @@
 #include "ColorMaterialComponent.h"
+#include "../Material.h"
+#include "ShaderConsts.h"
 #include <engine/systems/graphics/RenderManager.h>
 
 namespace sre
 {
 
-ColorMaterialComponent::ColorMaterialComponent() : AMaterialComponent()
+ColorMaterialComponent::ColorMaterialComponent(Material *material) : AMaterialComponent(material)
 {
-    // ### this->loadShader(shaderConsts::COLOR_V, shaderConsts::COLOR_F);
+	this->color = glm::vec4{ 1.0f };
+}
 
-	this->ambient = glm::vec3{ 0.3f };
-	this->diffuse = glm::vec3{ 0.7f };
-	this->specular = glm::vec3{ 0.9f };
+void ColorMaterialComponent::init()
+{
+    this->material->loadShader(ShaderConsts::COLOR_V, ShaderConsts::COLOR_F);
 }
 
 /* ###
@@ -20,19 +23,14 @@ void ColorMaterial::apply(std::vector<VertexData> *vertexData, bool receiveLight
 }
 */
 
-void ColorMaterialComponent::setAmbient(const glm::vec3 &ambient)
+void ColorMaterialComponent::setColor(const glm::vec4 &color)
 {
-	this->ambient = ambient;
+	this->color = color;
 }
 
-void ColorMaterialComponent::setDiffuse(const glm::vec3 &diffuse)
+glm::vec4 ColorMaterialComponent::getColor()
 {
-	this->diffuse = diffuse;
-}
-	
-void ColorMaterialComponent::setSpecular(const glm::vec3 &specular)
-{
-	this->specular = specular;
+	return this->color;
 }
 
 } // namespace

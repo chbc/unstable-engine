@@ -20,7 +20,7 @@ template <typename C>
 template <typename T>
 T *AComponentsHolder<C>::getComponent()
 {
-	AEntityComponent *component{ nullptr };
+	C *component{ nullptr };
 	if (hasComponent<T>())
 		component = componentsArray[this->getComponentID<T>()];
 	else

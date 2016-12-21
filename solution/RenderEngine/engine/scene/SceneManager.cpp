@@ -1,19 +1,11 @@
 #include "SceneManager.h"
 
-/*
-#include <engine/entities/renderables/CubeNode.h>
-#include <engine/entities/renderables/PlaneNode.h>
-#include <engine/entities/lights/DirectionalLight.h>
-#include <engine/systems/graphics/RenderManager.h>
-*/
-
 #include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/entities/components/meshes/MeshFactory.h>
+#include <engine/systems/graphics/RenderManager.h>
 
 namespace sre
 {
-
-// ### IMPLEMENT_SINGLETON(SceneManager);
 
 SceneManager::SceneManager()
 {
@@ -24,30 +16,32 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-	this->entities.clear();
+	this->renderableEntities.clear();
 }
 
 Entity *SceneManager::addCubeEntity(float size)
 {
 	Entity *newEntity = new Entity;
-	MeshFactory::createCube(newEntity);
+	MeshFactory::createCube(newEntity, size);
 	
-	this->entities.push_back(UPTR<Entity>{newEntity});
+	this->renderableEntities.emplace_back(newEntity);
 
 	return newEntity;
 }
 
 Entity *SceneManager::addPlaneEntity(float size)
 {
-	UPTR<Entity> newEntity = UPTR<Entity>{ new Entity };
-	// ### this->renderableNodes.push_back(newNode);
+	Entity *newEntity = new Entity;
+	MeshFactory::createPlane(newEntity, size);
+	
+	this->renderableEntities.emplace_back(newEntity);
 
-	return newEntity.get();
+	return newEntity;
 }
 
 Entity *SceneManager::addModelEntity(const char *fileName)
 {
-    /* TODO: implementar
+    /* ### TODO: implementar
     RenderableNode *newNode = new ModelNode(this, fileName);
     this->renderableNodes.push_back(newNode);
 
@@ -79,22 +73,24 @@ Entity *SceneManager::addPointLight()
 	return nullptr;
 }
 
-Entity *SceneManager::getMainCamera()
+CameraComponent *SceneManager::getMainCamera()
 {
-	return this->mainCamera.get();
+	return this->mainCamera->getComponent<CameraComponent>();
 }
 
-void SceneManager::render()
+void SceneManager::render(RenderManager *renderManager)
 {
-	/*
-    RenderManager *renderManager = RenderManager::getInstance();
-
     // Camera
-	renderManager->renderCamera(this->mainCamera->getTransform()->getPosition(), this->mainCamera->lookTarget, this->mainCamera->up);
+	CameraComponent *cameraComponent = this->mainCamera->getComponent<CameraComponent>();
+	renderManager->renderCamera
+	(
+		this->mainCamera->getTransform()->getPosition(), 
+		cameraComponent->lookAtTarget, cameraComponent->up
+	);
 
-    // Nodes
-    renderManager->render(this->renderableNodes);
-	*/
+    // Entities
+	for (const UPTR<Entity> &item : this->renderableEntities)
+		renderManager->render(item);
 }
 
 int SceneManager::generateNodeId()

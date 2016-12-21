@@ -10,6 +10,9 @@ using namespace sre;
 */
 class SampleApplication : public RenderEngine
 {
+private:
+	Entity *cube;
+
 public:
 	SampleApplication();
 

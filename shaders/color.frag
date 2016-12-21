@@ -1,15 +1,18 @@
-#version 140
+#version 400
 
-in vec3 normal;
-in vec3 lightDir;
-in vec3 lightColor;
+in vec4 var_position;
+in vec3 var_normal;
+in vec4 var_materialColor;
+in vec3 var_lightDirection;
 
-out vec4 outFragment;
 
-void main() 
-{ 
-	float energy = max(dot(normalize(normal), normalize(lightDir)), 0.0);
-	vec3 kd = lightColor * energy;
+out vec4 out_color;
 
-	outFragment = vec4(kd, 1.0);
+void main(void)
+{
+	vec3 lightVector = -var_lightDirection;
+	float energy = max(dot(normalize(var_normal), normalize(lightVector)), 0.0);
+	vec3 kd = var_materialColor.rgb * energy;
+
+	out_color = vec4(kd, 1.0);	
 }

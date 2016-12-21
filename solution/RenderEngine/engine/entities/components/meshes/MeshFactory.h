@@ -12,8 +12,8 @@ class Entity;
 class MeshFactory
 {
 	public:
-		static MeshComponent *createPlane(Entity *entity, float size = 1.0f);
-		static MeshComponent *createCube(Entity *entity, float size = 1.0f);
+		static MeshComponent *createPlane(Entity *entity, float size);
+		static MeshComponent *createCube(Entity *entity, float size);
 };
 
 } // namespace

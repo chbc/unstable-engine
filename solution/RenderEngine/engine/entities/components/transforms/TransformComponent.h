@@ -2,7 +2,7 @@
 #define _TRANSFORM_H_
 
 #include <engine/entities/components/AEntityComponent.h>
-#include <engine/math/Vector.h>
+#include <glm/vec3.hpp>
 #include <engine/math/Quaternion.h>
 
 namespace sre
@@ -23,13 +23,13 @@ private:
 public:
 	~TransformComponent();
 
-	void setPosition(Vector position);
-	void setScale(Vector scale);
-	void setRotation(Vector axis, float angle);
+	void setPosition(const glm::vec3 &position);
+	void setScale(const glm::vec3 &scale);
+	void setRotation(const glm::vec3 &axis, float angle);
 
-	Vector getPosition();
+	glm::vec3 getPosition();
 	Quaternion getRotation();
-	Vector getScale();
+	glm::vec3 getScale();
 
 	inline float *getMatrix() { return this->matrix; }
 

@@ -5,30 +5,44 @@
 namespace sre
 {
 
-MeshComponent * MeshFactory::createPlane(Entity *entity, float size)
+MeshComponent *MeshFactory::createPlane(Entity *entity, float size)
 {
 	MeshComponent *result{ nullptr };
 
 	float half = size * 0.5f;
 
-	float planeVertices[] = { half, half, 0,
+	float planeVertices[] = 
+	{ 
+		half, half, 0,
 		-half, half, 0,
 		-half,-half, 0,
-		half,-half, 0 };
+		half,-half, 0 
+	};
 
-	float planeNormals[] = { 0, 0, 1,
+	float planeNormals[] = 
+	{ 
 		0, 0, 1,
 		0, 0, 1,
-		0, 0, 1 };
+		0, 0, 1,
+		0, 0, 1 
+	};
 
-	unsigned char planeIndices[] = { 0, 1, 2,
-		2, 3, 0 };
+	unsigned char planeIndices[] = 
+	{ 
+		0, 1, 2,
+		2, 3, 0 
+	};
 
+	/*
 	// ### armazenar as coordenadas de textura
-	float planeTexCoords[] = { 1, 0,
+	float planeTexCoords[] = 
+	{ 
+		1, 0,
 		0, 0,
 		0, 1,
-		1, 1 };
+		1, 1 
+	};
+	*/
 
 	VECTOR_UPTR<VertexData> vertexData;
 	VertexData *newData;

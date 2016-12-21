@@ -1,33 +1,23 @@
-#version 140
+#version 400
+
+layout(location=0) in vec3 in_position;
+layout(location=1) in vec3 in_normal;
 
 uniform mat4 MVP;
+uniform vec4 materialColor;
 
-// Lights
-uniform struct
+out vec4 var_position;
+out vec3 var_normal;
+out vec4 var_materialColor;
+out vec3 var_lightDirection;
+
+
+void main(void)
 {
-	vec3 posDir;
-	vec3 color;
-	int type;
-} lights[];
-
-uniform int lightCount;
-
-// Input attributes
-in vec3 vertexPosition;
-in vec3 inputNormal;
-
-// Varying variables
-out vec3 normal;
-out vec3 lightDir;
-out vec3 lightColor;
-
-void main()
-{
-	int tt = lightCount;
+	var_materialColor = materialColor;
+	var_normal = (MVP * vec4(in_normal, 0.0)).xyz;
+	var_lightDirection = vec3(1.0, -1.0, 1.0);
 	
-	normal = normalize(inputNormal);
-	lightDir = lights[0].posDir;
-	lightColor = lights[0].color;
-	
-	gl_Position = MVP * vec4(vertexPosition, 1.0);
+	var_position = MVP * vec4(in_position, 1.0);
+	gl_Position = var_position;
 }

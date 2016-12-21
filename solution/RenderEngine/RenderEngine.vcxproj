@@ -178,6 +178,7 @@
     <ClInclude Include="engine\entities\components\lights\PointLightComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\AMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\ColorMaterialComponent.h" />
+    <ClInclude Include="engine\entities\components\meshes\materials\components\ShaderConsts.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\Material.h" />
     <ClInclude Include="engine\entities\components\meshes\MeshComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\MeshFactory.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="engine\systems\wrappers\graphics\OpenGLAPI.h" />
     <ClInclude Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.h" />
     <ClInclude Include="engine\systems\wrappers\multimedia\SDLAPI.h" />
+    <ClInclude Include="engine\temp\TEMP_Engine.h" />
     <ClInclude Include="engine\utils\EShaderVariable.h" />
     <ClInclude Include="engine\utils\FileUtils.h" />
     <ClInclude Include="engine\utils\memory_aliases.h" />

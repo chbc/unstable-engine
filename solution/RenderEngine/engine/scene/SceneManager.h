@@ -1,31 +1,23 @@
 #ifndef _SCENE_MANAGER_H//
 #define _SCENE_MANAGER_H_
 
-/*
-#include <engine/entities/CameraNode.h>
-#include <engine/entities/renderables/RenderableNode.h>
-#include <engine/entities/lights/DirectionalLight.h>
-#include <engine/entities/lights/PointLight.h>
-#include <engine/utils/singleton_macros.h>
-*/
-
 #include <engine/entities/Entity.h>
+#include <engine/entities/components/cameras/CameraComponent.h>
 
 namespace sre
 {
 
-class RenderEngine;
+class RenderManager;
+class CameraComponent;
 
 /*!
 	Class for manager scene nodes.
 */
 class SceneManager
 {
-// ### DECLARE_SINGLETON(SceneManager);
-
 private:
 	UPTR<Entity> mainCamera;
-	VECTOR_UPTR<Entity> entities;
+	VECTOR_UPTR<Entity> renderableEntities;
 
 	int nodeCount;
 
@@ -44,10 +36,10 @@ public:
 	Entity *addPointLight();
 
 	// camera //
-	Entity *getMainCamera();
+	CameraComponent *getMainCamera();
 
 private:
-	void render();
+	void render(RenderManager *renderManager);
 	int generateNodeId();
 
 	friend class RenderEngine;

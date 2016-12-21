@@ -12,6 +12,7 @@ protected:
 	OpenGLAPI() {}
 
 	void init() override;
+	void createVAO(MeshComponent *mesh) override {}
 	void createVBO(MeshComponent *mesh) override;
 	void createIBO(MeshComponent *mesh) override;
 	void clearBuffer() override;
@@ -28,10 +29,11 @@ protected:
 	void setValue(uint32_t program, const std::string &varName, float x) override;
 	void setValue(uint32_t program, const std::string &varName, float x, float y) override;
 	void setValue(uint32_t program, const std::string &varName, float x, float y, float z) override;
+	void setValue(uint32_t program, const std::string &varName, float x, float y, float z, float w) override;
 	void setValue(uint32_t program, const std::string &varName, float *matrix) override;
 	void setValue(uint32_t program, const std::string &varName, int value) override;
 
-	int getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable) override;
+	// ### int getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable) override;
 	void enableShader(uint32_t program) override;
 	void disableShader() override;
 	void releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs) override;

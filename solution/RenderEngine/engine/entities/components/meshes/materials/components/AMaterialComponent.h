@@ -4,10 +4,16 @@
 namespace sre
 {
 
+class Material;
+
 class AMaterialComponent
 {
+protected:
+	AMaterialComponent(Material *material) : material(material) {}
+	Material *material;
+
 public:
-	virtual void init() {}
+	virtual void init() =0;
 };
 
 }

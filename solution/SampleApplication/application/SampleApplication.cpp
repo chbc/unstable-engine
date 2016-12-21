@@ -8,19 +8,21 @@ SampleApplication::SampleApplication() : RenderEngine()
 void SampleApplication::onInit()
 {
 	// floor //
-	// RenderableNode *planeNode = this->sceneManager->addPlaneNode(5);
 	/*
 	Material *planeMaterial = new DiffuseMaterial("../media/woodfloor.png");
 	planeNode->setMaterial(planeMaterial);
 	*/
+	Entity *plane = this->sceneManager->addPlaneEntity(5);
+	TransformComponent *transform = plane->getTransform();
+	transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
 
-	// planeNode->setRotation(Vector(1, 0, 0), 90);
+	this->cube = this->sceneManager->addCubeEntity();
+	this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 0.0f));
 
-	// cube //
-	Entity *cube = this->sceneManager->addCubeEntity();
-	cube->getTransform()->setPosition(Vector(0, 0.5f, 0));
+	CameraComponent *camera = this->sceneManager->getMainCamera();
+	camera->setPosition(glm::vec3(0.0f, 2.0f, 10.0f));
 
-/*
+	/*
 	Material *cubeMaterial = new SpecularMaterial("../media/crate.jpg");
 	this->cube->setMaterial(cubeMaterial);
 	*/
@@ -40,4 +42,8 @@ void SampleApplication::onUpdate(unsigned int elapsedTime)
 {
 	//this->cubeAngle += elapsedTime * 0.05f;
 	//this->cube->setRotation(Vector(0, 1, 0), this->cubeAngle);
+
+	glm::vec3 position = this->cube->getTransform()->getPosition();
+	position.x += 0.001f * elapsedTime;
+	this->cube->getTransform()->setPosition(position);
 }

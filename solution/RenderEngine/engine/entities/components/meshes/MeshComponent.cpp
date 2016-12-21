@@ -15,9 +15,9 @@ MeshComponent::MeshComponent
 	this->vertexData = std::move(vertexData);
 	this->indices = std::move(indices);
 
-	this->material = std::make_unique<Material>();
+	this->material = std::make_unique<Material>();	// compila o shader
 
-	RenderManager::getInstance()->createBufferObject(this);
+	RenderManager::getInstance()->createVBO(this);
 }
 
 MeshComponent::~MeshComponent()
@@ -26,7 +26,7 @@ MeshComponent::~MeshComponent()
     this->indices.clear();
 }
 
-/*
+/* ###
 void MeshComponent::applyMaterial(bool receiveLight)
 {
     this->material->apply(this->vertexData, receiveLight);
