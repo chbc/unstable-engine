@@ -57,7 +57,7 @@ void RenderEngine::render()
 
 void RenderEngine::setEventReceiver(InputHandler *inputHandler)
 {
-	this->inputHandler = SPTR<InputHandler>(inputHandler);
+	this->inputHandler = UPTR<InputHandler>(inputHandler);
 }
 
 void RenderEngine::quit()

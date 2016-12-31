@@ -33,6 +33,7 @@ class MatrixManager
 
         void update();
         glm::mat4 getMVP();
+		glm::mat4 getModelMatrix();
 };
 
 } // namespace

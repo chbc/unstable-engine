@@ -2,6 +2,7 @@
 #define _QUATERNION_H_
 
 #include<glm/vec3.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace sre
 {
@@ -19,6 +20,7 @@ class Quaternion
 
 		void setRotation(const glm::vec3 &axis, float angle);
 		void getMatrix(float *matrix);
+		glm::mat4 getMatrix();
 };
 
 } // namespace

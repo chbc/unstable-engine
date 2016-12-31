@@ -58,6 +58,9 @@ void RenderManager::render(const UPTR<Entity> &entity)
 	glm::mat4 mvp = this->matrixManager->getMVP();
 	this->shaderManager->setValue(shaderProgram, "MVP", &mvp[0][0]);
 
+	glm::mat4 modelMatrix = this->matrixManager->getModelMatrix();
+	this->shaderManager->setValue(shaderProgram, "modelMatrix", &modelMatrix[0][0]);
+
 	ColorMaterialComponent *colorMaterial = mesh->material->getComponent<ColorMaterialComponent>();
 	glm::vec4 color = colorMaterial->getColor();
 	this->shaderManager->setValue(shaderProgram, "materialColor", color.r, color.g, color.b, color.a);

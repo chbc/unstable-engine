@@ -1,5 +1,5 @@
 #include "SampleApplication.h"
-// #include <application/events/EventReceiver.h>
+#include <application/events/EventReceiver.h>
 
 SampleApplication::SampleApplication() : RenderEngine()
 {
@@ -35,15 +35,17 @@ void SampleApplication::onInit()
 	*/
 
 	// set EventReceiver class for input handling
-	// this->registerEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
+	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
 }
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)
 {
+	/*
 	//this->cubeAngle += elapsedTime * 0.05f;
 	//this->cube->setRotation(Vector(0, 1, 0), this->cubeAngle);
 
 	glm::vec3 position = this->cube->getTransform()->getPosition();
 	position.x += 0.001f * elapsedTime;
 	this->cube->getTransform()->setPosition(position);
+	*/
 }

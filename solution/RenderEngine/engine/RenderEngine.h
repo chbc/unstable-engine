@@ -19,7 +19,7 @@ class RenderEngine
 protected:
 	SPTR<RenderManager> renderManager;
 	SPTR<MultimediaManager> multimediaManager;
-	SPTR<InputHandler> inputHandler;
+	UPTR<InputHandler> inputHandler;
 
 	UPTR<SceneManager> sceneManager;
 

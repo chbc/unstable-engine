@@ -71,4 +71,18 @@ glm::mat4 MatrixManager::getMVP()
     return this->mvp;
 }
 
+glm::mat4 MatrixManager::getModelMatrix()
+{
+	glm::mat4 result;
+
+	std::stack<glm::mat4> modelMatrices = this->models;
+	while (!modelMatrices.empty())
+	{
+		result *= modelMatrices.top();
+		modelMatrices.pop();
+	}
+
+	return result;
+}
+
 } // namespace

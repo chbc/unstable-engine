@@ -1,4 +1,5 @@
 #include "Quaternion.h"
+#include <glm/gtc/type_ptr.hpp>
 
 #include "math_util.h"
 
@@ -46,6 +47,14 @@ void Quaternion::getMatrix(float *matrix)
 	matrix[8] = (2*x*z) - (2*w*y);
 	matrix[9] = (2*y*z) + (2*w*x);
 	matrix[10] = 1 - (2*x*x) - (2*y*y);
+}
+
+glm::mat4 Quaternion::getMatrix()
+{
+	float rawMatrix[16];
+	this->getMatrix(rawMatrix);
+	
+	return glm::make_mat4(rawMatrix);
 }
 
 } // namespace
