@@ -47,6 +47,7 @@ protected:
 
 friend class RenderManager;
 friend class ShaderManager;
+friend class ColorRenderer; // ###
 
 /* ###
 friend class TextureManager;

@@ -51,7 +51,7 @@ void RenderEngine::processInput()
 void RenderEngine::render()
 {
 	this->renderManager->clearBuffer();
-	this->sceneManager->render(this->renderManager.get());
+	this->renderManager->render();
 	this->multimediaManager->swapBuffers();
 }
 

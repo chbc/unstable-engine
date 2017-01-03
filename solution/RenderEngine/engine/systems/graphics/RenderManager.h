@@ -13,6 +13,7 @@
 namespace sre
 {
 class MeshComponent;
+class CameraComponent;
 class AGraphicsWrapper;
 class MatrixManager;
 class ShaderManager;
@@ -21,6 +22,8 @@ class LightManager;
 class Entity;
 class DirectionalLightComponent;
 class PointLightComponent;
+
+class ColorRenderer;
 
 /* ###
 class VertexData;
@@ -47,8 +50,17 @@ private:
 	UPTR<MatrixManager> matrixManager;
 	UPTR<LightManager> lightManager;
 
+	UPTR<ColorRenderer> colorRenderer;
+
+	UPTR<CameraComponent> mainCamera;
+
 private:
-	void render(const UPTR<Entity> &entity);
+	void addMesh(MeshComponent *mesh);
+	void setMainCamera(CameraComponent *camera);
+	CameraComponent *getMainCamera();
+
+	void render();
+	void renderCamera();
 
 	static void DEBUG_drawTriangle();
 	void clearBuffer();
@@ -59,8 +71,6 @@ private:
 */
 
 	// ### void releaseMaterial(Material *material);
-
-	void renderCamera(const glm::vec3 &position, const glm::vec3 &lookTarget, const glm::vec3 &up);
 
 /* ###
 	Texture *loadTexture(const std::string &fileName);

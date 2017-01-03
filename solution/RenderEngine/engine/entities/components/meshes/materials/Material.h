@@ -48,6 +48,7 @@ friend class Mesh;
 
 friend class RenderManager;
 friend class ColorMaterialComponent;
+friend class ColorRenderer; // ###
 };
 
 } // namespace

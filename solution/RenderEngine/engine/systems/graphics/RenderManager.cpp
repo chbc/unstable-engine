@@ -2,12 +2,14 @@
 
 #include <engine/entities/Entity.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
+#include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/systems/wrappers/graphics/OpenGLAPI.h>
 #include <engine/systems/multimedia/MultimediaManager.h>
 #include "MatrixManager.h"
 #include "ShaderManager.h"
 #include "LightManager.h"
 #include <engine/entities/components/meshes/materials/Material.h>
+#include "renders/ColorRenderer.h"
 
 namespace sre
 {
@@ -24,6 +26,9 @@ RenderManager::RenderManager()
 	this->shaderManager		= UPTR<ShaderManager>{ new ShaderManager{this->graphicsWrapper} };
 	this->matrixManager		= UPTR<MatrixManager>{ new MatrixManager{} };
 	this->lightManager		= UPTR<LightManager>{ new LightManager{} };
+	
+	this->colorRenderer		= UPTR<ColorRenderer>{ nullptr };
+	this->mainCamera		= UPTR<CameraComponent>{ nullptr };
 }
 
 void RenderManager::init()
@@ -43,37 +48,38 @@ void RenderManager::init()
 
 }
 
-void RenderManager::render(const UPTR<Entity> &entity)
+void RenderManager::addMesh(MeshComponent *mesh)
 {
-	// Matrix setup
-	TransformComponent *transform = entity->getTransform();
-    this->matrixManager->push(transform->getMatrix());
-    this->matrixManager->update();
+	if (this->colorRenderer.get() == nullptr)
+		this->colorRenderer = UPTR<ColorRenderer>{ new ColorRenderer{} };
 
-	// Shader setup
-	MeshComponent *mesh = entity->getComponent<MeshComponent>();
-	uint32_t shaderProgram = mesh->material->getShaderProgram();
-	this->shaderManager->enableShader(shaderProgram);
+	this->colorRenderer->addMesh(mesh);
+}
 
-	glm::mat4 mvp = this->matrixManager->getMVP();
-	this->shaderManager->setValue(shaderProgram, "MVP", &mvp[0][0]);
+void RenderManager::setMainCamera(CameraComponent *camera)
+{
+	this->mainCamera.reset(camera);
+}
+	
+CameraComponent *RenderManager::getMainCamera()
+{
+	return this->mainCamera.get();
+}
 
-	glm::mat4 modelMatrix = this->matrixManager->getModelMatrix();
-	this->shaderManager->setValue(shaderProgram, "modelMatrix", &modelMatrix[0][0]);
+void RenderManager::render()
+{
+	this->renderCamera();
+	this->colorRenderer->render(this->matrixManager.get(), this->shaderManager.get(), this->graphicsWrapper.get());
+}
 
-	ColorMaterialComponent *colorMaterial = mesh->material->getComponent<ColorMaterialComponent>();
-	glm::vec4 color = colorMaterial->getColor();
-	this->shaderManager->setValue(shaderProgram, "materialColor", color.r, color.g, color.b, color.a);
-
-	/* ###
-	if (receiveLight)
-        this->lightManager->setupLights(shaderProgram);
-	*/
-
-	this->graphicsWrapper->drawMesh(mesh);
-	this->shaderManager->disableShader();
-
-	this->matrixManager->pop();
+void RenderManager::renderCamera()
+{
+    this->matrixManager->setView
+	(
+		this->mainCamera->getTransform()->getPosition(),
+		this->mainCamera->lookAtTarget,
+		this->mainCamera->up
+	);
 }
 
 void RenderManager::createVBO(MeshComponent *mesh)
@@ -134,11 +140,6 @@ void RenderManager::releaseMaterial(Material *material)
     // ### TODO
 }
 */
-
-void RenderManager::renderCamera(const glm::vec3 &position, const glm::vec3 &lookTarget, const glm::vec3 &up)
-{
-    this->matrixManager->setView(position, lookTarget, up);
-}
 
 /* ###
 Texture *RenderManager::loadTexture(const std::string &fileName)

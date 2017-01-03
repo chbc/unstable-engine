@@ -16,8 +16,8 @@ class CameraComponent;
 class SceneManager
 {
 private:
-	UPTR<Entity> mainCamera;
-	VECTOR_UPTR<Entity> renderableEntities;
+	
+	VECTOR_UPTR<Entity> entities;
 
 	int nodeCount;
 
@@ -29,7 +29,6 @@ public:
 	// renderables //
 	Entity *addCubeEntity(float size = 1);
 	Entity *addPlaneEntity(float size = 1);
-	Entity *addModelEntity(const char *fileName);
 
 	// light //
 	Entity *addDirectionalLight();
@@ -39,7 +38,6 @@ public:
 	CameraComponent *getMainCamera();
 
 private:
-	void render(RenderManager *renderManager);
 	int generateNodeId();
 
 	friend class RenderEngine;

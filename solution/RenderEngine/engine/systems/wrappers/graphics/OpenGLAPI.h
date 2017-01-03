@@ -44,6 +44,7 @@ private:
 	void checkVariableLocation(int location, const std::string &varName); // throws "invalid variable"
 
 friend class RenderManager;
+friend class ColorRenderer; // ###
 };
 
 } // namespace

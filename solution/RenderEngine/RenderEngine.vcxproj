@@ -143,6 +143,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="engine\entities\components\AEntityComponent.cpp" />
+    <ClCompile Include="engine\systems\graphics\renders\ColorRenderer.cpp" />
     <ClCompile Include="engine\entities\components\cameras\CameraComponent.cpp" />
     <ClCompile Include="engine\entities\components\lights\ALightComponent.cpp" />
     <ClCompile Include="engine\entities\components\lights\DirectionalLightComponent.cpp" />
@@ -170,6 +172,7 @@
     <ClCompile Include="engine\utils\FileUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\systems\graphics\renders\ColorRenderer.h" />
     <ClInclude Include="engine\entities\components\AComponentsHolder.h" />
     <ClInclude Include="engine\entities\components\AEntityComponent.h" />
     <ClInclude Include="engine\entities\components\cameras\CameraComponent.h" />

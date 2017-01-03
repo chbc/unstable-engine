@@ -90,6 +90,12 @@
     <ClCompile Include="engine\entities\components\meshes\MeshFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\systems\graphics\renders\ColorRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entities\components\AEntityComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\EShaderVariable.h">
@@ -201,6 +207,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\temp\TEMP_Engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\renders\ColorRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

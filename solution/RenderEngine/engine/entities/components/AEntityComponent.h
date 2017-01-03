@@ -7,6 +7,7 @@ namespace sre
 {
 
 class Entity;
+class TransformComponent;
 
 class AEntityComponent
 {
@@ -23,6 +24,8 @@ public:
 	AEntityComponent(Entity *entity) { this->entity = entity; }
 	virtual void init() {}
 	virtual void update(uint32_t deltaTime) {}
+
+	TransformComponent *getTransform();
 
 friend class Entity;
 // friend class AComponentsHolder<AEntityComponent>;

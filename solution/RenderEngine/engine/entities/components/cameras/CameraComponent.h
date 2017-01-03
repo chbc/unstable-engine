@@ -24,7 +24,7 @@ public:
 	void setLookAt(const glm::vec3 &target);
 	void setPosition(const glm::vec3 &position);
 
-friend class SceneManager;
+friend class RenderManager;
 };
 
 } // namespace
