@@ -17,7 +17,6 @@ class MatrixManager
         std::stack<glm::mat4> models;
         glm::mat4 view;
         glm::mat4 projection;
-        glm::mat4 mvp;
 
 	public:
 	    MatrixManager();
@@ -27,13 +26,11 @@ class MatrixManager
         void pop();
 
         void setView(const glm::vec3 &position, const glm::vec3 &lookTarget, const glm::vec3 &up);
+        void setView(Vector position, Vector lookTarget, Vector up);
         void setProjection(float fov, float aspectRatio, float near, float far);
 
-        void setView(Vector position, Vector lookTarget, Vector up);
-
-        void update();
-        glm::mat4 getMVP();
 		glm::mat4 getModelMatrix();
+		glm::mat4 getViewProjectionMatrix();
 };
 
 } // namespace

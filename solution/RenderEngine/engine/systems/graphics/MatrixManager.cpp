@@ -32,43 +32,14 @@ void MatrixManager::setView(const glm::vec3 &position, const glm::vec3 &lookTarg
     this->view = glm::lookAt(position, lookTarget, up);
 }
 
-void MatrixManager::setProjection(float fov, float aspectRatio, float near, float far)
-{
-    this->projection = glm::perspective(fov, aspectRatio, near, far);
-}
-
 void MatrixManager::setView(Vector position, Vector lookTarget, Vector up)
 {
     this->view = glm::lookAt(position.toVec3(), lookTarget.toVec3(), up.toVec3());
 }
 
-void MatrixManager::update()
+void MatrixManager::setProjection(float fov, float aspectRatio, float near, float far)
 {
-    glm::mat4 result = this->projection * this->view;
-
-    std::stack<glm::mat4> currentModels;
-
-    while (!this->models.empty())
-    {
-        currentModels.push(this->models.top());
-        this->models.pop();
-    }
-
-    glm::mat4 model;
-    while (!currentModels.empty())
-    {
-        model = currentModels.top();
-        result *= model;
-        this->models.push(model);
-        currentModels.pop();
-    }
-
-    this->mvp = result;
-}
-
-glm::mat4 MatrixManager::getMVP()
-{
-    return this->mvp;
+    this->projection = glm::perspective(fov, aspectRatio, near, far);
 }
 
 glm::mat4 MatrixManager::getModelMatrix()
@@ -83,6 +54,11 @@ glm::mat4 MatrixManager::getModelMatrix()
 	}
 
 	return result;
+}
+
+glm::mat4 MatrixManager::getViewProjectionMatrix()
+{
+	return this->projection * this->view;
 }
 
 } // namespace

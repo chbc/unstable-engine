@@ -3,7 +3,7 @@
 layout(location=0) in vec3 in_position;
 layout(location=1) in vec3 in_normal;
 
-uniform mat4 MVP;
+uniform mat4 viewProjectionMatrix;
 uniform mat4 modelMatrix;
 uniform vec4 materialColor;
 
@@ -19,6 +19,7 @@ void main(void)
 	var_normal = (modelMatrix * vec4(in_normal, 1)).xyz;
 	var_lightDirection = vec3(1.0, -1.0, 1.0);
 	
-	var_position = MVP * vec4(in_position, 1.0);
+	mat4 mvp = viewProjectionMatrix * modelMatrix;
+	var_position = mvp * vec4(in_position, 1.0);
 	gl_Position = var_position;
 }

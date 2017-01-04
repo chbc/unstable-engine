@@ -46,13 +46,12 @@ private:
 */
 
 	SPTR<AGraphicsWrapper> graphicsWrapper;
-	UPTR<ShaderManager> shaderManager;
 	UPTR<MatrixManager> matrixManager;
 	UPTR<LightManager> lightManager;
 
 	UPTR<ColorRenderer> colorRenderer;
 
-	UPTR<CameraComponent> mainCamera;
+	CameraComponent *mainCamera;
 
 private:
 	void addMesh(MeshComponent *mesh);
@@ -75,8 +74,6 @@ private:
 /* ###
 	Texture *loadTexture(const std::string &fileName);
 */
-	unsigned int loadShader(const std::string &vertFile, const std::string &fragFile);
-
 	void createVBO(MeshComponent *mesh);
 
 	DirectionalLightComponent *addDirectionalLight(Entity *entity);

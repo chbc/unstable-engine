@@ -6,7 +6,6 @@
 #include <engine/systems/wrappers/graphics/OpenGLAPI.h>
 #include <engine/systems/multimedia/MultimediaManager.h>
 #include "MatrixManager.h"
-#include "ShaderManager.h"
 #include "LightManager.h"
 #include <engine/entities/components/meshes/materials/Material.h>
 #include "renders/ColorRenderer.h"
@@ -23,20 +22,22 @@ RenderManager::RenderManager()
 	*/ 
 
 	this->graphicsWrapper	= SPTR<AGraphicsWrapper>{ new OpenGLAPI{} };
-	this->shaderManager		= UPTR<ShaderManager>{ new ShaderManager{this->graphicsWrapper} };
 	this->matrixManager		= UPTR<MatrixManager>{ new MatrixManager{} };
 	this->lightManager		= UPTR<LightManager>{ new LightManager{} };
 	
 	this->colorRenderer		= UPTR<ColorRenderer>{ nullptr };
-	this->mainCamera		= UPTR<CameraComponent>{ nullptr };
+	this->mainCamera		= nullptr;
 }
 
 void RenderManager::init()
 {
 	this->graphicsWrapper->init();
 
-	const float FOV{45.0f};
+	const float FOV{90.0f};
 	this->matrixManager->setProjection(FOV, MultimediaManager::SCREEN_WIDTH/MultimediaManager::SCREEN_HEIGHT, 1, 100);
+
+	if (this->colorRenderer.get() == nullptr)
+		this->colorRenderer = UPTR<ColorRenderer>{ new ColorRenderer{this->graphicsWrapper} };
 
 	/*
 	if (!this->textureManager->init())
@@ -50,26 +51,25 @@ void RenderManager::init()
 
 void RenderManager::addMesh(MeshComponent *mesh)
 {
-	if (this->colorRenderer.get() == nullptr)
-		this->colorRenderer = UPTR<ColorRenderer>{ new ColorRenderer{} };
+
 
 	this->colorRenderer->addMesh(mesh);
 }
 
 void RenderManager::setMainCamera(CameraComponent *camera)
 {
-	this->mainCamera.reset(camera);
+	this->mainCamera = camera;
 }
-	
+
 CameraComponent *RenderManager::getMainCamera()
 {
-	return this->mainCamera.get();
+	return this->mainCamera;
 }
 
 void RenderManager::render()
 {
 	this->renderCamera();
-	this->colorRenderer->render(this->matrixManager.get(), this->shaderManager.get(), this->graphicsWrapper.get());
+	this->colorRenderer->render(this->matrixManager.get(), this->graphicsWrapper.get());
 }
 
 void RenderManager::renderCamera()
@@ -84,12 +84,7 @@ void RenderManager::renderCamera()
 
 void RenderManager::createVBO(MeshComponent *mesh)
 {
-    unsigned int program = mesh->material->getShaderProgram();
-    mesh->vertexAttribLocation = this->shaderManager->getAttribLocation(program, EShaderVariable::SHADER_POSITION);
-    mesh->normalAttribLocation = this->shaderManager->getAttribLocation(program, EShaderVariable::SHADER_NORMAL);
-
-	this->graphicsWrapper->createVBO(mesh);
-	this->graphicsWrapper->createIBO(mesh);
+	this->colorRenderer->createVBO(mesh);
 }
 
 DirectionalLightComponent *RenderManager::addDirectionalLight(Entity *entity)
@@ -147,11 +142,6 @@ Texture *RenderManager::loadTexture(const std::string &fileName)
 	return this->textureManager->loadTexture(fileName);
 }
 */
-
-unsigned int RenderManager::loadShader(const std::string &vertFile, const std::string &fragFile)
-{
-	return this->shaderManager->loadShader(vertFile, fragFile);
-}
 
 void RenderManager::release()
 {

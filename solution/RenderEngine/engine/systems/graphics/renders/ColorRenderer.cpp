@@ -5,12 +5,19 @@
 #include <engine/systems/graphics/MatrixManager.h>
 #include <engine/systems/graphics/ShaderManager.h>
 #include <engine/systems/wrappers/graphics/OpenGLAPI.h>
+#include <engine/systems/graphics/ShaderManager.h>
+#include "ShaderConsts.h"
 
 namespace sre
 {
 
-ColorRenderer::ColorRenderer()
+ColorRenderer::ColorRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper)
 {
+	this->graphicsWrapper = graphicsWrapper;
+	this->shaderManager	= UPTR<ShaderManager>{ new ShaderManager{graphicsWrapper} };
+	this->shaderPorgram = this->shaderManager->loadShader(ShaderConsts::COLOR_V, ShaderConsts::COLOR_F);
+    this->vertexAttribLocation = this->shaderManager->getAttribLocation(this->shaderPorgram, EShaderVariable::SHADER_POSITION);
+    this->normalAttribLocation = this->shaderManager->getAttribLocation(this->shaderPorgram, EShaderVariable::SHADER_NORMAL);
 }
 
 ColorRenderer::~ColorRenderer()
@@ -23,40 +30,48 @@ void ColorRenderer::addMesh(MeshComponent *mesh)
 	this->meshes.push_back(mesh);
 }
 
-void ColorRenderer::render(MatrixManager *matrixManager, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
+void ColorRenderer::createVBO(MeshComponent *mesh)
 {
+	this->graphicsWrapper->createVBO(mesh);
+	this->graphicsWrapper->createIBO(mesh);
+}
+
+uint32_t ColorRenderer::loadShader(const std::string &vertFile, const std::string &fragFile)
+{
+	return this->shaderManager->loadShader(vertFile, fragFile);
+}
+
+void ColorRenderer::render(MatrixManager *matrixManager, AGraphicsWrapper *graphicsWrapper)
+{
+	// Shader setup
+	this->shaderManager->enableShader(this->shaderPorgram);
+
 	for (MeshComponent *mesh : this->meshes)
 	{
 		// Matrix setup
 		TransformComponent *transform = mesh->getTransform();
 		matrixManager->push(transform->getMatrix());
-		matrixManager->update();
 
-		// Shader setup
-		uint32_t shaderProgram = mesh->material->getShaderProgram();
-		shaderManager->enableShader(shaderProgram);
-
-		glm::mat4 mvp = matrixManager->getMVP();
-		shaderManager->setValue(shaderProgram, "MVP", &mvp[0][0]);
+		glm::mat4 viewProjectionMatrix = matrixManager->getViewProjectionMatrix();
+		this->shaderManager->setValue(this->shaderPorgram, "viewProjectionMatrix", &viewProjectionMatrix[0][0]);
 
 		glm::mat4 modelMatrix = matrixManager->getModelMatrix();
-		shaderManager->setValue(shaderProgram, "modelMatrix", &modelMatrix[0][0]);
+		this->shaderManager->setValue(this->shaderPorgram, "modelMatrix", &modelMatrix[0][0]);
 
 		ColorMaterialComponent *colorMaterial = mesh->material->getComponent<ColorMaterialComponent>();
 		glm::vec4 color = colorMaterial->getColor();
-		shaderManager->setValue(shaderProgram, "materialColor", color.r, color.g, color.b, color.a);
+		this->shaderManager->setValue(this->shaderPorgram, "materialColor", color.r, color.g, color.b, color.a);
 
 		/* ###
 		if (receiveLight)
 			lightManager->setupLights(shaderProgram);
 		*/
 
-		graphicsWrapper->drawMesh(mesh);
-		shaderManager->disableShader();
-
+		graphicsWrapper->drawMesh(mesh, this->vertexAttribLocation, this->normalAttribLocation);
 		matrixManager->pop();
 	}
 
+	this->shaderManager->disableShader();
 }
 
 }

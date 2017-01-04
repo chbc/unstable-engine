@@ -203,13 +203,13 @@
     <ClInclude Include="engine\entities\components\meshes\VertexData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\components\meshes\materials\components\ShaderConsts.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\temp\TEMP_Engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\systems\graphics\renders\ColorRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\renders\ShaderConsts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

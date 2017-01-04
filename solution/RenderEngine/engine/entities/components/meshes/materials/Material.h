@@ -14,9 +14,6 @@ namespace sre
 
 class Material : public AComponentsHolder<AMaterialComponent>
 {
-private:
-	uint32_t shaderProgram;
-
 public:
 	Material();
 
@@ -35,11 +32,6 @@ public:
 
 		return newComponent;
 	}
-
-private:
-	inline uint32_t getShaderProgram() { return this->shaderProgram; }
-	void loadShader(const std::string &vertexFile, const std::string &fragmentFile);
-
 	// ### void apply(std::vector<VertexData> *vertexData, bool receiveLight);
 
 /* ###

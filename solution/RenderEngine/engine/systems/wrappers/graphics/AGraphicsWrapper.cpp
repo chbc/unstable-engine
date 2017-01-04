@@ -4,6 +4,6 @@
 namespace sre
 {
 
-// ##3 APAGAR
+// ### APAGAR
 
 } // namespace

@@ -23,9 +23,6 @@ private:
     unsigned int vbo;
     unsigned int indexBO;
 	
-    int vertexAttribLocation;
-    int normalAttribLocation;
-	
 	bool receiveLight;
 
 	MeshComponent

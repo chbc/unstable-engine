@@ -1,6 +1,5 @@
 #include "ColorMaterialComponent.h"
 #include "../Material.h"
-#include "ShaderConsts.h"
 #include <engine/systems/graphics/RenderManager.h>
 
 namespace sre
@@ -13,7 +12,6 @@ ColorMaterialComponent::ColorMaterialComponent(Material *material) : AMaterialCo
 
 void ColorMaterialComponent::init()
 {
-    this->material->loadShader(ShaderConsts::COLOR_V, ShaderConsts::COLOR_F);
 }
 
 /* ###

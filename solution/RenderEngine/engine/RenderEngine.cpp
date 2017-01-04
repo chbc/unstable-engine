@@ -1,6 +1,5 @@
 #include "RenderEngine.h"
 
-
 namespace sre
 {
 

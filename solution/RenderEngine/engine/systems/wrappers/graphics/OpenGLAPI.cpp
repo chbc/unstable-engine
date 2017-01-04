@@ -57,17 +57,15 @@ void OpenGLAPI::createIBO(MeshComponent *mesh)
 	delete[] indices;
 }
 
-void OpenGLAPI::drawMesh(MeshComponent *mesh)
+void OpenGLAPI::drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
 
 	// vertex
-	int vertexLocation = mesh->vertexAttribLocation;
 	glVertexAttribPointer(vertexLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
 	glEnableVertexAttribArray(vertexLocation);
 
 	// normal
-	int normalLocation = mesh->normalAttribLocation;
 	glVertexAttribPointer(normalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
 	glEnableVertexAttribArray(normalLocation);
 

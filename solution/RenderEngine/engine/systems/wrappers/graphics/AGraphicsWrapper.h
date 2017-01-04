@@ -24,7 +24,7 @@ protected:
 	virtual void createVAO(MeshComponent *mesh) =0;
 	virtual void createVBO(MeshComponent *mesh) =0;
 	virtual void createIBO(MeshComponent *mesh) =0;
-	virtual void drawMesh(MeshComponent *mesh) =0;
+	virtual void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation) =0;
 	virtual void clearBuffer() =0;
 	virtual void deleteTexture(uint32_t id) =0;
 

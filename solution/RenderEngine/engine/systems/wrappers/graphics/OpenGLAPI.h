@@ -16,7 +16,7 @@ protected:
 	void createVBO(MeshComponent *mesh) override;
 	void createIBO(MeshComponent *mesh) override;
 	void clearBuffer() override;
-	void drawMesh(MeshComponent *mesh) override;
+	void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation) override;
 	void deleteTexture(uint32_t id) override;
 
 	static void DEBUG_drawTriangle();
