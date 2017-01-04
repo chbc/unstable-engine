@@ -46,14 +46,15 @@ void ColorRenderer::render(MatrixManager *matrixManager, AGraphicsWrapper *graph
 	// Shader setup
 	this->shaderManager->enableShader(this->shaderPorgram);
 
+	glm::mat4 viewProjectionMatrix = matrixManager->getViewProjectionMatrix();
+	this->shaderManager->setValue(this->shaderPorgram, "viewProjectionMatrix", &viewProjectionMatrix[0][0]);
+
+	// ### tratar os filhos das entidades
 	for (MeshComponent *mesh : this->meshes)
 	{
 		// Matrix setup
 		TransformComponent *transform = mesh->getTransform();
 		matrixManager->push(transform->getMatrix());
-
-		glm::mat4 viewProjectionMatrix = matrixManager->getViewProjectionMatrix();
-		this->shaderManager->setValue(this->shaderPorgram, "viewProjectionMatrix", &viewProjectionMatrix[0][0]);
 
 		glm::mat4 modelMatrix = matrixManager->getModelMatrix();
 		this->shaderManager->setValue(this->shaderPorgram, "modelMatrix", &modelMatrix[0][0]);
