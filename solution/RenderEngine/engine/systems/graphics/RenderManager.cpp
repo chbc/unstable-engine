@@ -36,9 +36,6 @@ void RenderManager::init()
 	const float FOV{90.0f};
 	this->matrixManager->setProjection(FOV, MultimediaManager::SCREEN_WIDTH/MultimediaManager::SCREEN_HEIGHT, 1, 100);
 
-	if (this->colorRenderer.get() == nullptr)
-		this->colorRenderer = UPTR<ColorRenderer>{ new ColorRenderer{this->graphicsWrapper} };
-
 	/*
 	if (!this->textureManager->init())
 	{
@@ -51,9 +48,11 @@ void RenderManager::init()
 
 void RenderManager::addMesh(MeshComponent *mesh)
 {
-
+	if (this->colorRenderer.get() == nullptr)
+		this->colorRenderer = UPTR<ColorRenderer>{ new ColorRenderer{this->graphicsWrapper} };
 
 	this->colorRenderer->addMesh(mesh);
+	this->createVBO(mesh);
 }
 
 void RenderManager::setMainCamera(CameraComponent *camera)
@@ -82,6 +81,16 @@ void RenderManager::renderCamera()
 	);
 }
 
+void RenderManager::DEBUG_drawTriangle()
+{
+	OpenGLAPI::DEBUG_drawTriangle();
+}
+
+void RenderManager::clearBuffer()
+{
+	this->graphicsWrapper->clearBuffer();
+}
+
 void RenderManager::createVBO(MeshComponent *mesh)
 {
 	this->colorRenderer->createVBO(mesh);
@@ -97,15 +106,7 @@ PointLightComponent *RenderManager::addPointLight(Entity *entity)
     return this->lightManager->addPointLight(entity);
 }
 
-void RenderManager::DEBUG_drawTriangle()
-{
-	OpenGLAPI::DEBUG_drawTriangle();
-}
 
-void RenderManager::clearBuffer()
-{
-	this->graphicsWrapper->clearBuffer();
-}
 
 /* ###
 void RenderManager::applyMaterial(Material *material, bool receiveLight)
