@@ -6,22 +6,22 @@
 
 #define DECLARE_SINGLETON(className)			\
 		private:								\
-			static SPTR<className> instance;			\
+			static UPTR<className> instance;			\
 			className();						\
 		public:									\
-			static SPTR<className> getInstance();	\
+			static className *getInstance();	\
 			void init();						\
 			void release();
 
 
 // instance initialization and getInstance implementation
 #define IMPLEMENT_SINGLETON(className)					\
-		SPTR<className> className::instance = SPTR<className>(nullptr);			\
-		SPTR<className> className::getInstance()				\
+		UPTR<className> className::instance = UPTR<className>(nullptr);			\
+		className *className::getInstance()				\
 		{												\
 			if (instance.get() == nullptr)					\
-				instance = SPTR<className>{ new className{} };				\
-			return instance;							\
+				instance = UPTR<className>{ new className{} };				\
+			return instance.get();							\
 		}
 
 #endif

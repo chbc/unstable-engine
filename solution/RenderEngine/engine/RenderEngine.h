@@ -17,10 +17,9 @@ namespace sre
 class RenderEngine
 {
 protected:
-	SPTR<RenderManager> renderManager;
-	SPTR<MultimediaManager> multimediaManager;
+	RenderManager *renderManager;
+	MultimediaManager *multimediaManager;
 	UPTR<InputHandler> inputHandler;
-
 	UPTR<SceneManager> sceneManager;
 
 	RenderEngine();

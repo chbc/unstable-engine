@@ -26,9 +26,9 @@ Entity *SceneManager::addCubeEntity(float size)
 {
 	Entity *newEntity = new Entity;
 	MeshComponent *mesh = MeshFactory::createCube(newEntity, size);
+	RenderManager::getInstance()->addMesh(mesh);
 	
 	this->entities.emplace_back(newEntity);
-	RenderManager::getInstance()->addMesh(mesh);
 
 	return newEntity;
 }
@@ -45,17 +45,16 @@ Entity *SceneManager::addPlaneEntity(float size)
 }
 
 // light //
-Entity *SceneManager::addDirectionalLight()
+DirectionalLightComponent *SceneManager::addDirectionalLight()
 {
-	/* ###
-    RenderManager *renderManager = RenderManager::getInstance();
-    return renderManager->addDirectionalLight();
-	*/
+	Entity *newEntity = new Entity;
+	RenderManager *renderManager = RenderManager::getInstance();
 
-	return nullptr;
+	this->entities.emplace_back(newEntity);
+	return renderManager->addDirectionalLight(newEntity);
 }
 
-Entity *SceneManager::addPointLight()
+PointLightComponent *SceneManager::addPointLight()
 {
 	/* ###
     RenderManager *renderManager = RenderManager::getInstance();

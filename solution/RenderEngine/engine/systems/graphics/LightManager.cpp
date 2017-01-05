@@ -1,14 +1,14 @@
 #include "LightManager.h"
 
 #include <engine/entities/Entity.h>
-// #include "ShaderManager.h"
+#include "ShaderManager.h"
 
 namespace sre
 {
 
 LightManager::~LightManager()
 {
-	/*
+	/* ####
 	std::vector<LightNode *>::iterator itLight = this->lightNodes.begin();
 	while(itLight != this->lightNodes.end())
 	{
@@ -21,28 +21,55 @@ LightManager::~LightManager()
 
 DirectionalLightComponent *LightManager::addDirectionalLight(Entity *entity)
 {
-	DirectionalLightComponent *newLight = nullptr; // ### entity->addComponent<DirectionalLightComponent>();
-	// ### this->lightComponents.push_back(UPTR<DirectionalLightComponent>(newLight));
+	DirectionalLightComponent *newLight = entity->addComponent<DirectionalLightComponent>();
+	this->directionalLights.push_back(newLight);
 
 	return newLight;
 }
 
 PointLightComponent *LightManager::addPointLight(Entity *entity)
 {
-	PointLightComponent *newLight = nullptr; // ### entity->addComponent<PointLightComponent>();
-	// ### this->lightComponents.push_back(UPTR<PointLightComponent>(newLight));
+	PointLightComponent *newLight = entity->addComponent<PointLightComponent>();
+	this->pointLights.push_back(newLight);
 
 	return newLight;
 }
 
-void LightManager::setupLights(unsigned int program)
+void LightManager::setupLights(ShaderManager *shaderManager, uint32_t program)
+{
+	this->setupDirectionalLights(shaderManager, program);
+	this->setupPointLights(shaderManager, program);
+}
+
+void LightManager::setupDirectionalLights(ShaderManager *shaderManager, uint32_t program)
+{
+    char variable[100];
+
+    DirectionalLightComponent *light = nullptr;
+    int count = this->directionalLights.size();
+    for (int i = 0; i < count; i++)
+    {
+        light = this->directionalLights[i];
+		glm::vec3 direction = light->getDirection();
+		glm::vec3 color = light->getColor();
+
+        sprintf_s(variable, "directionalLights[%d].direction", i);
+        shaderManager->setValue(program, variable, direction.x, direction.y, direction.z);
+
+        sprintf_s(variable, "directionalLights[%d].color", i);
+        shaderManager->setValue(program, variable, color.r, color.g, color.b);
+    }
+
+    shaderManager->setValue(program, "directionalLightsCount", count);
+}
+
+void LightManager::setupPointLights(ShaderManager *shaderManager, uint32_t program)
 {
 	/*
-    ShaderManager *shaderManager = ShaderManager::getInstance();
-
     char variable[100];
-    LightNode *light = NULL;
-    int size = this->lightNodes.size();
+
+    ALightComponent *light = nullptr;
+    int size = this->lights.size();
     for (int i = 0; i < size; i++)
     {
         light = this->lightNodes[i];

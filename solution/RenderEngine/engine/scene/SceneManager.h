@@ -3,6 +3,8 @@
 
 #include <engine/entities/Entity.h>
 #include <engine/entities/components/cameras/CameraComponent.h>
+#include <engine/entities/components/lights/DirectionalLightComponent.h>
+#include <engine/entities/components/lights/PointLightComponent.h>
 
 namespace sre
 {
@@ -31,8 +33,8 @@ public:
 	Entity *addPlaneEntity(float size = 1);
 
 	// light //
-	Entity *addDirectionalLight();
-	Entity *addPointLight();
+	DirectionalLightComponent *addDirectionalLight();
+	PointLightComponent *addPointLight();
 
 	// camera //
 	CameraComponent *getMainCamera();

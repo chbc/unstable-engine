@@ -20,7 +20,7 @@ void SampleApplication::onInit()
 	this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 0.0f));
 
 	CameraComponent *camera = this->sceneManager->getMainCamera();
-	camera->setPosition(glm::vec3(0.0f, 2.0f, 10.0f));
+	camera->setPosition(glm::vec3(0.0f, 1.0f, 5.0f));
 
 	/*
 	Material *cubeMaterial = new SpecularMaterial("../media/crate.jpg");
@@ -28,11 +28,13 @@ void SampleApplication::onInit()
 	*/
 
 	// light //
-	/*
-	PointLight *light = this->sceneManager->addPointLight();
-	light->setColor(Vector(0.7f, 0.7f, 0.7f));
-	light->setPosition(Vector(1, 5, 3));
-	*/
+	DirectionalLightComponent *dLight1 = this->sceneManager->addDirectionalLight();
+	dLight1->setDirection(glm::vec3(-1.0f, -1.0f, 0.0f));
+	dLight1->setColor(glm::vec3(0.5f, 0.0f, 0.0f));
+
+	DirectionalLightComponent *dLight2 = this->sceneManager->addDirectionalLight();
+	dLight2->setDirection(glm::vec3(-1.0f, 0.0f, 0.0f));
+	dLight2->setColor(glm::vec3(0.0f, 0.5f, 0.0f));
 
 	// set EventReceiver class for input handling
 	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));

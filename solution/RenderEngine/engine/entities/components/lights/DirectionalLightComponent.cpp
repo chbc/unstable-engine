@@ -7,11 +7,14 @@ DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightCom
 {
 }
 
-/*
-ELightType DirectionalLight::getType()
+void DirectionalLightComponent::setDirection(const glm::vec3 &direction)
 {
-    return LIGHT_DIRECTIONAL;
+	this->direction = direction;
 }
-*/
+
+glm::vec3 DirectionalLightComponent::getDirection()
+{
+    return this->direction;
+}
 
 } // namespace

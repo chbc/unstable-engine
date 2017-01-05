@@ -68,7 +68,7 @@ CameraComponent *RenderManager::getMainCamera()
 void RenderManager::render()
 {
 	this->renderCamera();
-	this->colorRenderer->render(this->matrixManager.get(), this->graphicsWrapper.get());
+	this->colorRenderer->render(this->matrixManager.get(), this->lightManager.get());
 }
 
 void RenderManager::renderCamera()
@@ -105,8 +105,6 @@ PointLightComponent *RenderManager::addPointLight(Entity *entity)
 {
     return this->lightManager->addPointLight(entity);
 }
-
-
 
 /* ###
 void RenderManager::applyMaterial(Material *material, bool receiveLight)

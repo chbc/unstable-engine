@@ -8,6 +8,7 @@
 namespace sre
 {
 class Entity;
+class ShaderManager;
 
 /*!
 	Class to manage low level lighting.
@@ -15,7 +16,8 @@ class Entity;
 class LightManager
 {
 private:
-    VECTOR_UPTR<ALightComponent> lightComponents;
+    std::vector<DirectionalLightComponent *> directionalLights;
+	std::vector<PointLightComponent *> pointLights;
 
 	DirectionalLightComponent *addDirectionalLight(Entity *entity);
 	PointLightComponent *addPointLight(Entity *entity);
@@ -25,9 +27,12 @@ public:
 
 private:
 	LightManager() {}
-	void setupLights(unsigned int program);
+	void setupLights(ShaderManager *shaderManager, uint32_t program);
+	void setupDirectionalLights(ShaderManager *shaderManager, uint32_t program);
+	void setupPointLights(ShaderManager *shaderManager, uint32_t program);
 
 	friend class RenderManager;
+	friend class ColorRenderer;
 };
 
 } // namespace

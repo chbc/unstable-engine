@@ -8,13 +8,17 @@ namespace sre
 
 class DirectionalLightComponent : public ALightComponent
 {
-	private:
-		DirectionalLightComponent(Entity *entity);
+private:
+	glm::vec3 direction;
 
-	public:
-		// ### ELightType getType();
+public:
+	void setDirection(const glm::vec3 &direction);
+	glm::vec3 getDirection();
 
-	friend class Entity;
+private:
+	DirectionalLightComponent(Entity *entity);
+
+friend class Entity;
 };
 
 } // namespace

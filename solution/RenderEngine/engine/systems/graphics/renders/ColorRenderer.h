@@ -13,6 +13,7 @@ class AGraphicsWrapper;
 class MatrixManager;
 class ShaderManager;
 class AGraphicsWrapper;
+class LightManager;
 
 class ColorRenderer
 {
@@ -21,7 +22,7 @@ private:
 	UPTR<ShaderManager> shaderManager;
 	SPTR<AGraphicsWrapper> graphicsWrapper;
 
-	uint32_t shaderPorgram;
+	uint32_t shaderProgram;
 	int vertexAttribLocation;
 	int normalAttribLocation;
 
@@ -34,11 +35,11 @@ private:
 	void addMesh(MeshComponent *mesh);
 	void createVBO(MeshComponent *mesh);	// ###
 	uint32_t loadShader(const std::string &vertFile, const std::string &fragFile);
-	void render(MatrixManager *matrixManager, AGraphicsWrapper *graphicsWrapper);
+	void render(MatrixManager *matrixManager, LightManager *lightManager);
 
 friend class RenderManager;
 };
 
-}
+} // namespace
 
 #endif
