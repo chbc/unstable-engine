@@ -25,7 +25,7 @@ uint32_t ShaderManager::loadShader(const std::string &vertexFile, const std::str
 	this->vertShaders.push(vertShader);
 	this->fragShaders.push(fragShader);
 	this->programs.push(program);
-
+	
 	return program;
 }
 

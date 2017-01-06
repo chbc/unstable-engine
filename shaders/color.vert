@@ -5,7 +5,14 @@ struct DirectionalLight
 {
 	vec3 direction;
 	vec3 color;
-}; 
+};
+	
+struct Lights
+{
+	DirectionalLight directionalLights[4]; 
+	int directionalLightsCount;
+	vec3 ambientLightColor;
+};
 
 // Vertices
 layout(location=0) in vec3 in_position;
@@ -19,12 +26,9 @@ uniform mat4 modelMatrix;
 uniform vec4 materialColor;
 
 // Lights
-uniform DirectionalLight directionalLights[4];
-uniform int directionalLightsCount;
-uniform vec3 ambientLightColor;
+uniform Lights lights;
 
 // Varying variables
-out vec4 var_position;
 out vec3 var_normal;
 out vec4 var_materialColor;
 out DirectionalLight var_directionalLights[4];
@@ -41,18 +45,17 @@ void main(void)
 	processLights();
 	
 	mat4 mvp = viewProjectionMatrix * modelMatrix;
-	var_position = mvp * vec4(in_position, 1.0);
-	gl_Position = var_position;
+	gl_Position = mvp * vec4(in_position, 1.0);
 }
 
 void processLights()
 {
-	var_directionalLightsCount = directionalLightsCount;
-	var_ambientLightColor = ambientLightColor;
+	var_directionalLightsCount = lights.directionalLightsCount;
+	var_ambientLightColor = lights.ambientLightColor;
 	
-	for (int i = 0; i < directionalLightsCount; i++)
+	for (int i = 0; i < lights.directionalLightsCount; i++)
 	{
-		var_directionalLights[i].direction = directionalLights[i].direction;
-		var_directionalLights[i].color = directionalLights[i].color;
+		var_directionalLights[i].direction = lights.directionalLights[i].direction;
+		var_directionalLights[i].color = lights.directionalLights[i].color;
 	}
 }
