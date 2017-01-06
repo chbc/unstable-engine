@@ -13,6 +13,7 @@ in vec3 var_normal;
 in vec4 var_materialColor;
 in DirectionalLight var_directionalLights[4];
 in float var_directionalLightsCount;
+in vec3 var_ambientLightColor;
 
 // Out variables
 out vec4 out_color;
@@ -32,5 +33,5 @@ void main(void)
 		kd = kd + (var_materialColor.rgb * lightColor * energy);
 	}
 
-	out_color = vec4(kd, 1.0);	
+	out_color = vec4(var_ambientLightColor + kd, 1.0);
 }

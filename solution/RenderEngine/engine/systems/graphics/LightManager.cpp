@@ -6,6 +6,11 @@
 namespace sre
 {
 
+LightManager::LightManager()
+{
+	this->ambientLightColor = glm::vec3(0.3f, 0.3f, 0.3f);
+}
+
 LightManager::~LightManager()
 {
 	/* ####
@@ -39,6 +44,8 @@ void LightManager::setupLights(ShaderManager *shaderManager, uint32_t program)
 {
 	this->setupDirectionalLights(shaderManager, program);
 	this->setupPointLights(shaderManager, program);
+
+	shaderManager->setValue(program, "ambientLightColor", 1, &this->ambientLightColor[0]);
 }
 
 void LightManager::setupDirectionalLights(ShaderManager *shaderManager, uint32_t program)

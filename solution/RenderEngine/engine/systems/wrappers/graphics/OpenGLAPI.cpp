@@ -159,6 +159,13 @@ void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float x, 
 	glUniform4f(location, x, y, z, w);
 }
 
+void OpenGLAPI::setValue(uint32_t program, const std::string &varName, int count, float *value)
+{
+	int location = glGetUniformLocation(program, varName.c_str());
+	this->checkVariableLocation(location, varName);
+	glUniform3fv(location, count, value);
+}
+
 void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float *matrix)
 {
 	int location = glGetUniformLocation(program, varName.c_str());

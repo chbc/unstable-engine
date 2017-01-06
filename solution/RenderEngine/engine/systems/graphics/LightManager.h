@@ -19,14 +19,17 @@ private:
     std::vector<DirectionalLightComponent *> directionalLights;
 	std::vector<PointLightComponent *> pointLights;
 
-	DirectionalLightComponent *addDirectionalLight(Entity *entity);
-	PointLightComponent *addPointLight(Entity *entity);
+	glm::vec3 ambientLightColor;
 
 public:
 	~LightManager();
 
 private:
-	LightManager() {}
+	LightManager();
+
+	DirectionalLightComponent *addDirectionalLight(Entity *entity);
+	PointLightComponent *addPointLight(Entity *entity);
+
 	void setupLights(ShaderManager *shaderManager, uint32_t program);
 	void setupDirectionalLights(ShaderManager *shaderManager, uint32_t program);
 	void setupPointLights(ShaderManager *shaderManager, uint32_t program);

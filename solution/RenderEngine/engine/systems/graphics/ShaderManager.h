@@ -20,9 +20,9 @@ public:
 	~ShaderManager();
 
 public:
-	std::stack<unsigned int> vertShaders;
-	std::stack<unsigned int> fragShaders;
-	std::stack<unsigned int> programs;
+	std::stack<uint32_t> vertShaders;
+	std::stack<uint32_t> fragShaders;
+	std::stack<uint32_t> programs;
 
 	SPTR<AGraphicsWrapper> graphicsWrapper;
 
@@ -32,17 +32,18 @@ public:
 	unsigned int loadShader(const std::string &vertexName, const std::string &fragmentName);
 
 	// passing values //
-	void setValue(unsigned int program, const std::string &varName, float x);
-	void setValue(unsigned int program, const std::string &varName, float x, float y);
-	void setValue(unsigned int program, const std::string &varName, float x, float y, float z);
-	void setValue(unsigned int program, const std::string &varName, float x, float y, float z, float w);
-	void setValue(unsigned int program, const std::string &varName, float *matrix);
+	void setValue(uint32_t program, const std::string &varName, float x);
+	void setValue(uint32_t program, const std::string &varName, float x, float y);
+	void setValue(uint32_t program, const std::string &varName, float x, float y, float z);
+	void setValue(uint32_t program, const std::string &varName, float x, float y, float z, float w);
+	void setValue(uint32_t program, const std::string &varName, int count, float *value);
+	void setValue(uint32_t program, const std::string &varName, float *matrix);
 
-	void setValue(unsigned int program, const std::string &varName, int value);
+	void setValue(uint32_t program, const std::string &varName, int value);
 
-	int getAttribLocation(unsigned int program, EShaderVariable::Type shaderVariable);
+	int getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable);
 
-	void enableShader(unsigned int program);
+	void enableShader(uint32_t program);
 	void disableShader();
 
 friend class RenderManager;

@@ -30,6 +30,7 @@ protected:
 	void setValue(uint32_t program, const std::string &varName, float x, float y) override;
 	void setValue(uint32_t program, const std::string &varName, float x, float y, float z) override;
 	void setValue(uint32_t program, const std::string &varName, float x, float y, float z, float w) override;
+	void setValue(uint32_t program, const std::string &varName, int count, float *value) override;
 	void setValue(uint32_t program, const std::string &varName, float *matrix) override;
 	void setValue(uint32_t program, const std::string &varName, int value) override;
 

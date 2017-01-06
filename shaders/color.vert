@@ -21,6 +21,7 @@ uniform vec4 materialColor;
 // Lights
 uniform DirectionalLight directionalLights[4];
 uniform int directionalLightsCount;
+uniform vec3 ambientLightColor;
 
 // Varying variables
 out vec4 var_position;
@@ -28,6 +29,7 @@ out vec3 var_normal;
 out vec4 var_materialColor;
 out DirectionalLight var_directionalLights[4];
 out float var_directionalLightsCount;
+out vec3 var_ambientLightColor;
 
 // Functions
 void processLights();
@@ -46,6 +48,7 @@ void main(void)
 void processLights()
 {
 	var_directionalLightsCount = directionalLightsCount;
+	var_ambientLightColor = ambientLightColor;
 	
 	for (int i = 0; i < directionalLightsCount; i++)
 	{
