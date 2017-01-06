@@ -30,39 +30,24 @@ uint32_t ShaderManager::loadShader(const std::string &vertexFile, const std::str
 }
 
 // passing values //
-void ShaderManager::setValue(uint32_t program, const std::string &varName, float x)
+void ShaderManager::setInt(uint32_t program, const std::string &varName, int value)
 {
-	this->graphicsWrapper->setValue(program, varName, x);
+	this->graphicsWrapper->setInt(program, varName, value);
 }
 
-void ShaderManager::setValue(uint32_t program, const std::string &varName, float x, float y)
+void ShaderManager::setVec3(uint32_t program, const std::string &varName, float *value)
 {
-	this->graphicsWrapper->setValue(program, varName, x, y);
+	this->graphicsWrapper->setVec3(program, varName, value);
 }
 
-void ShaderManager::setValue(uint32_t program, const std::string &varName, float x, float y, float z)
+void ShaderManager::setVec4(uint32_t program, const std::string &varName, float *value)
 {
-	this->graphicsWrapper->setValue(program, varName, x, y, z);
+	this->graphicsWrapper->setVec4(program, varName, value);
 }
 
-void ShaderManager::setValue(uint32_t program, const std::string &varName, float x, float y, float z, float w)
+void ShaderManager::setMat4(uint32_t program, const std::string &varName, float *value)
 {
-	this->graphicsWrapper->setValue(program, varName, x, y, z, w);
-}
-
-void ShaderManager::setValue(uint32_t program, const std::string &varName, int count, float *value)
-{
-	this->graphicsWrapper->setValue(program, varName, count, value);
-}
-
-void ShaderManager::setValue(uint32_t program, const std::string &varName, float *matrix)
-{
-	this->graphicsWrapper->setValue(program, varName, matrix);
-}
-
-void ShaderManager::setValue(uint32_t program, const std::string &varName, int value)
-{
-	this->graphicsWrapper->setValue(program, varName, value);
+	this->graphicsWrapper->setMat4(program, varName, value);
 }
 
 int ShaderManager::getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable)

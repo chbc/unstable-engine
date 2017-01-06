@@ -49,7 +49,7 @@ void ColorRenderer::render(MatrixManager *matrixManager, LightManager *lightMana
 	glm::mat4 viewProjectionMatrix = matrixManager->getViewProjectionMatrix();
 
 	// ### obter a localização das variáveis do shader
-	this->shaderManager->setValue(this->shaderProgram, "viewProjectionMatrix", &viewProjectionMatrix[0][0]);
+	this->shaderManager->setMat4(this->shaderProgram, "viewProjectionMatrix", &viewProjectionMatrix[0][0]);
 	lightManager->setupLights(this->shaderManager.get(), this->shaderProgram);
 
 	// ### tratar os filhos das entidades
@@ -60,11 +60,11 @@ void ColorRenderer::render(MatrixManager *matrixManager, LightManager *lightMana
 		matrixManager->push(transform->getMatrix());
 
 		glm::mat4 modelMatrix = matrixManager->getModelMatrix();
-		this->shaderManager->setValue(this->shaderProgram, "modelMatrix", &modelMatrix[0][0]);
+		this->shaderManager->setMat4(this->shaderProgram, "modelMatrix", &modelMatrix[0][0]);
 
 		ColorMaterialComponent *colorMaterial = mesh->material->getComponent<ColorMaterialComponent>();
 		glm::vec4 color = colorMaterial->getColor();
-		this->shaderManager->setValue(this->shaderProgram, "materialColor", color.r, color.g, color.b, color.a);
+		this->shaderManager->setVec4(this->shaderProgram, "materialColor", &color[0]);
 
 		this->graphicsWrapper->drawMesh(mesh, this->vertexAttribLocation, this->normalAttribLocation);
 		matrixManager->pop();

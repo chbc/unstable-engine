@@ -131,53 +131,33 @@ uint32_t OpenGLAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader
 	return program;
 }
 
-void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float x)
-{
-	int location = glGetUniformLocation(program, varName.c_str());
-	this->checkVariableLocation(location, varName);
-	glUniform1f(location, x);
-}
 
-void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float x, float y)
-{
-	int location = glGetUniformLocation(program, varName.c_str());
-	this->checkVariableLocation(location, varName);
-	glUniform2f(location, x, y);
-}
-
-void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float x, float y, float z)
-{
-	int location = glGetUniformLocation(program, varName.c_str());
-	this->checkVariableLocation(location, varName);
-	glUniform3f(location, x, y, z);
-}
-
-void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float x, float y, float z, float w)
-{
-	int location = glGetUniformLocation(program, varName.c_str());
-	this->checkVariableLocation(location, varName);
-	glUniform4f(location, x, y, z, w);
-}
-
-void OpenGLAPI::setValue(uint32_t program, const std::string &varName, int count, float *value)
-{
-	int location = glGetUniformLocation(program, varName.c_str());
-	this->checkVariableLocation(location, varName);
-	glUniform3fv(location, count, value);
-}
-
-void OpenGLAPI::setValue(uint32_t program, const std::string &varName, float *matrix)
-{
-	int location = glGetUniformLocation(program, varName.c_str());
-	this->checkVariableLocation(location, varName);
-	glUniformMatrix4fv(location, 1, GL_FALSE, matrix);
-}
-
-void OpenGLAPI::setValue(uint32_t program, const std::string &varName, int value)
+void OpenGLAPI::setInt(uint32_t program, const std::string &varName, int value)
 {
 	int location = glGetUniformLocation(program, varName.c_str());
 	this->checkVariableLocation(location, varName);
 	glUniform1i(location, value);
+}
+
+void OpenGLAPI::setVec3(uint32_t program, const std::string &varName, float *value)
+{
+	int location = glGetUniformLocation(program, varName.c_str());
+	this->checkVariableLocation(location, varName);
+	glUniform3fv(location, 1, value);
+}
+
+void OpenGLAPI::setVec4(uint32_t program, const std::string &varName, float *value)
+{
+	int location = glGetUniformLocation(program, varName.c_str());
+	this->checkVariableLocation(location, varName);
+	glUniform4fv(location, 1, value);
+}
+
+void OpenGLAPI::setMat4(uint32_t program, const std::string &varName, float *value)
+{
+	int location = glGetUniformLocation(program, varName.c_str());
+	this->checkVariableLocation(location, varName);
+	glUniformMatrix4fv(location, 1, GL_FALSE, value);
 }
 
 /*

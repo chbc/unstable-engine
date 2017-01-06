@@ -32,12 +32,10 @@ public:
 	unsigned int loadShader(const std::string &vertexName, const std::string &fragmentName);
 
 	// passing values //
-	void setValue(uint32_t program, const std::string &varName, float x);
-	void setValue(uint32_t program, const std::string &varName, float x, float y);
-	void setValue(uint32_t program, const std::string &varName, float x, float y, float z);
-	void setValue(uint32_t program, const std::string &varName, float x, float y, float z, float w);
-	void setValue(uint32_t program, const std::string &varName, int count, float *value);
-	void setValue(uint32_t program, const std::string &varName, float *matrix);
+	void setInt(uint32_t program, const std::string &varName, int value);
+	void setVec3(uint32_t program, const std::string &varName, float *value);
+	void setVec4(uint32_t program, const std::string &varName, float *value);
+	void setMat4(uint32_t program, const std::string &varName, float *value);
 
 	void setValue(uint32_t program, const std::string &varName, int value);
 
