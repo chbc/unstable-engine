@@ -34,9 +34,9 @@ protected:
 	virtual uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) =0;
 
 	virtual void setInt(uint32_t program, const std::string &varName, int value) =0;
-	virtual void setVec3(uint32_t program, const std::string &varName, float *value) =0;
-	virtual void setVec4(uint32_t program, const std::string &varName, float *value) =0;
-	virtual void setMat4(uint32_t program, const std::string &varName, float *value) =0;
+	virtual void setVec3(uint32_t program, const std::string &varName, const float *value) =0;
+	virtual void setVec4(uint32_t program, const std::string &varName, const float *value) =0;
+	virtual void setMat4(uint32_t program, const std::string &varName, const float *value) =0;
 
 	// ### virtual int getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable) =0;
 	virtual void enableShader(uint32_t program) =0;

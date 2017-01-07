@@ -24,6 +24,11 @@ LightManager::~LightManager()
 	*/
 }
 
+void LightManager::setAmbientLightColor(const glm::vec3 &ambientLightColor)
+{
+	this->ambientLightColor = ambientLightColor;
+}
+
 DirectionalLightComponent *LightManager::addDirectionalLight(Entity *entity)
 {
 	DirectionalLightComponent *newLight = entity->addComponent<DirectionalLightComponent>();
@@ -72,27 +77,24 @@ void LightManager::setupDirectionalLights(ShaderManager *shaderManager, uint32_t
 
 void LightManager::setupPointLights(ShaderManager *shaderManager, uint32_t program)
 {
-	/*
     char variable[100];
 
-    ALightComponent *light = nullptr;
-    int size = this->lights.size();
-    for (int i = 0; i < size; i++)
+    PointLightComponent *light = nullptr;
+    int count = this->pointLights.size();
+    for (int i = 0; i < count; i++)
     {
-        light = this->lightNodes[i];
+        light = this->pointLights[i];
+		glm::vec3 position = light->getTransform()->getPosition();
+		glm::vec3 color = light->getColor();
 
-        sprintf(variable, "lights[%d].posDir", i);
-        shaderManager->setValue(program, variable, light->posDir.x, light->posDir.y, light->posDir.z);
+        sprintf_s(variable, "lights.pointLights[%d].position", i);
+        shaderManager->setVec3(program, variable, &position[0]);
 
-        sprintf(variable, "lights[%d].color", i);
-        shaderManager->setValue(program, variable, 1, light->color.y, light->color.z);
-
-        sprintf(variable, "lights[%d].type", i);
-        shaderManager->setValue(program, variable, light->getType());
+        sprintf_s(variable, "lights.pointLights[%d].color", i);
+        shaderManager->setVec3(program, variable, &color[0]);
     }
 
-    shaderManager->setValue(program, "lightCount", size);
-	*/
+    shaderManager->setInt(program, "lights.pointLightsCount", count);
 }
 
 } // namespace

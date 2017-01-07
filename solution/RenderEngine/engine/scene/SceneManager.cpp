@@ -56,12 +56,11 @@ DirectionalLightComponent *SceneManager::addDirectionalLight()
 
 PointLightComponent *SceneManager::addPointLight()
 {
-	/* ###
-    RenderManager *renderManager = RenderManager::getInstance();
-    return renderManager->addPointLight();
-	*/
+	Entity *newEntity = new Entity;
+	RenderManager *renderManager = RenderManager::getInstance();
 
-	return nullptr;
+	this->entities.emplace_back(newEntity);
+	return renderManager->addPointLight(newEntity);
 }
 
 CameraComponent *SceneManager::getMainCamera()

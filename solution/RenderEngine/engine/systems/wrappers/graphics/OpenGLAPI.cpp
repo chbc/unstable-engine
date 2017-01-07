@@ -139,21 +139,21 @@ void OpenGLAPI::setInt(uint32_t program, const std::string &varName, int value)
 	glUniform1i(location, value);
 }
 
-void OpenGLAPI::setVec3(uint32_t program, const std::string &varName, float *value)
+void OpenGLAPI::setVec3(uint32_t program, const std::string &varName, const float *value)
 {
 	int location = glGetUniformLocation(program, varName.c_str());
 	this->checkVariableLocation(location, varName);
 	glUniform3fv(location, 1, value);
 }
 
-void OpenGLAPI::setVec4(uint32_t program, const std::string &varName, float *value)
+void OpenGLAPI::setVec4(uint32_t program, const std::string &varName, const float *value)
 {
 	int location = glGetUniformLocation(program, varName.c_str());
 	this->checkVariableLocation(location, varName);
 	glUniform4fv(location, 1, value);
 }
 
-void OpenGLAPI::setMat4(uint32_t program, const std::string &varName, float *value)
+void OpenGLAPI::setMat4(uint32_t program, const std::string &varName, const float *value)
 {
 	int location = glGetUniformLocation(program, varName.c_str());
 	this->checkVariableLocation(location, varName);

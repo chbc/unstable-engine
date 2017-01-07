@@ -41,15 +41,19 @@ uint32_t ColorRenderer::loadShader(const std::string &vertFile, const std::strin
 	return this->shaderManager->loadShader(vertFile, fragFile);
 }
 
-void ColorRenderer::render(MatrixManager *matrixManager, LightManager *lightManager)
+void ColorRenderer::render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition)
 {
 	// Shader setup
 	this->shaderManager->enableShader(this->shaderProgram);
 
-	glm::mat4 viewProjectionMatrix = matrixManager->getViewProjectionMatrix();
+	glm::mat4 viewMatrix = matrixManager->getViewMatrix();
+	glm::mat4 projectionMatrix = matrixManager->getProjectionMatrix();
 
 	// ### obter a localização das variáveis do shader
-	this->shaderManager->setMat4(this->shaderProgram, "viewProjectionMatrix", &viewProjectionMatrix[0][0]);
+	this->shaderManager->setMat4(this->shaderProgram, "viewMatrix", &viewMatrix[0][0]);
+	this->shaderManager->setMat4(this->shaderProgram, "projectionMatrix", &projectionMatrix[0][0]);
+	this->shaderManager->setVec3(this->shaderProgram, "cameraPosition", &cameraPosition[0]);
+	
 	lightManager->setupLights(this->shaderManager.get(), this->shaderProgram);
 
 	// ### tratar os filhos das entidades

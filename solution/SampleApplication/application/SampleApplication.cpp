@@ -28,13 +28,21 @@ void SampleApplication::onInit()
 	*/
 
 	// light //
+	/*
 	DirectionalLightComponent *dLight1 = this->sceneManager->addDirectionalLight();
-	dLight1->setDirection(glm::vec3(-1.0f, 0.0f, -1.0f));
-	dLight1->setColor(glm::vec3(1.0f, 1.0f, 0.0f));
+	dLight1->setDirection(glm::vec3(0.0f, -1.0f, 0.0f));
+	dLight1->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
+	*/
 
+	PointLightComponent *pLight1 = this->sceneManager->addPointLight();
+	pLight1->getTransform()->setPosition(glm::vec3(1.0f, 1.0f, 0.0f));
+	pLight1->setColor(glm::vec3(1.0f, 0.5f, 0.0f));
+
+	/*
 	DirectionalLightComponent *dLight2 = this->sceneManager->addDirectionalLight();
 	dLight2->setDirection(glm::vec3(1.0f, 0.0f, -1.0f));
 	dLight2->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
+	*/
 
 	// set EventReceiver class for input handling
 	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));

@@ -2,6 +2,7 @@
 #define _COLOR_RENDERER_H_
 
 #include <engine/utils/memory_aliases.h>
+#include <glm/vec3.hpp>
 #include <vector>
 
 namespace sre
@@ -35,7 +36,7 @@ private:
 	void addMesh(MeshComponent *mesh);
 	void createVBO(MeshComponent *mesh);	// ###
 	uint32_t loadShader(const std::string &vertFile, const std::string &fragFile);
-	void render(MatrixManager *matrixManager, LightManager *lightManager);
+	void render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition);
 
 friend class RenderManager;
 };

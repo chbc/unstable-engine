@@ -18,8 +18,6 @@ private:
 	glm::vec3 color;
 
 protected:
-	// ### float range;
-
 	ALightComponent(Entity *entity);
 
 public:

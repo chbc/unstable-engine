@@ -27,9 +27,9 @@ protected:
 	uint32_t createProgram(uint32_t vertexShader, int unsigned fragmentShader) override;
 
 	void setInt(uint32_t program, const std::string &varName, int value) override;
-	void setVec3(uint32_t program, const std::string &varName, float *value) override;
-	void setVec4(uint32_t program, const std::string &varName, float *value) override;
-	void setMat4(uint32_t program, const std::string &varName, float *value) override;
+	void setVec3(uint32_t program, const std::string &varName, const float *value) override;
+	void setVec4(uint32_t program, const std::string &varName, const float *value) override;
+	void setMat4(uint32_t program, const std::string &varName, const float *value) override;
 
 	// ### int getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable) override;
 	void enableShader(uint32_t program) override;

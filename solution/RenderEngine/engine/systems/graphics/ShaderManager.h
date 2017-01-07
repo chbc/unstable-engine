@@ -33,9 +33,9 @@ public:
 
 	// passing values //
 	void setInt(uint32_t program, const std::string &varName, int value);
-	void setVec3(uint32_t program, const std::string &varName, float *value);
-	void setVec4(uint32_t program, const std::string &varName, float *value);
-	void setMat4(uint32_t program, const std::string &varName, float *value);
+	void setVec3(uint32_t program, const std::string &varName, const float *value);
+	void setVec4(uint32_t program, const std::string &varName, const float *value);
+	void setMat4(uint32_t program, const std::string &varName, const float *value);
 
 	void setValue(uint32_t program, const std::string &varName, int value);
 

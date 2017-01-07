@@ -35,17 +35,17 @@ void ShaderManager::setInt(uint32_t program, const std::string &varName, int val
 	this->graphicsWrapper->setInt(program, varName, value);
 }
 
-void ShaderManager::setVec3(uint32_t program, const std::string &varName, float *value)
+void ShaderManager::setVec3(uint32_t program, const std::string &varName, const float *value)
 {
 	this->graphicsWrapper->setVec3(program, varName, value);
 }
 
-void ShaderManager::setVec4(uint32_t program, const std::string &varName, float *value)
+void ShaderManager::setVec4(uint32_t program, const std::string &varName, const float *value)
 {
 	this->graphicsWrapper->setVec4(program, varName, value);
 }
 
-void ShaderManager::setMat4(uint32_t program, const std::string &varName, float *value)
+void ShaderManager::setMat4(uint32_t program, const std::string &varName, const float *value)
 {
 	this->graphicsWrapper->setMat4(program, varName, value);
 }

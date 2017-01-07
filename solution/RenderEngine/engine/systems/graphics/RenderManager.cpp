@@ -68,7 +68,12 @@ CameraComponent *RenderManager::getMainCamera()
 void RenderManager::render()
 {
 	this->renderCamera();
-	this->colorRenderer->render(this->matrixManager.get(), this->lightManager.get());
+	this->colorRenderer->render
+	(
+		this->matrixManager.get(), 
+		this->lightManager.get(), 
+		this->mainCamera->getTransform()->getPosition()
+	);
 }
 
 void RenderManager::renderCamera()

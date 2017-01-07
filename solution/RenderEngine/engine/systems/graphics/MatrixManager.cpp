@@ -56,9 +56,14 @@ glm::mat4 MatrixManager::getModelMatrix()
 	return result;
 }
 
-glm::mat4 MatrixManager::getViewProjectionMatrix()
+glm::mat4 MatrixManager::getViewMatrix()
 {
-	return this->projection * this->view;
+	return this->view;
+}
+
+glm::mat4 MatrixManager::getProjectionMatrix()
+{
+	return this->projection;
 }
 
 } // namespace

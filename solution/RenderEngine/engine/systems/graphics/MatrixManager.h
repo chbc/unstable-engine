@@ -30,7 +30,8 @@ class MatrixManager
         void setProjection(float fov, float aspectRatio, float near, float far);
 
 		glm::mat4 getModelMatrix();
-		glm::mat4 getViewProjectionMatrix();
+		glm::mat4 getViewMatrix();
+		glm::mat4 getProjectionMatrix();
 };
 
 } // namespace
