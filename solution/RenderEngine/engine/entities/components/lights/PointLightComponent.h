@@ -11,6 +11,7 @@ class PointLightComponent : public ALightComponent
 {
 private:
 	float range;
+	float intensity;
 
 public:
 	void setPosition(const glm::vec3 &position);
@@ -18,6 +19,9 @@ public:
 
 	void setRange(float range);
 	float getRange();
+
+	void setIntensity(float intensity);
+	float getIntensity();
 
 private:
 	PointLightComponent(Entity *entity);

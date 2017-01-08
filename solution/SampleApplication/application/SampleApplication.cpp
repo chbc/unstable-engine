@@ -35,7 +35,7 @@ void SampleApplication::onInit()
 	*/
 
 	PointLightComponent *pLight1 = this->sceneManager->addPointLight();
-	pLight1->getTransform()->setPosition(glm::vec3(1.0f, 1.0f, 0.0f));
+	pLight1->getTransform()->setPosition(glm::vec3(5.0f, 5.0f, 0.0f));
 	pLight1->setColor(glm::vec3(1.0f, 0.5f, 0.0f));
 
 	/*

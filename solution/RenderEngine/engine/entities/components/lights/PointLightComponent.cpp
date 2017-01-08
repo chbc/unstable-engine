@@ -24,9 +24,20 @@ float PointLightComponent::getRange()
 	return this->range;
 }
 
+void PointLightComponent::setIntensity(float intensity)
+{
+	this->intensity = intensity;
+}
+
+float PointLightComponent::getIntensity()
+{
+	return this->intensity;
+}
+
 PointLightComponent::PointLightComponent(Entity *entity) : ALightComponent(entity)
 {
-	this->range = 5.0f;
+	this->range = 15.0f;
+	this->intensity = 1.0;
 }
 
 } // namespace

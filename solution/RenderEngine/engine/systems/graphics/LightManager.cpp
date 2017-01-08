@@ -87,8 +87,9 @@ void LightManager::setupPointLights(ShaderManager *shaderManager, uint32_t progr
 		glm::vec3 position	= light->getTransform()->getPosition();
 		glm::vec3 color		= light->getColor();
 		float range			= light->getRange();
+		float intensity		= light->getIntensity();
 
-        sprintf_s(variable, "lights.pointLights[%d].position", i);
+        sprintf_s(variable, "pointLightPositions[%d]", i);
         shaderManager->setVec3(program, variable, &position[0]);
 
         sprintf_s(variable, "lights.pointLights[%d].color", i);
@@ -96,6 +97,9 @@ void LightManager::setupPointLights(ShaderManager *shaderManager, uint32_t progr
 
         sprintf_s(variable, "lights.pointLights[%d].range", i);
         shaderManager->setFloat(program, variable, range);
+
+        sprintf_s(variable, "lights.pointLights[%d].intensity", i);
+        shaderManager->setFloat(program, variable, intensity);
     }
 
     shaderManager->setInt(program, "lights.pointLightsCount", count);
