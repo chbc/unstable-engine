@@ -4,9 +4,7 @@
 #include "OpenGLAPI.h"
 #include <engine/entities/components/meshes/MeshComponent.h>
 #include <engine/utils/FileUtils.h>
-
-#include <string>
-#include <iostream>
+#include <engine/utils/Log.h>
 
 namespace sre
 {
@@ -18,7 +16,8 @@ void OpenGLAPI::init()
 		throw std::string("GLEW didn't inited");
 
 	const GLubyte *glVersion = glGetString(GL_VERSION);
-	std::cout << "OpenGL Version: " << glVersion << std::endl;
+	std::string strGLVersion((char *)(glVersion));
+	Log::logMessage("OpenGL Version: " + strGLVersion);
 
 	glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
 
@@ -127,16 +126,23 @@ uint32_t OpenGLAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader
 	glAttachShader(program, fragmentShader);
 
 	glLinkProgram(program);
+	this->checkProgramLink(program);
 
 	return program;
 }
-
 
 void OpenGLAPI::setInt(uint32_t program, const std::string &varName, int value)
 {
 	int location = glGetUniformLocation(program, varName.c_str());
 	this->checkVariableLocation(location, varName);
 	glUniform1i(location, value);
+}
+
+void OpenGLAPI::setFloat(uint32_t program, const std::string &varName, float value)
+{
+	int location = glGetUniformLocation(program, varName.c_str());
+	this->checkVariableLocation(location, varName);
+	glUniform1f(location, value);
 }
 
 void OpenGLAPI::setVec3(uint32_t program, const std::string &varName, const float *value)
@@ -243,6 +249,7 @@ uint32_t OpenGLAPI::compileShader(const std::string &fileName, const std::string
 		throw "[OpenGLAPI] - In file: " + fileName + "\n" + error;
 	}
 
+
 	return id;
 }
 
@@ -250,6 +257,21 @@ void OpenGLAPI::checkVariableLocation(int location, const std::string &varName)
 {
 	if (location == -1)
 		throw ("[OpenGLAPI] Invalid shader variable: " + varName);
+}
+
+void OpenGLAPI::checkProgramLink(uint32_t program)
+{
+	int result = 0;
+	glGetProgramiv(program, GL_LINK_STATUS, &result);
+	if (result == GL_FALSE)
+	{
+		char error[1000];
+		glGetProgramInfoLog(program, 1000, NULL, error);
+
+		glDeleteProgram(program);
+
+		throw error;
+	}
 }
 //
 

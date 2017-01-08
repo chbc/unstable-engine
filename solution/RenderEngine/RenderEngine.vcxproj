@@ -170,6 +170,7 @@
     <ClCompile Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.cpp" />
     <ClCompile Include="engine\systems\wrappers\multimedia\SDLAPI.cpp" />
     <ClCompile Include="engine\utils\FileUtils.cpp" />
+    <ClCompile Include="engine\utils\Log.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\systems\graphics\renders\ColorRenderer.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="engine\temp\TEMP_Engine.h" />
     <ClInclude Include="engine\utils\EShaderVariable.h" />
     <ClInclude Include="engine\utils\FileUtils.h" />
+    <ClInclude Include="engine\utils\Log.h" />
     <ClInclude Include="engine\utils\memory_aliases.h" />
     <ClInclude Include="engine\utils\singleton_macros.h" />
   </ItemGroup>

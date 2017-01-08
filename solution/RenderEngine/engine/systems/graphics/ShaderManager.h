@@ -33,11 +33,10 @@ public:
 
 	// passing values //
 	void setInt(uint32_t program, const std::string &varName, int value);
+	void setFloat(uint32_t program, const std::string &varName, float value);
 	void setVec3(uint32_t program, const std::string &varName, const float *value);
 	void setVec4(uint32_t program, const std::string &varName, const float *value);
 	void setMat4(uint32_t program, const std::string &varName, const float *value);
-
-	void setValue(uint32_t program, const std::string &varName, int value);
 
 	int getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable);
 

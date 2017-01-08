@@ -9,9 +9,15 @@ namespace sre
 
 class PointLightComponent : public ALightComponent
 {
+private:
+	float range;
+
 public:
 	void setPosition(const glm::vec3 &position);
 	glm::vec3 getPosition();
+
+	void setRange(float range);
+	float getRange();
 
 private:
 	PointLightComponent(Entity *entity);

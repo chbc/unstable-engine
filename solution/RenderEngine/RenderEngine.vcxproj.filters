@@ -96,6 +96,9 @@
     <ClCompile Include="engine\entities\components\AEntityComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\utils\Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\EShaderVariable.h">
@@ -210,6 +213,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\systems\graphics\renders\ShaderConsts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\utils\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

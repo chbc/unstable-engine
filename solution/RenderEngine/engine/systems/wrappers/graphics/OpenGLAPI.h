@@ -24,9 +24,10 @@ protected:
 	// Shaders
 	uint32_t loadVertexShader(const std::string &vertexFile) override;  // throws "file can't be found"
 	uint32_t loadFragmentShader(const std::string &fragmentFile) override;  // throws "file can't be found"
-	uint32_t createProgram(uint32_t vertexShader, int unsigned fragmentShader) override;
+	uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) override;
 
 	void setInt(uint32_t program, const std::string &varName, int value) override;
+	void setFloat(uint32_t program, const std::string &varName, float value) override;
 	void setVec3(uint32_t program, const std::string &varName, const float *value) override;
 	void setVec4(uint32_t program, const std::string &varName, const float *value) override;
 	void setMat4(uint32_t program, const std::string &varName, const float *value) override;
@@ -40,6 +41,7 @@ private:
 	uint32_t loadShader(const std::string &fileName, int shaderType);
 	uint32_t compileShader(const std::string &fileName, const std::string &source, uint32_t mode);
 	void checkVariableLocation(int location, const std::string &varName); // throws "invalid variable"
+	void checkProgramLink(uint32_t program);	// throws "link error"
 
 friend class RenderManager;
 friend class ColorRenderer; // ###

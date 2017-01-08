@@ -14,8 +14,14 @@ namespace sre
 
 class Material : public AComponentsHolder<AMaterialComponent>
 {
+private:
+	float shininess;
+
 public:
-	Material();
+	Material(float shininess = 15.0f);
+
+	void setShininess(float shininess);
+	float getShininess();
 
 	template <typename T, typename... TArgs>
 	T *addComponent(TArgs&&... mArgs)

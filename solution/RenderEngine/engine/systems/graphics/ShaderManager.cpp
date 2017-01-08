@@ -1,6 +1,6 @@
-#include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
-
 #include "ShaderManager.h"
+#include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
+#include <engine/utils/Log.h>
 
 namespace sre
 {
@@ -17,6 +17,8 @@ ShaderManager::~ShaderManager()
 
 uint32_t ShaderManager::loadShader(const std::string &vertexFile, const std::string &fragmentFile)
 {
+	Log::logMessage("Loading shaders: " + vertexFile + " and " + fragmentFile);
+
 	uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexFile);
 	uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentFile);
 
@@ -33,6 +35,11 @@ uint32_t ShaderManager::loadShader(const std::string &vertexFile, const std::str
 void ShaderManager::setInt(uint32_t program, const std::string &varName, int value)
 {
 	this->graphicsWrapper->setInt(program, varName, value);
+}
+
+void ShaderManager::setFloat(uint32_t program, const std::string &varName, float value)
+{
+	this->graphicsWrapper->setFloat(program, varName, value);
 }
 
 void ShaderManager::setVec3(uint32_t program, const std::string &varName, const float *value)

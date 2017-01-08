@@ -69,6 +69,7 @@ void ColorRenderer::render(MatrixManager *matrixManager, LightManager *lightMana
 		ColorMaterialComponent *colorMaterial = mesh->material->getComponent<ColorMaterialComponent>();
 		glm::vec4 color = colorMaterial->getColor();
 		this->shaderManager->setVec4(this->shaderProgram, "materialColor", &color[0]);
+		this->shaderManager->setFloat(this->shaderProgram, "shininess", mesh->material->getShininess());
 
 		this->graphicsWrapper->drawMesh(mesh, this->vertexAttribLocation, this->normalAttribLocation);
 		matrixManager->pop();

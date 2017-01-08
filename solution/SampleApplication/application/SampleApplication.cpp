@@ -12,7 +12,7 @@ void SampleApplication::onInit()
 	Material *planeMaterial = new DiffuseMaterial("../media/woodfloor.png");
 	planeNode->setMaterial(planeMaterial);
 	*/
-	Entity *plane = this->sceneManager->addPlaneEntity(5);
+	Entity *plane = this->sceneManager->addPlaneEntity(20);
 	TransformComponent *transform = plane->getTransform();
 	transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
 
@@ -20,7 +20,7 @@ void SampleApplication::onInit()
 	this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 0.0f));
 
 	CameraComponent *camera = this->sceneManager->getMainCamera();
-	camera->setPosition(glm::vec3(0.0f, 1.0f, 5.0f));
+	camera->setPosition(glm::vec3(0.0f, 5.0f, 10.0f));
 
 	/*
 	Material *cubeMaterial = new SpecularMaterial("../media/crate.jpg");
