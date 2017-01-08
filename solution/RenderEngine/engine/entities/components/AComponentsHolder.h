@@ -8,7 +8,7 @@
 namespace sre
 {
 
-constexpr size_t MAX_COMPONENTS{ 4 };
+constexpr size_t MAX_COMPONENTS{ 10 };
 
 template <typename C>
 class AComponentsHolder

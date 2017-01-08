@@ -1,5 +1,17 @@
 #version 400
 
+// Types
+struct PointLight
+{
+	vec3 position;
+};
+
+struct LightSources
+{
+	PointLight pointLights[4];
+	int pointLightsCount;
+};
+
 // Vertices
 layout(location=0) in vec3 in_position;
 layout(location=1) in vec3 in_normal;
@@ -10,7 +22,7 @@ uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
 // Lights
-uniform vec3 pointLightPositions[4];
+uniform LightSources lights;
 
 // Camera
 uniform vec3 cameraPosition;
@@ -25,8 +37,10 @@ void main(void)
 	vec4 vertexPosition = modelMatrix * vec4(in_position, 1.0);
 	var_normal = (modelMatrix * vec4(in_normal, 0)).xyz;
 	
-	var_toPointLightVectors[0] = pointLightPositions[0] - vertexPosition.xyz;
 	var_toCameraVector = cameraPosition - vertexPosition.xyz;
+	
+	for (int i = 0; i < lights.pointLightsCount; i++)
+		var_toPointLightVectors[i] = lights.pointLights[i].position - vertexPosition.xyz;
 
 	gl_Position = projectionMatrix * viewMatrix * vertexPosition;
 }

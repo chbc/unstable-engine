@@ -89,7 +89,7 @@ void LightManager::setupPointLights(ShaderManager *shaderManager, uint32_t progr
 		float range			= light->getRange();
 		float intensity		= light->getIntensity();
 
-        sprintf_s(variable, "pointLightPositions[%d]", i);
+        sprintf_s(variable, "lights.pointLights[%d].position", i);
         shaderManager->setVec3(program, variable, &position[0]);
 
         sprintf_s(variable, "lights.pointLights[%d].color", i);
