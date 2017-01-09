@@ -18,20 +18,14 @@ class AGraphicsWrapper;
 class MatrixManager;
 class ShaderManager;
 class LightManager;
+class TextureManager;
+class Texture;
 
 class Entity;
 class DirectionalLightComponent;
 class PointLightComponent;
 
 class ColorRenderer;
-
-/* ###
-class VertexData;
-class RenderableNode;
-class LightNode;
-class DiffuseMaterial;
-class SceneManager;
-*/
 
 /*!
 	Singleton Class for low level rendering
@@ -48,6 +42,7 @@ private:
 	SPTR<AGraphicsWrapper> graphicsWrapper;
 	UPTR<MatrixManager> matrixManager;
 	UPTR<LightManager> lightManager;
+	UPTR<TextureManager> textureManager;
 
 	UPTR<ColorRenderer> colorRenderer;
 
@@ -64,25 +59,18 @@ private:
 	static void DEBUG_drawTriangle();
 	void clearBuffer();
 
-/* ###
-	void applyMaterial(Material *material, bool receiveLight);
-	void applyMaterial(DiffuseMaterial *material, std::vector<VertexData> *vertexData, bool receiveLight);
-*/
-
-	// ### void releaseMaterial(Material *material);
-
-/* ###
-	Texture *loadTexture(const std::string &fileName);
-*/
 	void createVBO(MeshComponent *mesh);
 
 	DirectionalLightComponent *addDirectionalLight(Entity *entity);
 	PointLightComponent *addPointLight(Entity *entity);
 
+	Texture *loadTexture(const std::string &fileName);
+
 friend class SceneManager;
 friend class MeshComponent;
 friend class RenderEngine;
 friend class Material;
+friend class DiffuseMaterialComponent;
 };
 
 } // namespace

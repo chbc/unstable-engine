@@ -32,11 +32,10 @@ private:
 		std::vector<uint32_t> &indices
 	);
 
-	// ### void applyMaterial(bool receiveLight);
-
 public:
 	~MeshComponent();
 
+	Material *getMaterial();
 	void setMaterial(UPTR<Material> &material);
 	void setReceiveLight(bool receiveLight);
 

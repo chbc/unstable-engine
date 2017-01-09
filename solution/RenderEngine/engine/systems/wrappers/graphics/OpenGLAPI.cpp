@@ -60,21 +60,34 @@ void OpenGLAPI::drawMesh(MeshComponent *mesh, int vertexLocation, int normalLoca
 {
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
 
-	// vertex
-	glVertexAttribPointer(vertexLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
-	glEnableVertexAttribArray(vertexLocation);
-
-	// normal
-	glVertexAttribPointer(normalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
-	glEnableVertexAttribArray(normalLocation);
+	this->enableVertexAndNormalLocation(vertexLocation, normalLocation);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
 	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, NULL);
 
 	// Clear
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glDisableVertexAttribArray(vertexLocation);
-	glDisableVertexAttribArray(normalLocation);
+	this->disableVertexAndNormalLocation(vertexLocation, normalLocation);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void OpenGLAPI::drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation, int textureCoordsLocation)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
+
+	this->enableVertexAndNormalLocation(vertexLocation, normalLocation);
+	
+	glVertexAttribPointer(textureCoordsLocation, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
+	glEnableVertexAttribArray(textureCoordsLocation);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
+	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, NULL);
+
+	// Clear
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	this->disableVertexAndNormalLocation(vertexLocation, normalLocation);
+	glDisableVertexAttribArray(textureCoordsLocation);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
@@ -82,6 +95,36 @@ void OpenGLAPI::drawMesh(MeshComponent *mesh, int vertexLocation, int normalLoca
 void OpenGLAPI::clearBuffer()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, void *data)
+{
+	uint32_t result = 0;
+
+	glGenTextures(1, &result);
+
+	glBindTexture(GL_TEXTURE_2D, result);
+	/* ###
+	unsigned int colorFormat;
+
+	colorFormat = GL_RGBA;
+
+	if (img1->flags & SDL_SRCALPHA)
+		colorFormat = GL_RGBA;
+	else
+		colorFormat = GL_RGB;
+	*/
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+	return result;
 }
 
 void OpenGLAPI::deleteTexture(uint32_t id)
@@ -221,6 +264,23 @@ void OpenGLAPI::releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uin
 }
 
 // Private methods
+void OpenGLAPI::enableVertexAndNormalLocation(int vertexLocation, int normalLocation)
+{
+	// Vertices
+	glVertexAttribPointer(vertexLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
+	glEnableVertexAttribArray(vertexLocation);
+
+	// Normals
+	glVertexAttribPointer(normalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
+	glEnableVertexAttribArray(normalLocation);
+}
+
+void OpenGLAPI::disableVertexAndNormalLocation(int vertexLocation, int normalLocation)
+{
+	glDisableVertexAttribArray(vertexLocation);
+	glDisableVertexAttribArray(normalLocation);
+}
+
 uint32_t OpenGLAPI::loadShader(const std::string &fileName, int shaderType)
 {
 	uint32_t result = 0;

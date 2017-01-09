@@ -1,71 +1,48 @@
 #include "TextureManager.h"
 #include <exception>
+#include <engine/systems/multimedia/MultimediaManager.h>
 #include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
 
 namespace sre
 {
 
-IMPLEMENT_SINGLETON(TextureManager);
-
-TextureManager::TextureManager()
+TextureManager::TextureManager(AGraphicsWrapper *graphicsWrapper)
 {
+	this->graphicsWrapper = graphicsWrapper;
 }
 
-bool TextureManager::init()
+TextureManager::~TextureManager()
 {
-	return true;
+	for (const UPTR<Texture> &item : this->textures)
+		this->graphicsWrapper->deleteTexture(item->getId());
+
+	this->textures.clear();
 }
 
-void TextureManager::release()
-{
-}
-
-/* ###
 Texture *TextureManager::loadTexture(const std::string &fileName)
 {
-    /*
-	SDL_Surface *img1 = IMG_Load(fileName);
+	Texture *result = nullptr;
 
-	if (img1 == NULL)
-		throw std::exception();
+	uint32_t width = 0;
+	uint32_t height = 0;
+	void *data = nullptr;
+	MultimediaManager *multimediaManager = MultimediaManager::getInstance();
+	multimediaManager->loadTexture(fileName, &width, &height, data);
 
-	unsigned int colorFormat;
-
-	colorFormat = GL_RGBA;
-
-	if (img1->flags & SDL_SRCALPHA)
-		colorFormat = GL_RGBA;
-	else
-		colorFormat = GL_RGB;
 
 	// OpenGL //
-	unsigned int id = 0;
-	glGenTextures(1, &id);
+	uint32_t id = this->graphicsWrapper->setupTexture(width, height, data);
+	delete data;
 
-	glBindTexture(GL_TEXTURE_2D, id);
-	glTexImage2D(GL_TEXTURE_2D, 0, colorFormat, img1->w, img1->h, 0, colorFormat, GL_UNSIGNED_BYTE, img1->pixels);
+	result = new Texture(id, width, height);
+	this->textures.emplace_back(result);
 
-	glGenerateMipmap(GL_TEXTURE_2D);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	Texture *newTexture = new Texture(id, img1->w, img1->h);
-
-	SDL_FreeSurface(img1);
-
-	return newTexture;
-*/
-	return NULL;
+	return result;
 }
 
-void TextureManager::deleteTexture(unsigned int id)
+void TextureManager::deleteTexture(uint32_t id)
 {
-	AGraphicsWrapper *wrapper = AGraphicsWrapper::getInstance();
-	wrapper->deleteTexture(id);
+	this->graphicsWrapper->deleteTexture(id);
 }
 
 } // namespace

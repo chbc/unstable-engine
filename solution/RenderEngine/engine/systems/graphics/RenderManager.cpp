@@ -7,6 +7,7 @@
 #include <engine/systems/multimedia/MultimediaManager.h>
 #include "MatrixManager.h"
 #include "LightManager.h"
+#include "TextureManager.h"
 #include <engine/entities/components/meshes/materials/Material.h>
 #include "renders/ColorRenderer.h"
 
@@ -24,6 +25,7 @@ RenderManager::RenderManager()
 	this->graphicsWrapper	= SPTR<AGraphicsWrapper>{ new OpenGLAPI{} };
 	this->matrixManager		= UPTR<MatrixManager>{ new MatrixManager{} };
 	this->lightManager		= UPTR<LightManager>{ new LightManager{} };
+	this->textureManager	= UPTR<TextureManager>{ new TextureManager{ this->graphicsWrapper.get() } };
 	
 	this->colorRenderer		= UPTR<ColorRenderer>{ nullptr };
 	this->mainCamera		= nullptr;
@@ -112,11 +114,6 @@ PointLightComponent *RenderManager::addPointLight(Entity *entity)
 }
 
 /* ###
-void RenderManager::applyMaterial(Material *material, bool receiveLight)
-{
-
-}
-
 void RenderManager::applyMaterial(DiffuseMaterial *material, std::vector<VertexData> *vertexData, bool receiveLight)
 {
     this->applyMaterial(material, receiveLight);
@@ -133,19 +130,10 @@ void RenderManager::applyMaterial(DiffuseMaterial *material, std::vector<VertexD
 }
 */
 
-/*
-void RenderManager::releaseMaterial(Material *material)
-{
-    // ### TODO
-}
-*/
-
-/* ###
 Texture *RenderManager::loadTexture(const std::string &fileName)
 {
 	return this->textureManager->loadTexture(fileName);
 }
-*/
 
 void RenderManager::release()
 {

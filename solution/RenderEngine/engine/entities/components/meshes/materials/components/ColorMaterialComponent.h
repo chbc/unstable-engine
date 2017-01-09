@@ -20,7 +20,6 @@ public:
 
 	void init() override;
 
-	// ### void apply(std::vector<VertexData> *vertexData, bool receiveLight);
 	void setColor(const glm::vec4 &color);
 	glm::vec4 getColor();
 };

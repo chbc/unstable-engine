@@ -9,7 +9,8 @@ namespace EShaderVariable
 	enum Type
 	{
 		SHADER_POSITION,
-		SHADER_NORMAL
+		SHADER_NORMAL,
+		SHADER_TEXCOORDS
 	};
 } // namespace
 

@@ -11,9 +11,7 @@ namespace sre
 class MeshComponent;
 class MatrixManager;
 class AGraphicsWrapper;
-class MatrixManager;
 class ShaderManager;
-class AGraphicsWrapper;
 class LightManager;
 
 class ColorRenderer

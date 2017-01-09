@@ -15,8 +15,10 @@ protected:
 	void createVAO(MeshComponent *mesh) override {}
 	void createVBO(MeshComponent *mesh) override;
 	void createIBO(MeshComponent *mesh) override;
-	void clearBuffer() override;
 	void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation) override;
+	void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation, int textureCoordsLocation) override;
+	void clearBuffer() override;
+	uint32_t setupTexture(uint32_t width, uint32_t height, void *data) override;
 	void deleteTexture(uint32_t id) override;
 
 	static void DEBUG_drawTriangle();
@@ -38,6 +40,8 @@ protected:
 	void releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs) override;
 
 private:
+	void enableVertexAndNormalLocation(int vertexLocation, int normalLocation);
+	void disableVertexAndNormalLocation(int vertexLocation, int normalLocation);
 	uint32_t loadShader(const std::string &fileName, int shaderType);
 	uint32_t compileShader(const std::string &fileName, const std::string &source, uint32_t mode);
 	void checkVariableLocation(int location, const std::string &varName); // throws "invalid variable"
@@ -45,6 +49,7 @@ private:
 
 friend class RenderManager;
 friend class ColorRenderer; // ###
+friend class TextureManager;
 };
 
 } // namespace

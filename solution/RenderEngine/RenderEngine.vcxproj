@@ -144,6 +144,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="engine\entities\components\AEntityComponent.cpp" />
+    <ClCompile Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.cpp" />
+    <ClCompile Include="engine\entities\components\meshes\materials\textures\Texture.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\ColorRenderer.cpp" />
     <ClCompile Include="engine\entities\components\cameras\CameraComponent.cpp" />
     <ClCompile Include="engine\entities\components\lights\ALightComponent.cpp" />
@@ -163,6 +165,7 @@
     <ClCompile Include="engine\systems\graphics\MatrixManager.cpp" />
     <ClCompile Include="engine\systems\graphics\RenderManager.cpp" />
     <ClCompile Include="engine\systems\graphics\ShaderManager.cpp" />
+    <ClCompile Include="engine\systems\graphics\TextureManager.cpp" />
     <ClCompile Include="engine\systems\multimedia\MultimediaManager.cpp" />
     <ClCompile Include="engine\systems\timer\Timer.cpp" />
     <ClCompile Include="engine\systems\wrappers\graphics\AGraphicsWrapper.cpp" />
@@ -173,6 +176,8 @@
     <ClCompile Include="engine\utils\Log.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.h" />
+    <ClInclude Include="engine\entities\components\meshes\materials\textures\Texture.h" />
     <ClInclude Include="engine\systems\graphics\renders\ColorRenderer.h" />
     <ClInclude Include="engine\entities\components\AComponentsHolder.h" />
     <ClInclude Include="engine\entities\components\AEntityComponent.h" />
@@ -198,6 +203,7 @@
     <ClInclude Include="engine\systems\graphics\MatrixManager.h" />
     <ClInclude Include="engine\systems\graphics\RenderManager.h" />
     <ClInclude Include="engine\systems\graphics\ShaderManager.h" />
+    <ClInclude Include="engine\systems\graphics\TextureManager.h" />
     <ClInclude Include="engine\systems\input\button_names.h" />
     <ClInclude Include="engine\systems\input\InputHandler.h" />
     <ClInclude Include="engine\systems\multimedia\MultimediaManager.h" />

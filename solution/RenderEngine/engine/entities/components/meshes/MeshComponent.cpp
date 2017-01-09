@@ -24,12 +24,10 @@ MeshComponent::~MeshComponent()
     this->indices.clear();
 }
 
-/* ###
-void MeshComponent::applyMaterial(bool receiveLight)
+Material *MeshComponent::getMaterial()
 {
-    this->material->apply(this->vertexData, receiveLight);
+	return this->material.get();
 }
-*/
 
 void MeshComponent::setMaterial(UPTR<Material> &material)
 {

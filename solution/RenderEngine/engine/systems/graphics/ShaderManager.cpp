@@ -63,8 +63,9 @@ int ShaderManager::getAttribLocation(uint32_t program, EShaderVariable::Type sha
 
 	switch (shaderVariable)
 	{
-		case EShaderVariable::SHADER_POSITION:   result = 0; break;
-		case EShaderVariable::SHADER_NORMAL:     result = 1; break;
+		case EShaderVariable::SHADER_POSITION:		result = 0; break;
+		case EShaderVariable::SHADER_NORMAL:		result = 1; break;
+		case EShaderVariable::SHADER_TEXCOORDS:		result = 2; break;
 		default: break;
 	}
 

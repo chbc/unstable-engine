@@ -1,21 +1,26 @@
 #ifndef _TEXTURE_H_
 #define _TEXTURE_H_
 
+#include <stdint.h>
+
+namespace sre
+{
+
 class Texture
 {
-	public:
-        enum Type
-        {
-            DIFFUSE,
-            SPECULAR,
-            NORMAL
-        } type;
+private:
+	uint32_t id;
+	uint32_t width;
+	uint32_t height;
 
-		unsigned int id;
-		unsigned int width;
-		unsigned int height;
+public:
+	Texture(uint32_t id, uint32_t width, uint32_t height);
 
-        Texture(unsigned int id, unsigned int width, unsigned int height, Type type = DIFFUSE);
+	uint32_t getId();
+	uint32_t getWidth();
+	uint32_t getHeight();
 };
+
+} // namespace
 
 #endif

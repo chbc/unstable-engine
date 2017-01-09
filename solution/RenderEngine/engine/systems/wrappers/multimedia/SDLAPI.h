@@ -27,6 +27,7 @@ protected:
 	bool checkClosePressed() override;
 	unsigned int getTicks() override;
 	void delay(unsigned int) override;
+	void loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, void *outData) override;
 	void release() override;
 
 private:

@@ -7,7 +7,6 @@ namespace sre
 {
 
 class AMultimediaWrapper;
-class RenderEngine;
 class InputHandler;
 class Timer;
 
@@ -33,9 +32,10 @@ private:
 	void onBeginFrame();
 	void onEndFrame();
 	unsigned int getElapsedTime();
-
+	void loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, void *outData);
 
 friend class RenderEngine;
+friend class TextureManager;
 };
 
 } // namespace

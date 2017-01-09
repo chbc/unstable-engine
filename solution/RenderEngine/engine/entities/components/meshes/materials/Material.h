@@ -6,6 +6,7 @@
 #include "components/AMaterialComponent.h"
 #include <engine/utils/memory_aliases.h>
 #include "components/ColorMaterialComponent.h"
+#include "components/DiffuseMaterialComponent.h"
 
 namespace sre
 {

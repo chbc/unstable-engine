@@ -55,4 +55,9 @@ unsigned int MultimediaManager::getElapsedTime()
 	return 0;
 }
 
+void MultimediaManager::loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, void *outData)
+{
+	this->multimediaWrapper->loadTexture(fileName, outWidth, outHeight, outData);
+}
+
 } // namespace

@@ -33,8 +33,6 @@ MeshComponent *MeshFactory::createPlane(Entity *entity, float size)
 		2, 3, 0 
 	};
 
-	/*
-	// ### armazenar as coordenadas de textura
 	float planeTexCoords[] = 
 	{ 
 		1, 0,
@@ -42,7 +40,6 @@ MeshComponent *MeshFactory::createPlane(Entity *entity, float size)
 		0, 1,
 		1, 1 
 	};
-	*/
 
 	VECTOR_UPTR<VertexData> vertexData;
 	VertexData *newData;
@@ -54,6 +51,12 @@ MeshComponent *MeshFactory::createPlane(Entity *entity, float size)
 		newData->color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 		vertexData.emplace_back(newData);
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		vertexData[i]->u = planeTexCoords[2 * i];
+		vertexData[i]->v = planeTexCoords[(2 * i) + 1];
 	}
 
 	std::vector<uint32_t> indices;

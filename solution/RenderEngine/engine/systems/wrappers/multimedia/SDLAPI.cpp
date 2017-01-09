@@ -1,5 +1,6 @@
 #include "SDLAPI.h"
 #include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 #include <engine/systems/input/InputHandler.h>
 
 namespace sre
@@ -9,6 +10,10 @@ void SDLAPI::init(int width, int height)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		throw this->getError();
+
+    int imgFlags = IMG_INIT_PNG;
+	if (!(IMG_Init(imgFlags) & imgFlags))
+		throw IMG_GetError();
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
@@ -97,9 +102,27 @@ void SDLAPI::delay(unsigned int timeMS)
 	SDL_Delay(timeMS);
 }
 
+void SDLAPI::loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, void *outData)
+{
+	SDL_Surface *surface = IMG_Load(fileName.c_str());
+
+	if (surface == NULL)
+		throw "[TextureManager] Can't load texture file: " + fileName;
+
+	*outWidth = surface->w;
+	*outHeight = surface->h;
+
+	uint32_t size = surface->pitch * surface->h;
+	outData = new char[size];
+	memcpy_s(outData, size, surface->pixels, size);
+
+	SDL_FreeSurface(surface);
+}
+
 void SDLAPI::release()
 {
 	SDL_DestroyWindow(this->window);
+	IMG_Quit();
 	SDL_Quit();
 
 	delete this->event;
@@ -107,7 +130,7 @@ void SDLAPI::release()
 
 std::string SDLAPI::getError()
 {
-	return "Error: " + std::string(SDL_GetError());
+	return "SDL Error: " + std::string(SDL_GetError());
 }
 
 } // namespace

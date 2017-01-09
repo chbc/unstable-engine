@@ -25,7 +25,9 @@ protected:
 	virtual void createVBO(MeshComponent *mesh) =0;
 	virtual void createIBO(MeshComponent *mesh) =0;
 	virtual void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation) =0;
+	virtual void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation, int textureCoordsLocation) =0;
 	virtual void clearBuffer() =0;
+	virtual uint32_t setupTexture(uint32_t width, uint32_t height, void *data) =0;
 	virtual void deleteTexture(uint32_t id) =0;
 
 	// Shaders
@@ -39,7 +41,6 @@ protected:
 	virtual void setVec4(uint32_t program, const std::string &varName, const float *value) =0;
 	virtual void setMat4(uint32_t program, const std::string &varName, const float *value) =0;
 
-	// ### virtual int getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable) =0;
 	virtual void enableShader(uint32_t program) =0;
 	virtual void disableShader() =0;
 	virtual void releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs) =0;
@@ -47,10 +48,8 @@ protected:
 friend class RenderManager;
 friend class ShaderManager;
 friend class ColorRenderer; // ###
-
-/* ###
 friend class TextureManager;
-*/
+
 };
 
 } // namespace
