@@ -172,6 +172,7 @@
     <ClCompile Include="engine\systems\wrappers\graphics\OpenGLAPI.cpp" />
     <ClCompile Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.cpp" />
     <ClCompile Include="engine\systems\wrappers\multimedia\SDLAPI.cpp" />
+    <ClCompile Include="engine\temp\TEMP_TextureEngine.cpp" />
     <ClCompile Include="engine\utils\FileUtils.cpp" />
     <ClCompile Include="engine\utils\Log.cpp" />
   </ItemGroup>
@@ -212,7 +213,7 @@
     <ClInclude Include="engine\systems\wrappers\graphics\OpenGLAPI.h" />
     <ClInclude Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.h" />
     <ClInclude Include="engine\systems\wrappers\multimedia\SDLAPI.h" />
-    <ClInclude Include="engine\temp\TEMP_Engine.h" />
+    <ClInclude Include="engine\temp\TEMP_TextureEngine.h" />
     <ClInclude Include="engine\utils\EShaderVariable.h" />
     <ClInclude Include="engine\utils\FileUtils.h" />
     <ClInclude Include="engine\utils\Log.h" />

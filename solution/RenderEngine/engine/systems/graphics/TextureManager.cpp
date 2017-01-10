@@ -25,14 +25,13 @@ Texture *TextureManager::loadTexture(const std::string &fileName)
 
 	uint32_t width = 0;
 	uint32_t height = 0;
-	void *data = nullptr;
+	uint8_t bpp = 0;
 	MultimediaManager *multimediaManager = MultimediaManager::getInstance();
-	multimediaManager->loadTexture(fileName, &width, &height, data);
-
+	void *data = multimediaManager->loadTexture(fileName, &width, &height, &bpp);
 
 	// OpenGL //
-	uint32_t id = this->graphicsWrapper->setupTexture(width, height, data);
-	delete data;
+	uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data);
+	delete[] data;
 
 	result = new Texture(id, width, height);
 	this->textures.emplace_back(result);

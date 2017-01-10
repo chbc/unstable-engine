@@ -108,6 +108,9 @@
     <ClCompile Include="engine\systems\graphics\TextureManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\temp\TEMP_TextureEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\EShaderVariable.h">
@@ -215,9 +218,6 @@
     <ClInclude Include="engine\entities\components\meshes\VertexData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\temp\TEMP_Engine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\systems\graphics\renders\ColorRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -234,6 +234,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\systems\graphics\TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\temp\TEMP_TextureEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

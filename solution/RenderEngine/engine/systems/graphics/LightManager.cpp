@@ -8,7 +8,7 @@ namespace sre
 
 LightManager::LightManager()
 {
-	this->ambientLightColor = glm::vec3(0.3f, 0.3f, 0.3f);
+	this->ambientLightColor = glm::vec3(0.1f, 0.1f, 0.1f);
 }
 
 LightManager::~LightManager()

@@ -15,7 +15,11 @@ ColorRenderer::ColorRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper)
 {
 	this->graphicsWrapper = graphicsWrapper;
 	this->shaderManager	= UPTR<ShaderManager>{ new ShaderManager{graphicsWrapper} };
-	this->shaderProgram = this->shaderManager->loadShader(ShaderConsts::COLOR_V, ShaderConsts::COLOR_F);
+	// ### this->shaderProgram = this->shaderManager->loadShader(ShaderConsts::COLOR_V, ShaderConsts::COLOR_F);
+
+	this->shaderProgram = this->shaderManager->loadShader(ShaderConsts::DIFFUSE_V, ShaderConsts::DIFFUSE_F);
+
+
     this->vertexAttribLocation = this->shaderManager->getAttribLocation(this->shaderProgram, EShaderVariable::SHADER_POSITION);
     this->normalAttribLocation = this->shaderManager->getAttribLocation(this->shaderProgram, EShaderVariable::SHADER_NORMAL);
 }
@@ -71,7 +75,16 @@ void ColorRenderer::render(MatrixManager *matrixManager, LightManager *lightMana
 		this->shaderManager->setVec4(this->shaderProgram, "materialColor", &color[0]);
 		this->shaderManager->setFloat(this->shaderProgram, "shininess", mesh->material->getShininess());
 
-		this->graphicsWrapper->drawMesh(mesh, this->vertexAttribLocation, this->normalAttribLocation);
+		
+		// ###
+		DiffuseMaterialComponent *diffuseMaterial = mesh->material->getComponent<DiffuseMaterialComponent>();
+		this->graphicsWrapper->drawMesh
+		(
+			mesh, this->vertexAttribLocation, this->normalAttribLocation, 2,
+			diffuseMaterial->getTextureID()
+		);
+
+		// this->graphicsWrapper->drawMesh(mesh, this->vertexAttribLocation, this->normalAttribLocation);
 		matrixManager->pop();
 	}
 

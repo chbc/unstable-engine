@@ -102,21 +102,25 @@ void SDLAPI::delay(unsigned int timeMS)
 	SDL_Delay(timeMS);
 }
 
-void SDLAPI::loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, void *outData)
+void *SDLAPI::loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp)
 {
+	void *result = nullptr;
 	SDL_Surface *surface = IMG_Load(fileName.c_str());
 
-	if (surface == NULL)
-		throw "[TextureManager] Can't load texture file: " + fileName;
+	if (surface == nullptr)
+		throw "[SDLAPI] Can't load texture file: " + fileName;
 
 	*outWidth = surface->w;
 	*outHeight = surface->h;
+	*outBpp = surface->format->BytesPerPixel;
 
 	uint32_t size = surface->pitch * surface->h;
-	outData = new char[size];
-	memcpy_s(outData, size, surface->pixels, size);
+	result = new char[size];
+	memcpy_s(result, size, surface->pixels, size);
 
 	SDL_FreeSurface(surface);
+
+	return result;
 }
 
 void SDLAPI::release()

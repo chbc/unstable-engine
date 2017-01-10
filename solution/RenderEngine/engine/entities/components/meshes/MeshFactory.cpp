@@ -48,7 +48,7 @@ MeshComponent *MeshFactory::createPlane(Entity *entity, float size)
 		newData = new VertexData;
 		newData->position = glm::vec3(planeVertices[i], planeVertices[i + 1], planeVertices[i + 2]);
 		newData->normal = glm::vec3(planeNormals[i], planeNormals[i + 1], planeNormals[i + 2]);
-		newData->color = glm::vec3(1.0f, 1.0f, 1.0f);
+		// ### newData->color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 		vertexData.emplace_back(newData);
 	}
@@ -122,7 +122,7 @@ MeshComponent *MeshFactory::createCube(Entity *entity, float size)
 		newData = new VertexData;
 		newData->position = glm::vec3(cubeVertices[i], cubeVertices[i + 1], cubeVertices[i + 2]);
 		newData->normal = glm::vec3(cubeNormals[i], cubeNormals[i + 1], cubeNormals[i + 2]);
-		newData->color = glm::vec3(1.0f, 1.0f, 1.0f);
+		// ### newData->color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 		vertexData.emplace_back(newData);
 	}

@@ -19,7 +19,7 @@ protected:
 	virtual bool checkClosePressed() =0;
 	virtual unsigned int getTicks() =0;
 	virtual void delay(unsigned int timeMS) =0;
-	virtual void loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, void *outData) =0;
+	virtual void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) =0;
 	virtual void release() =0;
 
 friend class MultimediaManager;

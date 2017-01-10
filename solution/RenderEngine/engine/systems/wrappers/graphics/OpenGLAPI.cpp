@@ -43,15 +43,15 @@ void OpenGLAPI::createVBO(MeshComponent *mesh)
 void OpenGLAPI::createIBO(MeshComponent *mesh)
 {
 	// indices
-	int indCount = mesh->indices.size();
-	uint32_t *indices = new uint32_t[indCount];
-	for (int i = 0; i < indCount; i++)
+	int size = mesh->indices.size();
+	uint32_t *indices = new uint32_t[size];
+	for (int i = 0; i < size; i++)
 		indices[i] = mesh->indices[i];
 
 	// Creates IBO
 	glGenBuffers(1, &mesh->indexBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indices.size() * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), indices, GL_STATIC_DRAW);
 
 	delete[] indices;
 }
@@ -72,7 +72,7 @@ void OpenGLAPI::drawMesh(MeshComponent *mesh, int vertexLocation, int normalLoca
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void OpenGLAPI::drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation, int textureCoordsLocation)
+void OpenGLAPI::drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation, int textureCoordsLocation, uint32_t textureId)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
 
@@ -81,8 +81,11 @@ void OpenGLAPI::drawMesh(MeshComponent *mesh, int vertexLocation, int normalLoca
 	glVertexAttribPointer(textureCoordsLocation, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
 	glEnableVertexAttribArray(textureCoordsLocation);
 
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, NULL);
+	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, nullptr);
 
 	// Clear
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -97,24 +100,18 @@ void OpenGLAPI::clearBuffer()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, void *data)
+uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data)
 {
 	uint32_t result = 0;
 
 	glGenTextures(1, &result);
 
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, result);
-	/* ###
-	unsigned int colorFormat;
 
-	colorFormat = GL_RGBA;
+	int colorFormat = (bpp == 3) ? GL_RGB : GL_RGBA;
 
-	if (img1->flags & SDL_SRCALPHA)
-		colorFormat = GL_RGBA;
-	else
-		colorFormat = GL_RGB;
-	*/
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, 0, colorFormat, width, height, 0, colorFormat, GL_UNSIGNED_BYTE, data);
 
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

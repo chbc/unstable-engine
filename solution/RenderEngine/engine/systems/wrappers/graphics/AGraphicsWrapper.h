@@ -25,9 +25,9 @@ protected:
 	virtual void createVBO(MeshComponent *mesh) =0;
 	virtual void createIBO(MeshComponent *mesh) =0;
 	virtual void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation) =0;
-	virtual void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation, int textureCoordsLocation) =0;
+	virtual void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation, int textureCoordsLocation, uint32_t textureId) =0;
 	virtual void clearBuffer() =0;
-	virtual uint32_t setupTexture(uint32_t width, uint32_t height, void *data) =0;
+	virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data) =0;
 	virtual void deleteTexture(uint32_t id) =0;
 
 	// Shaders

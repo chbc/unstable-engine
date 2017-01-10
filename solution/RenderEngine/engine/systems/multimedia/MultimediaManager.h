@@ -32,7 +32,7 @@ private:
 	void onBeginFrame();
 	void onEndFrame();
 	unsigned int getElapsedTime();
-	void loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, void *outData);
+	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp);
 
 friend class RenderEngine;
 friend class TextureManager;
