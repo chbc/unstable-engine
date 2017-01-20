@@ -9,6 +9,18 @@
 namespace sre
 {
 
+namespace EAttribLocation
+{
+
+enum Type : int
+{
+	POSITION = 0,
+	NORMAL = 1,
+	TEXCOORDS = 2
+};
+
+}
+
 void OpenGLAPI::init()
 {
 	glewExperimental = GL_TRUE;
@@ -56,30 +68,30 @@ void OpenGLAPI::createIBO(MeshComponent *mesh)
 	delete[] indices;
 }
 
-void OpenGLAPI::drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation)
+void OpenGLAPI::drawColorMesh(MeshComponent *mesh)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
 
-	this->enableVertexAndNormalLocation(vertexLocation, normalLocation);
+	this->enableVertexAndNormalLocation(EAttribLocation::POSITION, EAttribLocation::NORMAL);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
 	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, NULL);
 
 	// Clear
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	this->disableVertexAndNormalLocation(vertexLocation, normalLocation);
+	this->disableVertexAndNormalLocation(EAttribLocation::POSITION, EAttribLocation::NORMAL);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void OpenGLAPI::drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation, int textureCoordsLocation, uint32_t textureId)
+void OpenGLAPI::drawTexturedMesh(MeshComponent *mesh, uint32_t textureId)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
 
-	this->enableVertexAndNormalLocation(vertexLocation, normalLocation);
+	this->enableVertexAndNormalLocation(EAttribLocation::POSITION, EAttribLocation::NORMAL);
 	
-	glVertexAttribPointer(textureCoordsLocation, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
-	glEnableVertexAttribArray(textureCoordsLocation);
+	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
+	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureId);
@@ -89,8 +101,8 @@ void OpenGLAPI::drawMesh(MeshComponent *mesh, int vertexLocation, int normalLoca
 
 	// Clear
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	this->disableVertexAndNormalLocation(vertexLocation, normalLocation);
-	glDisableVertexAttribArray(textureCoordsLocation);
+	this->disableVertexAndNormalLocation(EAttribLocation::POSITION, EAttribLocation::NORMAL);
+	glDisableVertexAttribArray(EAttribLocation::TEXCOORDS);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

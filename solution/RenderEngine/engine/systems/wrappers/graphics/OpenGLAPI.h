@@ -15,8 +15,8 @@ protected:
 	void createVAO(MeshComponent *mesh) override {}
 	void createVBO(MeshComponent *mesh) override;
 	void createIBO(MeshComponent *mesh) override;
-	void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation) override;
-	void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation, int textureCoordsLocation, uint32_t textureId) override;
+	void drawColorMesh(MeshComponent *mesh) override;
+	void drawTexturedMesh(MeshComponent *mesh, uint32_t textureId) override;
 	void clearBuffer() override;
 	uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data) override;
 	void deleteTexture(uint32_t id) override;

@@ -5,7 +5,7 @@
 #include <engine/systems/graphics/MatrixManager.h>
 #include <engine/systems/graphics/ShaderManager.h>
 #include <engine/systems/graphics/LightManager.h>
-#include <engine/systems/wrappers/graphics/OpenGLAPI.h>
+#include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
 #include "ShaderConsts.h"
 
 namespace sre
@@ -15,18 +15,20 @@ ColorRenderer::ColorRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper)
 {
 	this->graphicsWrapper = graphicsWrapper;
 	this->shaderManager	= UPTR<ShaderManager>{ new ShaderManager{graphicsWrapper} };
-	// ### this->shaderProgram = this->shaderManager->loadShader(ShaderConsts::COLOR_V, ShaderConsts::COLOR_F);
-
-	this->shaderProgram = this->shaderManager->loadShader(ShaderConsts::DIFFUSE_V, ShaderConsts::DIFFUSE_F);
-
-
-    this->vertexAttribLocation = this->shaderManager->getAttribLocation(this->shaderProgram, EShaderVariable::SHADER_POSITION);
-    this->normalAttribLocation = this->shaderManager->getAttribLocation(this->shaderProgram, EShaderVariable::SHADER_NORMAL);
+	this->shaderProgram = this->shaderManager->loadShader(ShaderConsts::COLOR_V, ShaderConsts::COLOR_F);
 }
 
 ColorRenderer::~ColorRenderer()
 {
 	this->meshes.clear();
+}
+
+void ColorRenderer::setupMaterial(MeshComponent *mesh)
+{
+	ColorMaterialComponent *colorMaterial = mesh->getMaterial()->getComponent<ColorMaterialComponent>();
+	glm::vec4 color = colorMaterial->getColor();
+	this->shaderManager->setVec4(this->shaderProgram, "materialColor", &color[0]);
+	this->shaderManager->setFloat(this->shaderProgram, "shininess", mesh->getMaterial()->getShininess());
 }
 
 void ColorRenderer::addMesh(MeshComponent *mesh)
@@ -70,25 +72,18 @@ void ColorRenderer::render(MatrixManager *matrixManager, LightManager *lightMana
 		glm::mat4 modelMatrix = matrixManager->getModelMatrix();
 		this->shaderManager->setMat4(this->shaderProgram, "modelMatrix", &modelMatrix[0][0]);
 
-		ColorMaterialComponent *colorMaterial = mesh->material->getComponent<ColorMaterialComponent>();
-		glm::vec4 color = colorMaterial->getColor();
-		this->shaderManager->setVec4(this->shaderProgram, "materialColor", &color[0]);
-		this->shaderManager->setFloat(this->shaderProgram, "shininess", mesh->material->getShininess());
+		this->setupMaterial(mesh);
+		this->drawMesh(mesh);
 
-		
-		// ###
-		DiffuseMaterialComponent *diffuseMaterial = mesh->material->getComponent<DiffuseMaterialComponent>();
-		this->graphicsWrapper->drawMesh
-		(
-			mesh, this->vertexAttribLocation, this->normalAttribLocation, 2,
-			diffuseMaterial->getTextureID()
-		);
-
-		// this->graphicsWrapper->drawMesh(mesh, this->vertexAttribLocation, this->normalAttribLocation);
 		matrixManager->pop();
 	}
 
 	this->shaderManager->disableShader();
+}
+
+void ColorRenderer::drawMesh(MeshComponent *mesh)
+{
+	this->graphicsWrapper->drawColorMesh(mesh);
 }
 
 } // namespace

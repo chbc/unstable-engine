@@ -24,8 +24,8 @@ protected:
 	virtual void createVAO(MeshComponent *mesh) =0;
 	virtual void createVBO(MeshComponent *mesh) =0;
 	virtual void createIBO(MeshComponent *mesh) =0;
-	virtual void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation) =0;
-	virtual void drawMesh(MeshComponent *mesh, int vertexLocation, int normalLocation, int textureCoordsLocation, uint32_t textureId) =0;
+	virtual void drawColorMesh(MeshComponent *mesh) =0;
+	virtual void drawTexturedMesh(MeshComponent *mesh, uint32_t textureId) =0;
 	virtual void clearBuffer() =0;
 	virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data) =0;
 	virtual void deleteTexture(uint32_t id) =0;
@@ -48,6 +48,7 @@ protected:
 friend class RenderManager;
 friend class ShaderManager;
 friend class ColorRenderer; // ###
+friend class DiffuseTexturedRenderer;
 friend class TextureManager;
 
 };

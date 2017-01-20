@@ -16,8 +16,6 @@ private:
 public:
 	DiffuseMaterialComponent(Material *material, const std::string &fileName);
 
-	void init() override {};
-
 	void loadTexture(const std::string &fileName);
 	unsigned int getTextureID(uint32_t index = 0);
 };

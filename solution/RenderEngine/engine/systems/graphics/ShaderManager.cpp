@@ -57,21 +57,6 @@ void ShaderManager::setMat4(uint32_t program, const std::string &varName, const 
 	this->graphicsWrapper->setMat4(program, varName, value);
 }
 
-int ShaderManager::getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable)
-{
-	int result = -1;
-
-	switch (shaderVariable)
-	{
-		case EShaderVariable::SHADER_POSITION:		result = 0; break;
-		case EShaderVariable::SHADER_NORMAL:		result = 1; break;
-		case EShaderVariable::SHADER_TEXCOORDS:		result = 2; break;
-		default: break;
-	}
-
-	return result;
-}
-
 // attributes
 /*
 void ShaderManager::setAttributeValue(const char *idName, float x)

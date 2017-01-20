@@ -1,17 +1,32 @@
 #ifndef _MATERIAL_H_
 #define _MATERIAL_H_
 
-// ### #include "ShaderConsts.h"
 #include <engine/entities/components/AComponentsHolder.h>
 #include "components/AMaterialComponent.h"
 #include <engine/utils/memory_aliases.h>
 #include "components/ColorMaterialComponent.h"
 #include "components/DiffuseMaterialComponent.h"
 
-namespace sre
+/*
+namespace EMaterialMap
 {
 
-// ### struct VertexData;
+enum Type
+{
+	COLOR = 0x
+};
+
+}
+*/
+
+/* ###
+- array de bits
+- passar flags pelo construtor
+- adicionar components baseado nas flags
+*/
+
+namespace sre
+{
 
 class Material : public AComponentsHolder<AMaterialComponent>
 {
@@ -19,8 +34,6 @@ private:
 	float shininess;
 
 public:
-	Material(float shininess = 15.0f);
-
 	void setShininess(float shininess);
 	float getShininess();
 
@@ -39,15 +52,11 @@ public:
 
 		return newComponent;
 	}
-	// ### void apply(std::vector<VertexData> *vertexData, bool receiveLight);
 
-/* ###
-friend class Mesh;
-*/
+private:
+	Material(float shininess = 15.0);
 
-friend class RenderManager;
-friend class ColorMaterialComponent;
-friend class ColorRenderer; // ###
+friend class MeshComponent;
 };
 
 } // namespace

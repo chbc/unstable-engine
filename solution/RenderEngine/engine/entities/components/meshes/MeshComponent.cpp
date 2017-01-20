@@ -15,7 +15,7 @@ MeshComponent::MeshComponent
 	this->vertexData = std::move(vertexData);
 	this->indices = std::move(indices);
 
-	this->material = std::make_unique<Material>();
+	this->material = UPTR<Material>{ new Material{} };
 }
 
 MeshComponent::~MeshComponent()

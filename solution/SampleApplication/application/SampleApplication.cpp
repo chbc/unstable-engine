@@ -16,19 +16,16 @@ void SampleApplication::onInit()
 	Entity *plane = this->sceneManager->addPlaneEntity(10);
 	TransformComponent *transform = plane->getTransform();
 	transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
-	Material *material = plane->getComponent<MeshComponent>()->getMaterial();
-	material->addComponent<DiffuseMaterialComponent>
-	(
-		"../../media/woodfloor.png"
-	);
 
 	this->cube = this->sceneManager->addCubeEntity();
 	this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 0.0f));
-	material = cube->getComponent<MeshComponent>()->getMaterial();
+	/*
+	Material *material = cube->getComponent<MeshComponent>()->getMaterial();
 	material->addComponent<DiffuseMaterialComponent>
 	(
 		"../../media/crate.jpg"
 	);
+	*/
 
 	CameraComponent *camera = this->sceneManager->getMainCamera();
 	camera->setPosition(glm::vec3(0.0f, 5.0f, 10.0f));

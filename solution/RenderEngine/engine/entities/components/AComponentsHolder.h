@@ -27,8 +27,19 @@ public:
 	template <typename T> T *getComponent();
 
 private:
-	template <typename T> std::size_t getComponentID();
-	uint16_t generateComponentID();
+	template <typename T>
+	std::size_t getComponentId();
+
+	// Entity components
+	template <> std::size_t getComponentId<class TransformComponent>() { return 1; }
+	template <> std::size_t getComponentId<class CameraComponent>() { return 2; }
+	template <> std::size_t getComponentId<class DirectionalLightComponent>() { return 3; }
+	template <> std::size_t getComponentId<class PointLightComponent>() { return 4; }
+	template <> std::size_t getComponentId<class MeshComponent>() { return 5; }
+
+	// Material components
+	template <> std::size_t getComponentId<class ColorMaterialComponent>() { return 1; }
+	template <> std::size_t getComponentId<class DiffuseMaterialComponent>() { return 2; }
 };
 
 } // namespace

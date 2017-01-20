@@ -19,14 +19,18 @@ class ColorRenderer
 private:
 	std::vector<MeshComponent *> meshes;
 	UPTR<ShaderManager> shaderManager;
-	SPTR<AGraphicsWrapper> graphicsWrapper;
 
 	uint32_t shaderProgram;
-	int vertexAttribLocation;
-	int normalAttribLocation;
+
+protected:
+	SPTR<AGraphicsWrapper> graphicsWrapper;
 
 public:
 	~ColorRenderer();
+
+protected:
+	virtual void setupMaterial(MeshComponent *mesh);
+	virtual void drawMesh(MeshComponent *mesh);
 
 private:
 	ColorRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper);

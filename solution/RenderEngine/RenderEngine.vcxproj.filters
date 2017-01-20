@@ -111,6 +111,9 @@
     <ClCompile Include="engine\temp\TEMP_TextureEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\systems\graphics\renders\DiffuseTexturedRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\EShaderVariable.h">
@@ -237,6 +240,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\temp\TEMP_TextureEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\renders\DiffuseTexturedRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

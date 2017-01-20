@@ -18,8 +18,6 @@ private:
 public:
 	ColorMaterialComponent(Material *material);
 
-	void init() override;
-
 	void setColor(const glm::vec4 &color);
 	glm::vec4 getColor();
 };

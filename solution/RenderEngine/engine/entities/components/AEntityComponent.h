@@ -12,9 +12,6 @@ class TransformComponent;
 class AEntityComponent
 {
 private:
-#ifdef SRE_TESTS
-public:
-#endif
 	Entity *entity;
 
 public:
@@ -28,7 +25,6 @@ public:
 	TransformComponent *getTransform();
 
 friend class Entity;
-// friend class AComponentsHolder<AEntityComponent>;
 
 };
 
