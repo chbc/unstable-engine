@@ -6,7 +6,6 @@
 #include <engine/systems/graphics/ShaderManager.h>
 #include <engine/systems/graphics/LightManager.h>
 #include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
-#include "ShaderConsts.h"
 
 namespace sre
 {
@@ -15,12 +14,17 @@ ColorRenderer::ColorRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper)
 {
 	this->graphicsWrapper = graphicsWrapper;
 	this->shaderManager	= UPTR<ShaderManager>{ new ShaderManager{graphicsWrapper} };
-	this->shaderProgram = this->shaderManager->loadShader(ShaderConsts::COLOR_V, ShaderConsts::COLOR_F);
+	this->shaderProgram = this->loadShader(this->shaderManager.get());
 }
 
 ColorRenderer::~ColorRenderer()
 {
 	this->meshes.clear();
+}
+
+uint32_t ColorRenderer::loadShader(ShaderManager *shaderManager)
+{
+	return shaderManager->loadColorShader();
 }
 
 void ColorRenderer::setupMaterial(MeshComponent *mesh)
@@ -40,11 +44,6 @@ void ColorRenderer::createVBO(MeshComponent *mesh)
 {
 	this->graphicsWrapper->createVBO(mesh);
 	this->graphicsWrapper->createIBO(mesh);
-}
-
-uint32_t ColorRenderer::loadShader(const std::string &vertFile, const std::string &fragFile)
-{
-	return this->shaderManager->loadShader(vertFile, fragFile);
 }
 
 void ColorRenderer::render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition)

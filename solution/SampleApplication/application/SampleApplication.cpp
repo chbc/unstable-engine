@@ -19,21 +19,15 @@ void SampleApplication::onInit()
 
 	this->cube = this->sceneManager->addCubeEntity();
 	this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 0.0f));
-	/*
 	Material *material = cube->getComponent<MeshComponent>()->getMaterial();
 	material->addComponent<DiffuseMaterialComponent>
 	(
 		"../../media/crate.jpg"
 	);
-	*/
+
 
 	CameraComponent *camera = this->sceneManager->getMainCamera();
 	camera->setPosition(glm::vec3(0.0f, 5.0f, 10.0f));
-
-	/*
-	Material *cubeMaterial = new SpecularMaterial("../media/crate.jpg");
-	this->cube->setMaterial(cubeMaterial);
-	*/
 
 	// light //
 	/*

@@ -1,6 +1,6 @@
 #include "ShaderManager.h"
 #include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
-#include <engine/utils/Log.h>
+#include "shaders/ShaderContentFactory.h"
 
 namespace sre
 {
@@ -15,12 +15,15 @@ ShaderManager::~ShaderManager()
 	this->graphicsWrapper->releaseShaders(this->vertShaders, this->fragShaders, this->programs);
 }
 
-uint32_t ShaderManager::loadShader(const std::string &vertexFile, const std::string &fragmentFile)
+uint32_t ShaderManager::loadColorShader()
 {
-	Log::logMessage("Loading shaders: " + vertexFile + " and " + fragmentFile);
+	std::string vertexContent;
+	std::string fragmentContent;
+	ShaderContentFactory contentFactory;
+	contentFactory.createColorContent(vertexContent, fragmentContent);
 
-	uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexFile);
-	uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentFile);
+	uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);
+	uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentContent);
 
 	uint32_t program = this->graphicsWrapper->createProgram(vertShader, fragShader);
 
@@ -29,6 +32,11 @@ uint32_t ShaderManager::loadShader(const std::string &vertexFile, const std::str
 	this->programs.push(program);
 	
 	return program;
+}
+
+uint32_t ShaderManager::loadDiffuseShader()
+{
+	return 0;
 }
 
 // passing values //
@@ -56,27 +64,6 @@ void ShaderManager::setMat4(uint32_t program, const std::string &varName, const 
 {
 	this->graphicsWrapper->setMat4(program, varName, value);
 }
-
-// attributes
-/*
-void ShaderManager::setAttributeValue(const char *idName, float x)
-{
-	uint32_t location = glGetAttribLocation(this->program, idName);
-	glUniform1f(location, x);
-}
-
-void ShaderManager::setAttributeValue(const char *idName, float x, float y)
-{
-	uint32_t location = glGetAttribLocation(this->program, idName);
-	glUniform2f(location, x, y);
-}
-
-void ShaderManager::setAttributeValue(const char *idName, float x, float y, float z)
-{
-	uint32_t location = glGetAttribLocation(this->program, idName);
-	glUniform3f(location, x, y, z);
-}
-*/
 
 void ShaderManager::enableShader(uint32_t program)
 {

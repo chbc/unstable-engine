@@ -12,6 +12,7 @@ class LightManager;
 class DiffuseTexturedRenderer : public ColorRenderer
 {
 protected:
+	uint32_t loadShader(ShaderManager *shaderManager);
 	void drawMesh(MeshComponent *mesh) override;
 };
 

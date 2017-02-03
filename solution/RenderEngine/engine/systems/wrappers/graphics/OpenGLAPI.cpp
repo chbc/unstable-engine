@@ -3,7 +3,6 @@
 
 #include "OpenGLAPI.h"
 #include <engine/entities/components/meshes/MeshComponent.h>
-#include <engine/utils/FileUtils.h>
 #include <engine/utils/Log.h>
 
 namespace sre
@@ -161,14 +160,14 @@ void OpenGLAPI::DEBUG_drawTriangle()
 }
 
 // Shaders
-uint32_t OpenGLAPI::loadVertexShader(const std::string &vertexFile)
+uint32_t OpenGLAPI::loadVertexShader(const std::string &vertexContent)
 {
-	return this->loadShader(vertexFile, GL_VERTEX_SHADER);
+	return this->compileShader(vertexContent, GL_VERTEX_SHADER);
 }
 
-uint32_t OpenGLAPI::loadFragmentShader(const std::string &fragmentFile)
+uint32_t OpenGLAPI::loadFragmentShader(const std::string &fragmentContent)
 {
-	return this->loadShader(fragmentFile, GL_FRAGMENT_SHADER);
+	return this->compileShader(fragmentContent, GL_FRAGMENT_SHADER);
 }
 
 uint32_t OpenGLAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader)
@@ -290,16 +289,7 @@ void OpenGLAPI::disableVertexAndNormalLocation(int vertexLocation, int normalLoc
 	glDisableVertexAttribArray(normalLocation);
 }
 
-uint32_t OpenGLAPI::loadShader(const std::string &fileName, int shaderType)
-{
-	uint32_t result = 0;
-	std::string source;
-	FileUtils::loadFile(fileName, source);
-	result = this->compileShader(fileName, source, shaderType);
-	return result;
-}
-
-uint32_t OpenGLAPI::compileShader(const std::string &fileName, const std::string &source, uint32_t mode)
+uint32_t OpenGLAPI::compileShader(const std::string &source, uint32_t mode)
 {
 	uint32_t id = glCreateShader(mode);
 	const char *csource = source.c_str();
@@ -315,9 +305,9 @@ uint32_t OpenGLAPI::compileShader(const std::string &fileName, const std::string
 		char error[1000];
 		glGetShaderInfoLog(id, 1000, NULL, error);
 
-		throw "[OpenGLAPI] - In file: " + fileName + "\n" + error;
+		std::string shaderType = (mode == GL_VERTEX_SHADER) ? "VERTEX SHADER" : "FRAGMENT SHADER";
+		throw "[OpenGLAPI] - In shader: " + shaderType + "\n" + error;
 	}
-
 
 	return id;
 }

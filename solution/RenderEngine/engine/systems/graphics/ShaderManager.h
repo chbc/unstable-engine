@@ -29,7 +29,8 @@ public:
 	ShaderManager(const SPTR<AGraphicsWrapper> &graphicsWrapper);
 
 	// main load function
-	unsigned int loadShader(const std::string &vertexName, const std::string &fragmentName);
+	unsigned int loadColorShader();
+	unsigned int loadDiffuseShader();
 
 	// passing values //
 	void setInt(uint32_t program, const std::string &varName, int value);

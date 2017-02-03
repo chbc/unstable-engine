@@ -10,6 +10,7 @@
 #include "TextureManager.h"
 #include <engine/entities/components/meshes/materials/Material.h>
 #include "renders/ColorRenderer.h"
+#include "renders/DiffuseTexturedRenderer.h"
 
 namespace sre
 {
@@ -28,6 +29,7 @@ RenderManager::RenderManager()
 	this->textureManager	= UPTR<TextureManager>{ new TextureManager{ this->graphicsWrapper.get() } };
 	
 	this->colorRenderer		= UPTR<ColorRenderer>{ nullptr };
+	this->diffuseRenderer	= UPTR<DiffuseTexturedRenderer>{ nullptr };
 	this->mainCamera		= nullptr;
 }
 

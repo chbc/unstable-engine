@@ -31,8 +31,8 @@ protected:
 	virtual void deleteTexture(uint32_t id) =0;
 
 	// Shaders
-	virtual uint32_t loadVertexShader(const std::string &vertexFile) =0;
-	virtual uint32_t loadFragmentShader(const std::string &fragmentFile) =0;
+	virtual uint32_t loadVertexShader(const std::string &vertexContent) =0;
+	virtual uint32_t loadFragmentShader(const std::string &vertexContent) =0;
 	virtual uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) =0;
 
 	virtual void setInt(uint32_t program, const std::string &varName, int value) =0;

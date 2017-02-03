@@ -114,6 +114,9 @@
     <ClCompile Include="engine\systems\graphics\renders\DiffuseTexturedRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\systems\graphics\shaders\ShaderContentFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\EShaderVariable.h">
@@ -224,9 +227,6 @@
     <ClInclude Include="engine\systems\graphics\renders\ColorRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\systems\graphics\renders\ShaderConsts.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\utils\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -243,6 +243,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\systems\graphics\renders\DiffuseTexturedRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\shaders\ShaderContentFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\shaders\ShaderFiles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

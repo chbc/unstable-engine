@@ -29,6 +29,7 @@ public:
 	~ColorRenderer();
 
 protected:
+	virtual uint32_t loadShader(ShaderManager *shaderManager);
 	virtual void setupMaterial(MeshComponent *mesh);
 	virtual void drawMesh(MeshComponent *mesh);
 
@@ -37,7 +38,6 @@ private:
 
 	void addMesh(MeshComponent *mesh);
 	void createVBO(MeshComponent *mesh);	// ###
-	uint32_t loadShader(const std::string &vertFile, const std::string &fragFile);
 	void render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition);
 
 friend class RenderManager;

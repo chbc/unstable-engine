@@ -24,8 +24,9 @@ protected:
 	static void DEBUG_drawTriangle();
 
 	// Shaders
-	uint32_t loadVertexShader(const std::string &vertexFile) override;  // throws "file can't be found"
-	uint32_t loadFragmentShader(const std::string &fragmentFile) override;  // throws "file can't be found"
+	uint32_t loadVertexShader(const std::string &vertexContent) override;  // throws "file can't be found"
+	uint32_t loadFragmentShader(const std::string &fragmentContent) override;  // throws "file can't be found"
+
 	uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) override;
 
 	void setInt(uint32_t program, const std::string &varName, int value) override;
@@ -42,8 +43,7 @@ protected:
 private:
 	void enableVertexAndNormalLocation(int vertexLocation, int normalLocation);
 	void disableVertexAndNormalLocation(int vertexLocation, int normalLocation);
-	uint32_t loadShader(const std::string &fileName, int shaderType);
-	uint32_t compileShader(const std::string &fileName, const std::string &source, uint32_t mode);
+	uint32_t compileShader(const std::string &source, uint32_t mode);
 	void checkVariableLocation(int location, const std::string &varName); // throws "invalid variable"
 	void checkProgramLink(uint32_t program);	// throws "link error"
 
