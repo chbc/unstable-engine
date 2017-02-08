@@ -18,7 +18,10 @@ void ShaderContentFactory::createDiffuseContent(std::string &outVertexContent, s
 	loadDiffuseContent(outVertexContent, outFragmentContent);
 
 	outVertexContent = "#version 400\n" + outVertexContent;
+	this->replaceCode(outVertexContent, "Diffuse_setup();\n}");
+
 	outFragmentContent = "#version 400\n" + outFragmentContent;
+	this->replaceCode(outFragmentContent, "out_color = Diffuse_computeTextureColor(ka, kd, ks);\n}");
 }
 
 // Load methods
@@ -50,6 +53,22 @@ void ShaderContentFactory::loadDiffuseContent(std::string &outVertexContent, std
 
 	outVertexContent = diffuseVertex + outVertexContent;
 	outFragmentContent = diffuseFragment + outFragmentContent;
+}
+
+void ShaderContentFactory::replaceCode(std::string &outShaderContent, const char *code)
+{
+	std::size_t beginCodePosition = outShaderContent.find("// ###");
+	std::size_t size = outShaderContent.size() - beginCodePosition;
+	if (beginCodePosition != std::string::npos)
+	{
+		outShaderContent = outShaderContent.replace
+		(
+			beginCodePosition, size,
+			code
+		);
+	}
+	else
+		throw "[ShaderContentFactory] - Didn't find code mark!";
 }
 
 } // namespace

@@ -37,6 +37,9 @@ public:
 	void setShininess(float shininess);
 	float getShininess();
 
+private:
+	Material(float shininess = 15.0);
+
 	template <typename T, typename... TArgs>
 	T *addComponent(TArgs&&... mArgs)
 	{
@@ -52,9 +55,6 @@ public:
 
 		return newComponent;
 	}
-
-private:
-	Material(float shininess = 15.0);
 
 friend class MeshComponent;
 };

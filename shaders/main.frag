@@ -23,5 +23,6 @@ void main(void)
 	kd = kd * materialColor.rgb;
 	ks = ks * materialColor.rgb;
 	
+	// ### Don't remove this comment
 	out_color = vec4(ka + kd + ks, 1.0);
 }

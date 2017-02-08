@@ -52,11 +52,44 @@ void RenderManager::init()
 
 void RenderManager::addMesh(MeshComponent *mesh)
 {
-	if (this->colorRenderer.get() == nullptr)
-		this->colorRenderer = UPTR<ColorRenderer>{ new ColorRenderer{this->graphicsWrapper} };
+	ColorRenderer *renderer = this->chooseRenderer(mesh);
+	renderer->createVBO(mesh);
+}
 
-	this->colorRenderer->addMesh(mesh);
-	this->createVBO(mesh);
+void RenderManager::onMaterialChange(MeshComponent *mesh)
+{
+	this->colorRenderer->removeMesh(mesh);
+	this->chooseRenderer(mesh);
+}
+
+ColorRenderer *RenderManager::chooseRenderer(MeshComponent *mesh)
+{
+	ColorRenderer *result = nullptr;
+
+	Material *material = mesh->getMaterial();
+	if (material->hasComponent<DiffuseMaterialComponent>())
+	{
+		if (this->diffuseRenderer.get() == nullptr)
+		{
+			this->diffuseRenderer = UPTR<DiffuseTexturedRenderer>{ new DiffuseTexturedRenderer{this->graphicsWrapper} };
+			this->diffuseRenderer->loadShader();
+		}
+
+		result = this->diffuseRenderer.get();
+	}
+	else if (material->hasComponent<ColorMaterialComponent>())
+	{
+		if (this->colorRenderer.get() == nullptr)
+		{
+			this->colorRenderer = UPTR<ColorRenderer>{ new ColorRenderer{this->graphicsWrapper} };
+			this->colorRenderer->loadShader();
+		}
+
+		result = this->colorRenderer.get();
+	}
+
+	result->addMesh(mesh);
+	return result;
 }
 
 void RenderManager::setMainCamera(CameraComponent *camera)
@@ -72,12 +105,28 @@ CameraComponent *RenderManager::getMainCamera()
 void RenderManager::render()
 {
 	this->renderCamera();
-	this->colorRenderer->render
-	(
-		this->matrixManager.get(), 
-		this->lightManager.get(), 
-		this->mainCamera->getTransform()->getPosition()
-	);
+
+	// Color renderer
+	if (this->colorRenderer.get() != nullptr)
+	{
+		this->colorRenderer->render
+		(
+			this->matrixManager.get(), 
+			this->lightManager.get(), 
+			this->mainCamera->getTransform()->getPosition()
+		);
+	}
+
+	// Diffuse renderer
+	if (this->diffuseRenderer.get() != nullptr)
+	{
+		this->diffuseRenderer->render
+		(
+			this->matrixManager.get(),
+			this->lightManager.get(),
+			this->mainCamera->getTransform()->getPosition()
+		);
+	}
 }
 
 void RenderManager::renderCamera()
@@ -98,11 +147,6 @@ void RenderManager::DEBUG_drawTriangle()
 void RenderManager::clearBuffer()
 {
 	this->graphicsWrapper->clearBuffer();
-}
-
-void RenderManager::createVBO(MeshComponent *mesh)
-{
-	this->colorRenderer->createVBO(mesh);
 }
 
 DirectionalLightComponent *RenderManager::addDirectionalLight(Entity *entity)

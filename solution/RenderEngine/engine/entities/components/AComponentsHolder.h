@@ -13,18 +13,19 @@ constexpr size_t MAX_COMPONENTS{ 10 };
 template <typename C>
 class AComponentsHolder
 {
+protected:
+	VECTOR_UPTR<C> components;
+
 private:
 	std::bitset<MAX_COMPONENTS> componentsBitset;
 	std::array<C*, MAX_COMPONENTS> componentsArray;
 
-protected:
-	VECTOR_UPTR<C> components;
-
-	template <typename T> void addComponent(T *newComponent);
-	template <typename T> bool hasComponent();
-
 public:
 	template <typename T> T *getComponent();
+	template <typename T> bool hasComponent();
+
+protected:
+	template <typename T> void addComponent(T *newComponent);
 
 private:
 	template <typename T>

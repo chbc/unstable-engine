@@ -6,14 +6,15 @@
 namespace sre
 {
 
-class MatrixManager;
-class LightManager;
-
 class DiffuseTexturedRenderer : public ColorRenderer
 {
 protected:
-	uint32_t loadShader(ShaderManager *shaderManager);
+	DiffuseTexturedRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper);
+
+	void loadShader() override;
 	void drawMesh(MeshComponent *mesh) override;
+
+friend class RenderManager;
 };
 
 } // namespace

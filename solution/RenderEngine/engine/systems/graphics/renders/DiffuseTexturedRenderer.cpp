@@ -8,9 +8,13 @@
 namespace sre
 {
 
-uint32_t DiffuseTexturedRenderer::loadShader(ShaderManager *shaderManager)
+DiffuseTexturedRenderer::DiffuseTexturedRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper)
+	: ColorRenderer(graphicsWrapper)
+{ }
+
+void DiffuseTexturedRenderer::loadShader()
 {
-	return shaderManager->loadDiffuseShader();
+	this->shaderProgram = this->shaderManager->loadDiffuseShader();
 }
 
 void DiffuseTexturedRenderer::drawMesh(MeshComponent *mesh)

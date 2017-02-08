@@ -15,6 +15,8 @@ public:
 private:
 	void loadColorContent(std::string &outVertexContent, std::string &outFragmentContent);
 	void loadDiffuseContent(std::string &outVertexContent, std::string &outFragmentContent);
+
+	void replaceCode(std::string &outShaderContent, const char *code); // throws "didn't find code mark
 };
 
 } // namespace

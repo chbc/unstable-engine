@@ -39,6 +39,17 @@ public:
 	void setMaterial(UPTR<Material> &material);
 	void setReceiveLight(bool receiveLight);
 
+	template <typename T, typename... TArgs>
+	T *addMaterialComponent(TArgs&&... mArgs)
+	{
+		T * result = this->material->addComponent<T>(std::forward<TArgs>(mArgs)...);
+		this->notifyMaterialChange();
+		return result;
+	}
+
+private:
+	void notifyMaterialChange();
+
 friend class RenderManager;
 friend class Entity;
 friend class OpenGLAPI;

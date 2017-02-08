@@ -14,8 +14,8 @@ namespace ShaderFiles
 	const std::string LIGHTS_V = "../../shaders/lights.vert";
 	const std::string LIGHTS_F = "../../shaders/lights.frag";
 
-	const std::string DIFFUSE_V = "../../shaders/diffuseTexture.vert";
-	const std::string DIFFUSE_F = "../../shaders/diffuseTexture.frag";
+	const std::string DIFFUSE_V = "../../shaders/diffuse.vert";
+	const std::string DIFFUSE_F = "../../shaders/diffuse.frag";
 }
 
 } // namespace

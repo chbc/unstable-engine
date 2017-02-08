@@ -52,6 +52,9 @@ private:
 
 private:
 	void addMesh(MeshComponent *mesh);
+	void onMaterialChange(MeshComponent *mesh);
+	ColorRenderer *chooseRenderer(MeshComponent *mesh);
+
 	void setMainCamera(CameraComponent *camera);
 	CameraComponent *getMainCamera();
 
@@ -60,8 +63,6 @@ private:
 
 	static void DEBUG_drawTriangle();
 	void clearBuffer();
-
-	void createVBO(MeshComponent *mesh);
 
 	DirectionalLightComponent *addDirectionalLight(Entity *entity);
 	PointLightComponent *addPointLight(Entity *entity);

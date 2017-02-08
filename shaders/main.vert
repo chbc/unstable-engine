@@ -14,7 +14,7 @@ uniform vec3 cameraPosition;
 out vec3 var_normal;
 out vec3 var_toCameraVector;
 
-void main(void)
+void main()
 {
 	vec4 vertexPosition = modelMatrix * vec4(in_position, 1.0);
 	var_normal = (modelMatrix * vec4(in_normal, 0)).xyz;
@@ -25,4 +25,6 @@ void main(void)
 	Lights_setup(vertexPosition.xyz);
 
 	gl_Position = projectionMatrix * viewMatrix * vertexPosition;
+	
+	// ### Don't remove this comment
 }

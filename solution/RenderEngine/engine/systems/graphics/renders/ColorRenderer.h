@@ -3,7 +3,7 @@
 
 #include <engine/utils/memory_aliases.h>
 #include <glm/vec3.hpp>
-#include <vector>
+#include <list>
 
 namespace sre
 {
@@ -17,28 +17,29 @@ class LightManager;
 class ColorRenderer
 {
 private:
-	std::vector<MeshComponent *> meshes;
-	UPTR<ShaderManager> shaderManager;
-
-	uint32_t shaderProgram;
+	std::list<MeshComponent *> meshes;
 
 protected:
+	uint32_t shaderProgram;
+	UPTR<ShaderManager> shaderManager;
 	SPTR<AGraphicsWrapper> graphicsWrapper;
 
 public:
 	~ColorRenderer();
 
 protected:
-	virtual uint32_t loadShader(ShaderManager *shaderManager);
+	ColorRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper);
+
+	virtual void loadShader();
 	virtual void setupMaterial(MeshComponent *mesh);
 	virtual void drawMesh(MeshComponent *mesh);
 
 private:
-	ColorRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper);
-
 	void addMesh(MeshComponent *mesh);
+	void removeMesh(MeshComponent *mesh);
 	void createVBO(MeshComponent *mesh);	// ###
 	void render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition);
+	bool contains(MeshComponent *mesh);
 
 friend class RenderManager;
 };

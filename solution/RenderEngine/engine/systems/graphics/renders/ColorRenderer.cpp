@@ -14,7 +14,6 @@ ColorRenderer::ColorRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper)
 {
 	this->graphicsWrapper = graphicsWrapper;
 	this->shaderManager	= UPTR<ShaderManager>{ new ShaderManager{graphicsWrapper} };
-	this->shaderProgram = this->loadShader(this->shaderManager.get());
 }
 
 ColorRenderer::~ColorRenderer()
@@ -22,9 +21,9 @@ ColorRenderer::~ColorRenderer()
 	this->meshes.clear();
 }
 
-uint32_t ColorRenderer::loadShader(ShaderManager *shaderManager)
+void ColorRenderer::loadShader()
 {
-	return shaderManager->loadColorShader();
+	this->shaderProgram = shaderManager->loadColorShader();
 }
 
 void ColorRenderer::setupMaterial(MeshComponent *mesh)
@@ -38,6 +37,11 @@ void ColorRenderer::setupMaterial(MeshComponent *mesh)
 void ColorRenderer::addMesh(MeshComponent *mesh)
 {
 	this->meshes.push_back(mesh);
+}
+
+void ColorRenderer::removeMesh(MeshComponent *mesh)
+{
+	this->meshes.remove(mesh);
 }
 
 void ColorRenderer::createVBO(MeshComponent *mesh)
@@ -83,6 +87,22 @@ void ColorRenderer::render(MatrixManager *matrixManager, LightManager *lightMana
 void ColorRenderer::drawMesh(MeshComponent *mesh)
 {
 	this->graphicsWrapper->drawColorMesh(mesh);
+}
+
+bool ColorRenderer::contains(MeshComponent *mesh)
+{
+	bool result = false;
+
+	for (MeshComponent *item : this->meshes)
+	{
+		if (item == mesh)
+		{
+			result = true;
+			break;
+		}
+	}
+
+	return result;
 }
 
 } // namespace

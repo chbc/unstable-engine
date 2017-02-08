@@ -36,7 +36,21 @@ uint32_t ShaderManager::loadColorShader()
 
 uint32_t ShaderManager::loadDiffuseShader()
 {
-	return 0;
+	std::string vertexContent;
+	std::string fragmentContent;
+	ShaderContentFactory contentFactory;
+	contentFactory.createDiffuseContent(vertexContent, fragmentContent);
+
+	uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);
+	uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentContent);
+
+	uint32_t program = this->graphicsWrapper->createProgram(vertShader, fragShader);
+
+	this->vertShaders.push(vertShader);
+	this->fragShaders.push(fragShader);
+	this->programs.push(program);
+	
+	return program;
 }
 
 // passing values //
