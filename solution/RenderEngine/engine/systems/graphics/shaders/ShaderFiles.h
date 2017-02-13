@@ -16,6 +16,9 @@ namespace ShaderFiles
 
 	const std::string DIFFUSE_V = "../../shaders/diffuse.vert";
 	const std::string DIFFUSE_F = "../../shaders/diffuse.frag";
+
+	const std::string NORMAL_V = "../../shaders/normal.vert";
+	const std::string NORMAL_F = "../../shaders/normal.frag";
 }
 
 } // namespace

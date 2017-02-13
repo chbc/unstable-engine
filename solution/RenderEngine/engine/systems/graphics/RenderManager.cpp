@@ -19,10 +19,6 @@ IMPLEMENT_SINGLETON(RenderManager);
 
 RenderManager::RenderManager()
 {
-	/* ###
-	this->textureManager = TextureManager::getInstance();
-	*/ 
-
 	this->graphicsWrapper	= SPTR<AGraphicsWrapper>{ new OpenGLAPI{} };
 	this->matrixManager		= UPTR<MatrixManager>{ new MatrixManager{} };
 	this->lightManager		= UPTR<LightManager>{ new LightManager{} };
@@ -39,15 +35,6 @@ void RenderManager::init()
 
 	const float FOV{90.0f};
 	this->matrixManager->setProjection(FOV, MultimediaManager::SCREEN_WIDTH/MultimediaManager::SCREEN_HEIGHT, 1, 100);
-
-	/*
-	if (!this->textureManager->init())
-	{
-		std::cout << "TextureManager error: init" << std::endl;
-		return false;
-	}
-	*/
-
 }
 
 void RenderManager::addMesh(MeshComponent *mesh)
@@ -159,23 +146,6 @@ PointLightComponent *RenderManager::addPointLight(Entity *entity)
     return this->lightManager->addPointLight(entity);
 }
 
-/* ###
-void RenderManager::applyMaterial(DiffuseMaterial *material, std::vector<VertexData> *vertexData, bool receiveLight)
-{
-    this->applyMaterial(material, receiveLight);
-
-	// texture //
-	// TODO: acertar texCoords
-	 /* ###
-	glEnable(GL_TEXTURE_2D);
-
-	glBindTexture(GL_TEXTURE_2D, material->getTextureID());
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
-	 // /
-}
-*/
-
 Texture *RenderManager::loadTexture(const std::string &fileName)
 {
 	return this->textureManager->loadTexture(fileName);
@@ -183,10 +153,6 @@ Texture *RenderManager::loadTexture(const std::string &fileName)
 
 void RenderManager::release()
 {
-	/* ###
-	this->textureManager->release();
-	delete this->textureManager;
-	*/
 }
 
 } // namespace

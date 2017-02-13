@@ -1,13 +1,27 @@
 SRE
-- atualizar as modificações feitas no inpe [OK]
-- implementar VBO
-- incluir Assimp
-- remover namespaces
-- criar esquema de include sem .h
-- incluir glm
-- fazer iluminação apenas pelo shader
-- acertar a arquitetura para componentes
-- proteger classes internas
-- criar notação para o nome das classes (S...)
-- dividir os shaders em módulos
-- incluir luz ambiente pelo LightManager
+Renderers:
+	- normal map
+	- specular map
+	- ambient occlusion
+	- reflection
+
+Post Processing:
+	- base
+	- antialiasing
+	- bloom
+
+Shadows:
+	- lightmap
+	- dynamic shadows
+
+Map:
+	- JSon definition
+	- importer
+	- maya exporter
+
+- profiler
+
+- model loader with Assimp
+- animation
+
+- update file inclusion system (remove .h)

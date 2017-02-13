@@ -22,16 +22,7 @@ uint32_t ShaderManager::loadColorShader()
 	ShaderContentFactory contentFactory;
 	contentFactory.createColorContent(vertexContent, fragmentContent);
 
-	uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);
-	uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentContent);
-
-	uint32_t program = this->graphicsWrapper->createProgram(vertShader, fragShader);
-
-	this->vertShaders.push(vertShader);
-	this->fragShaders.push(fragShader);
-	this->programs.push(program);
-	
-	return program;
+	return this->loadShader(vertexContent, fragmentContent);
 }
 
 uint32_t ShaderManager::loadDiffuseShader()
@@ -41,6 +32,21 @@ uint32_t ShaderManager::loadDiffuseShader()
 	ShaderContentFactory contentFactory;
 	contentFactory.createDiffuseContent(vertexContent, fragmentContent);
 
+	return this->loadShader(vertexContent, fragmentContent);
+}
+
+uint32_t ShaderManager::loadNormalMapShader()
+{
+	std::string vertexContent;
+	std::string fragmentContent;
+	ShaderContentFactory contentFactory;
+	contentFactory.createNormalMapContent(vertexContent, fragmentContent);
+
+	return this->loadShader(vertexContent, fragmentContent);
+}
+
+uint32_t ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent)
+{
 	uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);
 	uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentContent);
 

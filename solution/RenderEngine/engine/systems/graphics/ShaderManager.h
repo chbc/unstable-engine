@@ -19,7 +19,7 @@ class ShaderManager
 public:
 	~ShaderManager();
 
-public:
+private:
 	std::stack<uint32_t> vertShaders;
 	std::stack<uint32_t> fragShaders;
 	std::stack<uint32_t> programs;
@@ -29,8 +29,10 @@ public:
 	ShaderManager(const SPTR<AGraphicsWrapper> &graphicsWrapper);
 
 	// main load function
-	unsigned int loadColorShader();
-	unsigned int loadDiffuseShader();
+	uint32_t loadColorShader();
+	uint32_t loadDiffuseShader();
+	uint32_t loadNormalMapShader();
+	uint32_t loadShader(const std::string &vertexContent, const std::string &fragmentContent);
 
 	// passing values //
 	void setInt(uint32_t program, const std::string &varName, int value);
@@ -46,7 +48,9 @@ public:
 
 friend class RenderManager;
 friend class LightManager;
-friend class ColorRenderer;	// ###
+friend class ColorRenderer;
+friend class DiffuseTexturedRenderer;
+friend class NormalMapRenderer;
 };
 
 } // namespace

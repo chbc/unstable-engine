@@ -24,6 +24,27 @@ void ShaderContentFactory::createDiffuseContent(std::string &outVertexContent, s
 	this->replaceCode(outFragmentContent, "out_color = Diffuse_computeTextureColor(ka, kd, ks);\n}");
 }
 
+void ShaderContentFactory::createNormalMapContent(std::string &outVertexContent, std::string &outFragmentContent)
+{
+	this->loadNormalMapContent(outVertexContent, outFragmentContent);
+
+	outVertexContent = "#version 400\n" + outVertexContent;
+	this->replaceCode
+	(
+		outVertexContent, 
+		"Diffuse_setup();\n"
+		"Normal_setup();\n}"
+	);
+
+	outFragmentContent = "#version 400\n" + outFragmentContent;
+	this->replaceCode
+	(
+		outFragmentContent, 
+		"out_color = Diffuse_computeTextureColor(ka, kd, ks);\n"
+		"### NORMAL_MAP\n}"
+	);
+}
+
 // Load methods
 void ShaderContentFactory::loadColorContent(std::string &outVertexContent, std::string &outFragmentContent)
 {
@@ -53,6 +74,20 @@ void ShaderContentFactory::loadDiffuseContent(std::string &outVertexContent, std
 
 	outVertexContent = diffuseVertex + outVertexContent;
 	outFragmentContent = diffuseFragment + outFragmentContent;
+}
+
+void ShaderContentFactory::loadNormalMapContent(std::string &outVertexContent, std::string &outFragmentContent)
+{
+	std::string normalVertex;
+	std::string normalFragment;
+
+	FileUtils::loadFile(ShaderFiles::NORMAL_V, normalVertex);
+	FileUtils::loadFile(ShaderFiles::NORMAL_F, normalFragment);
+
+	loadDiffuseContent(outVertexContent, outFragmentContent);
+
+	outVertexContent = normalVertex + outVertexContent;
+	outFragmentContent = normalFragment + outFragmentContent;
 }
 
 void ShaderContentFactory::replaceCode(std::string &outShaderContent, const char *code)

@@ -8,15 +8,18 @@ namespace sre
 
 class ShaderContentFactory
 {
-public:
+private:
 	void createColorContent(std::string &outVertexContent, std::string &outFragmentContent);
 	void createDiffuseContent(std::string &outVertexContent, std::string &outFragmentContent);
+	void createNormalMapContent(std::string &outVertexContent, std::string &outFragmentContent);
 
-private:
 	void loadColorContent(std::string &outVertexContent, std::string &outFragmentContent);
 	void loadDiffuseContent(std::string &outVertexContent, std::string &outFragmentContent);
+	void loadNormalMapContent(std::string &outVertexContent, std::string &outFragmentContent);
 
 	void replaceCode(std::string &outShaderContent, const char *code); // throws "didn't find code mark
+
+friend class ShaderManager;
 };
 
 } // namespace
