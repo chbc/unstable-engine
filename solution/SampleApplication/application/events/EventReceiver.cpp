@@ -55,3 +55,14 @@ void EventReceiver::onMouseMove(const glm::vec2 &relativePosition)
 		this->camera->setPosition(position);
 	}
 }
+
+void EventReceiver::onMouseWheelMove(int direction)
+{
+	this->cameraDistance -= direction;
+	
+	glm::vec3 position = this->camera->getTransform()->getPosition();
+	position = glm::normalize(position);
+	position *= this->cameraDistance;
+
+	this->camera->setPosition(position);
+}

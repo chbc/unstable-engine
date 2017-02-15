@@ -7,84 +7,146 @@ namespace sre
 
 void ShaderContentFactory::createColorContent(std::string &outVertexContent, std::string &outFragmentContent)
 {
-	loadColorContent(outVertexContent, outFragmentContent);
+	std::string vertexContentHeader;
+	std::string fragmentContentHeader;
+	this->loadColorContentHeader(vertexContentHeader, fragmentContentHeader);
 
-	outVertexContent = "#version 400\n" + outVertexContent;
-	outFragmentContent = "#version 400\n" + outFragmentContent;
+	std::string vertexContentImpl;
+	std::string fragmentContentImpl;
+	this->loadColorContentImplementation(vertexContentImpl, fragmentContentImpl);
+
+	outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
+	outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
 }
 
 void ShaderContentFactory::createDiffuseContent(std::string &outVertexContent, std::string &outFragmentContent)
 {
-	loadDiffuseContent(outVertexContent, outFragmentContent);
+	std::string vertexContentHeader;
+	std::string fragmentContentHeader;
+	this->loadDiffuseContentHeader(vertexContentHeader, fragmentContentHeader);
 
-	outVertexContent = "#version 400\n" + outVertexContent;
+	std::string vertexContentImpl;
+	std::string fragmentContentImpl;
+	this->loadDiffuseContentImplementation(vertexContentImpl, fragmentContentImpl);
+
+	outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
 	this->replaceCode(outVertexContent, "Diffuse_setup();\n}");
 
-	outFragmentContent = "#version 400\n" + outFragmentContent;
+	outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
 	this->replaceCode(outFragmentContent, "out_color = Diffuse_computeTextureColor(ka, kd, ks);\n}");
 }
 
 void ShaderContentFactory::createNormalMapContent(std::string &outVertexContent, std::string &outFragmentContent)
 {
-	this->loadNormalMapContent(outVertexContent, outFragmentContent);
+	std::string vertexContentHeader;
+	std::string fragmentContentHeader;
+	this->loadNormalMapContentHeader(vertexContentHeader, fragmentContentHeader);
 
-	outVertexContent = "#version 400\n" + outVertexContent;
+	std::string vertexContentImpl;
+	std::string fragmentContentImpl;
+	this->loadNormalMapContentImplementation(vertexContentImpl, fragmentContentImpl);
+
+	outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
 	this->replaceCode
 	(
 		outVertexContent, 
-		"Diffuse_setup();\n"
-		"Normal_setup();\n}"
+		"Diffuse_setup();\n}" // ### }
+		// ### "Normal_setup();\n}"
 	);
 
-	outFragmentContent = "#version 400\n" + outFragmentContent;
+	outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
 	this->replaceCode
 	(
 		outFragmentContent, 
-		"out_color = Diffuse_computeTextureColor(ka, kd, ks);\n"
-		"### NORMAL_MAP\n}"
+		"out_color = Diffuse_computeTextureColor(ka, kd, ks);"
+		"out_color = Normal_computeNormal(ka, kd, ks);\n}"
 	);
 }
 
 // Load methods
-void ShaderContentFactory::loadColorContent(std::string &outVertexContent, std::string &outFragmentContent)
+void ShaderContentFactory::loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
 {
-	std::string mainVertex;
 	std::string lightsVertex;
-	std::string mainFragment;
+	std::string mainVertex;
 	std::string lightsFragment;
+	std::string mainFragment;
 
-	FileUtils::loadFile(ShaderFiles::LIGHTS_V, lightsVertex);
-	FileUtils::loadFile(ShaderFiles::MAIN_V, mainVertex);
-	FileUtils::loadFile(ShaderFiles::LIGHTS_F, lightsFragment);
-	FileUtils::loadFile(ShaderFiles::MAIN_F, mainFragment);
+	FileUtils::loadFile(ShaderFiles::LIGHTS_H_V, lightsVertex);
+	FileUtils::loadFile(ShaderFiles::MAIN_H_V, mainVertex);
+	FileUtils::loadFile(ShaderFiles::LIGHTS_H_F, lightsFragment);
+	FileUtils::loadFile(ShaderFiles::MAIN_H_F, mainFragment);
 
 	outVertexContent = lightsVertex + mainVertex;
 	outFragmentContent = lightsFragment + mainFragment;
 }
 
-void ShaderContentFactory::loadDiffuseContent(std::string &outVertexContent, std::string &outFragmentContent)
+void ShaderContentFactory::loadColorContentImplementation(std::string &outVertexContent, std::string &outFragmentContent)
+{
+	std::string lightsVertex;
+	std::string mainVertex;
+	std::string lightsFragment;
+	std::string mainFragment;
+
+	FileUtils::loadFile(ShaderFiles::LIGHTS_IMPL_V, lightsVertex);
+	FileUtils::loadFile(ShaderFiles::MAIN_IMPL_V, mainVertex);
+	FileUtils::loadFile(ShaderFiles::LIGHTS_IMPL_F, lightsFragment);
+	FileUtils::loadFile(ShaderFiles::MAIN_IMPL_F, mainFragment);
+
+	outVertexContent = lightsVertex + mainVertex;
+	outFragmentContent = lightsFragment + mainFragment;
+}
+
+void ShaderContentFactory::loadDiffuseContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
 {
 	std::string diffuseVertex;
 	std::string diffuseFragment;
 
-	FileUtils::loadFile(ShaderFiles::DIFFUSE_V, diffuseVertex);
-	FileUtils::loadFile(ShaderFiles::DIFFUSE_F, diffuseFragment);
+	FileUtils::loadFile(ShaderFiles::DIFFUSE_H_V, diffuseVertex);
+	FileUtils::loadFile(ShaderFiles::DIFFUSE_H_F, diffuseFragment);
 
-	loadColorContent(outVertexContent, outFragmentContent);
+	this->loadColorContentHeader(outVertexContent, outFragmentContent);
 
 	outVertexContent = diffuseVertex + outVertexContent;
 	outFragmentContent = diffuseFragment + outFragmentContent;
 }
 
-void ShaderContentFactory::loadNormalMapContent(std::string &outVertexContent, std::string &outFragmentContent)
+void ShaderContentFactory::loadDiffuseContentImplementation(std::string &outVertexContent, std::string &outFragmentContent)
+{
+	std::string diffuseVertex;
+	std::string diffuseFragment;
+
+	FileUtils::loadFile(ShaderFiles::DIFFUSE_IMPL_V, diffuseVertex);
+	FileUtils::loadFile(ShaderFiles::DIFFUSE_IMPL_F, diffuseFragment);
+
+	this->loadColorContentImplementation(outVertexContent, outFragmentContent);
+
+	outVertexContent = diffuseVertex + outVertexContent;
+	outFragmentContent = diffuseFragment + outFragmentContent;
+}
+
+void ShaderContentFactory::loadNormalMapContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
 {
 	std::string normalVertex;
 	std::string normalFragment;
 
-	FileUtils::loadFile(ShaderFiles::NORMAL_V, normalVertex);
-	FileUtils::loadFile(ShaderFiles::NORMAL_F, normalFragment);
+	FileUtils::loadFile(ShaderFiles::NORMAL_H_V, normalVertex);
+	FileUtils::loadFile(ShaderFiles::NORMAL_H_F, normalFragment);
 
-	loadDiffuseContent(outVertexContent, outFragmentContent);
+	this->loadDiffuseContentHeader(outVertexContent, outFragmentContent);
+
+	outVertexContent = normalVertex + outVertexContent;
+	outFragmentContent = normalFragment + outFragmentContent;
+}
+
+void ShaderContentFactory::loadNormalMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent)
+{
+	std::string normalVertex;
+	std::string normalFragment;
+
+	FileUtils::loadFile(ShaderFiles::NORMAL_IMPL_V, normalVertex);
+	FileUtils::loadFile(ShaderFiles::NORMAL_IMPL_F, normalFragment);
+
+	this->loadDiffuseContentImplementation(outVertexContent, outFragmentContent);
 
 	outVertexContent = normalVertex + outVertexContent;
 	outFragmentContent = normalFragment + outFragmentContent;

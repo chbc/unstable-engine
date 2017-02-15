@@ -106,18 +106,44 @@ void OpenGLAPI::drawTexturedMesh(MeshComponent *mesh, uint32_t textureId)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
+void OpenGLAPI::drawNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
+
+	this->enableVertexAndNormalLocation(EAttribLocation::POSITION, EAttribLocation::NORMAL);
+
+	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
+	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, diffuseTextureId);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, normalTextureId);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
+	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, nullptr);
+
+	// Clear
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	this->disableVertexAndNormalLocation(EAttribLocation::POSITION, EAttribLocation::NORMAL);
+	glDisableVertexAttribArray(EAttribLocation::TEXCOORDS);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
 void OpenGLAPI::clearBuffer()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data)
+uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit)
 {
 	uint32_t result = 0;
 
 	glGenTextures(1, &result);
 
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(GL_TEXTURE_2D, result);
 
 	int colorFormat = (bpp == 3) ? GL_RGB : GL_RGBA;

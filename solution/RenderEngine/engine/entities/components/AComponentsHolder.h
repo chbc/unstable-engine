@@ -41,6 +41,7 @@ private:
 	// Material components
 	template <> std::size_t getComponentId<class ColorMaterialComponent>() { return 1; }
 	template <> std::size_t getComponentId<class DiffuseMaterialComponent>() { return 2; }
+	template <> std::size_t getComponentId<class NormalMaterialComponent>() { return 3; }
 };
 
 } // namespace

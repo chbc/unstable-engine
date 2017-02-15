@@ -17,7 +17,7 @@ public:
 	DiffuseMaterialComponent(Material *material, const std::string &fileName);
 
 	void loadTexture(const std::string &fileName);
-	unsigned int getTextureID(uint32_t index = 0);
+	uint32_t getTextureID(uint32_t index = 0);
 };
 
 } // namespace

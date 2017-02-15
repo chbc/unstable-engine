@@ -25,6 +25,7 @@ class InputHandler
 		virtual void onMouseMove(const glm::vec2 &relativePosition) {}
 		virtual void onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position) {}
 		virtual void onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position) {}
+		virtual void onMouseWheelMove(int direction) {}
 
 	friend class SDLAPI;
 };

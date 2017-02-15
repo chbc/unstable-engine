@@ -27,6 +27,7 @@ class PointLightComponent;
 
 class ColorRenderer;
 class DiffuseTexturedRenderer;
+class NormalMapRenderer;
 
 /*!
 	Singleton Class for low level rendering
@@ -47,12 +48,14 @@ private:
 
 	UPTR<ColorRenderer> colorRenderer;
 	UPTR<DiffuseTexturedRenderer> diffuseRenderer;
+	UPTR<NormalMapRenderer> normalMapRenderer;
 
 	CameraComponent *mainCamera;
 
 private:
 	void addMesh(MeshComponent *mesh);
-	void onMaterialChange(MeshComponent *mesh);
+	void onBeforeMaterialChange(MeshComponent *mesh);
+	void onAfterMaterialChange(MeshComponent *mesh);
 	ColorRenderer *chooseRenderer(MeshComponent *mesh);
 
 	void setMainCamera(CameraComponent *camera);
@@ -67,13 +70,15 @@ private:
 	DirectionalLightComponent *addDirectionalLight(Entity *entity);
 	PointLightComponent *addPointLight(Entity *entity);
 
-	Texture *loadTexture(const std::string &fileName);
+	Texture *loadDiffuseTexture(const std::string &fileName);
+	Texture *loadNormalTexture(const std::string &fileName);
 
 friend class SceneManager;
 friend class MeshComponent;
 friend class RenderEngine;
 friend class Material;
 friend class DiffuseMaterialComponent;
+friend class NormalMaterialComponent;
 };
 
 } // namespace

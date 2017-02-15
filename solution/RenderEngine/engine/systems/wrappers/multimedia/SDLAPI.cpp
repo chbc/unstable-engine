@@ -73,6 +73,10 @@ void SDLAPI::processInput(InputHandler *inputHandler)
 				};
 				inputHandler->onMouseButtonReleased(this->event->button.button, position);
 				break;
+
+			case SDL_MOUSEWHEEL:
+				inputHandler->onMouseWheelMove(this->event->wheel.y);
+				break;
 		}
 	}
 }

@@ -13,9 +13,14 @@ private:
 	void createDiffuseContent(std::string &outVertexContent, std::string &outFragmentContent);
 	void createNormalMapContent(std::string &outVertexContent, std::string &outFragmentContent);
 
-	void loadColorContent(std::string &outVertexContent, std::string &outFragmentContent);
-	void loadDiffuseContent(std::string &outVertexContent, std::string &outFragmentContent);
-	void loadNormalMapContent(std::string &outVertexContent, std::string &outFragmentContent);
+	void loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
+	void loadColorContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
+
+	void loadDiffuseContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
+	void loadDiffuseContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
+
+	void loadNormalMapContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
+	void loadNormalMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 
 	void replaceCode(std::string &outShaderContent, const char *code); // throws "didn't find code mark
 

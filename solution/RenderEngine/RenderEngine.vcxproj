@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="engine\entities\components\AEntityComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.cpp" />
+    <ClCompile Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\textures\Texture.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\ColorRenderer.cpp" />
     <ClCompile Include="engine\entities\components\cameras\CameraComponent.cpp" />
@@ -181,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.h" />
+    <ClInclude Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\textures\Texture.h" />
     <ClInclude Include="engine\systems\graphics\renders\ColorRenderer.h" />
     <ClInclude Include="engine\entities\components\AComponentsHolder.h" />

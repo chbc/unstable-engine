@@ -20,7 +20,8 @@ void SampleApplication::onInit()
 	this->cube = this->sceneManager->addCubeEntity();
 	this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 0.0f));
 	MeshComponent *cubeMesh = this->cube->getComponent<MeshComponent>();
-	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.jpg");
+	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
+	cubeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/crate_normal.png");
 
 	CameraComponent *camera = this->sceneManager->getMainCamera();
 	camera->setPosition(glm::vec3(0.0f, 5.0f, 10.0f));

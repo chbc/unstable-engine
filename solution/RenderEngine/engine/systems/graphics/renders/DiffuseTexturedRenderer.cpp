@@ -17,6 +17,12 @@ void DiffuseTexturedRenderer::loadShader()
 	this->shaderProgram = this->shaderManager->loadDiffuseShader();
 }
 
+void DiffuseTexturedRenderer::setupMaterial(MeshComponent *mesh)
+{
+	ColorRenderer::setupMaterial(mesh);
+	this->shaderManager->setInt(this->shaderProgram, "diffuseTexture", 0);
+}
+
 void DiffuseTexturedRenderer::drawMesh(MeshComponent *mesh)
 {
 	DiffuseMaterialComponent *diffuseMaterial = mesh->getMaterial()->getComponent<DiffuseMaterialComponent>();

@@ -6,6 +6,7 @@
 #include <engine/utils/memory_aliases.h>
 #include "components/ColorMaterialComponent.h"
 #include "components/DiffuseMaterialComponent.h"
+#include "components/NormalMaterialComponent.h"
 
 /*
 namespace EMaterialMap

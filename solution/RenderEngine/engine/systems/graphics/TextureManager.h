@@ -22,7 +22,9 @@ private:
 private:
 	TextureManager(AGraphicsWrapper *graphicsWrapper);
 
-	Texture *loadTexture(const std::string &fileName);
+	Texture *loadDiffuseTexture(const std::string &fileName);
+	Texture *loadNormalTexture(const std::string &fileName);
+	Texture *loadTexture(const std::string &fileName, uint32_t unit);
 	void deleteTexture(uint32_t id);
 
 public:

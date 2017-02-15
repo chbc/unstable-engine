@@ -6,7 +6,6 @@
 
 using namespace sre;
 
-// forward Game declaration
 class SampleApplication;
 
 /*!
@@ -25,11 +24,12 @@ class EventReceiver : public InputHandler
 	public:
 		EventReceiver(SampleApplication *application, CameraComponent *camera);
 
-		void onQuit();
-		void onKeyPressed(KeyboardButton key);
-		void onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position);
-		void onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position);
-		void onMouseMove(const glm::vec2 &relativePosition);
+		void onQuit() override;
+		void onKeyPressed(KeyboardButton key) override;
+		void onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position) override;
+		void onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position) override;
+		void onMouseMove(const glm::vec2 &relativePosition) override;
+		void onMouseWheelMove(int direction) override;
 };
 
 #endif

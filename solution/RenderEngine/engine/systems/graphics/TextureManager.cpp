@@ -19,7 +19,17 @@ TextureManager::~TextureManager()
 	this->textures.clear();
 }
 
-Texture *TextureManager::loadTexture(const std::string &fileName)
+Texture *TextureManager::loadDiffuseTexture(const std::string &fileName)
+{
+	return this->loadTexture(fileName, 0);
+}
+
+Texture *TextureManager::loadNormalTexture(const std::string &fileName)
+{
+	return this->loadTexture(fileName, 1);
+}
+
+Texture *TextureManager::loadTexture(const std::string &fileName, uint32_t unit)
 {
 	Texture *result = nullptr;
 
@@ -30,7 +40,7 @@ Texture *TextureManager::loadTexture(const std::string &fileName)
 	void *data = multimediaManager->loadTexture(fileName, &width, &height, &bpp);
 
 	// OpenGL //
-	uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data);
+	uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data, unit);
 	delete[] data;
 
 	result = new Texture(id, width, height);

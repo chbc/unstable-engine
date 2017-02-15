@@ -12,6 +12,7 @@ protected:
 	DiffuseTexturedRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper);
 
 	void loadShader() override;
+	void setupMaterial(MeshComponent *mesh) override;
 	void drawMesh(MeshComponent *mesh) override;
 
 friend class RenderManager;
