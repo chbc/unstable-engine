@@ -29,11 +29,9 @@ void SampleApplication::onInit()
 	camera->setPosition(glm::vec3(0.0f, 5.0f, 10.0f));
 
 	// light //
-	/*
 	DirectionalLightComponent *dLight1 = this->sceneManager->addDirectionalLight();
-	dLight1->setDirection(glm::vec3(0.0f, -1.0f, 0.0f));
-	dLight1->setColor(glm::vec3(0.0f, 0.5f, 0.0f));
-	*/
+	dLight1->setDirection(glm::vec3(0.0f, -1.0f, 1.0f));
+	dLight1->setColor(glm::vec3(0.25f, 0.1f, 0.0f));
 
 	/*
 	DirectionalLightComponent *dLight2 = this->sceneManager->addDirectionalLight();

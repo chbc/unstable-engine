@@ -3,7 +3,6 @@
 // Types
 struct DirectionalLight
 {
-	vec3 direction;
 	vec3 color;
 };
 
@@ -31,6 +30,7 @@ uniform float shininess;
 
 // Varying variables
 in vec3 var_toPointLightVectors[4];
+in vec3 var_directionalLightVectors[4];
 
 // Functions
 void Lights_computeEnergies(vec3 normal, vec3 toCameraDirection, vec3 toLightVector, vec3 lightColor, inout float diffuseEnergy, inout float specularEnergy);

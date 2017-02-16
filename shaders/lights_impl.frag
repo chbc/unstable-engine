@@ -20,7 +20,7 @@ void Lights_computeDirectionalLights(vec3 normal, vec3 toCameraDirection, inout 
 	for (int i = 0; i < lights.directionalLightsCount; i++)
 	{
 		vec3 lightColor = lights.directionalLights[i].color;
-		Lights_computeEnergies(normal, toCameraDirection, -lights.directionalLights[i].direction, lightColor, diffuseEnergy, specularEnergy);
+		Lights_computeEnergies(normal, toCameraDirection, -var_directionalLightVectors[i], lightColor, diffuseEnergy, specularEnergy);
 				
 		kd = kd + (lightColor * diffuseEnergy);
 		ks = ks + (vec3(1.0) * specularEnergy);

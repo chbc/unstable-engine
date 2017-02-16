@@ -14,5 +14,6 @@ void Normal_setup()
 	for (int i = 0; i < lights.pointLightsCount; i++)
 		var_toPointLightVectors[i] = TBN * var_toPointLightVectors[i];
 	
-	// acertar as luzes direcionais
+	for (int i = 0; i < lights.directionalLightsCount; i++)
+		var_directionalLightVectors[i] = TBN * lights.directionalLights[i].direction;
 }
