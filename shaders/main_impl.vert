@@ -11,5 +11,6 @@ void main()
 
 	gl_Position = projectionMatrix * viewMatrix * vertexPosition;
 	
-	// ### Don't remove this comment
+	// [DIFFUSE] Diffuse_setup();
+	// [NORMAL] Normal_setup();
 }

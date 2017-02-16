@@ -159,7 +159,6 @@
     <ClCompile Include="engine\entities\Entity.cpp" />
     <ClCompile Include="engine\math\Quaternion.cpp" />
     <ClCompile Include="engine\entities\components\transforms\TransformComponent.cpp" />
-    <ClCompile Include="engine\math\Vector.cpp" />
     <ClCompile Include="engine\RenderEngine.cpp" />
     <ClCompile Include="engine\scene\SceneManager.cpp" />
     <ClCompile Include="engine\systems\graphics\LightManager.cpp" />
@@ -179,6 +178,7 @@
     <ClCompile Include="engine\temp\TEMP_TextureEngine.cpp" />
     <ClCompile Include="engine\utils\FileUtils.cpp" />
     <ClCompile Include="engine\utils\Log.cpp" />
+    <ClCompile Include="engine\utils\MathUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.h" />
@@ -201,10 +201,8 @@
     <ClInclude Include="engine\entities\components\meshes\MeshFactory.h" />
     <ClInclude Include="engine\entities\components\meshes\VertexData.h" />
     <ClInclude Include="engine\entities\Entity.h" />
-    <ClInclude Include="engine\math\math_util.h" />
     <ClInclude Include="engine\math\Quaternion.h" />
     <ClInclude Include="engine\entities\components\transforms\TransformComponent.h" />
-    <ClInclude Include="engine\math\Vector.h" />
     <ClInclude Include="engine\RenderEngine.h" />
     <ClInclude Include="engine\scene\SceneManager.h" />
     <ClInclude Include="engine\systems\graphics\LightManager.h" />
@@ -222,9 +220,9 @@
     <ClInclude Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.h" />
     <ClInclude Include="engine\systems\wrappers\multimedia\SDLAPI.h" />
     <ClInclude Include="engine\temp\TEMP_TextureEngine.h" />
-    <ClInclude Include="engine\utils\EShaderVariable.h" />
     <ClInclude Include="engine\utils\FileUtils.h" />
     <ClInclude Include="engine\utils\Log.h" />
+    <ClInclude Include="engine\utils\MathUtils.h" />
     <ClInclude Include="engine\utils\memory_aliases.h" />
     <ClInclude Include="engine\utils\singleton_macros.h" />
   </ItemGroup>

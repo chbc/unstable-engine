@@ -32,11 +32,6 @@ void MatrixManager::setView(const glm::vec3 &position, const glm::vec3 &lookTarg
     this->view = glm::lookAt(position, lookTarget, up);
 }
 
-void MatrixManager::setView(Vector position, Vector lookTarget, Vector up)
-{
-    this->view = glm::lookAt(position.toVec3(), lookTarget.toVec3(), up.toVec3());
-}
-
 void MatrixManager::setProjection(float fov, float aspectRatio, float near, float far)
 {
     this->projection = glm::perspective(fov, aspectRatio, near, far);

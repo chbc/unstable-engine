@@ -30,10 +30,7 @@ void ShaderContentFactory::createDiffuseContent(std::string &outVertexContent, s
 	this->loadDiffuseContentImplementation(vertexContentImpl, fragmentContentImpl);
 
 	outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
-	this->replaceCode(outVertexContent, "Diffuse_setup();\n}");
-
 	outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
-	this->replaceCode(outFragmentContent, "out_color = Diffuse_computeTextureColor(ka, kd, ks);\n}");
 }
 
 void ShaderContentFactory::createNormalMapContent(std::string &outVertexContent, std::string &outFragmentContent)
@@ -47,20 +44,7 @@ void ShaderContentFactory::createNormalMapContent(std::string &outVertexContent,
 	this->loadNormalMapContentImplementation(vertexContentImpl, fragmentContentImpl);
 
 	outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
-	this->replaceCode
-	(
-		outVertexContent, 
-		"Diffuse_setup();\n}" // ### }
-		// ### "Normal_setup();\n}"
-	);
-
 	outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
-	this->replaceCode
-	(
-		outFragmentContent, 
-		"out_color = Diffuse_computeTextureColor(ka, kd, ks);"
-		"out_color = Normal_computeNormal(ka, kd, ks);\n}"
-	);
 }
 
 // Load methods
@@ -122,6 +106,9 @@ void ShaderContentFactory::loadDiffuseContentImplementation(std::string &outVert
 
 	outVertexContent = diffuseVertex + outVertexContent;
 	outFragmentContent = diffuseFragment + outFragmentContent;
+
+	this->uncommentCode(outVertexContent, "// [DIFFUSE] ");
+	this->uncommentCode(outFragmentContent, "// [DIFFUSE] ");
 }
 
 void ShaderContentFactory::loadNormalMapContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
@@ -150,6 +137,9 @@ void ShaderContentFactory::loadNormalMapContentImplementation(std::string &outVe
 
 	outVertexContent = normalVertex + outVertexContent;
 	outFragmentContent = normalFragment + outFragmentContent;
+
+	this->uncommentCode(outVertexContent, "// [NORMAL] ");
+	this->uncommentCode(outFragmentContent, "// [NORMAL] ");
 }
 
 void ShaderContentFactory::replaceCode(std::string &outShaderContent, const char *code)
@@ -164,6 +154,15 @@ void ShaderContentFactory::replaceCode(std::string &outShaderContent, const char
 			code
 		);
 	}
+	else
+		throw "[ShaderContentFactory] - Didn't find code mark!";
+}
+
+void ShaderContentFactory::uncommentCode(std::string &outShaderContent, const std::string &mark)
+{
+	std::size_t position = outShaderContent.find(mark);
+	if (position != std::string::npos)
+		outShaderContent = outShaderContent.erase(position, mark.size());
 	else
 		throw "[ShaderContentFactory] - Didn't find code mark!";
 }

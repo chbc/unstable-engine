@@ -23,6 +23,7 @@ private:
 	void loadNormalMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 
 	void replaceCode(std::string &outShaderContent, const char *code); // throws "didn't find code mark
+	void uncommentCode(std::string &outShaderContent, const std::string &mark); // throws "didn't find code mark
 
 friend class ShaderManager;
 };

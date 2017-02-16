@@ -36,14 +36,11 @@ protected:
 	void setVec4(uint32_t program, const std::string &varName, const float *value) override;
 	void setMat4(uint32_t program, const std::string &varName, const float *value) override;
 
-	// ### int getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable) override;
 	void enableShader(uint32_t program) override;
 	void disableShader() override;
 	void releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs) override;
 
 private:
-	void enableVertexAndNormalLocation(int vertexLocation, int normalLocation);
-	void disableVertexAndNormalLocation(int vertexLocation, int normalLocation);
 	uint32_t compileShader(const std::string &source, uint32_t mode);
 	void checkVariableLocation(int location, const std::string &varName); // throws "invalid variable"
 	void checkProgramLink(uint32_t program);	// throws "link error"

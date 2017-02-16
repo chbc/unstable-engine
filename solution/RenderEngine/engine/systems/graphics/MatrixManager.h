@@ -3,7 +3,6 @@
 
 #include <glm/matrix.hpp>
 #include <stack>
-#include <engine/math/Vector.h>
 
 namespace sre
 {
@@ -26,7 +25,6 @@ class MatrixManager
         void pop();
 
         void setView(const glm::vec3 &position, const glm::vec3 &lookTarget, const glm::vec3 &up);
-        void setView(Vector position, Vector lookTarget, Vector up);
         void setProjection(float fov, float aspectRatio, float near, float far);
 
 		glm::mat4 getModelMatrix();

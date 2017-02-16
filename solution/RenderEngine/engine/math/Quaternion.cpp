@@ -1,8 +1,6 @@
 #include "Quaternion.h"
 #include <glm/gtc/type_ptr.hpp>
 
-#include "math_util.h"
-
 namespace sre
 {
 
@@ -16,9 +14,9 @@ Quaternion::Quaternion()
 */
 void Quaternion::setRotation(const glm::vec3 &axis, float angle)
 {
-	this->w = cosf(DEG2RAD(angle/2.0f));
+	this->w = cosf(glm::radians(angle/2.0f));
 
-	float sinAngle = sinf(DEG2RAD(angle/2.0f));
+	float sinAngle = sinf(glm::radians(angle/2.0f));
 	this->x = axis.x * sinAngle;
 	this->y = axis.y * sinAngle;
 	this->z = axis.z * sinAngle;

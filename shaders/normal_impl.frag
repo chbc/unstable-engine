@@ -1,9 +1,9 @@
 // NORMAL_IMPL //
 
-vec4 Normal_computeNormal(vec3 ka, vec3 kd, vec3 ks)
+vec3 Normal_computeNormal()
 {
-	vec3 kt = texture(normalTexture, var_textureCoords).rgb;
-	vec3 resultColor = (ka * kt) + (kd * kt) + ks;
+	vec3 result = texture(normalTexture, var_textureCoords).rgb;
+	result = normalize((result * 2.0) - 1.0);
 	
-	return vec4(resultColor, 1.0);
+	return result;
 }

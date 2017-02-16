@@ -1,6 +1,7 @@
 #include "MeshFactory.h"
 #include <engine/entities/Entity.h>
 #include "MeshComponent.h"
+#include <engine/utils/MathUtils.h>
 
 namespace sre
 {
@@ -43,25 +44,48 @@ MeshComponent *MeshFactory::createPlane(Entity *entity, float size)
 
 	VECTOR_UPTR<VertexData> vertexData;
 	VertexData *newData;
+	// Positions and normals
 	for (int i = 0; i < 12; i += 3)
 	{
 		newData = new VertexData;
 		newData->position = glm::vec3(planeVertices[i], planeVertices[i + 1], planeVertices[i + 2]);
 		newData->normal = glm::vec3(planeNormals[i], planeNormals[i + 1], planeNormals[i + 2]);
-		// ### newData->color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 		vertexData.emplace_back(newData);
 	}
 
+	// UVs
 	for (int i = 0; i < 4; i++)
 	{
 		vertexData[i]->u = planeTexCoords[2 * i];
 		vertexData[i]->v = planeTexCoords[(2 * i) + 1];
 	}
 
+	// Indices
 	std::vector<uint32_t> indices;
 	for (int i = 0; i < 6; i++)
 		indices.push_back(planeIndices[i]);
+
+	// Tangents and bitangents
+	glm::vec3 tangent, bitangent;
+	const int FACES_COUNT = 2;
+	for (int i = 0; i < FACES_COUNT; i++)
+	{
+		MathUtils::calculateTangentAndBitangent
+		(
+			vertexData[indices[3*i]]->position, vertexData[indices[3*i + 1]]->position, vertexData[indices[3*i + 2]]->position,
+			glm::vec2(vertexData[indices[3*i]]->u, vertexData[indices[3*i]]->v), 
+			glm::vec2(vertexData[indices[3*i + 1]]->u, vertexData[indices[3*i + 1]]->v), 
+			glm::vec2(vertexData[indices[3*i + 2]]->u, vertexData[indices[3*i + 2]]->v),
+			tangent, bitangent
+		);
+
+		for (int j = 0; j < 2; j++)
+		{
+			vertexData[indices[3 * i + j]]->tangent = tangent;
+			vertexData[indices[3 * i + j]]->bitangent = bitangent;
+		}
+	}
 
 	result = entity->addComponent<MeshComponent>(vertexData, indices);
 
@@ -104,7 +128,6 @@ MeshComponent *MeshFactory::createCube(Entity *entity, float size)
 		20,21,22,  22,23,20		// back
 	};
 
-	// TODO: armazenar as coordenadas de textura
 	float cubeTexCoords[] = 
 	{
 		1, 0,	0, 0,	0, 1,	1, 1,
@@ -122,7 +145,6 @@ MeshComponent *MeshFactory::createCube(Entity *entity, float size)
 		newData = new VertexData;
 		newData->position = glm::vec3(cubeVertices[i], cubeVertices[i + 1], cubeVertices[i + 2]);
 		newData->normal = glm::vec3(cubeNormals[i], cubeNormals[i + 1], cubeNormals[i + 2]);
-		// ### newData->color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 		vertexData.emplace_back(newData);
 	}

@@ -15,7 +15,9 @@ enum Type : int
 {
 	POSITION = 0,
 	NORMAL = 1,
-	TEXCOORDS = 2
+	TEXCOORDS = 2,
+	TANGENT = 3,
+	BITANGENT = 4
 };
 
 }
@@ -71,14 +73,22 @@ void OpenGLAPI::drawColorMesh(MeshComponent *mesh)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
 
-	this->enableVertexAndNormalLocation(EAttribLocation::POSITION, EAttribLocation::NORMAL);
+	// Setup vertices
+	glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
+	glEnableVertexAttribArray(EAttribLocation::POSITION);
 
+	// Setup normals
+	glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
+	glEnableVertexAttribArray(EAttribLocation::NORMAL);
+
+	// Drawing
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
 	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, NULL);
 
 	// Clear
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	this->disableVertexAndNormalLocation(EAttribLocation::POSITION, EAttribLocation::NORMAL);
+	glDisableVertexAttribArray(EAttribLocation::POSITION);
+	glDisableVertexAttribArray(EAttribLocation::NORMAL);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
@@ -87,20 +97,30 @@ void OpenGLAPI::drawTexturedMesh(MeshComponent *mesh, uint32_t textureId)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
 
-	this->enableVertexAndNormalLocation(EAttribLocation::POSITION, EAttribLocation::NORMAL);
+	// Setup vertices
+	glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
+	glEnableVertexAttribArray(EAttribLocation::POSITION);
+
+	// Setup normals
+	glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
+	glEnableVertexAttribArray(EAttribLocation::NORMAL);
 	
+	// Setup texture coordinates
 	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
 	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
 
+	// Setup diffuse texture unit
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 
+	// Drawing
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
 	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, nullptr);
 
 	// Clear
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	this->disableVertexAndNormalLocation(EAttribLocation::POSITION, EAttribLocation::NORMAL);
+	glDisableVertexAttribArray(EAttribLocation::POSITION);
+	glDisableVertexAttribArray(EAttribLocation::NORMAL);
 	glDisableVertexAttribArray(EAttribLocation::TEXCOORDS);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -110,24 +130,47 @@ void OpenGLAPI::drawNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseText
 {
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
 
-	this->enableVertexAndNormalLocation(EAttribLocation::POSITION, EAttribLocation::NORMAL);
+	// Setup vertices
+	glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
+	glEnableVertexAttribArray(EAttribLocation::POSITION);
 
+	// Setup normals
+	glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
+	glEnableVertexAttribArray(EAttribLocation::NORMAL);
+
+	// Setup texture coordinates
 	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
 	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
 
+	// Setup tangents
+	int offset = (sizeof(glm::vec3) * 2) + (sizeof(float) * 2);
+	glVertexAttribPointer(EAttribLocation::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
+	glEnableVertexAttribArray(EAttribLocation::TANGENT);
+	
+	// Setup bitangents
+	offset = (sizeof(glm::vec3) * 3) + (sizeof(float) * 2);
+	glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
+	glEnableVertexAttribArray(EAttribLocation::BITANGENT);
+
+	// Setup diffuse texture unit
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, diffuseTextureId);
 
+	// Setup normal texture unit
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, normalTextureId);
 
+	// Drawing
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
 	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, nullptr);
 
 	// Clear
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	this->disableVertexAndNormalLocation(EAttribLocation::POSITION, EAttribLocation::NORMAL);
+	glDisableVertexAttribArray(EAttribLocation::POSITION);
+	glDisableVertexAttribArray(EAttribLocation::NORMAL);
 	glDisableVertexAttribArray(EAttribLocation::TEXCOORDS);
+	glDisableVertexAttribArray(EAttribLocation::TANGENT);
+	glDisableVertexAttribArray(EAttribLocation::BITANGENT);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
@@ -243,26 +286,6 @@ void OpenGLAPI::setMat4(uint32_t program, const std::string &varName, const floa
 	glUniformMatrix4fv(location, 1, GL_FALSE, value);
 }
 
-/*
-int OpenGLAPI::getAttribLocation(uint32_t program, EShaderVariable::Type shaderVariable)
-{
-	int result = -1;
-	std::string variable = "INVALID";
-
-	switch (shaderVariable)
-	{
-		case EShaderVariable::SHADER_POSITION:   variable = "vertexPosition"; break;
-		case EShaderVariable::SHADER_NORMAL:     variable = "inputNormal"; break;
-		default: break;
-	}
-
-	result = glGetAttribLocation(program, variable.c_str());
-	this->checkVariableLocation(result, variable);
-
-	return result;
-}
-*/
-
 void OpenGLAPI::enableShader(uint32_t program)
 {
 	glUseProgram(program);
@@ -295,24 +318,6 @@ void OpenGLAPI::releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uin
 		vertShaders.pop();
 		fragShaders.pop();
 	}
-}
-
-// Private methods
-void OpenGLAPI::enableVertexAndNormalLocation(int vertexLocation, int normalLocation)
-{
-	// Vertices
-	glVertexAttribPointer(vertexLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
-	glEnableVertexAttribArray(vertexLocation);
-
-	// Normals
-	glVertexAttribPointer(normalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
-	glEnableVertexAttribArray(normalLocation);
-}
-
-void OpenGLAPI::disableVertexAndNormalLocation(int vertexLocation, int normalLocation)
-{
-	glDisableVertexAttribArray(vertexLocation);
-	glDisableVertexAttribArray(normalLocation);
 }
 
 uint32_t OpenGLAPI::compileShader(const std::string &source, uint32_t mode)

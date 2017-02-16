@@ -24,9 +24,6 @@
     <ClCompile Include="engine\math\Quaternion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\math\Vector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\entities\components\transforms\TransformComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -123,11 +120,11 @@
     <ClCompile Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\utils\MathUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\utils\EShaderVariable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\utils\FileUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -140,13 +137,7 @@
     <ClInclude Include="engine\utils\memory_aliases.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\math\math_util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\math\Quaternion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\math\Vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\entities\components\AEntityComponent.h">
@@ -261,6 +252,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\utils\MathUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
