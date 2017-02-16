@@ -40,6 +40,7 @@ private:
 	void createVBO(MeshComponent *mesh);	// ###
 	void render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition);
 	bool contains(MeshComponent *mesh);
+	inline bool hasMeshes() { return this->meshes.size() > 0; }
 
 friend class RenderManager;
 };

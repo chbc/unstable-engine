@@ -7,6 +7,7 @@
 #include "components/ColorMaterialComponent.h"
 #include "components/DiffuseMaterialComponent.h"
 #include "components/NormalMaterialComponent.h"
+#include "components/SpecularMaterialComponent.h"
 
 /*
 namespace EMaterialMap

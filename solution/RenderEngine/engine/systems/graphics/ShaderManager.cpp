@@ -45,6 +45,16 @@ uint32_t ShaderManager::loadNormalMapShader()
 	return this->loadShader(vertexContent, fragmentContent);
 }
 
+uint32_t ShaderManager::loadSpecularMapShader()
+{
+	std::string vertexContent;
+	std::string fragmentContent;
+	ShaderContentFactory contentFactory;
+	contentFactory.createSpecularMapContent(vertexContent, fragmentContent);
+
+	return this->loadShader(vertexContent, fragmentContent);
+}
+
 uint32_t ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent)
 {
 	uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);

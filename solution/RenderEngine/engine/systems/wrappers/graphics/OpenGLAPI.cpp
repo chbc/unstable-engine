@@ -175,6 +175,59 @@ void OpenGLAPI::drawNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseText
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
+void OpenGLAPI::drawSpecularNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId, uint32_t specularTextureId)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
+
+	// Setup vertices
+	glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
+	glEnableVertexAttribArray(EAttribLocation::POSITION);
+
+	// Setup normals
+	glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
+	glEnableVertexAttribArray(EAttribLocation::NORMAL);
+
+	// Setup texture coordinates
+	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
+	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
+
+	// Setup tangents
+	int offset = (sizeof(glm::vec3) * 2) + (sizeof(float) * 2);
+	glVertexAttribPointer(EAttribLocation::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
+	glEnableVertexAttribArray(EAttribLocation::TANGENT);
+
+	// Setup bitangents
+	offset = (sizeof(glm::vec3) * 3) + (sizeof(float) * 2);
+	glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
+	glEnableVertexAttribArray(EAttribLocation::BITANGENT);
+
+	// Setup diffuse texture unit
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, diffuseTextureId);
+
+	// Setup normal texture unit
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, normalTextureId);
+
+	// Setup specular texture unit
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, specularTextureId);
+
+	// Drawing
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
+	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, nullptr);
+
+	// Clear
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glDisableVertexAttribArray(EAttribLocation::POSITION);
+	glDisableVertexAttribArray(EAttribLocation::NORMAL);
+	glDisableVertexAttribArray(EAttribLocation::TEXCOORDS);
+	glDisableVertexAttribArray(EAttribLocation::TANGENT);
+	glDisableVertexAttribArray(EAttribLocation::BITANGENT);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
 void OpenGLAPI::clearBuffer()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

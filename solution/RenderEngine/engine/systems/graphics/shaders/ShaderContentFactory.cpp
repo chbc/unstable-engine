@@ -47,6 +47,20 @@ void ShaderContentFactory::createNormalMapContent(std::string &outVertexContent,
 	outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
 }
 
+void ShaderContentFactory::createSpecularMapContent(std::string &outVertexContent, std::string &outFragmentContent)
+{
+	std::string vertexContentHeader;
+	std::string fragmentContentHeader;
+	this->loadSpecularMapContentHeader(vertexContentHeader, fragmentContentHeader);
+
+	std::string vertexContentImpl;
+	std::string fragmentContentImpl;
+	this->loadSpecularMapContentImplementation(vertexContentImpl, fragmentContentImpl);
+
+	outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
+	outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
+}
+
 // Load methods
 void ShaderContentFactory::loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
 {
@@ -142,20 +156,26 @@ void ShaderContentFactory::loadNormalMapContentImplementation(std::string &outVe
 	this->uncommentCode(outFragmentContent, "// [NORMAL] ");
 }
 
-void ShaderContentFactory::replaceCode(std::string &outShaderContent, const char *code)
+void ShaderContentFactory::loadSpecularMapContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
 {
-	std::size_t beginCodePosition = outShaderContent.find("// ###");
-	std::size_t size = outShaderContent.size() - beginCodePosition;
-	if (beginCodePosition != std::string::npos)
-	{
-		outShaderContent = outShaderContent.replace
-		(
-			beginCodePosition, size,
-			code
-		);
-	}
-	else
-		throw "[ShaderContentFactory] - Didn't find code mark!";
+	std::string specularFragment;
+	FileUtils::loadFile(ShaderFiles::SPECULAR_H_F, specularFragment);
+
+	this->loadNormalMapContentHeader(outVertexContent, outFragmentContent);
+
+	outFragmentContent = specularFragment + outFragmentContent;
+}
+
+void ShaderContentFactory::loadSpecularMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent)
+{
+	std::string specularFragment;
+
+	FileUtils::loadFile(ShaderFiles::SPECULAR_IMPL_F, specularFragment);
+
+	this->loadNormalMapContentImplementation(outVertexContent, outFragmentContent);
+
+	outFragmentContent = specularFragment + outFragmentContent;
+	this->uncommentCode(outFragmentContent, "// [SPECULAR] ");
 }
 
 void ShaderContentFactory::uncommentCode(std::string &outShaderContent, const std::string &mark)

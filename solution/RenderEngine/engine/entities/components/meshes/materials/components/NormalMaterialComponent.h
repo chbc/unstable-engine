@@ -10,7 +10,7 @@ namespace sre
 
 class NormalMaterialComponent : public AMaterialComponent
 {
-private:
+protected:
 	UPTR<Texture> texture;
 
 public:

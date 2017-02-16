@@ -27,6 +27,9 @@ namespace ShaderFiles
 	const std::string NORMAL_IMPL_V = "../../shaders/normal_impl.vert";
 	const std::string NORMAL_H_F = "../../shaders/normal_h.frag";
 	const std::string NORMAL_IMPL_F = "../../shaders/normal_impl.frag";
+
+	const std::string SPECULAR_H_F = "../../shaders/specular_h.frag";
+	const std::string SPECULAR_IMPL_F = "../../shaders/specular_impl.frag";
 }
 
 } // namespace

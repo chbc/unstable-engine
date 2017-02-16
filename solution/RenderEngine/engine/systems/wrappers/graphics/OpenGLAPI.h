@@ -18,6 +18,7 @@ protected:
 	void drawColorMesh(MeshComponent *mesh) override;
 	void drawTexturedMesh(MeshComponent *mesh, uint32_t textureId) override;
 	void drawNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId) override;
+	void drawSpecularNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId, uint32_t specularTextureId) override;
 	void clearBuffer() override;
 	uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit) override;
 	void deleteTexture(uint32_t id) override;

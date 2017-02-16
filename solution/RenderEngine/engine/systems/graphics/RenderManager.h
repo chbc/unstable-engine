@@ -26,8 +26,6 @@ class DirectionalLightComponent;
 class PointLightComponent;
 
 class ColorRenderer;
-class DiffuseTexturedRenderer;
-class NormalMapRenderer;
 
 /*!
 	Singleton Class for low level rendering
@@ -47,8 +45,9 @@ private:
 	UPTR<TextureManager> textureManager;
 
 	UPTR<ColorRenderer> colorRenderer;
-	UPTR<DiffuseTexturedRenderer> diffuseRenderer;
-	UPTR<NormalMapRenderer> normalMapRenderer;
+	UPTR<ColorRenderer> diffuseRenderer;
+	UPTR<ColorRenderer> normalMapRenderer;
+	UPTR<ColorRenderer> specularMapRenderer;
 
 	CameraComponent *mainCamera;
 

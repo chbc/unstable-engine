@@ -12,6 +12,7 @@
 #include "renders/ColorRenderer.h"
 #include "renders/DiffuseTexturedRenderer.h"
 #include "renders/NormalMapRenderer.h"
+#include "renders/SpecularMapRenderer.h"
 
 namespace sre
 {
@@ -26,8 +27,9 @@ RenderManager::RenderManager()
 	this->textureManager	= UPTR<TextureManager>{ new TextureManager{ this->graphicsWrapper.get() } };
 	
 	this->colorRenderer		= UPTR<ColorRenderer>{ nullptr };
-	this->diffuseRenderer	= UPTR<DiffuseTexturedRenderer>{ nullptr };
-	this->normalMapRenderer = UPTR<NormalMapRenderer>{ nullptr };
+	this->diffuseRenderer	= UPTR<ColorRenderer>{ nullptr };
+	this->normalMapRenderer = UPTR<ColorRenderer>{ nullptr };
+	this->specularMapRenderer = UPTR<ColorRenderer>{ nullptr };
 	this->mainCamera		= nullptr;
 }
 
@@ -63,7 +65,17 @@ ColorRenderer *RenderManager::chooseRenderer(MeshComponent *mesh)
 	ColorRenderer *result = nullptr;
 
 	Material *material = mesh->getMaterial();
-	if (material->hasComponent<NormalMaterialComponent>())
+	if (material->hasComponent<SpecularMaterialComponent>())
+	{
+		if (this->specularMapRenderer.get() == nullptr)
+		{
+			this->specularMapRenderer = UPTR <SpecularMapRenderer>{ new SpecularMapRenderer{this->graphicsWrapper} };
+			this->specularMapRenderer->loadShader();
+		}
+
+		result = this->specularMapRenderer.get();
+	}
+	else if (material->hasComponent<NormalMaterialComponent>())
 	{
 		if (this->normalMapRenderer.get() == nullptr)
 		{
@@ -111,37 +123,26 @@ void RenderManager::render()
 {
 	this->renderCamera();
 
-	// Color renderer
-	if (this->colorRenderer.get() != nullptr)
+	const int MAX_RENDERS = 4;
+	ColorRenderer *renders[MAX_RENDERS]
 	{
-		this->colorRenderer->render
-		(
-			this->matrixManager.get(), 
-			this->lightManager.get(), 
-			this->mainCamera->getTransform()->getPosition()
-		);
-	}
+		this->colorRenderer.get(),
+		this->diffuseRenderer.get(),
+		this->normalMapRenderer.get(),
+		this->specularMapRenderer.get()
+	};
 
-	// Diffuse renderer
-	if (this->diffuseRenderer.get() != nullptr)
+	for (ColorRenderer *item : renders)
 	{
-		this->diffuseRenderer->render
-		(
-			this->matrixManager.get(),
-			this->lightManager.get(),
-			this->mainCamera->getTransform()->getPosition()
-		);
-	}
-
-	// Normal Map renderer
-	if (this->normalMapRenderer.get() != nullptr)
-	{
-		this->normalMapRenderer->render
-		(
-			this->matrixManager.get(),
-			this->lightManager.get(),
-			this->mainCamera->getTransform()->getPosition()
-		);
+		if ((item != nullptr) && (item->hasMeshes()))
+		{
+			item->render
+			(
+				this->matrixManager.get(), 
+				this->lightManager.get(), 
+				this->mainCamera->getTransform()->getPosition()
+			);
+		}
 	}
 }
 

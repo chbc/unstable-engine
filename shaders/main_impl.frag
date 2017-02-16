@@ -17,6 +17,8 @@ void main(void)
 	kd = kd * materialColor.rgb;
 	ks = ks * materialColor.rgb;
 	
+	// [SPECULAR] Specular_computeSpecular(ks);
+	
 	out_color = vec4(ka + kd + ks, 1.0);
 	
 	// [DIFFUSE] out_color = Diffuse_computeTextureColor(ka, kd, ks);

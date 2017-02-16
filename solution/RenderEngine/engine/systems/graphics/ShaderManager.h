@@ -31,6 +31,7 @@ private:
 	uint32_t loadColorShader();
 	uint32_t loadDiffuseShader();
 	uint32_t loadNormalMapShader();
+	uint32_t loadSpecularMapShader();
 	uint32_t loadShader(const std::string &vertexContent, const std::string &fragmentContent);
 
 	// passing values //
@@ -48,6 +49,7 @@ friend class LightManager;
 friend class ColorRenderer;
 friend class DiffuseTexturedRenderer;
 friend class NormalMapRenderer;
+friend class SpecularMapRenderer;
 };
 
 } // namespace

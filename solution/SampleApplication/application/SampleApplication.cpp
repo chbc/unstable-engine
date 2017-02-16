@@ -17,8 +17,9 @@ void SampleApplication::onInit()
 	TransformComponent *transform = plane->getTransform();
 	transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
 	MeshComponent *planeMesh = plane->getComponent<MeshComponent>();
-	planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/brickwall.jpg");
-	planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/brickwall_normal.jpg");
+	planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
+	planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
+	planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
 
 	this->cube = this->sceneManager->addCubeEntity();
 	this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 0.0f));
@@ -29,9 +30,11 @@ void SampleApplication::onInit()
 	camera->setPosition(glm::vec3(0.0f, 5.0f, 10.0f));
 
 	// light //
+	/*
 	DirectionalLightComponent *dLight1 = this->sceneManager->addDirectionalLight();
 	dLight1->setDirection(glm::vec3(0.0f, -1.0f, 1.0f));
-	dLight1->setColor(glm::vec3(0.25f, 0.1f, 0.0f));
+	dLight1->setColor(glm::vec3(0.5f, 0.5f, 0.5f));
+	*/
 
 	/*
 	DirectionalLightComponent *dLight2 = this->sceneManager->addDirectionalLight();
@@ -40,14 +43,14 @@ void SampleApplication::onInit()
 	*/
 
 	PointLightComponent *pLight1 = this->sceneManager->addPointLight();
-	pLight1->getTransform()->setPosition(glm::vec3(0.0f, 7.0f, 0.0f));
-	pLight1->setColor(glm::vec3(1.0f, 1.0f, 1.0f));
+	pLight1->getTransform()->setPosition(glm::vec3(7.0f, 7.0f, 0.0f));
+	pLight1->setColor(glm::vec3(0.0f, 0.25f, 0.5f));
 
-	/*
+	
 	PointLightComponent *pLight2 = this->sceneManager->addPointLight();
 	pLight2->getTransform()->setPosition(glm::vec3(-7.0f, 7.0f, 0.0f));
-	pLight2->setColor(glm::vec3(1.0f, 1.0f, 1.0f));
-	*/
+	pLight2->setColor(glm::vec3(0.5f, 0.25f, 0.0f));
+	
 
 	// set EventReceiver class for input handling
 	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
