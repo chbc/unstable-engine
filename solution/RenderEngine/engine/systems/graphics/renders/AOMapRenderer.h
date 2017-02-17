@@ -1,15 +1,15 @@
-#ifndef _SPECULAR_MAP_RENDERER_H_
-#define _SPECULAR_MAP_RENDERER_H_
+#ifndef _AO_MAP_RENDERER_H_
+#define _AO_MAP_RENDERER_H_
 
 #include "ColorRenderer.h"
 
 namespace sre
 {
 
-class SpecularMapRenderer : public ColorRenderer
+class AOMapRenderer : public ColorRenderer
 {
 protected:
-	SpecularMapRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper);
+	AOMapRenderer(const SPTR<AGraphicsWrapper> &graphicsWrapper);
 
 	void loadShader() override;
 	void setupMaterial(MeshComponent *mesh) override;

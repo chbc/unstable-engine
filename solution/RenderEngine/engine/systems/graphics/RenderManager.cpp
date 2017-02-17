@@ -13,6 +13,7 @@
 #include "renders/DiffuseTexturedRenderer.h"
 #include "renders/NormalMapRenderer.h"
 #include "renders/SpecularMapRenderer.h"
+#include "renders/AOMapRenderer.h"
 
 namespace sre
 {
@@ -30,6 +31,7 @@ RenderManager::RenderManager()
 	this->diffuseRenderer	= UPTR<ColorRenderer>{ nullptr };
 	this->normalMapRenderer = UPTR<ColorRenderer>{ nullptr };
 	this->specularMapRenderer = UPTR<ColorRenderer>{ nullptr };
+	this->aoMapRenderer		= UPTR<ColorRenderer>{ nullptr };
 	this->mainCamera		= nullptr;
 }
 
@@ -65,7 +67,17 @@ ColorRenderer *RenderManager::chooseRenderer(MeshComponent *mesh)
 	ColorRenderer *result = nullptr;
 
 	Material *material = mesh->getMaterial();
-	if (material->hasComponent<SpecularMaterialComponent>())
+	if (material->hasComponent<AmbientOcclusionMaterialComponent>())
+	{
+		if (this->aoMapRenderer.get() == nullptr)
+		{
+			this->aoMapRenderer = UPTR<AOMapRenderer>{ new AOMapRenderer{this->graphicsWrapper} };
+			this->aoMapRenderer->loadShader(); // ### tambem é chamado ao remover!
+		}
+
+		result = this->aoMapRenderer.get();
+	}
+	else if (material->hasComponent<SpecularMaterialComponent>())
 	{
 		if (this->specularMapRenderer.get() == nullptr)
 		{
@@ -123,13 +135,14 @@ void RenderManager::render()
 {
 	this->renderCamera();
 
-	const int MAX_RENDERS = 4;
+	const int MAX_RENDERS = 5;
 	ColorRenderer *renders[MAX_RENDERS]
 	{
 		this->colorRenderer.get(),
 		this->diffuseRenderer.get(),
 		this->normalMapRenderer.get(),
-		this->specularMapRenderer.get()
+		this->specularMapRenderer.get(),
+		this->aoMapRenderer.get()
 	};
 
 	for (ColorRenderer *item : renders)
@@ -184,6 +197,16 @@ Texture *RenderManager::loadDiffuseTexture(const std::string &fileName)
 Texture *RenderManager::loadNormalTexture(const std::string &fileName)
 {
 	return this->textureManager->loadNormalTexture(fileName);
+}
+
+Texture *RenderManager::loadSpecularTexture(const std::string &fileName)
+{
+	return this->textureManager->loadSpecularTexture(fileName);
+}
+
+Texture *RenderManager::loadAOTexture(const std::string &fileName)
+{
+	return this->textureManager->loadAOTexture(fileName);
 }
 
 void RenderManager::release()

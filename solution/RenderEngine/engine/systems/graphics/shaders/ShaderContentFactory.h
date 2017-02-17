@@ -13,6 +13,7 @@ private:
 	void createDiffuseContent(std::string &outVertexContent, std::string &outFragmentContent);
 	void createNormalMapContent(std::string &outVertexContent, std::string &outFragmentContent);
 	void createSpecularMapContent(std::string &outVertexContent, std::string &outFragmentContent);
+	void createAOMapContent(std::string &outVertexContent, std::string &outFragmentContent);
 
 	void loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
 	void loadColorContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
@@ -25,6 +26,9 @@ private:
 
 	void loadSpecularMapContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
 	void loadSpecularMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
+
+	void loadAOMapContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
+	void loadAOMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 
 	void uncommentCode(std::string &outShaderContent, const std::string &mark); // throws "didn't find code mark
 

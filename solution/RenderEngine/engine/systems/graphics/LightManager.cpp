@@ -11,19 +11,6 @@ LightManager::LightManager()
 	this->ambientLightColor = glm::vec3(0.1f, 0.1f, 0.1f);
 }
 
-LightManager::~LightManager()
-{
-	/* ####
-	std::vector<LightNode *>::iterator itLight = this->lightNodes.begin();
-	while(itLight != this->lightNodes.end())
-	{
-		delete (*itLight);
-		itLight++;
-	}
-	this->lightNodes.clear();
-	*/
-}
-
 void LightManager::setAmbientLightColor(const glm::vec3 &ambientLightColor)
 {
 	this->ambientLightColor = ambientLightColor;

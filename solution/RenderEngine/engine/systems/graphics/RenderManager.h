@@ -4,12 +4,6 @@
 #include <engine/utils/singleton_macros.h>
 #include <glm/vec3.hpp>
 
-/* ###
-#include "TextureManager.h"
-#include "ShaderManager.h"
-#include "LightManager.h"
-*/
-
 namespace sre
 {
 class MeshComponent;
@@ -28,17 +22,13 @@ class PointLightComponent;
 class ColorRenderer;
 
 /*!
-	Singleton Class for low level rendering
+	Singleton Class to handle renders
 */
 class RenderManager
 {
 DECLARE_SINGLETON(RenderManager);
 
 private:
-/* ###
-	TextureManager *textureManager;
-*/
-
 	SPTR<AGraphicsWrapper> graphicsWrapper;
 	UPTR<MatrixManager> matrixManager;
 	UPTR<LightManager> lightManager;
@@ -48,6 +38,7 @@ private:
 	UPTR<ColorRenderer> diffuseRenderer;
 	UPTR<ColorRenderer> normalMapRenderer;
 	UPTR<ColorRenderer> specularMapRenderer;
+	UPTR<ColorRenderer> aoMapRenderer;
 
 	CameraComponent *mainCamera;
 
@@ -71,6 +62,8 @@ private:
 
 	Texture *loadDiffuseTexture(const std::string &fileName);
 	Texture *loadNormalTexture(const std::string &fileName);
+	Texture *loadSpecularTexture(const std::string &fileName);
+	Texture *loadAOTexture(const std::string &fileName);
 
 friend class SceneManager;
 friend class MeshComponent;
@@ -78,6 +71,8 @@ friend class RenderEngine;
 friend class Material;
 friend class DiffuseMaterialComponent;
 friend class NormalMaterialComponent;
+friend class SpecularMaterialComponent;
+friend class AmbientOcclusionMaterialComponent;
 };
 
 } // namespace

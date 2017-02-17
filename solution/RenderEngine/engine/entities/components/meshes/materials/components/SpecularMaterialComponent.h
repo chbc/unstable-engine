@@ -10,6 +10,8 @@ class SpecularMaterialComponent : public NormalMaterialComponent
 {
 public:
 	SpecularMaterialComponent(Material *material, const std::string &fileName);
+
+	void loadTexture(const std::string &fileName) override;
 };
 
 } // namespace

@@ -22,8 +22,6 @@ private:
 	glm::vec3 ambientLightColor;
 
 public:
-	~LightManager();
-
 	void setAmbientLightColor(const glm::vec3 &ambientLightColor);
 
 private:

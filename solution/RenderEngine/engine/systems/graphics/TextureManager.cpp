@@ -29,6 +29,16 @@ Texture *TextureManager::loadNormalTexture(const std::string &fileName)
 	return this->loadTexture(fileName, 1);
 }
 
+Texture *TextureManager::loadSpecularTexture(const std::string &fileName)
+{
+	return this->loadTexture(fileName, 2);
+}
+
+Texture *TextureManager::loadAOTexture(const std::string &fileName)
+{
+	return this->loadTexture(fileName, 3);
+}
+
 Texture *TextureManager::loadTexture(const std::string &fileName, uint32_t unit)
 {
 	Texture *result = nullptr;

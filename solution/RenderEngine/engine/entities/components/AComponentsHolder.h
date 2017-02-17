@@ -43,6 +43,7 @@ private:
 	template <> std::size_t getComponentId<class DiffuseMaterialComponent>() { return 2; }
 	template <> std::size_t getComponentId<class NormalMaterialComponent>() { return 3; }
 	template <> std::size_t getComponentId<class SpecularMaterialComponent>() { return 4; }
+	template <> std::size_t getComponentId<class AmbientOcclusionMaterialComponent>() { return 5; }
 };
 
 } // namespace

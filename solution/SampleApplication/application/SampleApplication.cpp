@@ -20,6 +20,7 @@ void SampleApplication::onInit()
 	planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
 	planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
 	planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
+	planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
 
 	this->cube = this->sceneManager->addCubeEntity();
 	this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 0.0f));
@@ -43,14 +44,14 @@ void SampleApplication::onInit()
 	*/
 
 	PointLightComponent *pLight1 = this->sceneManager->addPointLight();
-	pLight1->getTransform()->setPosition(glm::vec3(7.0f, 7.0f, 0.0f));
-	pLight1->setColor(glm::vec3(0.0f, 0.25f, 0.5f));
+	pLight1->getTransform()->setPosition(glm::vec3(2.0f, 5.0f, 0.0f));
+	pLight1->setColor(glm::vec3(1.0f, 1.0f, 1.0f));
 
-	
+	/*
 	PointLightComponent *pLight2 = this->sceneManager->addPointLight();
-	pLight2->getTransform()->setPosition(glm::vec3(-7.0f, 7.0f, 0.0f));
+	pLight2->getTransform()->setPosition(glm::vec3(-2.0f, 2.0f, 0.0f));
 	pLight2->setColor(glm::vec3(0.5f, 0.25f, 0.0f));
-	
+	*/	
 
 	// set EventReceiver class for input handling
 	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));

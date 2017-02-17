@@ -27,6 +27,7 @@ protected:
 	virtual void drawTexturedMesh(MeshComponent *mesh, uint32_t textureId) =0;
 	virtual void drawNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId) =0;
 	virtual void drawSpecularNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId, uint32_t specularTextureId) =0;
+	virtual void drawAOSpecularNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId, uint32_t specularTextureId, uint32_t aoTextureId) =0;
 	virtual void clearBuffer() =0;
 	virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit) =0;
 	virtual void deleteTexture(uint32_t id) =0;
@@ -53,6 +54,7 @@ friend class ColorRenderer;
 friend class DiffuseTexturedRenderer;
 friend class NormalMapRenderer;
 friend class SpecularMapRenderer;
+friend class AOMapRenderer;
 };
 
 } // namespace

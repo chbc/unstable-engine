@@ -61,6 +61,20 @@ void ShaderContentFactory::createSpecularMapContent(std::string &outVertexConten
 	outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
 }
 
+void ShaderContentFactory::createAOMapContent(std::string &outVertexContent, std::string &outFragmentContent)
+{
+	std::string vertexContentHeader;
+	std::string fragmentContentHeader;
+	this->loadAOMapContentHeader(vertexContentHeader, fragmentContentHeader);
+
+	std::string vertexContentImpl;
+	std::string fragmentContentImpl;
+	this->loadAOMapContentImplementation(vertexContentImpl, fragmentContentImpl);
+
+	outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
+	outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
+}
+
 // Load methods
 void ShaderContentFactory::loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
 {
@@ -176,6 +190,28 @@ void ShaderContentFactory::loadSpecularMapContentImplementation(std::string &out
 
 	outFragmentContent = specularFragment + outFragmentContent;
 	this->uncommentCode(outFragmentContent, "// [SPECULAR] ");
+}
+
+void ShaderContentFactory::loadAOMapContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
+{
+	std::string aoFragment;
+	FileUtils::loadFile(ShaderFiles::AMBIENT_OCCLUSION_H_F, aoFragment);
+
+	this->loadSpecularMapContentHeader(outVertexContent, outFragmentContent);
+
+	outFragmentContent = aoFragment + outFragmentContent;
+}
+
+void ShaderContentFactory::loadAOMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent)
+{
+	std::string aoFragment;
+
+	FileUtils::loadFile(ShaderFiles::AMBIENT_OCCLUSION_IMPL_F, aoFragment);
+
+	this->loadSpecularMapContentImplementation(outVertexContent, outFragmentContent);
+
+	outFragmentContent = aoFragment + outFragmentContent;
+	this->uncommentCode(outFragmentContent, "// [AO] ");
 }
 
 void ShaderContentFactory::uncommentCode(std::string &outShaderContent, const std::string &mark)

@@ -24,6 +24,8 @@ private:
 
 	Texture *loadDiffuseTexture(const std::string &fileName);
 	Texture *loadNormalTexture(const std::string &fileName);
+	Texture *loadSpecularTexture(const std::string &fileName);
+	Texture *loadAOTexture(const std::string &fileName);
 	Texture *loadTexture(const std::string &fileName, uint32_t unit);
 	void deleteTexture(uint32_t id);
 

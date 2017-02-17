@@ -14,8 +14,11 @@ void main(void)
 	Lights_computeDirectionalLights(normal, toCameraDirection, kd, ks);
 	Lights_computePointLights(normal, toCameraDirection, kd, ks);
 
-	kd = kd * materialColor.rgb;
-	ks = ks * materialColor.rgb;
+	ka *= materialColor.rgb;
+	kd *= materialColor.rgb;
+	ks *= materialColor.rgb;
+	
+	// [AO] AmbientOclusion_computeAO(ka);
 	
 	// [SPECULAR] Specular_computeSpecular(ks);
 	

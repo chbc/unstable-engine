@@ -30,6 +30,9 @@ namespace ShaderFiles
 
 	const std::string SPECULAR_H_F = "../../shaders/specular_h.frag";
 	const std::string SPECULAR_IMPL_F = "../../shaders/specular_impl.frag";
+
+	const std::string AMBIENT_OCCLUSION_H_F = "../../shaders/ambientOcclusion_h.frag";
+	const std::string AMBIENT_OCCLUSION_IMPL_F = "../../shaders/ambientOcclusion_impl.frag";
 }
 
 } // namespace
