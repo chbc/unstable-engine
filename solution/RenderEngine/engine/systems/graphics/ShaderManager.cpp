@@ -1,6 +1,5 @@
 #include "ShaderManager.h"
 #include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
-#include "shaders/ShaderContentFactory.h"
 
 namespace sre
 {
@@ -13,56 +12,6 @@ ShaderManager::ShaderManager(const SPTR<AGraphicsWrapper> &graphicsWrapper)
 ShaderManager::~ShaderManager()
 {
 	this->graphicsWrapper->releaseShaders(this->vertShaders, this->fragShaders, this->programs);
-}
-
-uint32_t ShaderManager::loadColorShader()
-{
-	std::string vertexContent;
-	std::string fragmentContent;
-	ShaderContentFactory contentFactory;
-	contentFactory.createColorContent(vertexContent, fragmentContent);
-
-	return this->loadShader(vertexContent, fragmentContent);
-}
-
-uint32_t ShaderManager::loadDiffuseShader()
-{
-	std::string vertexContent;
-	std::string fragmentContent;
-	ShaderContentFactory contentFactory;
-	contentFactory.createDiffuseContent(vertexContent, fragmentContent);
-
-	return this->loadShader(vertexContent, fragmentContent);
-}
-
-uint32_t ShaderManager::loadNormalMapShader()
-{
-	std::string vertexContent;
-	std::string fragmentContent;
-	ShaderContentFactory contentFactory;
-	contentFactory.createNormalMapContent(vertexContent, fragmentContent);
-
-	return this->loadShader(vertexContent, fragmentContent);
-}
-
-uint32_t ShaderManager::loadSpecularMapShader()
-{
-	std::string vertexContent;
-	std::string fragmentContent;
-	ShaderContentFactory contentFactory;
-	contentFactory.createSpecularMapContent(vertexContent, fragmentContent);
-
-	return this->loadShader(vertexContent, fragmentContent);
-}
-
-uint32_t ShaderManager::loadAOMapShader()
-{
-	std::string vertexContent;
-	std::string fragmentContent;
-	ShaderContentFactory contentFactory;
-	contentFactory.createAOMapContent(vertexContent, fragmentContent);
-
-	return this->loadShader(vertexContent, fragmentContent);
 }
 
 uint32_t ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent)

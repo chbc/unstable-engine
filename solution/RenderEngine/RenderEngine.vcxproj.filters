@@ -84,9 +84,6 @@
     <ClCompile Include="engine\entities\components\meshes\MeshFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\systems\graphics\renders\ColorRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\entities\components\AEntityComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,13 +102,7 @@
     <ClCompile Include="engine\temp\TEMP_TextureEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\systems\graphics\renders\DiffuseTexturedRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\systems\graphics\shaders\ShaderContentFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\systems\graphics\renders\NormalMapRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.cpp">
@@ -123,13 +114,16 @@
     <ClCompile Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\systems\graphics\renders\SpecularMapRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\systems\graphics\renders\AOMapRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\entities\components\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\systems\graphics\renders\ColorRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\systems\graphics\renders\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\systems\graphics\renders\DiffuseRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -230,9 +224,6 @@
     <ClInclude Include="engine\entities\components\meshes\VertexData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\systems\graphics\renders\ColorRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\utils\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -248,16 +239,10 @@
     <ClInclude Include="engine\temp\TEMP_TextureEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\systems\graphics\renders\DiffuseTexturedRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\systems\graphics\shaders\ShaderContentFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\systems\graphics\shaders\ShaderFiles.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\systems\graphics\renders\NormalMapRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.h">
@@ -269,17 +254,24 @@
     <ClInclude Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\systems\graphics\renders\SpecularMapRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\systems\graphics\renders\AOMapRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\entities\components\meshes\materials\components\AmbientOcclusionMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\renders\Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\renders\ColorRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\meshes\materials\EMaterialMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\renders\DiffuseRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="engine\entities\components\AComponentsHolder.tpp" />
+    <None Include="engine\systems\graphics\shaders\ShaderContentFactory.tpp" />
   </ItemGroup>
 </Project>

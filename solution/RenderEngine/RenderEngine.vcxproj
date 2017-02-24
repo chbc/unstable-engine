@@ -149,8 +149,7 @@
     <ClCompile Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\textures\Texture.cpp" />
-    <ClCompile Include="engine\systems\graphics\renders\AOMapRenderer.cpp" />
-    <ClCompile Include="engine\systems\graphics\renders\ColorRenderer.cpp" />
+    <ClCompile Include="engine\systems\graphics\renders\ColorRendererComponent.cpp" />
     <ClCompile Include="engine\entities\components\cameras\CameraComponent.cpp" />
     <ClCompile Include="engine\entities\components\lights\ALightComponent.cpp" />
     <ClCompile Include="engine\entities\components\lights\DirectionalLightComponent.cpp" />
@@ -167,9 +166,8 @@
     <ClCompile Include="engine\systems\graphics\LightManager.cpp" />
     <ClCompile Include="engine\systems\graphics\MatrixManager.cpp" />
     <ClCompile Include="engine\systems\graphics\RenderManager.cpp" />
-    <ClCompile Include="engine\systems\graphics\renders\DiffuseTexturedRenderer.cpp" />
-    <ClCompile Include="engine\systems\graphics\renders\NormalMapRenderer.cpp" />
-    <ClCompile Include="engine\systems\graphics\renders\SpecularMapRenderer.cpp" />
+    <ClCompile Include="engine\systems\graphics\renders\DiffuseRendererComponent.cpp" />
+    <ClCompile Include="engine\systems\graphics\renders\Renderer.cpp" />
     <ClCompile Include="engine\systems\graphics\ShaderManager.cpp" />
     <ClCompile Include="engine\systems\graphics\shaders\ShaderContentFactory.cpp" />
     <ClCompile Include="engine\systems\graphics\TextureManager.cpp" />
@@ -188,9 +186,9 @@
     <ClInclude Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.h" />
+    <ClInclude Include="engine\entities\components\meshes\materials\EMaterialMap.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\textures\Texture.h" />
-    <ClInclude Include="engine\systems\graphics\renders\AOMapRenderer.h" />
-    <ClInclude Include="engine\systems\graphics\renders\ColorRenderer.h" />
+    <ClInclude Include="engine\systems\graphics\renders\ColorRendererComponent.h" />
     <ClInclude Include="engine\entities\components\AComponentsHolder.h" />
     <ClInclude Include="engine\entities\components\AEntityComponent.h" />
     <ClInclude Include="engine\entities\components\cameras\CameraComponent.h" />
@@ -199,9 +197,8 @@
     <ClInclude Include="engine\entities\components\lights\PointLightComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\AMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\ColorMaterialComponent.h" />
-    <ClInclude Include="engine\systems\graphics\renders\DiffuseTexturedRenderer.h" />
-    <ClInclude Include="engine\systems\graphics\renders\NormalMapRenderer.h" />
-    <ClInclude Include="engine\systems\graphics\renders\SpecularMapRenderer.h" />
+    <ClInclude Include="engine\systems\graphics\renders\DiffuseRendererComponent.h" />
+    <ClInclude Include="engine\systems\graphics\renders\Renderer.h" />
     <ClInclude Include="engine\systems\graphics\shaders\ShaderFiles.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\Material.h" />
     <ClInclude Include="engine\entities\components\meshes\MeshComponent.h" />
@@ -235,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="engine\entities\components\AComponentsHolder.tpp" />
+    <None Include="engine\systems\graphics\shaders\ShaderContentFactory.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

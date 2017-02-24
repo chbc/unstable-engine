@@ -11,9 +11,6 @@ class AMaterialComponent
 protected:
 	AMaterialComponent(Material *material) : material(material) {}
 	Material *material;
-
-public:
-	virtual void init() {}
 };
 
 }

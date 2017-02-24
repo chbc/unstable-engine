@@ -12,14 +12,26 @@ protected:
 	OpenGLAPI() {}
 
 	void init() override;
-	void createVAO(MeshComponent *mesh) override {}
 	void createVBO(MeshComponent *mesh) override;
 	void createIBO(MeshComponent *mesh) override;
-	void drawColorMesh(MeshComponent *mesh) override;
-	void drawTexturedMesh(MeshComponent *mesh, uint32_t textureId) override;
-	void drawNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId) override;
-	void drawSpecularNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId, uint32_t specularTextureId) override;
-	void drawAOSpecularNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId, uint32_t specularTextureId, uint32_t aoTextureId) override;
+	void bindVBO(uint32_t vbo) override;
+	void enableVertexPositions() override;
+	void enableVertexNormals() override;
+	void enableTexCoords() override;
+	void enableVertexTangents() override;
+	void enableVertexBitangents() override;
+	void activeDiffuseTexture(uint32_t textureId) override;
+	void activeNormalTexture(uint32_t textureId) override;
+	void activeSpecularTexture(uint32_t textureId) override;
+	void activeAOTexture(uint32_t textureId) override;
+	void drawMesh(uint32_t ibo, int indicesSize);
+	void unbindVBO() override;
+	void disableVertexPositions() override;
+	void disableVertexNormals() override;
+	void disableTexCoords() override;
+	void disableVertexTangents() override;
+	void disableVertexBitangents() override;
+
 	void clearBuffer() override;
 	uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit) override;
 	void deleteTexture(uint32_t id) override;

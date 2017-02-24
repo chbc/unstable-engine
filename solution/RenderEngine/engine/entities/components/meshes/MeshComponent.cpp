@@ -39,14 +39,4 @@ void MeshComponent::setReceiveLight(bool receiveLight)
 	this->receiveLight = receiveLight;
 }
 
-void MeshComponent::notifyBeforeMaterialChange()
-{
-	RenderManager::getInstance()->onBeforeMaterialChange(this);
-}
-
-void MeshComponent::notifyAfterMaterialChange()
-{
-	RenderManager::getInstance()->onAfterMaterialChange(this);
-}
-
 } // namespace

@@ -5,6 +5,7 @@
 #include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/entities/components/lights/DirectionalLightComponent.h>
 #include <engine/entities/components/lights/PointLightComponent.h>
+#include <engine/entities/components/meshes/materials/EMaterialMap.h>
 
 namespace sre
 {
@@ -29,8 +30,9 @@ public:
 	~SceneManager();
 
 	// renderables //
-	Entity *addCubeEntity(float size = 1);
-	Entity *addPlaneEntity(float size = 1);
+	Entity *createPlaneEntity(float size = 1.0f);
+	Entity *createCubeEntity(float size = 1.0f);
+	void addEntity(Entity *entity);
 
 	// light //
 	DirectionalLightComponent *addDirectionalLight();

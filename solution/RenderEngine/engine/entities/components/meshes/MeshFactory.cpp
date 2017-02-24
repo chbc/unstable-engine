@@ -1,6 +1,5 @@
 #include "MeshFactory.h"
 #include <engine/entities/Entity.h>
-#include "MeshComponent.h"
 #include <engine/utils/MathUtils.h>
 
 namespace sre

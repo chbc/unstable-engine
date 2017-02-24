@@ -42,21 +42,15 @@ public:
 	template <typename T, typename... TArgs>
 	T *addMaterialComponent(TArgs&&... mArgs)
 	{
-		this->notifyBeforeMaterialChange();
 		T * result = this->material->addComponent<T>(std::forward<TArgs>(mArgs)...);
-		this->notifyAfterMaterialChange();
 		return result;
 	}
-
-private:
-	void notifyBeforeMaterialChange();
-	void notifyAfterMaterialChange();
 
 friend class RenderManager;
 friend class Entity;
 friend class OpenGLAPI;
 friend class MeshFactory;
-friend class ColorRenderer; // ###
+friend class Renderer;
 };
 
 } // namespace

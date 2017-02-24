@@ -19,7 +19,6 @@ public:
 
 // protected:
 	AEntityComponent(Entity *entity) { this->entity = entity; }
-	virtual void init() {}
 	virtual void update(uint32_t deltaTime) {}
 
 	TransformComponent *getTransform();

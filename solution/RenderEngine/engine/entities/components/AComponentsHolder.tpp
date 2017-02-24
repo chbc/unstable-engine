@@ -18,6 +18,17 @@ T *AComponentsHolder<C>::getComponent()
 }
 
 template <typename C>
+std::vector<C*> AComponentsHolder<C>::getComponents()
+{
+	std::vector<C*> result;
+
+	for (const UPTR<C> &item : this->components)
+		result.push_back(item.get());
+
+	return result;
+}
+
+template <typename C>
 template<typename T>
 bool AComponentsHolder<C>::hasComponent()
 {
@@ -34,8 +45,6 @@ void AComponentsHolder<C>::addComponent(T *newComponent)
 
 	componentsArray[getComponentId<T>()] = newComponent;
 	componentsBitset[getComponentId<T>()] = true;
-
-	newComponent->init();
 }
 
 } // namespace

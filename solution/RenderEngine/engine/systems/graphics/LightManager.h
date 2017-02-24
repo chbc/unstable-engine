@@ -36,6 +36,8 @@ private:
 
 	friend class RenderManager;
 	friend class ColorRenderer;
+	
+	friend class Renderer;
 };
 
 } // namespace

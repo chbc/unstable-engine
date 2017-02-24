@@ -22,26 +22,25 @@ SceneManager::~SceneManager()
 	this->entities.clear();
 }
 
-Entity *SceneManager::addCubeEntity(float size)
-{
-	Entity *newEntity = new Entity;
-	MeshComponent *mesh = MeshFactory::createCube(newEntity, size);
-	RenderManager::getInstance()->addMesh(mesh);
-	
-	this->entities.emplace_back(newEntity);
-
-	return newEntity;
-}
-
-Entity *SceneManager::addPlaneEntity(float size)
+Entity *SceneManager::createPlaneEntity(float size)
 {
 	Entity *newEntity = new Entity;
 	MeshComponent *mesh = MeshFactory::createPlane(newEntity, size);
-	
-	this->entities.emplace_back(newEntity);
-	RenderManager::getInstance()->addMesh(mesh);
-
 	return newEntity;
+}
+
+Entity *SceneManager::createCubeEntity(float size)
+{
+	Entity *newEntity = new Entity;
+	MeshComponent *mesh = MeshFactory::createCube(newEntity, size);
+	return newEntity;
+}
+
+void SceneManager::addEntity(Entity *newEntity)
+{
+	this->entities.emplace_back(newEntity);
+	if (newEntity->hasComponent<MeshComponent>()) {}
+		RenderManager::getInstance()->addMesh(newEntity->getComponent<MeshComponent>());
 }
 
 // light //

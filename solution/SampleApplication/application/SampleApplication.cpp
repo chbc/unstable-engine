@@ -13,19 +13,24 @@ void SampleApplication::onInit()
 	Material *planeMaterial = new DiffuseMaterial("../media/woodfloor.png");
 	planeNode->setMaterial(planeMaterial);
 	*/
-	Entity *plane = this->sceneManager->addPlaneEntity(10);
+	Entity *plane = this->sceneManager->createPlaneEntity(10);
 	TransformComponent *transform = plane->getTransform();
 	transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
 	MeshComponent *planeMesh = plane->getComponent<MeshComponent>();
 	planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
+	/*
 	planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
 	planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
 	planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
+	*/
+	this->sceneManager->addEntity(plane);
 
-	this->cube = this->sceneManager->addCubeEntity();
+	this->cube = this->sceneManager->createCubeEntity();
 	this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 0.0f));
 	MeshComponent *cubeMesh = this->cube->getComponent<MeshComponent>();
 	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
+
+	this->sceneManager->addEntity(this->cube);
 
 	CameraComponent *camera = this->sceneManager->getMainCamera();
 	camera->setPosition(glm::vec3(0.0f, 5.0f, 10.0f));

@@ -69,220 +69,102 @@ void OpenGLAPI::createIBO(MeshComponent *mesh)
 	delete[] indices;
 }
 
-void OpenGLAPI::drawColorMesh(MeshComponent *mesh)
+void OpenGLAPI::bindVBO(uint32_t vbo)
 {
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-
-	// Setup vertices
-	glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
-	glEnableVertexAttribArray(EAttribLocation::POSITION);
-
-	// Setup normals
-	glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
-	glEnableVertexAttribArray(EAttribLocation::NORMAL);
-
-	// Drawing
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, NULL);
-
-	// Clear
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glDisableVertexAttribArray(EAttribLocation::POSITION);
-	glDisableVertexAttribArray(EAttribLocation::NORMAL);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 }
 
-void OpenGLAPI::drawTexturedMesh(MeshComponent *mesh, uint32_t textureId)
+void OpenGLAPI::enableVertexPositions()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-
-	// Setup vertices
 	glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
 	glEnableVertexAttribArray(EAttribLocation::POSITION);
+}
 
-	// Setup normals
+void OpenGLAPI::enableVertexNormals()
+{
 	glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
 	glEnableVertexAttribArray(EAttribLocation::NORMAL);
-	
-	// Setup texture coordinates
+}
+
+void OpenGLAPI::enableTexCoords()
+{
 	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
 	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
+}
 
-	// Setup diffuse texture unit
+void OpenGLAPI::enableVertexTangents()
+{
+	int offset = (sizeof(glm::vec3) * 2) + (sizeof(float) * 2);
+	glVertexAttribPointer(EAttribLocation::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
+	glEnableVertexAttribArray(EAttribLocation::TANGENT);
+}
+
+void OpenGLAPI::enableVertexBitangents()
+{
+	int offset = (sizeof(glm::vec3) * 3) + (sizeof(float) * 2);
+	glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
+	glEnableVertexAttribArray(EAttribLocation::BITANGENT);
+}
+
+void OpenGLAPI::activeDiffuseTexture(uint32_t textureId)
+{
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureId);
-
-	// Drawing
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, nullptr);
-
-	// Clear
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glDisableVertexAttribArray(EAttribLocation::POSITION);
-	glDisableVertexAttribArray(EAttribLocation::NORMAL);
-	glDisableVertexAttribArray(EAttribLocation::TEXCOORDS);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void OpenGLAPI::drawNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId)
+void OpenGLAPI::activeNormalTexture(uint32_t textureId)
 {
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-
-	// Setup vertices
-	glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
-	glEnableVertexAttribArray(EAttribLocation::POSITION);
-
-	// Setup normals
-	glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
-	glEnableVertexAttribArray(EAttribLocation::NORMAL);
-
-	// Setup texture coordinates
-	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
-	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
-
-	// Setup tangents
-	int offset = (sizeof(glm::vec3) * 2) + (sizeof(float) * 2);
-	glVertexAttribPointer(EAttribLocation::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
-	glEnableVertexAttribArray(EAttribLocation::TANGENT);
-	
-	// Setup bitangents
-	offset = (sizeof(glm::vec3) * 3) + (sizeof(float) * 2);
-	glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
-	glEnableVertexAttribArray(EAttribLocation::BITANGENT);
-
-	// Setup diffuse texture unit
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, diffuseTextureId);
-
-	// Setup normal texture unit
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, normalTextureId);
-
-	// Drawing
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, nullptr);
-
-	// Clear
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glDisableVertexAttribArray(EAttribLocation::POSITION);
-	glDisableVertexAttribArray(EAttribLocation::NORMAL);
-	glDisableVertexAttribArray(EAttribLocation::TEXCOORDS);
-	glDisableVertexAttribArray(EAttribLocation::TANGENT);
-	glDisableVertexAttribArray(EAttribLocation::BITANGENT);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-void OpenGLAPI::drawSpecularNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId, uint32_t specularTextureId)
+void OpenGLAPI::activeSpecularTexture(uint32_t textureId)
 {
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-
-	// Setup vertices
-	glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
-	glEnableVertexAttribArray(EAttribLocation::POSITION);
-
-	// Setup normals
-	glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
-	glEnableVertexAttribArray(EAttribLocation::NORMAL);
-
-	// Setup texture coordinates
-	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
-	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
-
-	// Setup tangents
-	int offset = (sizeof(glm::vec3) * 2) + (sizeof(float) * 2);
-	glVertexAttribPointer(EAttribLocation::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
-	glEnableVertexAttribArray(EAttribLocation::TANGENT);
-
-	// Setup bitangents
-	offset = (sizeof(glm::vec3) * 3) + (sizeof(float) * 2);
-	glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
-	glEnableVertexAttribArray(EAttribLocation::BITANGENT);
-
-	// Setup diffuse texture unit
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, diffuseTextureId);
-
-	// Setup normal texture unit
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, normalTextureId);
-
-	// Setup specular texture unit
 	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, specularTextureId);
-
-	// Drawing
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, nullptr);
-
-	// Clear
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glDisableVertexAttribArray(EAttribLocation::POSITION);
-	glDisableVertexAttribArray(EAttribLocation::NORMAL);
-	glDisableVertexAttribArray(EAttribLocation::TEXCOORDS);
-	glDisableVertexAttribArray(EAttribLocation::TANGENT);
-	glDisableVertexAttribArray(EAttribLocation::BITANGENT);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-void OpenGLAPI::drawAOSpecularNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId, uint32_t specularTextureId, uint32_t aoTextureId)
+void OpenGLAPI::activeAOTexture(uint32_t textureId)
 {
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-
-	// Setup vertices
-	glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
-	glEnableVertexAttribArray(EAttribLocation::POSITION);
-
-	// Setup normals
-	glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
-	glEnableVertexAttribArray(EAttribLocation::NORMAL);
-
-	// Setup texture coordinates
-	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
-	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
-
-	// Setup tangents
-	int offset = (sizeof(glm::vec3) * 2) + (sizeof(float) * 2);
-	glVertexAttribPointer(EAttribLocation::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
-	glEnableVertexAttribArray(EAttribLocation::TANGENT);
-
-	// Setup bitangents
-	offset = (sizeof(glm::vec3) * 3) + (sizeof(float) * 2);
-	glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
-	glEnableVertexAttribArray(EAttribLocation::BITANGENT);
-
-	// Setup diffuse texture unit
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, diffuseTextureId);
-
-	// Setup normal texture unit
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, normalTextureId);
-
-	// Setup specular texture unit
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, specularTextureId);
-
-	// Setup ambient occlusion texture unit
 	glActiveTexture(GL_TEXTURE3);
-	glBindTexture(GL_TEXTURE_2D, aoTextureId);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+}
 
-	// Drawing
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBO);
-	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, nullptr);
+void OpenGLAPI::drawMesh(uint32_t ibo, int indicesSize)
+{
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_INT, nullptr);
+}
 
-	// Clear
+void OpenGLAPI::unbindVBO()
+{
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glDisableVertexAttribArray(EAttribLocation::POSITION);
-	glDisableVertexAttribArray(EAttribLocation::NORMAL);
-	glDisableVertexAttribArray(EAttribLocation::TEXCOORDS);
-	glDisableVertexAttribArray(EAttribLocation::TANGENT);
-	glDisableVertexAttribArray(EAttribLocation::BITANGENT);
-
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void OpenGLAPI::disableVertexPositions()
+{
+	glDisableVertexAttribArray(EAttribLocation::POSITION);
+}
+
+void OpenGLAPI::disableVertexNormals()
+{
+	glDisableVertexAttribArray(EAttribLocation::NORMAL);
+}
+
+void OpenGLAPI::disableTexCoords()
+{
+	glDisableVertexAttribArray(EAttribLocation::TEXCOORDS);
+}
+
+void OpenGLAPI::disableVertexTangents()
+{
+	glDisableVertexAttribArray(EAttribLocation::TANGENT);
+}
+
+void OpenGLAPI::disableVertexBitangents()
+{
+	glDisableVertexAttribArray(EAttribLocation::BITANGENT);
 }
 
 void OpenGLAPI::clearBuffer()

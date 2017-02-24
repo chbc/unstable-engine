@@ -8,12 +8,8 @@
 #include "MatrixManager.h"
 #include "LightManager.h"
 #include "TextureManager.h"
-#include <engine/entities/components/meshes/materials/Material.h>
-#include "renders/ColorRenderer.h"
-#include "renders/DiffuseTexturedRenderer.h"
-#include "renders/NormalMapRenderer.h"
-#include "renders/SpecularMapRenderer.h"
-#include "renders/AOMapRenderer.h"
+#include "ShaderManager.h"
+#include "renders/Renderer.h"
 
 namespace sre
 {
@@ -26,12 +22,7 @@ RenderManager::RenderManager()
 	this->matrixManager		= UPTR<MatrixManager>{ new MatrixManager{} };
 	this->lightManager		= UPTR<LightManager>{ new LightManager{} };
 	this->textureManager	= UPTR<TextureManager>{ new TextureManager{ this->graphicsWrapper.get() } };
-	
-	this->colorRenderer		= UPTR<ColorRenderer>{ nullptr };
-	this->diffuseRenderer	= UPTR<ColorRenderer>{ nullptr };
-	this->normalMapRenderer = UPTR<ColorRenderer>{ nullptr };
-	this->specularMapRenderer = UPTR<ColorRenderer>{ nullptr };
-	this->aoMapRenderer		= UPTR<ColorRenderer>{ nullptr };
+	this->shaderManager		= SPTR<ShaderManager>{ new ShaderManager{this->graphicsWrapper} };
 	this->mainCamera		= nullptr;
 }
 
@@ -45,80 +36,24 @@ void RenderManager::init()
 
 void RenderManager::addMesh(MeshComponent *mesh)
 {
-	ColorRenderer *renderer = this->chooseRenderer(mesh);
-	renderer->createVBO(mesh);
+	Renderer *renderer = nullptr;
+	for (const UPTR<Renderer> &item : this->renders)
+	{
+		if (item->fitsWithMesh(mesh))
+		{
+			renderer = item.get();
+			break;
+		}
+	}
+
+	if (renderer == nullptr)
+	{
+		renderer = new Renderer{mesh->getMaterial(), this->shaderManager, this->graphicsWrapper};
+		renderer->loadShader();
+		this->renders.emplace_back(renderer);
+	}
+
 	renderer->addMesh(mesh);
-}
-
-void RenderManager::onBeforeMaterialChange(MeshComponent *mesh)
-{
-	ColorRenderer *renderer = this->chooseRenderer(mesh);
-	renderer->removeMesh(mesh);
-}
-
-void RenderManager::onAfterMaterialChange(MeshComponent *mesh)
-{
-	ColorRenderer *renderer = this->chooseRenderer(mesh);
-	renderer->addMesh(mesh);
-}
-
-ColorRenderer *RenderManager::chooseRenderer(MeshComponent *mesh)
-{
-	ColorRenderer *result = nullptr;
-
-	Material *material = mesh->getMaterial();
-	if (material->hasComponent<AmbientOcclusionMaterialComponent>())
-	{
-		if (this->aoMapRenderer.get() == nullptr)
-		{
-			this->aoMapRenderer = UPTR<AOMapRenderer>{ new AOMapRenderer{this->graphicsWrapper} };
-			this->aoMapRenderer->loadShader(); // ### tambem é chamado ao remover!
-		}
-
-		result = this->aoMapRenderer.get();
-	}
-	else if (material->hasComponent<SpecularMaterialComponent>())
-	{
-		if (this->specularMapRenderer.get() == nullptr)
-		{
-			this->specularMapRenderer = UPTR <SpecularMapRenderer>{ new SpecularMapRenderer{this->graphicsWrapper} };
-			this->specularMapRenderer->loadShader();
-		}
-
-		result = this->specularMapRenderer.get();
-	}
-	else if (material->hasComponent<NormalMaterialComponent>())
-	{
-		if (this->normalMapRenderer.get() == nullptr)
-		{
-			this->normalMapRenderer = UPTR<NormalMapRenderer>{ new NormalMapRenderer{this->graphicsWrapper} };
-			this->normalMapRenderer->loadShader();
-		}
-
-		result = this->normalMapRenderer.get();
-	}
-	else if (material->hasComponent<DiffuseMaterialComponent>())
-	{
-		if (this->diffuseRenderer.get() == nullptr)
-		{
-			this->diffuseRenderer = UPTR<DiffuseTexturedRenderer>{ new DiffuseTexturedRenderer{this->graphicsWrapper} };
-			this->diffuseRenderer->loadShader();
-		}
-
-		result = this->diffuseRenderer.get();
-	}
-	else if (material->hasComponent<ColorMaterialComponent>())
-	{
-		if (this->colorRenderer.get() == nullptr)
-		{
-			this->colorRenderer = UPTR<ColorRenderer>{ new ColorRenderer{this->graphicsWrapper} };
-			this->colorRenderer->loadShader();
-		}
-
-		result = this->colorRenderer.get();
-	}
-
-	return result;
 }
 
 void RenderManager::setMainCamera(CameraComponent *camera)
@@ -135,27 +70,14 @@ void RenderManager::render()
 {
 	this->renderCamera();
 
-	const int MAX_RENDERS = 5;
-	ColorRenderer *renders[MAX_RENDERS]
+	for (const UPTR<Renderer> &item : this->renders)
 	{
-		this->colorRenderer.get(),
-		this->diffuseRenderer.get(),
-		this->normalMapRenderer.get(),
-		this->specularMapRenderer.get(),
-		this->aoMapRenderer.get()
-	};
-
-	for (ColorRenderer *item : renders)
-	{
-		if ((item != nullptr) && (item->hasMeshes()))
-		{
-			item->render
-			(
-				this->matrixManager.get(), 
-				this->lightManager.get(), 
-				this->mainCamera->getTransform()->getPosition()
-			);
-		}
+		item->render
+		(
+			this->matrixManager.get(), 
+			this->lightManager.get(), 
+			this->mainCamera->getTransform()->getPosition()
+		);
 	}
 }
 

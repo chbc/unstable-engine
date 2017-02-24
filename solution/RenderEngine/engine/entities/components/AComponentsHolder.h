@@ -15,13 +15,14 @@ class AComponentsHolder
 {
 protected:
 	VECTOR_UPTR<C> components;
+	std::bitset<MAX_COMPONENTS> componentsBitset;
 
 private:
-	std::bitset<MAX_COMPONENTS> componentsBitset;
 	std::array<C*, MAX_COMPONENTS> componentsArray;
 
 public:
 	template <typename T> T *getComponent();
+	std::vector<C*> getComponents();
 	template <typename T> bool hasComponent();
 
 protected:
@@ -32,18 +33,22 @@ private:
 	std::size_t getComponentId();
 
 	// Entity components
-	template <> std::size_t getComponentId<class TransformComponent>() { return 1; }
-	template <> std::size_t getComponentId<class CameraComponent>() { return 2; }
-	template <> std::size_t getComponentId<class DirectionalLightComponent>() { return 3; }
-	template <> std::size_t getComponentId<class PointLightComponent>() { return 4; }
-	template <> std::size_t getComponentId<class MeshComponent>() { return 5; }
+	template <> std::size_t getComponentId<class TransformComponent>() { return 0; }
+	template <> std::size_t getComponentId<class CameraComponent>() { return 1; }
+	template <> std::size_t getComponentId<class DirectionalLightComponent>() { return 2; }
+	template <> std::size_t getComponentId<class PointLightComponent>() { return 3; }
+	template <> std::size_t getComponentId<class MeshComponent>() { return 4; }
 
 	// Material components
-	template <> std::size_t getComponentId<class ColorMaterialComponent>() { return 1; }
-	template <> std::size_t getComponentId<class DiffuseMaterialComponent>() { return 2; }
-	template <> std::size_t getComponentId<class NormalMaterialComponent>() { return 3; }
-	template <> std::size_t getComponentId<class SpecularMaterialComponent>() { return 4; }
-	template <> std::size_t getComponentId<class AmbientOcclusionMaterialComponent>() { return 5; }
+	template <> std::size_t getComponentId<class ColorMaterialComponent>() { return 0; }
+	template <> std::size_t getComponentId<class DiffuseMaterialComponent>() { return 1; }
+	template <> std::size_t getComponentId<class NormalMaterialComponent>() { return 2; }
+	template <> std::size_t getComponentId<class SpecularMaterialComponent>() { return 3; }
+	template <> std::size_t getComponentId<class AmbientOcclusionMaterialComponent>() { return 4; }
+
+	// Renderer components
+	template <> std::size_t getComponentId<class ColorRendererComponent>() { return 0; }
+	template <> std::size_t getComponentId<class DiffuseRendererComponent>() { return 1; }
 };
 
 } // namespace

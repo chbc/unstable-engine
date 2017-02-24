@@ -3,7 +3,9 @@
 
 #include <string>
 #include <engine/utils/memory_aliases.h>
+#include "shaders/ShaderContentFactory.h"
 #include <stack>
+#include <bitset>
 
 namespace sre
 {
@@ -28,7 +30,16 @@ private:
 	ShaderManager(const SPTR<AGraphicsWrapper> &graphicsWrapper);
 
 	// main load function
-	uint32_t loadColorShader();
+	template <size_t SIZE> uint32_t loadShader(const std::bitset<SIZE> &componentsBitset)
+	{
+		std::string vertexContent;
+		std::string fragmentContent;
+
+		ShaderContentFactory contentFactory;
+		contentFactory.createShaderContent(componentsBitset, vertexContent, fragmentContent);
+
+		return this->loadShader(vertexContent, fragmentContent);
+	}
 	uint32_t loadDiffuseShader();
 	uint32_t loadNormalMapShader();
 	uint32_t loadSpecularMapShader();
@@ -52,6 +63,10 @@ friend class DiffuseTexturedRenderer;
 friend class NormalMapRenderer;
 friend class SpecularMapRenderer;
 friend class AOMapRenderer;
+
+friend class Renderer;
+friend class ColorRendererComponent;
+friend class DiffuseRendererComponent;
 };
 
 } // namespace

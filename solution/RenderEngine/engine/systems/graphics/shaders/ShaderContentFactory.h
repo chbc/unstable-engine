@@ -2,6 +2,7 @@
 #define _SHADER_CONTENT_FACTORY_H_
 
 #include <string>
+#include <bitset>
 
 namespace sre
 {
@@ -9,11 +10,8 @@ namespace sre
 class ShaderContentFactory
 {
 private:
-	void createColorContent(std::string &outVertexContent, std::string &outFragmentContent);
-	void createDiffuseContent(std::string &outVertexContent, std::string &outFragmentContent);
-	void createNormalMapContent(std::string &outVertexContent, std::string &outFragmentContent);
-	void createSpecularMapContent(std::string &outVertexContent, std::string &outFragmentContent);
-	void createAOMapContent(std::string &outVertexContent, std::string &outFragmentContent);
+	template <size_t SIZE>
+	void createShaderContent(const std::bitset<SIZE> &componentsBitset, std::string &outVertexContent, std::string &outFragmentContent);
 
 	void loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
 	void loadColorContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
@@ -36,5 +34,7 @@ friend class ShaderManager;
 };
 
 } // namespace
+
+#include "ShaderContentFactory.tpp"
 
 #endif

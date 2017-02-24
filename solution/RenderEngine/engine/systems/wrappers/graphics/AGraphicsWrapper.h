@@ -20,14 +20,27 @@ protected:
 	AGraphicsWrapper() {}
 
 	virtual void init() = 0; // throws std::string
-	virtual void createVAO(MeshComponent *mesh) =0;
 	virtual void createVBO(MeshComponent *mesh) =0;
 	virtual void createIBO(MeshComponent *mesh) =0;
-	virtual void drawColorMesh(MeshComponent *mesh) =0;
-	virtual void drawTexturedMesh(MeshComponent *mesh, uint32_t textureId) =0;
-	virtual void drawNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId) =0;
-	virtual void drawSpecularNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId, uint32_t specularTextureId) =0;
-	virtual void drawAOSpecularNormalTexturedMesh(MeshComponent *mesh, uint32_t diffuseTextureId, uint32_t normalTextureId, uint32_t specularTextureId, uint32_t aoTextureId) =0;
+
+	virtual void bindVBO(uint32_t vbo) =0;
+	virtual void enableVertexPositions() =0;
+	virtual void enableVertexNormals() =0;
+	virtual void enableTexCoords() =0;
+	virtual void enableVertexTangents() =0;
+	virtual void enableVertexBitangents() =0;
+	virtual void activeDiffuseTexture(uint32_t textureId) =0;
+	virtual void activeNormalTexture(uint32_t textureId) =0;
+	virtual void activeSpecularTexture(uint32_t textureId) =0;
+	virtual void activeAOTexture(uint32_t textureId) =0;
+	virtual void drawMesh(uint32_t ibo, int indicesSize) =0;
+	virtual void unbindVBO() =0;
+	virtual void disableVertexPositions() =0;
+	virtual void disableVertexNormals() =0;
+	virtual void disableTexCoords() =0;
+	virtual void disableVertexTangents() =0;
+	virtual void disableVertexBitangents() =0;
+
 	virtual void clearBuffer() =0;
 	virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit) =0;
 	virtual void deleteTexture(uint32_t id) =0;
@@ -55,6 +68,10 @@ friend class DiffuseTexturedRenderer;
 friend class NormalMapRenderer;
 friend class SpecularMapRenderer;
 friend class AOMapRenderer;
+
+friend class Renderer;
+friend class ColorRendererComponent;
+friend class DiffuseRendererComponent;
 };
 
 } // namespace

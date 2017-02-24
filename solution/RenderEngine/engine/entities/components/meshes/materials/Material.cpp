@@ -8,7 +8,6 @@ Material::Material(float shininess)
 {
 	this->shininess = shininess;
 	ColorMaterialComponent *component = this->addComponent<ColorMaterialComponent>();
-	component->init();
 }
 
 void Material::setShininess(float shininess)

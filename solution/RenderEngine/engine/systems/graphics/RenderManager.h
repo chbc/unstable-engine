@@ -19,7 +19,7 @@ class Entity;
 class DirectionalLightComponent;
 class PointLightComponent;
 
-class ColorRenderer;
+class Renderer;
 
 /*!
 	Singleton Class to handle renders
@@ -29,24 +29,18 @@ class RenderManager
 DECLARE_SINGLETON(RenderManager);
 
 private:
+	SPTR<ShaderManager> shaderManager;
 	SPTR<AGraphicsWrapper> graphicsWrapper;
 	UPTR<MatrixManager> matrixManager;
 	UPTR<LightManager> lightManager;
 	UPTR<TextureManager> textureManager;
 
-	UPTR<ColorRenderer> colorRenderer;
-	UPTR<ColorRenderer> diffuseRenderer;
-	UPTR<ColorRenderer> normalMapRenderer;
-	UPTR<ColorRenderer> specularMapRenderer;
-	UPTR<ColorRenderer> aoMapRenderer;
+	VECTOR_UPTR<Renderer> renders;
 
 	CameraComponent *mainCamera;
 
 private:
 	void addMesh(MeshComponent *mesh);
-	void onBeforeMaterialChange(MeshComponent *mesh);
-	void onAfterMaterialChange(MeshComponent *mesh);
-	ColorRenderer *chooseRenderer(MeshComponent *mesh);
 
 	void setMainCamera(CameraComponent *camera);
 	CameraComponent *getMainCamera();

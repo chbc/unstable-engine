@@ -9,21 +9,9 @@
 #include "components/NormalMaterialComponent.h"
 #include "components/SpecularMaterialComponent.h"
 #include "components/AmbientOcclusionMaterialComponent.h"
-
-/*
-namespace EMaterialMap
-{
-
-enum Type
-{
-	COLOR = 0x
-};
-
-}
-*/
+#include "EMaterialMap.h"
 
 /* ###
-- array de bits
 - passar flags pelo construtor
 - adicionar components baseado nas flags
 */
@@ -60,6 +48,7 @@ private:
 	}
 
 friend class MeshComponent;
+friend class Renderer;
 };
 
 } // namespace
