@@ -72,6 +72,7 @@ friend class AOMapRenderer;
 friend class Renderer;
 friend class ColorRendererComponent;
 friend class DiffuseRendererComponent;
+friend class NormalRendererComponent;
 };
 
 } // namespace

@@ -18,8 +18,8 @@ void SampleApplication::onInit()
 	transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
 	MeshComponent *planeMesh = plane->getComponent<MeshComponent>();
 	planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
-	/*
 	planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
+	/*
 	planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
 	planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
 	*/

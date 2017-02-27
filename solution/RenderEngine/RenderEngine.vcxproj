@@ -167,6 +167,7 @@
     <ClCompile Include="engine\systems\graphics\MatrixManager.cpp" />
     <ClCompile Include="engine\systems\graphics\RenderManager.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\DiffuseRendererComponent.cpp" />
+    <ClCompile Include="engine\systems\graphics\renders\NormalRendererComponent.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\Renderer.cpp" />
     <ClCompile Include="engine\systems\graphics\ShaderManager.cpp" />
     <ClCompile Include="engine\systems\graphics\shaders\ShaderContentFactory.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="engine\entities\components\meshes\materials\components\AMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\ColorMaterialComponent.h" />
     <ClInclude Include="engine\systems\graphics\renders\DiffuseRendererComponent.h" />
+    <ClInclude Include="engine\systems\graphics\renders\NormalRendererComponent.h" />
     <ClInclude Include="engine\systems\graphics\renders\Renderer.h" />
     <ClInclude Include="engine\systems\graphics\shaders\ShaderFiles.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\Material.h" />

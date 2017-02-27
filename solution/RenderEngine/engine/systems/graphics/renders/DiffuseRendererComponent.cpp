@@ -13,14 +13,12 @@ DiffuseRendererComponent::DiffuseRendererComponent(const SPTR<ShaderManager> &sh
 
 void DiffuseRendererComponent::setupShaderVariables(MeshComponent *mesh, uint32_t shaderProgram)
 {
-	ColorRendererComponent::setupShaderVariables(mesh, shaderProgram);
 	this->shaderManager->setInt(shaderProgram, "diffuseTexture", 0);
 	this->textureId = mesh->getMaterial()->getComponent<DiffuseMaterialComponent>()->getTextureID();
 }
 
 void DiffuseRendererComponent::preDraw()
 {
-	ColorRendererComponent::preDraw();
 	this->graphicsWrapper->enableTexCoords();
 	this->graphicsWrapper->activeDiffuseTexture(this->textureId);
 }

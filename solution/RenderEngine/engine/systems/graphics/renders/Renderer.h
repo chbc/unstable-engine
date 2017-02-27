@@ -4,6 +4,7 @@
 #include <engine/entities/components/AComponentsHolder.h>
 #include "ColorRendererComponent.h"
 #include "DiffuseRendererComponent.h"
+#include "NormalRendererComponent.h"
 #include <glm/vec3.hpp>
 #include <list>
 

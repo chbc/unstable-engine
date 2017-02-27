@@ -27,7 +27,9 @@ Renderer::Renderer(Material *material, const SPTR<ShaderManager> &shaderManager,
 				case EMaterialMap::DIFFUSE:
 					this->addComponent<DiffuseRendererComponent>(this->shaderManager, this->graphicsWrapper);
 					break;
-				case EMaterialMap::NORMAL: break;
+				case EMaterialMap::NORMAL:
+					this->addComponent<NormalRendererComponent>(this->shaderManager, this->graphicsWrapper);
+					break;
 				case EMaterialMap::SPECULAR: break;
 				case EMaterialMap::AMBIENT_OCCLUSION: break;
 				default: break;

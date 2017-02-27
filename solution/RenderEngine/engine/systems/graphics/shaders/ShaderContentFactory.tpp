@@ -22,7 +22,11 @@ void ShaderContentFactory::createShaderContent(const std::bitset<SIZE> &componen
 				case EMaterialMap::DIFFUSE:
 					this->loadDiffuseContentHeader(vertexContentHeader, fragmentContentHeader);
 					this->loadDiffuseContentImplementation(vertexContentImpl, fragmentContentImpl);
-				case EMaterialMap::NORMAL: break;
+					break;
+				case EMaterialMap::NORMAL:
+					this->loadNormalMapContentHeader(vertexContentHeader, fragmentContentHeader);
+					this->loadNormalMapContentImplementation(vertexContentImpl, fragmentContentImpl);
+					break;
 				case EMaterialMap::SPECULAR: break;
 				case EMaterialMap::AMBIENT_OCCLUSION: break;
 				default: break;

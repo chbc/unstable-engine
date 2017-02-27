@@ -126,6 +126,9 @@
     <ClCompile Include="engine\systems\graphics\renders\DiffuseRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\systems\graphics\renders\NormalRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\FileUtils.h">
@@ -267,6 +270,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\systems\graphics\renders\DiffuseRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\renders\NormalRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
