@@ -30,8 +30,12 @@ Renderer::Renderer(Material *material, const SPTR<ShaderManager> &shaderManager,
 				case EMaterialMap::NORMAL:
 					this->addComponent<NormalRendererComponent>(this->shaderManager, this->graphicsWrapper);
 					break;
-				case EMaterialMap::SPECULAR: break;
-				case EMaterialMap::AMBIENT_OCCLUSION: break;
+				case EMaterialMap::SPECULAR:
+					this->addComponent<SpecularRendererComponent>(this->shaderManager, this->graphicsWrapper);
+					break;
+				case EMaterialMap::AMBIENT_OCCLUSION:
+					this->addComponent<AORendererComponent>(this->shaderManager, this->graphicsWrapper);
+					break;
 				default: break;
 			}
 		}

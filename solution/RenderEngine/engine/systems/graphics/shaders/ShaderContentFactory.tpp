@@ -27,8 +27,14 @@ void ShaderContentFactory::createShaderContent(const std::bitset<SIZE> &componen
 					this->loadNormalMapContentHeader(vertexContentHeader, fragmentContentHeader);
 					this->loadNormalMapContentImplementation(vertexContentImpl, fragmentContentImpl);
 					break;
-				case EMaterialMap::SPECULAR: break;
-				case EMaterialMap::AMBIENT_OCCLUSION: break;
+				case EMaterialMap::SPECULAR:
+					this->loadSpecularMapContentHeader(vertexContentHeader, fragmentContentHeader);
+					this->loadSpecularMapContentImplementation(vertexContentImpl, fragmentContentImpl);
+					break;
+				case EMaterialMap::AMBIENT_OCCLUSION: 
+					this->loadAOMapContentHeader(vertexContentHeader, fragmentContentHeader);
+					this->loadAOMapContentImplementation(vertexContentImpl, fragmentContentImpl);
+					break;
 				default: break;
 			}
 		}

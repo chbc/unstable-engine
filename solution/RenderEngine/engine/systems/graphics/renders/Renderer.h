@@ -5,6 +5,8 @@
 #include "ColorRendererComponent.h"
 #include "DiffuseRendererComponent.h"
 #include "NormalRendererComponent.h"
+#include "SpecularRendererComponent.h"
+#include "AORendererComponent.h"
 #include <glm/vec3.hpp>
 #include <list>
 

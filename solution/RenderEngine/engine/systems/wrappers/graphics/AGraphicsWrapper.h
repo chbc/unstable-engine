@@ -63,16 +63,13 @@ protected:
 friend class RenderManager;
 friend class ShaderManager;
 friend class TextureManager;
-friend class ColorRenderer;
-friend class DiffuseTexturedRenderer;
-friend class NormalMapRenderer;
-friend class SpecularMapRenderer;
-friend class AOMapRenderer;
 
 friend class Renderer;
 friend class ColorRendererComponent;
 friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;
+friend class SpecularRendererComponent;
+friend class AORendererComponent;
 };
 
 } // namespace

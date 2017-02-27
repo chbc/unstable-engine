@@ -25,7 +25,6 @@ void DiffuseRendererComponent::preDraw()
 
 void DiffuseRendererComponent::postDraw()
 {
-	ColorRendererComponent::postDraw();
 	this->graphicsWrapper->disableTexCoords();
 }
 

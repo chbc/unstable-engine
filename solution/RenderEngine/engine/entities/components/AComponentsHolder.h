@@ -50,6 +50,8 @@ private:
 	template <> std::size_t getComponentId<class ColorRendererComponent>() { return 0; }
 	template <> std::size_t getComponentId<class DiffuseRendererComponent>() { return 1; }
 	template <> std::size_t getComponentId<class NormalRendererComponent>() { return 2; }
+	template <> std::size_t getComponentId<class SpecularRendererComponent>() { return 3; }
+	template <> std::size_t getComponentId<class AORendererComponent>() { return 4; }
 };
 
 } // namespace

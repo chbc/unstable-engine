@@ -19,6 +19,7 @@ void NormalRendererComponent::setupShaderVariables(MeshComponent *mesh, uint32_t
 
 void NormalRendererComponent::preDraw()
 {
+	this->graphicsWrapper->enableTexCoords();
 	this->graphicsWrapper->enableVertexTangents();
 	this->graphicsWrapper->enableVertexBitangents();
 	this->graphicsWrapper->activeNormalTexture(this->textureId);
@@ -28,6 +29,7 @@ void NormalRendererComponent::postDraw()
 {
 	this->graphicsWrapper->disableVertexTangents();
 	this->graphicsWrapper->disableVertexBitangents();
+	this->graphicsWrapper->disableTexCoords();
 }
 
 } // namespace

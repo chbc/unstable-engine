@@ -149,6 +149,7 @@
     <ClCompile Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\textures\Texture.cpp" />
+    <ClCompile Include="engine\systems\graphics\renders\AORendererComponent.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\ColorRendererComponent.cpp" />
     <ClCompile Include="engine\entities\components\cameras\CameraComponent.cpp" />
     <ClCompile Include="engine\entities\components\lights\ALightComponent.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="engine\systems\graphics\renders\DiffuseRendererComponent.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\NormalRendererComponent.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\Renderer.cpp" />
+    <ClCompile Include="engine\systems\graphics\renders\SpecularRendererComponent.cpp" />
     <ClCompile Include="engine\systems\graphics\ShaderManager.cpp" />
     <ClCompile Include="engine\systems\graphics\shaders\ShaderContentFactory.cpp" />
     <ClCompile Include="engine\systems\graphics\TextureManager.cpp" />
@@ -189,6 +191,7 @@
     <ClInclude Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\EMaterialMap.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\textures\Texture.h" />
+    <ClInclude Include="engine\systems\graphics\renders\AORendererComponent.h" />
     <ClInclude Include="engine\systems\graphics\renders\ColorRendererComponent.h" />
     <ClInclude Include="engine\entities\components\AComponentsHolder.h" />
     <ClInclude Include="engine\entities\components\AEntityComponent.h" />
@@ -201,6 +204,7 @@
     <ClInclude Include="engine\systems\graphics\renders\DiffuseRendererComponent.h" />
     <ClInclude Include="engine\systems\graphics\renders\NormalRendererComponent.h" />
     <ClInclude Include="engine\systems\graphics\renders\Renderer.h" />
+    <ClInclude Include="engine\systems\graphics\renders\SpecularRendererComponent.h" />
     <ClInclude Include="engine\systems\graphics\shaders\ShaderFiles.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\Material.h" />
     <ClInclude Include="engine\entities\components\meshes\MeshComponent.h" />
