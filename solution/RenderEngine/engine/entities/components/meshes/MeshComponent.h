@@ -20,8 +20,8 @@ private:
     UPTR<Material> material;
 
 	uint32_t vao;
-    unsigned int vbo;
-    unsigned int indexBO;
+	uint32_t vbo;
+	uint32_t ebo;
 	
 	bool receiveLight;
 

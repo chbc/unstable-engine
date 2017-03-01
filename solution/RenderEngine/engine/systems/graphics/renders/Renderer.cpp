@@ -42,6 +42,12 @@ Renderer::Renderer(Material *material, const SPTR<ShaderManager> &shaderManager,
 	}
 }
 
+Renderer::~Renderer()
+{
+	for (MeshComponent *item : this->meshes)
+		this->graphicsWrapper->deleteBuffers(item);
+}
+
 void Renderer::loadShader()
 {
 	this->shaderProgram = this->shaderManager->loadShader(this->componentsBitset);
@@ -50,8 +56,8 @@ void Renderer::loadShader()
 void Renderer::addMesh(MeshComponent *mesh)
 {
 	this->meshes.push_back(mesh);
-	this->graphicsWrapper->createVBO(mesh);
-	this->graphicsWrapper->createIBO(mesh);
+	this->graphicsWrapper->createVAO(mesh);
+	this->graphicsWrapper->createEBO(mesh);
 }
 
 void Renderer::removeMesh(MeshComponent *mesh)
@@ -84,19 +90,17 @@ void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, 
 		glm::mat4 modelMatrix = matrixManager->getModelMatrix();
 		this->shaderManager->setMat4(this->shaderProgram, "modelMatrix", &modelMatrix[0][0]);
 
-		this->graphicsWrapper->bindVBO(mesh->vbo);
+		this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
 		for (const UPTR<ColorRendererComponent> &item : this->components)
 		{
 			item->setupShaderVariables(mesh, this->shaderProgram);
 			item->preDraw();
 		}
 
-		this->graphicsWrapper->drawMesh(mesh->indexBO, mesh->indices.size());
+		this->graphicsWrapper->drawMesh(mesh->vao, mesh->indices.size());
 
 		for (const UPTR<ColorRendererComponent> &item : this->components)
 			item->postDraw();
-
-		this->graphicsWrapper->unbindVBO();
 
 		matrixManager->pop();
 	}

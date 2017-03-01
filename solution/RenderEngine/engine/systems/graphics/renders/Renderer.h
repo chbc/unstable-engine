@@ -29,6 +29,9 @@ private:
 	SPTR<ShaderManager> shaderManager;
 	SPTR<AGraphicsWrapper> graphicsWrapper;
 
+public:
+	virtual ~Renderer();
+
 private:
 	Renderer(Material *material, const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper);
 

@@ -20,10 +20,10 @@ protected:
 	AGraphicsWrapper() {}
 
 	virtual void init() = 0; // throws std::string
-	virtual void createVBO(MeshComponent *mesh) =0;
-	virtual void createIBO(MeshComponent *mesh) =0;
+	virtual void createVAO(MeshComponent *mesh) =0;
+	virtual void createEBO(MeshComponent *mesh) =0;
 
-	virtual void bindVBO(uint32_t vbo) =0;
+	virtual void bindVAO(uint32_t vao, uint32_t vbo) =0;
 	virtual void enableVertexPositions() =0;
 	virtual void enableVertexNormals() =0;
 	virtual void enableTexCoords() =0;
@@ -33,8 +33,7 @@ protected:
 	virtual void activeNormalTexture(uint32_t textureId) =0;
 	virtual void activeSpecularTexture(uint32_t textureId) =0;
 	virtual void activeAOTexture(uint32_t textureId) =0;
-	virtual void drawMesh(uint32_t ibo, int indicesSize) =0;
-	virtual void unbindVBO() =0;
+	virtual void drawMesh(uint32_t vao, int indicesSize) =0;
 	virtual void disableVertexPositions() =0;
 	virtual void disableVertexNormals() =0;
 	virtual void disableTexCoords() =0;
@@ -59,6 +58,7 @@ protected:
 	virtual void enableShader(uint32_t program) =0;
 	virtual void disableShader() =0;
 	virtual void releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs) =0;
+	virtual void deleteBuffers(MeshComponent *mesh) = 0;
 
 friend class RenderManager;
 friend class ShaderManager;

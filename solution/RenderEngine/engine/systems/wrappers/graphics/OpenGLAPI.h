@@ -12,9 +12,9 @@ protected:
 	OpenGLAPI() {}
 
 	void init() override;
-	void createVBO(MeshComponent *mesh) override;
-	void createIBO(MeshComponent *mesh) override;
-	void bindVBO(uint32_t vbo) override;
+	void createVAO(MeshComponent *mesh) override;
+	void createEBO(MeshComponent *mesh) override;
+	void bindVAO(uint32_t vao, uint32_t vbo) override;
 	void enableVertexPositions() override;
 	void enableVertexNormals() override;
 	void enableTexCoords() override;
@@ -24,8 +24,7 @@ protected:
 	void activeNormalTexture(uint32_t textureId) override;
 	void activeSpecularTexture(uint32_t textureId) override;
 	void activeAOTexture(uint32_t textureId) override;
-	void drawMesh(uint32_t ibo, int indicesSize);
-	void unbindVBO() override;
+	void drawMesh(uint32_t vao, int indicesSize);
 	void disableVertexPositions() override;
 	void disableVertexNormals() override;
 	void disableTexCoords() override;
@@ -53,6 +52,7 @@ protected:
 	void enableShader(uint32_t program) override;
 	void disableShader() override;
 	void releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs) override;
+	void deleteBuffers(MeshComponent *mesh);
 
 private:
 	uint32_t compileShader(const std::string &source, uint32_t mode);
