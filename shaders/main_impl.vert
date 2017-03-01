@@ -11,6 +11,6 @@ void main()
 
 	gl_Position = projectionMatrix * viewMatrix * vertexPosition;
 	
-	// [DIFFUSE] Diffuse_setup();
+	var_textureCoords = in_textureCoords;
 	// [NORMAL] Normal_setup();
 }

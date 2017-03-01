@@ -18,8 +18,6 @@ namespace ShaderFiles
 	const std::string LIGHTS_H_F = "../../shaders/lights_h.frag";
 	const std::string LIGHTS_IMPL_F = "../../shaders/lights_impl.frag";
 
-	const std::string DIFFUSE_H_V = "../../shaders/diffuse_h.vert";
-	const std::string DIFFUSE_IMPL_V = "../../shaders/diffuse_impl.vert";
 	const std::string DIFFUSE_H_F = "../../shaders/diffuse_h.frag";
 	const std::string DIFFUSE_IMPL_F = "../../shaders/diffuse_impl.frag";
 

@@ -41,28 +41,19 @@ void ShaderContentFactory::loadColorContentImplementation(std::string &outVertex
 
 void ShaderContentFactory::loadDiffuseContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
 {
-	std::string diffuseVertex;
 	std::string diffuseFragment;
-
-	FileUtils::loadFile(ShaderFiles::DIFFUSE_H_V, diffuseVertex);
 	FileUtils::loadFile(ShaderFiles::DIFFUSE_H_F, diffuseFragment);
 
-	outVertexContent = diffuseVertex + outVertexContent;
 	outFragmentContent = diffuseFragment + outFragmentContent;
 }
 
 void ShaderContentFactory::loadDiffuseContentImplementation(std::string &outVertexContent, std::string &outFragmentContent)
 {
-	std::string diffuseVertex;
 	std::string diffuseFragment;
 
-	FileUtils::loadFile(ShaderFiles::DIFFUSE_IMPL_V, diffuseVertex);
 	FileUtils::loadFile(ShaderFiles::DIFFUSE_IMPL_F, diffuseFragment);
-
-	outVertexContent = diffuseVertex + outVertexContent;
 	outFragmentContent = diffuseFragment + outFragmentContent;
 
-	this->uncommentCode(outVertexContent, "// [DIFFUSE] ");
 	this->uncommentCode(outFragmentContent, "// [DIFFUSE] ");
 }
 
