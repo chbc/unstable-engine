@@ -21,40 +21,59 @@ TextureManager::~TextureManager()
 
 Texture *TextureManager::loadDiffuseTexture(const std::string &fileName)
 {
-	return this->loadTexture(fileName, 0);
+	return this->loadTexture(fileName, EMaterialMap::DIFFUSE);
 }
 
 Texture *TextureManager::loadNormalTexture(const std::string &fileName)
 {
-	return this->loadTexture(fileName, 1);
+	return this->loadTexture(fileName, EMaterialMap::NORMAL);
 }
 
 Texture *TextureManager::loadSpecularTexture(const std::string &fileName)
 {
-	return this->loadTexture(fileName, 2);
+	return this->loadTexture(fileName, EMaterialMap::SPECULAR);
 }
 
 Texture *TextureManager::loadAOTexture(const std::string &fileName)
 {
-	return this->loadTexture(fileName, 3);
+	return this->loadTexture(fileName, EMaterialMap::AMBIENT_OCCLUSION);
 }
 
-Texture *TextureManager::loadTexture(const std::string &fileName, uint32_t unit)
+Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::Type mapType)
+{
+	Texture *result = this->loadExistingTexture(fileName, mapType);
+
+	if (result == nullptr)
+	{
+		uint32_t width = 0;
+		uint32_t height = 0;
+		uint8_t bpp = 0;
+		MultimediaManager *multimediaManager = MultimediaManager::getInstance();
+		void *data = multimediaManager->loadTexture(fileName, &width, &height, &bpp);
+
+		// OpenGL //
+		uint32_t unitTexture = mapType - 1;
+		uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data, unitTexture);
+		delete[] data;
+
+		result = new Texture(id, width, height, mapType, fileName);
+		this->textures.emplace_back(result);
+	}
+
+	return result;
+}
+
+Texture * TextureManager::loadExistingTexture(const std::string &fileName, EMaterialMap::Type mapType)
 {
 	Texture *result = nullptr;
-
-	uint32_t width = 0;
-	uint32_t height = 0;
-	uint8_t bpp = 0;
-	MultimediaManager *multimediaManager = MultimediaManager::getInstance();
-	void *data = multimediaManager->loadTexture(fileName, &width, &height, &bpp);
-
-	// OpenGL //
-	uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data, unit);
-	delete[] data;
-
-	result = new Texture(id, width, height);
-	this->textures.emplace_back(result);
+	for (const UPTR<Texture> &item : this->textures)
+	{
+		if ((item->getFileName().compare(fileName) == 0) && (item->getMapType() == mapType))
+		{
+			result = item.get();
+			break;
+		}
+	}
 
 	return result;
 }

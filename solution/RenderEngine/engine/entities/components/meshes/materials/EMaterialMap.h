@@ -1,6 +1,9 @@
 #ifndef _EMATERIAL_MAP_H_
 #define _EMATERIAL_MAP_H_
 
+namespace sre
+{
+
 namespace EMaterialMap
 {
 
@@ -16,4 +19,5 @@ enum Type : int
 
 } // namespace
 
+} // namespace
 #endif

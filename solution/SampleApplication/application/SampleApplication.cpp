@@ -11,9 +11,11 @@ void SampleApplication::onInit()
 	// cube //
 	/*
 	this->cube = this->sceneManager->createCubeEntity();
-	this->cube->getTransform()->setPosition(glm::vec3(5.0f, 5.0f, 0.0f));
+	this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 0.0f));
 	MeshComponent *cubeMesh = this->cube->getComponent<MeshComponent>();
-	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
+	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
+
+	this->sceneManager->addEntity(this->cube);
 	*/
 
 	// floor //

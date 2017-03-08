@@ -29,7 +29,14 @@ void EventReceiver::onKeyPressed(KeyboardButton key)
 
 void EventReceiver::onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position)
 {
+	static float yLookAt = 0.0f;
+
 	this->viewingActive = true;
+	if (mouseButton == MOUSEBUTTON_MIDDLE)
+	{
+		yLookAt += 1.0f;
+		this->camera->setLookAt(glm::vec3(0.0f, yLookAt, 0.0f));
+	}
 }
 
 void EventReceiver::onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position)
