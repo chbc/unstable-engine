@@ -32,6 +32,7 @@ public:
 	// renderables //
 	Entity *createPlaneEntity(float size = 1.0f);
 	Entity *createCubeEntity(float size = 1.0f);
+	Entity *createModelEntity(const std::string &fileName);
 	void addEntity(Entity *entity);
 
 	// light //

@@ -26,7 +26,7 @@ class Renderer;
 */
 class RenderManager
 {
-DECLARE_SINGLETON(RenderManager);
+DECLARE_SINGLETON(RenderManager)
 
 private:
 	SPTR<ShaderManager> shaderManager;
@@ -40,6 +40,7 @@ private:
 	CameraComponent *mainCamera;
 
 private:
+	void addEntityMeshes(Entity *entity);
 	void addMesh(MeshComponent *mesh);
 
 	void setMainCamera(CameraComponent *camera);

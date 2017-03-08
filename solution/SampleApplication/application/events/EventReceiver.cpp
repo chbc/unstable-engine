@@ -9,7 +9,7 @@ EventReceiver::EventReceiver(SampleApplication *application, CameraComponent *ca
 	this->application = application;
 	this->camera = camera;
 
-	glm::vec3 position(0, 2, 5);
+	glm::vec3 position(0, 0, 5);
 	this->camera->setPosition(position);
 	this->cameraDistance = glm::distance(position, glm::vec3(0, 0, 0));
 
@@ -56,7 +56,7 @@ void EventReceiver::onMouseMove(const glm::vec2 &relativePosition)
 	}
 }
 
-void EventReceiver::onMouseWheelMove(int direction)
+void EventReceiver::onMouseWheel(int direction)
 {
 	this->cameraDistance -= direction;
 	

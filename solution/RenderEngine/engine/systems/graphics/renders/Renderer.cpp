@@ -80,12 +80,11 @@ void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, 
 
 	lightManager->setupLights(this->shaderManager.get(), this->shaderProgram);
 
-	// ### tratar os filhos das entidades
 	for (MeshComponent *mesh : this->meshes)
 	{
 		// Matrix setup
 		TransformComponent *transform = mesh->getTransform();
-		matrixManager->push(transform->getMatrix());
+		matrixManager->setModel(transform->getMatrix());
 
 		glm::mat4 modelMatrix = matrixManager->getModelMatrix();
 		this->shaderManager->setMat4(this->shaderProgram, "modelMatrix", &modelMatrix[0][0]);
@@ -101,8 +100,6 @@ void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, 
 
 		for (const UPTR<ColorRendererComponent> &item : this->components)
 			item->postDraw();
-
-		matrixManager->pop();
 	}
 
 	this->shaderManager->disableShader();

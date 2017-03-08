@@ -3,6 +3,7 @@
 #include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/entities/components/meshes/MeshFactory.h>
 #include <engine/systems/graphics/RenderManager.h>
+#include <engine/systems/io/ModelLoader.h>
 
 namespace sre
 {
@@ -36,11 +37,16 @@ Entity *SceneManager::createCubeEntity(float size)
 	return newEntity;
 }
 
+Entity *SceneManager::createModelEntity(const std::string &fileName)
+{
+	ModelLoader modelLoader;
+	return modelLoader.load(fileName);
+}
+
 void SceneManager::addEntity(Entity *newEntity)
 {
 	this->entities.emplace_back(newEntity);
-	if (newEntity->hasComponent<MeshComponent>()) {}
-		RenderManager::getInstance()->addMesh(newEntity->getComponent<MeshComponent>());
+	RenderManager::getInstance()->addEntityMeshes(newEntity);
 }
 
 // light //

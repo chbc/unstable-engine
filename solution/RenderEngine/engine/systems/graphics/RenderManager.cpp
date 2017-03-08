@@ -14,7 +14,7 @@
 namespace sre
 {
 
-IMPLEMENT_SINGLETON(RenderManager);
+IMPLEMENT_SINGLETON(RenderManager)
 
 RenderManager::RenderManager()
 {
@@ -32,6 +32,19 @@ void RenderManager::init()
 
 	const float FOV{90.0f};
 	this->matrixManager->setProjection(FOV, MultimediaManager::SCREEN_WIDTH/MultimediaManager::SCREEN_HEIGHT, 0.1f, 100);
+}
+
+void RenderManager::addEntityMeshes(Entity *entity)
+{
+	if (entity->hasComponent<MeshComponent>())
+	{
+		MeshComponent *mesh = entity->getComponent<MeshComponent>();
+		this->addMesh(mesh);
+	}
+
+	uint32_t size = entity->getChildrenCount();
+	for (uint32_t i = 0; i < size; i++)
+		this->addEntityMeshes(entity->getChild(i));
 }
 
 void RenderManager::addMesh(MeshComponent *mesh)

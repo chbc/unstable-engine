@@ -1,70 +1,129 @@
 #include "TransformComponent.h"
+#include <engine/entities/Entity.h>
+#include <glm/gtc/matrix_transform.hpp>
+
 
 namespace sre
 {
 
 /*
 	Matrix Format
-	0	4	8	12
-	1	5	9	13
-	2	6	10	14
-	3	7	11	15
+	00	10	20	30
+	01	11	21	31
+	02	12	22	32
+	t1	t2	t3	33
 */
 TransformComponent::TransformComponent(Entity *entity) : AEntityComponent(entity)
 {
-	this->matrix = new float[16];
-	this->loadIdentity();
-}
-
-TransformComponent::~TransformComponent()
-{
-	delete this->matrix;
-}
-
-void TransformComponent::loadIdentity()
-{
-	for (int i = 0; i < 16; i++)
-	{
-		if ((i == 0) || (i == 5) || (i == 10) || (i == 15))
-			this->matrix[i] = 1;
-		else
-			this->matrix[i] = 0;
-	}
 }
 
 void TransformComponent::setPosition(const glm::vec3 &position)
 {
-	this->matrix[12] = position.x;
-	this->matrix[13] = position.y;
-	this->matrix[14] = position.z;
+	this->worldMatrix[3][0] = position.x;
+	this->worldMatrix[3][1] = position.y;
+	this->worldMatrix[3][2] = position.z;
+
+	this->localMatrix = this->worldMatrix; // ###
+
+	this->forwardTransform();
 }
 
 void TransformComponent::setScale(const glm::vec3 &scale)
 {
-	this->matrix[0] = scale.x;
-	this->matrix[5] = scale.y;
-	this->matrix[10] = scale.z;
+	this->worldMatrix[0][0] = scale.x;
+	this->worldMatrix[1][1] = scale.y;
+	this->worldMatrix[2][2] = scale.z;
+
+	this->localMatrix = this->worldMatrix; // ###
+
+	this->forwardTransform();
 }
 
 void TransformComponent::setRotation(const glm::vec3 &axis, float angle)
 {
-	this->quaternion.setRotation(axis, angle);
-	this->quaternion.getMatrix(this->matrix);
+	glm::mat4 rotationMatrix;
+	rotationMatrix = glm::rotate(rotationMatrix, glm::radians(angle), axis);
+	this->worldMatrix *= glm::transpose(rotationMatrix);
+	
+	this->localMatrix = this->worldMatrix; // ###
+
+	this->forwardTransform();
+}
+
+void TransformComponent::setLocalPosition(const glm::vec3 &position)
+{
+	this->localMatrix[3][0] = position.x;
+	this->localMatrix[3][1] = position.y;
+	this->localMatrix[3][2] = position.z;
+
+	this->worldMatrix *= this->localMatrix;
+
+	this->forwardTransform();
+}
+
+void TransformComponent::setLocalScale(const glm::vec3 &scale)
+{
+	this->localMatrix[0][0] = scale.x;
+	this->localMatrix[1][1] = scale.y;
+	this->localMatrix[2][2] = scale.z;
+
+	this->worldMatrix *= this->localMatrix;
+
+	this->forwardTransform();
+}
+
+void TransformComponent::setLocalRotation(const glm::vec3 &axis, float angle)
+{
+	glm::mat4 rotationMatrix;
+	rotationMatrix = glm::rotate(rotationMatrix, glm::radians(angle), axis);
+	this->localMatrix *= glm::transpose(rotationMatrix);
+
+	this->worldMatrix *= this->localMatrix;
+
+	this->forwardTransform();
 }
 
 glm::vec3 TransformComponent::getPosition()
 {
-	return glm::vec3(this->matrix[12], this->matrix[13], this->matrix[14]);
+	return glm::vec3(this->worldMatrix[3][0], this->worldMatrix[3][1], this->worldMatrix[3][2]);
 }
 
-Quaternion TransformComponent::getRotation()
+glm::quat TransformComponent::getRotation()
 {
-	return this->quaternion;
+	return glm::quat_cast(this->worldMatrix);
 }
 
 glm::vec3 TransformComponent::getScale()
 {
-	return glm::vec3(this->matrix[0], this->matrix[5], this->matrix[10]);
+	return glm::vec3(this->worldMatrix[0][0], this->worldMatrix[1][1], this->worldMatrix[2][2]);
+}
+
+glm::vec3 TransformComponent::getLocalPosition()
+{
+	return glm::vec3(this->localMatrix[3][0], this->localMatrix[3][1], this->localMatrix[3][2]);
+}
+
+glm::quat TransformComponent::getLocalRotation()
+{
+	return glm::quat_cast(this->localMatrix);
+}
+
+glm::vec3 TransformComponent::getLocalScale()
+{
+	return glm::vec3(this->localMatrix[0][0], this->localMatrix[1][1], this->localMatrix[2][2]);
+}
+
+void TransformComponent::forwardTransform()
+{
+	Entity *entity = this->getEntity();
+	uint32_t size = entity->getChildrenCount();
+	for (uint32_t i = 0; i < size; i++)
+	{
+		Entity *child = entity->getChild(i);
+		TransformComponent *childTransform = child->getComponent<TransformComponent>();
+		childTransform->worldMatrix = this->worldMatrix * childTransform->localMatrix;
+		childTransform->forwardTransform();
+	}
 }
 
 } // namespace

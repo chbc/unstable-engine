@@ -11,20 +11,9 @@ MatrixManager::MatrixManager()
     this->projection = glm::mat4(1.0f);
 }
 
-void MatrixManager::push(const glm::mat4 &model)
+void MatrixManager::setModel(const glm::mat4 &model)
 {
-    this->models.push(model);
-}
-
-void MatrixManager::push(float *matrix)
-{
-    glm::mat4 model = glm::make_mat4(matrix);
-    this->models.push(model);
-}
-
-void MatrixManager::pop()
-{
-    this->models.pop();
+	this->model = model;
 }
 
 void MatrixManager::setView(const glm::vec3 &position, const glm::vec3 &lookTarget, const glm::vec3 &up)
@@ -39,16 +28,7 @@ void MatrixManager::setProjection(float fov, float aspectRatio, float near, floa
 
 glm::mat4 MatrixManager::getModelMatrix()
 {
-	glm::mat4 result;
-
-	std::stack<glm::mat4> modelMatrices = this->models;
-	while (!modelMatrices.empty())
-	{
-		result *= modelMatrices.top();
-		modelMatrices.pop();
-	}
-
-	return result;
+	return this->model;
 }
 
 glm::mat4 MatrixManager::getViewMatrix()

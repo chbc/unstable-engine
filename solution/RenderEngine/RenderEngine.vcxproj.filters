@@ -21,9 +21,6 @@
     <ClCompile Include="engine\entities\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\math\Quaternion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\entities\components\transforms\TransformComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -40,9 +37,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\RenderEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\systems\wrappers\multimedia\SDLAPI.cpp">
@@ -135,6 +129,9 @@
     <ClCompile Include="engine\systems\graphics\renders\AORendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\systems\io\ModelLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\FileUtils.h">
@@ -147,9 +144,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\utils\memory_aliases.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\math\Quaternion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\entities\components\AEntityComponent.h">
@@ -180,12 +174,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\systems\wrappers\multimedia\SDLAPI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\systems\input\button_names.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\systems\input\InputHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\systems\multimedia\MultimediaManager.h">
@@ -285,6 +273,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\systems\graphics\renders\AORendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\io\button_names.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\io\InputHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\io\ModelLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

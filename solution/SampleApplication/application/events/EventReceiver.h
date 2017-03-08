@@ -1,7 +1,7 @@
 #ifndef _EVENT_RECEIVER_H_
 #define _EVENT_RECEIVER_H_
 
-#include <engine/systems/input/InputHandler.h>
+#include <engine/systems/io/InputHandler.h>
 #include <engine/entities/components/cameras/CameraComponent.h>
 
 using namespace sre;
@@ -29,7 +29,7 @@ class EventReceiver : public InputHandler
 		void onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position) override;
 		void onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position) override;
 		void onMouseMove(const glm::vec2 &relativePosition) override;
-		void onMouseWheelMove(int direction) override;
+		void onMouseWheel(int direction) override;
 };
 
 #endif

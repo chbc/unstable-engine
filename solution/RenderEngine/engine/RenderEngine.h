@@ -1,7 +1,7 @@
 #ifndef _RENDER_ENGINE_H_
 #define _RENDER_ENGINE_H_
 
-#include <engine/systems/input/InputHandler.h>
+#include <engine/systems/io/InputHandler.h>
 #include <engine/scene/SceneManager.h>
 #include <engine/systems/multimedia/MultimediaManager.h>
 #include <engine/systems/graphics/RenderManager.h>

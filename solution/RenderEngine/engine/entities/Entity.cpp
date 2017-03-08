@@ -28,6 +28,14 @@ void Entity::addChild(Entity *child)
 	child->parent = this;
 }
 
+Entity *Entity::getChild(uint32_t index)
+{
+	if (index >= this->children.size())
+		throw "[Entity] - getChild - Index out of range!";
+
+	return this->children[index];
+}
+
 TransformComponent *Entity::getTransform()
 {
 	return this->transform;

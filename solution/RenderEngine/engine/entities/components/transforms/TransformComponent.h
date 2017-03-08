@@ -2,8 +2,7 @@
 #define _TRANSFORM_H_
 
 #include <engine/entities/components/AEntityComponent.h>
-#include <glm/vec3.hpp>
-#include <engine/math/Quaternion.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace sre
 {
@@ -14,24 +13,33 @@ namespace sre
 class TransformComponent : public AEntityComponent
 {
 private:
-	Quaternion quaternion;
-	float *matrix;
+	glm::mat4 worldMatrix;
+	glm::mat4 localMatrix;
 
-	void loadIdentity();
-
+private:
 	TransformComponent(Entity *entity);
-public:
-	~TransformComponent();
 
+public:
 	void setPosition(const glm::vec3 &position);
 	void setScale(const glm::vec3 &scale);
 	void setRotation(const glm::vec3 &axis, float angle);
 
+	void setLocalPosition(const glm::vec3 &position);
+	void setLocalScale(const glm::vec3 &scale);
+	void setLocalRotation(const glm::vec3 &axis, float angle);
+
 	glm::vec3 getPosition();
-	Quaternion getRotation();
+	glm::quat getRotation();
 	glm::vec3 getScale();
 
-	inline float *getMatrix() { return this->matrix; }
+	glm::vec3 getLocalPosition();
+	glm::quat getLocalRotation();
+	glm::vec3 getLocalScale();
+
+	inline const glm::mat4 &getMatrix() { return this->worldMatrix; }
+
+private:
+	void forwardTransform();
 
 friend class Entity;
 };

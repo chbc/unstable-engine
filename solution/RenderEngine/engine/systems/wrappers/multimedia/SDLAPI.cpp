@@ -1,7 +1,7 @@
 #include "SDLAPI.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-#include <engine/systems/input/InputHandler.h>
+#include <engine/systems/io/InputHandler.h>
 
 namespace sre
 {
@@ -75,7 +75,7 @@ void SDLAPI::processInput(InputHandler *inputHandler)
 				break;
 
 			case SDL_MOUSEWHEEL:
-				inputHandler->onMouseWheelMove(this->event->wheel.y);
+				inputHandler->onMouseWheel(this->event->wheel.y);
 				break;
 		}
 	}
