@@ -7,6 +7,7 @@
 namespace sre
 {
 class MeshComponent;
+class GUIImageComponent;
 class CameraComponent;
 class AGraphicsWrapper;
 class MatrixManager;
@@ -20,6 +21,7 @@ class DirectionalLightComponent;
 class PointLightComponent;
 
 class Renderer;
+class GUIRenderer;
 
 /*!
 	Singleton Class to handle renders
@@ -36,12 +38,14 @@ private:
 	UPTR<TextureManager> textureManager;
 
 	VECTOR_UPTR<Renderer> renders;
+	UPTR<GUIRenderer> guiRenderer;
 
 	CameraComponent *mainCamera;
 
 private:
-	void addEntityMeshes(Entity *entity);
+	void addEntity(Entity *entity);
 	void addMesh(MeshComponent *mesh);
+	void addGUIComponent(GUIImageComponent *guiComponent);
 
 	void setMainCamera(CameraComponent *camera);
 	CameraComponent *getMainCamera();
@@ -61,9 +65,11 @@ private:
 	Texture *loadAOTexture(const std::string &fileName);
 
 friend class SceneManager;
+friend class GUIManager;
 friend class MeshComponent;
 friend class RenderEngine;
 friend class Material;
+friend class GUIImageComponent;
 friend class DiffuseMaterialComponent;
 friend class NormalMaterialComponent;
 friend class SpecularMaterialComponent;

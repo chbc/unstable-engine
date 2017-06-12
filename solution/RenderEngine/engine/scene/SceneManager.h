@@ -1,4 +1,4 @@
-#ifndef _SCENE_MANAGER_H//
+#ifndef _SCENE_MANAGER_H_
 #define _SCENE_MANAGER_H_
 
 #include <engine/entities/Entity.h>
@@ -45,7 +45,7 @@ public:
 private:
 	int generateNodeId();
 
-	friend class RenderEngine;
+friend class RenderEngine;
 };
 
 } // namespace

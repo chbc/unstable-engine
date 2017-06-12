@@ -6,6 +6,12 @@
 namespace sre
 {
 
+void ShaderContentFactory::createGUIShaderContent(std::string &outVertexContent, std::string &outFragmentContent)
+{
+	FileUtils::loadFile(ShaderFiles::GUI_V, outVertexContent);
+	FileUtils::loadFile(ShaderFiles::GUI_F, outFragmentContent);
+}
+
 // Load methods
 void ShaderContentFactory::loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
 {

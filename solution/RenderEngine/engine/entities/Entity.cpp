@@ -1,5 +1,4 @@
 #include "Entity.h"
-//#include "components/cameras/CameraComponent.h"
 
 namespace sre
 {

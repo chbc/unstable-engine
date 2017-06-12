@@ -14,7 +14,11 @@ protected:
 	void init() override;
 	void createVAO(MeshComponent *mesh) override;
 	void createEBO(MeshComponent *mesh) override;
+	void createGUIVAO(GUIImageComponent *guiComponent);
+	void createGUIEBO(GUIImageComponent *guiComponent);
+
 	void bindVAO(uint32_t vao, uint32_t vbo) override;
+	void enableGUISettings() override;
 	void enableVertexPositions() override;
 	void enableVertexNormals() override;
 	void enableTexCoords() override;
@@ -24,12 +28,15 @@ protected:
 	void activeNormalTexture(uint32_t textureId) override;
 	void activeSpecularTexture(uint32_t textureId) override;
 	void activeAOTexture(uint32_t textureId) override;
-	void drawMesh(uint32_t vao, int indicesSize);
+
+	void drawElement(uint32_t vao, uint32_t indicesSize);
+
 	void disableVertexPositions() override;
 	void disableVertexNormals() override;
 	void disableTexCoords() override;
 	void disableVertexTangents() override;
 	void disableVertexBitangents() override;
+	void disableGUISettings() override;
 
 	void clearBuffer() override;
 	uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit) override;

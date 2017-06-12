@@ -1,5 +1,4 @@
-#include <engine/entities/Entity.h>
-#include <engine/entities/components/cameras/CameraComponent.h>
+#include <engine/tests/TestServicesProvider.h>
 
 #include "CppUnitTest.h"
 #include <iostream>
@@ -9,59 +8,83 @@ using namespace sre;
 
 namespace SRETests
 {
-
-	TEST_CLASS(EntityTests)
+TEST_CLASS(EntityTests)
+{
+public:
+	TEST_METHOD(CreateEmptyEntityTest)
 	{
-		public:
-		TEST_METHOD(CreateEmptyEntityTest)
-		{
-			Entity entity;
-			Assert::IsNull(entity.parent);
-			Assert::IsNotNull(entity.transform);
-			Assert::IsTrue(entity.children.empty());
-			Assert::AreEqual(1, static_cast<int>(entity.components.size()));
-		}
+		UPTR<Entity> entity = TestServicesProvider::getInstance()->createEntity();
+		Assert::AreEqual(0u, entity->getChildrenCount());
+		Assert::IsTrue(entity->hasComponent<TransformComponent>());
 
-		TEST_METHOD(AddComponent)
-		{
-			Entity entity;
-			CameraComponent *newComponent = entity.addComponent<CameraComponent>();
+		auto functor = [&entity] { entity->getChild(0); };
+		Assert::ExpectException<const char *>(functor);
+	}
 
-			Assert::AreEqual(2, static_cast<int>(entity.components.size()));
-			Assert::IsNotNull(newComponent);
-			Assert::IsNotNull(newComponent->entity);
-		}
+	TEST_METHOD(getExistingComponentTest)
+	{
+		UPTR<Entity> entity = TestServicesProvider::getInstance()->createEntity();
+		TransformComponent *component = entity->getComponent<TransformComponent>();
+		Assert::IsNotNull(component);
+	}
 
-		TEST_METHOD(AddDuplicateComponent)
-		{
-			Entity entity;
-			auto functor = [&entity] { entity.addComponent<TransformComponent>(); };
-			Assert::ExpectException<const char *>(functor);
-		}
+	TEST_METHOD(getNotExistingComponentTest)
+	{
+		UPTR<Entity> entity = TestServicesProvider::getInstance()->createEntity();
+		auto functor = [&entity] { entity->getComponent<MeshComponent>(); };
+		Assert::ExpectException<const char *>(functor);
+	}
 
-		TEST_METHOD(getComponent)
-		{
-			Entity entity;
-			entity.addComponent<CameraComponent>();
-			CameraComponent *component = entity.getComponent<CameraComponent>();
-			Assert::IsTrue(typeid(component) == typeid(CameraComponent *));
-		}
+	TEST_METHOD(AddExistingComponentTest)
+	{
+		UPTR<Entity> entity = TestServicesProvider::getInstance()->createEntity();
+		auto functor = [&entity] { entity->addComponent<TransformComponent>(); };
+		Assert::ExpectException<const char *>(functor);
+	}
 
-		TEST_METHOD(getUnknowComponent)
-		{
-			Entity entity;
-			auto functor = [&entity] { entity.getComponent<CameraComponent>(); };
-			Assert::ExpectException<const char *>(functor);
-		}
+	TEST_METHOD(addChildTest)
+	{
+		TestServicesProvider *testProvider = TestServicesProvider::getInstance();
+		UPTR<Entity> entity = testProvider->createEntity();
+		UPTR<Entity> child = testProvider->createEntity();
+		entity->addChild(child.get());
 
-		TEST_METHOD(addChild)
-		{
-			Entity entity;
-			Entity child;
-			entity.addChild(&child);
+		Assert::AreEqual(1u, entity->getChildrenCount());
+		Assert::IsTrue(entity.get() == child->getParent());
+	}
 
-			Assert::AreEqual(1, static_cast<int>(entity.children.size()));
-			Assert::IsTrue(&entity == child.parent);
-		}
-	};
-}
+	TEST_METHOD(AddCameraComponentTest)
+	{
+		assertAddComponent<CameraComponent>();
+	}
+
+	TEST_METHOD(AddDirectionalLightComponentTest)
+	{
+		assertAddComponent<DirectionalLightComponent>();
+	}
+
+	TEST_METHOD(AddPointLightComponentTest)
+	{
+		assertAddComponent<PointLightComponent>();
+	}
+
+	TEST_METHOD(AddMeshComponentTest)
+	{
+		VECTOR_UPTR<VertexData> vertexData;
+		std::vector<uint32_t> indices;
+		assertAddComponent<MeshComponent>(vertexData, indices);
+	}
+
+private:
+	template <typename T, typename... TParams>
+	void assertAddComponent(TParams&&... parameters)
+	{
+		UPTR<Entity> entity = TestServicesProvider::getInstance()->createEntity();
+		T *newComponent = entity->addComponent<T>(std::forward<TParams>(parameters)...);
+		Assert::IsNotNull(newComponent);
+		Assert::IsNotNull(newComponent->getEntity());
+		Assert::IsTrue(entity->hasComponent<T>());
+	}
+};
+
+} // namespace

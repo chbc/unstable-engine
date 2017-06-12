@@ -12,18 +12,15 @@ namespace sre
 class MatrixManager
 {
     private:
-		glm::mat4 model;
         glm::mat4 view;
         glm::mat4 projection;
 
 	public:
 	    MatrixManager();
 
-		void setModel(const glm::mat4 &model);
         void setView(const glm::vec3 &position, const glm::vec3 &lookTarget, const glm::vec3 &up);
         void setProjection(float fov, float aspectRatio, float near, float far);
 
-		glm::mat4 getModelMatrix();
 		glm::mat4 getViewMatrix();
 		glm::mat4 getProjectionMatrix();
 };

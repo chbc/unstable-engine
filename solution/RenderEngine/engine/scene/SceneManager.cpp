@@ -46,7 +46,7 @@ Entity *SceneManager::createModelEntity(const std::string &fileName)
 void SceneManager::addEntity(Entity *newEntity)
 {
 	this->entities.emplace_back(newEntity);
-	RenderManager::getInstance()->addEntityMeshes(newEntity);
+	RenderManager::getInstance()->addEntity(newEntity);
 }
 
 // light //

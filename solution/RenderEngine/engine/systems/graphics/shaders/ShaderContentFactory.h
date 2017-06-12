@@ -12,6 +12,7 @@ class ShaderContentFactory
 private:
 	template <size_t SIZE>
 	void createShaderContent(const std::bitset<SIZE> &componentsBitset, std::string &outVertexContent, std::string &outFragmentContent);
+	void createGUIShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
 
 	void loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
 	void loadColorContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);

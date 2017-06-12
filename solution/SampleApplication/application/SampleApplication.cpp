@@ -59,6 +59,10 @@ void SampleApplication::onInit()
 
 	// set EventReceiver class for input handling
 	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
+
+	// GUI //
+	Entity *guiEntity = this->guiManager->createGUIImageEntity("../../media/testTexture.png");
+	this->guiManager->addEntity(guiEntity);
 }
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)

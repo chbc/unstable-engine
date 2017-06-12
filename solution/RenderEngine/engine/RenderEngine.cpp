@@ -15,6 +15,7 @@ void RenderEngine::run()
 	this->multimediaManager->init();
 	this->renderManager->init();
 	this->sceneManager = UPTR<SceneManager>{ new SceneManager };
+	this->guiManager = UPTR<GUIManager>{ new GUIManager };
 
 	this->onInit();
 

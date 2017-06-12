@@ -7,8 +7,6 @@
 namespace sre
 {
 
-class TransformComponent;
-
 /*!
 	Base class to handle lighting.
 */

@@ -1,10 +1,17 @@
 #ifndef _VERTEX_DATA_H_
 #define _VERTEX_DATA_H_
 
+#include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
 namespace sre
 {
+
+struct GUIVertexData
+{
+	glm::vec2 position;
+	float u, v;
+};
 
 struct VertexData
 {

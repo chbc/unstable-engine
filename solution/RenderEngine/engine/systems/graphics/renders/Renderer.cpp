@@ -84,9 +84,7 @@ void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, 
 	{
 		// Matrix setup
 		TransformComponent *transform = mesh->getTransform();
-		matrixManager->setModel(transform->getMatrix());
-
-		glm::mat4 modelMatrix = matrixManager->getModelMatrix();
+		glm::mat4 modelMatrix = transform->getMatrix();
 		this->shaderManager->setMat4(this->shaderProgram, "modelMatrix", &modelMatrix[0][0]);
 
 		this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
@@ -96,7 +94,7 @@ void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, 
 			item->preDraw();
 		}
 
-		this->graphicsWrapper->drawMesh(mesh->vao, mesh->indices.size());
+		this->graphicsWrapper->drawElement(mesh->vao, mesh->indices.size());
 
 		for (const UPTR<ColorRendererComponent> &item : this->components)
 			item->postDraw();

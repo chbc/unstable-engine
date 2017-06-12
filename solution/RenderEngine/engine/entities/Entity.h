@@ -42,9 +42,11 @@ public:
 	}
 
 	void update(uint32_t deltaTime);
+
 	void addChild(Entity *child);
 	inline uint32_t getChildrenCount() { return this->children.size(); }
 	Entity *getChild(uint32_t index); // throws "Index out of range"
+	inline Entity *getParent() { return this->parent; }
 
 	TransformComponent *getTransform();
 
@@ -52,11 +54,12 @@ public:
 	inline bool isAlive() { return this->alive; }
 
 	friend class SceneManager;
+	friend class GUIManager;
 	friend class ModelLoader;
+
+	friend class TestServicesProvider;
 };
 
 } // namespace
-
-// #include "Entity.tpp"
 
 #endif

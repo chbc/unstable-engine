@@ -13,6 +13,9 @@ namespace ShaderFiles
 	const std::string MAIN_H_F = "../../shaders/main_h.frag";
 	const std::string MAIN_IMPL_F = "../../shaders/main_impl.frag";
 
+	const std::string GUI_V = "../../shaders/gui.vert";
+	const std::string GUI_F = "../../shaders/gui.frag";
+
 	const std::string LIGHTS_H_V = "../../shaders/lights_h.vert";
 	const std::string LIGHTS_IMPL_V = "../../shaders/lights_impl.vert";
 	const std::string LIGHTS_H_F = "../../shaders/lights_h.frag";

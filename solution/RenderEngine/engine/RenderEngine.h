@@ -3,6 +3,7 @@
 
 #include <engine/systems/io/InputHandler.h>
 #include <engine/scene/SceneManager.h>
+#include <engine/gui/GUIManager.h>
 #include <engine/systems/multimedia/MultimediaManager.h>
 #include <engine/systems/graphics/RenderManager.h>
 
@@ -21,6 +22,7 @@ protected:
 	MultimediaManager *multimediaManager;
 	UPTR<InputHandler> inputHandler;
 	UPTR<SceneManager> sceneManager;
+	UPTR<GUIManager> guiManager;
 
 	RenderEngine();
 

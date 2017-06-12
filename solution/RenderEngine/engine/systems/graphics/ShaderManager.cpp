@@ -14,6 +14,17 @@ ShaderManager::~ShaderManager()
 	this->graphicsWrapper->releaseShaders(this->vertShaders, this->fragShaders, this->programs);
 }
 
+uint32_t ShaderManager::loadGUIShader()
+{
+	std::string vertexContent;
+	std::string fragmentContent;
+
+	ShaderContentFactory contentFactory;
+	contentFactory.createGUIShaderContent(vertexContent, fragmentContent);
+
+	return this->loadShader(vertexContent, fragmentContent);
+}
+
 uint32_t ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent)
 {
 	uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);

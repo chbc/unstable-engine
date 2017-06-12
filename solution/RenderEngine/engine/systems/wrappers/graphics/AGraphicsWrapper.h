@@ -9,6 +9,7 @@ namespace sre
 {
 
 class MeshComponent;
+class GUIImageComponent;
 
 /* ###
 class TextureManager;
@@ -22,8 +23,11 @@ protected:
 	virtual void init() = 0; // throws std::string
 	virtual void createVAO(MeshComponent *mesh) =0;
 	virtual void createEBO(MeshComponent *mesh) =0;
+	virtual void createGUIVAO(GUIImageComponent *guiComponent) =0;
+	virtual void createGUIEBO(GUIImageComponent *guiComponent) =0;
 
 	virtual void bindVAO(uint32_t vao, uint32_t vbo) =0;
+	virtual void enableGUISettings() =0;
 	virtual void enableVertexPositions() =0;
 	virtual void enableVertexNormals() =0;
 	virtual void enableTexCoords() =0;
@@ -33,12 +37,15 @@ protected:
 	virtual void activeNormalTexture(uint32_t textureId) =0;
 	virtual void activeSpecularTexture(uint32_t textureId) =0;
 	virtual void activeAOTexture(uint32_t textureId) =0;
-	virtual void drawMesh(uint32_t vao, int indicesSize) =0;
+
+	virtual void drawElement(uint32_t vao, uint32_t indicesSize) =0;
+
 	virtual void disableVertexPositions() =0;
 	virtual void disableVertexNormals() =0;
 	virtual void disableTexCoords() =0;
 	virtual void disableVertexTangents() =0;
 	virtual void disableVertexBitangents() =0;
+	virtual void disableGUISettings() =0;
 
 	virtual void clearBuffer() =0;
 	virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit) =0;
@@ -65,6 +72,7 @@ friend class ShaderManager;
 friend class TextureManager;
 
 friend class Renderer;
+friend class GUIRenderer;
 friend class ColorRendererComponent;
 friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;

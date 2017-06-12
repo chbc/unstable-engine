@@ -126,7 +126,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>None</DebugInformationFormat>
       <AdditionalIncludeDirectories>../../include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>SRE_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SRE_TEST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -139,16 +139,18 @@
     </ProjectReference>
     <Lib>
       <AdditionalLibraryDirectories>../../lib/vc;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glew32.lib;</AdditionalDependencies>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glew32.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="engine\entities\components\AEntityComponent.cpp" />
+    <ClCompile Include="engine\entities\components\gui\GUIImageComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\textures\Texture.cpp" />
+    <ClCompile Include="engine\gui\GUIManager.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\AORendererComponent.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\ColorRendererComponent.cpp" />
     <ClCompile Include="engine\entities\components\cameras\CameraComponent.cpp" />
@@ -167,6 +169,7 @@
     <ClCompile Include="engine\systems\graphics\MatrixManager.cpp" />
     <ClCompile Include="engine\systems\graphics\RenderManager.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\DiffuseRendererComponent.cpp" />
+    <ClCompile Include="engine\systems\graphics\renders\GUIRenderer.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\NormalRendererComponent.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\Renderer.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\SpecularRendererComponent.cpp" />
@@ -179,17 +182,20 @@
     <ClCompile Include="engine\systems\wrappers\graphics\OpenGLAPI.cpp" />
     <ClCompile Include="engine\systems\wrappers\multimedia\SDLAPI.cpp" />
     <ClCompile Include="engine\temp\TEMP_TextureEngine.cpp" />
+    <ClCompile Include="engine\tests\TestServicesProvider.cpp" />
     <ClCompile Include="engine\utils\FileUtils.cpp" />
     <ClCompile Include="engine\utils\Log.cpp" />
     <ClCompile Include="engine\utils\MathUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\entities\components\gui\GUIImageComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\AmbientOcclusionMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\EMaterialMap.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\textures\Texture.h" />
+    <ClInclude Include="engine\gui\GUIManager.h" />
     <ClInclude Include="engine\systems\graphics\renders\AORendererComponent.h" />
     <ClInclude Include="engine\systems\graphics\renders\ColorRendererComponent.h" />
     <ClInclude Include="engine\entities\components\AComponentsHolder.h" />
@@ -201,6 +207,7 @@
     <ClInclude Include="engine\entities\components\meshes\materials\components\AMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\ColorMaterialComponent.h" />
     <ClInclude Include="engine\systems\graphics\renders\DiffuseRendererComponent.h" />
+    <ClInclude Include="engine\systems\graphics\renders\GUIRenderer.h" />
     <ClInclude Include="engine\systems\graphics\renders\NormalRendererComponent.h" />
     <ClInclude Include="engine\systems\graphics\renders\Renderer.h" />
     <ClInclude Include="engine\systems\graphics\renders\SpecularRendererComponent.h" />
@@ -229,6 +236,7 @@
     <ClInclude Include="engine\systems\wrappers\multimedia\AMultimediaWrapper.h" />
     <ClInclude Include="engine\systems\wrappers\multimedia\SDLAPI.h" />
     <ClInclude Include="engine\temp\TEMP_TextureEngine.h" />
+    <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\utils\FileUtils.h" />
     <ClInclude Include="engine\utils\Log.h" />
     <ClInclude Include="engine\utils\MathUtils.h" />

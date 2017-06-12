@@ -40,10 +40,7 @@ private:
 
 		return this->loadShader(vertexContent, fragmentContent);
 	}
-	uint32_t loadDiffuseShader();
-	uint32_t loadNormalMapShader();
-	uint32_t loadSpecularMapShader();
-	uint32_t loadAOMapShader();
+	uint32_t loadGUIShader();
 	uint32_t loadShader(const std::string &vertexContent, const std::string &fragmentContent);
 
 	// passing values //
@@ -60,6 +57,7 @@ friend class RenderManager;
 friend class LightManager;
 
 friend class Renderer;
+friend class GUIRenderer;
 friend class ColorRendererComponent;
 friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;

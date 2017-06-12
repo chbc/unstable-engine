@@ -21,7 +21,7 @@ private:
 	std::array<C*, MAX_COMPONENTS> componentsArray;
 
 public:
-	template <typename T> T *getComponent();
+	template <typename T> T *getComponent(); // throws "Can't find component"
 	std::vector<C*> getComponents();
 	template <typename T> bool hasComponent();
 
@@ -52,6 +52,9 @@ private:
 	template <> std::size_t getComponentId<class NormalRendererComponent>() { return 2; }
 	template <> std::size_t getComponentId<class SpecularRendererComponent>() { return 3; }
 	template <> std::size_t getComponentId<class AORendererComponent>() { return 4; }
+
+	// GUI components
+	template <> std::size_t getComponentId<class GUIImageComponent>() { return 1; }
 };
 
 } // namespace

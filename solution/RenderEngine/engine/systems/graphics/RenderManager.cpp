@@ -2,6 +2,7 @@
 
 #include <engine/entities/Entity.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
+#include <engine/entities/components/gui/GUIImageComponent.h>
 #include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/systems/wrappers/graphics/OpenGLAPI.h>
 #include <engine/systems/multimedia/MultimediaManager.h>
@@ -10,6 +11,7 @@
 #include "TextureManager.h"
 #include "ShaderManager.h"
 #include "renders/Renderer.h"
+#include "renders/GUIRenderer.h"
 
 namespace sre
 {
@@ -24,6 +26,8 @@ RenderManager::RenderManager()
 	this->textureManager	= UPTR<TextureManager>{ new TextureManager{ this->graphicsWrapper.get() } };
 	this->shaderManager		= SPTR<ShaderManager>{ new ShaderManager{this->graphicsWrapper} };
 	this->mainCamera		= nullptr;
+
+	this->guiRenderer		= UPTR <GUIRenderer>{ nullptr };
 }
 
 void RenderManager::init()
@@ -34,17 +38,22 @@ void RenderManager::init()
 	this->matrixManager->setProjection(FOV, MultimediaManager::SCREEN_WIDTH/MultimediaManager::SCREEN_HEIGHT, 0.1f, 100);
 }
 
-void RenderManager::addEntityMeshes(Entity *entity)
+void RenderManager::addEntity(Entity *entity)
 {
 	if (entity->hasComponent<MeshComponent>())
 	{
 		MeshComponent *mesh = entity->getComponent<MeshComponent>();
 		this->addMesh(mesh);
 	}
+	else if (entity->hasComponent<GUIImageComponent>())
+	{
+		GUIImageComponent *guiComponent = entity->getComponent<GUIImageComponent>();
+		this->addGUIComponent(guiComponent);
+	}
 
 	uint32_t size = entity->getChildrenCount();
 	for (uint32_t i = 0; i < size; i++)
-		this->addEntityMeshes(entity->getChild(i));
+		this->addEntity(entity->getChild(i));
 }
 
 void RenderManager::addMesh(MeshComponent *mesh)
@@ -67,6 +76,17 @@ void RenderManager::addMesh(MeshComponent *mesh)
 	}
 
 	renderer->addMesh(mesh);
+}
+
+void RenderManager::addGUIComponent(GUIImageComponent *guiComponent)
+{
+	if (this->guiRenderer.get() == nullptr)
+	{
+		this->guiRenderer = UPTR<GUIRenderer>{ new GUIRenderer{this->shaderManager, this->graphicsWrapper} };
+		this->guiRenderer->loadShader();
+	}
+
+	this->guiRenderer->addGUIComponent(guiComponent);
 }
 
 void RenderManager::setMainCamera(CameraComponent *camera)
@@ -92,6 +112,9 @@ void RenderManager::render()
 			this->mainCamera->getTransform()->getPosition()
 		);
 	}
+
+	if (this->guiRenderer.get() != nullptr)
+		this->guiRenderer->render();
 }
 
 void RenderManager::renderCamera()

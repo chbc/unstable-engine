@@ -3,6 +3,7 @@
 
 #include "OpenGLAPI.h"
 #include <engine/entities/components/meshes/MeshComponent.h>
+#include <engine/entities/components/gui/GUIImageComponent.h>
 #include <engine/utils/Log.h>
 
 namespace sre
@@ -67,10 +68,47 @@ void OpenGLAPI::createEBO(MeshComponent *mesh)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &mesh->indices[0], GL_STATIC_DRAW);
 }
 
+void OpenGLAPI::createGUIVAO(GUIImageComponent *guiComponent)
+{
+	// data
+	int dataSize = guiComponent->vertexData.size();
+	GUIVertexData *vertexDataArray = new GUIVertexData[dataSize];
+	for (int i = 0; i < dataSize; i++)
+		vertexDataArray[i] = *guiComponent->vertexData[i].get();
+
+	// VAO
+	glGenVertexArrays(1, &guiComponent->vao);
+	glBindVertexArray(guiComponent->vao);
+
+	// VBO
+	glGenBuffers(1, &guiComponent->vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, guiComponent->vbo);
+	glBufferData(GL_ARRAY_BUFFER, guiComponent->vertexData.size() * sizeof(GUIVertexData), vertexDataArray, GL_STATIC_DRAW);
+	delete[] vertexDataArray;
+}
+
+void OpenGLAPI::createGUIEBO(GUIImageComponent *guiComponent)
+{
+	// EBO
+	glGenBuffers(1, &guiComponent->ebo);
+	int size = guiComponent->indices.size();
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, guiComponent->ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &guiComponent->indices[0], GL_STATIC_DRAW);
+}
+
 void OpenGLAPI::bindVAO(uint32_t vao, uint32_t vbo)
 {
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+}
+
+void OpenGLAPI::enableGUISettings()
+{
+	glEnableVertexAttribArray(EAttribLocation::POSITION);
+	glVertexAttribPointer(EAttribLocation::POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), (GLvoid *)0);
+	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
+	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), (GLvoid *)sizeof(glm::vec2));
 }
 
 void OpenGLAPI::enableVertexPositions()
@@ -129,9 +167,8 @@ void OpenGLAPI::activeAOTexture(uint32_t textureId)
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-void OpenGLAPI::drawMesh(uint32_t vao, int indicesSize)
+void OpenGLAPI::drawElement(uint32_t vao, uint32_t indicesSize)
 {
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
 }
@@ -159,6 +196,12 @@ void OpenGLAPI::disableVertexTangents()
 void OpenGLAPI::disableVertexBitangents()
 {
 	glDisableVertexAttribArray(EAttribLocation::BITANGENT);
+}
+
+void OpenGLAPI::disableGUISettings()
+{
+	glDisableVertexAttribArray(EAttribLocation::POSITION);
+	glEnable(GL_DEPTH_TEST);
 }
 
 void OpenGLAPI::clearBuffer()
