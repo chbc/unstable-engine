@@ -145,11 +145,12 @@
   <ItemGroup>
     <ClCompile Include="engine\entities\components\AEntityComponent.cpp" />
     <ClCompile Include="engine\entities\components\gui\GUIImageComponent.cpp" />
+    <ClCompile Include="engine\entities\components\gui\text\GUITextComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.cpp" />
-    <ClCompile Include="engine\entities\components\meshes\materials\textures\Texture.cpp" />
+    <ClCompile Include="engine\systems\multimedia\textures\Texture.cpp" />
     <ClCompile Include="engine\gui\GUIManager.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\AORendererComponent.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\ColorRendererComponent.cpp" />
@@ -175,7 +176,7 @@
     <ClCompile Include="engine\systems\graphics\renders\SpecularRendererComponent.cpp" />
     <ClCompile Include="engine\systems\graphics\ShaderManager.cpp" />
     <ClCompile Include="engine\systems\graphics\shaders\ShaderContentFactory.cpp" />
-    <ClCompile Include="engine\systems\graphics\TextureManager.cpp" />
+    <ClCompile Include="engine\systems\multimedia\textures\TextureManager.cpp" />
     <ClCompile Include="engine\systems\io\ModelLoader.cpp" />
     <ClCompile Include="engine\systems\multimedia\MultimediaManager.cpp" />
     <ClCompile Include="engine\systems\timer\Timer.cpp" />
@@ -185,17 +186,23 @@
     <ClCompile Include="engine\tests\TestServicesProvider.cpp" />
     <ClCompile Include="engine\utils\FileUtils.cpp" />
     <ClCompile Include="engine\utils\Log.cpp" />
-    <ClCompile Include="engine\utils\MathUtils.cpp" />
+    <ClCompile Include="engine\utils\math\MathUtils.cpp" />
+    <ClCompile Include="engine\utils\math\Rect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\components\gui\GUIImageComponent.h" />
+    <ClInclude Include="engine\systems\multimedia\textures\Atlas.h" />
+    <ClInclude Include="engine\systems\multimedia\text\Font.h" />
+    <ClInclude Include="engine\systems\multimedia\text\Glyph.h" />
+    <ClInclude Include="engine\entities\components\gui\text\GUITextComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\AmbientOcclusionMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.h" />
-    <ClInclude Include="engine\entities\components\meshes\materials\EMaterialMap.h" />
-    <ClInclude Include="engine\entities\components\meshes\materials\textures\Texture.h" />
+    <ClInclude Include="engine\systems\multimedia\textures\EMaterialMap.h" />
+    <ClInclude Include="engine\systems\multimedia\textures\Texture.h" />
     <ClInclude Include="engine\gui\GUIManager.h" />
+    <ClInclude Include="engine\systems\multimedia\textures\FontManager.h" />
     <ClInclude Include="engine\systems\graphics\renders\AORendererComponent.h" />
     <ClInclude Include="engine\systems\graphics\renders\ColorRendererComponent.h" />
     <ClInclude Include="engine\entities\components\AComponentsHolder.h" />
@@ -225,7 +232,7 @@
     <ClInclude Include="engine\systems\graphics\RenderManager.h" />
     <ClInclude Include="engine\systems\graphics\ShaderManager.h" />
     <ClInclude Include="engine\systems\graphics\shaders\ShaderContentFactory.h" />
-    <ClInclude Include="engine\systems\graphics\TextureManager.h" />
+    <ClInclude Include="engine\systems\multimedia\textures\TextureManager.h" />
     <ClInclude Include="engine\systems\io\button_names.h" />
     <ClInclude Include="engine\systems\io\InputHandler.h" />
     <ClInclude Include="engine\systems\io\ModelLoader.h" />
@@ -239,7 +246,8 @@
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\utils\FileUtils.h" />
     <ClInclude Include="engine\utils\Log.h" />
-    <ClInclude Include="engine\utils\MathUtils.h" />
+    <ClInclude Include="engine\utils\math\MathUtils.h" />
+    <ClInclude Include="engine\utils\math\Rect.h" />
     <ClInclude Include="engine\utils\memory_aliases.h" />
     <ClInclude Include="engine\utils\singleton_macros.h" />
   </ItemGroup>

@@ -13,7 +13,7 @@ class Texture;
 class GUIImageComponent : public AEntityComponent
 {
 private:
-	UPTR<Texture> texture;
+	Texture *texture;
 
 	VECTOR_UPTR<GUIVertexData> vertexData;
 	std::vector<uint32_t> indices;

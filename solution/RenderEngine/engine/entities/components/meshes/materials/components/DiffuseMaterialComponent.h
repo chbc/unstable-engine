@@ -3,10 +3,11 @@
 
 #include "AMaterialComponent.h"
 #include <engine/utils/memory_aliases.h>
-#include "../textures/Texture.h"
 
 namespace sre
 {
+
+class Texture;
 
 class DiffuseMaterialComponent : public AMaterialComponent
 {

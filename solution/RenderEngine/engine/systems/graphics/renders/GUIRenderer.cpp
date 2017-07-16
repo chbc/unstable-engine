@@ -4,7 +4,7 @@
 #include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
 #include <engine/systems/graphics/MatrixManager.h>
 #include <engine/systems/graphics/ShaderManager.h>
-#include <engine/entities/components/meshes/materials/textures/Texture.h>
+#include <engine/systems/multimedia/textures/Texture.h>
 
 namespace sre
 {

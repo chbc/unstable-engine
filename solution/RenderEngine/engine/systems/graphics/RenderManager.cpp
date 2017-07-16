@@ -6,9 +6,9 @@
 #include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/systems/wrappers/graphics/OpenGLAPI.h>
 #include <engine/systems/multimedia/MultimediaManager.h>
+#include <engine/systems/multimedia/textures/TextureManager.h>
 #include "MatrixManager.h"
 #include "LightManager.h"
-#include "TextureManager.h"
 #include "ShaderManager.h"
 #include "renders/Renderer.h"
 #include "renders/GUIRenderer.h"

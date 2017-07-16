@@ -63,6 +63,7 @@ void SampleApplication::onInit()
 	// GUI //
 	Entity *guiEntity = this->guiManager->createGUIImageEntity("../../media/testTexture.png");
 	this->guiManager->addEntity(guiEntity);
+
 }
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)

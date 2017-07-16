@@ -1,6 +1,7 @@
 #include "DiffuseMaterialComponent.h"
 #include <iostream>
 #include <engine/systems/graphics/RenderManager.h>
+#include <engine/systems/multimedia/textures/Texture.h>
 
 namespace sre
 {

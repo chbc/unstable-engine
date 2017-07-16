@@ -1,5 +1,6 @@
 #include "GUIManager.h"
 #include <engine/entities/components/gui/GUIImageComponent.h>
+#include <engine/entities/components/gui/text/GUITextComponent.h>
 #include <engine/systems/graphics/RenderManager.h>
 #include <sstream>
 
@@ -8,10 +9,23 @@ namespace sre
 
 GUIManager::GUIManager() : EntityIndex(0) { }
 
+GUIManager::~GUIManager()
+{
+	this->entities.clear();
+}
+
 Entity *GUIManager::createGUIImageEntity(const std::string &fileName)
 {
 	Entity *entity = new Entity;
 	entity->addComponent<GUIImageComponent>(fileName);
+
+	return entity;
+}
+
+Entity *GUIManager::createGUITextEntity(const std::string fontFile)
+{
+	Entity *entity = new Entity;
+	entity->addComponent<GUITextComponent>(fontFile);
 
 	return entity;
 }

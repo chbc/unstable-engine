@@ -5,7 +5,7 @@
 #include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/entities/components/lights/DirectionalLightComponent.h>
 #include <engine/entities/components/lights/PointLightComponent.h>
-#include <engine/entities/components/meshes/materials/EMaterialMap.h>
+#include <engine/systems/multimedia/textures/EMaterialMap.h>
 
 namespace sre
 {

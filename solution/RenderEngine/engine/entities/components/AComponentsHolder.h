@@ -55,6 +55,7 @@ private:
 
 	// GUI components
 	template <> std::size_t getComponentId<class GUIImageComponent>() { return 1; }
+	template <> std::size_t getComponentId<class GUITextComponent>() { return 2; }
 };
 
 } // namespace

@@ -2,7 +2,7 @@
 #define _TEXTURE_MANAGER_H_
 
 #include <engine/utils/memory_aliases.h>
-#include <engine/entities/components/meshes/materials/textures/Texture.h>
+#include "Texture.h"
 
 namespace sre
 {

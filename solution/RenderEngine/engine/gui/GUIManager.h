@@ -15,7 +15,10 @@ private:
 
 public:
 	Entity *createGUIImageEntity(const std::string &fileName);
+	Entity *createGUITextEntity(const std::string fontFile);
 	void addEntity(Entity *entity, const std::string &name = "");
+
+	~GUIManager();
 
 private:
 	GUIManager();

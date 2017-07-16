@@ -1,6 +1,6 @@
 #include "GUIImageComponent.h"
 #include <engine/systems/graphics/RenderManager.h>
-#include <engine/entities/components/meshes/materials/textures/Texture.h>
+#include <engine/systems/multimedia/textures/Texture.h>
 
 namespace sre
 {
@@ -56,9 +56,7 @@ GUIImageComponent::GUIImageComponent(Entity *entity, const std::string &fileName
 		indices.push_back(planeIndices[i]);
 
 	this->vertexData = std::move(vertexData);
-	Texture *newTexture = RenderManager::getInstance()->loadDiffuseTexture(fileName);
-
-	this->texture = UPTR<Texture>{ newTexture };
+	this->texture = RenderManager::getInstance()->loadDiffuseTexture(fileName);
 }
 
 GUIImageComponent::~GUIImageComponent()
