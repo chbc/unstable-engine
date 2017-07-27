@@ -39,7 +39,7 @@ protected:
 	void disableGUISettings() override;
 
 	void clearBuffer() override;
-	uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit) override;
+	uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit, bool genMipmap = true) override;
 	void deleteTexture(uint32_t id) override;
 
 	static void DEBUG_drawTriangle();

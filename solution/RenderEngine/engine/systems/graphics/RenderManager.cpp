@@ -147,6 +147,11 @@ PointLightComponent *RenderManager::addPointLight(Entity *entity)
     return this->lightManager->addPointLight(entity);
 }
 
+Texture *RenderManager::loadGUITexture(const std::string &fileName)
+{
+	return this->textureManager->loadGUITexture(fileName);
+}
+
 Texture *RenderManager::loadDiffuseTexture(const std::string &fileName)
 {
 	return this->textureManager->loadDiffuseTexture(fileName);

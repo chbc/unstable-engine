@@ -2,6 +2,7 @@
 #define _A_COMPONENTS_HOLDER_H_
 
 #include <engine/utils/memory_aliases.h>
+#include <engine/systems/multimedia/textures/EMaterialMap.h>
 #include <bitset>
 #include <array>
 
@@ -40,22 +41,22 @@ private:
 	template <> std::size_t getComponentId<class MeshComponent>() { return 4; }
 
 	// Material components
-	template <> std::size_t getComponentId<class ColorMaterialComponent>() { return 0; }
-	template <> std::size_t getComponentId<class DiffuseMaterialComponent>() { return 1; }
-	template <> std::size_t getComponentId<class NormalMaterialComponent>() { return 2; }
-	template <> std::size_t getComponentId<class SpecularMaterialComponent>() { return 3; }
-	template <> std::size_t getComponentId<class AmbientOcclusionMaterialComponent>() { return 4; }
-
-	// Renderer components
-	template <> std::size_t getComponentId<class ColorRendererComponent>() { return 0; }
-	template <> std::size_t getComponentId<class DiffuseRendererComponent>() { return 1; }
-	template <> std::size_t getComponentId<class NormalRendererComponent>() { return 2; }
-	template <> std::size_t getComponentId<class SpecularRendererComponent>() { return 3; }
-	template <> std::size_t getComponentId<class AORendererComponent>() { return 4; }
+	template <> std::size_t getComponentId<class ColorMaterialComponent>() { return EMaterialMap::COLOR; }
+	template <> std::size_t getComponentId<class DiffuseMaterialComponent>() { return EMaterialMap::DIFFUSE; }
+	template <> std::size_t getComponentId<class NormalMaterialComponent>() { return EMaterialMap::NORMAL; }
+	template <> std::size_t getComponentId<class SpecularMaterialComponent>() { return EMaterialMap::SPECULAR; }
+	template <> std::size_t getComponentId<class AmbientOcclusionMaterialComponent>() { return EMaterialMap::AMBIENT_OCCLUSION; }
 
 	// GUI components
-	template <> std::size_t getComponentId<class GUIImageComponent>() { return 1; }
-	template <> std::size_t getComponentId<class GUITextComponent>() { return 2; }
+	template <> std::size_t getComponentId<class GUIImageComponent>() { return EMaterialMap::GUI; }
+	template <> std::size_t getComponentId<class GUITextComponent>() { return EMaterialMap::GUI; }	// ###
+
+	// Renderer components
+	template <> std::size_t getComponentId<class ColorRendererComponent>() { return EMaterialMap::COLOR; }
+	template <> std::size_t getComponentId<class DiffuseRendererComponent>() { return EMaterialMap::DIFFUSE; }
+	template <> std::size_t getComponentId<class NormalRendererComponent>() { return EMaterialMap::NORMAL; }
+	template <> std::size_t getComponentId<class SpecularRendererComponent>() { return EMaterialMap::SPECULAR; }
+	template <> std::size_t getComponentId<class AORendererComponent>() { return EMaterialMap::AMBIENT_OCCLUSION; }
 };
 
 } // namespace

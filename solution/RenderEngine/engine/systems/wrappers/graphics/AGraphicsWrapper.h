@@ -11,10 +11,6 @@ namespace sre
 class MeshComponent;
 class GUIImageComponent;
 
-/* ###
-class TextureManager;
-*/
-
 class AGraphicsWrapper
 {
 protected:
@@ -48,7 +44,7 @@ protected:
 	virtual void disableGUISettings() =0;
 
 	virtual void clearBuffer() =0;
-	virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit) =0;
+	virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit, bool genMipmap) =0;
 	virtual void deleteTexture(uint32_t id) =0;
 
 	// Shaders

@@ -2,21 +2,26 @@
 #define _GUI_TEXT_COMPONENT_H_
 
 #include <engine/entities/components/AEntityComponent.h>
-#include <engine/utils/memory_aliases.h>
 #include <engine/entities/components/meshes/VertexData.h>
+#include <string>
 
 namespace sre
 {
 
-class Texture;
+class Atlas;
 
 class GUITextComponent : public AEntityComponent
 {
 private:
-	std::string fontFile;
+	Atlas *atlas;
 
 private:
-	GUITextComponent(Entity *entity, const std::string &fontFile);
+	GUITextComponent(Entity *entity);
+
+	void loadFont(const std::string &fontFile);
+
+public:
+	void setText(const std::string &text);
 
 friend class GUIManager;
 friend class Entity;

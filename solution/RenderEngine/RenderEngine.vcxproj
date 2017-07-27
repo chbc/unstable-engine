@@ -145,11 +145,13 @@
   <ItemGroup>
     <ClCompile Include="engine\entities\components\AEntityComponent.cpp" />
     <ClCompile Include="engine\entities\components\gui\GUIImageComponent.cpp" />
-    <ClCompile Include="engine\entities\components\gui\text\GUITextComponent.cpp" />
+    <ClCompile Include="engine\entities\components\gui\GUITextComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.cpp" />
+    <ClCompile Include="engine\systems\multimedia\textures\Atlas.cpp" />
+    <ClCompile Include="engine\systems\multimedia\textures\AtlasManager.cpp" />
     <ClCompile Include="engine\systems\multimedia\textures\Texture.cpp" />
     <ClCompile Include="engine\gui\GUIManager.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\AORendererComponent.cpp" />
@@ -194,7 +196,7 @@
     <ClInclude Include="engine\systems\multimedia\textures\Atlas.h" />
     <ClInclude Include="engine\systems\multimedia\text\Font.h" />
     <ClInclude Include="engine\systems\multimedia\text\Glyph.h" />
-    <ClInclude Include="engine\entities\components\gui\text\GUITextComponent.h" />
+    <ClInclude Include="engine\entities\components\gui\GUITextComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\AmbientOcclusionMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.h" />
@@ -202,7 +204,7 @@
     <ClInclude Include="engine\systems\multimedia\textures\EMaterialMap.h" />
     <ClInclude Include="engine\systems\multimedia\textures\Texture.h" />
     <ClInclude Include="engine\gui\GUIManager.h" />
-    <ClInclude Include="engine\systems\multimedia\textures\FontManager.h" />
+    <ClInclude Include="engine\systems\multimedia\textures\AtlasManager.h" />
     <ClInclude Include="engine\systems\graphics\renders\AORendererComponent.h" />
     <ClInclude Include="engine\systems\graphics\renders\ColorRendererComponent.h" />
     <ClInclude Include="engine\entities\components\AComponentsHolder.h" />

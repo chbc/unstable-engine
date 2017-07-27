@@ -19,6 +19,11 @@ TextureManager::~TextureManager()
 	this->textures.clear();
 }
 
+Texture *TextureManager::loadGUITexture(const std::string &fileName)
+{
+	return this->loadTexture(fileName, EMaterialMap::GUI);
+}
+
 Texture *TextureManager::loadDiffuseTexture(const std::string &fileName)
 {
 	return this->loadTexture(fileName, EMaterialMap::DIFFUSE);
@@ -53,7 +58,8 @@ Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::
 
 		// OpenGL //
 		uint32_t unitTexture = mapType - 1;
-		uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data, unitTexture);
+		bool genMipmap = (mapType != EMaterialMap::GUI);
+		uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data, unitTexture, genMipmap);
 		delete[] data;
 
 		result = new Texture(id, width, height, mapType, fileName);

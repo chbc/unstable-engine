@@ -1,6 +1,5 @@
 #include "GUIManager.h"
 #include <engine/entities/components/gui/GUIImageComponent.h>
-#include <engine/entities/components/gui/text/GUITextComponent.h>
 #include <engine/systems/graphics/RenderManager.h>
 #include <sstream>
 
@@ -25,7 +24,8 @@ Entity *GUIManager::createGUIImageEntity(const std::string &fileName)
 Entity *GUIManager::createGUITextEntity(const std::string fontFile)
 {
 	Entity *entity = new Entity;
-	entity->addComponent<GUITextComponent>(fontFile);
+	GUITextComponent *component = entity->addComponent<GUITextComponent>();
+	component->loadFont(fontFile);
 
 	return entity;
 }

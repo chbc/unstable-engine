@@ -34,11 +34,10 @@ void SampleApplication::onInit()
 	nanosuit->getTransform()->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
 	this->sceneManager->addEntity(nanosuit);
 
-
 	// light //
 	DirectionalLightComponent *dLight1 = this->sceneManager->addDirectionalLight();
 	dLight1->setDirection(glm::vec3(0.0f, -1.0f, 1.0f));
-	dLight1->setColor(glm::vec3(0.5f, 0.5f, 0.5f));
+	dLight1->setColor(glm::vec3(0.3f, 0.3f, 0.3f));
 	
 
 	/*
@@ -49,7 +48,7 @@ void SampleApplication::onInit()
 
 	PointLightComponent *pLight1 = this->sceneManager->addPointLight();
 	pLight1->getTransform()->setPosition(glm::vec3(0.0f, 5.0f, 3.0f));
-	pLight1->setColor(glm::vec3(1.0f, 1.0f, 1.0f));
+	pLight1->setColor(glm::vec3(0.5f, 0.5f, 0.5f));
 
 	/*
 	PointLightComponent *pLight2 = this->sceneManager->addPointLight();
@@ -64,6 +63,12 @@ void SampleApplication::onInit()
 	Entity *guiEntity = this->guiManager->createGUIImageEntity("../../media/testTexture.png");
 	this->guiManager->addEntity(guiEntity);
 
+	/* Texts
+	guiEntity = this->guiManager->createGUITextEntity("../../media/fonts/verdana");
+	GUITextComponent *textComponent = guiEntity->getComponent<GUITextComponent>();
+	textComponent->setText("teste");
+	this->guiManager->addEntity(guiEntity);
+	*/
 }
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)
