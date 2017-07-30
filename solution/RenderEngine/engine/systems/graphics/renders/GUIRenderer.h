@@ -28,7 +28,7 @@ private:
 	void loadShader();
 	void addGUIComponent(GUIImageComponent *guiComponent);
 	void removeGUIComponent(GUIImageComponent *guiComponent);
-	void render();
+	void render(MatrixManager *matrixManager);
 
 friend class RenderManager;
 };

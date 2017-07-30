@@ -28,6 +28,9 @@ private:
 public:
 	~GUIImageComponent();
 
+	void setPosition(const glm::vec2 &position);
+	glm::vec2 getPosition();
+
 friend class Entity;
 friend class OpenGLAPI;
 friend class GUIRenderer;

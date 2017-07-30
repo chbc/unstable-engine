@@ -61,6 +61,9 @@ void SampleApplication::onInit()
 
 	// GUI //
 	Entity *guiEntity = this->guiManager->createGUIImageEntity("../../media/testTexture.png");
+	TransformComponent *guiTransform = guiEntity->getComponent<TransformComponent>();
+	guiTransform->setPosition(glm::vec3(0.5f, 0.0f, 0.0f));
+
 	this->guiManager->addEntity(guiEntity);
 
 	/* Texts

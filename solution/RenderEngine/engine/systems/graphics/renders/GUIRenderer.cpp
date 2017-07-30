@@ -1,5 +1,6 @@
 #include "GUIRenderer.h"
 
+#include <engine/entities/components/transforms/TransformComponent.h>
 #include <engine/entities/components/gui/GUIImageComponent.h>
 #include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
 #include <engine/systems/graphics/MatrixManager.h>
@@ -32,12 +33,19 @@ void GUIRenderer::removeGUIComponent(GUIImageComponent *guiComponent)
 	this->guiComponents.remove(guiComponent);
 }
 
-void GUIRenderer::render()
+void GUIRenderer::render(MatrixManager *matrixManager)
 {
 	this->shaderManager->enableShader(this->shaderProgram);
 
+	glm::mat4 projectionMatrix = matrixManager->getProjectionMatrix();
+
 	for (GUIImageComponent *item : this->guiComponents)
 	{
+		// Matrix setup
+		TransformComponent *transform = item->getTransform();
+		glm::mat4 modelMatrix = transform->getMatrix();
+		this->shaderManager->setMat4(this->shaderProgram, "modelMatrix", &modelMatrix[0][0]);
+
 		this->graphicsWrapper->bindVAO(item->vao, item->vbo);
 
 		this->shaderManager->setInt(shaderProgram, "guiTexture", 0);

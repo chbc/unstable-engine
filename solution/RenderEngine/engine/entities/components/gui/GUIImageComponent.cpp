@@ -1,6 +1,7 @@
 #include "GUIImageComponent.h"
 #include <engine/systems/graphics/RenderManager.h>
 #include <engine/systems/multimedia/textures/Texture.h>
+#include <engine/entities/components/transforms/TransformComponent.h>
 
 namespace sre
 {
@@ -63,6 +64,17 @@ GUIImageComponent::~GUIImageComponent()
 {
 	this->vertexData.clear();
 	this->indices.clear();
+}
+
+void GUIImageComponent::setPosition(const glm::vec2 &position)
+{
+	this->getTransform()->setPosition(glm::vec3(position, 0.0f));
+}
+
+glm::vec2 GUIImageComponent::getPosition()
+{
+	glm::vec3 position3 = this->getTransform()->getPosition();
+	return glm::vec2(position3.x, position3.y);
 }
 
 } // namespace

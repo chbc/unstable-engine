@@ -114,7 +114,7 @@ void RenderManager::render()
 	}
 
 	if (this->guiRenderer.get() != nullptr)
-		this->guiRenderer->render();
+		this->guiRenderer->render(this->matrixManager.get());
 }
 
 void RenderManager::renderCamera()
