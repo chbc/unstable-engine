@@ -34,6 +34,7 @@ public:
 protected:
 	virtual void onInit() =0;
 	virtual void onUpdate(unsigned int){};
+	virtual void onGUI(){};
 	virtual void onQuit(){};
 
 private:

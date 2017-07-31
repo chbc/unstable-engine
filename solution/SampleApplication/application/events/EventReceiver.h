@@ -28,7 +28,7 @@ class EventReceiver : public InputHandler
 		void onKeyPressed(KeyboardButton key) override;
 		void onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position) override;
 		void onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position) override;
-		void onMouseMove(const glm::vec2 &relativePosition) override;
+		void onMouseMoveRelative(const glm::vec2 &relativePosition) override;
 		void onMouseWheel(int direction) override;
 };
 

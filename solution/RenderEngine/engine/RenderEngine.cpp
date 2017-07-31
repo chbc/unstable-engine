@@ -52,6 +52,7 @@ void RenderEngine::render()
 {
 	this->renderManager->clearBuffer();
 	this->renderManager->render();
+	this->onGUI();
 	this->multimediaManager->swapBuffers();
 }
 

@@ -3,7 +3,6 @@
 layout(location = 0) in vec2 in_position;
 layout(location = 2) in vec2 in_textureCoords;
 
-uniform mat4 projectionMatrix;
 uniform mat4 modelMatrix;
 
 out vec2 var_textureCoords;

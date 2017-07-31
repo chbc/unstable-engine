@@ -6,6 +6,8 @@
 namespace sre
 {
 
+SDL_Window *SDLAPI::TEMP_SDL_WINDOW = nullptr;
+
 void SDLAPI::init(int width, int height)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -20,15 +22,15 @@ void SDLAPI::init(int width, int height)
 	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 	this->window = SDL_CreateWindow("SudaRA Render Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
+	TEMP_SDL_WINDOW = this->window;
+
 	if (this->window == NULL)
 		throw this->getError();
 
-	this->context = SDL_GL_CreateContext(this->window);
+	void *context = SDL_GL_CreateContext(this->window);
 
-	if (this->context == NULL)
+	if (context == NULL)
 		throw this->getError();
-
-	this->event = new SDL_Event;
 }
 
 void SDLAPI::swapBuffers()
@@ -39,43 +41,36 @@ void SDLAPI::swapBuffers()
 void SDLAPI::processInput(InputHandler *inputHandler)
 {
 	glm::vec2 position;
-	while (SDL_PollEvent(this->event) != 0)
+
+	SDL_Event currentEvent;
+	while (SDL_PollEvent(&currentEvent))
 	{
-		switch (this->event->type)
+		switch (currentEvent.type)
 		{
 			case SDL_QUIT:		inputHandler->onQuit(); break;
-			case SDL_KEYDOWN:	inputHandler->onKeyPressed(this->event->key.keysym.sym); break;
-			case SDL_KEYUP:		inputHandler->onKeyReleased(this->event->key.keysym.sym); break;
+			case SDL_KEYDOWN:	inputHandler->onKeyPressed(currentEvent.key.keysym.sym); break;
+			case SDL_KEYUP:		inputHandler->onKeyReleased(currentEvent.key.keysym.sym); break;
 
 			case SDL_MOUSEMOTION:
-				position = glm::vec2
-				{
-					static_cast<float>(this->event->motion.xrel), 
-					static_cast<float>(this->event->motion.yrel) 
-				};
+				position = glm::vec2{currentEvent.motion.x, currentEvent.motion.y};
 				inputHandler->onMouseMove(position);
+
+				position = glm::vec2{currentEvent.motion.xrel, currentEvent.motion.yrel};
+				inputHandler->onMouseMoveRelative(position);
 				break;
 
 			case SDL_MOUSEBUTTONDOWN:
-				position = glm::vec2
-				{ 
-					static_cast<float>(this->event->button.x), 
-					static_cast<float>(this->event->button.y) 
-				};
-				inputHandler->onMouseButtonPressed(this->event->button.button, position);
+				position = glm::vec2{currentEvent.button.x, currentEvent.button.y};
+				inputHandler->onMouseButtonPressed(currentEvent.button.button, position);
 				break;
 
 			case SDL_MOUSEBUTTONUP:
-				position = glm::vec2
-				{ 
-					static_cast<float>(this->event->button.x), 
-					static_cast<float>(this->event->button.y) 
-				};
-				inputHandler->onMouseButtonReleased(this->event->button.button, position);
+				position = glm::vec2{currentEvent.button.x, currentEvent.button.y};
+				inputHandler->onMouseButtonReleased(currentEvent.button.button, position);
 				break;
 
 			case SDL_MOUSEWHEEL:
-				inputHandler->onMouseWheel(this->event->wheel.y);
+				inputHandler->onMouseWheel(currentEvent.wheel.y);
 				break;
 		}
 	}
@@ -84,9 +79,10 @@ void SDLAPI::processInput(InputHandler *inputHandler)
 bool SDLAPI::checkClosePressed()
 {
 	bool result = false;
-	while (SDL_PollEvent(this->event) != 0)
+	SDL_Event currentEvent;
+	while (SDL_PollEvent(&currentEvent))
 	{
-		if (this->event->type == SDL_QUIT)
+		if (currentEvent.type == SDL_QUIT)
 		{
 			result = true;
 			break;
@@ -132,8 +128,6 @@ void SDLAPI::release()
 	SDL_DestroyWindow(this->window);
 	IMG_Quit();
 	SDL_Quit();
-
-	delete this->event;
 }
 
 std::string SDLAPI::getError()

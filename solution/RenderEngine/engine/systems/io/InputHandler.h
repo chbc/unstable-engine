@@ -22,7 +22,8 @@ class InputHandler
 		virtual void onQuit() {}
 		virtual void onKeyPressed(KeyboardButton key) {}
 		virtual void onKeyReleased(KeyboardButton key) {}
-		virtual void onMouseMove(const glm::vec2 &relativePosition) {}
+		virtual void onMouseMove(const glm::vec2 &position) {}
+		virtual void onMouseMoveRelative(const glm::vec2 &relativePosition) {}
 		virtual void onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position) {}
 		virtual void onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position) {}
 		virtual void onMouseWheel(int direction) {}

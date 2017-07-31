@@ -44,7 +44,7 @@ void EventReceiver::onMouseButtonReleased(MouseButton mouseButton, const glm::ve
 	this->viewingActive = false;
 }
 
-void EventReceiver::onMouseMove(const glm::vec2 &relativePosition)
+void EventReceiver::onMouseMoveRelative(const glm::vec2 &relativePosition)
 {
 	if (this->viewingActive)
 	{
