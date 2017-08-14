@@ -9,8 +9,6 @@ out vec2 var_textureCoords;
 
 void main()
 {
-	vec4 vertexPosition = modelMatrix * vec4(in_position, 0.0, 1.0);
 	var_textureCoords = in_textureCoords;
-	
-	gl_Position = modelMatrix * vertexPosition;
+	gl_Position = modelMatrix * vec4(in_position, 0.0, 1.0);
 }

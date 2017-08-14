@@ -8,7 +8,7 @@ namespace sre
 
 SDL_Window *SDLAPI::TEMP_SDL_WINDOW = nullptr;
 
-void SDLAPI::init(int width, int height)
+void SDLAPI::init(float width, float height, const std::string &title)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		throw this->getError();
@@ -20,7 +20,13 @@ void SDLAPI::init(int width, int height)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
-	this->window = SDL_CreateWindow("SudaRA Render Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+	this->window = SDL_CreateWindow
+	(
+		title.c_str(),
+		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+		static_cast<int>(width), static_cast<int>(height),
+		flags
+	);
 
 	TEMP_SDL_WINDOW = this->window;
 

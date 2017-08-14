@@ -19,7 +19,7 @@ public:
 	SDLAPI() {}
 
 protected:
-	void init(int width, int height) override;
+	void init(float width, float height, const std::string &title) override;
 	void swapBuffers() override;
 	void processInput(InputHandler *inputHandler) override;
 	bool checkClosePressed() override;

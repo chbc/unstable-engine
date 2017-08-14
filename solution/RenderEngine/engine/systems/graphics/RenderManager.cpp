@@ -34,8 +34,9 @@ void RenderManager::init()
 {
 	this->graphicsWrapper->init();
 
+	MultimediaManager *multimediaManager = MultimediaManager::getInstance();
 	const float FOV{90.0f};
-	this->matrixManager->setProjection(FOV, MultimediaManager::SCREEN_WIDTH/MultimediaManager::SCREEN_HEIGHT, 0.1f, 100);
+	this->matrixManager->setProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 100);
 }
 
 void RenderManager::addEntity(Entity *entity)

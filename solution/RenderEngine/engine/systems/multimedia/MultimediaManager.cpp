@@ -9,12 +9,16 @@ IMPLEMENT_SINGLETON(MultimediaManager);
 
 MultimediaManager::MultimediaManager()
 {
+	this->screenWidth = 1024.0f;
+	this->screenHeight = 768.0f;
+
+	this->aspectRatio = this->screenWidth / this->screenHeight;
 }
 
 void MultimediaManager::init()
 {
 	this->multimediaWrapper = UPTR<AMultimediaWrapper>{ new SDLAPI{} };
-	this->multimediaWrapper->init(SCREEN_WIDTH, SCREEN_HEIGHT);
+	this->multimediaWrapper->init(this->screenWidth, this->screenHeight, "SudaRA Render Engine");
 	this->timer = UPTR<Timer>{ new Timer{this->multimediaWrapper.get()} };
 }
 

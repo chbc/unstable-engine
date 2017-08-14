@@ -21,9 +21,14 @@ private:
 	UPTR<AMultimediaWrapper> multimediaWrapper;
 	UPTR<Timer> timer;
 
+	float screenWidth;
+	float screenHeight;
+	float aspectRatio;
+
 public:
-	static const int SCREEN_WIDTH = 800;
-	static const int SCREEN_HEIGHT = 600;
+	inline float getScreenWidth() { return this->screenWidth; }
+	inline float getScreenHeight() { return this->screenHeight; }
+	inline float getAspectRatio() { return this->aspectRatio; }
 
 private:
 	void swapBuffers();

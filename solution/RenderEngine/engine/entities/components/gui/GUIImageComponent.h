@@ -22,14 +22,16 @@ private:
 	uint32_t vbo;
 	uint32_t ebo;
 
+	glm::vec2 uiPosition;
+
 private:
 	GUIImageComponent(Entity *entity, const std::string &fileName);
 
 public:
 	~GUIImageComponent();
 
-	void setPosition(const glm::vec2 &position);
-	glm::vec2 getPosition();
+	void setUIPosition(const glm::vec2 &position);
+	glm::vec2 getUIPosition();
 
 friend class Entity;
 friend class OpenGLAPI;

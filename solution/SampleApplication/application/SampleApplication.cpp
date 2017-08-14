@@ -1,6 +1,7 @@
 #include "SampleApplication.h"
 #include <application/events/EventReceiver.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
+#include <engine/entities/components/gui/GUIImageComponent.h>
 
 SampleApplication::SampleApplication() : RenderEngine()
 {
@@ -60,9 +61,9 @@ void SampleApplication::onInit()
 	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
 
 	// GUI //
-	Entity *guiEntity = this->guiManager->createGUIImageEntity("../../media/testTexture.png");
-	TransformComponent *guiTransform = guiEntity->getComponent<TransformComponent>();
-	guiTransform->setPosition(glm::vec3(0.5f, 0.0f, 0.0f));
+	Entity *guiEntity = this->guiManager->createGUIImageEntity("../../media/smal_texture.png");
+	GUIImageComponent *guiComponent = guiEntity->getComponent<GUIImageComponent>();
+	guiComponent->setUIPosition(glm::vec2(0.5f, 0.5f));
 
 	this->guiManager->addEntity(guiEntity);
 

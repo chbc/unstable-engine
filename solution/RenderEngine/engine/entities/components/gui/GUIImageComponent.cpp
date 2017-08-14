@@ -1,5 +1,6 @@
 #include "GUIImageComponent.h"
 #include <engine/systems/graphics/RenderManager.h>
+#include <engine/systems/multimedia/MultimediaManager.h>
 #include <engine/systems/multimedia/textures/Texture.h>
 #include <engine/entities/components/transforms/TransformComponent.h>
 
@@ -9,19 +10,27 @@ namespace sre
 GUIImageComponent::GUIImageComponent(Entity *entity, const std::string &fileName)
 	: AEntityComponent(entity)
 {
-	float half = 0.5f;
+	this->texture = RenderManager::getInstance()->loadDiffuseTexture(fileName);
+
+	float aspectRatio = MultimediaManager::getInstance()->getAspectRatio();
+	float halfWidth = this->texture->getWidth() / MultimediaManager::getInstance()->getScreenWidth();
+	float halfHeight = this->texture->getHeight() / MultimediaManager::getInstance()->getScreenHeight();
+
+	halfWidth /= 2.0f;
+	halfHeight /= 2.0f;
+
 
 	float planeVertices[] = 
 	{ 
-		-half, half,
-		-half,-half,
-		half,-half,
-		half, half
+		-halfWidth, halfHeight,
+		-halfWidth,-halfHeight,
+		halfWidth,-halfHeight,
+		halfWidth, halfHeight
 	};
 
 	unsigned char planeIndices[] = 
 	{ 
-		0, 1, 2,
+ 		0, 1, 2,
 		2, 3, 0 
 	};
 
@@ -57,7 +66,6 @@ GUIImageComponent::GUIImageComponent(Entity *entity, const std::string &fileName
 		indices.push_back(planeIndices[i]);
 
 	this->vertexData = std::move(vertexData);
-	this->texture = RenderManager::getInstance()->loadDiffuseTexture(fileName);
 }
 
 GUIImageComponent::~GUIImageComponent()
@@ -66,15 +74,23 @@ GUIImageComponent::~GUIImageComponent()
 	this->indices.clear();
 }
 
-void GUIImageComponent::setPosition(const glm::vec2 &position)
+void GUIImageComponent::setUIPosition(const glm::vec2 &position)
 {
-	this->getTransform()->setPosition(glm::vec3(position, 0.0f));
+	float aspectRatio = MultimediaManager::getInstance()->getAspectRatio();
+	glm::vec3 realPosition = glm::vec3
+	(
+		((position.x * 2) - 1), 
+		-(position.y * 2) + 1, 
+		0.0f
+	);
+	this->getTransform()->setPosition(realPosition);
+
+	this->uiPosition = position;
 }
 
-glm::vec2 GUIImageComponent::getPosition()
+glm::vec2 GUIImageComponent::getUIPosition()
 {
-	glm::vec3 position3 = this->getTransform()->getPosition();
-	return glm::vec2(position3.x, position3.y);
+	return this->uiPosition;
 }
 
 } // namespace

@@ -9,6 +9,9 @@
 #include <engine/entities/components/lights/DirectionalLightComponent.h>
 #include <engine/entities/components/lights/PointLightComponent.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
+#include <engine/entities/components/gui/GUIImageComponent.h>
+#include <engine/systems/graphics/RenderManager.h>
+#include <engine/systems/multimedia/MultimediaManager.h>
 
 namespace sre
 {

@@ -13,7 +13,7 @@ class AMultimediaWrapper
 protected:
 	AMultimediaWrapper() {}
 		
-	virtual void init(int width, int height) =0; // throws sdl error
+	virtual void init(float width, float height, const std::string &title) =0; // throws sdl error
 	virtual void swapBuffers() =0;
 	virtual void processInput(InputHandler *inputHandler) =0;
 	virtual bool checkClosePressed() =0;
