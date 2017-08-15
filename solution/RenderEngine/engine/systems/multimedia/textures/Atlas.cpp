@@ -1,9 +1,6 @@
 #include "Atlas.h"
 #include <fstream>
-
-
-
-#include <iostream>
+#include <regex>
 
 namespace sre
 {
@@ -26,7 +23,7 @@ void Atlas::loadUVs(const std::string &fontFileName)
 	{
 		while (std::getline(file, line))
 		{
-			this->parse(line);
+			this->processLine(line);
 		}
 		file.close();
 	}
@@ -34,39 +31,82 @@ void Atlas::loadUVs(const std::string &fontFileName)
 		throw "Couldn't find file: " + fontFileName;
 }
 
-void Atlas::parse(const std::string &input)
+void Atlas::processLine(const std::string &input)
 {
 	const std::string PATTERN("char id=");
 	const std::string substr = input.substr(0, PATTERN.length());
 
 	if (std::strcmp(substr.c_str(), PATTERN.c_str()) == 0)
 	{
-		char *context = nullptr;
 		char *line = const_cast<char *>(input.c_str());
 
-		/* ### ARRUMAR UM DELIMITADOR
-		char *token = strtok_s(line, "\t", &context);
+		std::list<std::tuple<std::string, int>> properties;
+		this->getProperties(line, properties);
+		std::unordered_map<std::string, int> propertiesMap;
 
-		while (token != nullptr)
+		for (std::tuple<std::string, int> item : properties)
 		{
-			token = strtok_s(nullptr, "\t", &context);
+			propertiesMap[std::get<0>(item)] = std::get<1>(item);
 		}
-		*/
+
+		this->storeItems(propertiesMap);
 	}
 }
 
-} // namespace
-
-/*
-char str[] ="- This, a sample string.";
-char * pch;
-
-pch = strtok (str," ,.-");
-
-while (pch != NULL)
+void Atlas::storeItems(std::unordered_map<std::string, int> &propertiesMap)
 {
-	printf ("%s\n",pch);
-	pch = strtok (NULL, " ,.-");
+	char id = propertiesMap["id"];
+	glm::vec2 topLeft(propertiesMap["x"], propertiesMap["y"]);
+	glm::vec2 size(propertiesMap["width"], propertiesMap["height"]);
+
+	UPTR<Rect> uv = std::make_unique<Rect>(topLeft, size);
+	this->uvs[id] = std::move(uv);
 }
 
-*/
+void Atlas::getProperties(const std::string &input, std::list<std::tuple<std::string, int>> &result)
+{
+	std::regex expression("[a-z]+=\\d+");
+
+	std::sregex_iterator iter(input.begin(), input.end(), expression);
+	std::sregex_iterator end;
+
+	std::string propertyInput;
+	std::string key;
+	int value;
+	while (iter != end)
+	{
+		for (unsigned i = 0; i < iter->size(); ++i)
+		{
+			propertyInput = (*iter)[i];
+			key = this->getKey(propertyInput);
+			value = this->getValue(propertyInput);
+			result.push_back(std::tuple<std::string, int>(key, value));
+		}
+
+		++iter;
+	}
+}
+
+std::string Atlas::getKey(const std::string &input)
+{
+	return this->findRegex(input, "\\w+");
+}
+
+int Atlas::getValue(const std::string &input)
+{
+	return std::stoi(this->findRegex(input, "\\d+"));
+}
+
+std::string Atlas::findRegex(const std::string &input, const std::string &regex)
+{
+	std::string result;
+	std::regex expression(regex.c_str());
+	std::smatch match;
+
+	if (std::regex_search(input, match, expression))
+		result = match[0];
+
+	return result;
+}
+
+} // namespace

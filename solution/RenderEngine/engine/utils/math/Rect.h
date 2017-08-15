@@ -10,12 +10,9 @@ class Rect
 {
 public:
 	glm::vec2 topLeft;
-	glm::vec2 bottomRight;
+	glm::vec2 size;
 
-	Rect(const glm::vec2 &topLeft, const glm::vec2 &bottomRight);
-
-	float getWidth();
-	float getHeight();
+	Rect(const glm::vec2 &topLeft, const glm::vec2 &size);
 };
 
 } // namespace

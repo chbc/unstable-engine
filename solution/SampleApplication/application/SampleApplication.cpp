@@ -63,16 +63,14 @@ void SampleApplication::onInit()
 	// GUI //
 	Entity *guiEntity = this->guiManager->createGUIImageEntity("../../media/smal_texture.png");
 	GUIImageComponent *guiComponent = guiEntity->getComponent<GUIImageComponent>();
-	guiComponent->setUIPosition(glm::vec2(0.5f, 0.5f));
+	guiComponent->setUIPosition(glm::vec2(0.25f, 0.5f));
 
 	this->guiManager->addEntity(guiEntity);
 
-	/* Texts
 	guiEntity = this->guiManager->createGUITextEntity("../../media/fonts/verdana");
 	GUITextComponent *textComponent = guiEntity->getComponent<GUITextComponent>();
 	textComponent->setText("teste");
 	this->guiManager->addEntity(guiEntity);
-	*/
 }
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)
