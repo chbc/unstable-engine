@@ -18,7 +18,9 @@ private:
 
 private:
 	Atlas *getAtlas(const std::string &fileName);
-	Atlas *loadAtlas(const std::string &fileName);
+	Atlas *getFont(const std::string &fileName);
+	Atlas *getAtlas(const std::string &fileName, const std::string &textureExtension, const std::string &configExtension);
+	Atlas *loadAtlas(const std::string &textureFile, const std::string &configFile);
 
 friend class GUITextComponent;
 };

@@ -72,12 +72,6 @@
     <ClCompile Include="engine\entities\components\meshes\materials\components\ColorMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\scene\SceneManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\entities\components\meshes\MeshFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\entities\components\AEntityComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -126,9 +120,6 @@
     <ClCompile Include="engine\entities\components\gui\GUIImageComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\gui\GUIManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\systems\graphics\renders\GUIRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -154,6 +145,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\entities\components\gui\GUITextComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entitiesManagers\gui\GUIManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entitiesManagers\scene\SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entitiesManagers\AEntityManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\systems\graphics\meshData\PrimitiveMeshFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\systems\graphics\meshData\MeshData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -236,15 +242,6 @@
     <ClInclude Include="engine\entities\components\AComponentsHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\scene\SceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\entities\components\meshes\MeshFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\entities\components\meshes\VertexData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\utils\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -299,9 +296,6 @@
     <ClInclude Include="engine\entities\components\gui\GUIImageComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\gui\GUIManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\systems\graphics\renders\GUIRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -336,6 +330,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\entities\components\gui\GUITextComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entitiesManagers\gui\GUIManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entitiesManagers\scene\SceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entitiesManagers\AEntityManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\meshData\MeshData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\systems\graphics\meshData\PrimitiveMeshFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

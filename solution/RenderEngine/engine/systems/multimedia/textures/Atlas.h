@@ -29,7 +29,10 @@ private:
 	int getValue(const std::string &input);
 	std::string findRegex(const std::string &input, const std::string &regex);
 
+	uint32_t getTextureId();
+
 friend class AtlasManager;
+friend class GUITextComponent;
 };
 
 } // namespace

@@ -65,8 +65,8 @@ private:
 	Texture *loadSpecularTexture(const std::string &fileName);
 	Texture *loadAOTexture(const std::string &fileName);
 
+friend class AEntityManager;
 friend class SceneManager;
-friend class GUIManager;
 friend class AtlasManager;
 friend class MeshComponent;
 friend class RenderEngine;

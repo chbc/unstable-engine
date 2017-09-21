@@ -1,21 +1,19 @@
 #include "SceneManager.h"
 
 #include <engine/entities/components/cameras/CameraComponent.h>
-#include <engine/entities/components/meshes/MeshFactory.h>
 #include <engine/systems/graphics/RenderManager.h>
 #include <engine/systems/io/ModelLoader.h>
+#include <engine/entities/components/meshes/MeshComponent.h>
 
 namespace sre
 {
 
-SceneManager::SceneManager()
+SceneManager::SceneManager() : AEntityManager()
 {
-	this->nodeCount = 0;
-	Entity *mainCamera = new Entity;
+	Entity *mainCamera = this->createEntity();
 	CameraComponent *cameraComponent = mainCamera->addComponent<CameraComponent>();
 
 	RenderManager::getInstance()->setMainCamera(cameraComponent);
-	this->entities.emplace_back(mainCamera);
 }
 
 SceneManager::~SceneManager()
@@ -25,16 +23,12 @@ SceneManager::~SceneManager()
 
 Entity *SceneManager::createPlaneEntity(float size)
 {
-	Entity *newEntity = new Entity;
-	MeshComponent *mesh = MeshFactory::createPlane(newEntity, size);
-	return newEntity;
+	return this->createMeshEntity(PrimitiveMeshFactory::createPlane(size));
 }
 
 Entity *SceneManager::createCubeEntity(float size)
 {
-	Entity *newEntity = new Entity;
-	MeshComponent *mesh = MeshFactory::createCube(newEntity, size);
-	return newEntity;
+	return this->createMeshEntity(PrimitiveMeshFactory::createCube(size));
 }
 
 Entity *SceneManager::createModelEntity(const std::string &fileName)
@@ -43,28 +37,18 @@ Entity *SceneManager::createModelEntity(const std::string &fileName)
 	return modelLoader.load(fileName);
 }
 
-void SceneManager::addEntity(Entity *newEntity)
-{
-	this->entities.emplace_back(newEntity);
-	RenderManager::getInstance()->addEntity(newEntity);
-}
-
 // light //
 DirectionalLightComponent *SceneManager::addDirectionalLight()
 {
-	Entity *newEntity = new Entity;
+	Entity *newEntity = this->createEntity();
 	RenderManager *renderManager = RenderManager::getInstance();
-
-	this->entities.emplace_back(newEntity);
 	return renderManager->addDirectionalLight(newEntity);
 }
 
 PointLightComponent *SceneManager::addPointLight()
 {
-	Entity *newEntity = new Entity;
+	Entity *newEntity = this->createEntity();
 	RenderManager *renderManager = RenderManager::getInstance();
-
-	this->entities.emplace_back(newEntity);
 	return renderManager->addPointLight(newEntity);
 }
 
@@ -73,12 +57,11 @@ CameraComponent *SceneManager::getMainCamera()
 	return RenderManager::getInstance()->getMainCamera();
 }
 
-int SceneManager::generateNodeId()
+Entity *SceneManager::createMeshEntity(UPTR<MeshData<VertexData>> &objectData)
 {
-	int newId = this->nodeCount;
-	this->nodeCount++;
-
-	return newId;
+	Entity *newEntity = this->createEntity();
+	newEntity->addComponent<MeshComponent>(objectData);
+	return newEntity;
 }
 
 } // namespace

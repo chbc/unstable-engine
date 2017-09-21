@@ -9,3 +9,5 @@ solution/obj/
 *.iobj
 *.ipdb
 bin/tests/
+solution/RenderEngine.VC.db
+solution/RenderEngine.VC.VC.opendb

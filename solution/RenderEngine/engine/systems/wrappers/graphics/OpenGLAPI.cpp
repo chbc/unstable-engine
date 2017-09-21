@@ -42,10 +42,10 @@ void OpenGLAPI::init()
 void OpenGLAPI::createVAO(MeshComponent *mesh)
 {
 	// data
-	int ttSize = mesh->vertexData.size();
+	int ttSize = mesh->objectData->vertexData.size();
 	VertexData *vertexDataArray = new VertexData[ttSize];
 	for (int i = 0; i < ttSize; i++)
-		vertexDataArray[i] = *mesh->vertexData[i].get();	// ###
+		vertexDataArray[i] = *mesh->objectData->vertexData[i].get();	// ###
 
 	// VAO
 	glGenVertexArrays(1, &mesh->vao);
@@ -54,7 +54,7 @@ void OpenGLAPI::createVAO(MeshComponent *mesh)
 	// VBO
 	glGenBuffers(1, &mesh->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-	glBufferData(GL_ARRAY_BUFFER, mesh->vertexData.size() * sizeof(VertexData), vertexDataArray, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, mesh->objectData->vertexData.size() * sizeof(VertexData), vertexDataArray, GL_STATIC_DRAW);
 	delete[] vertexDataArray;
 }
 
@@ -62,19 +62,19 @@ void OpenGLAPI::createEBO(MeshComponent *mesh)
 {
 	// EBO
 	glGenBuffers(1, &mesh->ebo);
-	int size = mesh->indices.size();
+	int size = mesh->objectData->indices.size();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &mesh->indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &mesh->objectData->indices[0], GL_STATIC_DRAW);
 }
 
 void OpenGLAPI::createGUIVAO(GUIImageComponent *guiComponent)
 {
 	// data
-	int dataSize = guiComponent->vertexData.size();
+	int dataSize = guiComponent->meshData->vertexData.size();
 	GUIVertexData *vertexDataArray = new GUIVertexData[dataSize];
 	for (int i = 0; i < dataSize; i++)
-		vertexDataArray[i] = *guiComponent->vertexData[i].get();
+		vertexDataArray[i] = *guiComponent->meshData->vertexData[i].get();
 
 	// VAO
 	glGenVertexArrays(1, &guiComponent->vao);
@@ -83,7 +83,7 @@ void OpenGLAPI::createGUIVAO(GUIImageComponent *guiComponent)
 	// VBO
 	glGenBuffers(1, &guiComponent->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, guiComponent->vbo);
-	glBufferData(GL_ARRAY_BUFFER, guiComponent->vertexData.size() * sizeof(GUIVertexData), vertexDataArray, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, guiComponent->meshData->vertexData.size() * sizeof(GUIVertexData), vertexDataArray, GL_STATIC_DRAW);
 	delete[] vertexDataArray;
 }
 
@@ -91,10 +91,10 @@ void OpenGLAPI::createGUIEBO(GUIImageComponent *guiComponent)
 {
 	// EBO
 	glGenBuffers(1, &guiComponent->ebo);
-	int size = guiComponent->indices.size();
+	int size = guiComponent->meshData->indices.size();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, guiComponent->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &guiComponent->indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &guiComponent->meshData->indices[0], GL_STATIC_DRAW);
 }
 
 void OpenGLAPI::bindVAO(uint32_t vao, uint32_t vbo)
@@ -105,42 +105,47 @@ void OpenGLAPI::bindVAO(uint32_t vao, uint32_t vbo)
 
 void OpenGLAPI::enableGUISettings()
 {
-	glEnableVertexAttribArray(EAttribLocation::POSITION);
-	glVertexAttribPointer(EAttribLocation::POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), (GLvoid *)0);
 	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
-	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), (GLvoid *)sizeof(glm::vec2));
+	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), ABaseVertexData::getUVOffset());
+	glEnableVertexAttribArray(EAttribLocation::POSITION);
+	glVertexAttribPointer(EAttribLocation::POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), GUIVertexData::getPositionOffset());
+
+	// ###
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 }
 
 void OpenGLAPI::enableVertexPositions()
 {
 	glEnableVertexAttribArray(EAttribLocation::POSITION);
-	glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)0);
+	glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getPositionOffset());
 }
 
 void OpenGLAPI::enableVertexNormals()
 {
+	int offset = sizeof(glm::vec3) + (sizeof(float) * 2);
 	glEnableVertexAttribArray(EAttribLocation::NORMAL);
-	glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)sizeof(glm::vec3));
+	glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getNormalOffset());
 }
 
 void OpenGLAPI::enableTexCoords()
 {
 	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
-	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)(sizeof(glm::vec3) * 2));
+	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), ABaseVertexData::getUVOffset());
 }
 
 void OpenGLAPI::enableVertexTangents()
 {
 	int offset = (sizeof(glm::vec3) * 2) + (sizeof(float) * 2);
 	glEnableVertexAttribArray(EAttribLocation::TANGENT);
-	glVertexAttribPointer(EAttribLocation::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
+	glVertexAttribPointer(EAttribLocation::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getTangentOffset());
 }
 
 void OpenGLAPI::enableVertexBitangents()
 {
 	int offset = (sizeof(glm::vec3) * 3) + (sizeof(float) * 2);
 	glEnableVertexAttribArray(EAttribLocation::BITANGENT);
-	glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), (GLvoid *)offset);
+	glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getBitangentOffset());
 }
 
 void OpenGLAPI::activeDiffuseTexture(uint32_t textureId)
@@ -202,6 +207,7 @@ void OpenGLAPI::disableGUISettings()
 {
 	glDisableVertexAttribArray(EAttribLocation::POSITION);
 	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
 }
 
 void OpenGLAPI::clearBuffer()

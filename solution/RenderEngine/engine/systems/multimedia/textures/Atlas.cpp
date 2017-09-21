@@ -56,8 +56,10 @@ void Atlas::processLine(const std::string &input)
 void Atlas::storeItems(std::unordered_map<std::string, int> &propertiesMap)
 {
 	char id = propertiesMap["id"];
-	glm::vec2 topLeft(propertiesMap["x"], propertiesMap["y"]);
-	glm::vec2 size(propertiesMap["width"], propertiesMap["height"]);
+	float textureWidth = static_cast<float>(this->texture->getWidth());
+	float textureHeight = static_cast<float>(this->texture->getHeight());
+	glm::vec2 topLeft(static_cast<float>(propertiesMap["x"]) / textureWidth, static_cast<float>(propertiesMap["y"]) / textureHeight);
+	glm::vec2 size(static_cast<float>(propertiesMap["width"]) / textureWidth, static_cast<float>(propertiesMap["height"]) / textureHeight);
 
 	UPTR<Rect> uv = std::make_unique<Rect>(topLeft, size);
 	this->uvs[id] = std::move(uv);
@@ -107,6 +109,11 @@ std::string Atlas::findRegex(const std::string &input, const std::string &regex)
 		result = match[0];
 
 	return result;
+}
+
+uint32_t Atlas::getTextureId()
+{
+	return this->texture->getId();
 }
 
 } // namespace

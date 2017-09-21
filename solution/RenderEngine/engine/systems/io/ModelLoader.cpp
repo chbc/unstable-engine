@@ -77,7 +77,9 @@ void ModelLoader::processMesh(aiMesh *inputMesh, const aiScene *scene, Entity *e
 			indices.push_back(face.mIndices[j]);
 	}
 
-	MeshComponent *entityMesh = entity->addComponent<MeshComponent>(vertexData, indices);
+	UPTR<MeshData<VertexData>> objectData = std::make_unique<MeshData<VertexData>>(vertexData, indices);
+
+	MeshComponent *entityMesh = entity->addComponent<MeshComponent>(objectData);
 	this->processMaterials(inputMesh, scene, entityMesh);
 }
 

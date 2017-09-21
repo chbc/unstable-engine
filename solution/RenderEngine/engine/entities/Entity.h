@@ -20,6 +20,7 @@ private:
 
 	bool alive;
 
+private:
 	Entity();
 
 public:
@@ -53,8 +54,7 @@ public:
 	void destroy();
 	inline bool isAlive() { return this->alive; }
 
-	friend class SceneManager;
-	friend class GUIManager;
+	friend class AEntityManager;
 	friend class ModelLoader;
 
 	friend class TestServicesProvider;

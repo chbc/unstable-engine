@@ -37,7 +37,7 @@ void GUIRenderer::render(MatrixManager *matrixManager)
 {
 	this->shaderManager->enableShader(this->shaderProgram);
 
-	glm::mat4 projectionMatrix = matrixManager->getProjectionMatrix();
+	this->shaderManager->setInt(shaderProgram, "guiTexture", 0);
 
 	for (GUIImageComponent *item : this->guiComponents)
 	{
@@ -48,13 +48,11 @@ void GUIRenderer::render(MatrixManager *matrixManager)
 
 		this->graphicsWrapper->bindVAO(item->vao, item->vbo);
 
-		this->shaderManager->setInt(shaderProgram, "guiTexture", 0);
-
 		this->graphicsWrapper->enableGUISettings();
 
-		this->graphicsWrapper->activeDiffuseTexture(item->texture->getId());
+		this->graphicsWrapper->activeDiffuseTexture(item->getTextureId());
 
-		this->graphicsWrapper->drawElement(item->vao, item->indices.size());
+		this->graphicsWrapper->drawElement(item->vao, item->meshData->indices.size());
 	}
 
 	this->graphicsWrapper->disableGUISettings();

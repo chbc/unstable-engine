@@ -4,24 +4,11 @@
 namespace sre
 {
 
-MeshComponent::MeshComponent
-(
-	Entity *entity, 
-	VECTOR_UPTR<VertexData> &vertexData, 
-	std::vector<uint32_t> &indices
-)
+MeshComponent::MeshComponent(Entity *entity, UPTR<MeshData<VertexData>> &objectData)
 	: AEntityComponent(entity)
 {
-	this->vertexData = std::move(vertexData);
-	this->indices = std::move(indices);
-
+	this->objectData = std::move(objectData);
 	this->material = UPTR<Material>{ new Material{} };
-}
-
-MeshComponent::~MeshComponent()
-{
-    this->vertexData.clear();
-    this->indices.clear();
 }
 
 Material *MeshComponent::getMaterial()

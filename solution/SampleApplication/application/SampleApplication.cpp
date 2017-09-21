@@ -31,6 +31,7 @@ void SampleApplication::onInit()
 
 	this->sceneManager->addEntity(plane);
 
+	/*
 	Entity *nanosuit = this->sceneManager->createModelEntity("../../media/nanosuit/nanosuit.obj");
 	nanosuit->getTransform()->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
 	this->sceneManager->addEntity(nanosuit);
@@ -39,7 +40,7 @@ void SampleApplication::onInit()
 	DirectionalLightComponent *dLight1 = this->sceneManager->addDirectionalLight();
 	dLight1->setDirection(glm::vec3(0.0f, -1.0f, 1.0f));
 	dLight1->setColor(glm::vec3(0.3f, 0.3f, 0.3f));
-	
+	*/
 
 	/*
 	DirectionalLightComponent *dLight2 = this->sceneManager->addDirectionalLight();
@@ -61,9 +62,9 @@ void SampleApplication::onInit()
 	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
 
 	// GUI //
-	Entity *guiEntity = this->guiManager->createGUIImageEntity("../../media/smal_texture.png");
+	Entity *guiEntity = this->guiManager->createGUIImageEntity("../../media/test_texture_rect.png");
 	GUIImageComponent *guiComponent = guiEntity->getComponent<GUIImageComponent>();
-	guiComponent->setUIPosition(glm::vec2(0.25f, 0.5f));
+	// guiComponent->setUIPosition(glm::vec2(0.5f, 0.25f));
 
 	this->guiManager->addEntity(guiEntity);
 

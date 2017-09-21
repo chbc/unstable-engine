@@ -3,6 +3,7 @@
 #include <engine/systems/multimedia/MultimediaManager.h>
 #include <engine/systems/multimedia/textures/Texture.h>
 #include <engine/entities/components/transforms/TransformComponent.h>
+#include <engine/systems/graphics/meshData/PrimitiveMeshFactory.h>
 
 namespace sre
 {
@@ -12,71 +13,19 @@ GUIImageComponent::GUIImageComponent(Entity *entity, const std::string &fileName
 {
 	this->texture = RenderManager::getInstance()->loadDiffuseTexture(fileName);
 
-	float aspectRatio = MultimediaManager::getInstance()->getAspectRatio();
-	float halfWidth = this->texture->getWidth() / MultimediaManager::getInstance()->getScreenWidth();
-	float halfHeight = this->texture->getHeight() / MultimediaManager::getInstance()->getScreenHeight();
+	float width = this->texture->getWidth() / MultimediaManager::getInstance()->getScreenWidth();
+	float height = this->texture->getHeight() / MultimediaManager::getInstance()->getScreenHeight();
 
-	halfWidth /= 2.0f;
-	halfHeight /= 2.0f;
+	this->meshData = PrimitiveMeshFactory::createPlane2D(width, height);
 
-
-	float planeVertices[] = 
-	{ 
-		-halfWidth, halfHeight,
-		-halfWidth,-halfHeight,
-		halfWidth,-halfHeight,
-		halfWidth, halfHeight
-	};
-
-	unsigned char planeIndices[] = 
-	{ 
- 		0, 1, 2,
-		2, 3, 0 
-	};
-
-	float planeTexCoords[] = 
-	{ 
-		0, 0,
-		0, 1,
-		1, 1,
-		1, 0
-	};
-	
-	VECTOR_UPTR<GUIVertexData> vertexData;
-	GUIVertexData *newData;
-	// Positions
-	for (int i = 0; i < 8; i += 2)
-	{
-		newData = new GUIVertexData;
-		newData->position = glm::vec2(planeVertices[i], planeVertices[i + 1]);
-
-		vertexData.emplace_back(newData);
-	}
-
-	// UVs
-	for (int i = 0; i < 4; i++)
-	{
-		vertexData[i]->u = planeTexCoords[2 * i];
-		vertexData[i]->v = planeTexCoords[(2 * i) + 1];
-	}
-	
-	// Indices
-	this->indices;
-	for (int i = 0; i < 6; i++)
-		indices.push_back(planeIndices[i]);
-
-	this->vertexData = std::move(vertexData);
+	this->setUIPosition(glm::vec2(0.0f, 0.0f));
 }
 
-GUIImageComponent::~GUIImageComponent()
-{
-	this->vertexData.clear();
-	this->indices.clear();
-}
+GUIImageComponent::GUIImageComponent(Entity *entity) : AEntityComponent(entity)
+{ }
 
 void GUIImageComponent::setUIPosition(const glm::vec2 &position)
 {
-	float aspectRatio = MultimediaManager::getInstance()->getAspectRatio();
 	glm::vec3 realPosition = glm::vec3
 	(
 		((position.x * 2) - 1), 
@@ -91,6 +40,11 @@ void GUIImageComponent::setUIPosition(const glm::vec2 &position)
 glm::vec2 GUIImageComponent::getUIPosition()
 {
 	return this->uiPosition;
+}
+
+uint32_t GUIImageComponent::getTextureId()
+{
+	return this->texture->getId();
 }
 
 } // namespace

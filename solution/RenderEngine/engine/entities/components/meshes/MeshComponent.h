@@ -3,8 +3,8 @@
 
 #include "../AEntityComponent.h"
 #include "materials/Material.h"
-#include "VertexData.h"
 #include <engine/utils/memory_aliases.h>
+#include <engine/systems/graphics/meshData/MeshData.h>
 
 namespace sre
 {
@@ -15,8 +15,7 @@ namespace sre
 class MeshComponent : public AEntityComponent
 {
 private:
-	VECTOR_UPTR<VertexData> vertexData;
-	std::vector<uint32_t> indices;
+	UPTR<MeshData<VertexData>> objectData;
     UPTR<Material> material;
 
 	uint32_t vao;
@@ -25,16 +24,9 @@ private:
 	
 	bool receiveLight;
 
-	MeshComponent
-	(
-		Entity *entity,
-		VECTOR_UPTR<VertexData> &vertexData, 
-		std::vector<uint32_t> &indices
-	);
+	MeshComponent(Entity *entity, UPTR<MeshData<VertexData>> &objectData);
 
 public:
-	~MeshComponent();
-
 	Material *getMaterial();
 	void setMaterial(UPTR<Material> &material);
 	void setReceiveLight(bool receiveLight);
@@ -49,8 +41,8 @@ public:
 friend class RenderManager;
 friend class Entity;
 friend class OpenGLAPI;
-friend class MeshFactory;
 friend class Renderer;
+friend class VertexDataFactory;
 };
 
 } // namespace
