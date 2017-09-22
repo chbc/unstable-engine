@@ -8,11 +8,12 @@ namespace sre
 {
 
 class Entity;
+class Rect;
 
 class PrimitiveMeshFactory
 {
 public:
-	static UPTR<MeshData<GUIVertexData>> createPlane2D(float width, float height, float *planeTexCoords);
+	static UPTR<MeshData<GUIVertexData>> createPlane2D(float width, float height, const Rect &uv);
 	static UPTR<MeshData<GUIVertexData>> createPlane2D(float width, float height);
 	static UPTR<MeshData<VertexData>> createPlane(float size);
 	static UPTR<MeshData<VertexData>> createCube(float size);

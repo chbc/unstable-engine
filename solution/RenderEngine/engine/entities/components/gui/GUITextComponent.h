@@ -23,7 +23,7 @@ private:
 	GUITextComponent(Entity *entity);
 
 	void loadFont(const std::string &fontFile);
-	void makeGliph(char id);
+	void makeGliph(int id);
 	uint32_t getTextureId() override;
 
 friend class GUIManager;

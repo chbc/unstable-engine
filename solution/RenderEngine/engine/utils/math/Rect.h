@@ -12,6 +12,7 @@ public:
 	glm::vec2 topLeft;
 	glm::vec2 size;
 
+	Rect();
 	Rect(const glm::vec2 &topLeft, const glm::vec2 &size);
 };
 

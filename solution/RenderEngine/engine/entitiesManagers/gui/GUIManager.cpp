@@ -9,7 +9,16 @@ GUIManager::GUIManager() : AEntityManager() { }
 Entity *GUIManager::createGUIImageEntity(const std::string &fileName)
 {
 	Entity *result = this->createEntity();
-	result->addComponent<GUIImageComponent>(fileName);
+	GUIImageComponent *component = result->addComponent<GUIImageComponent>();
+	component->load(fileName);
+	return result;
+}
+
+Entity *GUIManager::createGUIImageEntityFromAtlas(const std::string &fileName, const std::string &imageId)
+{
+	Entity *result = this->createEntity();
+	GUIImageComponent *component = result->addComponent<GUIImageComponent>();
+	component->loadFromAtlas(fileName, imageId);
 	return result;
 }
 

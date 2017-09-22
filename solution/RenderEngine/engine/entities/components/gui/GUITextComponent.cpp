@@ -2,7 +2,6 @@
 
 #include <engine/systems/multimedia/textures/AtlasManager.h>
 #include <engine/systems/multimedia/textures/Texture.h>
-#include <engine/utils/math/Rect.h>
 #include <engine/systems/graphics/meshData/PrimitiveMeshFactory.h>
 
 namespace sre
@@ -23,25 +22,10 @@ void GUITextComponent::setText(const std::string &text)
 
 }
 
-void GUITextComponent::makeGliph(char id)
+void GUITextComponent::makeGliph(int id)
 {
-
-	const Rect *uv = this->atlas->getItem(id);
-
-	float x1 = uv->topLeft.x;
-	float y1 = uv->topLeft.y;
-	float x2 = uv->topLeft.x + uv->size.x;
-	float y2 = uv->topLeft.y + uv->size.y;
-
-	float planeTexCoords[] = 
-	{
-		x1, y1,
-		x1, y2,
-		x2, y2,
-		x2, y1
-	};
-
-	this->meshData = PrimitiveMeshFactory::createPlane2D(1.0f, 1.0f, planeTexCoords);
+	const Rect uv = this->atlas->getItem(std::to_string(id));
+	this->meshData = PrimitiveMeshFactory::createPlane2D(1.0f, 1.0f, uv);
 }
 
 uint32_t GUITextComponent::getTextureId()

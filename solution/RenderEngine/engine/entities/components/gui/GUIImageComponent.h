@@ -8,12 +8,10 @@
 namespace sre
 {
 
-class Texture;
-
 class GUIImageComponent : public AEntityComponent
 {
 private:
-	Texture *texture;
+	uint32_t textureId;
 
 	uint32_t vao;
 	uint32_t vbo;
@@ -24,9 +22,6 @@ private:
 protected:
 	UPTR<MeshData<GUIVertexData>> meshData;
 
-private:
-	GUIImageComponent(Entity *entity, const std::string &fileName);
-
 protected:
 	GUIImageComponent(Entity *entity);
 
@@ -35,9 +30,14 @@ public:
 	glm::vec2 getUIPosition();
 	virtual uint32_t getTextureId();
 
+private:
+	void load(const std::string &fileName);
+	void loadFromAtlas(const std::string &fileName, const std::string &imageId);
+
 friend class Entity;
 friend class OpenGLAPI;
 friend class GUIRenderer;
+friend class GUIManager;
 };
 
 } // namespace

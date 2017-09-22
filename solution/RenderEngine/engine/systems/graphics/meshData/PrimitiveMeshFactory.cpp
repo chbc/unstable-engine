@@ -1,23 +1,17 @@
 #include "PrimitiveMeshFactory.h"
 #include <engine/utils/math/MathUtils.h>
+#include <engine/utils/math/Rect.h>
 
 namespace sre
 {
 
 UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(float width, float height)
 {
-	float planeTexCoords[] = 
-	{ 
-		0, 0,
-		0, 1,
-		1, 1,
-		1, 0
-	};
-
-	return createPlane2D(width, height, planeTexCoords);
+	Rect uv(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f));
+	return createPlane2D(width, height, uv);
 }
 
-UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(float width, float height, float *planeTexCoords)
+UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(float width, float height, const Rect &uv)
 {
 	float planeVertices[] = 
 	{ 
@@ -39,6 +33,18 @@ UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(float width, f
 	}
 
 	// UVs
+	float x1 = uv.topLeft.x;
+	float y1 = uv.topLeft.y;
+	float x2 = uv.topLeft.x + uv.size.x;
+	float y2 = uv.topLeft.y + uv.size.y;
+
+	float planeTexCoords[] =
+	{
+		x1, y1,
+		x1, y2,
+		x2, y2,
+		x2, y1
+	};
 	getPlaneUVs(vertexData, planeTexCoords);
 
 	// Indices

@@ -14,25 +14,25 @@ class Atlas
 {
 private:
 	Texture *texture;
+
 	// <id, uv>
-	std::unordered_map<char, UPTR<Rect>> uvs;
+	std::unordered_map<std::string, Rect> uvs;
 
 private:
 	Atlas(Texture *texture);
-	const Rect *getItem(char id);
+	const Rect &getItem(const std::string &id);
 	void loadUVs(const std::string &fontFileName);	// throws file not found
 	void processLine(const std::string &input);
-	void storeItems(std::unordered_map<std::string, int> &propertiesMap);
+	void storeItems(std::unordered_map<std::string, std::string> &propertiesMap);
 
-	void getProperties(const std::string &input, std::list<std::tuple<std::string, int>> &result);
-	std::string getKey(const std::string &input);
-	int getValue(const std::string &input);
+	void getProperties(const std::string &input, std::list<std::tuple<std::string, std::string>> &result);
 	std::string findRegex(const std::string &input, const std::string &regex);
 
 	uint32_t getTextureId();
 
 friend class AtlasManager;
 friend class GUITextComponent;
+friend class GUIImageComponent;
 };
 
 } // namespace

@@ -10,9 +10,9 @@ Atlas::Atlas(Texture *texture)
 	this->texture = texture;
 }
 
-const Rect *Atlas::getItem(char id)
+const Rect &Atlas::getItem(const std::string &id)
 {
-	return this->uvs[id].get();
+	return this->uvs[id];
 }
 
 void Atlas::loadUVs(const std::string &fontFileName)
@@ -40,11 +40,11 @@ void Atlas::processLine(const std::string &input)
 	{
 		char *line = const_cast<char *>(input.c_str());
 
-		std::list<std::tuple<std::string, int>> properties;
+		std::list<std::tuple<std::string, std::string>> properties;
 		this->getProperties(line, properties);
-		std::unordered_map<std::string, int> propertiesMap;
+		std::unordered_map<std::string, std::string> propertiesMap;
 
-		for (std::tuple<std::string, int> item : properties)
+		for (std::tuple<std::string, std::string> item : properties)
 		{
 			propertiesMap[std::get<0>(item)] = std::get<1>(item);
 		}
@@ -53,19 +53,18 @@ void Atlas::processLine(const std::string &input)
 	}
 }
 
-void Atlas::storeItems(std::unordered_map<std::string, int> &propertiesMap)
+void Atlas::storeItems(std::unordered_map<std::string, std::string> &propertiesMap)
 {
-	char id = propertiesMap["id"];
+	std::string id = propertiesMap["id"];
 	float textureWidth = static_cast<float>(this->texture->getWidth());
 	float textureHeight = static_cast<float>(this->texture->getHeight());
-	glm::vec2 topLeft(static_cast<float>(propertiesMap["x"]) / textureWidth, static_cast<float>(propertiesMap["y"]) / textureHeight);
-	glm::vec2 size(static_cast<float>(propertiesMap["width"]) / textureWidth, static_cast<float>(propertiesMap["height"]) / textureHeight);
+	glm::vec2 topLeft(std::stof(propertiesMap["x"].c_str()) / textureWidth, std::stof(propertiesMap["y"].c_str()) / textureHeight);
+	glm::vec2 size(std::stof(propertiesMap["width"].c_str()) / textureWidth, std::stof(propertiesMap["height"].c_str()) / textureHeight);
 
-	UPTR<Rect> uv = std::make_unique<Rect>(topLeft, size);
-	this->uvs[id] = std::move(uv);
+	this->uvs[id] = Rect(topLeft, size);
 }
 
-void Atlas::getProperties(const std::string &input, std::list<std::tuple<std::string, int>> &result)
+void Atlas::getProperties(const std::string &input, std::list<std::tuple<std::string, std::string>> &result)
 {
 	std::regex expression("[a-z]+=\\d+");
 
@@ -74,29 +73,19 @@ void Atlas::getProperties(const std::string &input, std::list<std::tuple<std::st
 
 	std::string propertyInput;
 	std::string key;
-	int value;
+	std::string value;
 	while (iter != end)
 	{
 		for (unsigned i = 0; i < iter->size(); ++i)
 		{
 			propertyInput = (*iter)[i];
-			key = this->getKey(propertyInput);
-			value = this->getValue(propertyInput);
-			result.push_back(std::tuple<std::string, int>(key, value));
+			key = this->findRegex(propertyInput, "\\w+");
+			value = this->findRegex(propertyInput, "\\d+");
+			result.push_back(std::tuple<std::string, std::string>(key, value));
 		}
 
 		++iter;
 	}
-}
-
-std::string Atlas::getKey(const std::string &input)
-{
-	return this->findRegex(input, "\\w+");
-}
-
-int Atlas::getValue(const std::string &input)
-{
-	return std::stoi(this->findRegex(input, "\\d+"));
 }
 
 std::string Atlas::findRegex(const std::string &input, const std::string &regex)

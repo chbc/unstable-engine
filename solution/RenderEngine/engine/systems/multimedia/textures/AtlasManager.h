@@ -23,6 +23,7 @@ private:
 	Atlas *loadAtlas(const std::string &textureFile, const std::string &configFile);
 
 friend class GUITextComponent;
+friend class GUIImageComponent;
 };
 
 } // namespace
