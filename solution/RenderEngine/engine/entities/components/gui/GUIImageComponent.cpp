@@ -1,10 +1,10 @@
 #include "GUIImageComponent.h"
-#include <engine/systems/graphics/RenderManager.h>
-#include <engine/systems/multimedia/MultimediaManager.h>
-#include <engine/systems/multimedia/textures/Texture.h>
-#include <engine/systems/multimedia/textures/atlases/AtlasManager.h>
+#include <engine/core/graphics/RenderManager.h>
+#include <engine/core/multimedia/MultimediaManager.h>
+#include <engine/core/multimedia/textures/Texture.h>
+#include <engine/core/multimedia/textures/atlases/AtlasManager.h>
 #include <engine/entities/components/transforms/TransformComponent.h>
-#include <engine/systems/graphics/meshData/PrimitiveMeshFactory.h>
+#include <engine/core/graphics/meshData/PrimitiveMeshFactory.h>
 
 namespace sre
 {

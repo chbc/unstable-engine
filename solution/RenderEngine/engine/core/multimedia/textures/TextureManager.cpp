@@ -1,7 +1,7 @@
 #include "TextureManager.h"
 #include <exception>
-#include <engine/systems/multimedia/MultimediaManager.h>
-#include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
+#include <engine/core/multimedia/MultimediaManager.h>
+#include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
 
 namespace sre
 {

@@ -1,6 +1,6 @@
 #include "MultimediaManager.h"
-#include <engine/systems/wrappers/multimedia/SDLAPI.h>
-#include <engine/systems/timer/Timer.h>
+#include <engine/core/wrappers/multimedia/SDLAPI.h>
+#include <engine/core/timer/Timer.h>
 
 namespace sre
 {

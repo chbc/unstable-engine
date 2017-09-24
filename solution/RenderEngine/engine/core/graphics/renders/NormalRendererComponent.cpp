@@ -1,8 +1,8 @@
 #include "NormalRendererComponent.h"
 
 #include <engine/entities/components/meshes/MeshComponent.h>
-#include <engine/systems/graphics/ShaderManager.h>
-#include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
+#include <engine/core/graphics/ShaderManager.h>
+#include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
 
 namespace sre
 {

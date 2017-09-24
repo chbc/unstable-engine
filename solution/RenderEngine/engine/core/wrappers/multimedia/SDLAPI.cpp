@@ -1,7 +1,7 @@
 #include "SDLAPI.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-#include <engine/systems/io/InputHandler.h>
+#include <engine/core/io/InputHandler.h>
 
 namespace sre
 {

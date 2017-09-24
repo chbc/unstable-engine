@@ -1,8 +1,8 @@
 #include "SceneManager.h"
 
 #include <engine/entities/components/cameras/CameraComponent.h>
-#include <engine/systems/graphics/RenderManager.h>
-#include <engine/systems/io/ModelLoader.h>
+#include <engine/core/graphics/RenderManager.h>
+#include <engine/core/io/ModelLoader.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
 
 namespace sre

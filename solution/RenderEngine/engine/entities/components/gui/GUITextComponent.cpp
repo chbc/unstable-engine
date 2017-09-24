@@ -1,8 +1,8 @@
 #include "GUITextComponent.h"
 
-#include <engine/systems/multimedia/textures/atlases/AtlasManager.h>
-#include <engine/systems/multimedia/textures/Texture.h>
-#include <engine/systems/graphics/meshData/PrimitiveMeshFactory.h>
+#include <engine/core/multimedia/textures/atlases/AtlasManager.h>
+#include <engine/core/multimedia/textures/Texture.h>
+#include <engine/core/graphics/meshData/PrimitiveMeshFactory.h>
 
 namespace sre
 {

@@ -4,9 +4,9 @@
 #include <engine/entities/components/meshes/MeshComponent.h>
 #include <engine/entities/components/gui/GUIImageComponent.h>
 #include <engine/entities/components/cameras/CameraComponent.h>
-#include <engine/systems/wrappers/graphics/OpenGLAPI.h>
-#include <engine/systems/multimedia/MultimediaManager.h>
-#include <engine/systems/multimedia/textures/TextureManager.h>
+#include <engine/core/wrappers/graphics/OpenGLAPI.h>
+#include <engine/core/multimedia/MultimediaManager.h>
+#include <engine/core/multimedia/textures/TextureManager.h>
 #include "MatrixManager.h"
 #include "LightManager.h"
 #include "ShaderManager.h"

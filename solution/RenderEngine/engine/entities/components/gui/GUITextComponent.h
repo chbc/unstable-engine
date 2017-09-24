@@ -2,7 +2,7 @@
 #define _GUI_TEXT_COMPONENT_H_
 
 #include "GUIImageComponent.h"
-#include <engine/systems/graphics/meshData/PrimitiveMeshFactory.h>
+#include <engine/core/graphics/meshData/PrimitiveMeshFactory.h>
 #include <engine/utils/memory_aliases.h>
 #include <string>
 

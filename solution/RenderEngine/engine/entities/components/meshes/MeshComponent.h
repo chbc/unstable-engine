@@ -4,7 +4,7 @@
 #include "../AEntityComponent.h"
 #include "materials/Material.h"
 #include <engine/utils/memory_aliases.h>
-#include <engine/systems/graphics/meshData/MeshData.h>
+#include <engine/core/graphics/meshData/MeshData.h>
 
 namespace sre
 {

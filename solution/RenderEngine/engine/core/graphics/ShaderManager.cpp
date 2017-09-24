@@ -1,5 +1,5 @@
 #include "ShaderManager.h"
-#include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
+#include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
 
 namespace sre
 {

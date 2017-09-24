@@ -3,7 +3,7 @@
 
 #include "AMaterialComponent.h"
 #include <engine/utils/memory_aliases.h>
-#include <engine/systems/multimedia/textures/Texture.h>
+#include <engine/core/multimedia/textures/Texture.h>
 
 namespace sre
 {

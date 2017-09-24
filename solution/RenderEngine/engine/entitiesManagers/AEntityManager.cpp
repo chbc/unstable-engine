@@ -1,6 +1,6 @@
 #include "AEntityManager.h"
 #include <sstream>
-#include <engine/systems/graphics/RenderManager.h>
+#include <engine/core/graphics/RenderManager.h>
 
 namespace sre
 {

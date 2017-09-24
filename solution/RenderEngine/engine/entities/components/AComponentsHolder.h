@@ -2,7 +2,7 @@
 #define _A_COMPONENTS_HOLDER_H_
 
 #include <engine/utils/memory_aliases.h>
-#include <engine/systems/multimedia/textures/EMaterialMap.h>
+#include <engine/core/multimedia/textures/EMaterialMap.h>
 #include <bitset>
 #include <array>
 

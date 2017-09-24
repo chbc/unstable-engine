@@ -1,7 +1,7 @@
 #include "Atlas.h"
 #include <fstream>
 #include <regex>
-#include <engine/systems/multimedia/MultimediaManager.h>
+#include <engine/core/multimedia/MultimediaManager.h>
 
 namespace sre
 {

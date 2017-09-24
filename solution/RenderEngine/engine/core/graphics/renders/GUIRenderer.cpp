@@ -2,10 +2,10 @@
 
 #include <engine/entities/components/transforms/TransformComponent.h>
 #include <engine/entities/components/gui/GUIImageComponent.h>
-#include <engine/systems/wrappers/graphics/AGraphicsWrapper.h>
-#include <engine/systems/graphics/MatrixManager.h>
-#include <engine/systems/graphics/ShaderManager.h>
-#include <engine/systems/multimedia/textures/Texture.h>
+#include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
+#include <engine/core/graphics/MatrixManager.h>
+#include <engine/core/graphics/ShaderManager.h>
+#include <engine/core/multimedia/textures/Texture.h>
 
 namespace sre
 {

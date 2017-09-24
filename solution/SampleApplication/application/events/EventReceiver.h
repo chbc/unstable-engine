@@ -1,7 +1,7 @@
 #ifndef _EVENT_RECEIVER_H_
 #define _EVENT_RECEIVER_H_
 
-#include <engine/systems/io/InputHandler.h>
+#include <engine/core/io/InputHandler.h>
 #include <engine/entities/components/cameras/CameraComponent.h>
 
 using namespace sre;

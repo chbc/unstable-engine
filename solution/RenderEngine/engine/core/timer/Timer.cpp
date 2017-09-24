@@ -1,5 +1,5 @@
 #include "Timer.h"
-#include <engine/systems/wrappers/multimedia/AMultimediaWrapper.h>
+#include <engine/core/wrappers/multimedia/AMultimediaWrapper.h>
 
 namespace sre
 {

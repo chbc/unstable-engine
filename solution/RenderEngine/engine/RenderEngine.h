@@ -1,11 +1,11 @@
 #ifndef _RENDER_ENGINE_H_
 #define _RENDER_ENGINE_H_
 
-#include <engine/systems/io/InputHandler.h>
+#include <engine/core/io/InputHandler.h>
 #include <engine/entitiesManagers/scene/SceneManager.h>
 #include <engine/entitiesManagers/gui/GUIManager.h>
-#include <engine/systems/multimedia/MultimediaManager.h>
-#include <engine/systems/graphics/RenderManager.h>
+#include <engine/core/multimedia/MultimediaManager.h>
+#include <engine/core/graphics/RenderManager.h>
 
 class MultimediaManager;
 
