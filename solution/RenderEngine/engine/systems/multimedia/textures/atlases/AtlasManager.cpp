@@ -40,7 +40,7 @@ Atlas *AtlasManager::loadAtlas(const std::string &textureFile, const std::string
 	Texture *texture = renderManager->loadGUITexture(textureFile);
 
 	result = new Atlas(texture);
-	result->loadUVs(configFile);
+	result->load(configFile);
 
 	return result;
 }

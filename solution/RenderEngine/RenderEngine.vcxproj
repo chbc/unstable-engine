@@ -195,8 +195,8 @@
     <ClCompile Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.cpp" />
     <ClCompile Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.cpp" />
     <ClCompile Include="engine\systems\graphics\meshData\MeshData.cpp" />
-    <ClCompile Include="engine\systems\multimedia\textures\Atlas.cpp" />
-    <ClCompile Include="engine\systems\multimedia\textures\AtlasManager.cpp" />
+    <ClCompile Include="engine\systems\multimedia\textures\atlases\Atlas.cpp" />
+    <ClCompile Include="engine\systems\multimedia\textures\atlases\AtlasManager.cpp" />
     <ClCompile Include="engine\systems\multimedia\textures\Texture.cpp" />
     <ClCompile Include="engine\entitiesManagers\gui\GUIManager.cpp" />
     <ClCompile Include="engine\systems\graphics\renders\AORendererComponent.cpp" />
@@ -239,7 +239,8 @@
   <ItemGroup>
     <ClInclude Include="engine\entities\components\gui\GUIImageComponent.h" />
     <ClInclude Include="engine\entitiesManagers\AEntityManager.h" />
-    <ClInclude Include="engine\systems\multimedia\textures\Atlas.h" />
+    <ClInclude Include="engine\systems\multimedia\textures\atlases\Atlas.h" />
+    <ClInclude Include="engine\systems\multimedia\textures\atlases\FontAtlas.h" />
     <ClInclude Include="engine\systems\multimedia\text\Font.h" />
     <ClInclude Include="engine\systems\multimedia\text\Glyph.h" />
     <ClInclude Include="engine\entities\components\gui\GUITextComponent.h" />
@@ -250,7 +251,7 @@
     <ClInclude Include="engine\systems\multimedia\textures\EMaterialMap.h" />
     <ClInclude Include="engine\systems\multimedia\textures\Texture.h" />
     <ClInclude Include="engine\entitiesManagers\gui\GUIManager.h" />
-    <ClInclude Include="engine\systems\multimedia\textures\AtlasManager.h" />
+    <ClInclude Include="engine\systems\multimedia\textures\atlases\AtlasManager.h" />
     <ClInclude Include="engine\systems\graphics\renders\AORendererComponent.h" />
     <ClInclude Include="engine\systems\graphics\renders\ColorRendererComponent.h" />
     <ClInclude Include="engine\entities\components\AComponentsHolder.h" />

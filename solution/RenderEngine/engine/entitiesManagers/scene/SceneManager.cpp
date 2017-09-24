@@ -23,12 +23,12 @@ SceneManager::~SceneManager()
 
 Entity *SceneManager::createPlaneEntity(float size)
 {
-	return this->createMeshEntity(PrimitiveMeshFactory::createPlane(size));
+	return this->createMeshEntity((PrimitiveMeshFactory()).createPlane(size));
 }
 
 Entity *SceneManager::createCubeEntity(float size)
 {
-	return this->createMeshEntity(PrimitiveMeshFactory::createCube(size));
+	return this->createMeshEntity((PrimitiveMeshFactory()).createCube(size));
 }
 
 Entity *SceneManager::createModelEntity(const std::string &fileName)

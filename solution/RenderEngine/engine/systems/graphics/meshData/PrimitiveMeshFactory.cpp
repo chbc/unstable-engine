@@ -5,20 +5,20 @@
 namespace sre
 {
 
-UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(float width, float height)
+UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size)
 {
 	Rect uv(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f));
-	return createPlane2D(width, height, uv);
+	return createPlane2D(size, uv);
 }
 
-UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(float width, float height, const Rect &uv)
+UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size, const Rect &uv)
 {
 	float planeVertices[] = 
 	{ 
-		-width, height,
-		-width,-height,
-		width,-height,
-		width, height
+		-size.x, size.y,
+		-size.x,-size.y,
+		size.x,-size.y,
+		size.x, size.y
 	};
 
 	VECTOR_UPTR<GUIVertexData> vertexData;

@@ -2,7 +2,7 @@
 #include <engine/systems/graphics/RenderManager.h>
 #include <engine/systems/multimedia/MultimediaManager.h>
 #include <engine/systems/multimedia/textures/Texture.h>
-#include <engine/systems/multimedia/textures/AtlasManager.h>
+#include <engine/systems/multimedia/textures/atlases/AtlasManager.h>
 #include <engine/entities/components/transforms/TransformComponent.h>
 #include <engine/systems/graphics/meshData/PrimitiveMeshFactory.h>
 
@@ -17,11 +17,10 @@ GUIImageComponent::GUIImageComponent(Entity *entity) : AEntityComponent(entity)
 void GUIImageComponent::load(const std::string &fileName)
 {
 	Texture *texture = RenderManager::getInstance()->loadDiffuseTexture(fileName);
+	glm::vec2 pixelSize(texture->getWidth(), texture->getHeight());
+	glm::vec2 screenBasedSize = MultimediaManager::getInstance()->getScreenBasedSize(pixelSize);
 
-	float width = texture->getWidth() / MultimediaManager::getInstance()->getScreenWidth();
-	float height = texture->getHeight() / MultimediaManager::getInstance()->getScreenHeight();
-
-	this->meshData = PrimitiveMeshFactory::createPlane2D(width, height);
+	this->meshData = (PrimitiveMeshFactory()).createPlane2D(screenBasedSize);
 	this->textureId = texture->getId();
 }
 
@@ -29,8 +28,9 @@ void GUIImageComponent::loadFromAtlas(const std::string &fileName, const std::st
 {
 	Atlas *atlas = AtlasManager::getInstance()->getAtlas(fileName);
 
-	const Rect uv = atlas->getItem(imageId);
-	this->meshData = PrimitiveMeshFactory::createPlane2D(uv.size.x, uv.size.y, uv);
+	const AtlasItem atlasItem = atlas->getItem(imageId);
+
+	this->meshData = (PrimitiveMeshFactory()).createPlane2D(atlasItem.screenBasedSize, atlasItem.uv);
 	this->textureId = atlas->getTextureId();
 }
 

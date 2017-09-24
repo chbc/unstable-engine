@@ -1,6 +1,6 @@
 #include "GUITextComponent.h"
 
-#include <engine/systems/multimedia/textures/AtlasManager.h>
+#include <engine/systems/multimedia/textures/atlases/AtlasManager.h>
 #include <engine/systems/multimedia/textures/Texture.h>
 #include <engine/systems/graphics/meshData/PrimitiveMeshFactory.h>
 
@@ -24,8 +24,8 @@ void GUITextComponent::setText(const std::string &text)
 
 void GUITextComponent::makeGliph(int id)
 {
-	const Rect uv = this->atlas->getItem(std::to_string(id));
-	this->meshData = PrimitiveMeshFactory::createPlane2D(1.0f, 1.0f, uv);
+	const AtlasItem atlasItem = this->atlas->getItem(std::to_string(id));
+	this->meshData = (PrimitiveMeshFactory()).createPlane2D(glm::vec2(0.5f, 0.5f), atlasItem.uv);
 }
 
 uint32_t GUITextComponent::getTextureId()

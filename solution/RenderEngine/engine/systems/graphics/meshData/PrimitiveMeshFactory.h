@@ -13,16 +13,16 @@ class Rect;
 class PrimitiveMeshFactory
 {
 public:
-	static UPTR<MeshData<GUIVertexData>> createPlane2D(float width, float height, const Rect &uv);
-	static UPTR<MeshData<GUIVertexData>> createPlane2D(float width, float height);
-	static UPTR<MeshData<VertexData>> createPlane(float size);
-	static UPTR<MeshData<VertexData>> createCube(float size);
+	UPTR<MeshData<GUIVertexData>> createPlane2D(const glm::vec2 &size);
+	UPTR<MeshData<GUIVertexData>> createPlane2D(const glm::vec2 &size, const Rect &uv);
+	UPTR<MeshData<VertexData>> createPlane(float size);
+	UPTR<MeshData<VertexData>> createCube(float size);
 
 private:
-	static void getPlaneIndices(std::vector<uint32_t> &result);
+	void getPlaneIndices(std::vector<uint32_t> &result);
 
 	template <typename T>
-	static void getPlaneUVs(VECTOR_UPTR<T> &vertexData, float *planeTexCoords)
+	void getPlaneUVs(VECTOR_UPTR<T> &vertexData, float *planeTexCoords)
 	{
 		for (int i = 0; i < 4; i++)
 		{

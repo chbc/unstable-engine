@@ -24,6 +24,8 @@ int main(int argc, char *argv[])
 		result = 1;
 	}
 	
-	system("pause");
+	if (result != 0)
+		system("pause");
+
 	return result;
 }

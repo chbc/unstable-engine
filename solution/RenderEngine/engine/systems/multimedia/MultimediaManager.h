@@ -2,6 +2,7 @@
 #define _MULTIMEDIA_MANAGER_H_
 
 #include <engine/utils/singleton_macros.h>
+#include <glm/vec2.hpp>
 
 namespace sre
 {
@@ -29,6 +30,8 @@ public:
 	inline float getScreenWidth() { return this->screenWidth; }
 	inline float getScreenHeight() { return this->screenHeight; }
 	inline float getAspectRatio() { return this->aspectRatio; }
+
+	glm::vec2 getScreenBasedSize(const glm::vec2 &pixelSize);
 
 private:
 	void swapBuffers();
