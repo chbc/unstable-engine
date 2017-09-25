@@ -162,6 +162,9 @@
     <ClCompile Include="engine\core\wrappers\multimedia\SDLAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\core\multimedia\textures\atlases\FontAtlas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\FileUtils.h">

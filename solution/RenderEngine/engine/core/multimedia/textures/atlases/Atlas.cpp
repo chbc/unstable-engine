@@ -6,11 +6,16 @@
 namespace sre
 {
 
+Atlas::Atlas(Texture *texture)
+{
+	this->texture = texture;
+}
+
 bool Atlas::checkProperties(const std::unordered_map<std::string, std::string> &properties)
 {
 	return
 	(
-		(properties.size() == 5) &&
+		(properties.size() >= this->getMinItems()) &&
 		(properties.count(keys::ID) > 0) &&
 		(properties.count(keys::X) > 0) &&
 		(properties.count(keys::Y) > 0) &&
@@ -19,9 +24,29 @@ bool Atlas::checkProperties(const std::unordered_map<std::string, std::string> &
 	);
 }
 
-Atlas::Atlas(Texture *texture)
+AtlasItem Atlas::createItem(std::unordered_map<std::string, std::string> &propertiesMap)
 {
-	this->texture = texture;
+	float textureWidth = static_cast<float>(this->texture->getWidth());
+	float textureHeight = static_cast<float>(this->texture->getHeight());
+
+	glm::vec2 positions(getValue(propertiesMap, keys::X), getValue(propertiesMap, keys::Y));
+	glm::vec2 pixelSize(getValue(propertiesMap, keys::WIDTH), getValue(propertiesMap, keys::HEIGHT));
+
+	glm::vec2 uvPositions(positions.x / textureWidth, positions.y / textureHeight);
+	glm::vec2 uvSize(pixelSize.x / textureWidth, pixelSize.y / textureHeight);
+	glm::vec2 screenBasedSize = MultimediaManager::getInstance()->getScreenBasedSize(pixelSize);
+
+	return AtlasItem(Rect(uvPositions, uvSize), pixelSize, screenBasedSize);
+}
+
+uint16_t Atlas::getMinItems()
+{
+	return 5;
+}
+
+float Atlas::getValue(std::unordered_map<std::string, std::string> &propertiesMap, const std::string &key)
+{
+	return std::stof(propertiesMap[key].c_str());
 }
 
 const AtlasItem &Atlas::getItem(const std::string &id)
@@ -54,7 +79,8 @@ void Atlas::processLine(const std::string &input)
 
 		if (this->checkProperties(propertiesMap))
 		{
-			this->storeItems(propertiesMap);
+			std::string id = propertiesMap[keys::ID];
+			this->items[id] = this->createItem(propertiesMap);
 		}
 	}
 }
@@ -82,22 +108,6 @@ void Atlas::getProperties(const std::string &input, std::unordered_map<std::stri
 
 		++iter;
 	}
-}
-
-void Atlas::storeItems(std::unordered_map<std::string, std::string> &propertiesMap)
-{
-	std::string id = propertiesMap[keys::ID];
-	float textureWidth = static_cast<float>(this->texture->getWidth());
-	float textureHeight = static_cast<float>(this->texture->getHeight());
-
-	glm::vec2 positions(std::stof(propertiesMap[keys::X].c_str()), std::stof(propertiesMap[keys::Y].c_str()));
-	glm::vec2 pixelSize(std::stof(propertiesMap[keys::WIDTH].c_str()), std::stof(propertiesMap[keys::HEIGHT].c_str()));
-
-	glm::vec2 uvPositions(positions.x / textureWidth, positions.y / textureHeight);
-	glm::vec2 uvSize(pixelSize.x / textureWidth, pixelSize.y / textureHeight);
-	glm::vec2 screenBasedSize = MultimediaManager::getInstance()->getScreenBasedSize(pixelSize);
-
-	this->items[id] = AtlasItem(Rect(uvPositions, uvSize), pixelSize, screenBasedSize);
 }
 
 uint32_t Atlas::getTextureId()

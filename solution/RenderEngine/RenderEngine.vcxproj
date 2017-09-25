@@ -186,6 +186,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="engine\core\multimedia\textures\atlases\FontAtlas.cpp" />
     <ClCompile Include="engine\entitiesManagers\AEntityManager.cpp" />
     <ClCompile Include="engine\entities\components\AEntityComponent.cpp" />
     <ClCompile Include="engine\entities\components\gui\GUIImageComponent.cpp" />

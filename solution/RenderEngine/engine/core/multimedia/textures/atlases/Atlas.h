@@ -24,7 +24,10 @@ struct AtlasItem
 	Rect uv;
 	glm::vec2 pixelSize;
 	glm::vec2 screenBasedSize;
+
 	AtlasItem() { }
+	AtlasItem(const AtlasItem &item) 
+		: uv(item.uv), pixelSize(item.pixelSize), screenBasedSize(item.screenBasedSize) { }
 	AtlasItem(Rect uv, glm::vec2 pixelSize, glm::vec2 screenBasedSize) 
 		: uv(uv), pixelSize(pixelSize), screenBasedSize(screenBasedSize) { }
 };
@@ -38,15 +41,18 @@ private:
 	std::unordered_map<std::string, AtlasItem> items;
 
 protected:
+	Atlas(Texture *texture);
+
 	virtual bool checkProperties(const std::unordered_map<std::string, std::string> &properties);
+	virtual AtlasItem createItem(std::unordered_map<std::string, std::string> &propertiesMap);
+	virtual uint16_t getMinItems();
+	float getValue(std::unordered_map<std::string, std::string> &propertiesMap, const std::string &key);
 
 private:
-	Atlas(Texture *texture);
 	const AtlasItem &getItem(const std::string &id);
 	void load(const std::string &fontFileName);	// throws file not found
 	void processLine(const std::string &input);
 	void getProperties(const std::string &input, std::unordered_map<std::string, std::string> &result);
-	void storeItems(std::unordered_map<std::string, std::string> &propertiesMap);
 
 	uint32_t getTextureId();
 
