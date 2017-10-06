@@ -62,18 +62,20 @@ void SampleApplication::onInit()
 	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
 
 	// GUI //
-	Entity *guiEntity = this->guiManager->createGUIImageEntityFromAtlas("../../media/atlases/test_texture_rect", "sete");
+	Entity *guiEntity;
+	/* ###
+	guiEntity = this->guiManager->createGUIImageEntityFromAtlas("../../media/atlases/test_texture_rect", "sete");
 	GUIImageComponent *guiComponent = guiEntity->getComponent<GUIImageComponent>();
 	guiComponent->setUIPosition(glm::vec2(0.5f, 0.5f));
 
 	this->guiManager->addEntity(guiEntity);
+	*/
 
-	/*
 	guiEntity = this->guiManager->createGUITextEntity("../../media/fonts/verdana");
 	GUITextComponent *textComponent = guiEntity->getComponent<GUITextComponent>();
-	textComponent->setText("teste");
+	textComponent->setText("tj");
+	textComponent->setUIPosition(glm::vec2(0.5f, 0.5f));
 	this->guiManager->addEntity(guiEntity);
-	*/
 }
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)

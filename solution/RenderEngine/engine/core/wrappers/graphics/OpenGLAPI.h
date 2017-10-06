@@ -14,8 +14,9 @@ protected:
 	void init() override;
 	void createVAO(MeshComponent *mesh) override;
 	void createEBO(MeshComponent *mesh) override;
-	void createGUIVAO(GUIImageComponent *guiComponent);
-	void createGUIEBO(GUIImageComponent *guiComponent);
+	void createGUIVAO(GUIImageComponent *guiComponent) override;
+	void createDynamicGUIVAO(GUIImageComponent *guiComponent, int size) override;
+	void createGUIEBO(GUIImageComponent *guiComponent) override;
 
 	void bindVAO(uint32_t vao, uint32_t vbo) override;
 	void enableGUISettings() override;
@@ -29,7 +30,9 @@ protected:
 	void activeSpecularTexture(uint32_t textureId) override;
 	void activeAOTexture(uint32_t textureId) override;
 
-	void drawElement(uint32_t vao, uint32_t indicesSize);
+	void setupBufferSubData(const VECTOR_UPTR<MeshData<GUIVertexData>> &meshData) override;
+
+	void drawElement(uint32_t indicesSize) override;
 
 	void disableVertexPositions() override;
 	void disableVertexNormals() override;
@@ -59,7 +62,7 @@ protected:
 	void enableShader(uint32_t program) override;
 	void disableShader() override;
 	void releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs) override;
-	void deleteBuffers(MeshComponent *mesh);
+	void deleteBuffers(MeshComponent *mesh) override;
 
 private:
 	uint32_t compileShader(const std::string &source, uint32_t mode);

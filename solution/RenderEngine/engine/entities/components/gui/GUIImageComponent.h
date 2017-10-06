@@ -18,17 +18,19 @@ private:
 	uint32_t ebo;
 
 	glm::vec2 uiPosition;
+	bool isDynamic;
 
 protected:
-	UPTR<MeshData<GUIVertexData>> meshData;
+	VECTOR_UPTR<MeshData<GUIVertexData>> meshData;
 
 protected:
-	GUIImageComponent(Entity *entity);
+	GUIImageComponent(Entity *entity, bool isDynamic = false);
 
 public:
 	void setUIPosition(const glm::vec2 &position);
 	glm::vec2 getUIPosition();
 	virtual uint32_t getTextureId();
+	inline bool getIsDynamic() { return this->isDynamic; }
 
 private:
 	void load(const std::string &fileName);

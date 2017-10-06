@@ -12,35 +12,54 @@ void AtlasManager::init() { }
 
 Atlas *AtlasManager::getAtlas(const std::string &fileName)
 {
-	return this->getAtlas(fileName, ".png", ".atlas");
-}
-
-Atlas *AtlasManager::getFont(const std::string &fileName)
-{
-	return this->getAtlas(fileName, ".png", ".fnt");
-}
-
-Atlas *AtlasManager::getAtlas(const std::string &fileName, const std::string &textureExtension, const std::string &configExtension)
-{
-	Atlas *result = atlases[fileName].get();
+	Atlas *result = this->atlases[fileName].get();
 
 	if (result == nullptr)
 	{
-		result = loadAtlas(fileName + textureExtension, fileName + configExtension);
+		result = loadAtlas(fileName);
 	}
 
 	return result;
 }
 
-Atlas *AtlasManager::loadAtlas(const std::string &textureFile, const std::string &configFile)
+Atlas *AtlasManager::loadAtlas(const std::string &baseFileName)
 {
-	Atlas *result = nullptr;
+	Atlas *result;
 
 	RenderManager *renderManager = RenderManager::getInstance();
-	Texture *texture = renderManager->loadGUITexture(textureFile);
+	Texture *texture = renderManager->loadGUITexture(baseFileName + ".png");
 
-	result = new Atlas(texture);
-	result->load(configFile);
+	result = new Atlas{ texture };
+	UPTR<Atlas> newItem{ result };
+	result->load(baseFileName + ".atlas");
+	this->atlases[baseFileName] = std::move(newItem);
+
+	return result;
+}
+
+FontAtlas *AtlasManager::getFont(const std::string &fileName)
+{
+	FontAtlas *result = static_cast<FontAtlas *>(this->atlases[fileName].get());
+
+	if (result == nullptr)
+	{
+		result = this->loadFont(fileName);
+	}
+
+	return this->loadFont(fileName);
+}
+
+FontAtlas *AtlasManager::loadFont(const std::string &baseFileName)
+{
+	FontAtlas *result;
+
+	RenderManager *renderManager = RenderManager::getInstance();
+	Texture *texture = renderManager->loadGUITexture(baseFileName + ".png");
+
+	result = new FontAtlas{ texture };
+	UPTR<FontAtlas> newItem{ result };
+	result->load(baseFileName + ".fnt");
+	this->atlases[baseFileName] = std::move(newItem);
 
 	return result;
 }

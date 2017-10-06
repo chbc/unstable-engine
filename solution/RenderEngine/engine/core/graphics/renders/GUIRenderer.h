@@ -1,8 +1,8 @@
 #ifndef _GUI_RENDERER_H_
 #define _GUI_RENDERER_H_
 
-#include <engine/utils/memory_aliases.h>
 #include <list>
+#include <engine/utils/memory_aliases.h>
 
 namespace sre
 {
@@ -14,9 +14,9 @@ class MatrixManager;
 
 class GUIRenderer
 {
-private:
+protected:
 	std::list<GUIImageComponent *> guiComponents;
-
+	std::list<GUIImageComponent *> dynamicGUIComponents;
 	uint32_t shaderProgram;
 
 	SPTR<ShaderManager> shaderManager;
@@ -27,8 +27,10 @@ private:
 
 	void loadShader();
 	void addGUIComponent(GUIImageComponent *guiComponent);
+	void addDynamicGUIComponent(GUIImageComponent *guiComponent);
 	void removeGUIComponent(GUIImageComponent *guiComponent);
 	void render(MatrixManager *matrixManager);
+	void setup(GUIImageComponent *guiComponent);
 
 friend class RenderManager;
 };

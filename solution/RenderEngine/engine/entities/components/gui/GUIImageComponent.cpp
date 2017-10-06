@@ -9,7 +9,7 @@
 namespace sre
 {
 
-GUIImageComponent::GUIImageComponent(Entity *entity) : AEntityComponent(entity) 
+GUIImageComponent::GUIImageComponent(Entity *entity, bool isDynamic) : AEntityComponent(entity), isDynamic(isDynamic)
 {
 	this->setUIPosition(glm::vec2(0.0f, 0.0f));
 }
@@ -20,7 +20,8 @@ void GUIImageComponent::load(const std::string &fileName)
 	glm::vec2 pixelSize(texture->getWidth(), texture->getHeight());
 	glm::vec2 screenBasedSize = MultimediaManager::getInstance()->getScreenBasedSize(pixelSize);
 
-	this->meshData = (PrimitiveMeshFactory()).createPlane2D(screenBasedSize);
+
+	this->meshData.emplace_back((PrimitiveMeshFactory()).createPlane2D(screenBasedSize));
 	this->textureId = texture->getId();
 }
 
@@ -30,7 +31,7 @@ void GUIImageComponent::loadFromAtlas(const std::string &fileName, const std::st
 
 	const AtlasItem atlasItem = atlas->getItem(imageId);
 
-	this->meshData = (PrimitiveMeshFactory()).createPlane2D(atlasItem.screenBasedSize, atlasItem.uv);
+	this->meshData.emplace_back((PrimitiveMeshFactory()).createPlane2D(atlasItem.screenBasedSize, atlasItem.uv));
 	this->textureId = atlas->getTextureId();
 }
 

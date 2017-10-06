@@ -28,6 +28,13 @@ void GUIRenderer::addGUIComponent(GUIImageComponent *guiComponent)
 	this->graphicsWrapper->createGUIEBO(guiComponent);
 }
 
+void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
+{
+	this->dynamicGUIComponents.push_back(guiComponent);
+	this->graphicsWrapper->createDynamicGUIVAO(guiComponent, sizeof(GUIVertexData) * 10);
+	this->graphicsWrapper->createGUIEBO(guiComponent);
+}
+
 void GUIRenderer::removeGUIComponent(GUIImageComponent *guiComponent)
 {
 	this->guiComponents.remove(guiComponent);
@@ -36,27 +43,37 @@ void GUIRenderer::removeGUIComponent(GUIImageComponent *guiComponent)
 void GUIRenderer::render(MatrixManager *matrixManager)
 {
 	this->shaderManager->enableShader(this->shaderProgram);
-
 	this->shaderManager->setInt(shaderProgram, "guiTexture", 0);
 
+	// Static meshes
 	for (GUIImageComponent *item : this->guiComponents)
 	{
-		// Matrix setup
-		TransformComponent *transform = item->getTransform();
-		glm::mat4 modelMatrix = transform->getMatrix();
-		this->shaderManager->setMat4(this->shaderProgram, "modelMatrix", &modelMatrix[0][0]);
+		this->setup(item);
+		this->graphicsWrapper->drawElement(item->meshData.front()->indices.size());
+	}
 
-		this->graphicsWrapper->bindVAO(item->vao, item->vbo);
-
-		this->graphicsWrapper->enableGUISettings();
-
-		this->graphicsWrapper->activeDiffuseTexture(item->getTextureId());
-
-		this->graphicsWrapper->drawElement(item->vao, item->meshData->indices.size());
+	// Dynamic meshes
+	for (GUIImageComponent *item : this->dynamicGUIComponents)
+	{
+		this->setup(item);
+		this->graphicsWrapper->setupBufferSubData(item->meshData); // CHAMAR SÓ NA MUDANÇA DE TEXTO
+		this->graphicsWrapper->drawElement(item->meshData.front()->indices.size()); // ###
 	}
 
 	this->graphicsWrapper->disableGUISettings();
 	this->shaderManager->disableShader();
+}
+
+void GUIRenderer::setup(GUIImageComponent *guiComponent)
+{
+	// Matrix setup
+	TransformComponent *transform = guiComponent->getTransform();
+	glm::mat4 modelMatrix = transform->getMatrix();
+	this->shaderManager->setMat4(this->shaderProgram, "modelMatrix", &modelMatrix[0][0]);
+
+	this->graphicsWrapper->bindVAO(guiComponent->vao, guiComponent->vbo);
+	this->graphicsWrapper->enableGUISettings();
+	this->graphicsWrapper->activeDiffuseTexture(guiComponent->getTextureId());
 }
 
 } // namespace

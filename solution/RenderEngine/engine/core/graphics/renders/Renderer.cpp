@@ -94,7 +94,7 @@ void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, 
 			item->preDraw();
 		}
 
-		this->graphicsWrapper->drawElement(mesh->vao, mesh->objectData->indices.size());
+		this->graphicsWrapper->drawElement(mesh->objectData->indices.size());
 
 		for (const UPTR<ColorRendererComponent> &item : this->components)
 			item->postDraw();

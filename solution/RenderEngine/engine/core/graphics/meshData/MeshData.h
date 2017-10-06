@@ -38,16 +38,17 @@ struct VertexData : public ABaseVertexData
 template <typename T>
 struct MeshData
 {
-	VECTOR_UPTR<T> vertexData;
+	std::vector<T> vertexData;
 	std::vector<uint32_t> indices;
 
-	MeshData(VECTOR_UPTR<T> &vertexData, const std::vector<uint32_t> &indices)
-		: vertexData(std::move(vertexData)), indices(indices)
-	{ }
+	MeshData(const std::vector<T> &vertexData, const std::vector<uint32_t> &indices)
+		: vertexData(vertexData), indices(indices)
+	{
+	}
 
 	~MeshData()
 	{
-		this->vertexData.clear();
+		vertexData.clear();
 		this->indices.clear();
 	}
 };

@@ -10,7 +10,6 @@ bool FontAtlas::checkProperties(const std::unordered_map<std::string, std::strin
 	return
 	(
 		Atlas::checkProperties(properties) &&
-		(properties.size() == 5) &&
 		(properties.count(keys::ID) > 0) &&
 		(properties.count(keys::X) > 0) &&
 		(properties.count(keys::Y) > 0) &&

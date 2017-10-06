@@ -9,12 +9,12 @@
 namespace sre
 {
 
-class Atlas;
+class FontAtlas;
 
 class GUITextComponent : public GUIImageComponent
 {
 private:
-	Atlas *atlas;
+	FontAtlas *atlas;
 
 public:
 	void setText(const std::string &text);

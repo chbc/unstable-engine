@@ -1,7 +1,7 @@
 #ifndef _AGRAPHICS_WRAPPER_H_
 #define _AGRAPHICS_WRAPPER_H_
 
-#include <memory>
+#include <engine/utils/memory_aliases.h>
 #include <stack>
 #include <string>
 
@@ -10,6 +10,9 @@ namespace sre
 
 class MeshComponent;
 class GUIImageComponent;
+
+struct GUIVertexData;
+template <typename T> struct MeshData;
 
 class AGraphicsWrapper
 {
@@ -20,6 +23,7 @@ protected:
 	virtual void createVAO(MeshComponent *mesh) =0;
 	virtual void createEBO(MeshComponent *mesh) =0;
 	virtual void createGUIVAO(GUIImageComponent *guiComponent) =0;
+	virtual void createDynamicGUIVAO(GUIImageComponent *guiComponent, int size) =0;
 	virtual void createGUIEBO(GUIImageComponent *guiComponent) =0;
 
 	virtual void bindVAO(uint32_t vao, uint32_t vbo) =0;
@@ -34,7 +38,9 @@ protected:
 	virtual void activeSpecularTexture(uint32_t textureId) =0;
 	virtual void activeAOTexture(uint32_t textureId) =0;
 
-	virtual void drawElement(uint32_t vao, uint32_t indicesSize) =0;
+	virtual void setupBufferSubData(const VECTOR_UPTR<MeshData<GUIVertexData>> &meshData) = 0;
+
+	virtual void drawElement(uint32_t indicesSize) =0;
 
 	virtual void disableVertexPositions() =0;
 	virtual void disableVertexNormals() =0;

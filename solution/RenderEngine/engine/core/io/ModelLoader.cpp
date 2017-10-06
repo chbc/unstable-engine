@@ -51,19 +51,17 @@ Entity *ModelLoader::processNode(aiNode *node, const aiScene *scene)
 
 void ModelLoader::processMesh(aiMesh *inputMesh, const aiScene *scene, Entity *entity)
 {
-	VECTOR_UPTR<VertexData> vertexData;
-	VertexData *newData = nullptr;
-
+	std::vector<VertexData> vertexData;
 	for(uint32_t i = 0; i < inputMesh->mNumVertices; i++)
 	{
-		newData = new VertexData;
-		newData->position = glm::vec3(inputMesh->mVertices[i].x, inputMesh->mVertices[i].y, inputMesh->mVertices[i].z);
-		newData->normal = glm::vec3(inputMesh->mNormals[i].x, inputMesh->mNormals[i].y, inputMesh->mNormals[i].z);
+		VertexData newData;
+		newData.position = glm::vec3(inputMesh->mVertices[i].x, inputMesh->mVertices[i].y, inputMesh->mVertices[i].z);
+		newData.normal = glm::vec3(inputMesh->mNormals[i].x, inputMesh->mNormals[i].y, inputMesh->mNormals[i].z);
 
 		if (inputMesh->mTextureCoords[0])
 		{
-			newData->u = inputMesh->mTextureCoords[0][i].x;
-			newData->v = inputMesh->mTextureCoords[0][i].y;
+			newData.u = inputMesh->mTextureCoords[0][i].x;
+			newData.v = inputMesh->mTextureCoords[0][i].y;
 		}
 
 		vertexData.emplace_back(newData);

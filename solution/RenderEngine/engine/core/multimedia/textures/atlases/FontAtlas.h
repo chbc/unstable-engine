@@ -31,6 +31,8 @@ protected:
 	bool checkProperties(const std::unordered_map<std::string, std::string> &properties) override;
 	AtlasItem createItem(std::unordered_map<std::string, std::string> &propertiesMap) override;
 	inline uint16_t getMinItems() override { return 8; }
+
+friend class AtlasManager;
 };
 
 } // namespace

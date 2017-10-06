@@ -5,29 +5,63 @@
 namespace sre
 {
 
+void PrimitiveMeshFactory::createVerticesPlane2D(const glm::vec2 &size, const Rect &uv, float xOffset, std::vector<GUIVertexData> &result)
+{
+	float planeVertices[] = 
+	{ 
+		-size.x + xOffset, size.y + xOffset,
+		-size.x + xOffset,-size.y + xOffset,
+		size.x + xOffset,-size.y + xOffset,
+		size.x + xOffset, size.y + xOffset
+	};
+
+	// Positions
+	for (int i = 0; i < 8; i += 2)
+	{
+		GUIVertexData newData;
+		newData.position = glm::vec2(planeVertices[i], planeVertices[i + 1]);
+
+		result.emplace_back(newData);
+	}
+
+	// UVs
+	float x1 = uv.topLeft.x;
+	float y1 = uv.topLeft.y;
+	float x2 = uv.topLeft.x + uv.size.x;
+	float y2 = uv.topLeft.y + uv.size.y;
+
+	float planeTexCoords[] =
+	{
+		x1, y1,
+		x1, y2,
+		x2, y2,
+		x2, y1
+	};
+	getPlaneUVs(result, planeTexCoords);
+}
+
 UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size)
 {
 	Rect uv(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f));
 	return createPlane2D(size, uv);
 }
 
-UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size, const Rect &uv)
+UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size, const Rect &uv, float xOffset)
 {
 	float planeVertices[] = 
 	{ 
-		-size.x, size.y,
-		-size.x,-size.y,
-		size.x,-size.y,
-		size.x, size.y
+		-size.x + xOffset, size.y + xOffset,
+		-size.x + xOffset,-size.y + xOffset,
+		 size.x + xOffset,-size.y + xOffset,
+		 size.x + xOffset, size.y + xOffset
 	};
 
-	VECTOR_UPTR<GUIVertexData> vertexData;
-	GUIVertexData *newData;
+	std::vector<GUIVertexData> vertexData;
 	// Positions
 	for (int i = 0; i < 8; i += 2)
 	{
-		newData = new GUIVertexData;
-		newData->position = glm::vec2(planeVertices[i], planeVertices[i + 1]);
+		GUIVertexData newData;
+		newData.position = glm::vec2(planeVertices[i], planeVertices[i + 1]);
 
 		vertexData.emplace_back(newData);
 	}
@@ -49,7 +83,7 @@ UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(const glm::vec
 
 	// Indices
 	std::vector<uint32_t> indices;
-	getPlaneIndices(indices);
+	createPlaneIndices(indices);
 
 	return UPTR<MeshData<GUIVertexData>>{ new MeshData<GUIVertexData>{vertexData, indices} };
 }
@@ -74,14 +108,13 @@ UPTR<MeshData<VertexData>> PrimitiveMeshFactory::createPlane(float size)
 		0, 0, 1 
 	};
 
-	VECTOR_UPTR<VertexData> vertexData;
-	VertexData *newData;
+	std::vector<VertexData> vertexData;
 	// Positions and normals
 	for (int i = 0; i < 12; i += 3)
 	{
-		newData = new VertexData;
-		newData->position = glm::vec3(planeVertices[i], planeVertices[i + 1], planeVertices[i + 2]);
-		newData->normal = glm::vec3(planeNormals[i], planeNormals[i + 1], planeNormals[i + 2]);
+		VertexData newData;
+		newData.position = glm::vec3(planeVertices[i], planeVertices[i + 1], planeVertices[i + 2]);
+		newData.normal = glm::vec3(planeNormals[i], planeNormals[i + 1], planeNormals[i + 2]);
 
 		vertexData.emplace_back(newData);
 	}
@@ -98,7 +131,7 @@ UPTR<MeshData<VertexData>> PrimitiveMeshFactory::createPlane(float size)
 
 	// Indices
 	std::vector<uint32_t> indices;
-	getPlaneIndices(indices);
+	createPlaneIndices(indices);
 
 	// Tangents and bitangents
 	glm::vec3 tangent, bitangent;
@@ -107,17 +140,17 @@ UPTR<MeshData<VertexData>> PrimitiveMeshFactory::createPlane(float size)
 	{
 		MathUtils::calculateTangentAndBitangent
 		(
-			vertexData[indices[3*i]]->position, vertexData[indices[3*i + 1]]->position, vertexData[indices[3*i + 2]]->position,
-			glm::vec2(vertexData[indices[3*i]]->u, vertexData[indices[3*i]]->v), 
-			glm::vec2(vertexData[indices[3*i + 1]]->u, vertexData[indices[3*i + 1]]->v), 
-			glm::vec2(vertexData[indices[3*i + 2]]->u, vertexData[indices[3*i + 2]]->v),
+			vertexData[indices[3*i]].position, vertexData[indices[3*i + 1]].position, vertexData[indices[3*i + 2]].position,
+			glm::vec2(vertexData[indices[3*i]].u, vertexData[indices[3*i]].v), 
+			glm::vec2(vertexData[indices[3*i + 1]].u, vertexData[indices[3*i + 1]].v),
+			glm::vec2(vertexData[indices[3*i + 2]].u, vertexData[indices[3*i + 2]].v),
 			tangent, bitangent
 		);
 
 		for (int j = 0; j < 2; j++)
 		{
-			vertexData[indices[3 * i + j]]->tangent = tangent;
-			vertexData[indices[3 * i + j]]->bitangent = bitangent;
+			vertexData[indices[3 * i + j]].tangent = tangent;
+			vertexData[indices[3 * i + j]].bitangent = bitangent;
 		}
 	}
 
@@ -170,21 +203,20 @@ UPTR<MeshData<VertexData>> PrimitiveMeshFactory::createCube(float size)
 		0, 1,	1, 1,	1, 0,	0, 0 
 	};
 
-	VECTOR_UPTR<VertexData> vertexData;
-	VertexData *newData;
+	std::vector<VertexData> vertexData;
 	for (int i = 0; i < 72; i += 3)
 	{
-		newData = new VertexData;
-		newData->position = glm::vec3(cubeVertices[i], cubeVertices[i + 1], cubeVertices[i + 2]);
-		newData->normal = glm::vec3(cubeNormals[i], cubeNormals[i + 1], cubeNormals[i + 2]);
+		VertexData newData;
+		newData.position = glm::vec3(cubeVertices[i], cubeVertices[i + 1], cubeVertices[i + 2]);
+		newData.normal = glm::vec3(cubeNormals[i], cubeNormals[i + 1], cubeNormals[i + 2]);
 
 		vertexData.emplace_back(newData);
 	}
 
 	for (int i = 0; i < 24; i++)
 	{
-		vertexData[i]->u = cubeTexCoords[2 * i];
-		vertexData[i]->v = cubeTexCoords[(2 * i) + 1];
+		vertexData[i].u = cubeTexCoords[2 * i];
+		vertexData[i].v = cubeTexCoords[(2 * i) + 1];
 	}
 
 	std::vector<uint32_t> indices;
@@ -195,16 +227,19 @@ UPTR<MeshData<VertexData>> PrimitiveMeshFactory::createCube(float size)
 	return result;
 }
 
-void PrimitiveMeshFactory::getPlaneIndices(std::vector<uint32_t> &result)
+void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint32_t> &result, int planesCount)
 {
-	unsigned char planeIndices[] = 
+	unsigned char baseIndices[] = 
 	{ 
 		0, 1, 2,
-		2, 3, 0 
+		2, 3, 0,
 	};
 
-	for (int i = 0; i < 6; i++)
-		result.push_back(planeIndices[i]);
+	for (int planeIndex = 0; planeIndex < planesCount; planeIndex++)
+	{
+		for (int i = 0; i < 6; i++)
+			result.push_back(baseIndices[i] + (4 * planeIndex));
+	}
 }
 
 } // namespace

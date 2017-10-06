@@ -46,6 +46,8 @@ private:
 	void addEntity(Entity *entity);
 	void addMesh(MeshComponent *mesh);
 	void addGUIComponent(GUIImageComponent *guiComponent);
+	void addDynamicGUIComponent(GUIImageComponent *guiComponent);
+	void initGUIRenderer();
 
 	void setMainCamera(CameraComponent *camera);
 	CameraComponent *getMainCamera();

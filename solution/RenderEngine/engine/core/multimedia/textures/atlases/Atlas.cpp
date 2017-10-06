@@ -87,7 +87,7 @@ void Atlas::processLine(const std::string &input)
 
 void Atlas::getProperties(const std::string &input, std::unordered_map<std::string, std::string> &result)
 {
-	std::regex expression("\\w+=\\w+");
+	std::regex expression("\\w+=-?\\w+");
 
 	std::sregex_iterator iter(input.begin(), input.end(), expression);
 	std::sregex_iterator end;

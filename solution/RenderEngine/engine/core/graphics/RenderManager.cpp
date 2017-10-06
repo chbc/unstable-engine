@@ -3,6 +3,7 @@
 #include <engine/entities/Entity.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
 #include <engine/entities/components/gui/GUIImageComponent.h>
+#include <engine/entities/components/gui/GUITextComponent.h>
 #include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/core/wrappers/graphics/OpenGLAPI.h>
 #include <engine/core/multimedia/MultimediaManager.h>
@@ -49,7 +50,10 @@ void RenderManager::addEntity(Entity *entity)
 	else if (entity->hasComponent<GUIImageComponent>())
 	{
 		GUIImageComponent *guiComponent = entity->getComponent<GUIImageComponent>();
-		this->addGUIComponent(guiComponent);
+		if (guiComponent->getIsDynamic())
+			this->addDynamicGUIComponent(guiComponent);
+		else
+			this->addGUIComponent(guiComponent);
 	}
 
 	uint32_t size = entity->getChildrenCount();
@@ -81,13 +85,23 @@ void RenderManager::addMesh(MeshComponent *mesh)
 
 void RenderManager::addGUIComponent(GUIImageComponent *guiComponent)
 {
+	this->initGUIRenderer();
+	this->guiRenderer->addGUIComponent(guiComponent);
+}
+
+void RenderManager::addDynamicGUIComponent(GUIImageComponent *guiComponent)
+{
+	this->initGUIRenderer();
+	this->guiRenderer->addDynamicGUIComponent(guiComponent);
+}
+
+void RenderManager::initGUIRenderer()
+{
 	if (this->guiRenderer.get() == nullptr)
 	{
 		this->guiRenderer = UPTR<GUIRenderer>{ new GUIRenderer{this->shaderManager, this->graphicsWrapper} };
 		this->guiRenderer->loadShader();
 	}
-
-	this->guiRenderer->addGUIComponent(guiComponent);
 }
 
 void RenderManager::setMainCamera(CameraComponent *camera)

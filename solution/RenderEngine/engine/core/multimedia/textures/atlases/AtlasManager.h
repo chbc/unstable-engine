@@ -2,7 +2,7 @@
 #define _ATLAS_MANAGER_H_
 
 #include <unordered_map>
-#include "Atlas.h"
+#include "FontAtlas.h"
 #include <engine/utils/singleton_macros.h>
 
 namespace sre
@@ -18,9 +18,9 @@ private:
 
 private:
 	Atlas *getAtlas(const std::string &fileName);
-	Atlas *getFont(const std::string &fileName);
-	Atlas *getAtlas(const std::string &fileName, const std::string &textureExtension, const std::string &configExtension);
-	Atlas *loadAtlas(const std::string &textureFile, const std::string &configFile);
+	Atlas *loadAtlas(const std::string &baseFileName);
+	FontAtlas *getFont(const std::string &fileName);
+	FontAtlas *loadFont(const std::string &baseFileName);
 
 friend class GUITextComponent;
 friend class GUIImageComponent;
