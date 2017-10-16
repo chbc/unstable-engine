@@ -24,27 +24,23 @@ void GUITextComponent::setText(const std::string &text)
 		std::vector<GUIVertexData> vertices;
 		std::vector<uint32_t> indices;
 
-		int tt = 0;
+		float offset = 0;
+		int itemsCount = 0;
 		for (char item : text)
 		{
-			// this->makeGliph(item);
-			// ###
-			const AtlasItem atlasItem = this->atlas->getItem(std::to_string(item));
+			const FontItem *atlasItem = static_cast<const FontItem *>(this->atlas->getItem(std::to_string(item)));
 
-			meshFactory.createVerticesPlane2D(glm::vec2(0.1f, 0.1f), atlasItem.uv, tt * 0.2f, vertices);
-			tt++;
+			if (item != ' ')
+				meshFactory.createVerticesPlane2D(atlasItem->normalizedSize, atlasItem->uv, offset, vertices);
+
+			offset += (atlasItem->offset.x + atlasItem->xAdvance) * 1.75f;
+			
+			itemsCount++;
 		}
 
-		meshFactory.createPlaneIndices(indices, tt);
-		this->meshData.emplace_back(new MeshData<GUIVertexData>{ vertices, indices });
+		meshFactory.createPlaneIndices(indices, itemsCount);
+		this->meshData = std::make_unique<MeshData<GUIVertexData>>(vertices, indices);
 	}
-}
-
-// ###
-void GUITextComponent::makeGliph(int id)
-{
-	const AtlasItem atlasItem = this->atlas->getItem(std::to_string(id));
-	this->meshData.emplace_back((PrimitiveMeshFactory()).createPlane2D(glm::vec2(0.5f, 0.5f), atlasItem.uv));
 }
 
 uint32_t GUITextComponent::getTextureId()

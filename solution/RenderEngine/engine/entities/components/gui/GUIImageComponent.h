@@ -21,7 +21,7 @@ private:
 	bool isDynamic;
 
 protected:
-	VECTOR_UPTR<MeshData<GUIVertexData>> meshData;
+	UPTR<MeshData<GUIVertexData>> meshData;
 
 protected:
 	GUIImageComponent(Entity *entity, bool isDynamic = false);

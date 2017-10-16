@@ -20,6 +20,7 @@ void SampleApplication::onInit()
 	*/
 
 	// floor //
+	/* 
 	Entity *plane = this->sceneManager->createPlaneEntity(10);
 	TransformComponent *transform = plane->getTransform();
 	transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
@@ -30,6 +31,7 @@ void SampleApplication::onInit()
 	planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
 
 	this->sceneManager->addEntity(plane);
+	*/
 
 	/*
 	Entity *nanosuit = this->sceneManager->createModelEntity("../../media/nanosuit/nanosuit.obj");
@@ -48,9 +50,11 @@ void SampleApplication::onInit()
 	dLight2->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
 	*/
 
+	/* 
 	PointLightComponent *pLight1 = this->sceneManager->addPointLight();
 	pLight1->getTransform()->setPosition(glm::vec3(0.0f, 5.0f, 3.0f));
 	pLight1->setColor(glm::vec3(0.5f, 0.5f, 0.5f));
+	*/
 
 	/*
 	PointLightComponent *pLight2 = this->sceneManager->addPointLight();
@@ -63,7 +67,7 @@ void SampleApplication::onInit()
 
 	// GUI //
 	Entity *guiEntity;
-	/* ###
+	/* 
 	guiEntity = this->guiManager->createGUIImageEntityFromAtlas("../../media/atlases/test_texture_rect", "sete");
 	GUIImageComponent *guiComponent = guiEntity->getComponent<GUIImageComponent>();
 	guiComponent->setUIPosition(glm::vec2(0.5f, 0.5f));
@@ -73,7 +77,7 @@ void SampleApplication::onInit()
 
 	guiEntity = this->guiManager->createGUITextEntity("../../media/fonts/verdana");
 	GUITextComponent *textComponent = guiEntity->getComponent<GUITextComponent>();
-	textComponent->setText("tj");
+	textComponent->setText("Carlos Henrique");
 	textComponent->setUIPosition(glm::vec2(0.5f, 0.5f));
 	this->guiManager->addEntity(guiEntity);
 }

@@ -27,7 +27,12 @@ void MultimediaManager::release()
 	this->multimediaWrapper->release();
 }
 
-glm::vec2 MultimediaManager::getScreenBasedSize(const glm::vec2 &pixelSize)
+float MultimediaManager::getNormalizedWidth(float pixelWidth)
+{
+	return (pixelWidth / this->screenWidth);
+}
+
+glm::vec2 MultimediaManager::getNormalizedSize(const glm::vec2 &pixelSize)
 {
 	return glm::vec2(pixelSize.x / this->screenWidth, pixelSize.y / this->screenHeight);
 }

@@ -67,7 +67,7 @@ void OpenGLAPI::createEBO(MeshComponent *mesh)
 void OpenGLAPI::createGUIVAO(GUIImageComponent *guiComponent)
 {
 	// data
-	int dataSize = guiComponent->meshData.front()->vertexData.size();
+	int dataSize = guiComponent->meshData->vertexData.size();
 
 	// VAO
 	glGenVertexArrays(1, &guiComponent->vao);
@@ -76,7 +76,7 @@ void OpenGLAPI::createGUIVAO(GUIImageComponent *guiComponent)
 	// VBO
 	glGenBuffers(1, &guiComponent->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, guiComponent->vbo);
-	glBufferData(GL_ARRAY_BUFFER, dataSize * sizeof(GUIVertexData), &guiComponent->meshData.front()->vertexData[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, dataSize * sizeof(GUIVertexData), &guiComponent->meshData->vertexData[0], GL_STATIC_DRAW);
 }
 
 void OpenGLAPI::createDynamicGUIVAO(GUIImageComponent *guiComponent, int size)
@@ -88,17 +88,17 @@ void OpenGLAPI::createDynamicGUIVAO(GUIImageComponent *guiComponent, int size)
 	// VBO
 	glGenBuffers(1, &guiComponent->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, guiComponent->vbo);
-	glBufferData(GL_ARRAY_BUFFER, size, NULL, GL_DYNAMIC_DRAW);	// ###
+	glBufferData(GL_ARRAY_BUFFER, size, NULL, GL_DYNAMIC_DRAW);
 }
 
 void OpenGLAPI::createGUIEBO(GUIImageComponent *guiComponent)
 {
 	// EBO
 	glGenBuffers(1, &guiComponent->ebo);
-	int size = guiComponent->meshData.front()->indices.size();
+	int size = guiComponent->meshData->indices.size();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, guiComponent->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &guiComponent->meshData.front()->indices[0], GL_DYNAMIC_DRAW); // ###
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &guiComponent->meshData->indices[0], GL_DYNAMIC_DRAW); // ###
 }
 
 void OpenGLAPI::bindVAO(uint32_t vao, uint32_t vbo)
@@ -176,15 +176,13 @@ void OpenGLAPI::activeAOTexture(uint32_t textureId)
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-void OpenGLAPI::setupBufferSubData(const VECTOR_UPTR<MeshData<GUIVertexData>> &meshData)
+void OpenGLAPI::setupBufferSubData(const MeshData<GUIVertexData> *meshData)
 {
-	const UPTR<MeshData<GUIVertexData>> &item = meshData.front();
-	uint32_t DATA_SIZE = item->vertexData.size() * sizeof(GUIVertexData);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, DATA_SIZE, &item->vertexData[0]);
+	uint32_t DATA_SIZE = meshData->vertexData.size() * sizeof(GUIVertexData);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, DATA_SIZE, &meshData->vertexData[0]);
 }
 
-// ### glBufferSubData + glDrawElements?
-// TENTAR DRAW_ARRAYS
+
 void OpenGLAPI::drawElement(uint32_t indicesSize)
 {
 	glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_INT, nullptr);

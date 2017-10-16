@@ -31,7 +31,8 @@ public:
 	inline float getScreenHeight() { return this->screenHeight; }
 	inline float getAspectRatio() { return this->aspectRatio; }
 
-	glm::vec2 getScreenBasedSize(const glm::vec2 &pixelSize);
+	float getNormalizedWidth(float pixelWidth);
+	glm::vec2 getNormalizedSize(const glm::vec2 &pixelSize);
 
 private:
 	void swapBuffers();

@@ -30,7 +30,7 @@ protected:
 	void activeSpecularTexture(uint32_t textureId) override;
 	void activeAOTexture(uint32_t textureId) override;
 
-	void setupBufferSubData(const VECTOR_UPTR<MeshData<GUIVertexData>> &meshData) override;
+	void setupBufferSubData(const MeshData<GUIVertexData> *meshData) override;
 
 	void drawElement(uint32_t indicesSize) override;
 

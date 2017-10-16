@@ -23,13 +23,10 @@ struct AtlasItem
 {
 	Rect uv;
 	glm::vec2 pixelSize;
-	glm::vec2 screenBasedSize;
+	glm::vec2 normalizedSize;
 
-	AtlasItem() { }
-	AtlasItem(const AtlasItem &item) 
-		: uv(item.uv), pixelSize(item.pixelSize), screenBasedSize(item.screenBasedSize) { }
-	AtlasItem(Rect uv, glm::vec2 pixelSize, glm::vec2 screenBasedSize) 
-		: uv(uv), pixelSize(pixelSize), screenBasedSize(screenBasedSize) { }
+	AtlasItem(Rect uv, glm::vec2 pixelSize, glm::vec2 normalizedSize)
+		: uv(uv), pixelSize(pixelSize), normalizedSize(normalizedSize) { }
 };
 
 class Atlas
@@ -38,18 +35,18 @@ private:
 	Texture *texture;
 
 	// <id, item>
-	std::unordered_map<std::string, AtlasItem> items;
+	std::unordered_map<std::string, UPTR<AtlasItem>> items;
 
 protected:
 	Atlas(Texture *texture);
 
 	virtual bool checkProperties(const std::unordered_map<std::string, std::string> &properties);
-	virtual AtlasItem createItem(std::unordered_map<std::string, std::string> &propertiesMap);
+	virtual AtlasItem *createItem(std::unordered_map<std::string, std::string> &propertiesMap);
 	virtual uint16_t getMinItems();
 	float getValue(std::unordered_map<std::string, std::string> &propertiesMap, const std::string &key);
 
 private:
-	const AtlasItem &getItem(const std::string &id);
+	const AtlasItem *getItem(const std::string &id);
 	void load(const std::string &fontFileName);	// throws file not found
 	void processLine(const std::string &input);
 	void getProperties(const std::string &input, std::unordered_map<std::string, std::string> &result);

@@ -9,19 +9,19 @@ void PrimitiveMeshFactory::createVerticesPlane2D(const glm::vec2 &size, const Re
 {
 	float planeVertices[] = 
 	{ 
-		-size.x + xOffset, size.y + xOffset,
-		-size.x + xOffset,-size.y + xOffset,
-		size.x + xOffset,-size.y + xOffset,
-		size.x + xOffset, size.y + xOffset
+		-size.x + xOffset, size.y,
+		-size.x + xOffset,-size.y,
+		 size.x + xOffset,-size.y,
+		 size.x + xOffset, size.y
 	};
 
 	// Positions
+	std::vector<GUIVertexData> verticesData;
+	GUIVertexData newData;
 	for (int i = 0; i < 8; i += 2)
 	{
-		GUIVertexData newData;
 		newData.position = glm::vec2(planeVertices[i], planeVertices[i + 1]);
-
-		result.emplace_back(newData);
+		verticesData.emplace_back(newData);
 	}
 
 	// UVs
@@ -37,7 +37,12 @@ void PrimitiveMeshFactory::createVerticesPlane2D(const glm::vec2 &size, const Re
 		x2, y2,
 		x2, y1
 	};
-	getPlaneUVs(result, planeTexCoords);
+	getPlaneUVs(verticesData, planeTexCoords);
+	
+	for (GUIVertexData item : verticesData)
+	{
+		result.emplace_back(item);
+	}
 }
 
 UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size)

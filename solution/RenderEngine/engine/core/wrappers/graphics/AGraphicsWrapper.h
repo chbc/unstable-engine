@@ -38,7 +38,7 @@ protected:
 	virtual void activeSpecularTexture(uint32_t textureId) =0;
 	virtual void activeAOTexture(uint32_t textureId) =0;
 
-	virtual void setupBufferSubData(const VECTOR_UPTR<MeshData<GUIVertexData>> &meshData) = 0;
+	virtual void setupBufferSubData(const MeshData<GUIVertexData> *meshData) = 0;
 
 	virtual void drawElement(uint32_t indicesSize) =0;
 

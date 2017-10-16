@@ -24,7 +24,7 @@ bool Atlas::checkProperties(const std::unordered_map<std::string, std::string> &
 	);
 }
 
-AtlasItem Atlas::createItem(std::unordered_map<std::string, std::string> &propertiesMap)
+AtlasItem *Atlas::createItem(std::unordered_map<std::string, std::string> &propertiesMap)
 {
 	float textureWidth = static_cast<float>(this->texture->getWidth());
 	float textureHeight = static_cast<float>(this->texture->getHeight());
@@ -34,9 +34,9 @@ AtlasItem Atlas::createItem(std::unordered_map<std::string, std::string> &proper
 
 	glm::vec2 uvPositions(positions.x / textureWidth, positions.y / textureHeight);
 	glm::vec2 uvSize(pixelSize.x / textureWidth, pixelSize.y / textureHeight);
-	glm::vec2 screenBasedSize = MultimediaManager::getInstance()->getScreenBasedSize(pixelSize);
+	glm::vec2 screenBasedSize = MultimediaManager::getInstance()->getNormalizedSize(pixelSize);
 
-	return AtlasItem(Rect(uvPositions, uvSize), pixelSize, screenBasedSize);
+	return new AtlasItem(Rect(uvPositions, uvSize), pixelSize, screenBasedSize);
 }
 
 uint16_t Atlas::getMinItems()
@@ -49,9 +49,9 @@ float Atlas::getValue(std::unordered_map<std::string, std::string> &propertiesMa
 	return std::stof(propertiesMap[key].c_str());
 }
 
-const AtlasItem &Atlas::getItem(const std::string &id)
+const AtlasItem *Atlas::getItem(const std::string &id)
 {
-	return this->items[id];
+	return this->items[id].get();
 }
 
 void Atlas::load(const std::string &fontFileName)
@@ -80,7 +80,7 @@ void Atlas::processLine(const std::string &input)
 		if (this->checkProperties(propertiesMap))
 		{
 			std::string id = propertiesMap[keys::ID];
-			this->items[id] = this->createItem(propertiesMap);
+			this->items[id] = UPTR<AtlasItem>{ this->createItem(propertiesMap) };
 		}
 	}
 }

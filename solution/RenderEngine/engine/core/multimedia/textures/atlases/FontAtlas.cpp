@@ -1,4 +1,5 @@
 #include "FontAtlas.h"
+#include <engine/core/multimedia/MultimediaManager.h>
 
 namespace sre
 {
@@ -18,13 +19,17 @@ bool FontAtlas::checkProperties(const std::unordered_map<std::string, std::strin
 	);
 }
 
-AtlasItem FontAtlas::createItem(std::unordered_map<std::string, std::string> &propertiesMap)
+AtlasItem *FontAtlas::createItem(std::unordered_map<std::string, std::string> &propertiesMap)
 {
-	AtlasItem baseItem = Atlas::createItem(propertiesMap);
+	AtlasItem *baseItem = Atlas::createItem(propertiesMap);
 	glm::vec2 offset(this->getValue(propertiesMap, keys::X_OFFSET), this->getValue(propertiesMap, keys::Y_OFFSET));
 	float xAdvance = this->getValue(propertiesMap, keys::X_ADVANCE);
 
-	return FontItem(baseItem, offset, xAdvance);
+	MultimediaManager *multimediaManager = MultimediaManager::getInstance();
+	offset = multimediaManager->getNormalizedSize(offset);
+	xAdvance = multimediaManager->getNormalizedWidth(xAdvance);
+
+	return new FontItem(baseItem, offset, xAdvance);
 }
 
 } // namespace

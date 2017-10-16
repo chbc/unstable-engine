@@ -31,7 +31,7 @@ void GUIRenderer::addGUIComponent(GUIImageComponent *guiComponent)
 void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 {
 	this->dynamicGUIComponents.push_back(guiComponent);
-	this->graphicsWrapper->createDynamicGUIVAO(guiComponent, sizeof(GUIVertexData) * 10);
+	this->graphicsWrapper->createDynamicGUIVAO(guiComponent, sizeof(GUIVertexData) * 100);
 	this->graphicsWrapper->createGUIEBO(guiComponent);
 }
 
@@ -49,15 +49,15 @@ void GUIRenderer::render(MatrixManager *matrixManager)
 	for (GUIImageComponent *item : this->guiComponents)
 	{
 		this->setup(item);
-		this->graphicsWrapper->drawElement(item->meshData.front()->indices.size());
+		this->graphicsWrapper->drawElement(item->meshData->indices.size());
 	}
 
 	// Dynamic meshes
 	for (GUIImageComponent *item : this->dynamicGUIComponents)
 	{
 		this->setup(item);
-		this->graphicsWrapper->setupBufferSubData(item->meshData); // CHAMAR SÓ NA MUDANÇA DE TEXTO
-		this->graphicsWrapper->drawElement(item->meshData.front()->indices.size()); // ###
+		this->graphicsWrapper->setupBufferSubData(item->meshData.get()); // ### CHAMAR SÓ NA MUDANÇA DE TEXTO
+		this->graphicsWrapper->drawElement(item->meshData->indices.size());
 	}
 
 	this->graphicsWrapper->disableGUISettings();

@@ -18,10 +18,9 @@ void GUIImageComponent::load(const std::string &fileName)
 {
 	Texture *texture = RenderManager::getInstance()->loadDiffuseTexture(fileName);
 	glm::vec2 pixelSize(texture->getWidth(), texture->getHeight());
-	glm::vec2 screenBasedSize = MultimediaManager::getInstance()->getScreenBasedSize(pixelSize);
+	glm::vec2 screenBasedSize = MultimediaManager::getInstance()->getNormalizedSize(pixelSize);
 
-
-	this->meshData.emplace_back((PrimitiveMeshFactory()).createPlane2D(screenBasedSize));
+	this->meshData = (PrimitiveMeshFactory()).createPlane2D(screenBasedSize);
 	this->textureId = texture->getId();
 }
 
@@ -29,9 +28,9 @@ void GUIImageComponent::loadFromAtlas(const std::string &fileName, const std::st
 {
 	Atlas *atlas = AtlasManager::getInstance()->getAtlas(fileName);
 
-	const AtlasItem atlasItem = atlas->getItem(imageId);
+	const AtlasItem *atlasItem = atlas->getItem(imageId);
 
-	this->meshData.emplace_back((PrimitiveMeshFactory()).createPlane2D(atlasItem.screenBasedSize, atlasItem.uv));
+	this->meshData = (PrimitiveMeshFactory()).createPlane2D(atlasItem->normalizedSize, atlasItem->uv);
 	this->textureId = atlas->getTextureId();
 }
 
