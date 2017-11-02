@@ -25,7 +25,7 @@ Entity *GUIManager::createGUIImageEntityFromAtlas(const std::string &fileName, c
 Entity *GUIManager::createGUITextEntity(const std::string fontFile)
 {
 	Entity *result = this->createEntity();
-	GUITextComponent *component = result->addComponent<GUITextComponent>();
+	GUITextComponent *component = result->addComponent<GUITextComponent>(100);
 	component->loadFont(fontFile);
 
 	return result;

@@ -13,7 +13,7 @@ class Rect;
 class PrimitiveMeshFactory
 {
 public:
-	void createVerticesPlane2D(const glm::vec2 &size, const Rect &uv, float xOffset, std::vector<GUIVertexData> &result);
+	void createVerticesPlane2D(const glm::vec2 &size, const Rect &uv, const glm::vec2 &offset, std::vector<GUIVertexData> &result);
 	UPTR<MeshData<GUIVertexData>> createPlane2D(const glm::vec2 &size);
 	UPTR<MeshData<GUIVertexData>> createPlane2D(const glm::vec2 &size, const Rect &uv, float xOffset = 0.0f);
 	UPTR<MeshData<VertexData>> createPlane(float size);

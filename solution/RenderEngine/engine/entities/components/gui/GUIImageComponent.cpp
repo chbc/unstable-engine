@@ -9,7 +9,10 @@
 namespace sre
 {
 
-GUIImageComponent::GUIImageComponent(Entity *entity, bool isDynamic) : AEntityComponent(entity), isDynamic(isDynamic)
+GUIImageComponent::GUIImageComponent(Entity *entity, int maxItems) 
+    :   AEntityComponent(entity), 
+        maxItems(maxItems),
+        isDynamic(maxItems > 0)
 {
 	this->setUIPosition(glm::vec2(0.0f, 0.0f));
 }

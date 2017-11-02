@@ -5,19 +5,19 @@
 namespace sre
 {
 
-void PrimitiveMeshFactory::createVerticesPlane2D(const glm::vec2 &size, const Rect &uv, float xOffset, std::vector<GUIVertexData> &result)
+void PrimitiveMeshFactory::createVerticesPlane2D(const glm::vec2 &size, const Rect &uv, const glm::vec2 &offset, std::vector<GUIVertexData> &result)
 {
 	float planeVertices[] = 
 	{ 
-		-size.x + xOffset, size.y,
-		-size.x + xOffset,-size.y,
-		 size.x + xOffset,-size.y,
-		 size.x + xOffset, size.y
+		offset.x,            offset.y + size.y,
+		offset.x,            offset.y - size.y,
+		size.x*2 + offset.x, offset.y - size.y,
+		size.x*2 + offset.x, offset.y + size.y
 	};
 
 	// Positions
 	std::vector<GUIVertexData> verticesData;
-	GUIVertexData newData;
+	GUIVertexData newData; 
 	for (int i = 0; i < 8; i += 2)
 	{
 		newData.position = glm::vec2(planeVertices[i], planeVertices[i + 1]);

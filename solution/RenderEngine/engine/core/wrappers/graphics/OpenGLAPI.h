@@ -15,7 +15,6 @@ protected:
 	void createVAO(MeshComponent *mesh) override;
 	void createEBO(MeshComponent *mesh) override;
 	void createGUIVAO(GUIImageComponent *guiComponent) override;
-	void createDynamicGUIVAO(GUIImageComponent *guiComponent, int size) override;
 	void createGUIEBO(GUIImageComponent *guiComponent) override;
 
 	void bindVAO(uint32_t vao, uint32_t vbo) override;

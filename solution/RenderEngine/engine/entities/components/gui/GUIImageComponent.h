@@ -18,13 +18,14 @@ private:
 	uint32_t ebo;
 
 	glm::vec2 uiPosition;
-	bool isDynamic;
+	bool isDynamic; // ###
 
 protected:
 	UPTR<MeshData<GUIVertexData>> meshData;
+    int maxItems; // ###
 
 protected:
-	GUIImageComponent(Entity *entity, bool isDynamic = false);
+	GUIImageComponent(Entity *entity, int maxItems = 0);
 
 public:
 	void setUIPosition(const glm::vec2 &position);

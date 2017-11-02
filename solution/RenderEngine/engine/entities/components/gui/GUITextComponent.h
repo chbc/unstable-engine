@@ -20,7 +20,7 @@ public:
 	void setText(const std::string &text);
 
 private:
-	GUITextComponent(Entity *entity);
+	GUITextComponent(Entity *entity, int maxItems);
 
 	void loadFont(const std::string &fontFile);
 	uint32_t getTextureId() override;

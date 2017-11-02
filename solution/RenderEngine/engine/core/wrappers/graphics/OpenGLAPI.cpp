@@ -66,29 +66,26 @@ void OpenGLAPI::createEBO(MeshComponent *mesh)
 
 void OpenGLAPI::createGUIVAO(GUIImageComponent *guiComponent)
 {
-	// data
-	int dataSize = guiComponent->meshData->vertexData.size();
-
 	// VAO
 	glGenVertexArrays(1, &guiComponent->vao);
 	glBindVertexArray(guiComponent->vao);
 
+    GLenum usage = GL_DYNAMIC_DRAW;
+    void *data = nullptr;
+    int size = guiComponent->maxItems * 4;
+
+    // data
+    if (size <= 0) // ### MAX ITEMS NÃO PODE SIGNIFICAR DINAMICO
+    {
+        size = guiComponent->meshData->vertexData.size();
+        usage = GL_STATIC_DRAW;
+        data = &guiComponent->meshData->vertexData[0];
+    }
+
 	// VBO
 	glGenBuffers(1, &guiComponent->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, guiComponent->vbo);
-	glBufferData(GL_ARRAY_BUFFER, dataSize * sizeof(GUIVertexData), &guiComponent->meshData->vertexData[0], GL_STATIC_DRAW);
-}
-
-void OpenGLAPI::createDynamicGUIVAO(GUIImageComponent *guiComponent, int size)
-{
-	// VAO
-	glGenVertexArrays(1, &guiComponent->vao);
-	glBindVertexArray(guiComponent->vao);
-
-	// VBO
-	glGenBuffers(1, &guiComponent->vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, guiComponent->vbo);
-	glBufferData(GL_ARRAY_BUFFER, size, NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, size * sizeof(GUIVertexData), data, usage);
 }
 
 void OpenGLAPI::createGUIEBO(GUIImageComponent *guiComponent)
@@ -96,9 +93,10 @@ void OpenGLAPI::createGUIEBO(GUIImageComponent *guiComponent)
 	// EBO
 	glGenBuffers(1, &guiComponent->ebo);
 	int size = guiComponent->meshData->indices.size();
+    GLenum usage = guiComponent->isDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW;
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, guiComponent->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &guiComponent->meshData->indices[0], GL_DYNAMIC_DRAW); // ###
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &guiComponent->meshData->indices[0], usage);
 }
 
 void OpenGLAPI::bindVAO(uint32_t vao, uint32_t vbo)
@@ -114,7 +112,6 @@ void OpenGLAPI::enableGUISettings()
 	glEnableVertexAttribArray(EAttribLocation::POSITION);
 	glVertexAttribPointer(EAttribLocation::POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), GUIVertexData::getPositionOffset());
 
-	// ###
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 }

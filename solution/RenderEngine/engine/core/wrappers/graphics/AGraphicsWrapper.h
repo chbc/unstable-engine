@@ -23,7 +23,6 @@ protected:
 	virtual void createVAO(MeshComponent *mesh) =0;
 	virtual void createEBO(MeshComponent *mesh) =0;
 	virtual void createGUIVAO(GUIImageComponent *guiComponent) =0;
-	virtual void createDynamicGUIVAO(GUIImageComponent *guiComponent, int size) =0;
 	virtual void createGUIEBO(GUIImageComponent *guiComponent) =0;
 
 	virtual void bindVAO(uint32_t vao, uint32_t vbo) =0;
@@ -38,7 +37,7 @@ protected:
 	virtual void activeSpecularTexture(uint32_t textureId) =0;
 	virtual void activeAOTexture(uint32_t textureId) =0;
 
-	virtual void setupBufferSubData(const MeshData<GUIVertexData> *meshData) = 0;
+	virtual void setupBufferSubData(const MeshData<GUIVertexData> *meshData) =0;
 
 	virtual void drawElement(uint32_t indicesSize) =0;
 

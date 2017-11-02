@@ -31,7 +31,7 @@ void GUIRenderer::addGUIComponent(GUIImageComponent *guiComponent)
 void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 {
 	this->dynamicGUIComponents.push_back(guiComponent);
-	this->graphicsWrapper->createDynamicGUIVAO(guiComponent, sizeof(GUIVertexData) * 100);
+	this->graphicsWrapper->createGUIVAO(guiComponent);
 	this->graphicsWrapper->createGUIEBO(guiComponent);
 }
 
