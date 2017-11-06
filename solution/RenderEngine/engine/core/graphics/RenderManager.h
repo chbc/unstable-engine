@@ -23,6 +23,9 @@ class PointLightComponent;
 class Renderer;
 class GUIRenderer;
 
+struct GUIVertexData;
+template <typename T> struct MeshData;
+
 /*!
 	Singleton Class to handle renders
 */
@@ -67,6 +70,8 @@ private:
 	Texture *loadSpecularTexture(const std::string &fileName);
 	Texture *loadAOTexture(const std::string &fileName);
 
+    void setupBufferSubData(const GUIImageComponent *guiComponent);
+
 friend class AEntityManager;
 friend class SceneManager;
 friend class AtlasManager;
@@ -74,6 +79,7 @@ friend class MeshComponent;
 friend class RenderEngine;
 friend class Material;
 friend class GUIImageComponent;
+friend class GUITextComponent;
 friend class DiffuseMaterialComponent;
 friend class NormalMaterialComponent;
 friend class SpecularMaterialComponent;

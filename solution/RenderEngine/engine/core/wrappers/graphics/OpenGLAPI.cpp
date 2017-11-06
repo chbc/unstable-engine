@@ -66,21 +66,21 @@ void OpenGLAPI::createEBO(MeshComponent *mesh)
 
 void OpenGLAPI::createGUIVAO(GUIImageComponent *guiComponent)
 {
-	// VAO
-	glGenVertexArrays(1, &guiComponent->vao);
-	glBindVertexArray(guiComponent->vao);
-
-    GLenum usage = GL_DYNAMIC_DRAW;
     void *data = nullptr;
     int size = guiComponent->maxItems * 4;
+    GLenum usage = GL_DYNAMIC_DRAW;
 
     // data
-    if (size <= 0) // ### MAX ITEMS NÃO PODE SIGNIFICAR DINAMICO
+    if (!guiComponent->isDynamic)
     {
+        data = &guiComponent->meshData->vertexData[0];
         size = guiComponent->meshData->vertexData.size();
         usage = GL_STATIC_DRAW;
-        data = &guiComponent->meshData->vertexData[0];
     }
+
+    // VAO
+    glGenVertexArrays(1, &guiComponent->vao);
+    glBindVertexArray(guiComponent->vao);
 
 	// VBO
 	glGenBuffers(1, &guiComponent->vbo);
@@ -90,13 +90,21 @@ void OpenGLAPI::createGUIVAO(GUIImageComponent *guiComponent)
 
 void OpenGLAPI::createGUIEBO(GUIImageComponent *guiComponent)
 {
-	// EBO
-	glGenBuffers(1, &guiComponent->ebo);
-	int size = guiComponent->meshData->indices.size();
-    GLenum usage = guiComponent->isDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW;
+    void *data = nullptr;
+	int size = guiComponent->maxItems * 6;
+    GLenum usage = GL_DYNAMIC_DRAW;
 
+    if (!guiComponent->isDynamic)
+    {
+        data = &guiComponent->meshData->indices[0];
+        size = guiComponent->meshData->indices.size();
+        usage = GL_STATIC_DRAW;
+    }
+
+    // EBO
+    glGenBuffers(1, &guiComponent->ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, guiComponent->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &guiComponent->meshData->indices[0], usage);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), data, usage);
 }
 
 void OpenGLAPI::bindVAO(uint32_t vao, uint32_t vbo)
@@ -175,10 +183,12 @@ void OpenGLAPI::activeAOTexture(uint32_t textureId)
 
 void OpenGLAPI::setupBufferSubData(const MeshData<GUIVertexData> *meshData)
 {
-	uint32_t DATA_SIZE = meshData->vertexData.size() * sizeof(GUIVertexData);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, DATA_SIZE, &meshData->vertexData[0]);
-}
+    uint32_t size = meshData->indices.size() * sizeof(uint32_t);
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, size, &meshData->indices[0]);
 
+	size = meshData->vertexData.size() * sizeof(GUIVertexData);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, size, &meshData->vertexData[0]);
+}
 
 void OpenGLAPI::drawElement(uint32_t indicesSize)
 {

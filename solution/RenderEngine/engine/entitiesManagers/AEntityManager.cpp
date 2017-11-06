@@ -33,6 +33,7 @@ void AEntityManager::addEntity(Entity *entity, const std::string &name)
 	this->entitiesToBeAdded.erase(entity);
 
 	RenderManager::getInstance()->addEntity(entity);
+    entity->onStart();
 }
 
 const std::string AEntityManager::generateEntityId()

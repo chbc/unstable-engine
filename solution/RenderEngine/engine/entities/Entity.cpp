@@ -7,12 +7,20 @@ Entity::Entity() : AComponentsHolder<AEntityComponent>()
 {
 	this->transform = this->addComponent<TransformComponent>();
 	this->parent = nullptr;
-	this->alive = true;
+	this->alive = false;
 }
 
 Entity::~Entity()
 {
 	this->children.clear();
+}
+
+void Entity::onStart()
+{
+    this->alive = true;
+
+    for (auto const &item : this->components)
+        item->onStart();
 }
 
 void Entity::update(uint32_t deltaTime)

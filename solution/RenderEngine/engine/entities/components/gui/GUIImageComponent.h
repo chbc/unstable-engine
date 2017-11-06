@@ -22,10 +22,10 @@ private:
 
 protected:
 	UPTR<MeshData<GUIVertexData>> meshData;
-    int maxItems; // ###
+    uint32_t maxItems; // ###
 
 protected:
-	GUIImageComponent(Entity *entity, int maxItems = 0);
+	GUIImageComponent(Entity *entity, uint32_t maxItems = 0);
 
 public:
 	void setUIPosition(const glm::vec2 &position);
@@ -41,6 +41,7 @@ friend class Entity;
 friend class OpenGLAPI;
 friend class GUIRenderer;
 friend class GUIManager;
+friend class RenderManager;
 };
 
 } // namespace

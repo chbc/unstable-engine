@@ -9,17 +9,16 @@
 namespace sre
 {
 
-GUIImageComponent::GUIImageComponent(Entity *entity, int maxItems) 
+GUIImageComponent::GUIImageComponent(Entity *entity, uint32_t maxItems) 
     :   AEntityComponent(entity), 
-        maxItems(maxItems),
-        isDynamic(maxItems > 0)
+        maxItems(maxItems), isDynamic(maxItems > 0)
 {
 	this->setUIPosition(glm::vec2(0.0f, 0.0f));
 }
 
 void GUIImageComponent::load(const std::string &fileName)
 {
-	Texture *texture = RenderManager::getInstance()->loadDiffuseTexture(fileName);
+	Texture *texture = RenderManager::getInstance()->loadGUITexture(fileName);
 	glm::vec2 pixelSize(texture->getWidth(), texture->getHeight());
 	glm::vec2 screenBasedSize = MultimediaManager::getInstance()->getNormalizedSize(pixelSize);
 

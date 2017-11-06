@@ -1,8 +1,11 @@
 #include "GUITextComponent.h"
 
+#include <engine/core/graphics/RenderManager.h>
 #include <engine/core/multimedia/textures/atlases/AtlasManager.h>
 #include <engine/core/multimedia/textures/Texture.h>
 #include <engine/core/graphics/meshData/PrimitiveMeshFactory.h>
+#include <engine/entities/Entity.h>
+#include <engine/utils/Log.h>
 
 namespace sre
 {
@@ -17,9 +20,17 @@ void GUITextComponent::loadFont(const std::string &fontFile)
 	this->atlas = atlasManager->getFont(fontFile);
 }
 
+void GUITextComponent::onStart()
+{
+    if (this->meshData.get() != nullptr)
+        RenderManager::getInstance()->setupBufferSubData(this);
+}
+
 void GUITextComponent::setText(const std::string &text)
 {
-	if (!text.empty() && (text.size() <= this->maxItems))
+    if (text.size() > this->maxItems)
+        throw "[ERROR] [GUITextComponent] - Text bigger than maxItems";
+	else if (!text.empty())
 	{
 		PrimitiveMeshFactory meshFactory;
 		std::vector<GUIVertexData> vertices;
@@ -30,6 +41,12 @@ void GUITextComponent::setText(const std::string &text)
 		for (char item : text)
 		{
 			const FontItem *atlasItem = static_cast<const FontItem *>(this->atlas->getItem(std::to_string(item)));
+            if (atlasItem == nullptr)
+            {
+                Log::logMessage("'" + std::to_string(item) + "' does not exists in the loaded atlas");
+                continue;
+            }
+
 			offset.y = -atlasItem->offset.y;
 
 			if (item != ' ')
@@ -42,11 +59,10 @@ void GUITextComponent::setText(const std::string &text)
 
 		meshFactory.createPlaneIndices(indices, itemsCount);
 		this->meshData = std::make_unique<MeshData<GUIVertexData>>(vertices, indices);
+
+        if (this->getEntity()->isAlive())
+            RenderManager::getInstance()->setupBufferSubData(this);
 	}
-    else
-    {
-        throw "[ERROR] [GUITextComponent] - Text is empty or is bigger than maxItems";
-    }
 }
 
 uint32_t GUITextComponent::getTextureId()

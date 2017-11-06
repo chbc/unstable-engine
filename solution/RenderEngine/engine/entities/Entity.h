@@ -42,6 +42,7 @@ public:
 		return newComponent;
 	}
 
+    void onStart();
 	void update(uint32_t deltaTime);
 
 	void addChild(Entity *child);

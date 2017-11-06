@@ -46,7 +46,7 @@ FontAtlas *AtlasManager::getFont(const std::string &fileName)
 		result = this->loadFont(fileName);
 	}
 
-	return this->loadFont(fileName);
+	return result;
 }
 
 FontAtlas *AtlasManager::loadFont(const std::string &baseFileName)

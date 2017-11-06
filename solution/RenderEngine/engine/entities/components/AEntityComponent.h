@@ -14,11 +14,14 @@ class AEntityComponent
 private:
 	Entity *entity;
 
+
+
 public:
 	inline Entity *getEntity() { return this->entity; }
 
-// protected:
+// protected: ###
 	AEntityComponent(Entity *entity) { this->entity = entity; }
+    virtual void onStart() {}
 	virtual void update(uint32_t deltaTime) {}
 
 	TransformComponent *getTransform();

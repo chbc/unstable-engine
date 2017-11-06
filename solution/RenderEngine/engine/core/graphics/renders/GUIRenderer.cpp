@@ -56,7 +56,6 @@ void GUIRenderer::render(MatrixManager *matrixManager)
 	for (GUIImageComponent *item : this->dynamicGUIComponents)
 	{
 		this->setup(item);
-		this->graphicsWrapper->setupBufferSubData(item->meshData.get()); // ### CHAMAR SÓ NA MUDANÇA DE TEXTO
 		this->graphicsWrapper->drawElement(item->meshData->indices.size());
 	}
 

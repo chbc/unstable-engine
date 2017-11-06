@@ -2,6 +2,7 @@
 #include <application/events/EventReceiver.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
 #include <engine/entities/components/gui/GUIImageComponent.h>
+#include <sstream>
 
 SampleApplication::SampleApplication() : RenderEngine()
 {
@@ -75,11 +76,19 @@ void SampleApplication::onInit()
 	this->guiManager->addEntity(guiEntity);
 	*/
 
-	guiEntity = this->guiManager->createGUITextEntity("../../media/fonts/verdana");
-	GUITextComponent *textComponent = guiEntity->getComponent<GUITextComponent>();
-	textComponent->setText("Carlos Henrique");
-	textComponent->setUIPosition(glm::vec2(0.5f, 0.5f));
-	this->guiManager->addEntity(guiEntity);
+    std::stringstream ss;
+    for (int i = 0; i < 10; i++)
+    {
+        guiEntity = this->guiManager->createGUITextEntity("../../media/fonts/verdana");
+        GUITextComponent *textComponent = guiEntity->getComponent<GUITextComponent>();
+        textComponent->setUIPosition(glm::vec2(0.25f, 0.1f + i * 0.05f));
+        ss << "Texto " << i;
+        textComponent->setText(ss.str());
+        this->guiManager->addEntity(guiEntity);
+
+        ss.str( std::string() );
+        ss.clear();
+    }
 }
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)

@@ -17,6 +17,7 @@ private:
 	FontAtlas *atlas;
 
 public:
+    void onStart() override;
 	void setText(const std::string &text);
 
 private:
