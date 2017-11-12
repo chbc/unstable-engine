@@ -6,8 +6,6 @@
 namespace sre
 {
 
-SDL_Window *SDLAPI::TEMP_SDL_WINDOW = nullptr;
-
 void SDLAPI::init(float width, float height, const std::string &title)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -27,8 +25,6 @@ void SDLAPI::init(float width, float height, const std::string &title)
 		static_cast<int>(width), static_cast<int>(height),
 		flags
 	);
-
-	TEMP_SDL_WINDOW = this->window;
 
 	if (this->window == NULL)
 		throw this->getError();

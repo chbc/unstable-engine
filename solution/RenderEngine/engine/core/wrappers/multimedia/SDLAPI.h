@@ -28,10 +28,6 @@ protected:
 	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) override;
 	void release() override;
 
-	// ###
-public:
-	static SDL_Window *TEMP_SDL_WINDOW;
-
 private:
 	std::string getError();
 };
