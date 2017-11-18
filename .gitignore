@@ -11,3 +11,4 @@ solution/obj/
 bin/tests/
 solution/RenderEngine.VC.db
 solution/RenderEngine.VC.VC.opendb
+*.tmp
