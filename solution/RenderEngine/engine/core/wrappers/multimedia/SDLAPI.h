@@ -10,7 +10,7 @@ union SDL_Event;
 namespace sre
 {
 
-class SDLAPI : AMultimediaWrapper
+class SDLAPI : public AMultimediaWrapper
 {
 private:
 	SDL_Window *window;
