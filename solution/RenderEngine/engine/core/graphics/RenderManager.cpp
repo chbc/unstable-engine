@@ -5,8 +5,9 @@
 #include <engine/entities/components/gui/GUIImageComponent.h>
 #include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/core/wrappers/graphics/OpenGLAPI.h>
-#include <engine/core/multimedia/MultimediaManager.h>
 #include <engine/core/multimedia/textures/TextureManager.h>
+#include <engine/core/multimedia/MultimediaManager.h>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 #include "meshData/MeshData.h"
 #include "MatrixManager.h"
 #include "LightManager.h"
@@ -35,7 +36,7 @@ void RenderManager::init()
 {
 	this->graphicsWrapper->init();
 
-	MultimediaManager *multimediaManager = MultimediaManager::getInstance();
+	MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
 	const float FOV{90.0f};
 	this->matrixManager->setProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 100);
 }

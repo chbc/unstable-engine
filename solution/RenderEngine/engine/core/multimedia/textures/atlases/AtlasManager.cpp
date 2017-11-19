@@ -4,11 +4,10 @@
 namespace sre
 {
 
-IMPLEMENT_SINGLETON(AtlasManager)
-
-AtlasManager::AtlasManager() { }
-
-void AtlasManager::init() { }
+void AtlasManager::release()
+{
+    this->atlases.clear();
+}
 
 Atlas *AtlasManager::getAtlas(const std::string &fileName)
 {
@@ -62,11 +61,6 @@ FontAtlas *AtlasManager::loadFont(const std::string &baseFileName)
 	this->atlases[baseFileName] = std::move(newItem);
 
 	return result;
-}
-
-void AtlasManager::release() 
-{ 
-	this->atlases.clear();
 }
 
 } // namespace

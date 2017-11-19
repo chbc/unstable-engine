@@ -3,18 +3,21 @@
 
 #include <unordered_map>
 #include "FontAtlas.h"
-#include <engine/utils/singleton_macros.h>
+#include <engine/core/singletonsManager/ISingleton.h>
 
 namespace sre
 {
 
-class AtlasManager
+class AtlasManager : public ISingleton
 {
-DECLARE_SINGLETON(AtlasManager)
 
 private:
 	// <path, atlas>
 	std::unordered_map<std::string, UPTR<Atlas>> atlases;
+
+protected:
+    void init() override {}
+    void release() override;
 
 private:
 	Atlas *getAtlas(const std::string &fileName);
@@ -24,6 +27,7 @@ private:
 
 friend class GUITextComponent;
 friend class GUIImageComponent;
+friend class SingletonsManager;
 };
 
 } // namespace

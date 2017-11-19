@@ -3,6 +3,7 @@
 
 #include <engine/utils/singleton_macros.h>
 #include <glm/vec3.hpp>
+#include <engine/core/singletonsManager/ISingleton.h>
 
 namespace sre
 {
@@ -29,7 +30,7 @@ template <typename T> struct MeshData;
 /*!
 	Singleton Class to handle renders
 */
-class RenderManager
+class RenderManager : ISingleton
 {
 DECLARE_SINGLETON(RenderManager)
 
@@ -84,6 +85,7 @@ friend class DiffuseMaterialComponent;
 friend class NormalMaterialComponent;
 friend class SpecularMaterialComponent;
 friend class AmbientOcclusionMaterialComponent;
+friend class SingletonsManager;
 };
 
 } // namespace

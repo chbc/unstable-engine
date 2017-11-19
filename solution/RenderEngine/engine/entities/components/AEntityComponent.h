@@ -14,8 +14,6 @@ class AEntityComponent
 private:
 	Entity *entity;
 
-
-
 public:
 	inline Entity *getEntity() { return this->entity; }
 

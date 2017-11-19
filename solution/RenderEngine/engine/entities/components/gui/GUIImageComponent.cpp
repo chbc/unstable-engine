@@ -1,6 +1,7 @@
 #include "GUIImageComponent.h"
 #include <engine/core/graphics/RenderManager.h>
 #include <engine/core/multimedia/MultimediaManager.h>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/core/multimedia/textures/Texture.h>
 #include <engine/core/multimedia/textures/atlases/AtlasManager.h>
 #include <engine/entities/components/transforms/TransformComponent.h>
@@ -20,7 +21,7 @@ void GUIImageComponent::load(const std::string &fileName)
 {
 	Texture *texture = RenderManager::getInstance()->loadGUITexture(fileName);
 	glm::vec2 pixelSize(texture->getWidth(), texture->getHeight());
-	glm::vec2 screenBasedSize = MultimediaManager::getInstance()->getNormalizedSize(pixelSize);
+	glm::vec2 screenBasedSize = SingletonsManager::getInstance()->resolve<MultimediaManager>()->getNormalizedSize(pixelSize);
 
 	this->meshData = (PrimitiveMeshFactory()).createPlane2D(screenBasedSize);
 	this->textureId = texture->getId();
@@ -28,7 +29,7 @@ void GUIImageComponent::load(const std::string &fileName)
 
 void GUIImageComponent::loadFromAtlas(const std::string &fileName, const std::string &imageId)
 {
-	Atlas *atlas = AtlasManager::getInstance()->getAtlas(fileName);
+	Atlas *atlas = SingletonsManager::getInstance()->resolve<AtlasManager>()->getAtlas(fileName);
 
 	const AtlasItem *atlasItem = atlas->getItem(imageId);
 

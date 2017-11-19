@@ -165,6 +165,9 @@
     <ClCompile Include="engine\core\multimedia\textures\atlases\FontAtlas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\core\singletonsManager\SingletonsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\FileUtils.h">
@@ -351,6 +354,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\core\wrappers\multimedia\SDLAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\singletonsManager\ISingleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

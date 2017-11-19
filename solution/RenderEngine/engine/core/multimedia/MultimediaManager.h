@@ -1,8 +1,9 @@
 #ifndef _MULTIMEDIA_MANAGER_H_
 #define _MULTIMEDIA_MANAGER_H_
 
-#include <engine/utils/singleton_macros.h>
 #include <glm/vec2.hpp>
+#include <engine/utils/memory_aliases.h>
+#include <engine/core/singletonsManager/ISingleton.h>
 
 namespace sre
 {
@@ -14,10 +15,8 @@ class Timer;
 /*!
 	Class for window management
 */
-class MultimediaManager
+class MultimediaManager : public ISingleton
 {
-DECLARE_SINGLETON(MultimediaManager);
-
 private:
 	UPTR<AMultimediaWrapper> multimediaWrapper;
 	UPTR<Timer> timer;
@@ -25,6 +24,13 @@ private:
 	float screenWidth;
 	float screenHeight;
 	float aspectRatio;
+
+private:
+    MultimediaManager();
+
+protected:
+    void init() override;
+    void release() override;
 
 public:
 	inline float getScreenWidth() { return this->screenWidth; }
@@ -45,6 +51,7 @@ private:
 
 friend class RenderEngine;
 friend class TextureManager;
+friend class SingletonsManager;
 };
 
 } // namespace

@@ -12,6 +12,7 @@
 #include <engine/entities/components/gui/GUIImageComponent.h>
 #include <engine/core/graphics/RenderManager.h>
 #include <engine/core/multimedia/MultimediaManager.h>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 
 namespace sre
 {

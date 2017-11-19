@@ -5,8 +5,10 @@ namespace sre
 
 RenderEngine::RenderEngine()
 {
+    this->singletonsManager = SingletonsManager::getInstance();
+
 	this->renderManager = RenderManager::getInstance();
-	this->multimediaManager = MultimediaManager::getInstance();
+	this->multimediaManager = this->singletonsManager->resolve<MultimediaManager>();
 	this->inputHandler = nullptr;
 }
 
@@ -36,8 +38,9 @@ void RenderEngine::run()
 
 void RenderEngine::release()
 {
+    this->singletonsManager->release();
+
 	this->renderManager->release();
-	this->multimediaManager->release();
 }
 
 void RenderEngine::processInput()

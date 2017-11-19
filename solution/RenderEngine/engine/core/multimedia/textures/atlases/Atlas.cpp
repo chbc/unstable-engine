@@ -2,6 +2,7 @@
 #include <fstream>
 #include <regex>
 #include <engine/core/multimedia/MultimediaManager.h>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 
 namespace sre
 {
@@ -34,7 +35,7 @@ AtlasItem *Atlas::createItem(std::unordered_map<std::string, std::string> &prope
 
 	glm::vec2 uvPositions(positions.x / textureWidth, positions.y / textureHeight);
 	glm::vec2 uvSize(pixelSize.x / textureWidth, pixelSize.y / textureHeight);
-	glm::vec2 screenBasedSize = MultimediaManager::getInstance()->getNormalizedSize(pixelSize);
+	glm::vec2 screenBasedSize = SingletonsManager::getInstance()->resolve<MultimediaManager>()->getNormalizedSize(pixelSize);
 
 	return new AtlasItem(Rect(uvPositions, uvSize), pixelSize, screenBasedSize);
 }

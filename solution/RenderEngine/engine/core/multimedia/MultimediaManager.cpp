@@ -5,8 +5,6 @@
 namespace sre
 {
 
-IMPLEMENT_SINGLETON(MultimediaManager);
-
 MultimediaManager::MultimediaManager()
 {
 	this->screenWidth = 1024.0f;

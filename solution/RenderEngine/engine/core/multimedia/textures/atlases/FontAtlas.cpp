@@ -1,5 +1,6 @@
 #include "FontAtlas.h"
 #include <engine/core/multimedia/MultimediaManager.h>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 
 namespace sre
 {
@@ -25,7 +26,7 @@ AtlasItem *FontAtlas::createItem(std::unordered_map<std::string, std::string> &p
 	glm::vec2 offset(this->getValue(propertiesMap, keys::X_OFFSET), this->getValue(propertiesMap, keys::Y_OFFSET));
 	float xAdvance = this->getValue(propertiesMap, keys::X_ADVANCE);
 
-	MultimediaManager *multimediaManager = MultimediaManager::getInstance();
+	MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
 	offset = multimediaManager->getNormalizedSize(offset);
 	xAdvance = multimediaManager->getNormalizedWidth(xAdvance);
 

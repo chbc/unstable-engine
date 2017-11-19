@@ -6,6 +6,7 @@
 #include <engine/entitiesManagers/gui/GUIManager.h>
 #include <engine/core/multimedia/MultimediaManager.h>
 #include <engine/core/graphics/RenderManager.h>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 
 class MultimediaManager;
 
@@ -18,6 +19,7 @@ namespace sre
 class RenderEngine
 {
 protected:
+    SingletonsManager *singletonsManager;
 	RenderManager *renderManager;
 	MultimediaManager *multimediaManager;
 	UPTR<InputHandler> inputHandler;

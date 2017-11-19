@@ -1,6 +1,7 @@
 #include "TextureManager.h"
 #include <exception>
 #include <engine/core/multimedia/MultimediaManager.h>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
 
 namespace sre
@@ -53,7 +54,7 @@ Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::
 		uint32_t width = 0;
 		uint32_t height = 0;
 		uint8_t bpp = 0;
-		MultimediaManager *multimediaManager = MultimediaManager::getInstance();
+		MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
 		void *data = multimediaManager->loadTexture(fileName, &width, &height, &bpp);
 
 		// OpenGL //

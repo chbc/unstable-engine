@@ -1,6 +1,7 @@
 #include "GUITextComponent.h"
 
 #include <engine/core/graphics/RenderManager.h>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/core/multimedia/textures/atlases/AtlasManager.h>
 #include <engine/core/multimedia/textures/Texture.h>
 #include <engine/core/graphics/meshData/PrimitiveMeshFactory.h>
@@ -16,8 +17,7 @@ GUITextComponent::GUITextComponent(Entity *entity, int maxItems)
 
 void GUITextComponent::loadFont(const std::string &fontFile)
 {
-	AtlasManager *atlasManager = AtlasManager::getInstance();
-	this->atlas = atlasManager->getFont(fontFile);
+    this->atlas = SingletonsManager::getInstance()->resolve<AtlasManager>()->getFont(fontFile);
 }
 
 void GUITextComponent::onStart()

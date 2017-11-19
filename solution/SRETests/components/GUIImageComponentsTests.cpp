@@ -15,8 +15,11 @@ public:
 
 	TEST_CLASS_INITIALIZE(SETUP)
 	{
-		MultimediaManager::getInstance()->init();
+        /* ###
+        MultimediaManager *multimediaManager = new MultimediaManager;
+        multimediaManager->init();
 		RenderManager::getInstance()->init();
+        */
 
 		entity = TestServicesProvider::getInstance()->createEntity();
 		component = entity->addComponent<GUIImageComponent>("../../media/testTexture.png");
