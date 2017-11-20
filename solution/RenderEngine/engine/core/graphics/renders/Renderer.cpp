@@ -10,7 +10,7 @@
 namespace sre
 {
 
-Renderer::Renderer(Material *material, const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper)
+Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
 {
 	this->shaderManager = shaderManager;
 	this->graphicsWrapper = graphicsWrapper;
@@ -78,7 +78,7 @@ void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, 
 	this->shaderManager->setMat4(this->shaderProgram, "projectionMatrix", &projectionMatrix[0][0]);
 	this->shaderManager->setVec3(this->shaderProgram, "cameraPosition", &cameraPosition[0]);
 
-	lightManager->setupLights(this->shaderManager.get(), this->shaderProgram);
+	lightManager->setupLights(this->shaderManager, this->shaderProgram);
 
 	for (MeshComponent *mesh : this->meshes)
 	{

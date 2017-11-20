@@ -1,7 +1,8 @@
 #ifndef _AGRAPHICS_WRAPPER_H_
 #define _AGRAPHICS_WRAPPER_H_
 
-#include <engine/utils/memory_aliases.h>
+#include <engine/core/singletonsManager/ASingleton.h>
+#include <engine/utils/memory_aliases.h> // ###
 #include <stack>
 #include <string>
 
@@ -14,12 +15,11 @@ class GUIImageComponent;
 struct GUIVertexData;
 template <typename T> struct MeshData;
 
-class AGraphicsWrapper
+class AGraphicsWrapper : ASingleton
 {
 protected:
 	AGraphicsWrapper() {}
 
-	virtual void init() = 0; // throws std::string
 	virtual void createVAO(MeshComponent *mesh) =0;
 	virtual void createEBO(MeshComponent *mesh) =0;
 	virtual void createGUIVAO(GUIImageComponent *guiComponent) =0;
@@ -71,6 +71,7 @@ protected:
 friend class RenderManager;
 friend class ShaderManager;
 friend class TextureManager;
+friend class SingletonsManager;
 
 friend class Renderer;
 friend class GUIRenderer;

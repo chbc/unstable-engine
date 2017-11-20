@@ -71,6 +71,7 @@ private:
 friend class RenderManager;
 friend class ColorRenderer;
 friend class TextureManager;
+friend class SingletonsManager;
 };
 
 } // namespace

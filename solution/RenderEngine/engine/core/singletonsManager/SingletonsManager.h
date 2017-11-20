@@ -43,6 +43,21 @@ public:
         return result;
     }
 
+    template <typename T> T* get()
+    {
+        T* result = nullptr;
+        std::string type = typeid(T).name();
+
+        if (this->singletons.count(type) > 0)
+            result = static_cast<T *>(this->singletons[type].get());
+        else
+        {
+            throw "Singleton not found: " + type;
+        }
+
+        return result;
+    }
+
     template <typename T> T* resolve()
     {
         T* result = nullptr;

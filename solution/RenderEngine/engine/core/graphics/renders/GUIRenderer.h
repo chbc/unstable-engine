@@ -19,11 +19,11 @@ protected:
 	std::list<GUIImageComponent *> dynamicGUIComponents;
 	uint32_t shaderProgram;
 
-	SPTR<ShaderManager> shaderManager;
-	SPTR<AGraphicsWrapper> graphicsWrapper;
+	ShaderManager *shaderManager;
+	AGraphicsWrapper *graphicsWrapper;
 
 private:
-	GUIRenderer(const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper);
+	GUIRenderer(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
 	void loadShader();
 	void addGUIComponent(GUIImageComponent *guiComponent);

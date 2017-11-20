@@ -7,7 +7,7 @@
 namespace sre
 {
 
-SpecularRendererComponent::SpecularRendererComponent(const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper)
+SpecularRendererComponent::SpecularRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
 	: DiffuseRendererComponent(shaderManager, graphicsWrapper)
 { }
 

@@ -2,7 +2,7 @@
 #define _GLSL_SHADER_API_H_
 
 #include <string>
-#include <engine/utils/memory_aliases.h>
+#include <engine/core/singletonsManager/ASingleton.h>
 #include "shaders/ShaderContentFactory.h"
 #include <stack>
 #include <bitset>
@@ -15,19 +15,18 @@ class AGraphicsWrapper;
 /*!
 	Class to deal with GLSL API
 */
-class ShaderManager
+class ShaderManager : ASingleton
 {
-public:
-	~ShaderManager();
+protected:
+	void init() override;
+    void release() override;
 
 private:
 	std::stack<uint32_t> vertShaders;
 	std::stack<uint32_t> fragShaders;
 	std::stack<uint32_t> programs;
 
-	SPTR<AGraphicsWrapper> graphicsWrapper;
-
-	ShaderManager(const SPTR<AGraphicsWrapper> &graphicsWrapper);
+	AGraphicsWrapper *graphicsWrapper;
 
 	// main load function
 	template <size_t SIZE> uint32_t loadShader(const std::bitset<SIZE> &componentsBitset)
@@ -55,6 +54,7 @@ private:
 
 friend class RenderManager;
 friend class LightManager;
+friend class SingletonsManager;
 
 friend class Renderer;
 friend class GUIRenderer;

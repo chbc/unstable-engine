@@ -26,14 +26,14 @@ private:
 	std::list<MeshComponent *> meshes;
 	uint32_t shaderProgram;
 
-	SPTR<ShaderManager> shaderManager;
-	SPTR<AGraphicsWrapper> graphicsWrapper;
+    ShaderManager *shaderManager;
+    AGraphicsWrapper *graphicsWrapper;
 
 public:
 	virtual ~Renderer();
 
 private:
-	Renderer(Material *material, const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper);
+	Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
 	void loadShader();
 

@@ -7,7 +7,7 @@
 namespace sre
 {
 
-DiffuseRendererComponent::DiffuseRendererComponent(const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper)
+DiffuseRendererComponent::DiffuseRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
 	: ColorRendererComponent(shaderManager, graphicsWrapper)
 { }
 

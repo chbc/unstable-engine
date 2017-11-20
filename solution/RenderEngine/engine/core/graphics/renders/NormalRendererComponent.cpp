@@ -7,7 +7,7 @@
 namespace sre
 {
 
-NormalRendererComponent::NormalRendererComponent(const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper)
+NormalRendererComponent::NormalRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
 	: DiffuseRendererComponent(shaderManager, graphicsWrapper)
 { }
 

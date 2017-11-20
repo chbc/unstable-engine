@@ -9,7 +9,7 @@ namespace sre
 class NormalRendererComponent : public DiffuseRendererComponent
 {
 protected:
-	NormalRendererComponent(const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper);
+	NormalRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
 	void setupShaderVariables(MeshComponent *mesh, uint32_t shaderProgram) override;
 	void preDraw() override;

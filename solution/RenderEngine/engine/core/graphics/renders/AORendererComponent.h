@@ -9,7 +9,7 @@ namespace sre
 class AORendererComponent : public DiffuseRendererComponent
 {
 protected:
-	AORendererComponent(const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper);
+	AORendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
 	void setupShaderVariables(MeshComponent *mesh, uint32_t shaderProgram) override;
 	void preDraw() override;

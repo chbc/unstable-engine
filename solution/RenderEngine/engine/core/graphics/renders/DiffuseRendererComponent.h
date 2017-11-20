@@ -12,7 +12,7 @@ protected:
 	uint32_t textureId;
 
 protected:
-	DiffuseRendererComponent(const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper);
+	DiffuseRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
 	virtual void setupShaderVariables(MeshComponent *mesh, uint32_t shaderProgram) override;
 	virtual void preDraw() override;

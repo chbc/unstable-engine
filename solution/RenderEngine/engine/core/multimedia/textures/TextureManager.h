@@ -1,6 +1,7 @@
 #ifndef _TEXTURE_MANAGER_H_
 #define _TEXTURE_MANAGER_H_
 
+#include <engine/core/singletonsManager/ASingleton.h>
 #include <engine/utils/memory_aliases.h>
 #include "Texture.h"
 
@@ -12,30 +13,32 @@ class AGraphicsWrapper;
 /*!
 	Class to manage low level texturing.
 */
-class TextureManager
+class TextureManager : public ASingleton
 {
 private:
-	VECTOR_UPTR<Texture> textures;
+    VECTOR_UPTR<Texture> textures;
+    AGraphicsWrapper *graphicsWrapper;
 
-	AGraphicsWrapper *graphicsWrapper;
+protected:
+    void init() override;
+    void release() override;
 
 private:
-	TextureManager(AGraphicsWrapper *graphicsWrapper);
+    Texture *loadGUITexture(const std::string &fileName);
+    Texture *loadDiffuseTexture(const std::string &fileName);
+    Texture *loadNormalTexture(const std::string &fileName);
+    Texture *loadSpecularTexture(const std::string &fileName);
+    Texture *loadAOTexture(const std::string &fileName);
+    Texture *loadTexture(const std::string &fileName, EMaterialMap::Type mapType);
 
-	Texture *loadGUITexture(const std::string &fileName);
-	Texture *loadDiffuseTexture(const std::string &fileName);
-	Texture *loadNormalTexture(const std::string &fileName);
-	Texture *loadSpecularTexture(const std::string &fileName);
-	Texture *loadAOTexture(const std::string &fileName);
-	Texture *loadTexture(const std::string &fileName, EMaterialMap::Type mapType);
-
-	Texture *loadExistingTexture(const std::string &fileName, EMaterialMap::Type mapType);
-	void deleteTexture(uint32_t id);
+    Texture *loadExistingTexture(const std::string &fileName, EMaterialMap::Type mapType);
+    void deleteTexture(uint32_t id);
 
 public:
 	~TextureManager();
 
 friend class RenderManager;
+friend class SingletonsManager;
 };
 
 } // namespace

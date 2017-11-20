@@ -10,7 +10,7 @@
 namespace sre
 {
 
-GUIRenderer::GUIRenderer(const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper)
+GUIRenderer::GUIRenderer(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
 {
 	this->shaderManager = shaderManager;
 	this->graphicsWrapper = graphicsWrapper;

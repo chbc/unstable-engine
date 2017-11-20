@@ -7,7 +7,7 @@
 namespace sre
 {
 
-AORendererComponent::AORendererComponent(const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper)
+AORendererComponent::AORendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
 	: DiffuseRendererComponent(shaderManager, graphicsWrapper)
 { }
 

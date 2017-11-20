@@ -1,15 +1,16 @@
 #include "ShaderManager.h"
 #include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 
 namespace sre
 {
 
-ShaderManager::ShaderManager(const SPTR<AGraphicsWrapper> &graphicsWrapper)
+void ShaderManager::init()
 {
-	this->graphicsWrapper = graphicsWrapper;
+	this->graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
 }
 
-ShaderManager::~ShaderManager()
+void ShaderManager::release()
 {
 	this->graphicsWrapper->releaseShaders(this->vertShaders, this->fragShaders, this->programs);
 }

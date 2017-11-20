@@ -21,19 +21,21 @@ namespace sre
 RenderManager::RenderManager()
 {
     SingletonsManager *singletonsManager = SingletonsManager::getInstance();
-	this->graphicsWrapper	= SPTR<AGraphicsWrapper>{ new OpenGLAPI{} };
-	this->matrixManager		= singletonsManager->resolve<MatrixManager>();
-	this->lightManager		= UPTR<LightManager>{ new LightManager{} };
-	this->textureManager	= UPTR<TextureManager>{ new TextureManager{ this->graphicsWrapper.get() } };
-	this->shaderManager		= SPTR<ShaderManager>{ new ShaderManager{this->graphicsWrapper} };
-	this->mainCamera		= nullptr;
+    this->graphicsWrapper   = singletonsManager->add<AGraphicsWrapper, OpenGLAPI>();
+    this->matrixManager     = singletonsManager->resolve<MatrixManager>();
+    this->lightManager      = singletonsManager->resolve<LightManager>();
+    this->textureManager    = singletonsManager->resolve<TextureManager>();
+    this->shaderManager     = singletonsManager->resolve<ShaderManager>();
 
-	this->guiRenderer		= UPTR <GUIRenderer>{ nullptr };
+    this->mainCamera = nullptr;
+    this->guiRenderer = UPTR<GUIRenderer>{ nullptr };
 }
 
 void RenderManager::init()
 {
-	this->graphicsWrapper->init();
+    this->graphicsWrapper->init();
+    this->shaderManager->init();
+    this->textureManager->init();
 
 	MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
 	const float FOV{90.0f};
@@ -97,11 +99,11 @@ void RenderManager::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 
 void RenderManager::initGUIRenderer()
 {
-	if (this->guiRenderer.get() == nullptr)
-	{
-		this->guiRenderer = UPTR<GUIRenderer>{ new GUIRenderer{this->shaderManager, this->graphicsWrapper} };
-		this->guiRenderer->loadShader();
-	}
+    if (this->guiRenderer.get() == nullptr)
+    {
+        this->guiRenderer = UPTR<GUIRenderer>{ new GUIRenderer{this->shaderManager, this->graphicsWrapper} };
+        this->guiRenderer->loadShader();
+    }
 }
 
 void RenderManager::setMainCamera(CameraComponent *camera)
@@ -123,7 +125,7 @@ void RenderManager::render()
 		item->render
 		(
 			this->matrixManager,
-			this->lightManager.get(), 
+			this->lightManager,
 			this->mainCamera->getTransform()->getPosition()
 		);
 	}

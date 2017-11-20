@@ -7,15 +7,15 @@
 namespace sre
 {
 
-TextureManager::TextureManager(AGraphicsWrapper *graphicsWrapper)
+void TextureManager::init()
 {
-	this->graphicsWrapper = graphicsWrapper;
+    this->graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
 }
 
-TextureManager::~TextureManager()
+void TextureManager::release()
 {
 	for (const UPTR<Texture> &item : this->textures)
-		this->graphicsWrapper->deleteTexture(item->getId());
+		this->deleteTexture(item->getId());
 
 	this->textures.clear();
 }

@@ -8,7 +8,7 @@
 namespace sre
 {
 
-ColorRendererComponent::ColorRendererComponent(const SPTR<ShaderManager> &shaderManager, const SPTR<AGraphicsWrapper> &graphicsWrapper)
+ColorRendererComponent::ColorRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
 {
 	this->shaderManager = shaderManager;
 	this->graphicsWrapper = graphicsWrapper;

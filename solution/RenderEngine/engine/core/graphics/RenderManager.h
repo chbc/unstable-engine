@@ -7,6 +7,7 @@
 
 namespace sre
 {
+
 class MeshComponent;
 class GUIImageComponent;
 class CameraComponent;
@@ -34,15 +35,15 @@ class RenderManager : ASingleton
 {
 
 private:
-    SPTR<ShaderManager> shaderManager;
-    SPTR<AGraphicsWrapper> graphicsWrapper;
-    MatrixManager *matrixManager;
-    UPTR<LightManager> lightManager;
-    UPTR<TextureManager> textureManager;
+    ShaderManager       *shaderManager;
+    AGraphicsWrapper    *graphicsWrapper;
+    MatrixManager       *matrixManager;
+    LightManager        *lightManager;
+    TextureManager      *textureManager;
     
     VECTOR_UPTR<Renderer> renders;
     UPTR<GUIRenderer> guiRenderer;
-    
+
     CameraComponent *mainCamera;
 
 private:
