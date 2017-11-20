@@ -3,12 +3,12 @@
 
 #include <unordered_map>
 #include "FontAtlas.h"
-#include <engine/core/singletonsManager/ISingleton.h>
+#include <engine/core/singletonsManager/ASingleton.h>
 
 namespace sre
 {
 
-class AtlasManager : public ISingleton
+class AtlasManager : public ASingleton
 {
 
 private:

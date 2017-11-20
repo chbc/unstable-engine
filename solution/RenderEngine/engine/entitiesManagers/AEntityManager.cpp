@@ -1,5 +1,6 @@
 #include "AEntityManager.h"
 #include <sstream>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/core/graphics/RenderManager.h>
 
 namespace sre
@@ -32,7 +33,7 @@ void AEntityManager::addEntity(Entity *entity, const std::string &name)
 	this->entities[resultName] = std::move(this->entitiesToBeAdded[entity]);
 	this->entitiesToBeAdded.erase(entity);
 
-	RenderManager::getInstance()->addEntity(entity);
+	SingletonsManager::getInstance()->resolve<RenderManager>()->addEntity(entity);
     entity->onStart();
 }
 

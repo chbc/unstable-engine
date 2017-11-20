@@ -3,7 +3,7 @@
 
 #include <glm/vec2.hpp>
 #include <engine/utils/memory_aliases.h>
-#include <engine/core/singletonsManager/ISingleton.h>
+#include <engine/core/singletonsManager/ASingleton.h>
 
 namespace sre
 {
@@ -15,7 +15,7 @@ class Timer;
 /*!
 	Class for window management
 */
-class MultimediaManager : public ISingleton
+class MultimediaManager : public ASingleton
 {
 private:
 	UPTR<AMultimediaWrapper> multimediaWrapper;

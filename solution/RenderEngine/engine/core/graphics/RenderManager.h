@@ -1,9 +1,9 @@
 #ifndef _RENDER_MANAGER_H_
 #define _RENDER_MANAGER_H_
 
-#include <engine/utils/singleton_macros.h>
 #include <glm/vec3.hpp>
-#include <engine/core/singletonsManager/ISingleton.h>
+#include <engine/core/singletonsManager/ASingleton.h>
+#include <engine/utils/memory_aliases.h>
 
 namespace sre
 {
@@ -30,46 +30,52 @@ template <typename T> struct MeshData;
 /*!
 	Singleton Class to handle renders
 */
-class RenderManager : ISingleton
+class RenderManager : ASingleton
 {
-DECLARE_SINGLETON(RenderManager)
 
 private:
-	SPTR<ShaderManager> shaderManager;
-	SPTR<AGraphicsWrapper> graphicsWrapper;
-	UPTR<MatrixManager> matrixManager;
-	UPTR<LightManager> lightManager;
-	UPTR<TextureManager> textureManager;
-
-	VECTOR_UPTR<Renderer> renders;
-	UPTR<GUIRenderer> guiRenderer;
-
-	CameraComponent *mainCamera;
+    SPTR<ShaderManager> shaderManager;
+    SPTR<AGraphicsWrapper> graphicsWrapper;
+    MatrixManager *matrixManager;
+    UPTR<LightManager> lightManager;
+    UPTR<TextureManager> textureManager;
+    
+    VECTOR_UPTR<Renderer> renders;
+    UPTR<GUIRenderer> guiRenderer;
+    
+    CameraComponent *mainCamera;
 
 private:
-	void addEntity(Entity *entity);
-	void addMesh(MeshComponent *mesh);
-	void addGUIComponent(GUIImageComponent *guiComponent);
-	void addDynamicGUIComponent(GUIImageComponent *guiComponent);
-	void initGUIRenderer();
+    RenderManager();
 
-	void setMainCamera(CameraComponent *camera);
-	CameraComponent *getMainCamera();
+protected:
+    void init();
+    void release() {}
 
-	void render();
-	void renderCamera();
+private:
+    void addEntity(Entity *entity);
+    void addMesh(MeshComponent *mesh);
+    void addGUIComponent(GUIImageComponent *guiComponent);
+    void addDynamicGUIComponent(GUIImageComponent *guiComponent);
+    void initGUIRenderer();
 
-	static void DEBUG_drawTriangle();
-	void clearBuffer();
+    void setMainCamera(CameraComponent *camera);
+    CameraComponent *getMainCamera();
 
-	DirectionalLightComponent *addDirectionalLight(Entity *entity);
-	PointLightComponent *addPointLight(Entity *entity);
+    void render();
+    void renderCamera();
 
-	Texture *loadGUITexture(const std::string &fileName);
-	Texture *loadDiffuseTexture(const std::string &fileName);
-	Texture *loadNormalTexture(const std::string &fileName);
-	Texture *loadSpecularTexture(const std::string &fileName);
-	Texture *loadAOTexture(const std::string &fileName);
+    static void DEBUG_drawTriangle();
+    void clearBuffer();
+
+    DirectionalLightComponent *addDirectionalLight(Entity *entity);
+    PointLightComponent *addPointLight(Entity *entity);
+
+    Texture *loadGUITexture(const std::string &fileName);
+    Texture *loadDiffuseTexture(const std::string &fileName);
+    Texture *loadNormalTexture(const std::string &fileName);
+    Texture *loadSpecularTexture(const std::string &fileName);
+    Texture *loadAOTexture(const std::string &fileName);
 
     void setupBufferSubData(const GUIImageComponent *guiComponent);
 

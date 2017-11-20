@@ -3,7 +3,6 @@
 #ifndef _TEST_SERVICES_PROVIDER_H_
 #define _TEST_SERVICES_PROVIDER_H_
 
-#include <engine/utils/singleton_macros.h>
 #include <engine/entities/Entity.h>
 #include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/entities/components/lights/DirectionalLightComponent.h>
@@ -19,10 +18,9 @@ namespace sre
 
 class TestServicesProvider
 {
-DECLARE_SINGLETON(TestServicesProvider)
 
 public:
-	UPTR<Entity> createEntity();
+	static UPTR<Entity> createEntity();
 };
 
 } // namespace

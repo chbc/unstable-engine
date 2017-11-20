@@ -7,7 +7,7 @@ RenderEngine::RenderEngine()
 {
     this->singletonsManager = SingletonsManager::getInstance();
 
-	this->renderManager = RenderManager::getInstance();
+	this->renderManager = this->singletonsManager->resolve<RenderManager>();
 	this->multimediaManager = this->singletonsManager->resolve<MultimediaManager>();
 	this->inputHandler = nullptr;
 }
@@ -39,8 +39,6 @@ void RenderEngine::run()
 void RenderEngine::release()
 {
     this->singletonsManager->release();
-
-	this->renderManager->release();
 }
 
 void RenderEngine::processInput()

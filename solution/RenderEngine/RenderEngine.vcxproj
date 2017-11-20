@@ -241,7 +241,7 @@
     <ClCompile Include="engine\utils\math\Rect.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\core\singletonsManager\ISingleton.h" />
+    <ClInclude Include="engine\core\singletonsManager\ASingleton.h" />
     <ClInclude Include="engine\entities\components\gui\GUIImageComponent.h" />
     <ClInclude Include="engine\entitiesManagers\AEntityManager.h" />
     <ClInclude Include="engine\core\multimedia\textures\atlases\Atlas.h" />
@@ -303,7 +303,6 @@
     <ClInclude Include="engine\utils\math\MathUtils.h" />
     <ClInclude Include="engine\utils\math\Rect.h" />
     <ClInclude Include="engine\utils\memory_aliases.h" />
-    <ClInclude Include="engine\utils\singleton_macros.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
   </ItemGroup>
   <ItemGroup>

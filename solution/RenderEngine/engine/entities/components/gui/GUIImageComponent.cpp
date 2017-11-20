@@ -19,7 +19,7 @@ GUIImageComponent::GUIImageComponent(Entity *entity, uint32_t maxItems)
 
 void GUIImageComponent::load(const std::string &fileName)
 {
-	Texture *texture = RenderManager::getInstance()->loadGUITexture(fileName);
+	Texture *texture = SingletonsManager::getInstance()->resolve<RenderManager>()->loadGUITexture(fileName);
 	glm::vec2 pixelSize(texture->getWidth(), texture->getHeight());
 	glm::vec2 screenBasedSize = SingletonsManager::getInstance()->resolve<MultimediaManager>()->getNormalizedSize(pixelSize);
 

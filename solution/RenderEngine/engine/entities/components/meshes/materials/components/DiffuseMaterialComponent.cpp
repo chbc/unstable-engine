@@ -1,5 +1,6 @@
 #include "DiffuseMaterialComponent.h"
 #include <iostream>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/core/graphics/RenderManager.h>
 #include <engine/core/multimedia/textures/Texture.h>
 
@@ -14,7 +15,7 @@ DiffuseMaterialComponent::DiffuseMaterialComponent(Material *material, const std
 
 void DiffuseMaterialComponent::loadTexture(const std::string &fileName)
 {
-	Texture *texture = RenderManager::getInstance()->loadDiffuseTexture(fileName);
+	Texture *texture = SingletonsManager::getInstance()->resolve<RenderManager>()->loadDiffuseTexture(fileName);
 	this->textures.emplace_back(texture);
 }
 

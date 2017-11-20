@@ -173,9 +173,6 @@
     <ClInclude Include="engine\utils\FileUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\utils\singleton_macros.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\entities\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -356,10 +353,10 @@
     <ClInclude Include="engine\core\wrappers\multimedia\SDLAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\singletonsManager\ISingleton.h">
+    <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h">
+    <ClInclude Include="engine\core\singletonsManager\ASingleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

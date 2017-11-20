@@ -13,7 +13,7 @@ TEST_CLASS(EntityTests)
 public:
 	TEST_METHOD(CreateEmptyEntityTest)
 	{
-		UPTR<Entity> entity = TestServicesProvider::getInstance()->createEntity();
+		UPTR<Entity> entity = TestServicesProvider::createEntity();
 		Assert::AreEqual(0u, entity->getChildrenCount());
 		Assert::IsTrue(entity->hasComponent<TransformComponent>());
 
@@ -23,30 +23,29 @@ public:
 
 	TEST_METHOD(getExistingComponentTest)
 	{
-		UPTR<Entity> entity = TestServicesProvider::getInstance()->createEntity();
+		UPTR<Entity> entity = TestServicesProvider::createEntity();
 		TransformComponent *component = entity->getComponent<TransformComponent>();
 		Assert::IsNotNull(component);
 	}
 
 	TEST_METHOD(getNotExistingComponentTest)
 	{
-		UPTR<Entity> entity = TestServicesProvider::getInstance()->createEntity();
+		UPTR<Entity> entity = TestServicesProvider::createEntity();
 		auto functor = [&entity] { entity->getComponent<MeshComponent>(); };
 		Assert::ExpectException<const char *>(functor);
 	}
 
 	TEST_METHOD(AddExistingComponentTest)
 	{
-		UPTR<Entity> entity = TestServicesProvider::getInstance()->createEntity();
+		UPTR<Entity> entity = TestServicesProvider::createEntity();
 		auto functor = [&entity] { entity->addComponent<TransformComponent>(); };
 		Assert::ExpectException<const char *>(functor);
 	}
 
 	TEST_METHOD(addChildTest)
 	{
-		TestServicesProvider *testProvider = TestServicesProvider::getInstance();
-		UPTR<Entity> entity = testProvider->createEntity();
-		UPTR<Entity> child = testProvider->createEntity();
+		UPTR<Entity> entity = TestServicesProvider::createEntity();
+		UPTR<Entity> child  = TestServicesProvider::createEntity();
 		entity->addChild(child.get());
 
 		Assert::AreEqual(1u, entity->getChildrenCount());

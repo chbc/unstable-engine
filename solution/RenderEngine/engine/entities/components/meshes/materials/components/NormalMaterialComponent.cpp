@@ -1,4 +1,5 @@
 #include "NormalMaterialComponent.h"
+#include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/core/graphics/RenderManager.h>
 
 namespace sre
@@ -12,7 +13,7 @@ NormalMaterialComponent::NormalMaterialComponent(Material *material, const std::
 
 void NormalMaterialComponent::loadTexture(const std::string &fileName)
 {
-	Texture *newTexture = RenderManager::getInstance()->loadNormalTexture(fileName);
+	Texture *newTexture = SingletonsManager::getInstance()->resolve<RenderManager>()->loadNormalTexture(fileName);
 	this->texture = UPTR<Texture>{ newTexture };
 }
 

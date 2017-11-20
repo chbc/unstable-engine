@@ -23,7 +23,7 @@ void GUITextComponent::loadFont(const std::string &fontFile)
 void GUITextComponent::onStart()
 {
     if (this->meshData.get() != nullptr)
-        RenderManager::getInstance()->setupBufferSubData(this);
+        SingletonsManager::getInstance()->resolve<RenderManager>()->setupBufferSubData(this);
 }
 
 void GUITextComponent::setText(const std::string &text)
@@ -61,7 +61,7 @@ void GUITextComponent::setText(const std::string &text)
 		this->meshData = std::make_unique<MeshData<GUIVertexData>>(vertices, indices);
 
         if (this->getEntity()->isAlive())
-            RenderManager::getInstance()->setupBufferSubData(this);
+            SingletonsManager::getInstance()->resolve<RenderManager>()->setupBufferSubData(this);
 	}
 }
 

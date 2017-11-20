@@ -1,4 +1,5 @@
 #include "AtlasManager.h"
+#include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/core/graphics/RenderManager.h>
 
 namespace sre
@@ -25,7 +26,7 @@ Atlas *AtlasManager::loadAtlas(const std::string &baseFileName)
 {
 	Atlas *result;
 
-	RenderManager *renderManager = RenderManager::getInstance();
+	RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
 	Texture *texture = renderManager->loadGUITexture(baseFileName + ".png");
 
 	result = new Atlas{ texture };
@@ -52,7 +53,7 @@ FontAtlas *AtlasManager::loadFont(const std::string &baseFileName)
 {
 	FontAtlas *result;
 
-	RenderManager *renderManager = RenderManager::getInstance();
+	RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
 	Texture *texture = renderManager->loadGUITexture(baseFileName + ".png");
 
 	result = new FontAtlas{ texture };

@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 
 #include <engine/entities/components/cameras/CameraComponent.h>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/core/graphics/RenderManager.h>
 #include <engine/core/io/ModelLoader.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
@@ -13,7 +14,7 @@ SceneManager::SceneManager() : AEntityManager()
 	Entity *mainCamera = this->createEntity();
 	CameraComponent *cameraComponent = mainCamera->addComponent<CameraComponent>();
 
-	RenderManager::getInstance()->setMainCamera(cameraComponent);
+	SingletonsManager::getInstance()->resolve<RenderManager>()->setMainCamera(cameraComponent);
 }
 
 SceneManager::~SceneManager()
@@ -41,20 +42,20 @@ Entity *SceneManager::createModelEntity(const std::string &fileName)
 DirectionalLightComponent *SceneManager::addDirectionalLight()
 {
 	Entity *newEntity = this->createEntity();
-	RenderManager *renderManager = RenderManager::getInstance();
+	RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
 	return renderManager->addDirectionalLight(newEntity);
 }
 
 PointLightComponent *SceneManager::addPointLight()
 {
 	Entity *newEntity = this->createEntity();
-	RenderManager *renderManager = RenderManager::getInstance();
+	RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
 	return renderManager->addPointLight(newEntity);
 }
 
 CameraComponent *SceneManager::getMainCamera()
 {
-	return RenderManager::getInstance()->getMainCamera();
+	return SingletonsManager::getInstance()->resolve<RenderManager>()->getMainCamera();
 }
 
 Entity *SceneManager::createMeshEntity(UPTR<MeshData<VertexData>> &objectData)

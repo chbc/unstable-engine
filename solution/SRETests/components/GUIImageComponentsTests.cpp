@@ -18,7 +18,7 @@ public:
         /* ###
         MultimediaManager *multimediaManager = new MultimediaManager;
         multimediaManager->init();
-		RenderManager::getInstance()->init();
+		RenderManager *renderManager = new RenderManager;
         */
 
 		entity = TestServicesProvider::getInstance()->createEntity();

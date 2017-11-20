@@ -18,12 +18,11 @@
 namespace sre
 {
 
-IMPLEMENT_SINGLETON(RenderManager)
-
 RenderManager::RenderManager()
 {
+    SingletonsManager *singletonsManager = SingletonsManager::getInstance();
 	this->graphicsWrapper	= SPTR<AGraphicsWrapper>{ new OpenGLAPI{} };
-	this->matrixManager		= UPTR<MatrixManager>{ new MatrixManager{} };
+	this->matrixManager		= singletonsManager->resolve<MatrixManager>();
 	this->lightManager		= UPTR<LightManager>{ new LightManager{} };
 	this->textureManager	= UPTR<TextureManager>{ new TextureManager{ this->graphicsWrapper.get() } };
 	this->shaderManager		= SPTR<ShaderManager>{ new ShaderManager{this->graphicsWrapper} };
@@ -123,14 +122,14 @@ void RenderManager::render()
 	{
 		item->render
 		(
-			this->matrixManager.get(), 
+			this->matrixManager,
 			this->lightManager.get(), 
 			this->mainCamera->getTransform()->getPosition()
 		);
 	}
 
 	if (this->guiRenderer.get() != nullptr)
-		this->guiRenderer->render(this->matrixManager.get());
+		this->guiRenderer->render(this->matrixManager);
 }
 
 void RenderManager::renderCamera()
@@ -192,10 +191,6 @@ void RenderManager::setupBufferSubData(const GUIImageComponent *guiComponent)
 {
     this->graphicsWrapper->bindVAO(guiComponent->vao, guiComponent->vbo);
     this->graphicsWrapper->setupBufferSubData(guiComponent->meshData.get());
-}
-
-void RenderManager::release()
-{
 }
 
 } // namespace
