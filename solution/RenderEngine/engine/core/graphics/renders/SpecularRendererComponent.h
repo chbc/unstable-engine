@@ -9,13 +9,14 @@ namespace sre
 class SpecularRendererComponent : public DiffuseRendererComponent
 {
 protected:
-	SpecularRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
+    SpecularRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-	void setupShaderVariables(MeshComponent *mesh, uint32_t shaderProgram) override;
-	void preDraw() override;
-	void postDraw() override;
+    void onLoadShader(class Shader *shader) override;
+    void setupShaderVariables(class MeshComponent *mesh, class Shader *shader) override;
+    void preDraw() override;
+    void postDraw() override;
 
-	friend class Renderer;
+    friend class Renderer;
 };
 } // namespace
 

@@ -2,7 +2,6 @@
 #define _AGRAPHICS_WRAPPER_H_
 
 #include <engine/core/singletonsManager/ASingleton.h>
-#include <engine/utils/memory_aliases.h> // ###
 #include <stack>
 #include <string>
 
@@ -57,15 +56,16 @@ protected:
 	virtual uint32_t loadFragmentShader(const std::string &vertexContent) =0;
 	virtual uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) =0;
 
-	virtual void setInt(uint32_t program, const std::string &varName, int value) =0;
-	virtual void setFloat(uint32_t program, const std::string &varName, float value) =0;
-	virtual void setVec3(uint32_t program, const std::string &varName, const float *value) =0;
-	virtual void setVec4(uint32_t program, const std::string &varName, const float *value) =0;
-	virtual void setMat4(uint32_t program, const std::string &varName, const float *value) =0;
+    virtual int getUniformLocation(uint32_t program, const std::string &varName) = 0;
+	virtual void setInt(uint32_t program, int location, int value) =0;
+	virtual void setFloat(uint32_t program, int location, float value) =0;
+	virtual void setVec3(uint32_t program, int location, const float *value) =0;
+	virtual void setVec4(uint32_t program, int location, const float *value) =0;
+	virtual void setMat4(uint32_t program, int location, const float *value) =0;
 
 	virtual void enableShader(uint32_t program) =0;
 	virtual void disableShader() =0;
-	virtual void releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs) =0;
+    virtual void releaseShader(uint32_t program, uint32_t vertShader, uint32_t fragShader) =0;
 	virtual void deleteBuffers(MeshComponent *mesh) = 0;
 
 friend class RenderManager;

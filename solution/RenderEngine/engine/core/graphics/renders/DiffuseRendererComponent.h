@@ -9,14 +9,16 @@ namespace sre
 class DiffuseRendererComponent : public ColorRendererComponent
 {
 protected:
-	uint32_t textureId;
+    uint32_t textureId;
+    int textureLocation;
 
 protected:
-	DiffuseRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
+    DiffuseRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-	virtual void setupShaderVariables(MeshComponent *mesh, uint32_t shaderProgram) override;
-	virtual void preDraw() override;
-	virtual void postDraw() override;
+    virtual void onLoadShader(class Shader *shader) override;
+    virtual void setupShaderVariables(MeshComponent *mesh, class Shader *shader) override;
+    virtual void preDraw() override;
+    virtual void postDraw() override;
 
 friend class Renderer;
 };

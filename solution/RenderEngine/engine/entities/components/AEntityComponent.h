@@ -12,17 +12,16 @@ class TransformComponent;
 class AEntityComponent
 {
 private:
-	Entity *entity;
+    Entity *entity;
 
 public:
-	inline Entity *getEntity() { return this->entity; }
+    inline Entity *getEntity() { return this->entity; }
+    TransformComponent *getTransform();
 
-// protected: ###
-	AEntityComponent(Entity *entity) { this->entity = entity; }
+protected:
+    AEntityComponent(Entity *entity) { this->entity = entity; }
     virtual void onStart() {}
-	virtual void update(uint32_t deltaTime) {}
-
-	TransformComponent *getTransform();
+    virtual void update(uint32_t deltaTime) {}
 
 friend class Entity;
 

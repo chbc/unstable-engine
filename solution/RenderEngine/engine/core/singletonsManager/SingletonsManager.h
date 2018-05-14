@@ -51,9 +51,7 @@ public:
         if (this->singletons.count(type) > 0)
             result = static_cast<T *>(this->singletons[type].get());
         else
-        {
             throw "Singleton not found: " + type;
-        }
 
         return result;
     }

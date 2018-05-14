@@ -1,5 +1,6 @@
 #include "LightManager.h"
 
+#include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/entities/Entity.h>
 #include "ShaderManager.h"
 
@@ -8,39 +9,116 @@ namespace sre
 
 LightManager::LightManager()
 {
-	this->ambientLightColor = glm::vec3(0.1f, 0.1f, 0.1f);
+    this->ambientLightColor = glm::vec3(0.1f, 0.1f, 0.1f);
 }
 
 void LightManager::setAmbientLightColor(const glm::vec3 &ambientLightColor)
 {
-	this->ambientLightColor = ambientLightColor;
+    this->ambientLightColor = ambientLightColor;
 }
 
 DirectionalLightComponent *LightManager::addDirectionalLight(Entity *entity)
 {
-	DirectionalLightComponent *newLight = entity->addComponent<DirectionalLightComponent>();
-	this->directionalLights.push_back(newLight);
+    DirectionalLightComponent *newLight = entity->addComponent<DirectionalLightComponent>();
+    this->directionalLights.push_back(newLight);
 
-	return newLight;
+    return newLight;
 }
 
 PointLightComponent *LightManager::addPointLight(Entity *entity)
 {
-	PointLightComponent *newLight = entity->addComponent<PointLightComponent>();
-	this->pointLights.push_back(newLight);
+    PointLightComponent *newLight = entity->addComponent<PointLightComponent>();
+    this->pointLights.push_back(newLight);
 
-	return newLight;
+    return newLight;
 }
 
-void LightManager::setupLights(ShaderManager *shaderManager, uint32_t program)
+void LightManager::onSceneLoaded()
 {
-	this->setupDirectionalLights(shaderManager, program);
-	this->setupPointLights(shaderManager, program);
-
-	shaderManager->setVec3(program, "lights.ambientLightColor", &this->ambientLightColor[0]);
+    ShaderManager *shaderManager = SingletonsManager::getInstance()->resolve<ShaderManager>();
+    this->setupVariablesLocations(shaderManager);
 }
 
-void LightManager::setupDirectionalLights(ShaderManager *shaderManager, uint32_t program)
+void LightManager::setupVariablesLocations(ShaderManager *shaderManager)
+{
+    bool hasAnyLight = false;
+
+    if (this->directionalLights.size() > 0)
+    {
+        shaderManager->setupUniformLocation(ShaderVariables::DIRECTIONAL_LIGHTS_COUNT);
+        this->setupDirectionalsVariablesLocations(shaderManager);
+        hasAnyLight = true;
+    }
+
+    if (this->pointLights.size() > 0)
+    {
+        shaderManager->setupUniformLocation(ShaderVariables::POINT_LIGHTS_COUNT);
+        this->setupPointsVariablesLocations(shaderManager);
+        hasAnyLight = true;
+    }
+
+    if (hasAnyLight)
+        shaderManager->setupUniformLocation(ShaderVariables::AMBIENT_LIGHT_COLOR);
+}
+
+void LightManager::setupDirectionalsVariablesLocations(ShaderManager *shaderManager)
+{
+    char variable[128];
+
+    int count = this->directionalLights.size();
+    for (int i = 0; i < count; i++)
+    {
+        sprintf_s(variable, DIRECTIONAL_DIRECTION_FORMAT, i);
+        shaderManager->setupUniformLocation(variable);
+
+        sprintf_s(variable, DIRECTIONAL_COLOR_FORMAT, i);
+        shaderManager->setupUniformLocation(variable);
+    }
+}
+
+void LightManager::setupPointsVariablesLocations(ShaderManager *shaderManager)
+{
+    char variable[128];
+
+    int count = this->pointLights.size();
+    for (int i = 0; i < count; i++)
+    {
+        sprintf_s(variable, POINT_POSITION_FORMAT, i);
+        shaderManager->setupUniformLocation(variable);
+
+        sprintf_s(variable, POINT_COLOR_FORMAT, i);
+        shaderManager->setupUniformLocation(variable);
+
+        sprintf_s(variable, POINT_RANGE_FORMAT, i);
+        shaderManager->setupUniformLocation(variable);
+
+        sprintf_s(variable, POINT_INTENSITY_FORMAT, i);
+        shaderManager->setupUniformLocation(variable);
+    }
+}
+
+// Renderer::render() ->
+void LightManager::setupValues(ShaderManager *shaderManager, Shader *shader)
+{
+    bool hasAnyLight = false;
+
+    if (this->directionalLights.size() > 0)
+    {
+        this->setupDirectionalValues(shaderManager, shader);
+        hasAnyLight = true;
+    }
+
+    if (this->pointLights.size() > 0)
+    {
+        this->setupPointValues(shaderManager, shader);
+        hasAnyLight = true;
+    }
+
+    if (hasAnyLight)
+        shaderManager->setVec3(shader, ShaderVariables::AMBIENT_LIGHT_COLOR, &this->ambientLightColor[0]);
+}
+
+void LightManager::setupDirectionalValues(ShaderManager *shaderManager, Shader *shader)
 {
     char variable[100];
 
@@ -49,20 +127,20 @@ void LightManager::setupDirectionalLights(ShaderManager *shaderManager, uint32_t
     for (int i = 0; i < count; i++)
     {
         light = this->directionalLights[i];
-		glm::vec3 direction = light->getDirection();
-		glm::vec3 color = light->getColor();
+        glm::vec3 direction = light->getDirection();
+        glm::vec3 color = light->getColor();
 
-        sprintf_s(variable, "lights.directionalLights[%d].direction", i);
-        shaderManager->setVec3(program, variable, &direction[0]);
+        sprintf_s(variable, DIRECTIONAL_DIRECTION_FORMAT, i);
+        shaderManager->setVec3(shader, variable, &direction[0]);
 
-        sprintf_s(variable, "lights.directionalLights[%d].color", i);
-        shaderManager->setVec3(program, variable, &color[0]);
+        sprintf_s(variable, DIRECTIONAL_COLOR_FORMAT, i);
+        shaderManager->setVec3(shader, variable, &color[0]);
     }
 
-    shaderManager->setInt(program, "lights.directionalLightsCount", count);
+    shaderManager->setInt(shader, ShaderVariables::DIRECTIONAL_LIGHTS_COUNT, count);
 }
 
-void LightManager::setupPointLights(ShaderManager *shaderManager, uint32_t program)
+void LightManager::setupPointValues(ShaderManager *shaderManager, Shader *shader)
 {
     char variable[100];
 
@@ -71,25 +149,25 @@ void LightManager::setupPointLights(ShaderManager *shaderManager, uint32_t progr
     for (int i = 0; i < count; i++)
     {
         light = this->pointLights[i];
-		glm::vec3 position	= light->getTransform()->getPosition();
-		glm::vec3 color		= light->getColor();
-		float range			= light->getRange();
-		float intensity		= light->getIntensity();
+        glm::vec3 position  = light->getTransform()->getPosition();
+        glm::vec3 color     = light->getColor();
+        float range         = light->getRange();
+        float intensity     = light->getIntensity();
 
-        sprintf_s(variable, "lights.pointLights[%d].position", i);
-        shaderManager->setVec3(program, variable, &position[0]);
+        sprintf_s(variable, POINT_POSITION_FORMAT, i);
+        shaderManager->setVec3(shader, variable, &position[0]);
 
-        sprintf_s(variable, "lights.pointLights[%d].color", i);
-        shaderManager->setVec3(program, variable, &color[0]);
+        sprintf_s(variable, POINT_COLOR_FORMAT, i);
+        shaderManager->setVec3(shader, variable, &color[0]);
 
-        sprintf_s(variable, "lights.pointLights[%d].range", i);
-        shaderManager->setFloat(program, variable, range);
+        sprintf_s(variable, POINT_RANGE_FORMAT, i);
+        shaderManager->setFloat(shader, variable, range);
 
-        sprintf_s(variable, "lights.pointLights[%d].intensity", i);
-        shaderManager->setFloat(program, variable, intensity);
+        sprintf_s(variable, POINT_INTENSITY_FORMAT, i);
+        shaderManager->setFloat(shader, variable, intensity);
     }
 
-    shaderManager->setInt(program, "lights.pointLightsCount", count);
+    shaderManager->setInt(shader, ShaderVariables::POINT_LIGHTS_COUNT, count);
 }
 
 } // namespace

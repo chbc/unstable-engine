@@ -168,6 +168,9 @@
     <ClCompile Include="engine\core\singletonsManager\SingletonsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\core\graphics\shaders\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\FileUtils.h">
@@ -293,9 +296,6 @@
     <ClInclude Include="engine\core\graphics\shaders\ShaderContentFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\shaders\ShaderFiles.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\core\graphics\LightManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -357,6 +357,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\core\singletonsManager\ASingleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\graphics\shaders\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\graphics\shaders\ShaderConstants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

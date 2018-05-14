@@ -7,33 +7,35 @@ RenderEngine::RenderEngine()
 {
     this->singletonsManager = SingletonsManager::getInstance();
 
-	this->renderManager = this->singletonsManager->resolve<RenderManager>();
-	this->multimediaManager = this->singletonsManager->resolve<MultimediaManager>();
-	this->inputHandler = nullptr;
+    this->renderManager = this->singletonsManager->resolve<RenderManager>();
+    this->multimediaManager = this->singletonsManager->resolve<MultimediaManager>();
+    this->inputHandler = nullptr;
 }
 
 void RenderEngine::run()
 {
-	this->multimediaManager->init();
-	this->renderManager->init();
-	this->sceneManager = UPTR<SceneManager>{ new SceneManager };
-	this->guiManager = UPTR<GUIManager>{ new GUIManager };
+    this->multimediaManager->init();
+    this->renderManager->init();
+    this->sceneManager = UPTR<SceneManager>{ new SceneManager };
+    this->guiManager = UPTR<GUIManager>{ new GUIManager };
 
-	this->onInit();
+    this->onInit();
 
-	this->running = true;
-	while(this->running)
-	{
-		this->multimediaManager->onBeginFrame();
+    this->renderManager->onSceneLoaded();
 
-		this->processInput();
-		this->onUpdate(this->multimediaManager->getElapsedTime());
-		this->render();
+    this->running = true;
+    while(this->running)
+    {
+        this->multimediaManager->onBeginFrame();
 
-		this->multimediaManager->onEndFrame();
-	}
+        this->processInput();
+        this->onUpdate(this->multimediaManager->getElapsedTime());
+        this->render();
 
-	this->release();
+        this->multimediaManager->onEndFrame();
+    }
+    
+    this->release();
 }
 
 void RenderEngine::release()
@@ -43,28 +45,28 @@ void RenderEngine::release()
 
 void RenderEngine::processInput()
 {
-	if (this->inputHandler != nullptr)
-		this->multimediaManager->processInput(this->inputHandler.get());
+    if (this->inputHandler != nullptr)
+        this->multimediaManager->processInput(this->inputHandler.get());
     else
-		this->running = !this->multimediaManager->checkClosePressed();
+        this->running = !this->multimediaManager->checkClosePressed();
 }
 
 void RenderEngine::render()
 {
-	this->renderManager->clearBuffer();
-	this->renderManager->render();
-	this->onGUI();
-	this->multimediaManager->swapBuffers();
+    this->renderManager->clearBuffer();
+    this->renderManager->render();
+    this->onGUI();
+    this->multimediaManager->swapBuffers();
 }
 
 void RenderEngine::setEventReceiver(InputHandler *inputHandler)
 {
-	this->inputHandler = UPTR<InputHandler>(inputHandler);
+    this->inputHandler = UPTR<InputHandler>(inputHandler);
 }
 
 void RenderEngine::quit()
 {
-	this->running = false;
+    this->running = false;
 }
 
 } // namespace

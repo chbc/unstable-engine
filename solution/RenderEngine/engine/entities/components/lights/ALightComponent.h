@@ -14,6 +14,7 @@ class ALightComponent : public AEntityComponent
 {
 private:
 	glm::vec3 color;
+    int variableColorLocation;
 
 protected:
 	ALightComponent(Entity *entity);
@@ -21,6 +22,8 @@ protected:
 public:
     void setColor(const glm::vec3 &color);
 	glm::vec3 getColor();
+
+friend class LightManager;
 };
 
 } // namespace

@@ -8,24 +8,29 @@ namespace sre
 {
 
 SpecularRendererComponent::SpecularRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
-	: DiffuseRendererComponent(shaderManager, graphicsWrapper)
+    : DiffuseRendererComponent(shaderManager, graphicsWrapper)
 { }
 
-void SpecularRendererComponent::setupShaderVariables(MeshComponent *mesh, uint32_t shaderProgram)
+void SpecularRendererComponent::onLoadShader(Shader *shader)
 {
-	this->shaderManager->setInt(shaderProgram, "specularTexture", 2);
-	this->textureId = mesh->getMaterial()->getComponent<SpecularMaterialComponent>()->getTextureID();
+    this->shaderManager->setupUniformLocation(shader, ShaderVariables::SPECULAR_TEXTURE);
+}
+
+void SpecularRendererComponent::setupShaderVariables(MeshComponent *mesh, Shader *shader)
+{
+    this->shaderManager->setInt(shader, ShaderVariables::SPECULAR_TEXTURE, 2);
+    this->textureId = mesh->getMaterial()->getComponent<SpecularMaterialComponent>()->getTextureID();
 }
 
 void SpecularRendererComponent::preDraw()
 {
-	this->graphicsWrapper->enableTexCoords();
-	this->graphicsWrapper->activeSpecularTexture(this->textureId);
+    this->graphicsWrapper->enableTexCoords();
+    this->graphicsWrapper->activeSpecularTexture(this->textureId);
 }
 
 void SpecularRendererComponent::postDraw()
 {
-	this->graphicsWrapper->disableTexCoords();
+    this->graphicsWrapper->disableTexCoords();
 }
 
 } // namespace

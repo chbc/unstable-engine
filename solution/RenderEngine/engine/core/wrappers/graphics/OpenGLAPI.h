@@ -52,15 +52,16 @@ protected:
 
 	uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) override;
 
-	void setInt(uint32_t program, const std::string &varName, int value) override;
-	void setFloat(uint32_t program, const std::string &varName, float value) override;
-	void setVec3(uint32_t program, const std::string &varName, const float *value) override;
-	void setVec4(uint32_t program, const std::string &varName, const float *value) override;
-	void setMat4(uint32_t program, const std::string &varName, const float *value) override;
+    int getUniformLocation(uint32_t program, const std::string &varName) override;
+	void setInt(uint32_t program, int location, int value) override;
+	void setFloat(uint32_t program, int location, float value) override;
+	void setVec3(uint32_t program, int location, const float *value) override;
+	void setVec4(uint32_t program, int location, const float *value) override;
+	void setMat4(uint32_t program, int location, const float *value) override;
 
 	void enableShader(uint32_t program) override;
 	void disableShader() override;
-	void releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs) override;
+    void releaseShader(uint32_t program, uint32_t vertShader, uint32_t fragShader) override;
 	void deleteBuffers(MeshComponent *mesh) override;
 
 private:
@@ -69,7 +70,6 @@ private:
 	void checkProgramLink(uint32_t program);	// throws "link error"
 
 friend class RenderManager;
-friend class ColorRenderer;
 friend class TextureManager;
 friend class SingletonsManager;
 };

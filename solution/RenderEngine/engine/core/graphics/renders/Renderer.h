@@ -23,11 +23,16 @@ class LightManager;
 class Renderer : public AComponentsHolder<ColorRendererComponent>
 {
 private:
-	std::list<MeshComponent *> meshes;
-	uint32_t shaderProgram;
+    std::list<MeshComponent *> meshes;
+    class Shader *shader;
 
     ShaderManager *shaderManager;
     AGraphicsWrapper *graphicsWrapper;
+
+    int viewMatrixLocation;
+    int projectionMaxtrixLocation;
+    int cameraPositionLocation;
+    int modelMatrixLocation;
 
 public:
 	virtual ~Renderer();

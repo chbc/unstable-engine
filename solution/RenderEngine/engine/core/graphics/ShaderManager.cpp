@@ -7,68 +7,110 @@ namespace sre
 
 void ShaderManager::init()
 {
-	this->graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
+    this->graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
 }
 
 void ShaderManager::release()
 {
-	this->graphicsWrapper->releaseShaders(this->vertShaders, this->fragShaders, this->programs);
+    for (const UPTR<Shader> &item : this->shaders)
+    {
+        this->graphicsWrapper->releaseShader(item->program, item->vertexShader, item->fragmentShader);
+    }
+
+    this->shaders.clear();
 }
 
-uint32_t ShaderManager::loadGUIShader()
+Shader *ShaderManager::loadGUIShader()
 {
-	std::string vertexContent;
-	std::string fragmentContent;
+    std::string vertexContent;
+    std::string fragmentContent;
 
-	ShaderContentFactory contentFactory;
-	contentFactory.createGUIShaderContent(vertexContent, fragmentContent);
+    ShaderContentFactory contentFactory;
+    contentFactory.createGUIShaderContent(vertexContent, fragmentContent);
 
-	return this->loadShader(vertexContent, fragmentContent);
+    return this->loadShader(vertexContent, fragmentContent);
 }
 
-uint32_t ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent)
+Shader *ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent)
 {
-	uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);
-	uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentContent);
+    uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);
+    uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentContent);
 
-	uint32_t program = this->graphicsWrapper->createProgram(vertShader, fragShader);
+    uint32_t program = this->graphicsWrapper->createProgram(vertShader, fragShader);
 
-	this->vertShaders.push(vertShader);
-	this->fragShaders.push(fragShader);
-	this->programs.push(program);
-	
-	return program;
+    Shader *shader = new Shader{ program, vertShader, fragShader };
+    this->shaders.emplace_back(shader);
+
+    return shader;
 }
 
-// passing values //
-void ShaderManager::setInt(uint32_t program, const std::string &varName, int value)
+void ShaderManager::setupUniformLocation(ShaderVariables::Type variableKey)
 {
-	this->graphicsWrapper->setInt(program, varName, value);
+    for (const UPTR<Shader> &item : this->shaders)
+    {
+        this->setupUniformLocation(item.get(), variableKey);
+    }
 }
 
-void ShaderManager::setFloat(uint32_t program, const std::string &varName, float value)
+void ShaderManager::setupUniformLocation(const char *variable)
 {
-	this->graphicsWrapper->setFloat(program, varName, value);
+    for (const UPTR<Shader> &item : this->shaders)
+    {
+        this->setupUniformLocation(item.get(), variable);
+    }
 }
 
-void ShaderManager::setVec3(uint32_t program, const std::string &varName, const float *value)
+void ShaderManager::setupUniformLocation(Shader *shader, ShaderVariables::Type variableKey)
 {
-	this->graphicsWrapper->setVec3(program, varName, value);
+    std::string variableName = ShaderVariables::Map.at(variableKey);
+    int location = this->graphicsWrapper->getUniformLocation(shader->program, variableName);
+    shader->addVariableLocation(variableKey, location);
 }
 
-void ShaderManager::setVec4(uint32_t program, const std::string &varName, const float *value)
+void ShaderManager::setupUniformLocation(Shader *shader, const char *variable)
 {
-	this->graphicsWrapper->setVec4(program, varName, value);
+    int location = this->graphicsWrapper->getUniformLocation(shader->program, variable);
+    shader->addVariableLocation(variable, location);
 }
 
-void ShaderManager::setMat4(uint32_t program, const std::string &varName, const float *value)
+void ShaderManager::setInt(Shader *shader, ShaderVariables::Type variableKey, int value)
 {
-	this->graphicsWrapper->setMat4(program, varName, value);
+    this->graphicsWrapper->setInt(shader->program, shader->variableLocations[variableKey], value);
 }
 
-void ShaderManager::enableShader(uint32_t program)
+void ShaderManager::setFloat(Shader *shader, ShaderVariables::Type variableKey, float value)
 {
-	this->graphicsWrapper->enableShader(program);
+    this->graphicsWrapper->setFloat(shader->program, shader->variableLocations[variableKey], value);
+}
+
+void ShaderManager::setFloat(Shader *shader, const char *variable, float value)
+{
+    this->graphicsWrapper->setFloat(shader->program, shader->customVariableLocations[variable], value);
+}
+
+void ShaderManager::setVec3(Shader *shader, ShaderVariables::Type variableKey, const float *value)
+{
+    this->graphicsWrapper->setVec3(shader->program, shader->variableLocations[variableKey], value);
+}
+
+void ShaderManager::setVec3(Shader *shader, const char *variable, const float *value)
+{
+    this->graphicsWrapper->setVec3(shader->program, shader->customVariableLocations[variable], value);
+}
+
+void ShaderManager::setVec4(Shader *shader, ShaderVariables::Type variableKey, const float *value)
+{
+    this->graphicsWrapper->setVec4(shader->program, shader->variableLocations[variableKey], value);
+}
+
+void ShaderManager::setMat4(Shader *shader, ShaderVariables::Type variableKey, const float *value)
+{
+    this->graphicsWrapper->setMat4(shader->program, shader->variableLocations[variableKey], value);
+}
+
+void ShaderManager::enableShader(Shader *shader)
+{
+	this->graphicsWrapper->enableShader(shader->program);
 }
 
 void ShaderManager::disableShader()

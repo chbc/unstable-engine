@@ -8,24 +8,29 @@ namespace sre
 {
 
 DiffuseRendererComponent::DiffuseRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
-	: ColorRendererComponent(shaderManager, graphicsWrapper)
+    : ColorRendererComponent(shaderManager, graphicsWrapper)
 { }
 
-void DiffuseRendererComponent::setupShaderVariables(MeshComponent *mesh, uint32_t shaderProgram)
+void DiffuseRendererComponent::onLoadShader(Shader *shader)
 {
-	this->shaderManager->setInt(shaderProgram, "diffuseTexture", 0);
-	this->textureId = mesh->getMaterial()->getComponent<DiffuseMaterialComponent>()->getTextureID();
+    this->shaderManager->setupUniformLocation(shader, ShaderVariables::DIFFUSE_TEXTURE);
+}
+
+void DiffuseRendererComponent::setupShaderVariables(MeshComponent *mesh, Shader *shader)
+{
+    this->shaderManager->setInt(shader, ShaderVariables::DIFFUSE_TEXTURE, 0);
+    this->textureId = mesh->getMaterial()->getComponent<DiffuseMaterialComponent>()->getTextureID();
 }
 
 void DiffuseRendererComponent::preDraw()
 {
-	this->graphicsWrapper->enableTexCoords();
-	this->graphicsWrapper->activeDiffuseTexture(this->textureId);
+    this->graphicsWrapper->enableTexCoords();
+    this->graphicsWrapper->activeDiffuseTexture(this->textureId);
 }
 
 void DiffuseRendererComponent::postDraw()
 {
-	this->graphicsWrapper->disableTexCoords();
+    this->graphicsWrapper->disableTexCoords();
 }
 
 } // namespace

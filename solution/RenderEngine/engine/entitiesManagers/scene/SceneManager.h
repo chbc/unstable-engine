@@ -12,28 +12,26 @@ namespace sre
 {
 
 /*!
-	Class for manager scene nodes.
+    lass for manager scene nodes.
 */
 class SceneManager : public AEntityManager
 {
 private:
-	SceneManager();
+    SceneManager();
 
 public:
-	~SceneManager();
+    // renderables //
+    Entity *createPlaneEntity(float size = 1.0f);
+    Entity *createCubeEntity(float size = 1.0f);
+    Entity *createModelEntity(const std::string &fileName);
 
-	// renderables //
-	Entity *createPlaneEntity(float size = 1.0f);
-	Entity *createCubeEntity(float size = 1.0f);
-	Entity *createModelEntity(const std::string &fileName);
+    // light //
+    DirectionalLightComponent *addDirectionalLight();
+    PointLightComponent *addPointLight();
 
-	// light //
-	DirectionalLightComponent *addDirectionalLight();
-	PointLightComponent *addPointLight();
-
-	// camera //
-	class CameraComponent *getMainCamera();
-	Entity *createMeshEntity(UPTR<MeshData<VertexData>> &objectData);
+    // camera //
+    class CameraComponent *getMainCamera();
+    Entity *createMeshEntity(UPTR<MeshData<VertexData>> &objectData);
 
 friend class RenderEngine;
 };

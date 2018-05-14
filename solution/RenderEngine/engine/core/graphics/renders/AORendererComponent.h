@@ -9,13 +9,14 @@ namespace sre
 class AORendererComponent : public DiffuseRendererComponent
 {
 protected:
-	AORendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
+    AORendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-	void setupShaderVariables(MeshComponent *mesh, uint32_t shaderProgram) override;
-	void preDraw() override;
-	void postDraw() override;
+    void onLoadShader(class Shader *shader) override;
+    void setupShaderVariables(MeshComponent *mesh, class Shader *shader) override;
+    void preDraw() override;
+    void postDraw() override;
 
-	friend class Renderer;
+    friend class Renderer;
 };
 
 }  // namespace

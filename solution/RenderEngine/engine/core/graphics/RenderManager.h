@@ -60,6 +60,8 @@ private:
     void addDynamicGUIComponent(GUIImageComponent *guiComponent);
     void initGUIRenderer();
 
+    void onSceneLoaded();
+
     void setMainCamera(CameraComponent *camera);
     CameraComponent *getMainCamera();
 

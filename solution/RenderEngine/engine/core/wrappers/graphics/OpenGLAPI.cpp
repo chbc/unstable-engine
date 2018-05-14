@@ -312,38 +312,36 @@ uint32_t OpenGLAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader
 	return program;
 }
 
-void OpenGLAPI::setInt(uint32_t program, const std::string &varName, int value)
+int OpenGLAPI::getUniformLocation(uint32_t program, const std::string &varName)
 {
-	int location = glGetUniformLocation(program, varName.c_str());
-	this->checkVariableLocation(location, varName);
+    int result = glGetUniformLocation(program, varName.c_str());
+    this->checkVariableLocation(result, varName);
+
+    return result;
+}
+
+void OpenGLAPI::setInt(uint32_t program, int location, int value)
+{
 	glUniform1i(location, value);
 }
 
-void OpenGLAPI::setFloat(uint32_t program, const std::string &varName, float value)
+void OpenGLAPI::setFloat(uint32_t program, int location, float value)
 {
-	int location = glGetUniformLocation(program, varName.c_str());
-	this->checkVariableLocation(location, varName);
 	glUniform1f(location, value);
 }
 
-void OpenGLAPI::setVec3(uint32_t program, const std::string &varName, const float *value)
+void OpenGLAPI::setVec3(uint32_t program, int location, const float *value)
 {
-	int location = glGetUniformLocation(program, varName.c_str());
-	this->checkVariableLocation(location, varName);
 	glUniform3fv(location, 1, value);
 }
 
-void OpenGLAPI::setVec4(uint32_t program, const std::string &varName, const float *value)
+void OpenGLAPI::setVec4(uint32_t program, int location, const float *value)
 {
-	int location = glGetUniformLocation(program, varName.c_str());
-	this->checkVariableLocation(location, varName);
 	glUniform4fv(location, 1, value);
 }
 
-void OpenGLAPI::setMat4(uint32_t program, const std::string &varName, const float *value)
+void OpenGLAPI::setMat4(uint32_t program, int location, const float *value)
 {
-	int location = glGetUniformLocation(program, varName.c_str());
-	this->checkVariableLocation(location, varName);
 	glUniformMatrix4fv(location, 1, GL_FALSE, value);
 }
 
@@ -357,28 +355,13 @@ void OpenGLAPI::disableShader()
 	glUseProgram(0);
 }
 
-void OpenGLAPI::releaseShaders(std::stack<uint32_t> &vertShaders, std::stack<uint32_t> &fragShaders, std::stack<uint32_t> &programs)
+void OpenGLAPI::releaseShader(uint32_t program, uint32_t vertShader, uint32_t fragShader)
 {
-	uint32_t program = 0;
-	uint32_t vertShader = 0;
-	uint32_t fragShader = 0;
-
-	while (!programs.empty())
-	{
-		program = programs.top();
-		vertShader = vertShaders.top();
-		fragShader = fragShaders.top();
-
-		glDetachShader(program, vertShader);
-		glDetachShader(program, fragShader);
-		glDeleteShader(vertShader);
-		glDeleteShader(fragShader);
-		glDeleteProgram(program);
-
-		programs.pop();
-		vertShaders.pop();
-		fragShaders.pop();
-	}
+    glDetachShader(program, vertShader);
+    glDetachShader(program, fragShader);
+    glDeleteShader(vertShader);
+    glDeleteShader(fragShader);
+    glDeleteProgram(program);
 }
 
 void OpenGLAPI::deleteBuffers(MeshComponent *mesh)

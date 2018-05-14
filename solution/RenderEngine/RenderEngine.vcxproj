@@ -188,6 +188,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="engine\core\graphics\shaders\Shader.cpp" />
     <ClCompile Include="engine\core\multimedia\textures\atlases\FontAtlas.cpp" />
     <ClCompile Include="engine\core\singletonsManager\SingletonsManager.cpp" />
     <ClCompile Include="engine\entitiesManagers\AEntityManager.cpp" />
@@ -241,6 +242,7 @@
     <ClCompile Include="engine\utils\math\Rect.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\core\graphics\shaders\Shader.h" />
     <ClInclude Include="engine\core\singletonsManager\ASingleton.h" />
     <ClInclude Include="engine\entities\components\gui\GUIImageComponent.h" />
     <ClInclude Include="engine\entitiesManagers\AEntityManager.h" />
@@ -272,7 +274,7 @@
     <ClInclude Include="engine\core\graphics\renders\NormalRendererComponent.h" />
     <ClInclude Include="engine\core\graphics\renders\Renderer.h" />
     <ClInclude Include="engine\core\graphics\renders\SpecularRendererComponent.h" />
-    <ClInclude Include="engine\core\graphics\shaders\ShaderFiles.h" />
+    <ClInclude Include="engine\core\graphics\shaders\ShaderConstants.h" />
     <ClInclude Include="engine\entities\components\meshes\materials\Material.h" />
     <ClInclude Include="engine\entities\components\meshes\MeshComponent.h" />
     <ClInclude Include="engine\core\graphics\meshData\PrimitiveMeshFactory.h" />

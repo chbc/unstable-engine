@@ -8,28 +8,33 @@ namespace sre
 {
 
 NormalRendererComponent::NormalRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
-	: DiffuseRendererComponent(shaderManager, graphicsWrapper)
+    : DiffuseRendererComponent(shaderManager, graphicsWrapper)
 { }
 
-void NormalRendererComponent::setupShaderVariables(MeshComponent *mesh, uint32_t shaderProgram)
+void NormalRendererComponent::onLoadShader(Shader *shader)
 {
-	this->shaderManager->setInt(shaderProgram, "normalTexture", 1);
-	this->textureId = mesh->getMaterial()->getComponent<NormalMaterialComponent>()->getTextureID();
+    this->shaderManager->setupUniformLocation(shader, ShaderVariables::NORMAL_TEXTURE);
+}
+
+void NormalRendererComponent::setupShaderVariables(MeshComponent *mesh, Shader *shader)
+{
+    this->shaderManager->setInt(shader, ShaderVariables::NORMAL_TEXTURE, 1);
+    this->textureId = mesh->getMaterial()->getComponent<NormalMaterialComponent>()->getTextureID();
 }
 
 void NormalRendererComponent::preDraw()
 {
-	this->graphicsWrapper->enableTexCoords();
-	this->graphicsWrapper->enableVertexTangents();
-	this->graphicsWrapper->enableVertexBitangents();
-	this->graphicsWrapper->activeNormalTexture(this->textureId);
+    this->graphicsWrapper->enableTexCoords();
+    this->graphicsWrapper->enableVertexTangents();
+    this->graphicsWrapper->enableVertexBitangents();
+    this->graphicsWrapper->activeNormalTexture(this->textureId);
 }
 
 void NormalRendererComponent::postDraw()
 {
-	this->graphicsWrapper->disableVertexTangents();
-	this->graphicsWrapper->disableVertexBitangents();
-	this->graphicsWrapper->disableTexCoords();
+    this->graphicsWrapper->disableVertexTangents();
+    this->graphicsWrapper->disableVertexBitangents();
+    this->graphicsWrapper->disableTexCoords();
 }
 
 } // namespace

@@ -8,24 +8,30 @@ namespace sre
 {
 
 AORendererComponent::AORendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
-	: DiffuseRendererComponent(shaderManager, graphicsWrapper)
-{ }
-
-void AORendererComponent::setupShaderVariables(MeshComponent *mesh, uint32_t shaderProgram)
+    : DiffuseRendererComponent(shaderManager, graphicsWrapper)
 {
-	this->shaderManager->setInt(shaderProgram, "aoTexture", 3);
-	this->textureId = mesh->getMaterial()->getComponent<AmbientOcclusionMaterialComponent>()->getTextureID();
+}
+
+void AORendererComponent::onLoadShader(Shader *shader)
+{
+    this->shaderManager->setupUniformLocation(shader, ShaderVariables::AO_TEXTURE);
+}
+
+void AORendererComponent::setupShaderVariables(MeshComponent *mesh, Shader *shader)
+{
+    this->shaderManager->setInt(shader, ShaderVariables::AO_TEXTURE, 3);
+    this->textureId = mesh->getMaterial()->getComponent<AmbientOcclusionMaterialComponent>()->getTextureID();
 }
 
 void AORendererComponent::preDraw()
 {
-	this->graphicsWrapper->enableTexCoords();
-	this->graphicsWrapper->activeAOTexture(this->textureId);
+    this->graphicsWrapper->enableTexCoords();
+    this->graphicsWrapper->activeAOTexture(this->textureId);
 }
 
 void AORendererComponent::postDraw()
 {
-	this->graphicsWrapper->disableTexCoords();
+    this->graphicsWrapper->disableTexCoords();
 }
 
 } // namespace

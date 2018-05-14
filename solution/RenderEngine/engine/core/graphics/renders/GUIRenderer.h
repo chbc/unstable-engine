@@ -15,22 +15,25 @@ class MatrixManager;
 class GUIRenderer
 {
 protected:
-	std::list<GUIImageComponent *> guiComponents;
-	std::list<GUIImageComponent *> dynamicGUIComponents;
-	uint32_t shaderProgram;
+    std::list<GUIImageComponent *> guiComponents;
+    std::list<GUIImageComponent *> dynamicGUIComponents;
+    uint32_t shaderProgram;
 
-	ShaderManager *shaderManager;
-	AGraphicsWrapper *graphicsWrapper;
+    ShaderManager *shaderManager;
+    AGraphicsWrapper *graphicsWrapper;
 
 private:
-	GUIRenderer(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
+    class Shader *shader;
 
-	void loadShader();
-	void addGUIComponent(GUIImageComponent *guiComponent);
-	void addDynamicGUIComponent(GUIImageComponent *guiComponent);
-	void removeGUIComponent(GUIImageComponent *guiComponent);
-	void render(MatrixManager *matrixManager);
-	void setup(GUIImageComponent *guiComponent);
+private:
+    GUIRenderer(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
+
+    void loadShader();
+    void addGUIComponent(GUIImageComponent *guiComponent);
+    void addDynamicGUIComponent(GUIImageComponent *guiComponent);
+    void removeGUIComponent(GUIImageComponent *guiComponent);
+    void render(MatrixManager *matrixManager);
+    void setup(GUIImageComponent *guiComponent);
 
 friend class RenderManager;
 };
