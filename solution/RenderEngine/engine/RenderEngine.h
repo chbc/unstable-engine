@@ -14,37 +14,40 @@ namespace sre
 {
 
 /*!
-	Abstract application class.
+    Abstract application class.
 */
 class RenderEngine
 {
 protected:
     SingletonsManager *singletonsManager;
-	RenderManager *renderManager;
-	MultimediaManager *multimediaManager;
-	UPTR<InputHandler> inputHandler;
-	UPTR<SceneManager> sceneManager;
-	UPTR<GUIManager> guiManager;
+    RenderManager *renderManager;
+    MultimediaManager *multimediaManager;
+    UPTR<InputHandler> inputHandler;
+    UPTR<SceneManager> sceneManager;
+    UPTR<GUIManager> guiManager;
 
-	RenderEngine();
+    RenderEngine();
 
 public:
-	void setEventReceiver(InputHandler *inputHandler);
-	void run();
-	void quit();
+    void setEventReceiver(InputHandler *inputHandler);
+    void run();
+    void quit();
 
 protected:
-	virtual void onInit() =0;
-	virtual void onUpdate(unsigned int){};
-	virtual void onGUI(){};
-	virtual void onQuit(){};
+    virtual void onInit() =0;
+    virtual void onUpdate(unsigned int){};
+    virtual void onGUI(){};
+    virtual void onQuit(){};
 
 private:
-	bool running;
+    bool running;
 
-	void processInput();
-	void render();
-	void release();
+    void processInput();
+
+    void removeDestroyedEntities();
+
+    void render();
+    void release();
 
 };
 

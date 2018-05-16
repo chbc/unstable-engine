@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-#include <engine/entities/components/transforms/TransformComponent.h>
+#include <engine/entities/Entity.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
 #include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
 #include <engine/core/graphics/MatrixManager.h>
@@ -70,11 +70,6 @@ void Renderer::addMesh(MeshComponent *mesh)
     this->graphicsWrapper->createEBO(mesh);
 }
 
-void Renderer::removeMesh(MeshComponent *mesh)
-{
-    this->meshes.remove(mesh);
-}
-
 void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition)
 {
     // Shader setup
@@ -114,23 +109,28 @@ void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, 
 
 bool Renderer::contains(MeshComponent *mesh)
 {
-	bool result = false;
+    bool result = false;
 
-	for (MeshComponent *item : this->meshes)
-	{
-		if (item == mesh)
-		{
-			result = true;
-			break;
-		}
-	}
+    for (MeshComponent *item : this->meshes)
+    {
+        if (item == mesh)
+        {
+            result = true;
+            break;
+        }
+    }
 
-	return result;
+    return result;
 }
 
 bool Renderer::fitsWithMesh(MeshComponent *mesh)
 {
-	return (this->componentsBitset == mesh->getMaterial()->componentsBitset);
+    return (this->componentsBitset == mesh->getMaterial()->componentsBitset);
+}
+
+void Renderer::removeDestroyedEntities()
+{
+    this->meshes.remove_if([](MeshComponent *item) { return !item->getEntity()->isAlive(); });
 }
 
 } // namespace

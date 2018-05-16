@@ -53,6 +53,8 @@ private:
     void setupDirectionalValues(ShaderManager *shaderManager, Shader *shader);
     void setupPointValues(ShaderManager *shaderManager, Shader *shader);
 
+    void removeDestroyedEntities();
+
 friend class RenderManager;
 friend class SingletonsManager;
 friend class Renderer;

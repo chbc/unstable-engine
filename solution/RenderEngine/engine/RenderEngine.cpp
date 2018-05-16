@@ -51,6 +51,13 @@ void RenderEngine::processInput()
         this->running = !this->multimediaManager->checkClosePressed();
 }
 
+void RenderEngine::removeDestroyedEntities()
+{
+    this->renderManager->removeDestroyedEntities();
+    this->sceneManager->removeDestroyedEntities();
+    this->guiManager->removeDestroyedEntities();
+}
+
 void RenderEngine::render()
 {
     this->renderManager->clearBuffer();

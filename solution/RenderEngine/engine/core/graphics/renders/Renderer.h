@@ -35,39 +35,39 @@ private:
     int modelMatrixLocation;
 
 public:
-	virtual ~Renderer();
+    virtual ~Renderer();
 
 private:
-	Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
+    Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-	void loadShader();
+    void loadShader();
 
-	template <typename T, typename... TArgs>
-	T *addComponent(TArgs&&... mArgs)
-	{
-		T *newComponent{ nullptr };
+    template <typename T, typename... TArgs>
+    T *addComponent(TArgs&&... mArgs)
+    {
+        T *newComponent{ nullptr };
 
-		if (!AComponentsHolder<ColorRendererComponent>::hasComponent<T>())
-		{
-			newComponent = new T{ std::forward<TArgs>(mArgs)... };
-			AComponentsHolder<ColorRendererComponent>::addComponent(newComponent);
-		}
-		else
-			throw "Can't add duplicate component!";
+        if (!AComponentsHolder<ColorRendererComponent>::hasComponent<T>())
+        {
+            newComponent = new T{ std::forward<TArgs>(mArgs)... };
+            AComponentsHolder<ColorRendererComponent>::addComponent(newComponent);
+        }
+        else
+            throw "Can't add duplicate component!";
 
-		return newComponent;
-	}
+        return newComponent;
+    }
+    
+    void addMesh(MeshComponent *mesh);
 
-	void addMesh(MeshComponent *mesh);
-	void removeMesh(MeshComponent *mesh);
+    void render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition);
 
-	void render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition);
+    bool contains(MeshComponent *mesh);
+    bool fitsWithMesh(MeshComponent *mesh);
 
-	bool contains(MeshComponent *mesh);
+    void removeDestroyedEntities();
 
-	bool fitsWithMesh(MeshComponent *mesh);
-	
-	friend class RenderManager;
+    friend class RenderManager;
 };
 
 } // namespace

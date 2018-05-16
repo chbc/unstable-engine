@@ -3,6 +3,7 @@
 #include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/entities/Entity.h>
 #include "ShaderManager.h"
+#include <experimental/vector>
 
 namespace sre
 {
@@ -168,6 +169,21 @@ void LightManager::setupPointValues(ShaderManager *shaderManager, Shader *shader
     }
 
     shaderManager->setInt(shader, ShaderVariables::POINT_LIGHTS_COUNT, count);
+}
+
+void LightManager::removeDestroyedEntities()
+{
+    std::experimental::erase_if
+    (
+        this->directionalLights, 
+        [](DirectionalLightComponent *item) { return !item->getEntity()->isAlive(); }
+    );
+
+    std::experimental::erase_if
+    (
+        this->pointLights,
+        [](PointLightComponent *item) { return !item->getEntity()->isAlive(); }
+    );
 }
 
 } // namespace

@@ -31,9 +31,10 @@ private:
     void loadShader();
     void addGUIComponent(GUIImageComponent *guiComponent);
     void addDynamicGUIComponent(GUIImageComponent *guiComponent);
-    void removeGUIComponent(GUIImageComponent *guiComponent);
     void render(MatrixManager *matrixManager);
     void setup(GUIImageComponent *guiComponent);
+
+    void removeDestroyedEntities();
 
 friend class RenderManager;
 };

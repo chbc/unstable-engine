@@ -11,15 +11,16 @@ SampleApplication::SampleApplication() : RenderEngine()
 void SampleApplication::onInit()
 {
     // cube //
+    /*
     this->cube = this->sceneManager->createCubeEntity();
     this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 0.0f));
     MeshComponent *cubeMesh = this->cube->getComponent<MeshComponent>();
     cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
     
     this->sceneManager->addEntity(this->cube);
+    */
     
     // floor //
-    /*
     Entity *plane = this->sceneManager->createPlaneEntity(10);
     TransformComponent *transform = plane->getTransform();
     transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
@@ -30,13 +31,11 @@ void SampleApplication::onInit()
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
     
     this->sceneManager->addEntity(plane);
-    */
+
     
-    /*
     Entity *nanosuit = this->sceneManager->createModelEntity("../../media/nanosuit/nanosuit.obj");
     nanosuit->getTransform()->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
     this->sceneManager->addEntity(nanosuit);
-    */
     
     // light //
     /*
@@ -51,17 +50,13 @@ void SampleApplication::onInit()
     dLight2->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
     */
 
-    /*
     PointLightComponent *pLight1 = this->sceneManager->addPointLight();
     pLight1->getTransform()->setPosition(glm::vec3(0.0f, 5.0f, 2.0f));
     pLight1->setColor(glm::vec3(0.75f, 0.5f, 0.0f));
-    */
 
-    /*
     PointLightComponent *pLight2 = this->sceneManager->addPointLight();
     pLight2->getTransform()->setPosition(glm::vec3(-5.0f, 2.0f, 0.0f));
     pLight2->setColor(glm::vec3(0.75f, 0.75f, 0.0f));
-    */
 
     // set EventReceiver class for input handling
     this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));

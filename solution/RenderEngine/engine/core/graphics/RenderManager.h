@@ -81,6 +81,7 @@ private:
     Texture *loadAOTexture(const std::string &fileName);
 
     void setupBufferSubData(const GUIImageComponent *guiComponent);
+    void removeDestroyedEntities();
 
 friend class AEntityManager;
 friend class SceneManager;

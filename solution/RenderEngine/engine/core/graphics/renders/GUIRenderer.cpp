@@ -1,6 +1,6 @@
 #include "GUIRenderer.h"
 
-#include <engine/entities/components/transforms/TransformComponent.h>
+#include <engine/entities/Entity.h>
 #include <engine/entities/components/gui/GUIImageComponent.h>
 #include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
 #include <engine/core/graphics/MatrixManager.h>
@@ -38,11 +38,6 @@ void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
     this->graphicsWrapper->createGUIEBO(guiComponent);
 }
 
-void GUIRenderer::removeGUIComponent(GUIImageComponent *guiComponent)
-{
-    this->guiComponents.remove(guiComponent);
-}
-
 void GUIRenderer::render(MatrixManager *matrixManager)
 {
     this->shaderManager->enableShader(this->shader);
@@ -76,6 +71,11 @@ void GUIRenderer::setup(GUIImageComponent *guiComponent)
     this->graphicsWrapper->bindVAO(guiComponent->vao, guiComponent->vbo);
     this->graphicsWrapper->enableGUISettings();
     this->graphicsWrapper->activeDiffuseTexture(guiComponent->getTextureId());
+}
+
+void GUIRenderer::removeDestroyedEntities()
+{
+    this->guiComponents.remove_if([](GUIImageComponent *item) { return !item->getEntity()->isAlive(); });
 }
 
 } // namespace

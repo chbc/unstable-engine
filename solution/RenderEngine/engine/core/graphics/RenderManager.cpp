@@ -200,4 +200,17 @@ void RenderManager::setupBufferSubData(const GUIImageComponent *guiComponent)
     this->graphicsWrapper->setupBufferSubData(guiComponent->meshData.get());
 }
 
+void RenderManager::removeDestroyedEntities()
+{
+    for (const UPTR<Renderer> &item : this->renders)
+        item->removeDestroyedEntities();
+
+    if (this->guiRenderer.get() != nullptr)
+        this->guiRenderer->removeDestroyedEntities();
+
+    this->lightManager->removeDestroyedEntities();
+
+    // ### REMOVER RENDERERS VAZIOS
+}
+
 } // namespace
