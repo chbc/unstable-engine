@@ -18,6 +18,8 @@ struct LightSources
 	
 	PointLight pointLights[4];
 	int pointLightsCount;
+	
+	vec3 ambientLightColor;
 };
 
 // Lights
