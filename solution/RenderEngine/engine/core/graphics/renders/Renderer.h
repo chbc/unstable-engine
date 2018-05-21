@@ -64,6 +64,7 @@ private:
 
     bool contains(MeshComponent *mesh);
     bool fitsWithMesh(MeshComponent *mesh);
+    inline bool isEmpty() { return this->meshes.empty(); }
 
     void removeDestroyedEntities();
 

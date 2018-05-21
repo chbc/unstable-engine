@@ -49,7 +49,7 @@ private:
 
 	// GUI components
 	template <> std::size_t getComponentId<class GUIImageComponent>() { return EMaterialMap::GUI; }
-	template <> std::size_t getComponentId<class GUITextComponent>() { return EMaterialMap::GUI; }	// ###
+	template <> std::size_t getComponentId<class GUITextComponent>() { return EMaterialMap::GUI; }	// ### CONFLITA COM A CAMERA
 
 	// Renderer components
 	template <> std::size_t getComponentId<class ColorRendererComponent>() { return EMaterialMap::COLOR; }

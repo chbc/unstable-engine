@@ -14,6 +14,7 @@
 #include "ShaderManager.h"
 #include "renders/Renderer.h"
 #include "renders/GUIRenderer.h"
+#include <experimental/vector>
 
 namespace sre
 {
@@ -205,12 +206,16 @@ void RenderManager::removeDestroyedEntities()
     for (const UPTR<Renderer> &item : this->renders)
         item->removeDestroyedEntities();
 
+    std::experimental::erase_if
+    (
+        this->renders, 
+        [](const UPTR<Renderer> &item) { return item->isEmpty(); }
+    );
+
     if (this->guiRenderer.get() != nullptr)
         this->guiRenderer->removeDestroyedEntities();
 
     this->lightManager->removeDestroyedEntities();
-
-    // ### REMOVER RENDERERS VAZIOS
 }
 
 } // namespace

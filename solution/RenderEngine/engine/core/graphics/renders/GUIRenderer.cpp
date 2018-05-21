@@ -75,7 +75,18 @@ void GUIRenderer::setup(GUIImageComponent *guiComponent)
 
 void GUIRenderer::removeDestroyedEntities()
 {
-    this->guiComponents.remove_if([](GUIImageComponent *item) { return !item->getEntity()->isAlive(); });
+    std::list<GUIImageComponent *>::iterator it;
+
+    for (it = this->guiComponents.begin(); it != this->guiComponents.end(); )
+    {
+        if (!(*it)->getEntity()->isAlive())
+        {
+            this->graphicsWrapper->deleteBuffers((*it));
+            it = this->guiComponents.erase(it);
+        }
+        else
+            ++it;
+    }
 }
 
 } // namespace

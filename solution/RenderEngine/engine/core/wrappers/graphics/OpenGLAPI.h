@@ -63,6 +63,7 @@ protected:
 	void disableShader() override;
     void releaseShader(uint32_t program, uint32_t vertShader, uint32_t fragShader) override;
 	void deleteBuffers(MeshComponent *mesh) override;
+    void deleteBuffers(GUIImageComponent *guiComponent) override;
 
 private:
 	uint32_t compileShader(const std::string &source, uint32_t mode);

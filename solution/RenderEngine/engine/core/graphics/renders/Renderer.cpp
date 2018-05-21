@@ -130,7 +130,18 @@ bool Renderer::fitsWithMesh(MeshComponent *mesh)
 
 void Renderer::removeDestroyedEntities()
 {
-    this->meshes.remove_if([](MeshComponent *item) { return !item->getEntity()->isAlive(); });
+    std::list<MeshComponent *>::iterator it;
+
+    for (it = this->meshes.begin(); it != this->meshes.end(); )
+    {
+        if (!(*it)->getEntity()->isAlive())
+        {
+            this->graphicsWrapper->deleteBuffers((*it));
+            it = this->meshes.erase(it);
+        }
+        else
+            ++it;
+    }
 }
 
 } // namespace

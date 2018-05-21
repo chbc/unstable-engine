@@ -32,10 +32,11 @@ void SampleApplication::onInit()
     
     this->sceneManager->addEntity(plane);
 
-    
+    /*
     Entity *nanosuit = this->sceneManager->createModelEntity("../../media/nanosuit/nanosuit.obj");
     nanosuit->getTransform()->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
     this->sceneManager->addEntity(nanosuit);
+    */
     
     // light //
     /*

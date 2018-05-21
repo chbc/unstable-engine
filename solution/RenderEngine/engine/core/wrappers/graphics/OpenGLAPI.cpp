@@ -366,9 +366,16 @@ void OpenGLAPI::releaseShader(uint32_t program, uint32_t vertShader, uint32_t fr
 
 void OpenGLAPI::deleteBuffers(MeshComponent *mesh)
 {
-	glDeleteBuffers(1, &mesh->ebo);
-	glDeleteBuffers(1, &mesh->vbo);
-	glDeleteVertexArrays(1, &mesh->vao);
+    glDeleteBuffers(1, &mesh->ebo);
+    glDeleteBuffers(1, &mesh->vbo);
+    glDeleteVertexArrays(1, &mesh->vao);
+}
+
+void OpenGLAPI::deleteBuffers(GUIImageComponent *guiComponent)
+{
+    glDeleteBuffers(1, &guiComponent->ebo);
+    glDeleteBuffers(1, &guiComponent->vbo);
+    glDeleteVertexArrays(1, &guiComponent->vao);
 }
 
 uint32_t OpenGLAPI::compileShader(const std::string &source, uint32_t mode)

@@ -67,6 +67,7 @@ protected:
 	virtual void disableShader() =0;
     virtual void releaseShader(uint32_t program, uint32_t vertShader, uint32_t fragShader) =0;
 	virtual void deleteBuffers(MeshComponent *mesh) = 0;
+    virtual void deleteBuffers(GUIImageComponent *guiComponent) = 0;
 
 friend class RenderManager;
 friend class ShaderManager;

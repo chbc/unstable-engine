@@ -32,6 +32,8 @@ void RenderEngine::run()
         this->onUpdate(this->multimediaManager->getElapsedTime());
         this->render();
 
+        this->removeDestroyedEntities();
+
         this->multimediaManager->onEndFrame();
     }
     
