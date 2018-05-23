@@ -28,35 +28,37 @@ Shader *ShaderManager::loadGUIShader()
     ShaderContentFactory contentFactory;
     contentFactory.createGUIShaderContent(vertexContent, fragmentContent);
 
-    return this->loadShader(vertexContent, fragmentContent);
+    return this->loadShader(vertexContent, fragmentContent, false);
 }
 
-Shader *ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent)
+Shader *ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent, bool isLit)
 {
     uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);
     uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentContent);
 
     uint32_t program = this->graphicsWrapper->createProgram(vertShader, fragShader);
 
-    Shader *shader = new Shader{ program, vertShader, fragShader };
+    Shader *shader = new Shader{ program, vertShader, fragShader, isLit };
     this->shaders.emplace_back(shader);
 
     return shader;
 }
 
-void ShaderManager::setupUniformLocation(ShaderVariables::Type variableKey)
+void ShaderManager::setupLightUniformLocations(ShaderVariables::Type variableKey)
 {
     for (const UPTR<Shader> &item : this->shaders)
     {
-        this->setupUniformLocation(item.get(), variableKey);
+        if (item->isLit)
+            this->setupUniformLocation(item.get(), variableKey);
     }
 }
 
-void ShaderManager::setupUniformLocation(const char *variable)
+void ShaderManager::setupLightUniformLocations(const char *variable)
 {
     for (const UPTR<Shader> &item : this->shaders)
     {
-        this->setupUniformLocation(item.get(), variable);
+        if (item->isLit)
+            this->setupUniformLocation(item.get(), variable);
     }
 }
 

@@ -46,20 +46,20 @@ void LightManager::setupVariablesLocations(ShaderManager *shaderManager)
 
     if (this->directionalLights.size() > 0)
     {
-        shaderManager->setupUniformLocation(ShaderVariables::DIRECTIONAL_LIGHTS_COUNT);
+        shaderManager->setupLightUniformLocations(ShaderVariables::DIRECTIONAL_LIGHTS_COUNT);
         this->setupDirectionalsVariablesLocations(shaderManager);
         hasAnyLight = true;
     }
 
     if (this->pointLights.size() > 0)
     {
-        shaderManager->setupUniformLocation(ShaderVariables::POINT_LIGHTS_COUNT);
+        shaderManager->setupLightUniformLocations(ShaderVariables::POINT_LIGHTS_COUNT);
         this->setupPointsVariablesLocations(shaderManager);
         hasAnyLight = true;
     }
 
     if (hasAnyLight)
-        shaderManager->setupUniformLocation(ShaderVariables::AMBIENT_LIGHT_COLOR);
+        shaderManager->setupLightUniformLocations(ShaderVariables::AMBIENT_LIGHT_COLOR);
 }
 
 void LightManager::setupDirectionalsVariablesLocations(ShaderManager *shaderManager)
@@ -70,10 +70,10 @@ void LightManager::setupDirectionalsVariablesLocations(ShaderManager *shaderMana
     for (int i = 0; i < count; i++)
     {
         sprintf_s(variable, DIRECTIONAL_DIRECTION_FORMAT, i);
-        shaderManager->setupUniformLocation(variable);
+        shaderManager->setupLightUniformLocations(variable);
 
         sprintf_s(variable, DIRECTIONAL_COLOR_FORMAT, i);
-        shaderManager->setupUniformLocation(variable);
+        shaderManager->setupLightUniformLocations(variable);
     }
 }
 
@@ -85,16 +85,16 @@ void LightManager::setupPointsVariablesLocations(ShaderManager *shaderManager)
     for (int i = 0; i < count; i++)
     {
         sprintf_s(variable, POINT_POSITION_FORMAT, i);
-        shaderManager->setupUniformLocation(variable);
+        shaderManager->setupLightUniformLocations(variable);
 
         sprintf_s(variable, POINT_COLOR_FORMAT, i);
-        shaderManager->setupUniformLocation(variable);
+        shaderManager->setupLightUniformLocations(variable);
 
         sprintf_s(variable, POINT_RANGE_FORMAT, i);
-        shaderManager->setupUniformLocation(variable);
+        shaderManager->setupLightUniformLocations(variable);
 
         sprintf_s(variable, POINT_INTENSITY_FORMAT, i);
-        shaderManager->setupUniformLocation(variable);
+        shaderManager->setupLightUniformLocations(variable);
     }
 }
 

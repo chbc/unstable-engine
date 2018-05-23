@@ -29,12 +29,14 @@ void SampleApplication::onInit()
     planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
     planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
-    
+
     this->sceneManager->addEntity(plane);
 
+    /*
     Entity *nanosuit = this->sceneManager->createModelEntity("../../media/nanosuit/nanosuit.obj");
     nanosuit->getTransform()->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
     this->sceneManager->addEntity(nanosuit);
+    */
     
     // light //
     /*
@@ -43,12 +45,11 @@ void SampleApplication::onInit()
     dLight1->setColor(glm::vec3(0.3f, 0.3f, 0.3f));
     */
     
-    /*
     DirectionalLightComponent *dLight2 = this->sceneManager->addDirectionalLight();
     dLight2->setDirection(glm::vec3(1.0f, 0.0f, -1.0f));
     dLight2->setColor(glm::vec3(1.0f, 0.0f, 0.0f));
-    */
 
+    /*
     PointLightComponent *pLight1 = this->sceneManager->addPointLight();
     pLight1->getTransform()->setPosition(glm::vec3(0.0f, 5.0f, 2.0f));
     pLight1->setColor(glm::vec3(0.75f, 0.5f, 0.0f));
@@ -56,12 +57,9 @@ void SampleApplication::onInit()
     PointLightComponent *pLight2 = this->sceneManager->addPointLight();
     pLight2->getTransform()->setPosition(glm::vec3(-5.0f, 2.0f, 0.0f));
     pLight2->setColor(glm::vec3(0.75f, 0.75f, 0.0f));
-
-    // set EventReceiver class for input handling
-    this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
+    */
     
     // GUI //
-    /*
     Entity *guiEntity;
 
     guiEntity = this->guiManager->createGUIImageEntityFromAtlas("../../media/atlases/test_texture_rect", "sete");
@@ -70,6 +68,7 @@ void SampleApplication::onInit()
     
     this->guiManager->addEntity(guiEntity);
 
+    /* ###
     std::stringstream ss;
     for (int i = 0; i < 10; i++)
     {
@@ -84,6 +83,9 @@ void SampleApplication::onInit()
         ss.clear();
     }
     */
+
+    // set EventReceiver class for input handling
+    this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
 }
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)

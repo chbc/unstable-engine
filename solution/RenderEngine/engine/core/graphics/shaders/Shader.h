@@ -15,18 +15,18 @@ private:
     uint32_t program;
     uint32_t vertexShader;
     uint32_t fragmentShader;
+    bool isLit;
 
     std::unordered_map<ShaderVariables::Type, int> variableLocations;
     std::unordered_map<std::string, int> customVariableLocations;
 
 public:
-    Shader() {}
     virtual ~Shader() {}
     int getVariableLocation(ShaderVariables::Type variable);
     int getVariableLocation(const char *variable);
 
 private:
-    Shader(uint32_t program, uint32_t vertexShader, uint32_t fragmentShader);
+    Shader(uint32_t program, uint32_t vertexShader, uint32_t fragmentShader, bool isLit);
 
     void addVariableLocation(ShaderVariables::Type variable, int location);
     void addVariableLocation(std::string variable, int location);

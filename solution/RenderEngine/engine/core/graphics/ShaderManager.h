@@ -41,11 +41,11 @@ private:
     }
 
     Shader *loadGUIShader();
-    Shader *loadShader(const std::string &vertexContent, const std::string &fragmentContent);
+    Shader *loadShader(const std::string &vertexContent, const std::string &fragmentContent, bool isLit = true);
 
     // passing values //
-    void setupUniformLocation(ShaderVariables::Type variableKey);
-    void setupUniformLocation(const char *variable);
+    void setupLightUniformLocations(ShaderVariables::Type variableKey);
+    void setupLightUniformLocations(const char *variable);
     void setupUniformLocation(Shader *shader, ShaderVariables::Type variableKey);
     void setupUniformLocation(Shader *shader, const char *variable);
 

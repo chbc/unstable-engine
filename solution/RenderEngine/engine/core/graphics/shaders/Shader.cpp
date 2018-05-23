@@ -3,12 +3,9 @@
 namespace sre
 {
 
-Shader::Shader(uint32_t program, uint32_t vertexShader, uint32_t fragmentShader)
-{
-    this->program = program;
-    this->vertexShader = vertexShader;
-    this->fragmentShader = fragmentShader;
-}
+Shader::Shader(uint32_t program, uint32_t vertexShader, uint32_t fragmentShader, bool isLit)
+        : program(program), vertexShader(vertexShader), fragmentShader(fragmentShader), isLit(isLit)
+{ }
 
 void Shader::addVariableLocation(ShaderVariables::Type variable, int location)
 {

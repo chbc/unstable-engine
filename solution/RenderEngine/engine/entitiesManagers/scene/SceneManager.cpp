@@ -42,7 +42,6 @@ DirectionalLightComponent *SceneManager::addDirectionalLight()
 {
     DirectionalLightComponent *result = nullptr;
     Entity *newEntity = this->createEntity();
-    this->addEntity(newEntity);
     RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
     result = renderManager->addDirectionalLight(newEntity);
 
