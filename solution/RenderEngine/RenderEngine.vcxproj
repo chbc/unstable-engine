@@ -244,6 +244,7 @@
   <ItemGroup>
     <ClInclude Include="engine\core\graphics\shaders\Shader.h" />
     <ClInclude Include="engine\core\singletonsManager\ASingleton.h" />
+    <ClInclude Include="engine\entities\components\EComponentId.h" />
     <ClInclude Include="engine\entities\components\gui\GUIImageComponent.h" />
     <ClInclude Include="engine\entitiesManagers\AEntityManager.h" />
     <ClInclude Include="engine\core\multimedia\textures\atlases\Atlas.h" />

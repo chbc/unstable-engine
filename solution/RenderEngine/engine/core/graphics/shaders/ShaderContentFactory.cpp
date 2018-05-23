@@ -1,7 +1,6 @@
 #include "ShaderContentFactory.h"
 #include <engine/utils/FileUtils.h>
 #include "ShaderConstants.h"
-#include <engine/core/multimedia/textures/EMaterialMap.h>
 
 namespace sre
 {

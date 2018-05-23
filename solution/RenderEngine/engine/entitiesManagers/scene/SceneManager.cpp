@@ -31,22 +31,35 @@ Entity *SceneManager::createCubeEntity(float size)
 Entity *SceneManager::createModelEntity(const std::string &fileName)
 {
     ModelLoader modelLoader;
-    return modelLoader.load(fileName);
+    Entity *rootEntity = this->createEntity();
+    modelLoader.load(rootEntity, fileName);
+
+    return rootEntity;
 }
 
 // light //
 DirectionalLightComponent *SceneManager::addDirectionalLight()
 {
+    DirectionalLightComponent *result = nullptr;
     Entity *newEntity = this->createEntity();
+    this->addEntity(newEntity);
     RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
-    return renderManager->addDirectionalLight(newEntity);
+    result = renderManager->addDirectionalLight(newEntity);
+
+    this->addEntity(newEntity);
+    return result;
 }
 
 PointLightComponent *SceneManager::addPointLight()
 {
+    PointLightComponent *result = nullptr;
     Entity *newEntity = this->createEntity();
+
     RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
-    return renderManager->addPointLight(newEntity);
+    result = renderManager->addPointLight(newEntity);
+
+    this->addEntity(newEntity);
+    return result;
 }
 
 CameraComponent *SceneManager::getMainCamera()

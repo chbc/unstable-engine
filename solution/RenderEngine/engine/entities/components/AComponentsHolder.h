@@ -2,61 +2,61 @@
 #define _A_COMPONENTS_HOLDER_H_
 
 #include <engine/utils/memory_aliases.h>
-#include <engine/core/multimedia/textures/EMaterialMap.h>
 #include <bitset>
 #include <array>
+#include "EComponentId.h"
 
 namespace sre
 {
 
-constexpr size_t MAX_COMPONENTS{ 10 };
+constexpr size_t MAX_COMPONENTS{ 17 };
 
 template <typename C>
 class AComponentsHolder
 {
 protected:
-	VECTOR_UPTR<C> components;
-	std::bitset<MAX_COMPONENTS> componentsBitset;
+    VECTOR_UPTR<C> components;
+    std::bitset<MAX_COMPONENTS> componentsBitset;
 
 private:
-	std::array<C*, MAX_COMPONENTS> componentsArray;
+    std::array<C*, MAX_COMPONENTS> componentsArray;
 
 public:
-	template <typename T> T *getComponent(); // throws "Can't find component"
-	std::vector<C*> getComponents();
-	template <typename T> bool hasComponent();
+    template <typename T> T *getComponent(); // throws "Can't find component"
+    std::vector<C*> getComponents();
+    template <typename T> bool hasComponent();
 
 protected:
-	template <typename T> void addComponent(T *newComponent);
+    template <typename T> void addComponent(T *newComponent);
 
 private:
-	template <typename T>
-	std::size_t getComponentId();
+    template <typename T>
+    std::size_t getComponentId();
 
-	// Entity components
-	template <> std::size_t getComponentId<class TransformComponent>() { return 0; }
-	template <> std::size_t getComponentId<class CameraComponent>() { return 1; }
-	template <> std::size_t getComponentId<class DirectionalLightComponent>() { return 2; }
-	template <> std::size_t getComponentId<class PointLightComponent>() { return 3; }
-	template <> std::size_t getComponentId<class MeshComponent>() { return 4; }
+    // Entity components
+    template <> std::size_t getComponentId<class TransformComponent>() { return EComponentId::TRANSFORM; }
+    template <> std::size_t getComponentId<class CameraComponent>() { return EComponentId::CAMERA; }
+    template <> std::size_t getComponentId<class DirectionalLightComponent>() { return EComponentId::DIRECTIONAL_LIGHT; }
+    template <> std::size_t getComponentId<class PointLightComponent>() { return EComponentId::POINT_LIGHT; }
+    template <> std::size_t getComponentId<class MeshComponent>() { return EComponentId::MESH; }
 
-	// Material components
-	template <> std::size_t getComponentId<class ColorMaterialComponent>() { return EMaterialMap::COLOR; }
-	template <> std::size_t getComponentId<class DiffuseMaterialComponent>() { return EMaterialMap::DIFFUSE; }
-	template <> std::size_t getComponentId<class NormalMaterialComponent>() { return EMaterialMap::NORMAL; }
-	template <> std::size_t getComponentId<class SpecularMaterialComponent>() { return EMaterialMap::SPECULAR; }
-	template <> std::size_t getComponentId<class AmbientOcclusionMaterialComponent>() { return EMaterialMap::AMBIENT_OCCLUSION; }
+    // Material components
+    template <> std::size_t getComponentId<class ColorMaterialComponent>() { return EComponentId::COLOR_MATERIAL; }
+    template <> std::size_t getComponentId<class DiffuseMaterialComponent>() { return EComponentId::DIFFUSE_MATERIAL; }
+    template <> std::size_t getComponentId<class NormalMaterialComponent>() { return EComponentId::NORMAL_MATERIAL; }
+    template <> std::size_t getComponentId<class SpecularMaterialComponent>() { return EComponentId::SPECULAR_MATERIAL; }
+    template <> std::size_t getComponentId<class AmbientOcclusionMaterialComponent>() { return EComponentId::AO_MATERIAL; }
 
-	// GUI components
-	template <> std::size_t getComponentId<class GUIImageComponent>() { return EMaterialMap::GUI; }
-	template <> std::size_t getComponentId<class GUITextComponent>() { return EMaterialMap::GUI; }	// ### CONFLITA COM A CAMERA
+    // GUI components
+    template <> std::size_t getComponentId<class GUIImageComponent>() { return EComponentId::GUI_IMAGE; }
+    template <> std::size_t getComponentId<class GUITextComponent>() { return EComponentId::GUI_TEXT; }
 
-	// Renderer components
-	template <> std::size_t getComponentId<class ColorRendererComponent>() { return EMaterialMap::COLOR; }
-	template <> std::size_t getComponentId<class DiffuseRendererComponent>() { return EMaterialMap::DIFFUSE; }
-	template <> std::size_t getComponentId<class NormalRendererComponent>() { return EMaterialMap::NORMAL; }
-	template <> std::size_t getComponentId<class SpecularRendererComponent>() { return EMaterialMap::SPECULAR; }
-	template <> std::size_t getComponentId<class AORendererComponent>() { return EMaterialMap::AMBIENT_OCCLUSION; }
+    // Renderer components
+    template <> std::size_t getComponentId<class ColorRendererComponent>() { return EComponentId::COLOR_RENDERER; }
+    template <> std::size_t getComponentId<class DiffuseRendererComponent>() { return EComponentId::DIFFUSE_RENDERER; }
+    template <> std::size_t getComponentId<class NormalRendererComponent>() { return EComponentId::NORMAL_RENDERER; }
+    template <> std::size_t getComponentId<class SpecularRendererComponent>() { return EComponentId::SPECULAR_RENDERER; }
+    template <> std::size_t getComponentId<class AORendererComponent>() { return EComponentId::AO_RENDERER; }
 };
 
 } // namespace

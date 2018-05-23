@@ -16,14 +16,14 @@ class MeshComponent;
 class ModelLoader
 {
 private:
-	std::string directory;
+    std::string directory;
 
-	ModelLoader() {}
+    ModelLoader() {}
 
-	Entity *load(const std::string &fileName);
-	Entity *processNode(aiNode *node, const aiScene *scene);
-	void processMesh(aiMesh *inputMesh, const aiScene *scene, Entity *entity);
-	void processMaterials(aiMesh *inputMesh, const aiScene *scene, MeshComponent *entityMesh);
+    void load(Entity *rootEntity, const std::string &fileName);
+    void processNode(Entity *entity, aiNode *node, const aiScene *scene);
+    void processMesh(aiMesh *inputMesh, const aiScene *scene, Entity *entity);
+    void processMaterials(aiMesh *inputMesh, const aiScene *scene, MeshComponent *entityMesh);
 
 friend class SceneManager;
 };

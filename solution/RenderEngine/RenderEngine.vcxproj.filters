@@ -365,6 +365,9 @@
     <ClInclude Include="engine\core\graphics\shaders\ShaderConstants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\entities\components\EComponentId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="engine\entities\components\AComponentsHolder.tpp" />

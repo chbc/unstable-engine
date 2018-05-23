@@ -9,29 +9,29 @@ void ShaderContentFactory::createShaderContent(const std::bitset<SIZE> &componen
     std::string vertexContentImpl;
     std::string fragmentContentImpl;
 
-    for (int i = 0; i <= EMaterialMap::SIZE; i++)
+    for (int i = EComponentId::COLOR_RENDERER; i <= EComponentId::AO_RENDERER; i++)
     {
         if (componentsBitset[i])
         {
             switch (i)
             {
-                case EMaterialMap::COLOR:
+                case EComponentId::COLOR_RENDERER:
                     this->loadColorContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadColorContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
-                case EMaterialMap::DIFFUSE:
+                case EComponentId::DIFFUSE_RENDERER:
                     this->loadDiffuseContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadDiffuseContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
-                case EMaterialMap::NORMAL:
+                case EComponentId::NORMAL_RENDERER:
                     this->loadNormalMapContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadNormalMapContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
-                case EMaterialMap::SPECULAR:
+                case EComponentId::SPECULAR_RENDERER:
                     this->loadSpecularMapContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadSpecularMapContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
-                case EMaterialMap::AMBIENT_OCCLUSION: 
+                case EComponentId::AO_RENDERER:
                     this->loadAOMapContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadAOMapContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;

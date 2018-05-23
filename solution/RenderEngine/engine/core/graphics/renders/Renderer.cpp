@@ -16,25 +16,25 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
     this->shaderManager = shaderManager;
     this->graphicsWrapper = graphicsWrapper;
     
-    for (int i = 0; i <= EMaterialMap::SIZE; i++)
+    for (int i = EComponentId::COLOR_MATERIAL; i <= EComponentId::AO_MATERIAL; i++) // ### TESTAR SE CHEGA NO AO
     {
         if (material->componentsBitset[i])
         {
             switch (i)
             {
-                case EMaterialMap::COLOR:
+                case EComponentId::COLOR_MATERIAL:
                     this->addComponent<ColorRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
-                case EMaterialMap::DIFFUSE:
+                case EComponentId::DIFFUSE_MATERIAL:
                     this->addComponent<DiffuseRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
-                case EMaterialMap::NORMAL:
+                case EComponentId::NORMAL_MATERIAL:
                     this->addComponent<NormalRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
-                case EMaterialMap::SPECULAR:
+                case EComponentId::SPECULAR_MATERIAL:
                     this->addComponent<SpecularRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
-                case EMaterialMap::AMBIENT_OCCLUSION:
+                case EComponentId::AO_MATERIAL:
                     this->addComponent<AORendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
                 default: break;

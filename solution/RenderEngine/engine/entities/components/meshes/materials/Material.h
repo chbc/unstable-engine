@@ -9,7 +9,6 @@
 #include "components/NormalMaterialComponent.h"
 #include "components/SpecularMaterialComponent.h"
 #include "components/AmbientOcclusionMaterialComponent.h"
-#include <engine/core/multimedia/textures/EMaterialMap.h>
 
 /* ###
 - passar flags pelo construtor

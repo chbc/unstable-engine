@@ -9,44 +9,38 @@
 namespace sre
 {
 
-Entity *ModelLoader::load(const std::string &fileName)
+void ModelLoader::load(Entity *rootEntity, const std::string &fileName)
 {
-	Entity *rootEntity = nullptr;
+    Assimp::Importer importer;
+    const aiScene* scene = importer.ReadFile(fileName, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals); 
 
-	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(fileName, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals); 
+    if
+    (
+        (scene == nullptr) || 
+        (scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) || 
+        (scene->mRootNode == nullptr)
+    )
+        throw "[ModelLoader] - Load Error: " + std::string(importer.GetErrorString());
 
-	if
-	(
-		(scene == nullptr) || 
-		(scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) || 
-		(scene->mRootNode == nullptr)
-	)
-		throw "[ModelLoader] - Load Error: " + std::string(importer.GetErrorString());
-
-	this->directory = fileName.substr(0, fileName.find_last_of('/')) + '/';
-	rootEntity = this->processNode(scene->mRootNode, scene);
-
-	return rootEntity;
+    this->directory = fileName.substr(0, fileName.find_last_of('/')) + '/';
+    this->processNode(rootEntity, scene->mRootNode, scene);
 }
 
-Entity *ModelLoader::processNode(aiNode *node, const aiScene *scene)
+void ModelLoader::processNode(Entity *entity, aiNode *node, const aiScene *scene)
 {
-	Entity *newEntity = new Entity;
+    for(uint32_t i = 0; i < node->mNumMeshes; i++)
+    {
+        aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+        this->processMesh(mesh, scene, entity);
+    }
 
-	for(uint32_t i = 0; i < node->mNumMeshes; i++)
-	{
-		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		this->processMesh(mesh, scene, newEntity);
-	}
-	
-	for(uint32_t i = 0; i < node->mNumChildren; i++)
-	{
-		Entity *childEntity = this->processNode(node->mChildren[i], scene);
-		newEntity->addChild(childEntity);
-	}
-
-	return newEntity;
+    for(uint32_t i = 0; i < node->mNumChildren; i++)
+    {
+        Entity *childEntity = new Entity;
+        this->processNode(childEntity, node->mChildren[i], scene);
+        entity->addChild(childEntity);
+        childEntity->onStart();
+    }
 }
 
 void ModelLoader::processMesh(aiMesh *inputMesh, const aiScene *scene, Entity *entity)
