@@ -13,7 +13,7 @@ SceneManager::SceneManager() : AEntityManager()
 {
     Entity *mainCamera = this->createEntity();
     CameraComponent *cameraComponent = mainCamera->addComponent<CameraComponent>();
-    this->addEntity(mainCamera);
+    this->addEntity(mainCamera, "_main_camera");
 
     SingletonsManager::getInstance()->resolve<RenderManager>()->setMainCamera(cameraComponent);
 }

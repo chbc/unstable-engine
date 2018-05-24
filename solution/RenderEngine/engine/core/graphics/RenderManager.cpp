@@ -2,7 +2,7 @@
 
 #include <engine/entities/Entity.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
-#include <engine/entities/components/gui/GUIImageComponent.h>
+#include <engine/entities/components/gui/GUITextComponent.h>
 #include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/core/wrappers/graphics/OpenGLAPI.h>
 #include <engine/core/multimedia/textures/TextureManager.h>
@@ -53,10 +53,12 @@ void RenderManager::addEntity(Entity *entity)
     else if (entity->hasComponent<GUIImageComponent>())
     {
         GUIImageComponent *guiComponent = entity->getComponent<GUIImageComponent>();
-        if (guiComponent->getIsDynamic())
-            this->addDynamicGUIComponent(guiComponent);
-        else
-            this->addGUIComponent(guiComponent);
+        this->addGUIComponent(guiComponent);
+    }
+    else if (entity->hasComponent<GUITextComponent>())
+    {
+        GUITextComponent *guiComponent = entity->getComponent<GUITextComponent>();
+        this->addDynamicGUIComponent(guiComponent);
     }
     
     uint32_t size = entity->getChildrenCount();
