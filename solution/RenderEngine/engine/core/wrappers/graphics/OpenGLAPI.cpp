@@ -5,7 +5,7 @@
 
 #include "OpenGLAPI.h"
 #include <engine/entities/components/meshes/MeshComponent.h>
-#include <engine/entities/components/gui/GUIImageComponent.h>
+#include <engine/entities/components/renderables/gui/GUIImageComponent.h>
 #include <engine/utils/Log.h>
 
 namespace sre

@@ -1,11 +1,16 @@
 #include "GUIManager.h"
-#include <engine/entities/components/gui/GUIImageComponent.h>
 
 namespace sre
 {
 
 GUIManager::GUIManager() : AEntityManager() 
 {
+    /*
+    Entity *entity = createGUITextEntity("../../media/fonts/verdana");
+    this->frameMSIndicator = entity->getComponent<GUITextComponent>();
+    this->frameMSIndicator->setText("17");
+    this->addEntity(entity, "_frame_indicator");
+    */
 }
 
 Entity *GUIManager::createGUIImageEntity(const std::string &fileName)

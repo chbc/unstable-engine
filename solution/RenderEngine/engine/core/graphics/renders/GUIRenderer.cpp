@@ -1,7 +1,7 @@
 #include "GUIRenderer.h"
 
 #include <engine/entities/Entity.h>
-#include <engine/entities/components/gui/GUIImageComponent.h>
+#include <engine/entities/components/renderables/gui/GUIImageComponent.h>
 #include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
 #include <engine/core/graphics/MatrixManager.h>
 #include <engine/core/graphics/ShaderManager.h>

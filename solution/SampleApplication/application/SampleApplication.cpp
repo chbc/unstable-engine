@@ -1,7 +1,6 @@
 #include "SampleApplication.h"
 #include <application/events/EventReceiver.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
-#include <engine/entities/components/gui/GUIImageComponent.h>
 #include <sstream>
 
 SampleApplication::SampleApplication() : RenderEngine()

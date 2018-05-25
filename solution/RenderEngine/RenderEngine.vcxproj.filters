@@ -69,9 +69,6 @@
     <ClCompile Include="engine\entities\components\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\gui\GUIImageComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\tests\TestServicesProvider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -79,9 +76,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\utils\math\Rect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\entities\components\gui\GUITextComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\entitiesManagers\gui\GUIManager.cpp">
@@ -171,6 +165,12 @@
     <ClCompile Include="engine\core\graphics\shaders\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\entities\components\renderables\gui\GUIImageComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entities\components\renderables\gui\GUITextComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\FileUtils.h">
@@ -236,9 +236,6 @@
     <ClInclude Include="engine\entities\components\meshes\materials\components\AmbientOcclusionMaterialComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\components\gui\GUIImageComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\tests\TestServicesProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -252,9 +249,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\utils\math\Rect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\entities\components\gui\GUITextComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\entitiesManagers\gui\GUIManager.h">
@@ -366,6 +360,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\entities\components\EComponentId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\renderables\ARenderableComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\renderables\gui\GUIImageComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\renderables\gui\GUITextComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

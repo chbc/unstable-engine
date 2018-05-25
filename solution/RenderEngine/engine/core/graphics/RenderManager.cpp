@@ -2,7 +2,7 @@
 
 #include <engine/entities/Entity.h>
 #include <engine/entities/components/meshes/MeshComponent.h>
-#include <engine/entities/components/gui/GUITextComponent.h>
+#include <engine/entities/components/renderables/gui/GUITextComponent.h>
 #include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/core/wrappers/graphics/OpenGLAPI.h>
 #include <engine/core/multimedia/textures/TextureManager.h>
@@ -90,14 +90,20 @@ void RenderManager::addMesh(MeshComponent *mesh)
 
 void RenderManager::addGUIComponent(GUIImageComponent *guiComponent)
 {
-    this->initGUIRenderer();
-    this->guiRenderer->addGUIComponent(guiComponent);
+    if (guiComponent->isAbleToBeRendered())
+    {
+        this->initGUIRenderer();
+        this->guiRenderer->addGUIComponent(guiComponent);
+    }
 }
 
 void RenderManager::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 {
-    this->initGUIRenderer();
-    this->guiRenderer->addDynamicGUIComponent(guiComponent);
+    if (guiComponent->isAbleToBeRendered())
+    {
+        this->initGUIRenderer();
+        this->guiRenderer->addDynamicGUIComponent(guiComponent);
+    }
 }
 
 void RenderManager::initGUIRenderer()
