@@ -1,7 +1,7 @@
 #include "Renderer.h"
 
 #include <engine/entities/Entity.h>
-#include <engine/entities/components/meshes/MeshComponent.h>
+#include <engine/entities/components/renderables/meshes/MeshComponent.h>
 #include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
 #include <engine/core/graphics/MatrixManager.h>
 #include <engine/core/graphics/ShaderManager.h>
@@ -98,7 +98,7 @@ void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, 
             item->preDraw();
         }
 
-        this->graphicsWrapper->drawElement(mesh->objectData->indices.size());
+        this->graphicsWrapper->drawElement(mesh->meshData->indices.size());
 
         for (const UPTR<ColorRendererComponent> &item : this->components)
             item->postDraw();

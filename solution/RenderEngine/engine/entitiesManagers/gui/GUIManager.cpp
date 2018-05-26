@@ -1,16 +1,19 @@
 #include "GUIManager.h"
 
+#include <sstream>
+
 namespace sre
 {
 
 GUIManager::GUIManager() : AEntityManager() 
 {
-    /*
-    Entity *entity = createGUITextEntity("../../media/fonts/verdana");
+#ifdef DEBUG
+    Entity *entity = createGUITextEntity("../../media/fonts/verdana", 6);
     this->frameMSIndicator = entity->getComponent<GUITextComponent>();
-    this->frameMSIndicator->setText("17");
+    this->frameMSIndicator->setUIPosition(glm::vec2(0.025f, 0.025f));
+    entity->getTransform()->setScale(glm::vec3(0.5f, 0.5f, 1.0f));
     this->addEntity(entity, "_frame_indicator");
-    */
+#endif
 }
 
 Entity *GUIManager::createGUIImageEntity(const std::string &fileName)
@@ -29,13 +32,25 @@ Entity *GUIManager::createGUIImageEntityFromAtlas(const std::string &fileName, c
     return result;
 }
 
-Entity *GUIManager::createGUITextEntity(const std::string fontFile)
+Entity *GUIManager::createGUITextEntity(const std::string fontFile, uint32_t maxItems)
 {
     Entity *result = this->createEntity();
-    GUITextComponent *component = result->addComponent<GUITextComponent>(100);
+    GUITextComponent *component = result->addComponent<GUITextComponent>(maxItems);
     component->loadFont(fontFile);
 
     return result;
 }
+
+#ifdef DEBUG
+std::stringstream frameIndicatorStream;
+
+void GUIManager::updateFrameIndicator(int frameTime)
+{
+    frameIndicatorStream << frameTime;
+    this->frameMSIndicator->setText(frameIndicatorStream.str());
+    frameIndicatorStream.str(std::string());
+    frameIndicatorStream.clear();
+}
+#endif
 
 } // namespace

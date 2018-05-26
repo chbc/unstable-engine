@@ -24,15 +24,21 @@ void RenderEngine::run()
     this->renderManager->onSceneLoaded();
 
     this->running = true;
+    uint32_t elapsedTime = 0;
     while(this->running)
     {
         this->multimediaManager->onBeginFrame();
 
         this->processInput();
-        this->onUpdate(this->multimediaManager->getElapsedTime());
+        this->onUpdate(this->multimediaManager->getLastFrameTime());
         this->render();
 
         this->removeDestroyedEntities();
+        elapsedTime = this->multimediaManager->stopTimer();
+
+#ifdef DEBUG
+        this->guiManager->updateFrameIndicator(elapsedTime);
+#endif
 
         this->multimediaManager->onEndFrame();
     }

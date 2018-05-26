@@ -4,7 +4,7 @@
 #include <GL/glew.h>
 
 #include "OpenGLAPI.h"
-#include <engine/entities/components/meshes/MeshComponent.h>
+#include <engine/entities/components/renderables/meshes/MeshComponent.h>
 #include <engine/entities/components/renderables/gui/GUIImageComponent.h>
 #include <engine/utils/Log.h>
 
@@ -44,7 +44,7 @@ void OpenGLAPI::init()
 void OpenGLAPI::createVAO(MeshComponent *mesh)
 {
 	// data
-	int dataSize = mesh->objectData->vertexData.size();
+	int dataSize = mesh->meshData->vertexData.size();
 
 	// VAO
 	glGenVertexArrays(1, &mesh->vao);
@@ -53,17 +53,17 @@ void OpenGLAPI::createVAO(MeshComponent *mesh)
 	// VBO
 	glGenBuffers(1, &mesh->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-	glBufferData(GL_ARRAY_BUFFER, mesh->objectData->vertexData.size() * sizeof(VertexData), &mesh->objectData->vertexData[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, mesh->meshData->vertexData.size() * sizeof(VertexData), &mesh->meshData->vertexData[0], GL_STATIC_DRAW);
 }
 
 void OpenGLAPI::createEBO(MeshComponent *mesh)
 {
 	// EBO
 	glGenBuffers(1, &mesh->ebo);
-	int size = mesh->objectData->indices.size();
+	int size = mesh->meshData->indices.size();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &mesh->objectData->indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &mesh->meshData->indices[0], GL_STATIC_DRAW);
 }
 
 void OpenGLAPI::createGUIVAO(GUIImageComponent *guiComponent)

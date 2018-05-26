@@ -53,8 +53,11 @@ void GUIRenderer::render(MatrixManager *matrixManager)
     // Dynamic meshes
     for (GUIImageComponent *item : this->dynamicGUIComponents)
     {
-        this->setup(item);
-        this->graphicsWrapper->drawElement(item->meshData->indices.size());
+        if (item->meshData.get() != nullptr)
+        {
+            this->setup(item);
+            this->graphicsWrapper->drawElement(item->meshData->indices.size());
+        }
     }
 
     this->graphicsWrapper->disableGUISettings();

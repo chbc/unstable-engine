@@ -4,7 +4,7 @@
 #include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/core/graphics/RenderManager.h>
 #include <engine/core/io/ModelLoader.h>
-#include <engine/entities/components/meshes/MeshComponent.h>
+#include <engine/entities/components/renderables/meshes/MeshComponent.h>
 
 namespace sre
 {

@@ -21,7 +21,7 @@ public:
 	void setText(const std::string &text);
 
 private:
-	GUITextComponent(Entity *entity, int maxItems);
+	GUITextComponent(Entity *entity, uint32_t arg_maxItems);
 
 	void loadFont(const std::string &fontFile);
 	uint32_t getTextureId() override;

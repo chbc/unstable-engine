@@ -27,9 +27,6 @@
     <ClCompile Include="engine\entities\components\cameras\CameraComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\meshes\MeshComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\RenderEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -42,31 +39,13 @@
     <ClCompile Include="engine\entities\components\lights\PointLightComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\meshes\materials\Material.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\entities\components\meshes\materials\components\ColorMaterialComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\entities\components\AEntityComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\utils\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="engine\temp\TEMP_TextureEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\entities\components\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\tests\TestServicesProvider.cpp">
@@ -171,6 +150,27 @@
     <ClCompile Include="engine\entities\components\renderables\gui\GUITextComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\ColorMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\DiffuseMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\NormalMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\SpecularMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entities\components\renderables\meshes\materials\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\entities\components\renderables\meshes\MeshComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\FileUtils.h">
@@ -191,9 +191,6 @@
     <ClInclude Include="engine\entities\components\cameras\CameraComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\components\meshes\MeshComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\RenderEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -206,34 +203,13 @@
     <ClInclude Include="engine\entities\components\lights\PointLightComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\components\meshes\materials\Material.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\entities\components\meshes\materials\components\AMaterialComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\entities\components\meshes\materials\components\ColorMaterialComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\entities\components\AComponentsHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\utils\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\temp\TEMP_TextureEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\entities\components\meshes\materials\components\AmbientOcclusionMaterialComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\tests\TestServicesProvider.h">
@@ -369,6 +345,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\entities\components\renderables\gui\GUITextComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\AMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\AmbientOcclusionMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\ColorMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\DiffuseMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\NormalMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\SpecularMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\renderables\meshes\MeshComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

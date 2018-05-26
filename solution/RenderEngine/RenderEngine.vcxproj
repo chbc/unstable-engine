@@ -96,6 +96,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glu32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -195,10 +196,10 @@
     <ClCompile Include="engine\entities\components\AEntityComponent.cpp" />
     <ClCompile Include="engine\entities\components\renderables\gui\GUIImageComponent.cpp" />
     <ClCompile Include="engine\entities\components\renderables\gui\GUITextComponent.cpp" />
-    <ClCompile Include="engine\entities\components\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp" />
-    <ClCompile Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.cpp" />
-    <ClCompile Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.cpp" />
-    <ClCompile Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.cpp" />
+    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp" />
+    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\DiffuseMaterialComponent.cpp" />
+    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\NormalMaterialComponent.cpp" />
+    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\SpecularMaterialComponent.cpp" />
     <ClCompile Include="engine\core\graphics\meshData\MeshData.cpp" />
     <ClCompile Include="engine\core\multimedia\textures\atlases\Atlas.cpp" />
     <ClCompile Include="engine\core\multimedia\textures\atlases\AtlasManager.cpp" />
@@ -210,9 +211,9 @@
     <ClCompile Include="engine\entities\components\lights\ALightComponent.cpp" />
     <ClCompile Include="engine\entities\components\lights\DirectionalLightComponent.cpp" />
     <ClCompile Include="engine\entities\components\lights\PointLightComponent.cpp" />
-    <ClCompile Include="engine\entities\components\meshes\materials\components\ColorMaterialComponent.cpp" />
-    <ClCompile Include="engine\entities\components\meshes\materials\Material.cpp" />
-    <ClCompile Include="engine\entities\components\meshes\MeshComponent.cpp" />
+    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\ColorMaterialComponent.cpp" />
+    <ClCompile Include="engine\entities\components\renderables\meshes\materials\Material.cpp" />
+    <ClCompile Include="engine\entities\components\renderables\meshes\MeshComponent.cpp" />
     <ClCompile Include="engine\core\graphics\meshData\PrimitiveMeshFactory.cpp" />
     <ClCompile Include="engine\entities\Entity.cpp" />
     <ClCompile Include="engine\entities\components\transforms\TransformComponent.cpp" />
@@ -253,10 +254,10 @@
     <ClInclude Include="engine\systems\multimedia\text\Font.h" />
     <ClInclude Include="engine\systems\multimedia\text\Glyph.h" />
     <ClInclude Include="engine\entities\components\renderables\gui\GUITextComponent.h" />
-    <ClInclude Include="engine\entities\components\meshes\materials\components\AmbientOcclusionMaterialComponent.h" />
-    <ClInclude Include="engine\entities\components\meshes\materials\components\DiffuseMaterialComponent.h" />
-    <ClInclude Include="engine\entities\components\meshes\materials\components\NormalMaterialComponent.h" />
-    <ClInclude Include="engine\entities\components\meshes\materials\components\SpecularMaterialComponent.h" />
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\AmbientOcclusionMaterialComponent.h" />
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\DiffuseMaterialComponent.h" />
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\NormalMaterialComponent.h" />
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\SpecularMaterialComponent.h" />
     <ClInclude Include="engine\core\multimedia\textures\EMaterialMap.h" />
     <ClInclude Include="engine\core\multimedia\textures\Texture.h" />
     <ClInclude Include="engine\entitiesManagers\gui\GUIManager.h" />
@@ -269,16 +270,16 @@
     <ClInclude Include="engine\entities\components\lights\ALightComponent.h" />
     <ClInclude Include="engine\entities\components\lights\DirectionalLightComponent.h" />
     <ClInclude Include="engine\entities\components\lights\PointLightComponent.h" />
-    <ClInclude Include="engine\entities\components\meshes\materials\components\AMaterialComponent.h" />
-    <ClInclude Include="engine\entities\components\meshes\materials\components\ColorMaterialComponent.h" />
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\AMaterialComponent.h" />
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\ColorMaterialComponent.h" />
     <ClInclude Include="engine\core\graphics\renders\DiffuseRendererComponent.h" />
     <ClInclude Include="engine\core\graphics\renders\GUIRenderer.h" />
     <ClInclude Include="engine\core\graphics\renders\NormalRendererComponent.h" />
     <ClInclude Include="engine\core\graphics\renders\Renderer.h" />
     <ClInclude Include="engine\core\graphics\renders\SpecularRendererComponent.h" />
     <ClInclude Include="engine\core\graphics\shaders\ShaderConstants.h" />
-    <ClInclude Include="engine\entities\components\meshes\materials\Material.h" />
-    <ClInclude Include="engine\entities\components\meshes\MeshComponent.h" />
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\Material.h" />
+    <ClInclude Include="engine\entities\components\renderables\meshes\MeshComponent.h" />
     <ClInclude Include="engine\core\graphics\meshData\PrimitiveMeshFactory.h" />
     <ClInclude Include="engine\core\graphics\meshData\MeshData.h" />
     <ClInclude Include="engine\entities\Entity.h" />

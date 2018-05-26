@@ -55,16 +55,19 @@ void MultimediaManager::onBeginFrame()
 	this->timer->start();
 }
 
+uint32_t MultimediaManager::stopTimer()
+{
+    return this->timer->stop();
+}
+
 void MultimediaManager::onEndFrame()
 {
 	this->timer->delay();
-	this->timer->updateElapsedTime();
 }
 
-unsigned int MultimediaManager::getElapsedTime()
+unsigned int MultimediaManager::getLastFrameTime()
 {
-	return this->timer->getElapsedTime();
-	return 0;
+    return this->timer->getLastFrameTime();
 }
 
 void *MultimediaManager::loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp)

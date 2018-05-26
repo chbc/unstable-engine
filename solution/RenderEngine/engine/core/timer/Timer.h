@@ -1,6 +1,8 @@
 #ifndef _TIMER_H_
 #define _TIMER_H_
 
+#include <stdint.h>
+
 namespace sre
 {
 
@@ -10,35 +12,23 @@ class AMultimediaWrapper;
 class Timer
 {
     private:
-		AMultimediaWrapper *multimediaWrapper;
+        AMultimediaWrapper *multimediaWrapper;
+        uint32_t timeBegin;
+        uint32_t elapsedTime;
+        uint32_t lastFrameTime;
 
-		unsigned int timeBegin;
-		unsigned int timePaused;
+        static const uint32_t MILISECONDS_PER_FRAME = 1000 / 60;
 
-		long elapsedTime;
+    private:
+        Timer(AMultimediaWrapper *multimediaWrapper);
 
-		bool paused;
-		bool started;
+        void start();
+        uint32_t stop();
+        uint32_t getElapsedTime();
+        void delay();
+        uint32_t getLastFrameTime();
 
-        static const unsigned int MILISECONDS_PER_FRAME = 1000 / 60;
-
-    public:
-		Timer(AMultimediaWrapper *multimediaWrapper);
-
-		void start();
-		void stop();
-		void pause();
-		void resume();
-
-		unsigned int getTime();
-		unsigned int getElapsedTime();
-
-		bool isStarted();
-		bool isPaused();
-
-		void updateElapsedTime();
-
-		void delay();
+friend class MultimediaManager;
 };
 
 } // namespace

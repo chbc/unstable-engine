@@ -18,7 +18,7 @@ protected:
     uint32_t maxItems; // ###
 
 protected:
-    GUIImageComponent(Entity *entity, uint32_t maxItems = 0);
+    GUIImageComponent(Entity *entity, uint32_t arg_maxItems = 0);
 
 public:
     void setUIPosition(const glm::vec2 &position);

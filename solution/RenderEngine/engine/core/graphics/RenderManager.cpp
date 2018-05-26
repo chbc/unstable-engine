@@ -1,7 +1,7 @@
 #include "RenderManager.h"
 
 #include <engine/entities/Entity.h>
-#include <engine/entities/components/meshes/MeshComponent.h>
+#include <engine/entities/components/renderables/meshes/MeshComponent.h>
 #include <engine/entities/components/renderables/gui/GUITextComponent.h>
 #include <engine/entities/components/cameras/CameraComponent.h>
 #include <engine/core/wrappers/graphics/OpenGLAPI.h>
@@ -99,11 +99,8 @@ void RenderManager::addGUIComponent(GUIImageComponent *guiComponent)
 
 void RenderManager::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 {
-    if (guiComponent->isAbleToBeRendered())
-    {
-        this->initGUIRenderer();
-        this->guiRenderer->addDynamicGUIComponent(guiComponent);
-    }
+    this->initGUIRenderer();
+    this->guiRenderer->addDynamicGUIComponent(guiComponent);
 }
 
 void RenderManager::initGUIRenderer()

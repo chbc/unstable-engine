@@ -1,6 +1,6 @@
 #include "ModelLoader.h"
 #include <engine/entities/Entity.h>
-#include <engine/entities/components/meshes/MeshComponent.h>
+#include <engine/entities/components/renderables/meshes/MeshComponent.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>

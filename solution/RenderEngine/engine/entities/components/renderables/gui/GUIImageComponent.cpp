@@ -10,9 +10,9 @@
 namespace sre
 {
 
-GUIImageComponent::GUIImageComponent(Entity *entity, uint32_t maxItems) 
+GUIImageComponent::GUIImageComponent(Entity *entity, uint32_t arg_maxItems)
     :   ARenderableComponent(entity), 
-        maxItems(maxItems), isDynamic(maxItems > 0)
+        maxItems(arg_maxItems), isDynamic(arg_maxItems > 0)
 {
     this->setUIPosition(glm::vec2(0.0f, 0.0f));
 }

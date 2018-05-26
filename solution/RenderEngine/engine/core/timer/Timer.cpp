@@ -4,92 +4,39 @@
 namespace sre
 {
 
-Timer::Timer(AMultimediaWrapper *multimediaWrapper)
+Timer::Timer(AMultimediaWrapper *multimediaWrapper) 
+    : timeBegin(0), elapsedTime(0), lastFrameTime(0)
 {
-	this->multimediaWrapper = multimediaWrapper;
-
-    this->timeBegin = 0;
-	this->timePaused = 0;
-	this->elapsedTime = 0;
-	this->paused = false;
-	this->started = false;
+    this->multimediaWrapper = multimediaWrapper;
 }
 
 void Timer::start()
 {
-    this->started = true;
-    this->paused = false;
-
-	this->timeBegin = this->multimediaWrapper->getTicks();
+    this->timeBegin = this->multimediaWrapper->getTicks();
 }
 
-void Timer::stop()
+uint32_t Timer::stop()
 {
-    this->started = false;
-    this->paused = false;
+    this->elapsedTime = this->multimediaWrapper->getTicks() - this->timeBegin;
+    return this->elapsedTime;
 }
 
-void Timer::pause()
-{
-    if( ( this->started == true ) && ( this->paused == false ) )
-    {
-        this->paused = true;
-		this->timePaused = this->multimediaWrapper->getTicks() - this->timeBegin;
-    }
-}
-
-void Timer::resume()
-{
-	if( this->paused == true )
-    {
-        this->paused = false;
-		this->timeBegin = this->multimediaWrapper->getTicks() - this->timePaused;
-        this->timePaused = 0;
-    }
-}
-
-unsigned int Timer::getTime()
-{
-    if( this->started == true )
-    {
-        if( this->paused == true )
-        {
-			return this->timePaused;
-        }
-        else
-        {
-			return this->multimediaWrapper->getTicks() - this->timeBegin;
-        }
-    }
-
-    return 0;
-}
-
-unsigned int Timer::getElapsedTime()
+uint32_t Timer::getElapsedTime()
 {
     return this->elapsedTime;
 }
 
-bool Timer::isStarted()
+uint32_t Timer::getLastFrameTime()
 {
-	return this->started;
-}
-
-bool Timer::isPaused()
-{
-    return this->paused;
-}
-
-void Timer::updateElapsedTime()
-{
-    this->elapsedTime = this->multimediaWrapper->getTicks() - this->timeBegin;
+    return this->lastFrameTime;
 }
 
 void Timer::delay()
 {
-	unsigned int time = this->getTime();
-	if( time < MILISECONDS_PER_FRAME )
-		this->multimediaWrapper->delay( MILISECONDS_PER_FRAME - time );
+    if (elapsedTime < MILISECONDS_PER_FRAME)
+        this->multimediaWrapper->delay(MILISECONDS_PER_FRAME - elapsedTime);
+
+    this->lastFrameTime = this->multimediaWrapper->getTicks() - this->timeBegin;
 }
 
 } // namespace

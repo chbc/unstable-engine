@@ -1,6 +1,6 @@
 #include "DiffuseRendererComponent.h"
 
-#include <engine/entities/components/meshes/MeshComponent.h>
+#include <engine/entities/components/renderables/meshes/MeshComponent.h>
 #include <engine/core/graphics/ShaderManager.h>
 #include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
 
