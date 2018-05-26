@@ -12,3 +12,5 @@ bin/tests/
 solution/RenderEngine.VC.db
 solution/RenderEngine.VC.VC.opendb
 *.tmp
+lib/vc/SRE_d.lib
+lib/vc/SRE.lib
