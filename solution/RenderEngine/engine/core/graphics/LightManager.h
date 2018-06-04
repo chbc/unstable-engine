@@ -28,13 +28,7 @@ private:
     // ### SOMBRA
     uint32_t depthMap;
 
-    const char *DIRECTIONAL_DIRECTION_FORMAT    = "lights.directionalLights[%d].direction";
-    const char *DIRECTIONAL_COLOR_FORMAT        = "lights.directionalLights[%d].color";
 
-    const char *POINT_POSITION_FORMAT   = "lights.pointLights[%d].position";
-    const char *POINT_COLOR_FORMAT      = "lights.pointLights[%d].color";
-    const char *POINT_RANGE_FORMAT      = "lights.pointLights[%d].range";
-    const char *POINT_INTENSITY_FORMAT  = "lights.pointLights[%d].intensity";
 
 public:
     void setAmbientLightColor(const glm::vec3 &ambientLightColor);
@@ -45,22 +39,11 @@ private:
     DirectionalLightComponent *addDirectionalLight(Entity *entity);
     PointLightComponent *addPointLight(Entity *entity);
 
-    void onSceneLoaded();
-    void onPreRender(ShaderManager *shaderManager, Shader *shader);
-    void setupDepthRendering(ShaderManager *shaderManager, class AGraphicsWrapper *graphicsWrapper);
-
-    void setupVariablesLocations(ShaderManager *shaderManager);
-    void setupDirectionalsVariablesLocations(ShaderManager *shaderManager);
-    void setupPointsVariablesLocations(ShaderManager *shaderManager);
-
-    void setupDirectionalValues(ShaderManager *shaderManager, Shader *shader);
-    void setupPointValues(ShaderManager *shaderManager, Shader *shader);
-
     void removeDestroyedEntities();
 
 friend class RenderManager;
 friend class SingletonsManager;
-friend class Renderer;
+friend class LightRendererComponent;
 };
 
 } // namespace

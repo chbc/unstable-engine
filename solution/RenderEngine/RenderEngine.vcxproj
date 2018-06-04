@@ -189,6 +189,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="engine\core\graphics\renders\LightRendererComponent.cpp" />
     <ClCompile Include="engine\core\graphics\shaders\Shader.cpp" />
     <ClCompile Include="engine\core\multimedia\textures\atlases\FontAtlas.cpp" />
     <ClCompile Include="engine\core\singletonsManager\SingletonsManager.cpp" />
@@ -243,6 +244,7 @@
     <ClCompile Include="engine\utils\math\Rect.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\core\graphics\renders\LightRendererComponent.h" />
     <ClInclude Include="engine\core\graphics\shaders\Shader.h" />
     <ClInclude Include="engine\core\singletonsManager\ASingleton.h" />
     <ClInclude Include="engine\entities\components\EComponentId.h" />

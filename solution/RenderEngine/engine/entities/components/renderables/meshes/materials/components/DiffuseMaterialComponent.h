@@ -12,7 +12,7 @@ class Texture;
 class DiffuseMaterialComponent : public AMaterialComponent
 {
 private:
-    VECTOR_UPTR<Texture> textures;
+    VECTOR_UPTR<Texture> textures; // ### TEXTURE MANAGER JÁ É O DONO
 
 public:
 	DiffuseMaterialComponent(Material *material, const std::string &fileName);

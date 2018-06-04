@@ -66,21 +66,20 @@ void RenderManager::init()
 // ###
 void RenderManager::onSceneLoaded()
 {
-    this->lightManager->onSceneLoaded();
-
     depthMap = OpenGLAPI::setupTexture(1024, 1024, 0);
 
     graphicsWrapper->generateFrameBuffer(depthMapFBO, depthMap);
 
     this->lightManager->depthMap = depthMap;
 
-    this->shaderManager->enableShader(simpleDepthShader);
     this->shaderManager->setupUniformLocation(simpleDepthShader, ShaderVariables::SOURCE_SPACE_MATRIX);
     this->shaderManager->setupUniformLocation(simpleDepthShader, ShaderVariables::MODEL_MATRIX);
 
-    this->shaderManager->enableShader(debugDepthQuad);
     this->shaderManager->setupUniformLocation(debugDepthQuad, ShaderVariables::SHADOW_MAP);
     this->shaderManager->setInt(debugDepthQuad, ShaderVariables::SHADOW_MAP, 4);
+
+    for (const UPTR<Renderer> &item : this->renders)
+        item->onSceneLoaded();
 }
 
 // ###
@@ -117,7 +116,6 @@ void RenderManager::render()
         item->render
         (
             this->matrixManager,
-            this->lightManager,
             this->mainCamera->getTransform()->getPosition()
         );
     }

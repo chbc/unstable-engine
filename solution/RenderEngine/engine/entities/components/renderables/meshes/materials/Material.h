@@ -21,30 +21,31 @@ namespace sre
 class Material : public AComponentsHolder<AMaterialComponent>
 {
 private:
-	float shininess;
+    float shininess;
+    bool receivesLight;
 
 public:
-	void setShininess(float shininess);
-	float getShininess();
+    void setShininess(float shininess);
+    float getShininess();
 
 private:
-	Material(float shininess = 15.0);
+    Material(bool arg_receivesLight = true, float arg_shininess = 15.0);
 
-	template <typename T, typename... TArgs>
-	T *addComponent(TArgs&&... mArgs)
-	{
-		T *newComponent{ nullptr };
+    template <typename T, typename... TArgs>
+    T *addComponent(TArgs&&... mArgs)
+    {
+        T *newComponent{ nullptr };
 
-		if (!AComponentsHolder<AMaterialComponent>::hasComponent<T>())
-		{
-			newComponent = new T{ this, std::forward<TArgs>(mArgs)... };
-			AComponentsHolder<AMaterialComponent>::addComponent(newComponent);
-		}
-		else
-			throw "Can't add duplicate component!";
+        if (!AComponentsHolder<AMaterialComponent>::hasComponent<T>())
+        {
+            newComponent = new T{ this, std::forward<TArgs>(mArgs)... };
+            AComponentsHolder<AMaterialComponent>::addComponent(newComponent);
+        }
+        else
+            throw "Can't add duplicate component!";
 
-		return newComponent;
-	}
+        return newComponent;
+    }
 
 friend class MeshComponent;
 friend class Renderer;

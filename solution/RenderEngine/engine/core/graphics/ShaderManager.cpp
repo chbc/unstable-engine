@@ -55,24 +55,6 @@ Shader *ShaderManager::loadShader(const std::string &vertexContent, const std::s
     return shader;
 }
 
-void ShaderManager::setupLightUniformLocations(ShaderVariables::Type variableKey)
-{
-    for (const UPTR<Shader> &item : this->shaders)
-    {
-        if (item->isLit)
-            this->setupUniformLocation(item.get(), variableKey);
-    }
-}
-
-void ShaderManager::setupLightUniformLocations(const char *variable)
-{
-    for (const UPTR<Shader> &item : this->shaders)
-    {
-        if (item->isLit)
-            this->setupUniformLocation(item.get(), variable);
-    }
-}
-
 void ShaderManager::setupUniformLocation(Shader *shader, ShaderVariables::Type variableKey)
 {
     std::string variableName = ShaderVariables::Map.at(variableKey);

@@ -45,8 +45,6 @@ private:
     Shader *loadShader(const std::string &vertexContent, const std::string &fragmentContent, bool isLit = true);
 
     // passing values //
-    void setupLightUniformLocations(ShaderVariables::Type variableKey);
-    void setupLightUniformLocations(const char *variable);
     void setupUniformLocation(Shader *shader, ShaderVariables::Type variableKey);
     void setupUniformLocation(Shader *shader, const char *variable);
 
@@ -72,6 +70,7 @@ friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;
 friend class SpecularRendererComponent;
 friend class AORendererComponent;
+friend class LightRendererComponent;
 };
 
 } // namespace

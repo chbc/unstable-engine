@@ -5,7 +5,6 @@
 #include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
 #include <engine/core/graphics/MatrixManager.h>
 #include <engine/core/graphics/ShaderManager.h>
-#include <engine/core/graphics/LightManager.h>
 #include <engine/core/singletonsManager/SingletonsManager.h>
 
 namespace sre
@@ -41,6 +40,9 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
             }
         }
     }
+
+    if (material->receivesLight)
+        this->addComponent<LightRendererComponent>(this->shaderManager, this->graphicsWrapper);
 }
 
 Renderer::~Renderer()
@@ -56,10 +58,13 @@ void Renderer::loadShader()
     this->shaderManager->setupUniformLocation(this->shader, ShaderVariables::PROJECTION_MATRIX);
     this->shaderManager->setupUniformLocation(this->shader, ShaderVariables::CAMERA_POSITION);
     this->shaderManager->setupUniformLocation(this->shader, ShaderVariables::MODEL_MATRIX);
+}
 
+void Renderer::onSceneLoaded()
+{
     for (const UPTR<ColorRendererComponent> &item : this->components)
     {
-        item->onLoadShader(this->shader);
+        item->onLoadShader(this->shader); // ###
     }
 }
 
@@ -86,7 +91,7 @@ void Renderer::render(Shader *shader)
     }
 }
 
-void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition)
+void Renderer::render(MatrixManager *matrixManager, const glm::vec3 &cameraPosition)
 {
     // Shader setup
     this->shaderManager->enableShader(this->shader);
@@ -97,8 +102,6 @@ void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, 
     this->shaderManager->setMat4(this->shader, ShaderVariables::VIEW_MATRIX, &viewMatrix[0][0]);
     this->shaderManager->setMat4(this->shader, ShaderVariables::PROJECTION_MATRIX, &projectionMatrix[0][0]);
     this->shaderManager->setVec3(this->shader, ShaderVariables::CAMERA_POSITION, &cameraPosition[0]);
-
-    lightManager->onPreRender(this->shaderManager, this->shader);
 
     for (MeshComponent *mesh : this->meshes)
     {
@@ -119,7 +122,7 @@ void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, 
         for (const UPTR<ColorRendererComponent> &item : this->components)
             item->postDraw();
     }
-    
+
     this->shaderManager->disableShader();
 }
 
@@ -141,7 +144,12 @@ bool Renderer::contains(MeshComponent *mesh)
 
 bool Renderer::fitsWithMesh(MeshComponent *mesh)
 {
-    return (this->componentsBitset == mesh->getMaterial()->componentsBitset);
+    Material *material = mesh->getMaterial();
+    return
+    (
+        (this->componentsBitset == material->componentsBitset) &&
+        (this->hasComponent<LightRendererComponent>() == material->receivesLight)
+    );
 }
 
 void Renderer::removeDestroyedEntities()

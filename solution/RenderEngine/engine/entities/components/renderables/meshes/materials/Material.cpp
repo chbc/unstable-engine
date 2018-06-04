@@ -4,20 +4,20 @@
 namespace sre
 {
 
-Material::Material(float shininess)
+Material::Material(bool arg_receivesLight, float arg_shininess)
+    : receivesLight(arg_receivesLight), shininess(arg_shininess)
 {
-	this->shininess = shininess;
-	ColorMaterialComponent *component = this->addComponent<ColorMaterialComponent>();
+    ColorMaterialComponent *component = this->addComponent<ColorMaterialComponent>();
 }
 
 void Material::setShininess(float shininess)
 {
-	this->shininess = shininess;
+    this->shininess = shininess;
 }
 
 float Material::getShininess()
 {
-	return this->shininess;
+    return this->shininess;
 }
 
 } // namespace

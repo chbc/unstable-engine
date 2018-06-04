@@ -81,7 +81,6 @@ friend class RenderManager;
 friend class ShaderManager;
 friend class TextureManager;
 friend class SingletonsManager;
-friend class LightManager;
 
 friend class Renderer;
 friend class GUIRenderer;
@@ -90,6 +89,7 @@ friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;
 friend class SpecularRendererComponent;
 friend class AORendererComponent;
+friend class LightRendererComponent;
 };
 
 } // namespace

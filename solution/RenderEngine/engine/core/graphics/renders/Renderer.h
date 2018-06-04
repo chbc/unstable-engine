@@ -7,6 +7,7 @@
 #include "NormalRendererComponent.h"
 #include "SpecularRendererComponent.h"
 #include "AORendererComponent.h"
+#include "LightRendererComponent.h"
 #include <glm/vec3.hpp>
 #include <list>
 
@@ -18,7 +19,6 @@ class Material;
 class MatrixManager;
 class AGraphicsWrapper;
 class ShaderManager;
-class LightManager;
 
 class Renderer : public AComponentsHolder<ColorRendererComponent>
 {
@@ -41,6 +41,7 @@ private:
     Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
     void loadShader();
+    void onSceneLoaded();
 
     template <typename T, typename... TArgs>
     T *addComponent(TArgs&&... mArgs)
@@ -61,7 +62,7 @@ private:
     void addMesh(MeshComponent *mesh);
 
     void render(class Shader *shader);
-    void render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition);
+    void render(MatrixManager *matrixManager, const glm::vec3 &cameraPosition);
 
     bool contains(MeshComponent *mesh);
     bool fitsWithMesh(MeshComponent *mesh);

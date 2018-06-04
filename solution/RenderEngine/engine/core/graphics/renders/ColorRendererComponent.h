@@ -3,11 +3,13 @@
 
 #include <stdint.h>
 
+// ### TRANSFORMAR OS COMPONENTES EM SINGLETONS
 namespace sre
 {
 
 class ShaderManager;
 class AGraphicsWrapper;
+class Shader;
 
 class ColorRendererComponent
 {
@@ -16,10 +18,10 @@ protected:
     AGraphicsWrapper *graphicsWrapper;
 
 protected:
-    ColorRendererComponent(class ShaderManager *shaderManager, class AGraphicsWrapper *graphicsWrapper);
+    ColorRendererComponent(ShaderManager *shaderManager, class AGraphicsWrapper *graphicsWrapper);
 
-    virtual void onLoadShader(class Shader *shader);
-    virtual void setupShaderVariables(class MeshComponent *mesh, class Shader *shader);
+    virtual void onLoadShader(Shader *shader);
+    virtual void setupShaderVariables(class MeshComponent *mesh, Shader *shader);
     virtual void preDraw();
     virtual void postDraw();
 

@@ -26,11 +26,7 @@ enum Type : std::size_t
     GUI_IMAGE,
     GUI_TEXT,
 
-    COLOR_RENDERER,
-    DIFFUSE_RENDERER,
-    NORMAL_RENDERER,
-    SPECULAR_RENDERER,
-    AO_RENDERER,
+    LIGHT_RENDERER,
 
     SIZE
 };

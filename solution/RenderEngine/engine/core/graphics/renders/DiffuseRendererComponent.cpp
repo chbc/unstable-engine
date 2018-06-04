@@ -28,7 +28,7 @@ void DiffuseRendererComponent::preDraw()
     this->graphicsWrapper->activeDiffuseTexture(this->textureId);
 }
 
-// ### TALVEZ SEJA DESNECESSÁRIO CHAMAR MAIS DE UMA VEZ
+// ### TALVEZ NÃO SEJA DESNECESSÁRIO CHAMAR MAIS DE UMA VEZ
 void DiffuseRendererComponent::postDraw()
 {
     this->graphicsWrapper->disableTexCoords();
