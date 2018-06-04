@@ -1,7 +1,5 @@
 #include "GUIManager.h"
 
-#include <sstream>
-
 namespace sre
 {
 
@@ -42,14 +40,9 @@ Entity *GUIManager::createGUITextEntity(const std::string fontFile, uint32_t max
 }
 
 #ifdef DEBUG
-std::stringstream frameIndicatorStream;
-
 void GUIManager::updateFrameIndicator(int frameTime)
 {
-    frameIndicatorStream << frameTime;
-    this->frameMSIndicator->setText(frameIndicatorStream.str());
-    frameIndicatorStream.str(std::string());
-    frameIndicatorStream.clear();
+    this->frameMSIndicator->setText(std::to_string(frameTime));
 }
 #endif
 

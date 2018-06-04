@@ -25,7 +25,8 @@ private:
 
     glm::vec3 ambientLightColor;
 
-    int ambientLightColorLocation;
+    // ### SOMBRA
+    uint32_t depthMap;
 
     const char *DIRECTIONAL_DIRECTION_FORMAT    = "lights.directionalLights[%d].direction";
     const char *DIRECTIONAL_COLOR_FORMAT        = "lights.directionalLights[%d].color";
@@ -45,11 +46,13 @@ private:
     PointLightComponent *addPointLight(Entity *entity);
 
     void onSceneLoaded();
+    void onPreRender(ShaderManager *shaderManager, Shader *shader);
+    void setupDepthRendering(ShaderManager *shaderManager, class AGraphicsWrapper *graphicsWrapper);
 
     void setupVariablesLocations(ShaderManager *shaderManager);
     void setupDirectionalsVariablesLocations(ShaderManager *shaderManager);
     void setupPointsVariablesLocations(ShaderManager *shaderManager);
-    void setupValues(ShaderManager *shaderManager, Shader *shader);
+
     void setupDirectionalValues(ShaderManager *shaderManager, Shader *shader);
     void setupPointValues(ShaderManager *shaderManager, Shader *shader);
 

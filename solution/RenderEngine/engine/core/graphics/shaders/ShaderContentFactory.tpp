@@ -9,29 +9,29 @@ void ShaderContentFactory::createShaderContent(const std::bitset<SIZE> &componen
     std::string vertexContentImpl;
     std::string fragmentContentImpl;
 
-    for (int i = EComponentId::COLOR_RENDERER; i <= EComponentId::AO_RENDERER; i++)
+    for (int i = EComponentId::COLOR_MATERIAL; i <= EComponentId::AO_MATERIAL; i++)
     {
         if (componentsBitset[i])
         {
             switch (i)
             {
-                case EComponentId::COLOR_RENDERER:
+                case EComponentId::COLOR_MATERIAL:
                     this->loadColorContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadColorContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
-                case EComponentId::DIFFUSE_RENDERER:
+                case EComponentId::DIFFUSE_MATERIAL:
                     this->loadDiffuseContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadDiffuseContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
-                case EComponentId::NORMAL_RENDERER:
+                case EComponentId::NORMAL_MATERIAL:
                     this->loadNormalMapContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadNormalMapContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
-                case EComponentId::SPECULAR_RENDERER:
+                case EComponentId::SPECULAR_MATERIAL:
                     this->loadSpecularMapContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadSpecularMapContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
-                case EComponentId::AO_RENDERER:
+                case EComponentId::AO_MATERIAL:
                     this->loadAOMapContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadAOMapContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;

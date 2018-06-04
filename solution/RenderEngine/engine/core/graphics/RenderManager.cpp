@@ -16,8 +16,19 @@
 #include "renders/GUIRenderer.h"
 #include <experimental/vector>
 
+
+// ###
+#include <engine/utils/FileUtils.h>
+#include <glm/gtc/matrix_transform.hpp> // ###
+
 namespace sre
 {
+
+    // ###
+    Shader *simpleDepthShader;
+    Shader *debugDepthQuad;
+    unsigned int depthMapFBO;
+    unsigned int depthMap;
 
 RenderManager::RenderManager()
 {
@@ -41,6 +52,88 @@ void RenderManager::init()
     MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
     const float FOV{90.0f};
     this->matrixManager->setProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 100);
+
+    // ###
+    std::string depthVStr, depthFStr, quadVStr, quadFStr;
+    FileUtils::loadFile("../../shaders/debug/depth_debug.vert", depthVStr);
+    FileUtils::loadFile("../../shaders/debug/depth_debug.frag", depthFStr);
+    FileUtils::loadFile("../../shaders/debug/quad_debug.vert", quadVStr);
+    FileUtils::loadFile("../../shaders/debug/quad_debug.frag", quadFStr);
+    simpleDepthShader = this->shaderManager->loadShader(depthVStr, depthFStr, false);
+    debugDepthQuad = this->shaderManager->loadShader(quadVStr, quadFStr, false);
+}
+
+// ###
+void RenderManager::onSceneLoaded()
+{
+    this->lightManager->onSceneLoaded();
+
+    depthMap = OpenGLAPI::setupTexture(1024, 1024, 0);
+
+    graphicsWrapper->generateFrameBuffer(depthMapFBO, depthMap);
+
+    this->lightManager->depthMap = depthMap;
+
+    this->shaderManager->enableShader(simpleDepthShader);
+    this->shaderManager->setupUniformLocation(simpleDepthShader, ShaderVariables::SOURCE_SPACE_MATRIX);
+    this->shaderManager->setupUniformLocation(simpleDepthShader, ShaderVariables::MODEL_MATRIX);
+
+    this->shaderManager->enableShader(debugDepthQuad);
+    this->shaderManager->setupUniformLocation(debugDepthQuad, ShaderVariables::SHADOW_MAP);
+    this->shaderManager->setInt(debugDepthQuad, ShaderVariables::SHADOW_MAP, 4);
+}
+
+// ###
+void RenderManager::render()
+{
+    // 1. first render to depth map
+    this->graphicsWrapper->clearBuffer();
+
+    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.5f);
+    glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 4.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+    this->shaderManager->enableShader(simpleDepthShader);
+    this->shaderManager->setMat4(simpleDepthShader, ShaderVariables::SOURCE_SPACE_MATRIX, &lightSpaceMatrix[0][0]);
+
+    graphicsWrapper->setViewport(1024, 1024);
+    OpenGLAPI::bindFrameBuffer(depthMapFBO);
+
+    OpenGLAPI::enableFrontCullFace();
+    for (const UPTR<Renderer> &item : this->renders)
+        item->render(simpleDepthShader);
+    OpenGLAPI::disableFrontCullFace();
+
+    graphicsWrapper->unbindFrameBuffer();
+
+
+    // 2. scene
+    this->graphicsWrapper->setViewport(1024, 768);
+    this->graphicsWrapper->clearBuffer();
+
+    this->renderCamera();
+    for (const UPTR<Renderer> &item : this->renders)
+    {
+        item->render
+        (
+            this->matrixManager,
+            this->lightManager,
+            this->mainCamera->getTransform()->getPosition()
+        );
+    }
+    // GUI rendering
+
+    if (this->guiRenderer.get() != nullptr)
+        this->guiRenderer->render(this->matrixManager);
+
+    // 3. quad
+    /*
+    graphicsWrapper->setViewport(1024, 768);
+    graphicsWrapper->clearBuffer();
+    this->shaderManager->enableShader(debugDepthQuad);
+    graphicsWrapper->activateShadowMapTexture(depthMap);
+    OpenGLAPI::renderQuad();
+    */
 }
 
 void RenderManager::addEntity(Entity *entity)
@@ -112,10 +205,12 @@ void RenderManager::initGUIRenderer()
     }
 }
 
+/* ###
 void RenderManager::onSceneLoaded()
 {
     this->lightManager->onSceneLoaded();
 }
+*/
 
 void RenderManager::setMainCamera(CameraComponent *camera)
 {
@@ -127,10 +222,35 @@ CameraComponent *RenderManager::getMainCamera()
     return this->mainCamera;
 }
 
+/*
 void RenderManager::render()
 {
-    this->renderCamera();
+    // Depth rendenring
+    Shader *depthShader = this->lightManager->depthShader;
+    this->lightManager->setupDepthRendering(this->shaderManager, this->graphicsWrapper);
 
+    for (const UPTR<Renderer> &item : this->renders)
+        item->render(depthShader);
+
+    graphicsWrapper->unbindFrameBuffer();
+
+
+    this->graphicsWrapper->setViewport(1024, 768);
+    this->graphicsWrapper->clearBuffer();
+
+    this->shaderManager->enableShader(debugDepthQuad);
+
+    graphicsWrapper->enableTexCoords();
+    graphicsWrapper->activateShadowMapTexture(this->lightManager->shadowMap->getId());
+
+    OpenGLAPI::renderQuad();
+
+    /* ###
+    this->graphicsWrapper->setViewport(1024, 768);
+    this->graphicsWrapper->clearBuffer();
+
+    // Scene rendering
+    this->renderCamera();
     for (const UPTR<Renderer> &item : this->renders)
     {
         item->render
@@ -141,10 +261,12 @@ void RenderManager::render()
         );
     }
     
+    // GUI rendering
     if (this->guiRenderer.get() != nullptr)
         this->guiRenderer->render(this->matrixManager);
+ 
 }
-
+*/
 void RenderManager::renderCamera()
 {
     this->matrixManager->setView

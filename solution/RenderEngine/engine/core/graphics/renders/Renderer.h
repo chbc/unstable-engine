@@ -60,6 +60,7 @@ private:
     
     void addMesh(MeshComponent *mesh);
 
+    void render(class Shader *shader);
     void render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition);
 
     bool contains(MeshComponent *mesh);

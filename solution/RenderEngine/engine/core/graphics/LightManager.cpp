@@ -3,8 +3,13 @@
 #include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/entities/Entity.h>
 #include "ShaderManager.h"
+#include <engine/core/multimedia/textures/TextureManager.h>
 #include <experimental/vector>
+#include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
 
+#include <glm/gtc/matrix_transform.hpp> // ###
+
+// ### TENTAR LightingRendererComponent
 namespace sre
 {
 
@@ -36,8 +41,64 @@ PointLightComponent *LightManager::addPointLight(Entity *entity)
 
 void LightManager::onSceneLoaded()
 {
-    ShaderManager *shaderManager = SingletonsManager::getInstance()->resolve<ShaderManager>();
+    SingletonsManager *singletonsManager = SingletonsManager::getInstance();
+
+    ShaderManager *shaderManager = singletonsManager->resolve<ShaderManager>();
     this->setupVariablesLocations(shaderManager);
+}
+
+// Renderer::render() ->
+void LightManager::onPreRender(ShaderManager *shaderManager, Shader *shader)
+{
+    bool hasAnyLight = false;
+
+    if (this->directionalLights.size() > 0)
+    {
+        this->setupDirectionalValues(shaderManager, shader);
+        hasAnyLight = true;
+    }
+
+    if (this->pointLights.size() > 0)
+    {
+        this->setupPointValues(shaderManager, shader);
+        hasAnyLight = true;
+    }
+
+    if (hasAnyLight)
+    {
+        shaderManager->setVec3(shader, ShaderVariables::AMBIENT_LIGHT_COLOR, &this->ambientLightColor[0]);
+
+        // ###
+        glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.5f);
+        glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 4.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+        glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+
+        shaderManager->setMat4(shader, ShaderVariables::SOURCE_SPACE_MATRIX, &lightSpaceMatrix[0][0]);
+
+        AGraphicsWrapper *graphics = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
+        graphics->activateShadowMapTexture(this->depthMap);
+
+        shaderManager->setInt(shader, ShaderVariables::SHADOW_MAP, 4);
+    }
+}
+
+void LightManager::setupDepthRendering(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
+{
+    // ###
+    // 1. first render to depth map
+    /*
+    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.5f);
+    glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 10.0f, 0.0f), // ### glm::vec3(0.0f) - this->directionalLights[0]->getDirection(),
+        glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+
+    shaderManager->enableShader(this->depthShader);
+    shaderManager->setMat4(this->depthShader, ShaderVariables::SOURCE_SPACE_MATRIX, &lightSpaceMatrix[0][0]);
+
+    graphicsWrapper->bindFrameBuffer(this->depthMapFBO, 1024, 1024);
+    */
 }
 
 void LightManager::setupVariablesLocations(ShaderManager *shaderManager)
@@ -59,7 +120,11 @@ void LightManager::setupVariablesLocations(ShaderManager *shaderManager)
     }
 
     if (hasAnyLight)
+    {
         shaderManager->setupLightUniformLocations(ShaderVariables::AMBIENT_LIGHT_COLOR);
+        shaderManager->setupLightUniformLocations(ShaderVariables::SHADOW_MAP);
+        shaderManager->setupLightUniformLocations(ShaderVariables::SOURCE_SPACE_MATRIX);
+    }
 }
 
 void LightManager::setupDirectionalsVariablesLocations(ShaderManager *shaderManager)
@@ -96,27 +161,6 @@ void LightManager::setupPointsVariablesLocations(ShaderManager *shaderManager)
         sprintf_s(variable, POINT_INTENSITY_FORMAT, i);
         shaderManager->setupLightUniformLocations(variable);
     }
-}
-
-// Renderer::render() ->
-void LightManager::setupValues(ShaderManager *shaderManager, Shader *shader)
-{
-    bool hasAnyLight = false;
-
-    if (this->directionalLights.size() > 0)
-    {
-        this->setupDirectionalValues(shaderManager, shader);
-        hasAnyLight = true;
-    }
-
-    if (this->pointLights.size() > 0)
-    {
-        this->setupPointValues(shaderManager, shader);
-        hasAnyLight = true;
-    }
-
-    if (hasAnyLight)
-        shaderManager->setVec3(shader, ShaderVariables::AMBIENT_LIGHT_COLOR, &this->ambientLightColor[0]);
 }
 
 void LightManager::setupDirectionalValues(ShaderManager *shaderManager, Shader *shader)

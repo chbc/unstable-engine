@@ -16,7 +16,7 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
     this->shaderManager = shaderManager;
     this->graphicsWrapper = graphicsWrapper;
     
-    for (int i = EComponentId::COLOR_MATERIAL; i <= EComponentId::AO_MATERIAL; i++) // ### TESTAR SE CHEGA NO AO
+    for (int i = EComponentId::COLOR_MATERIAL; i <= EComponentId::AO_MATERIAL; i++)
     {
         if (material->componentsBitset[i])
         {
@@ -70,6 +70,22 @@ void Renderer::addMesh(MeshComponent *mesh)
     this->graphicsWrapper->createEBO(mesh);
 }
 
+void Renderer::render(Shader *shader)
+{
+    for (MeshComponent *mesh : this->meshes)
+    {
+        TransformComponent *transform = mesh->getTransform();
+        glm::mat4 modelMatrix = transform->getMatrix();
+        this->shaderManager->setMat4(shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
+
+        this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
+
+        this->graphicsWrapper->enableVertexPositions();
+        this->graphicsWrapper->drawElement(mesh->meshData->indices.size());
+        this->graphicsWrapper->disableVertexPositions();
+    }
+}
+
 void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, const glm::vec3 &cameraPosition)
 {
     // Shader setup
@@ -82,7 +98,7 @@ void Renderer::render(MatrixManager *matrixManager, LightManager *lightManager, 
     this->shaderManager->setMat4(this->shader, ShaderVariables::PROJECTION_MATRIX, &projectionMatrix[0][0]);
     this->shaderManager->setVec3(this->shader, ShaderVariables::CAMERA_POSITION, &cameraPosition[0]);
 
-    lightManager->setupValues(this->shaderManager, this->shader);
+    lightManager->onPreRender(this->shaderManager, this->shader);
 
     for (MeshComponent *mesh : this->meshes)
     {

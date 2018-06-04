@@ -22,6 +22,9 @@ namespace ShaderFiles
     const std::string LIGHTS_H_F    = "../../shaders/lights_h.frag";
     const std::string LIGHTS_IMPL_F = "../../shaders/lights_impl.frag";
 
+    const std::string DEPTH_V = "../../shaders/depth_debug.vert"; // ###
+    const std::string DEPTH_F = "../../shaders/depth_debug.frag"; // ###
+
     const std::string DIFFUSE_H_F       = "../../shaders/diffuse_h.frag";
     const std::string DIFFUSE_IMPL_F    = "../../shaders/diffuse_impl.frag";
 
@@ -41,17 +44,19 @@ namespace ShaderVariables
 {
     namespace Names
     {
-        const std::string VIEW_MATRIX       = "viewMatrix";
-        const std::string PROJECTION_MATRIX = "projectionMatrix";
-        const std::string MODEL_MATRIX      = "modelMatrix";
-        const std::string CAMERA_POSITION   = "cameraPosition";
-        const std::string MATERIAL_COLOR    = "materialColor";
-        const std::string SHININESS         = "shininess";
-        const std::string GUI_TEXTURE       = "guiTexture";
-        const std::string DIFFUSE_TEXTURE   = "diffuseTexture";
-        const std::string AO_TEXTURE        = "aoTexture";
-        const std::string NORMAL_TEXTURE    = "normalTexture";
-        const std::string SPECULAR_TEXTURE  = "specularTexture";
+        const std::string VIEW_MATRIX           = "viewMatrix";
+        const std::string PROJECTION_MATRIX     = "projectionMatrix";
+        const std::string MODEL_MATRIX          = "modelMatrix";
+        const std::string SOURCE_SPACE_MATRIX   = "sourceSpaceMatrix";
+        const std::string CAMERA_POSITION       = "cameraPosition";
+        const std::string MATERIAL_COLOR        = "materialColor";
+        const std::string SHININESS             = "shininess";
+        const std::string GUI_TEXTURE           = "guiTexture";
+        const std::string DIFFUSE_TEXTURE       = "diffuseTexture";
+        const std::string AO_TEXTURE            = "aoTexture";
+        const std::string NORMAL_TEXTURE        = "normalTexture";
+        const std::string SPECULAR_TEXTURE      = "specularTexture";
+        const std::string SHADOW_MAP            = "shadowMap";
 
         const std::string AMBIENT_LIGHT_COLOR       = "lights.ambientLightColor";
         const std::string DIRECTIONAL_LIGHTS_COUNT  = "lights.directionalLightsCount";
@@ -63,6 +68,7 @@ namespace ShaderVariables
         VIEW_MATRIX,
         PROJECTION_MATRIX,
         MODEL_MATRIX,
+        SOURCE_SPACE_MATRIX,
         CAMERA_POSITION,
 
         MATERIAL_COLOR,
@@ -73,6 +79,7 @@ namespace ShaderVariables
         AO_TEXTURE,
         NORMAL_TEXTURE,
         SPECULAR_TEXTURE,
+        SHADOW_MAP,
 
         AMBIENT_LIGHT_COLOR,
         DIRECTIONAL_LIGHTS_COUNT,
@@ -86,6 +93,7 @@ namespace ShaderVariables
         { VIEW_MATRIX,                  Names::VIEW_MATRIX                  },
         { PROJECTION_MATRIX,            Names::PROJECTION_MATRIX            },
         { MODEL_MATRIX,                 Names::MODEL_MATRIX                 },
+        { SOURCE_SPACE_MATRIX,          Names::SOURCE_SPACE_MATRIX          },
         { CAMERA_POSITION,              Names::CAMERA_POSITION              },
         { MATERIAL_COLOR,               Names::MATERIAL_COLOR               },
         { SHININESS,                    Names::SHININESS                    },
@@ -94,6 +102,7 @@ namespace ShaderVariables
         { AO_TEXTURE,                   Names::AO_TEXTURE                   },
         { NORMAL_TEXTURE,               Names::NORMAL_TEXTURE               },
         { SPECULAR_TEXTURE,             Names::SPECULAR_TEXTURE             },
+        { SHADOW_MAP,                   Names::SHADOW_MAP                   },
         { AMBIENT_LIGHT_COLOR,          Names::AMBIENT_LIGHT_COLOR          },
         { DIRECTIONAL_LIGHTS_COUNT,     Names::DIRECTIONAL_LIGHTS_COUNT     },
         { POINT_LIGHTS_COUNT,           Names::POINT_LIGHTS_COUNT           }

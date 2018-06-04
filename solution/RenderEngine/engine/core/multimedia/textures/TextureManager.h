@@ -29,16 +29,18 @@ private:
     Texture *loadNormalTexture(const std::string &fileName);
     Texture *loadSpecularTexture(const std::string &fileName);
     Texture *loadAOTexture(const std::string &fileName);
+    Texture *loadShadowTexture(uint32_t width, uint32_t height);
     Texture *loadTexture(const std::string &fileName, EMaterialMap::Type mapType);
 
     Texture *loadExistingTexture(const std::string &fileName, EMaterialMap::Type mapType);
     void deleteTexture(uint32_t id);
 
 public:
-	~TextureManager();
+    ~TextureManager();
 
 friend class RenderManager;
 friend class SingletonsManager;
+friend class LightManager;
 };
 
 } // namespace

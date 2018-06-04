@@ -183,6 +183,12 @@ void OpenGLAPI::activeAOTexture(uint32_t textureId)
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
+void OpenGLAPI::activateShadowMapTexture(uint32_t textureId)
+{
+    glActiveTexture(GL_TEXTURE4); // ###
+    glBindTexture(GL_TEXTURE_2D, textureId);
+}
+
 void OpenGLAPI::setupBufferSubData(const MeshData<GUIVertexData> *meshData)
 {
     uint32_t size = meshData->indices.size() * sizeof(uint32_t);
@@ -235,34 +241,67 @@ void OpenGLAPI::clearBuffer()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+void OpenGLAPI::clearColorBuffer()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
 uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit, bool genMipmap)
 {
-	uint32_t result = 0;
+    uint32_t result{ 0 };
 
-	glGenTextures(1, &result);
+    glGenTextures(1, &result);
 
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glBindTexture(GL_TEXTURE_2D, result);
+    glActiveTexture(GL_TEXTURE0 + unit);
+    glBindTexture(GL_TEXTURE_2D, result);
 
-	int colorFormat = (bpp == 3) ? GL_RGB : GL_RGBA;
+    int colorFormat = (bpp == 3) ? GL_RGB : GL_RGBA;
 
-	glTexImage2D(GL_TEXTURE_2D, 0, colorFormat, width, height, 0, colorFormat, GL_UNSIGNED_BYTE, data);
+    glTexImage2D
+    (
+        GL_TEXTURE_2D, 0, colorFormat, width, height, 
+        0, colorFormat, GL_UNSIGNED_BYTE, data
+    );
 
-	GLint minFilterParam = GL_LINEAR;
-	if (genMipmap)
-	{
-		glGenerateMipmap(GL_TEXTURE_2D);
-		minFilterParam = GL_LINEAR_MIPMAP_LINEAR;
-	}
+    GLint minFilterParam = GL_LINEAR;
+    if (genMipmap)
+    {
+        glGenerateMipmap(GL_TEXTURE_2D);
+        minFilterParam = GL_LINEAR_MIPMAP_LINEAR;
+    }
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilterParam);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilterParam);
 
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-	return result;
+    return result;
+}
+
+// ### sombra
+uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint32_t unit)
+{
+    uint32_t result{ 0 };
+    glGenTextures(1, &result);
+    glActiveTexture(GL_TEXTURE0 + unit);
+    glBindTexture(GL_TEXTURE_2D, result);
+    glTexImage2D
+    (
+        GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height,
+        0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr
+    );
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    return result;
 }
 
 void OpenGLAPI::deleteTexture(uint32_t id)
@@ -378,6 +417,51 @@ void OpenGLAPI::deleteBuffers(GUIImageComponent *guiComponent)
     glDeleteVertexArrays(1, &guiComponent->vao);
 }
 
+// ###
+void OpenGLAPI::generateFrameBuffer(uint32_t &fbo, uint32_t textureId)
+{
+    glGenFramebuffers(1, &fbo);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, textureId, 0);
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        throw "[OpenGLAPI] - Framebuffer error!";
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+// ###
+void OpenGLAPI::bindFrameBuffer(uint32_t fbo)
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    glClear(GL_DEPTH_BUFFER_BIT);
+}
+
+// ###
+void OpenGLAPI::unbindFrameBuffer()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+// ###
+void OpenGLAPI::setViewport(uint32_t width, uint32_t height)
+{
+    glViewport(0, 0, width, height);
+}
+
+void OpenGLAPI::enableFrontCullFace()
+{
+    glCullFace(GL_FRONT);
+}
+
+void OpenGLAPI::disableFrontCullFace() 
+{
+    glCullFace(GL_BACK);
+}
+
 uint32_t OpenGLAPI::compileShader(const std::string &source, uint32_t mode)
 {
 	uint32_t id = glCreateShader(mode);
@@ -421,6 +505,38 @@ void OpenGLAPI::checkProgramLink(uint32_t program)
 		throw error;
 	}
 }
+
+unsigned int quadVAO = 0;
+unsigned int quadVBO;
+void OpenGLAPI::renderQuad()
+{
+    if (quadVAO == 0)
+    {
+        float w = 1.0f;
+
+        float quadVertices[] = {
+            // positions        // texture Coords
+            -w,  1.0f, 0.0f, 0.0f, 1.0f,
+            -w, -1.0f, 0.0f, 0.0f, 0.0f,
+            w,  1.0f, 0.0f, 1.0f, 1.0f,
+            w, -1.0f, 0.0f, 1.0f, 0.0f,
+        };
+        // setup plane VAO
+        glGenVertexArrays(1, &quadVAO);
+        glGenBuffers(1, &quadVBO);
+        glBindVertexArray(quadVAO);
+        glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    }
+    glBindVertexArray(quadVAO);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glBindVertexArray(0);
+}
+
 //
 
 } // namespace

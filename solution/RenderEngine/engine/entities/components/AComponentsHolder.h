@@ -52,11 +52,11 @@ private:
     template <> std::size_t getComponentId<class GUITextComponent>() { return EComponentId::GUI_TEXT; }
 
     // Renderer components
-    template <> std::size_t getComponentId<class ColorRendererComponent>() { return EComponentId::COLOR_RENDERER; }
-    template <> std::size_t getComponentId<class DiffuseRendererComponent>() { return EComponentId::DIFFUSE_RENDERER; }
-    template <> std::size_t getComponentId<class NormalRendererComponent>() { return EComponentId::NORMAL_RENDERER; }
-    template <> std::size_t getComponentId<class SpecularRendererComponent>() { return EComponentId::SPECULAR_RENDERER; }
-    template <> std::size_t getComponentId<class AORendererComponent>() { return EComponentId::AO_RENDERER; }
+    template <> std::size_t getComponentId<class ColorRendererComponent>() { return EComponentId::COLOR_MATERIAL; }
+    template <> std::size_t getComponentId<class DiffuseRendererComponent>() { return EComponentId::DIFFUSE_MATERIAL; }
+    template <> std::size_t getComponentId<class NormalRendererComponent>() { return EComponentId::NORMAL_MATERIAL; }
+    template <> std::size_t getComponentId<class SpecularRendererComponent>() { return EComponentId::SPECULAR_MATERIAL; }
+    template <> std::size_t getComponentId<class AORendererComponent>() { return EComponentId::AO_MATERIAL; }
 };
 
 } // namespace

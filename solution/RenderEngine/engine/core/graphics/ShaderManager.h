@@ -41,6 +41,7 @@ private:
     }
 
     Shader *loadGUIShader();
+    Shader *loadDepthShader();
     Shader *loadShader(const std::string &vertexContent, const std::string &fragmentContent, bool isLit = true);
 
     // passing values //

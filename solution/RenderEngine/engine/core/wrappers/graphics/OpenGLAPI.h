@@ -9,66 +9,78 @@ namespace sre
 class OpenGLAPI : public AGraphicsWrapper
 {
 protected:
-	OpenGLAPI() {}
+    OpenGLAPI() {}
 
-	void init() override;
-	void createVAO(MeshComponent *mesh) override;
-	void createEBO(MeshComponent *mesh) override;
-	void createGUIVAO(GUIImageComponent *guiComponent) override;
-	void createGUIEBO(GUIImageComponent *guiComponent) override;
+    void init() override;
+    void createVAO(MeshComponent *mesh) override;
+    void createEBO(MeshComponent *mesh) override;
+    void createGUIVAO(GUIImageComponent *guiComponent) override;
+    void createGUIEBO(GUIImageComponent *guiComponent) override;
 
-	void bindVAO(uint32_t vao, uint32_t vbo) override;
-	void enableGUISettings() override;
-	void enableVertexPositions() override;
-	void enableVertexNormals() override;
-	void enableTexCoords() override;
-	void enableVertexTangents() override;
-	void enableVertexBitangents() override;
-	void activeDiffuseTexture(uint32_t textureId) override;
-	void activeNormalTexture(uint32_t textureId) override;
-	void activeSpecularTexture(uint32_t textureId) override;
-	void activeAOTexture(uint32_t textureId) override;
+    void bindVAO(uint32_t vao, uint32_t vbo) override;
+    void enableGUISettings() override;
+    void enableVertexPositions() override;
+    void enableVertexNormals() override;
+    void enableTexCoords() override;
+    void enableVertexTangents() override;
+    void enableVertexBitangents() override;
+    void activeDiffuseTexture(uint32_t textureId) override;
+    void activeNormalTexture(uint32_t textureId) override;
+    void activeSpecularTexture(uint32_t textureId) override;
+    void activeAOTexture(uint32_t textureId) override;
 
-	void setupBufferSubData(const MeshData<GUIVertexData> *meshData) override;
+    void setupBufferSubData(const MeshData<GUIVertexData> *meshData) override;
 
-	void drawElement(uint32_t indicesSize) override;
+    void drawElement(uint32_t indicesSize) override;
 
-	void disableVertexPositions() override;
-	void disableVertexNormals() override;
-	void disableTexCoords() override;
-	void disableVertexTangents() override;
-	void disableVertexBitangents() override;
-	void disableGUISettings() override;
+    void disableVertexPositions() override;
+    void disableVertexNormals() override;
+    void disableTexCoords() override;
+    void disableVertexTangents() override;
+    void disableVertexBitangents() override;
+    void disableGUISettings() override;
 
-	void clearBuffer() override;
-	uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit, bool genMipmap = true) override;
-	void deleteTexture(uint32_t id) override;
+    void clearBuffer() override;
+    static void clearColorBuffer(); // ###
+    uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit, bool genMipmap = true) override;
+    static uint32_t setupTexture(uint32_t width, uint32_t height, uint32_t unit);
+    void deleteTexture(uint32_t id) override;
 
-	static void DEBUG_drawTriangle();
+    static void DEBUG_drawTriangle();
 
-	// Shaders
-	uint32_t loadVertexShader(const std::string &vertexContent) override;  // throws "file can't be found"
-	uint32_t loadFragmentShader(const std::string &fragmentContent) override;  // throws "file can't be found"
+    // Shaders
+    uint32_t loadVertexShader(const std::string &vertexContent) override;  // throws "file can't be found"
+    uint32_t loadFragmentShader(const std::string &fragmentContent) override;  // throws "file can't be found"
 
-	uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) override;
+    uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) override;
 
     int getUniformLocation(uint32_t program, const std::string &varName) override;
-	void setInt(uint32_t program, int location, int value) override;
-	void setFloat(uint32_t program, int location, float value) override;
-	void setVec3(uint32_t program, int location, const float *value) override;
-	void setVec4(uint32_t program, int location, const float *value) override;
-	void setMat4(uint32_t program, int location, const float *value) override;
+    void setInt(uint32_t program, int location, int value) override;
+    void setFloat(uint32_t program, int location, float value) override;
+    void setVec3(uint32_t program, int location, const float *value) override;
+    void setVec4(uint32_t program, int location, const float *value) override;
+    void setMat4(uint32_t program, int location, const float *value) override;
 
-	void enableShader(uint32_t program) override;
-	void disableShader() override;
+    void enableShader(uint32_t program) override;
+    void disableShader() override;
     void releaseShader(uint32_t program, uint32_t vertShader, uint32_t fragShader) override;
-	void deleteBuffers(MeshComponent *mesh) override;
+    void deleteBuffers(MeshComponent *mesh) override;
     void deleteBuffers(GUIImageComponent *guiComponent) override;
 
+    // ###
+    void generateFrameBuffer(uint32_t &fbo, uint32_t textureId) override;
+    static void bindFrameBuffer(uint32_t fbo);
+    void unbindFrameBuffer() override;
+    void setViewport(uint32_t width, uint32_t height) override;
+    void activateShadowMapTexture(uint32_t textureId) override;
+    static void enableFrontCullFace();
+    static void disableFrontCullFace();
+
 private:
-	uint32_t compileShader(const std::string &source, uint32_t mode);
-	void checkVariableLocation(int location, const std::string &varName); // throws "invalid variable"
-	void checkProgramLink(uint32_t program);	// throws "link error"
+    uint32_t compileShader(const std::string &source, uint32_t mode);
+    void checkVariableLocation(int location, const std::string &varName); // throws "invalid variable"
+    void checkProgramLink(uint32_t program);	// throws "link error"
+    static void renderQuad(); // ###
 
 friend class RenderManager;
 friend class TextureManager;

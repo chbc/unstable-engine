@@ -31,6 +31,17 @@ Shader *ShaderManager::loadGUIShader()
     return this->loadShader(vertexContent, fragmentContent, false);
 }
 
+Shader *ShaderManager::loadDepthShader()
+{
+    std::string vertexContent;
+    std::string fragmentContent;
+
+    ShaderContentFactory contentFactory;
+    contentFactory.createDepthShaderContent(vertexContent, fragmentContent);
+
+    return this->loadShader(vertexContent, fragmentContent, false);
+}
+
 Shader *ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent, bool isLit)
 {
     uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);

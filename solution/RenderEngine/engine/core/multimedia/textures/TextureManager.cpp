@@ -14,80 +14,101 @@ void TextureManager::init()
 
 void TextureManager::release()
 {
-	for (const UPTR<Texture> &item : this->textures)
-		this->deleteTexture(item->getId());
+    for (const UPTR<Texture> &item : this->textures)
+        this->deleteTexture(item->getId());
 
-	this->textures.clear();
+    this->textures.clear();
 }
 
 Texture *TextureManager::loadGUITexture(const std::string &fileName)
 {
-	return this->loadTexture(fileName, EMaterialMap::GUI);
+    return this->loadTexture(fileName, EMaterialMap::GUI);
 }
 
 Texture *TextureManager::loadDiffuseTexture(const std::string &fileName)
 {
-	return this->loadTexture(fileName, EMaterialMap::DIFFUSE);
+    return this->loadTexture(fileName, EMaterialMap::DIFFUSE);
 }
 
 Texture *TextureManager::loadNormalTexture(const std::string &fileName)
 {
-	return this->loadTexture(fileName, EMaterialMap::NORMAL);
+    return this->loadTexture(fileName, EMaterialMap::NORMAL);
 }
 
 Texture *TextureManager::loadSpecularTexture(const std::string &fileName)
 {
-	return this->loadTexture(fileName, EMaterialMap::SPECULAR);
+    return this->loadTexture(fileName, EMaterialMap::SPECULAR);
 }
 
 Texture *TextureManager::loadAOTexture(const std::string &fileName)
 {
-	return this->loadTexture(fileName, EMaterialMap::AMBIENT_OCCLUSION);
+    return this->loadTexture(fileName, EMaterialMap::AMBIENT_OCCLUSION);
+}
+
+Texture *TextureManager::loadShadowTexture(uint32_t width, uint32_t height)
+{
+    /* ###
+    std::string name{ "shadow_map" };
+    Texture *result = this->loadExistingTexture(name, EMaterialMap::SHADOW);
+
+    if (result == nullptr)
+    {
+        uint32_t unitTexture = EMaterialMap::SHADOW - 1;
+        uint32_t id = this->graphicsWrapper->setupTexture(width, height, unitTexture);
+
+        result = new Texture{ id, width, height, EMaterialMap::SHADOW, name };
+        this->textures.emplace_back(result);
+    }
+
+    return result;
+    */
+
+    return nullptr;
 }
 
 Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::Type mapType)
 {
-	Texture *result = this->loadExistingTexture(fileName, mapType);
+    Texture *result = this->loadExistingTexture(fileName, mapType);
 
-	if (result == nullptr)
-	{
-		uint32_t width = 0;
-		uint32_t height = 0;
-		uint8_t bpp = 0;
-		MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
-		void *data = multimediaManager->loadTexture(fileName, &width, &height, &bpp);
+    if (result == nullptr)
+    {
+        uint32_t width = 0;
+        uint32_t height = 0;
+        uint8_t bpp = 0;
+        MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
+        void *data = multimediaManager->loadTexture(fileName, &width, &height, &bpp);
 
-		// OpenGL //
-		uint32_t unitTexture = mapType - 1;
-		bool genMipmap = (mapType != EMaterialMap::GUI);
-		uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data, unitTexture, genMipmap);
-		delete[] data;
+        // OpenGL //
+        uint32_t unitTexture = mapType - 1;
+        bool genMipmap = (mapType != EMaterialMap::GUI);
+        uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data, unitTexture, genMipmap);
+        delete[] data;
 
-		result = new Texture(id, width, height, mapType, fileName);
-		this->textures.emplace_back(result);
-	}
+        result = new Texture(id, width, height, mapType, fileName);
+        this->textures.emplace_back(result);
+    }
 
-	return result;
+    return result;
 }
 
 Texture * TextureManager::loadExistingTexture(const std::string &fileName, EMaterialMap::Type mapType)
 {
-	Texture *result = nullptr;
-	for (const UPTR<Texture> &item : this->textures)
-	{
-		if ((item->getFileName().compare(fileName) == 0) && (item->getMapType() == mapType))
-		{
-			result = item.get();
-			break;
-		}
-	}
+    Texture *result = nullptr;
+    for (const UPTR<Texture> &item : this->textures)
+    {
+        if ((item->getFileName().compare(fileName) == 0) && (item->getMapType() == mapType))
+        {
+            result = item.get();
+            break;
+        }
+    }
 
-	return result;
+    return result;
 }
 
 void TextureManager::deleteTexture(uint32_t id)
 {
-	this->graphicsWrapper->deleteTexture(id);
+    this->graphicsWrapper->deleteTexture(id);
 }
 
 } // namespace

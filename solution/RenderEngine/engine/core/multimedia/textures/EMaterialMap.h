@@ -17,6 +17,7 @@ enum Type : std::size_t
     NORMAL,
     SPECULAR,
     AMBIENT_OCCLUSION,
+    SHADOW,
     SIZE
 };
 
