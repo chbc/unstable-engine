@@ -11,12 +11,12 @@ DiffuseRendererComponent::DiffuseRendererComponent(ShaderManager *shaderManager,
     : ColorRendererComponent(shaderManager, graphicsWrapper)
 { }
 
-void DiffuseRendererComponent::onLoadShader(Shader *shader)
+void DiffuseRendererComponent::onSceneLoaded(Shader *shader)
 {
     this->shaderManager->setupUniformLocation(shader, ShaderVariables::DIFFUSE_TEXTURE);
 }
 
-void DiffuseRendererComponent::setupShaderVariables(MeshComponent *mesh, Shader *shader)
+void DiffuseRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
     this->shaderManager->setInt(shader, ShaderVariables::DIFFUSE_TEXTURE, 0);
     this->textureId = mesh->getMaterial()->getComponent<DiffuseMaterialComponent>()->getTextureID();

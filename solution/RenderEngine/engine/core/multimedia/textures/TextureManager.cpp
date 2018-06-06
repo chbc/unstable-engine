@@ -47,23 +47,18 @@ Texture *TextureManager::loadAOTexture(const std::string &fileName)
 
 Texture *TextureManager::loadShadowTexture(uint32_t width, uint32_t height)
 {
-    /* ###
     std::string name{ "shadow_map" };
     Texture *result = this->loadExistingTexture(name, EMaterialMap::SHADOW);
 
     if (result == nullptr)
     {
-        uint32_t unitTexture = EMaterialMap::SHADOW - 1;
-        uint32_t id = this->graphicsWrapper->setupTexture(width, height, unitTexture);
+        uint32_t id = this->graphicsWrapper->setupTexture(width, height, EMaterialMap::SHADOW);
 
         result = new Texture{ id, width, height, EMaterialMap::SHADOW, name };
         this->textures.emplace_back(result);
     }
 
     return result;
-    */
-
-    return nullptr;
 }
 
 Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::Type mapType)
@@ -79,9 +74,8 @@ Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::
         void *data = multimediaManager->loadTexture(fileName, &width, &height, &bpp);
 
         // OpenGL //
-        uint32_t unitTexture = mapType - 1;
         bool genMipmap = (mapType != EMaterialMap::GUI);
-        uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data, unitTexture, genMipmap);
+        uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data, mapType, genMipmap);
         delete[] data;
 
         result = new Texture(id, width, height, mapType, fileName);

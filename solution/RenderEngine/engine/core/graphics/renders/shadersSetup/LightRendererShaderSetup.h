@@ -1,16 +1,14 @@
-#ifndef _LIGHT_RENDERER_COMPONENT_H_
-#define _LIGHT_RENDERER_COMPONENT_H_
+#ifndef _LIGHT_RENDERER_SHADER_SETUP_H_
+#define _LIGHT_RENDERER_SHADER_SETUP_H_
 
-#include "ColorRendererComponent.h"
+#include "ShadowRendererShaderSetup.h"
 
 namespace sre
 {
 
-class LightRendererComponent : public ColorRendererComponent
+class LightRendererShaderSetup : public ShadowRendererShaderSetup
 {
 private:
-    class LightManager *lightManager;
-
     const char *DIRECTIONAL_DIRECTION_FORMAT = "lights.directionalLights[%d].direction";
     const char *DIRECTIONAL_COLOR_FORMAT = "lights.directionalLights[%d].color";
 
@@ -20,10 +18,10 @@ private:
     const char *POINT_INTENSITY_FORMAT = "lights.pointLights[%d].intensity";
 
 protected:
-    LightRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
+    LightRendererShaderSetup(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-    void onLoadShader(Shader *shader) override;
-    void setupShaderVariables(MeshComponent *mesh, Shader *shader) override;
+    void onSceneLoaded(Shader *shader) override;
+    void setupShaderValues(Shader *shader) override;
 
 private:
     void setupDirectionalsVariablesLocations(Shader *shader);

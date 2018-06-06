@@ -2,14 +2,14 @@
 #define _RENDERER_H_
 
 #include <engine/entities/components/AComponentsHolder.h>
-#include "ColorRendererComponent.h"
-#include "DiffuseRendererComponent.h"
-#include "NormalRendererComponent.h"
-#include "SpecularRendererComponent.h"
-#include "AORendererComponent.h"
-#include "LightRendererComponent.h"
+#include "components/ColorRendererComponent.h"
+#include "components/DiffuseRendererComponent.h"
+#include "components/NormalRendererComponent.h"
+#include "components/SpecularRendererComponent.h"
+#include "components/AORendererComponent.h"
 #include <glm/vec3.hpp>
 #include <list>
+#include <unordered_map>
 
 namespace sre
 {
@@ -23,16 +23,13 @@ class ShaderManager;
 class Renderer : public AComponentsHolder<ColorRendererComponent>
 {
 private:
+    std::unordered_map<std::string, UPTR<class BaseRendererShaderSetup>> shaderSetupItems;
+
     std::list<MeshComponent *> meshes;
     class Shader *shader;
 
     ShaderManager *shaderManager;
     AGraphicsWrapper *graphicsWrapper;
-
-    int viewMatrixLocation;
-    int projectionMaxtrixLocation;
-    int cameraPositionLocation;
-    int modelMatrixLocation;
 
 public:
     virtual ~Renderer();
@@ -61,7 +58,6 @@ private:
     
     void addMesh(MeshComponent *mesh);
 
-    void render(class Shader *shader);
     void render(MatrixManager *matrixManager, const glm::vec3 &cameraPosition);
 
     bool contains(MeshComponent *mesh);

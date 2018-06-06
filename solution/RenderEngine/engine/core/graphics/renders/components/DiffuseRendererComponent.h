@@ -15,8 +15,8 @@ protected:
 protected:
     DiffuseRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-    virtual void onLoadShader(Shader *shader) override;
-    virtual void setupShaderVariables(MeshComponent *mesh, Shader *shader) override;
+    virtual void onSceneLoaded(Shader *shader) override;
+    virtual void setupShaderValues(MeshComponent *mesh, Shader *shader) override;
     virtual void preDraw() override;
     virtual void postDraw() override;
 

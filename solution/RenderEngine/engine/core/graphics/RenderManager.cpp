@@ -16,18 +16,8 @@
 #include "renders/GUIRenderer.h"
 #include <experimental/vector>
 
-
-// ###
-#include <engine/utils/FileUtils.h>
-#include <glm/gtc/matrix_transform.hpp> // ###
-
 namespace sre
 {
-
-    // ###
-    Shader *simpleDepthShader;
-    unsigned int depthMapFBO;
-    unsigned int depthMap;
 
 RenderManager::RenderManager()
 {
@@ -47,16 +37,11 @@ void RenderManager::init()
     this->graphicsWrapper->init();
     this->shaderManager->init();
     this->textureManager->init();
+    this->lightManager->init();
 
     MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
     const float FOV{90.0f};
     this->matrixManager->setProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 100);
-
-    // ###
-    std::string depthVStr, depthFStr;
-    FileUtils::loadFile("../../shaders/debug/depth_debug.vert", depthVStr);
-    FileUtils::loadFile("../../shaders/debug/depth_debug.frag", depthFStr);
-    simpleDepthShader = this->shaderManager->loadShader(depthVStr, depthFStr, false);
 }
 
 void RenderManager::addEntity(Entity *entity)
@@ -102,6 +87,9 @@ void RenderManager::addMesh(MeshComponent *mesh)
     }
     
     renderer->addMesh(mesh);
+
+    if (mesh->getMaterial()->castsShadow)
+        this->lightManager->addShadowCaster(mesh);
 }
 
 void RenderManager::addGUIComponent(GUIImageComponent *guiComponent)
@@ -130,14 +118,7 @@ void RenderManager::initGUIRenderer()
 
 void RenderManager::onSceneLoaded()
 {
-    depthMap = OpenGLAPI::setupTexture(1024, 1024, 0);
-
-    graphicsWrapper->generateFrameBuffer(depthMapFBO, depthMap);
-
-    this->lightManager->depthMap = depthMap;
-
-    this->shaderManager->setupUniformLocation(simpleDepthShader, ShaderVariables::SOURCE_SPACE_MATRIX);
-    this->shaderManager->setupUniformLocation(simpleDepthShader, ShaderVariables::MODEL_MATRIX);
+    this->lightManager->onSceneLoaded();
 
     for (const UPTR<Renderer> &item : this->renders)
         item->onSceneLoaded();
@@ -155,27 +136,10 @@ CameraComponent *RenderManager::getMainCamera()
 
 void RenderManager::render()
 {
-    // 1. first render to depth map
-    this->graphicsWrapper->clearBuffer();
+    // Depth rendering
+    this->lightManager->generateDepthMap();
 
-    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.5f);
-    glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 4.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-    glm::mat4 lightSpaceMatrix = lightProjection * lightView;
-    this->shaderManager->enableShader(simpleDepthShader);
-    this->shaderManager->setMat4(simpleDepthShader, ShaderVariables::SOURCE_SPACE_MATRIX, &lightSpaceMatrix[0][0]);
-
-    graphicsWrapper->setViewport(1024, 1024);
-    OpenGLAPI::bindFrameBuffer(depthMapFBO);
-
-    OpenGLAPI::enableFrontCullFace();
-    for (const UPTR<Renderer> &item : this->renders)
-        item->render(simpleDepthShader);
-    OpenGLAPI::disableFrontCullFace();
-
-    graphicsWrapper->unbindFrameBuffer();
-
-    // 2. scene
+    // Scene rendering
     this->graphicsWrapper->setViewport(1024, 768);
     this->graphicsWrapper->clearBuffer();
 

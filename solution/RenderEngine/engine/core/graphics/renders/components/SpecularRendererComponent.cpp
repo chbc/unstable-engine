@@ -11,12 +11,12 @@ SpecularRendererComponent::SpecularRendererComponent(ShaderManager *shaderManage
     : DiffuseRendererComponent(shaderManager, graphicsWrapper)
 { }
 
-void SpecularRendererComponent::onLoadShader(Shader *shader)
+void SpecularRendererComponent::onSceneLoaded(Shader *shader)
 {
     this->shaderManager->setupUniformLocation(shader, ShaderVariables::SPECULAR_TEXTURE);
 }
 
-void SpecularRendererComponent::setupShaderVariables(MeshComponent *mesh, Shader *shader)
+void SpecularRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
     this->shaderManager->setInt(shader, ShaderVariables::SPECULAR_TEXTURE, 2);
     this->textureId = mesh->getMaterial()->getComponent<SpecularMaterialComponent>()->getTextureID();

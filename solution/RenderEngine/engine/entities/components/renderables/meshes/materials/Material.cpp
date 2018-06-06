@@ -4,8 +4,9 @@
 namespace sre
 {
 
-Material::Material(bool arg_receivesLight, float arg_shininess)
-    : receivesLight(arg_receivesLight), shininess(arg_shininess)
+Material::Material(bool arg_receivesLight, bool arg_receivesShadow, bool arg_castsShadow, float arg_shininess)
+    :   receivesLight(arg_receivesLight), receivesShadow(arg_receivesShadow),  
+        castsShadow(arg_castsShadow), shininess(arg_shininess)
 {
     ColorMaterialComponent *component = this->addComponent<ColorMaterialComponent>();
 }

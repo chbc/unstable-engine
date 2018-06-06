@@ -9,7 +9,7 @@
 namespace sre
 {
 
-constexpr size_t MAX_COMPONENTS{ 13 };
+constexpr size_t MAX_COMPONENTS{ 12 };
 
 template <typename C>
 class AComponentsHolder
@@ -57,7 +57,6 @@ private:
     template <> std::size_t getComponentId<class NormalRendererComponent>() { return EComponentId::NORMAL_MATERIAL; }
     template <> std::size_t getComponentId<class SpecularRendererComponent>() { return EComponentId::SPECULAR_MATERIAL; }
     template <> std::size_t getComponentId<class AORendererComponent>() { return EComponentId::AO_MATERIAL; }
-    template <> std::size_t getComponentId<class LightRendererComponent>() { return EComponentId::LIGHT_RENDERER; }
 };
 
 } // namespace

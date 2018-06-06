@@ -11,8 +11,7 @@ namespace EMaterialMap
 
 enum Type : std::size_t
 {
-    COLOR = 0,
-    GUI,
+    GUI = 0,
     DIFFUSE,
     NORMAL,
     SPECULAR,

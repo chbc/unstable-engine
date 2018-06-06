@@ -189,7 +189,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="engine\core\graphics\renders\LightRendererComponent.cpp" />
+    <ClCompile Include="engine\core\graphics\renders\shadersSetup\BaseRendererShaderSetup.cpp" />
+    <ClCompile Include="engine\core\graphics\renders\shadersSetup\LightRendererShaderSetup.cpp" />
+    <ClCompile Include="engine\core\graphics\renders\shadersSetup\ShadowRendererShaderSetup.cpp" />
     <ClCompile Include="engine\core\graphics\shaders\Shader.cpp" />
     <ClCompile Include="engine\core\multimedia\textures\atlases\FontAtlas.cpp" />
     <ClCompile Include="engine\core\singletonsManager\SingletonsManager.cpp" />
@@ -206,8 +208,8 @@
     <ClCompile Include="engine\core\multimedia\textures\atlases\AtlasManager.cpp" />
     <ClCompile Include="engine\core\multimedia\textures\Texture.cpp" />
     <ClCompile Include="engine\entitiesManagers\gui\GUIManager.cpp" />
-    <ClCompile Include="engine\core\graphics\renders\AORendererComponent.cpp" />
-    <ClCompile Include="engine\core\graphics\renders\ColorRendererComponent.cpp" />
+    <ClCompile Include="engine\core\graphics\renders\components\AORendererComponent.cpp" />
+    <ClCompile Include="engine\core\graphics\renders\components\ColorRendererComponent.cpp" />
     <ClCompile Include="engine\entities\components\cameras\CameraComponent.cpp" />
     <ClCompile Include="engine\entities\components\lights\ALightComponent.cpp" />
     <ClCompile Include="engine\entities\components\lights\DirectionalLightComponent.cpp" />
@@ -223,11 +225,11 @@
     <ClCompile Include="engine\core\graphics\LightManager.cpp" />
     <ClCompile Include="engine\core\graphics\MatrixManager.cpp" />
     <ClCompile Include="engine\core\graphics\RenderManager.cpp" />
-    <ClCompile Include="engine\core\graphics\renders\DiffuseRendererComponent.cpp" />
+    <ClCompile Include="engine\core\graphics\renders\components\DiffuseRendererComponent.cpp" />
     <ClCompile Include="engine\core\graphics\renders\GUIRenderer.cpp" />
-    <ClCompile Include="engine\core\graphics\renders\NormalRendererComponent.cpp" />
+    <ClCompile Include="engine\core\graphics\renders\components\NormalRendererComponent.cpp" />
     <ClCompile Include="engine\core\graphics\renders\Renderer.cpp" />
-    <ClCompile Include="engine\core\graphics\renders\SpecularRendererComponent.cpp" />
+    <ClCompile Include="engine\core\graphics\renders\components\SpecularRendererComponent.cpp" />
     <ClCompile Include="engine\core\graphics\ShaderManager.cpp" />
     <ClCompile Include="engine\core\graphics\shaders\ShaderContentFactory.cpp" />
     <ClCompile Include="engine\core\multimedia\textures\TextureManager.cpp" />
@@ -244,7 +246,9 @@
     <ClCompile Include="engine\utils\math\Rect.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\core\graphics\renders\LightRendererComponent.h" />
+    <ClInclude Include="engine\core\graphics\renders\shadersSetup\BaseRendererShaderSetup.h" />
+    <ClInclude Include="engine\core\graphics\renders\shadersSetup\LightRendererShaderSetup.h" />
+    <ClInclude Include="engine\core\graphics\renders\shadersSetup\ShadowRendererShaderSetup.h" />
     <ClInclude Include="engine\core\graphics\shaders\Shader.h" />
     <ClInclude Include="engine\core\singletonsManager\ASingleton.h" />
     <ClInclude Include="engine\entities\components\EComponentId.h" />
@@ -264,8 +268,8 @@
     <ClInclude Include="engine\core\multimedia\textures\Texture.h" />
     <ClInclude Include="engine\entitiesManagers\gui\GUIManager.h" />
     <ClInclude Include="engine\core\multimedia\textures\atlases\AtlasManager.h" />
-    <ClInclude Include="engine\core\graphics\renders\AORendererComponent.h" />
-    <ClInclude Include="engine\core\graphics\renders\ColorRendererComponent.h" />
+    <ClInclude Include="engine\core\graphics\renders\components\AORendererComponent.h" />
+    <ClInclude Include="engine\core\graphics\renders\components\ColorRendererComponent.h" />
     <ClInclude Include="engine\entities\components\AComponentsHolder.h" />
     <ClInclude Include="engine\entities\components\AEntityComponent.h" />
     <ClInclude Include="engine\entities\components\cameras\CameraComponent.h" />
@@ -274,11 +278,11 @@
     <ClInclude Include="engine\entities\components\lights\PointLightComponent.h" />
     <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\AMaterialComponent.h" />
     <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\ColorMaterialComponent.h" />
-    <ClInclude Include="engine\core\graphics\renders\DiffuseRendererComponent.h" />
+    <ClInclude Include="engine\core\graphics\renders\components\DiffuseRendererComponent.h" />
     <ClInclude Include="engine\core\graphics\renders\GUIRenderer.h" />
-    <ClInclude Include="engine\core\graphics\renders\NormalRendererComponent.h" />
+    <ClInclude Include="engine\core\graphics\renders\components\NormalRendererComponent.h" />
     <ClInclude Include="engine\core\graphics\renders\Renderer.h" />
-    <ClInclude Include="engine\core\graphics\renders\SpecularRendererComponent.h" />
+    <ClInclude Include="engine\core\graphics\renders\components\SpecularRendererComponent.h" />
     <ClInclude Include="engine\core\graphics\shaders\ShaderConstants.h" />
     <ClInclude Include="engine\entities\components\renderables\meshes\materials\Material.h" />
     <ClInclude Include="engine\entities\components\renderables\meshes\MeshComponent.h" />

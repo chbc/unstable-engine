@@ -7,6 +7,8 @@
 #include <engine/core/graphics/ShaderManager.h>
 #include <engine/core/singletonsManager/SingletonsManager.h>
 
+#include "shadersSetup/LightRendererShaderSetup.h"
+
 namespace sre
 {
 
@@ -15,6 +17,7 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
     this->shaderManager = shaderManager;
     this->graphicsWrapper = graphicsWrapper;
     
+    // ### COLOCAR NUM FACTORY
     for (int i = EComponentId::COLOR_MATERIAL; i <= EComponentId::AO_MATERIAL; i++)
     {
         if (material->componentsBitset[i])
@@ -41,8 +44,20 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
         }
     }
 
+    BaseRendererShaderSetup *item = new BaseRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
+    this->shaderSetupItems[typeid(BaseRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
+
     if (material->receivesLight)
-        this->addComponent<LightRendererComponent>(this->shaderManager, this->graphicsWrapper);
+    {
+        item = new LightRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
+        this->shaderSetupItems[typeid(LightRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
+    }
+
+    if (material->receivesShadow)
+    {
+        item = new ShadowRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
+        this->shaderSetupItems[typeid(ShadowRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
+    }
 }
 
 Renderer::~Renderer()
@@ -54,17 +69,18 @@ Renderer::~Renderer()
 void Renderer::loadShader()
 {
     this->shader = this->shaderManager->loadShader(this->componentsBitset);
-    this->shaderManager->setupUniformLocation(this->shader, ShaderVariables::VIEW_MATRIX);
-    this->shaderManager->setupUniformLocation(this->shader, ShaderVariables::PROJECTION_MATRIX);
-    this->shaderManager->setupUniformLocation(this->shader, ShaderVariables::CAMERA_POSITION);
-    this->shaderManager->setupUniformLocation(this->shader, ShaderVariables::MODEL_MATRIX);
 }
 
 void Renderer::onSceneLoaded()
 {
+    for (const auto &item : this->shaderSetupItems)
+    {
+        item.second->onSceneLoaded(this->shader);
+    }
+
     for (const UPTR<ColorRendererComponent> &item : this->components)
     {
-        item->onLoadShader(this->shader); // ###
+        item->onSceneLoaded(this->shader);
     }
 }
 
@@ -75,33 +91,17 @@ void Renderer::addMesh(MeshComponent *mesh)
     this->graphicsWrapper->createEBO(mesh);
 }
 
-void Renderer::render(Shader *shader)
-{
-    for (MeshComponent *mesh : this->meshes)
-    {
-        TransformComponent *transform = mesh->getTransform();
-        glm::mat4 modelMatrix = transform->getMatrix();
-        this->shaderManager->setMat4(shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
-
-        this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
-
-        this->graphicsWrapper->enableVertexPositions();
-        this->graphicsWrapper->drawElement(mesh->meshData->indices.size());
-        this->graphicsWrapper->disableVertexPositions();
-    }
-}
-
 void Renderer::render(MatrixManager *matrixManager, const glm::vec3 &cameraPosition)
 {
     // Shader setup
     this->shaderManager->enableShader(this->shader);
 
-    glm::mat4 viewMatrix = matrixManager->getViewMatrix();
-    glm::mat4 projectionMatrix = matrixManager->getProjectionMatrix();
+    for (const auto &item : this->shaderSetupItems)
+    {
+        item.second->setupShaderValues(this->shader);
+    }
 
-    this->shaderManager->setMat4(this->shader, ShaderVariables::VIEW_MATRIX, &viewMatrix[0][0]);
-    this->shaderManager->setMat4(this->shader, ShaderVariables::PROJECTION_MATRIX, &projectionMatrix[0][0]);
-    this->shaderManager->setVec3(this->shader, ShaderVariables::CAMERA_POSITION, &cameraPosition[0]);
+    this->shaderManager->setVec3(shader, ShaderVariables::CAMERA_POSITION, &cameraPosition[0]);
 
     for (MeshComponent *mesh : this->meshes)
     {
@@ -113,7 +113,7 @@ void Renderer::render(MatrixManager *matrixManager, const glm::vec3 &cameraPosit
         this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
         for (const UPTR<ColorRendererComponent> &item : this->components)
         {
-            item->setupShaderVariables(mesh, this->shader);
+            item->setupShaderValues(mesh, this->shader);
             item->preDraw();
         }
 
@@ -148,7 +148,8 @@ bool Renderer::fitsWithMesh(MeshComponent *mesh)
     return
     (
         (this->componentsBitset == material->componentsBitset) &&
-        (this->hasComponent<LightRendererComponent>() == material->receivesLight)
+        ((this->shaderSetupItems.count(typeid(LightRendererShaderSetup).name()) > 0) == material->receivesLight) &&
+        ((this->shaderSetupItems.count(typeid(ShadowRendererShaderSetup).name()) > 0) == material->receivesShadow)
     );
 }
 

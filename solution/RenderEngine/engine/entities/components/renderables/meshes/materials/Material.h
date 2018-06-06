@@ -23,13 +23,15 @@ class Material : public AComponentsHolder<AMaterialComponent>
 private:
     float shininess;
     bool receivesLight;
+    bool receivesShadow;
+    bool castsShadow;
 
 public:
     void setShininess(float shininess);
     float getShininess();
 
 private:
-    Material(bool arg_receivesLight = true, float arg_shininess = 15.0);
+    Material(bool arg_receivesLight = true, bool arg_receivesShadow = true, bool arg_castsShadow = true, float arg_shininess = 15.0);
 
     template <typename T, typename... TArgs>
     T *addComponent(TArgs&&... mArgs)
@@ -49,6 +51,7 @@ private:
 
 friend class MeshComponent;
 friend class Renderer;
+friend class RenderManager;
 };
 
 } // namespace

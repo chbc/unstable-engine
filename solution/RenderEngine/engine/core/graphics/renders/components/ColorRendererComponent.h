@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 // ### TRANSFORMAR OS COMPONENTES EM SINGLETONS
+// ### RENOMEAR PRA REFERENCIAR OS MESHES
 namespace sre
 {
 
@@ -20,8 +21,8 @@ protected:
 protected:
     ColorRendererComponent(ShaderManager *shaderManager, class AGraphicsWrapper *graphicsWrapper);
 
-    virtual void onLoadShader(Shader *shader);
-    virtual void setupShaderVariables(class MeshComponent *mesh, Shader *shader);
+    virtual void onSceneLoaded(Shader *shader);
+    virtual void setupShaderValues(class MeshComponent *mesh, Shader *shader);
     virtual void preDraw();
     virtual void postDraw();
 

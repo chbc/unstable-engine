@@ -13,13 +13,13 @@ ColorRendererComponent::ColorRendererComponent(ShaderManager *shaderManager, AGr
     this->graphicsWrapper = graphicsWrapper;
 }
 
-void ColorRendererComponent::onLoadShader(class Shader *shader)
+void ColorRendererComponent::onSceneLoaded(class Shader *shader)
 {
     this->shaderManager->setupUniformLocation(shader, ShaderVariables::MATERIAL_COLOR);
     this->shaderManager->setupUniformLocation(shader, ShaderVariables::SHININESS);
 }
 
-void ColorRendererComponent::setupShaderVariables(MeshComponent *mesh, Shader *shader)
+void ColorRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
     ColorMaterialComponent *colorMaterial = mesh->getMaterial()->getComponent<ColorMaterialComponent>();
     glm::vec4 color = colorMaterial->getColor();

@@ -11,8 +11,8 @@ class NormalRendererComponent : public DiffuseRendererComponent
 protected:
     NormalRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-    void onLoadShader(class Shader *shader) override;
-    void setupShaderVariables(class MeshComponent *mesh, class Shader *shader) override;
+    void onSceneLoaded(class Shader *shader) override;
+    void setupShaderValues(class MeshComponent *mesh, class Shader *shader) override;
     void preDraw() override;
     void postDraw() override;
 

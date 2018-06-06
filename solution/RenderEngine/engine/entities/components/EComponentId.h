@@ -26,8 +26,6 @@ enum Type : std::size_t
     GUI_IMAGE,
     GUI_TEXT,
 
-    LIGHT_RENDERER,
-
     SIZE
 };
 

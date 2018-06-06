@@ -11,8 +11,8 @@ class AORendererComponent : public DiffuseRendererComponent
 protected:
     AORendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-    void onLoadShader(class Shader *shader) override;
-    void setupShaderVariables(MeshComponent *mesh, class Shader *shader) override;
+    void onSceneLoaded(class Shader *shader) override;
+    void setupShaderValues(MeshComponent *mesh, class Shader *shader) override;
     void preDraw() override;
     void postDraw() override;
 

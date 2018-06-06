@@ -49,7 +49,7 @@ protected:
 
     virtual void clearBuffer() =0;
     virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit, bool genMipmap) =0;
-    // ### virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint32_t unit) =0;
+    virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint32_t unit) =0;
     virtual void deleteTexture(uint32_t id) =0;
 
     // Shaders
@@ -81,6 +81,7 @@ friend class RenderManager;
 friend class ShaderManager;
 friend class TextureManager;
 friend class SingletonsManager;
+friend class LightManager;
 
 friend class Renderer;
 friend class GUIRenderer;
@@ -89,7 +90,7 @@ friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;
 friend class SpecularRendererComponent;
 friend class AORendererComponent;
-friend class LightRendererComponent;
+friend class ShadowRendererShaderSetup;
 };
 
 } // namespace

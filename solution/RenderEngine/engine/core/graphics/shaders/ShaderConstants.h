@@ -22,8 +22,8 @@ namespace ShaderFiles
     const std::string LIGHTS_H_F    = "../../shaders/lights_h.frag";
     const std::string LIGHTS_IMPL_F = "../../shaders/lights_impl.frag";
 
-    const std::string DEPTH_V = "../../shaders/depth_debug.vert"; // ###
-    const std::string DEPTH_F = "../../shaders/depth_debug.frag"; // ###
+    const std::string DEPTH_V = "../../shaders/depth.vert";
+    const std::string DEPTH_F = "../../shaders/depth.frag";
 
     const std::string DIFFUSE_H_F       = "../../shaders/diffuse_h.frag";
     const std::string DIFFUSE_IMPL_F    = "../../shaders/diffuse_impl.frag";

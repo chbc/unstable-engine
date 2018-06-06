@@ -11,12 +11,12 @@ NormalRendererComponent::NormalRendererComponent(ShaderManager *shaderManager, A
     : DiffuseRendererComponent(shaderManager, graphicsWrapper)
 { }
 
-void NormalRendererComponent::onLoadShader(Shader *shader)
+void NormalRendererComponent::onSceneLoaded(Shader *shader)
 {
     this->shaderManager->setupUniformLocation(shader, ShaderVariables::NORMAL_TEXTURE);
 }
 
-void NormalRendererComponent::setupShaderVariables(MeshComponent *mesh, Shader *shader)
+void NormalRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
     this->shaderManager->setInt(shader, ShaderVariables::NORMAL_TEXTURE, 1);
     this->textureId = mesh->getMaterial()->getComponent<NormalMaterialComponent>()->getTextureID();

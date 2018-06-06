@@ -12,12 +12,12 @@ AORendererComponent::AORendererComponent(ShaderManager *shaderManager, AGraphics
 {
 }
 
-void AORendererComponent::onLoadShader(Shader *shader)
+void AORendererComponent::onSceneLoaded(Shader *shader)
 {
     this->shaderManager->setupUniformLocation(shader, ShaderVariables::AO_TEXTURE);
 }
 
-void AORendererComponent::setupShaderVariables(MeshComponent *mesh, Shader *shader)
+void AORendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
     this->shaderManager->setInt(shader, ShaderVariables::AO_TEXTURE, 3);
     this->textureId = mesh->getMaterial()->getComponent<AmbientOcclusionMaterialComponent>()->getTextureID();

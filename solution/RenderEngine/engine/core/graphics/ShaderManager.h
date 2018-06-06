@@ -70,7 +70,10 @@ friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;
 friend class SpecularRendererComponent;
 friend class AORendererComponent;
-friend class LightRendererComponent;
+
+friend class BaseRendererShaderSetup;
+friend class LightRendererShaderSetup;
+friend class ShadowRendererShaderSetup;
 };
 
 } // namespace

@@ -1,22 +1,16 @@
-#include "LightRendererComponent.h"
+#include "LightRendererShaderSetup.h"
 #include <engine/core/graphics/LightManager.h>
-#include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/core/graphics/ShaderManager.h>
-#include <engine/core/wrappers/graphics/AGraphicsWrapper.h>
 #include <engine/entities/components/lights/PointLightComponent.h>
-
-#include <glm/gtc/matrix_transform.hpp> // ### SOMBRA
 
 namespace sre
 {
 
-LightRendererComponent::LightRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
-    : ColorRendererComponent(shaderManager, graphicsWrapper)
-{
-    this->lightManager = SingletonsManager::getInstance()->get<LightManager>();
-}
+LightRendererShaderSetup::LightRendererShaderSetup(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
+    : ShadowRendererShaderSetup(shaderManager, graphicsWrapper)
+{ }
 
-void LightRendererComponent::onLoadShader(Shader *shader)
+void LightRendererShaderSetup::onSceneLoaded(Shader *shader)
 {
     if (lightManager->directionalLights.size() > 0)
     {
@@ -30,13 +24,10 @@ void LightRendererComponent::onLoadShader(Shader *shader)
         this->setupPointsVariablesLocations(shader);
     }
 
-    // ### SOMBRA
     shaderManager->setupUniformLocation(shader, ShaderVariables::AMBIENT_LIGHT_COLOR);
-    shaderManager->setupUniformLocation(shader, ShaderVariables::SHADOW_MAP);
-    shaderManager->setupUniformLocation(shader, ShaderVariables::SOURCE_SPACE_MATRIX);
 }
 
-void LightRendererComponent::setupShaderVariables(MeshComponent *mesh, Shader *shader)
+void LightRendererShaderSetup::setupShaderValues(Shader *shader)
 {
     if (this->lightManager->directionalLights.size() > 0)
         this->setupDirectionalValues(shader);
@@ -45,21 +36,9 @@ void LightRendererComponent::setupShaderVariables(MeshComponent *mesh, Shader *s
         this->setupPointValues(shader);
 
     shaderManager->setVec3(shader, ShaderVariables::AMBIENT_LIGHT_COLOR, &this->lightManager->ambientLightColor[0]);
-
-    // ### SOMBRA
-    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.5f);
-    glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 4.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-    glm::mat4 lightSpaceMatrix = lightProjection * lightView;
-
-    shaderManager->setMat4(shader, ShaderVariables::SOURCE_SPACE_MATRIX, &lightSpaceMatrix[0][0]);
-
-    this->graphicsWrapper->activateShadowMapTexture(this->lightManager->depthMap); // ### PRE_RENDER
-
-    shaderManager->setInt(shader, ShaderVariables::SHADOW_MAP, 4);
 }
 
-void LightRendererComponent::setupDirectionalsVariablesLocations(Shader *shader)
+void LightRendererShaderSetup::setupDirectionalsVariablesLocations(Shader *shader)
 {
     char variable[128];
 
@@ -74,7 +53,7 @@ void LightRendererComponent::setupDirectionalsVariablesLocations(Shader *shader)
     }
 }
 
-void LightRendererComponent::setupPointsVariablesLocations(Shader *shader)
+void LightRendererShaderSetup::setupPointsVariablesLocations(Shader *shader)
 {
     char variable[128];
 
@@ -95,7 +74,7 @@ void LightRendererComponent::setupPointsVariablesLocations(Shader *shader)
     }
 }
 
-void LightRendererComponent::setupDirectionalValues(Shader *shader)
+void LightRendererShaderSetup::setupDirectionalValues(Shader *shader)
 {
     char variable[100];
 
@@ -117,7 +96,7 @@ void LightRendererComponent::setupDirectionalValues(Shader *shader)
     shaderManager->setInt(shader, ShaderVariables::DIRECTIONAL_LIGHTS_COUNT, count);
 }
 
-void LightRendererComponent::setupPointValues(Shader *shader)
+void LightRendererShaderSetup::setupPointValues(Shader *shader)
 {
     char variable[100];
 
@@ -125,24 +104,19 @@ void LightRendererComponent::setupPointValues(Shader *shader)
     int count = this->lightManager->pointLights.size();
     for (int i = 0; i < count; i++)
     {
-        // ### COLOCAR DIRETO
         light = this->lightManager->pointLights[i];
-        glm::vec3 position = light->getPosition();
-        glm::vec3 color = light->getColor();
-        float range = light->getRange();
-        float intensity = light->getIntensity();
 
         sprintf_s(variable, POINT_POSITION_FORMAT, i);
-        shaderManager->setVec3(shader, variable, &position[0]);
+        shaderManager->setVec3(shader, variable, &light->getPosition()[0]);
 
         sprintf_s(variable, POINT_COLOR_FORMAT, i);
-        shaderManager->setVec3(shader, variable, &color[0]);
+        shaderManager->setVec3(shader, variable, &light->getColor()[0]);
 
         sprintf_s(variable, POINT_RANGE_FORMAT, i);
-        shaderManager->setFloat(shader, variable, range);
+        shaderManager->setFloat(shader, variable, light->getRange());
 
         sprintf_s(variable, POINT_INTENSITY_FORMAT, i);
-        shaderManager->setFloat(shader, variable, intensity);
+        shaderManager->setFloat(shader, variable, light->getIntensity());
     }
 
     shaderManager->setInt(shader, ShaderVariables::POINT_LIGHTS_COUNT, count);

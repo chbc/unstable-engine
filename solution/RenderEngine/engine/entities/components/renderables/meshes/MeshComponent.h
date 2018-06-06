@@ -33,6 +33,7 @@ friend class Entity;
 friend class OpenGLAPI;
 friend class Renderer;
 friend class VertexDataFactory;
+friend class LightManager;
 };
 
 } // namespace
