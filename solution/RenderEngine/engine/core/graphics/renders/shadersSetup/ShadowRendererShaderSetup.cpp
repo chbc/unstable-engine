@@ -17,21 +17,15 @@ ShadowRendererShaderSetup::ShadowRendererShaderSetup(ShaderManager *shaderManage
 void ShadowRendererShaderSetup::onSceneLoaded(Shader *shader)
 {
     this->shaderManager->setupUniformLocation(shader, ShaderVariables::SHADOW_MAP);
-    this->shaderManager->setupUniformLocation(shader, ShaderVariables::SOURCE_SPACE_MATRIX);
+    this->shaderManager->setupUniformLocation(shader, ShaderVariables::LIGHT_SPACE_MATRIX);
 }
 
 void ShadowRendererShaderSetup::setupShaderValues(Shader *shader)
 {
-    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.5f);
-    glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 4.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-    glm::mat4 lightSpaceMatrix = lightProjection * lightView;
-
-    this->shaderManager->setMat4(shader, ShaderVariables::SOURCE_SPACE_MATRIX, &lightSpaceMatrix[0][0]);
+    this->shaderManager->setMat4(shader, ShaderVariables::LIGHT_SPACE_MATRIX, &lightManager->lightSpaceMatrix[0][0]);
+    this->shaderManager->setInt(shader, ShaderVariables::SHADOW_MAP, 4);
 
     this->graphicsWrapper->activateShadowMapTexture(this->lightManager->depthMap);
-
-    this->shaderManager->setInt(shader, ShaderVariables::SHADOW_MAP, 4);
 }
 
 } // namespace

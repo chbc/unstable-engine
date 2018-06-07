@@ -5,7 +5,6 @@
 #include "ShaderManager.h"
 #include <engine/core/wrappers/graphics/OpenGLAPI.h>
 #include <engine/core/singletonsManager/SingletonsManager.h>
-#include <glm/gtc/matrix_transform.hpp>
 #include <engine/entities/components/renderables/meshes/MeshComponent.h>
 #include <engine/core/multimedia/textures/TextureManager.h>
 
@@ -32,7 +31,7 @@ void LightManager::onSceneLoaded()
 
     graphicsWrapper->generateFrameBuffer(depthMapFBO, depthMap);
 
-    this->shaderManager->setupUniformLocation(this->depthShader, ShaderVariables::SOURCE_SPACE_MATRIX);
+    this->shaderManager->setupUniformLocation(this->depthShader, ShaderVariables::LIGHT_SPACE_MATRIX);
     this->shaderManager->setupUniformLocation(this->depthShader, ShaderVariables::MODEL_MATRIX);
 }
 
@@ -40,12 +39,19 @@ void LightManager::generateDepthMap()
 {
     this->graphicsWrapper->clearBuffer();
 
-    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 7.5f);
-    glm::mat4 lightView = glm::lookAt(glm::vec3(0.0f, 4.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::vec3 position = glm::vec3(0.0f) - (this->directionalLights[0]->getDirection() *  10.0f);
 
-    glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 20.0f);
+    glm::mat4 lightView = glm::lookAt
+    (
+        position,
+        glm::vec3(0.0f, 0.0f, 0.0f), 
+        glm::vec3(0.0f, 1.0f, 0.0f)
+    );
+
+    this->lightSpaceMatrix = lightProjection * lightView;
     this->shaderManager->enableShader(this->depthShader);
-    this->shaderManager->setMat4(this->depthShader, ShaderVariables::SOURCE_SPACE_MATRIX, &lightSpaceMatrix[0][0]);
+    this->shaderManager->setMat4(this->depthShader, ShaderVariables::LIGHT_SPACE_MATRIX, &this->lightSpaceMatrix[0][0]);
 
     graphicsWrapper->setViewport(1024, 1024);
     OpenGLAPI::bindFrameBuffer(depthMapFBO);

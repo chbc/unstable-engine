@@ -47,7 +47,7 @@ namespace ShaderVariables
         const std::string VIEW_MATRIX           = "viewMatrix";
         const std::string PROJECTION_MATRIX     = "projectionMatrix";
         const std::string MODEL_MATRIX          = "modelMatrix";
-        const std::string SOURCE_SPACE_MATRIX   = "sourceSpaceMatrix";
+        const std::string LIGHT_SPACE_MATRIX    = "lightSpaceMatrix";
         const std::string CAMERA_POSITION       = "cameraPosition";
         const std::string MATERIAL_COLOR        = "materialColor";
         const std::string SHININESS             = "shininess";
@@ -68,7 +68,7 @@ namespace ShaderVariables
         VIEW_MATRIX,
         PROJECTION_MATRIX,
         MODEL_MATRIX,
-        SOURCE_SPACE_MATRIX,
+        LIGHT_SPACE_MATRIX,
         CAMERA_POSITION,
 
         MATERIAL_COLOR,
@@ -93,7 +93,7 @@ namespace ShaderVariables
         { VIEW_MATRIX,                  Names::VIEW_MATRIX                  },
         { PROJECTION_MATRIX,            Names::PROJECTION_MATRIX            },
         { MODEL_MATRIX,                 Names::MODEL_MATRIX                 },
-        { SOURCE_SPACE_MATRIX,          Names::SOURCE_SPACE_MATRIX          },
+        { LIGHT_SPACE_MATRIX,           Names::LIGHT_SPACE_MATRIX           },
         { CAMERA_POSITION,              Names::CAMERA_POSITION              },
         { MATERIAL_COLOR,               Names::MATERIAL_COLOR               },
         { SHININESS,                    Names::SHININESS                    },

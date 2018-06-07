@@ -24,7 +24,7 @@ struct LightSources
 
 // Lights
 uniform LightSources lights;
-uniform mat4 sourceSpaceMatrix;
+uniform mat4 lightSpaceMatrix;
 
 // Varying variables
 out vec3 var_toPointLightVectors[4];

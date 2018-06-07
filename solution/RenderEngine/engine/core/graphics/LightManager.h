@@ -4,6 +4,7 @@
 #include <engine/entities/components/lights/DirectionalLightComponent.h>
 #include <engine/entities/components/lights/PointLightComponent.h>
 #include <engine/core/singletonsManager/ASingleton.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <vector>
 
@@ -33,6 +34,7 @@ private:
     uint32_t depthMap;
     uint32_t depthMapFBO;
     Shader *depthShader;
+    glm::mat4 lightSpaceMatrix;
 
     std::vector<MeshComponent *> meshes;
 
