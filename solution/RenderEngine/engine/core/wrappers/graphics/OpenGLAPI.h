@@ -69,12 +69,12 @@ protected:
 
     // ###
     void generateFrameBuffer(uint32_t &fbo, uint32_t textureId) override;
-    static void bindFrameBuffer(uint32_t fbo);
+    void bindFrameBuffer(uint32_t fbo) override;
     void unbindFrameBuffer() override;
     void setViewport(uint32_t width, uint32_t height) override;
     void activateShadowMapTexture(uint32_t textureId) override;
-    static void enableFrontCullFace();
-    static void disableFrontCullFace();
+    void enableFrontCullFace() override;
+    void disableFrontCullFace() override;
 
 private:
     uint32_t compileShader(const std::string &source, uint32_t mode);
@@ -83,9 +83,7 @@ private:
     static void renderQuad(); // ###
 
 friend class RenderManager;
-friend class TextureManager;
 friend class SingletonsManager;
-friend class LightManager;
 };
 
 } // namespace

@@ -22,9 +22,6 @@ class Entity;
 class DirectionalLightComponent;
 class PointLightComponent;
 
-class Renderer;
-class GUIRenderer;
-
 struct GUIVertexData;
 template <typename T> struct MeshData;
 
@@ -41,8 +38,9 @@ private:
     LightManager        *lightManager;
     TextureManager      *textureManager;
     
-    VECTOR_UPTR<Renderer> renders;
-    UPTR<GUIRenderer> guiRenderer;
+    VECTOR_UPTR<class Renderer> renders;
+    UPTR<class ShadowRenderer> shadowRenderer;
+    UPTR<class GUIRenderer> guiRenderer;
 
     CameraComponent *mainCamera;
 
@@ -59,6 +57,7 @@ private:
     void addGUIComponent(GUIImageComponent *guiComponent);
     void addDynamicGUIComponent(GUIImageComponent *guiComponent);
     void initGUIRenderer();
+    void initShadowRenderer();
 
     void onSceneLoaded();
 

@@ -74,6 +74,7 @@ friend class AORendererComponent;
 friend class BaseRendererShaderSetup;
 friend class LightRendererShaderSetup;
 friend class ShadowRendererShaderSetup;
+friend class ShadowRenderer;
 };
 
 } // namespace

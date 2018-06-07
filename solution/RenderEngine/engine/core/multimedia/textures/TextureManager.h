@@ -40,7 +40,7 @@ public:
 
 friend class RenderManager;
 friend class SingletonsManager;
-friend class LightManager;
+friend class ShadowRenderer;
 };
 
 } // namespace

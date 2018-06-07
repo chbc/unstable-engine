@@ -72,19 +72,21 @@ protected:
 
     // ###
     virtual void generateFrameBuffer(uint32_t &fbo, uint32_t textureId) =0;
-    // ### virtual void bindFrameBuffer(uint32_t fbo, uint32_t width, uint32_t height) =0;
+    virtual void bindFrameBuffer(uint32_t fbo) =0;
     virtual void unbindFrameBuffer() =0;
     virtual void setViewport(uint32_t width, uint32_t height) =0;
     virtual void activateShadowMapTexture(uint32_t textureId) =0;
+    virtual void enableFrontCullFace() =0;
+    virtual void disableFrontCullFace() =0;
 
 friend class RenderManager;
 friend class ShaderManager;
 friend class TextureManager;
 friend class SingletonsManager;
-friend class LightManager;
 
 friend class Renderer;
 friend class GUIRenderer;
+friend class ShadowRenderer;
 friend class ColorRendererComponent;
 friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;

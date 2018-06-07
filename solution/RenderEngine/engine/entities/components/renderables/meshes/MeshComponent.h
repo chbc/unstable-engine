@@ -32,6 +32,7 @@ friend class RenderManager;
 friend class Entity;
 friend class OpenGLAPI;
 friend class Renderer;
+friend class ShadowRenderer;
 friend class VertexDataFactory;
 friend class LightManager;
 };

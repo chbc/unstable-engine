@@ -14,6 +14,7 @@
 #include "ShaderManager.h"
 #include "renders/Renderer.h"
 #include "renders/GUIRenderer.h"
+#include "renders/ShadowRenderer.h"
 #include <experimental/vector>
 
 namespace sre
@@ -30,6 +31,7 @@ RenderManager::RenderManager()
 
     this->mainCamera = nullptr;
     this->guiRenderer = UPTR<GUIRenderer>{ nullptr };
+    this->shadowRenderer = UPTR<ShadowRenderer>{ nullptr };
 }
 
 void RenderManager::init()
@@ -78,7 +80,7 @@ void RenderManager::addMesh(MeshComponent *mesh)
             break;
         }
     }
-    
+
     if (renderer == nullptr)
     {
         renderer = new Renderer{mesh->getMaterial(), this->shaderManager, this->graphicsWrapper};
@@ -89,7 +91,10 @@ void RenderManager::addMesh(MeshComponent *mesh)
     renderer->addMesh(mesh);
 
     if (mesh->getMaterial()->castsShadow)
-        this->lightManager->addShadowCaster(mesh);
+    {
+        this->initShadowRenderer();
+        this->shadowRenderer->addItem(mesh);
+    }
 }
 
 void RenderManager::addGUIComponent(GUIImageComponent *guiComponent)
@@ -116,9 +121,18 @@ void RenderManager::initGUIRenderer()
     }
 }
 
+void RenderManager::initShadowRenderer()
+{
+    if (this->shadowRenderer.get() == nullptr)
+    {
+        this->shadowRenderer = UPTR<ShadowRenderer>{ new ShadowRenderer };
+    }
+}
+
 void RenderManager::onSceneLoaded()
 {
-    this->lightManager->onSceneLoaded();
+    if (this->shadowRenderer.get() != nullptr)
+        this->shadowRenderer->onSceneLoaded();
 
     for (const UPTR<Renderer> &item : this->renders)
         item->onSceneLoaded();
@@ -137,7 +151,7 @@ CameraComponent *RenderManager::getMainCamera()
 void RenderManager::render()
 {
     // Depth rendering
-    this->lightManager->generateDepthMap();
+    this->shadowRenderer->render();
 
     // Scene rendering
     this->graphicsWrapper->setViewport(1024, 768);
@@ -152,8 +166,8 @@ void RenderManager::render()
             this->mainCamera->getTransform()->getPosition()
         );
     }
-    // GUI rendering
 
+    // GUI rendering
     if (this->guiRenderer.get() != nullptr)
         this->guiRenderer->render(this->matrixManager);
 }

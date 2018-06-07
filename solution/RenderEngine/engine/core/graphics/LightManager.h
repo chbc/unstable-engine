@@ -12,9 +12,6 @@ namespace sre
 {
 
 class Entity;
-class ShaderManager;
-class Shader;
-class MeshComponent;
 
 /*!
     Class to manage low level lighting.
@@ -27,29 +24,15 @@ private:
 
     glm::vec3 ambientLightColor;
 
-    // ### SOMBRA
-    class ShaderManager *shaderManager;
-    class AGraphicsWrapper *graphicsWrapper;
-
     uint32_t depthMap;
-    uint32_t depthMapFBO;
-    Shader *depthShader;
     glm::mat4 lightSpaceMatrix;
-
-    std::vector<MeshComponent *> meshes;
 
 public:
     void setAmbientLightColor(const glm::vec3 &ambientLightColor);
 
 private:
     LightManager();
-
-    void init() override;
-    void onSceneLoaded();
-    void generateDepthMap();
-
-    void addShadowCaster(MeshComponent *mesh);
-
+    
     DirectionalLightComponent *addDirectionalLight(Entity *entity);
     PointLightComponent *addPointLight(Entity *entity);
 
@@ -59,6 +42,7 @@ friend class RenderManager;
 friend class SingletonsManager;
 friend class LightRendererShaderSetup;
 friend class ShadowRendererShaderSetup;
+friend class ShadowRenderer;
 };
 
 } // namespace
