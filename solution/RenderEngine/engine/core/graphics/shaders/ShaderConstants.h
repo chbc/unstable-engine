@@ -22,8 +22,9 @@ namespace ShaderFiles
     const std::string LIGHTS_H_F    = "../../shaders/lights_h.frag";
     const std::string LIGHTS_IMPL_F = "../../shaders/lights_impl.frag";
 
-    const std::string DEPTH_V = "../../shaders/depth.vert";
-    const std::string DEPTH_F = "../../shaders/depth.frag";
+    const std::string DEPTH_V = "../../shaders/point_shadow_depth.vert";
+    const std::string DEPTH_F = "../../shaders/point_shadow_depth.frag";
+    const std::string DEPTH_G = "../../shaders/point_shadow_depth.geom";
 
     const std::string DIFFUSE_H_F       = "../../shaders/diffuse_h.frag";
     const std::string DIFFUSE_IMPL_F    = "../../shaders/diffuse_impl.frag";
@@ -49,6 +50,8 @@ namespace ShaderVariables
         const std::string MODEL_MATRIX          = "modelMatrix";
         const std::string LIGHT_SPACE_MATRIX    = "lightSpaceMatrix";
         const std::string CAMERA_POSITION       = "cameraPosition";
+        const std::string FAR_PLANE             = "farPlane";
+        const std::string LIGHT_POSITION        = "lightPosition";
         const std::string MATERIAL_COLOR        = "materialColor";
         const std::string SHININESS             = "shininess";
         const std::string GUI_TEXTURE           = "guiTexture";
@@ -70,6 +73,8 @@ namespace ShaderVariables
         MODEL_MATRIX,
         LIGHT_SPACE_MATRIX,
         CAMERA_POSITION,
+        FAR_PLANE,
+        LIGHT_POSITION,
 
         MATERIAL_COLOR,
         SHININESS,
@@ -95,6 +100,8 @@ namespace ShaderVariables
         { MODEL_MATRIX,                 Names::MODEL_MATRIX                 },
         { LIGHT_SPACE_MATRIX,           Names::LIGHT_SPACE_MATRIX           },
         { CAMERA_POSITION,              Names::CAMERA_POSITION              },
+        { FAR_PLANE,                    Names::FAR_PLANE                    },
+        { LIGHT_POSITION,               Names::LIGHT_POSITION               },
         { MATERIAL_COLOR,               Names::MATERIAL_COLOR               },
         { SHININESS,                    Names::SHININESS                    },
         { GUI_TEXTURE,                  Names::GUI_TEXTURE                  },

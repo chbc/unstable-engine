@@ -6,9 +6,9 @@ void Lights_computeEnergies(vec3 normal, vec3 toCameraDirection, vec3 toLightVec
     vec3 toLightDirection = normalize(toLightVector);
     vec3 halfVector = normalize(toLightDirection + toCameraDirection);
 
-    float shadow = Lights_computeShadow(normal, toLightDirection);
+    float shadow = Lights_computeShadow(normal, toLightVector, toLightDirection);
 
-    diffuseEnergy = max(dot(normal, toLightDirection) * (1 - shadow), 0.0);
+    diffuseEnergy = max(dot(normal, toLightVector) * (1 - shadow), 0.0);
     specularEnergy = max(dot(normal, halfVector) * (1 - shadow), 0.0);
     if (specularEnergy > 0.0)
         specularEnergy  = pow(specularEnergy, shininess);
@@ -58,30 +58,37 @@ vec3 Lights_computeAmbientLight(vec3 materialColor)
     return lights.ambientLightColor * materialColor;
 }
 
-float Lights_computeShadow(vec3 normal, vec3 toLightDirection)
+float Lights_computeShadow(vec3 normal, vec3 toLightVector, vec3 toLightDirection)
 {
     float result = 0.0;
 
-    vec3 projCoords = var_fragPosLightSpace.xyz / var_fragPosLightSpace.w;
-    projCoords = (projCoords * 0.5) + 0.5;
-    float closestDepth = texture(shadowMap, projCoords.xy).r;
-    float currentDepth = projCoords.z;
+    toLightVector = vec3(0) - toLightVector;
 
-    if (currentDepth < 1.0)
+    float closestDepth = texture(shadowMap, toLightVector).r * farPlane;
+    float currentDepth = length(toLightVector);
+
+    // if (currentDepth < 1.0)
     {
-        float bias = max(0.05 * (1.0 - dot(normal, toLightDirection)), 0.005);
+        float bias = 0.05; // ### max(0.05 * (1.0 - dot(normal, toLightDirection)), 0.005);
 
+		/* ###
         vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
         for (int x = -1; x <= 1; ++x)
         {
             for (int y = -1; y <= 1; ++y)
             {
-                float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
-                result += (currentDepth - bias) > pcfDepth ? 1.0 : 0.0;
+				for (int z = -1; z <= 1; ++z)
+				{
+					float pcfDepth = texture(shadowMap, toLightVector + vec3(x, y, z) * texelSize).r;
+					result += (currentDepth - bias) > pcfDepth ? 1.0 : 0.0;
+				}
             }
         }
         
         result /= 9.0;
+		*/
+		
+		result = (currentDepth - bias) > closestDepth ? 1.0 : 0.0;
     }
 
     return result;

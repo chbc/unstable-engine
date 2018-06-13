@@ -17,15 +17,17 @@ ShadowRendererShaderSetup::ShadowRendererShaderSetup(ShaderManager *shaderManage
 void ShadowRendererShaderSetup::onSceneLoaded(Shader *shader)
 {
     this->shaderManager->setupUniformLocation(shader, ShaderVariables::SHADOW_MAP);
-    this->shaderManager->setupUniformLocation(shader, ShaderVariables::LIGHT_SPACE_MATRIX);
+    this->shaderManager->setupUniformLocation(shader, ShaderVariables::FAR_PLANE);
 }
 
 void ShadowRendererShaderSetup::setupShaderValues(Shader *shader)
 {
-    this->shaderManager->setMat4(shader, ShaderVariables::LIGHT_SPACE_MATRIX, &lightManager->lightSpaceMatrix[0][0]);
     this->shaderManager->setInt(shader, ShaderVariables::SHADOW_MAP, 4);
 
-    this->graphicsWrapper->activateShadowMapTexture(this->lightManager->depthMap);
+    float farPlane = 25.0f;
+    this->shaderManager->setFloat(shader, ShaderVariables::FAR_PLANE, farPlane);
+
+    this->graphicsWrapper->activateShadowMapTexture(this->lightManager->depthCubemap);
 }
 
 } // namespace

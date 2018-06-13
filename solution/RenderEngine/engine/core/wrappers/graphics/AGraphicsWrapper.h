@@ -48,14 +48,18 @@ protected:
     virtual void disableGUISettings() =0;
 
     virtual void clearBuffer() =0;
+    virtual void clearDepthBuffer() =0;
     virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit, bool genMipmap) =0;
     virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint32_t unit) =0;
+    virtual uint32_t generateCubemap(uint32_t width, uint32_t height, uint32_t unit) =0;
     virtual void deleteTexture(uint32_t id) =0;
 
     // Shaders
     virtual uint32_t loadVertexShader(const std::string &vertexContent) =0;
     virtual uint32_t loadFragmentShader(const std::string &vertexContent) =0;
+    virtual uint32_t loadGeometryShader(const std::string &geometryContent) =0;
     virtual uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) =0;
+    virtual uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader) =0;
 
     virtual int getUniformLocation(uint32_t program, const std::string &varName) = 0;
     virtual void setInt(uint32_t program, int location, int value) =0;
@@ -71,7 +75,7 @@ protected:
     virtual void deleteBuffers(GUIImageComponent *guiComponent) =0;
 
     // ###
-    virtual void generateFrameBuffer(uint32_t &fbo, uint32_t textureId) =0;
+    virtual void generateFrameBuffer(uint32_t &fbo, uint32_t textureId, bool cubemap = false) =0;
     virtual void bindFrameBuffer(uint32_t fbo) =0;
     virtual void unbindFrameBuffer() =0;
     virtual void setViewport(uint32_t width, uint32_t height) =0;

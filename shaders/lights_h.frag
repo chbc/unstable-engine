@@ -27,7 +27,8 @@ struct LightSources
 // Uniform variables
 uniform LightSources lights;
 uniform float shininess;
-uniform sampler2D shadowMap;
+uniform samplerCube shadowMap;
+uniform float farPlane;
 
 // Varying variables
 in vec3 var_toPointLightVectors[4];
@@ -39,4 +40,4 @@ void Lights_computeEnergies(vec3 normal, vec3 toCameraDirection, vec3 toLightVec
 void Lights_computeDirectionalLights(vec3 normal, vec3 toCameraDirection, inout vec3 kd, inout vec3 ks);
 void Lights_computePointLights(vec3 normal, vec3 toCameraDirection, inout vec3 kd, inout vec3 ks);
 vec3 Lights_computeAmbientLight(vec3 materialColor);
-float Lights_computeShadow(vec3 normal, vec3 toLightDirection);
+float Lights_computeShadow(vec3 normal, vec3 toLightVector, vec3 toLightDirection);

@@ -41,9 +41,10 @@ protected:
     void disableGUISettings() override;
 
     void clearBuffer() override;
-    static void clearColorBuffer(); // ###
+    void clearDepthBuffer() override;
     uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit, bool genMipmap = true) override;
     uint32_t setupTexture(uint32_t width, uint32_t height, uint32_t unit);
+    uint32_t generateCubemap(uint32_t width, uint32_t height, uint32_t unit);
     void deleteTexture(uint32_t id) override;
 
     static void DEBUG_drawTriangle();
@@ -51,8 +52,10 @@ protected:
     // Shaders
     uint32_t loadVertexShader(const std::string &vertexContent) override;  // throws "file can't be found"
     uint32_t loadFragmentShader(const std::string &fragmentContent) override;  // throws "file can't be found"
+    uint32_t loadGeometryShader(const std::string &geometryContent) override; // throws "file can't be found"
 
     uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) override;
+    uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader) override;
 
     int getUniformLocation(uint32_t program, const std::string &varName) override;
     void setInt(uint32_t program, int location, int value) override;
@@ -68,7 +71,7 @@ protected:
     void deleteBuffers(GUIImageComponent *guiComponent) override;
 
     // ###
-    void generateFrameBuffer(uint32_t &fbo, uint32_t textureId) override;
+    void generateFrameBuffer(uint32_t &fbo, uint32_t textureId, bool cubemap = false) override;
     void bindFrameBuffer(uint32_t fbo) override;
     void unbindFrameBuffer() override;
     void setViewport(uint32_t width, uint32_t height) override;

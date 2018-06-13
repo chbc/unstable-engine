@@ -47,12 +47,28 @@ Texture *TextureManager::loadAOTexture(const std::string &fileName)
 
 Texture *TextureManager::loadShadowTexture(uint32_t width, uint32_t height)
 {
-    std::string name{ "shadow_map" };
+    std::string name{ "_shadow_map" };
     Texture *result = this->loadExistingTexture(name, EMaterialMap::SHADOW);
 
     if (result == nullptr)
     {
         uint32_t id = this->graphicsWrapper->setupTexture(width, height, EMaterialMap::SHADOW);
+
+        result = new Texture{ id, width, height, EMaterialMap::SHADOW, name };
+        this->textures.emplace_back(result);
+    }
+
+    return result;
+}
+
+Texture *TextureManager::loadCubemapTexture(uint32_t width, uint32_t height)
+{
+    std::string name{ "_cube_map" };
+    Texture *result = this->loadExistingTexture(name, EMaterialMap::SHADOW);
+
+    if (result == nullptr)
+    {
+        uint32_t id = this->graphicsWrapper->generateCubemap(width, height, EMaterialMap::SHADOW);
 
         result = new Texture{ id, width, height, EMaterialMap::SHADOW, name };
         this->textures.emplace_back(result);

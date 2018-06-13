@@ -13,7 +13,7 @@ private:
     template <size_t SIZE>
     void createShaderContent(const std::bitset<SIZE> &componentsBitset, std::string &outVertexContent, std::string &outFragmentContent);
     void createGUIShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
-    void createDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
+    void createDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent, std::string &outGeometryContent);
 
     void loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
     void loadColorContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);

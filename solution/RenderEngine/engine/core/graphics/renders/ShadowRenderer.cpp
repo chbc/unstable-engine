@@ -24,24 +24,34 @@ void ShadowRenderer::onSceneLoaded()
     depthShader = this->shaderManager->loadDepthShader();
 
     this->lightManager = SingletonsManager::getInstance()->get<LightManager>();
-    Texture *texture = SingletonsManager::getInstance()->resolve<TextureManager>()->loadShadowTexture(1024, 1024);
-    this->lightManager->depthMap = texture->getId();
+    Texture *texture = SingletonsManager::getInstance()->resolve<TextureManager>()->loadCubemapTexture(1024, 1024);
+    this->lightManager->depthCubemap = texture->getId();
 
-    this->graphicsWrapper->generateFrameBuffer(depthMapFBO, this->lightManager->depthMap);
+    this->graphicsWrapper->generateFrameBuffer(depthMapFBO, this->lightManager->depthCubemap, true);
 
-    this->shaderManager->setupUniformLocation(this->depthShader, ShaderVariables::LIGHT_SPACE_MATRIX);
     this->shaderManager->setupUniformLocation(this->depthShader, ShaderVariables::MODEL_MATRIX);
-    glm::vec3 position = glm::vec3(0.0f) - (this->lightManager->directionalLights[0]->getDirection() *  10.0f);
+    this->shaderManager->setupUniformLocation(this->depthShader, ShaderVariables::FAR_PLANE);
+    this->shaderManager->setupUniformLocation(this->depthShader, ShaderVariables::LIGHT_POSITION);
+    
+    char variable[32];
+    for (unsigned int i = 0; i < 6; ++i)
+    {
+        sprintf_s(variable, SHADOW_MATRICES_FORMAT, i);
+        this->shaderManager->setupUniformLocation(this->depthShader, variable);
+    }
 
-    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 20.0f);
-    glm::mat4 lightView = glm::lookAt
-    (
-        position,
-        glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3(0.0f, 1.0f, 0.0f)
-    );
+    glm::vec3 lightPos = this->lightManager->pointLights[0]->getPosition();
+    float aspect = 1024.0f / 1024.0f;
+    float near = 1.0f;
+    this->farPlane = 25.0f;
+    glm::mat4 shadowProj = glm::perspective(glm::radians(90.0f), aspect, near, this->farPlane);
 
-    this->lightManager->lightSpaceMatrix = lightProjection * lightView;
+    this->shadowMatrices.push_back(shadowProj * glm::lookAt(lightPos, lightPos + glm::vec3(1.0, 0.0, 0.0),  glm::vec3(0.0, -1.0, 0.0)));
+    this->shadowMatrices.push_back(shadowProj * glm::lookAt(lightPos, lightPos + glm::vec3(-1.0, 0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)));
+    this->shadowMatrices.push_back(shadowProj * glm::lookAt(lightPos, lightPos + glm::vec3(0.0, 1.0, 0.0),  glm::vec3(0.0, 0.0, 1.0)));
+    this->shadowMatrices.push_back(shadowProj * glm::lookAt(lightPos, lightPos + glm::vec3(0.0, -1.0, 0.0), glm::vec3(0.0, 0.0, -1.0)));
+    this->shadowMatrices.push_back(shadowProj * glm::lookAt(lightPos, lightPos + glm::vec3(0.0, 0.0, 1.0),  glm::vec3(0.0, -1.0, 0.0)));
+    this->shadowMatrices.push_back(shadowProj * glm::lookAt(lightPos, lightPos + glm::vec3(0.0, 0.0, -1.0), glm::vec3(0.0, -1.0, 0.0)));
 }
 
 void ShadowRenderer::addItem(MeshComponent *item)
@@ -53,12 +63,23 @@ void ShadowRenderer::render()
 {
     this->graphicsWrapper->clearBuffer();
 
-    this->shaderManager->enableShader(this->depthShader);
-    this->shaderManager->setMat4(this->depthShader, ShaderVariables::LIGHT_SPACE_MATRIX, &this->lightManager->lightSpaceMatrix[0][0]);
-
     this->graphicsWrapper->setViewport(1024, 1024);
     this->graphicsWrapper->bindFrameBuffer(depthMapFBO);
-    this->graphicsWrapper->enableFrontCullFace();
+    this->graphicsWrapper->clearDepthBuffer();
+
+    this->shaderManager->enableShader(this->depthShader);
+    // ### this->graphicsWrapper->enableFrontCullFace();
+
+    char variable[32];
+    for (unsigned int i = 0; i < 6; ++i)
+    {
+        sprintf_s(variable, SHADOW_MATRICES_FORMAT, i);
+        this->shaderManager->setMat4(this->depthShader, variable, &this->shadowMatrices[i][0][0]);
+    }
+    
+    glm::vec3 lightPosition = this->lightManager->pointLights[0]->getPosition();
+    this->shaderManager->setFloat(this->depthShader, ShaderVariables::FAR_PLANE, this->farPlane);
+    this->shaderManager->setVec3(this->depthShader, ShaderVariables::LIGHT_POSITION, &lightPosition[0]);
 
     for (MeshComponent *item : this->items)
     {
@@ -73,7 +94,7 @@ void ShadowRenderer::render()
         this->graphicsWrapper->disableVertexPositions();
     }
 
-    this->graphicsWrapper->disableFrontCullFace();
+    // ### this->graphicsWrapper->disableFrontCullFace();
     this->graphicsWrapper->unbindFrameBuffer();
 }
 

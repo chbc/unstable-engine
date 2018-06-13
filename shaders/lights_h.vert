@@ -24,11 +24,11 @@ struct LightSources
 
 // Lights
 uniform LightSources lights;
-uniform mat4 lightSpaceMatrix;
+// ### uniform mat4 lightSpaceMatrix;
 
 // Varying variables
 out vec3 var_toPointLightVectors[4];
 out vec3 var_directionalLightVectors[4];
-out vec4 var_fragPosLightSpace;
+// ### out vec4 var_fragPosLightSpace;
 
 void Lights_setup(vec3 vertexPosition);

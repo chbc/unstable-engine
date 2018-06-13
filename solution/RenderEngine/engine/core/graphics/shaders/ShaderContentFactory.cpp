@@ -11,10 +11,11 @@ void ShaderContentFactory::createGUIShaderContent(std::string &outVertexContent,
     FileUtils::loadFile(ShaderFiles::GUI_F, outFragmentContent);
 }
 
-void ShaderContentFactory::createDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent)
+void ShaderContentFactory::createDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent, std::string &outGeometryContent)
 {
     FileUtils::loadFile(ShaderFiles::DEPTH_V, outVertexContent);
     FileUtils::loadFile(ShaderFiles::DEPTH_F, outFragmentContent);
+    FileUtils::loadFile(ShaderFiles::DEPTH_G, outGeometryContent);
 }
 
 // Load methods

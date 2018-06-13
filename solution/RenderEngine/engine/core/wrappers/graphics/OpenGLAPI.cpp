@@ -186,7 +186,7 @@ void OpenGLAPI::activeAOTexture(uint32_t textureId)
 void OpenGLAPI::activateShadowMapTexture(uint32_t textureId)
 {
     glActiveTexture(GL_TEXTURE4); // ###
-    glBindTexture(GL_TEXTURE_2D, textureId);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
 }
 
 void OpenGLAPI::setupBufferSubData(const MeshData<GUIVertexData> *meshData)
@@ -241,9 +241,9 @@ void OpenGLAPI::clearBuffer()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void OpenGLAPI::clearColorBuffer()
+void OpenGLAPI::clearDepthBuffer()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT);
 }
 
 uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit, bool genMipmap)
@@ -304,6 +304,32 @@ uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint32_t unit)
     return result;
 }
 
+uint32_t OpenGLAPI::generateCubemap(uint32_t width, uint32_t height, uint32_t unit)
+{
+    uint32_t result{ 0 };
+
+    glGenTextures(1, &result);
+    glActiveTexture(GL_TEXTURE0 + unit);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, result);
+
+    for (uint32_t i = 0; i < 6; i++)
+    {
+        glTexImage2D
+        (
+            GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, width, height,
+            0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr
+        );
+    }
+
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    return result;
+}
+
 void OpenGLAPI::deleteTexture(uint32_t id)
 {
 	glDeleteTextures(1, &id);
@@ -339,6 +365,11 @@ uint32_t OpenGLAPI::loadFragmentShader(const std::string &fragmentContent)
 	return this->compileShader(fragmentContent, GL_FRAGMENT_SHADER);
 }
 
+uint32_t OpenGLAPI::loadGeometryShader(const std::string &geometryContent)
+{
+    return this->compileShader(geometryContent, GL_GEOMETRY_SHADER);
+}
+
 uint32_t OpenGLAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader)
 {
 	uint32_t program = glCreateProgram();
@@ -349,6 +380,19 @@ uint32_t OpenGLAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader
 	this->checkProgramLink(program);
 
 	return program;
+}
+
+uint32_t OpenGLAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader)
+{
+    uint32_t program = glCreateProgram();
+    glAttachShader(program, vertexShader);
+    glAttachShader(program, fragmentShader);
+    glAttachShader(program, geometryShader);
+
+    glLinkProgram(program);
+    this->checkProgramLink(program);
+
+    return program;
 }
 
 int OpenGLAPI::getUniformLocation(uint32_t program, const std::string &varName)
@@ -418,12 +462,17 @@ void OpenGLAPI::deleteBuffers(GUIImageComponent *guiComponent)
 }
 
 // ###
-void OpenGLAPI::generateFrameBuffer(uint32_t &fbo, uint32_t textureId)
+void OpenGLAPI::generateFrameBuffer(uint32_t &fbo, uint32_t textureId, bool cubemap)
 {
     glGenFramebuffers(1, &fbo);
 
     glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, textureId, 0);
+
+    if (cubemap)
+        glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, textureId, 0);
+    else
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, textureId, 0);
+
     glDrawBuffer(GL_NONE);
     glReadBuffer(GL_NONE);
 
@@ -437,7 +486,6 @@ void OpenGLAPI::generateFrameBuffer(uint32_t &fbo, uint32_t textureId)
 void OpenGLAPI::bindFrameBuffer(uint32_t fbo)
 {
     glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-    glClear(GL_DEPTH_BUFFER_BIT);
 }
 
 // ###
@@ -478,7 +526,15 @@ uint32_t OpenGLAPI::compileShader(const std::string &source, uint32_t mode)
 		char error[1000];
 		glGetShaderInfoLog(id, 1000, NULL, error);
 
-		std::string shaderType = (mode == GL_VERTEX_SHADER) ? "VERTEX SHADER" : "FRAGMENT SHADER";
+        std::string shaderType = "UNKNOWN";
+        switch (mode)
+        {
+            case GL_VERTEX_SHADER:      shaderType = "VERTEX_SHADER"; break;
+            case GL_FRAGMENT_SHADER:    shaderType = "FRAGMENT_SHADER"; break;
+            case GL_GEOMETRY_SHADER:    shaderType = "GEOMETRY_SHADER"; break;
+        }
+        
+        //= (mode == GL_VERTEX_SHADER) ? "VERTEX SHADER" : "FRAGMENT SHADER";
 		throw "[OpenGLAPI] - In shader: " + shaderType + "\n" + error;
 	}
 

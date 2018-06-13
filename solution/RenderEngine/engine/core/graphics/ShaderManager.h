@@ -55,6 +55,7 @@ private:
     void setVec3(Shader *shader, const char *variable, const float *value);
     void setVec4(Shader *shader, ShaderVariables::Type variableKey, const float *value);
     void setMat4(Shader *shader, ShaderVariables::Type variableKey, const float *value);
+    void setMat4(Shader *shader, const char *variable, const float *value);
 
     void enableShader(Shader *shader);
     void disableShader();

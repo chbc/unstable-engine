@@ -30,6 +30,7 @@ private:
     Texture *loadSpecularTexture(const std::string &fileName);
     Texture *loadAOTexture(const std::string &fileName);
     Texture *loadShadowTexture(uint32_t width, uint32_t height);
+    Texture *loadCubemapTexture(uint32_t width, uint32_t height);
     Texture *loadTexture(const std::string &fileName, EMaterialMap::Type mapType);
 
     Texture *loadExistingTexture(const std::string &fileName, EMaterialMap::Type mapType);

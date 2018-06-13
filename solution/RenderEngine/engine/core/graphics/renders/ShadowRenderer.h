@@ -16,6 +16,9 @@ private:
 
     uint32_t depthMapFBO;
     class Shader *depthShader;
+    std::vector<glm::mat4> shadowMatrices;
+    float farPlane;
+    const char *SHADOW_MATRICES_FORMAT = "shadowMatrices[%d]";
 
     std::vector<class MeshComponent *> items;
 

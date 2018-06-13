@@ -24,8 +24,13 @@ private:
 
     glm::vec3 ambientLightColor;
 
+    /* ### DIRECIONAL
     uint32_t depthMap;
     glm::mat4 lightSpaceMatrix;
+    */
+
+    // ###
+    uint32_t depthCubemap;
 
 public:
     void setAmbientLightColor(const glm::vec3 &ambientLightColor);
