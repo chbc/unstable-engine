@@ -30,6 +30,9 @@ private:
     void loadAOMapContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
     void loadAOMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 
+    void loadShadowsContentHeader(std::string &outFragmentContent);
+    void loadShadowsContentImplementation(std::string &outFragmentContent);
+
     void uncommentCode(std::string &outShaderContent, const std::string &mark); // throws "didn't find code mark
 
 friend class ShaderManager;

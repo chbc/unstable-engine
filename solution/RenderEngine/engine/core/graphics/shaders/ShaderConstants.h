@@ -14,31 +14,34 @@ namespace ShaderFiles
     const std::string MAIN_H_F      = "../../shaders/main_h.frag";
     const std::string MAIN_IMPL_F   = "../../shaders/main_impl.frag";
 
-    const std::string GUI_V = "../../shaders/gui.vert";
-    const std::string GUI_F = "../../shaders/gui.frag";
+    const std::string GUI_V = "../../shaders/gui/gui.vert";
+    const std::string GUI_F = "../../shaders/gui/gui.frag";
 
-    const std::string LIGHTS_H_V    = "../../shaders/lights_h.vert";
-    const std::string LIGHTS_IMPL_V = "../../shaders/lights_impl.vert";
-    const std::string LIGHTS_H_F    = "../../shaders/lights_h.frag";
-    const std::string LIGHTS_IMPL_F = "../../shaders/lights_impl.frag";
+    const std::string LIGHTS_H_V    = "../../shaders/lights/lights_h.vert";
+    const std::string LIGHTS_IMPL_V = "../../shaders/lights/lights_impl.vert";
+    const std::string LIGHTS_H_F    = "../../shaders/lights/lights_h.frag";
+    const std::string LIGHTS_IMPL_F = "../../shaders/lights/lights_impl.frag";
 
-    const std::string DEPTH_V = "../../shaders/point_shadow_depth.vert";
-    const std::string DEPTH_F = "../../shaders/point_shadow_depth.frag";
-    const std::string DEPTH_G = "../../shaders/point_shadow_depth.geom";
+    const std::string DEPTH_V = "../../shaders/shadows/point_shadow_depth.vert";
+    const std::string DEPTH_F = "../../shaders/shadows/point_shadow_depth.frag";
+    const std::string DEPTH_G = "../../shaders/shadows/point_shadow_depth.geom";
 
-    const std::string DIFFUSE_H_F       = "../../shaders/diffuse_h.frag";
-    const std::string DIFFUSE_IMPL_F    = "../../shaders/diffuse_impl.frag";
+    const std::string DIFFUSE_H_F       = "../../shaders/diffuse/diffuse_h.frag";
+    const std::string DIFFUSE_IMPL_F    = "../../shaders/diffuse/diffuse_impl.frag";
 
-    const std::string NORMAL_H_V    = "../../shaders/normal_h.vert";
-    const std::string NORMAL_IMPL_V = "../../shaders/normal_impl.vert";
-    const std::string NORMAL_H_F    = "../../shaders/normal_h.frag";
-    const std::string NORMAL_IMPL_F = "../../shaders/normal_impl.frag";
+    const std::string NORMAL_H_V    = "../../shaders/normal/normal_h.vert";
+    const std::string NORMAL_IMPL_V = "../../shaders/normal/normal_impl.vert";
+    const std::string NORMAL_H_F    = "../../shaders/normal/normal_h.frag";
+    const std::string NORMAL_IMPL_F = "../../shaders/normal/normal_impl.frag";
 
-    const std::string SPECULAR_H_F      = "../../shaders/specular_h.frag";
-    const std::string SPECULAR_IMPL_F   = "../../shaders/specular_impl.frag";
+    const std::string SPECULAR_H_F      = "../../shaders/specular/specular_h.frag";
+    const std::string SPECULAR_IMPL_F   = "../../shaders/specular/specular_impl.frag";
 
-    const std::string AMBIENT_OCCLUSION_H_F     = "../../shaders/ambientOcclusion_h.frag";
-    const std::string AMBIENT_OCCLUSION_IMPL_F  = "../../shaders/ambientOcclusion_impl.frag";
+    const std::string AMBIENT_OCCLUSION_H_F     = "../../shaders/ambientOcclusion/ambientOcclusion_h.frag";
+    const std::string AMBIENT_OCCLUSION_IMPL_F  = "../../shaders/ambientOcclusion/ambientOcclusion_impl.frag";
+
+    const std::string SHADOWS_H_F = "../../shaders/shadows/shadows_h.frag";
+    const std::string SHADOWS_IMPL_F = "../../shaders/shadows/shadows_impl.frag";
 }
 
 namespace ShaderVariables

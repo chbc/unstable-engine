@@ -6,7 +6,8 @@ void Lights_computeEnergies(vec3 normal, vec3 toCameraDirection, vec3 toLightVec
     vec3 toLightDirection = normalize(toLightVector);
     vec3 halfVector = normalize(toLightDirection + toCameraDirection);
 
-    float shadow = Lights_computeShadow(normal, toLightVector, toLightDirection);
+    float shadow = 0;
+    // [SHADOWS] shadow = Shadows_computeShadow(-toLightVector);
 
     diffuseEnergy = max(dot(normal, toLightVector) * (1 - shadow), 0.0);
     specularEnergy = max(dot(normal, halfVector) * (1 - shadow), 0.0);
@@ -56,40 +57,4 @@ void Lights_computePointLights(vec3 normal, vec3 toCameraDirection, inout vec3 k
 vec3 Lights_computeAmbientLight(vec3 materialColor)
 {
     return lights.ambientLightColor * materialColor;
-}
-
-float Lights_computeShadow(vec3 normal, vec3 toLightVector, vec3 toLightDirection)
-{
-    float result = 0.0;
-
-    toLightVector = vec3(0) - toLightVector;
-
-    float closestDepth = texture(shadowMap, toLightVector).r * farPlane;
-    float currentDepth = length(toLightVector);
-
-    // if (currentDepth < 1.0)
-    {
-        float bias = 0.05; // ### max(0.05 * (1.0 - dot(normal, toLightDirection)), 0.005);
-
-		/* ###
-        vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
-        for (int x = -1; x <= 1; ++x)
-        {
-            for (int y = -1; y <= 1; ++y)
-            {
-				for (int z = -1; z <= 1; ++z)
-				{
-					float pcfDepth = texture(shadowMap, toLightVector + vec3(x, y, z) * texelSize).r;
-					result += (currentDepth - bias) > pcfDepth ? 1.0 : 0.0;
-				}
-            }
-        }
-        
-        result /= 9.0;
-		*/
-		
-		result = (currentDepth - bias) > closestDepth ? 1.0 : 0.0;
-    }
-
-    return result;
 }

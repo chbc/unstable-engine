@@ -131,6 +131,23 @@ void ShaderContentFactory::loadAOMapContentImplementation(std::string &outVertex
     this->uncommentCode(outFragmentContent, "// [AO] ");
 }
 
+void ShaderContentFactory::loadShadowsContentHeader(std::string &outFragmentContent)
+{
+    std::string shaderContent;
+    FileUtils::loadFile(ShaderFiles::SHADOWS_H_F, shaderContent);
+
+    outFragmentContent = shaderContent + outFragmentContent;
+}
+
+void ShaderContentFactory::loadShadowsContentImplementation(std::string &outFragmentContent)
+{
+    std::string shaderContent;
+    FileUtils::loadFile(ShaderFiles::SHADOWS_IMPL_F, shaderContent);
+
+    outFragmentContent = shaderContent + outFragmentContent;
+    this->uncommentCode(outFragmentContent, "// [SHADOWS]");
+}
+
 void ShaderContentFactory::uncommentCode(std::string &outShaderContent, const std::string &mark)
 {
     std::size_t position = outShaderContent.find(mark);

@@ -9,6 +9,4 @@ void Lights_setup(vec3 vertexPosition)
     // Directional lights
     for (int i = 0; i < lights.directionalLightsCount; i++)
         var_directionalLightVectors[i] = lights.directionalLights[i].direction;
-    
-    // ### var_fragPosLightSpace = lightSpaceMatrix * vec4(vertexPosition, 1.0);
 }
