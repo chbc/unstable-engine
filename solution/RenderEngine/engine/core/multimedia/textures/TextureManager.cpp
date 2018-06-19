@@ -10,6 +10,7 @@ namespace sre
 void TextureManager::init()
 {
     this->graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
+    this->shadowIndex = 0;
 }
 
 void TextureManager::release()
@@ -47,7 +48,8 @@ Texture *TextureManager::loadAOTexture(const std::string &fileName)
 
 Texture *TextureManager::loadShadowTexture(uint32_t width, uint32_t height)
 {
-    std::string name{ "_shadow_map" };
+    std::string name{ "_shadow_map_" + std::to_string(this->shadowIndex) };
+    this->shadowIndex++;
     Texture *result = this->loadExistingTexture(name, EMaterialMap::SHADOW);
 
     if (result == nullptr)
@@ -63,17 +65,13 @@ Texture *TextureManager::loadShadowTexture(uint32_t width, uint32_t height)
 
 Texture *TextureManager::loadCubemapTexture(uint32_t width, uint32_t height)
 {
-    std::string name{ "_cube_map" };
-    Texture *result = this->loadExistingTexture(name, EMaterialMap::SHADOW);
+    std::string name{ "_cube_map_" + std::to_string(this->shadowIndex) };
+    uint32_t id = this->graphicsWrapper->generateCubemap(width, height, EMaterialMap::SHADOW + this->shadowIndex);
 
-    if (result == nullptr)
-    {
-        uint32_t id = this->graphicsWrapper->generateCubemap(width, height, EMaterialMap::SHADOW);
+    Texture *result = new Texture{ id, width, height, EMaterialMap::SHADOW, name };
+    this->textures.emplace_back(result);
 
-        result = new Texture{ id, width, height, EMaterialMap::SHADOW, name };
-        this->textures.emplace_back(result);
-    }
-
+    this->shadowIndex++;
     return result;
 }
 

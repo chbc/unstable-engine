@@ -14,9 +14,9 @@ private:
     class AGraphicsWrapper *graphicsWrapper;
     class LightManager *lightManager;
 
-    uint32_t depthMapFBO;
     class Shader *depthShader;
-    std::vector<glm::mat4> shadowMatrices;
+    glm::mat4 shadowMatrices[6];
+    glm::mat4 projection;
     float farPlane;
     const char *SHADOW_MATRICES_FORMAT = "shadowMatrices[%d]";
 
@@ -29,6 +29,7 @@ private:
     void addItem(MeshComponent *item);
     void render();
     void removeDestroyedEntities();
+    void updateShadowMatrices(const glm::vec3 &lightPosition);
 
 friend class RenderManager;
 };

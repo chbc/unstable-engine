@@ -41,7 +41,7 @@ void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 void GUIRenderer::render(MatrixManager *matrixManager)
 {
     this->shaderManager->enableShader(this->shader);
-    this->shaderManager->setInt(this->shader, ShaderVariables::GUI_TEXTURE, 0);
+    this->shaderManager->setInt(this->shader, ShaderVariables::GUI_TEXTURE, EMaterialMap::GUI);
 
     // Static meshes
     for (GUIImageComponent *item : this->guiComponents)
@@ -73,7 +73,7 @@ void GUIRenderer::setup(GUIImageComponent *guiComponent)
 
     this->graphicsWrapper->bindVAO(guiComponent->vao, guiComponent->vbo);
     this->graphicsWrapper->enableGUISettings();
-    this->graphicsWrapper->activeDiffuseTexture(guiComponent->getTextureId());
+    this->graphicsWrapper->activateDiffuseTexture(guiComponent->getTextureId());
 }
 
 void GUIRenderer::removeDestroyedEntities()

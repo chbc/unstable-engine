@@ -18,6 +18,7 @@ class TextureManager : public ASingleton
 private:
     VECTOR_UPTR<Texture> textures;
     AGraphicsWrapper *graphicsWrapper;
+    uint32_t shadowIndex;
 
 protected:
     void init() override;

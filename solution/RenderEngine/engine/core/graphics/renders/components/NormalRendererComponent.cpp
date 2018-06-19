@@ -18,7 +18,7 @@ void NormalRendererComponent::onSceneLoaded(Shader *shader)
 
 void NormalRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
-    this->shaderManager->setInt(shader, ShaderVariables::NORMAL_TEXTURE, 1);
+    this->shaderManager->setInt(shader, ShaderVariables::NORMAL_TEXTURE, EMaterialMap::NORMAL);
     this->textureId = mesh->getMaterial()->getComponent<NormalMaterialComponent>()->getTextureID();
 }
 
@@ -27,7 +27,7 @@ void NormalRendererComponent::preDraw()
     this->graphicsWrapper->enableTexCoords();
     this->graphicsWrapper->enableVertexTangents();
     this->graphicsWrapper->enableVertexBitangents();
-    this->graphicsWrapper->activeNormalTexture(this->textureId);
+    this->graphicsWrapper->activateNormalTexture(this->textureId);
 }
 
 void NormalRendererComponent::postDraw()

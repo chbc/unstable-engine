@@ -159,33 +159,39 @@ void OpenGLAPI::enableVertexBitangents()
 	glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getBitangentOffset());
 }
 
-void OpenGLAPI::activeDiffuseTexture(uint32_t textureId)
+void OpenGLAPI::activateGUITexture(uint32_t textureId)
 {
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, textureId);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-void OpenGLAPI::activeNormalTexture(uint32_t textureId)
+void OpenGLAPI::activateDiffuseTexture(uint32_t textureId)
 {
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-void OpenGLAPI::activeSpecularTexture(uint32_t textureId)
+void OpenGLAPI::activateNormalTexture(uint32_t textureId)
 {
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-void OpenGLAPI::activeAOTexture(uint32_t textureId)
+void OpenGLAPI::activateSpecularTexture(uint32_t textureId)
 {
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-void OpenGLAPI::activateShadowMapTexture(uint32_t textureId)
+void OpenGLAPI::activateAOTexture(uint32_t textureId)
 {
-    glActiveTexture(GL_TEXTURE4); // ###
+	glActiveTexture(GL_TEXTURE4);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+}
+
+void OpenGLAPI::activateShadowMapTexture(uint32_t unit, uint32_t textureId)
+{
+    glActiveTexture(GL_TEXTURE5 + unit);
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
 }
 

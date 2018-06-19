@@ -1,13 +1,13 @@
 // LIGHTS_IMPL
 
 // Functions
-void Lights_computeEnergies(vec3 normal, vec3 toCameraDirection, vec3 toLightVector, vec3 lightColor, inout float diffuseEnergy, inout float specularEnergy)
+void Lights_computeEnergies(vec3 normal, vec3 toCameraDirection, vec3 toLightVector, vec3 lightColor, inout float diffuseEnergy, inout float specularEnergy, int XXX_lightIndex)
 {
     vec3 toLightDirection = normalize(toLightVector);
     vec3 halfVector = normalize(toLightDirection + toCameraDirection);
 
     float shadow = 0;
-    // [SHADOWS] shadow = Shadows_computeShadow(-toLightVector);
+    // [SHADOWS] shadow = Shadows_computeShadow(-toLightVector, XXX_lightIndex);
 
     diffuseEnergy = max(dot(normal, toLightVector) * (1 - shadow), 0.0);
     specularEnergy = max(dot(normal, halfVector) * (1 - shadow), 0.0);
@@ -23,7 +23,7 @@ void Lights_computeDirectionalLights(vec3 normal, vec3 toCameraDirection, inout 
     for (int i = 0; i < lights.directionalLightsCount; i++)
     {
         vec3 lightColor = lights.directionalLights[i].color;
-        Lights_computeEnergies(normal, toCameraDirection, -var_directionalLightVectors[i], lightColor, diffuseEnergy, specularEnergy);
+        // ### Lights_computeEnergies(normal, toCameraDirection, -var_directionalLightVectors[i], lightColor, diffuseEnergy, specularEnergy);
 
         kd = kd + (lightColor * diffuseEnergy);
         ks = ks + (vec3(1.0) * specularEnergy);
@@ -43,7 +43,7 @@ void Lights_computePointLights(vec3 normal, vec3 toCameraDirection, inout vec3 k
         if (distance < lights.pointLights[i].range)
         {
             vec3 lightColor = lights.pointLights[i].color;
-            Lights_computeEnergies(normal, toCameraDirection, lightVector, lightColor, diffuseEnergy, specularEnergy);
+            Lights_computeEnergies(normal, toCameraDirection, lightVector, lightColor, diffuseEnergy, specularEnergy, i);
 
             float attenuation = 1 - (distance / lights.pointLights[i].range);
             attenuation *= lights.pointLights[i].intensity;

@@ -19,14 +19,14 @@ void AORendererComponent::onSceneLoaded(Shader *shader)
 
 void AORendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
-    this->shaderManager->setInt(shader, ShaderVariables::AO_TEXTURE, 3);
+    this->shaderManager->setInt(shader, ShaderVariables::AO_TEXTURE, EMaterialMap::AMBIENT_OCCLUSION);
     this->textureId = mesh->getMaterial()->getComponent<AmbientOcclusionMaterialComponent>()->getTextureID();
 }
 
 void AORendererComponent::preDraw()
 {
     this->graphicsWrapper->enableTexCoords();
-    this->graphicsWrapper->activeAOTexture(this->textureId);
+    this->graphicsWrapper->activateAOTexture(this->textureId);
 }
 
 void AORendererComponent::postDraw()

@@ -18,14 +18,14 @@ void DiffuseRendererComponent::onSceneLoaded(Shader *shader)
 
 void DiffuseRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
-    this->shaderManager->setInt(shader, ShaderVariables::DIFFUSE_TEXTURE, 0);
+    this->shaderManager->setInt(shader, ShaderVariables::DIFFUSE_TEXTURE, EMaterialMap::DIFFUSE);
     this->textureId = mesh->getMaterial()->getComponent<DiffuseMaterialComponent>()->getTextureID();
 }
 
 void DiffuseRendererComponent::preDraw()
 {
     this->graphicsWrapper->enableTexCoords();
-    this->graphicsWrapper->activeDiffuseTexture(this->textureId);
+    this->graphicsWrapper->activateDiffuseTexture(this->textureId);
 }
 
 // ### TALVEZ NÃO SEJA DESNECESSÁRIO CHAMAR MAIS DE UMA VEZ

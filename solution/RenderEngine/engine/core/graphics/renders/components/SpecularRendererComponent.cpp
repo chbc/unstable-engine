@@ -18,14 +18,14 @@ void SpecularRendererComponent::onSceneLoaded(Shader *shader)
 
 void SpecularRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
-    this->shaderManager->setInt(shader, ShaderVariables::SPECULAR_TEXTURE, 2);
+    this->shaderManager->setInt(shader, ShaderVariables::SPECULAR_TEXTURE, EMaterialMap::SPECULAR);
     this->textureId = mesh->getMaterial()->getComponent<SpecularMaterialComponent>()->getTextureID();
 }
 
 void SpecularRendererComponent::preDraw()
 {
     this->graphicsWrapper->enableTexCoords();
-    this->graphicsWrapper->activeSpecularTexture(this->textureId);
+    this->graphicsWrapper->activateSpecularTexture(this->textureId);
 }
 
 void SpecularRendererComponent::postDraw()

@@ -11,6 +11,10 @@ class ShadowRendererShaderSetup : public BaseRendererShaderSetup
 protected:
     class LightManager *lightManager;
 
+private:
+    const char *SHADOW_MAPS_FORMAT = "shadowMaps[%d]";
+
+protected:
     ShadowRendererShaderSetup(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
     void onSceneLoaded(Shader *shader) override;

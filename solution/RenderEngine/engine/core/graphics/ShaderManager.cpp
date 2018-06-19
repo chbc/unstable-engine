@@ -84,6 +84,11 @@ void ShaderManager::setInt(Shader *shader, ShaderVariables::Type variableKey, in
     this->graphicsWrapper->setInt(shader->program, shader->variableLocations[variableKey], value);
 }
 
+void ShaderManager::setInt(Shader *shader, const char *variable, int value)
+{
+    this->graphicsWrapper->setInt(shader->program, shader->customVariableLocations[variable], value);
+}
+
 void ShaderManager::setFloat(Shader *shader, ShaderVariables::Type variableKey, float value)
 {
     this->graphicsWrapper->setFloat(shader->program, shader->variableLocations[variableKey], value);

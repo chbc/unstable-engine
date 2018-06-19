@@ -11,7 +11,7 @@ void SampleApplication::onInit()
 {
     // cube //
     this->cube = this->sceneManager->createCubeEntity();
-    this->cube->getTransform()->setPosition(glm::vec3(0.0f, 1.5f, 2.0f));
+    this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 2.0f));
     MeshComponent *cubeMesh = this->cube->getComponent<MeshComponent>();
     cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
     
@@ -32,9 +32,11 @@ void SampleApplication::onInit()
 
     this->sceneManager->addEntity(plane);
 
+    /*
     Entity *nanosuit = this->sceneManager->createModelEntity("../../media/nanosuit/nanosuit.obj");
     nanosuit->getTransform()->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
     this->sceneManager->addEntity(nanosuit);
+    */
     
     // light //
     /* ###
@@ -48,14 +50,28 @@ void SampleApplication::onInit()
     */
 
     PointLightComponent *pLight1 = this->sceneManager->addPointLight();
-    pLight1->getTransform()->setPosition(glm::vec3(2.0f, 5.0f, 5.0f));
-    pLight1->setColor(glm::vec3(0.75f, 0.5f, 0.0f));
+    pLight1->getTransform()->setPosition(glm::vec3(2.0f, 2.0f, 5.0f));
+    pLight1->setColor(glm::vec3(0.25f, 0.25f, 0.25f));
 
-    /*
+    Entity *l1 = this->sceneManager->createCubeEntity();
+    l1->getTransform()->setPosition(pLight1->getPosition());
+    l1->getTransform()->setScale(glm::vec3(0.25f));
+    cubeMesh = this->cube->getComponent<MeshComponent>();
+    cubeMesh->getMaterial()->setCastsShadow(false);
+    cubeMesh->getMaterial()->setReceivesLight(false);
+    this->sceneManager->addEntity(l1);
+
     PointLightComponent *pLight2 = this->sceneManager->addPointLight();
-    pLight2->getTransform()->setPosition(glm::vec3(-5.0f, 2.0f, 0.0f));
-    pLight2->setColor(glm::vec3(0.0f, 0.0f, 0.75f));
-    */
+    pLight2->getTransform()->setPosition(glm::vec3(-2.0f, 2.0f, 5.0f));
+    pLight2->setColor(glm::vec3(0.25f, 0.25f, 0.25f));
+
+    Entity *l2 = this->sceneManager->createCubeEntity();
+    l2->getTransform()->setPosition(pLight2->getPosition());
+    l2->getTransform()->setScale(glm::vec3(0.25f));
+    cubeMesh = this->cube->getComponent<MeshComponent>();
+    cubeMesh->getMaterial()->setCastsShadow(false);
+    cubeMesh->getMaterial()->setReceivesLight(false);
+    this->sceneManager->addEntity(l2);
     
     // GUI //
     /*

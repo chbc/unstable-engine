@@ -30,7 +30,8 @@ public:
     void setShininess(float shininess);
     float getShininess();
 
-    inline void setCastsShadow(bool value) { this->castsShadow = value; }
+    inline void setCastsShadow(bool value)      { this->castsShadow = value; }
+    inline void setReceivesLight(bool value)    { this->receivesLight = value; }
 
 private:
     Material(bool arg_receivesLight = true, bool arg_receivesShadow = true, bool arg_castsShadow = true, float arg_shininess = 15.0);

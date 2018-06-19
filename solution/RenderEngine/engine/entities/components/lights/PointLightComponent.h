@@ -12,6 +12,8 @@ class PointLightComponent : public ALightComponent
 private:
 	float range;
 	float intensity;
+    uint32_t depthCubemap;
+    uint32_t fbo;
 
 public:
 	void setPosition(const glm::vec3 &position);
@@ -27,6 +29,8 @@ private:
 	PointLightComponent(Entity *entity);
 
 friend class Entity;
+friend class ShadowRenderer;
+friend class ShadowRendererShaderSetup;
 };
 
 } // namespace

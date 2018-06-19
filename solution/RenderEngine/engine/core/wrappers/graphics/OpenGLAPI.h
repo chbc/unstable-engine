@@ -24,10 +24,11 @@ protected:
     void enableTexCoords() override;
     void enableVertexTangents() override;
     void enableVertexBitangents() override;
-    void activeDiffuseTexture(uint32_t textureId) override;
-    void activeNormalTexture(uint32_t textureId) override;
-    void activeSpecularTexture(uint32_t textureId) override;
-    void activeAOTexture(uint32_t textureId) override;
+    void activateGUITexture(uint32_t textureId) override;
+    void activateDiffuseTexture(uint32_t textureId) override;
+    void activateNormalTexture(uint32_t textureId) override;
+    void activateSpecularTexture(uint32_t textureId) override;
+    void activateAOTexture(uint32_t textureId) override;
 
     void setupBufferSubData(const MeshData<GUIVertexData> *meshData) override;
 
@@ -75,7 +76,7 @@ protected:
     void bindFrameBuffer(uint32_t fbo) override;
     void unbindFrameBuffer() override;
     void setViewport(uint32_t width, uint32_t height) override;
-    void activateShadowMapTexture(uint32_t textureId) override;
+    void activateShadowMapTexture(uint32_t unit, uint32_t textureId) override;
     void enableFrontCullFace() override;
     void disableFrontCullFace() override;
 
