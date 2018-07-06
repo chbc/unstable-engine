@@ -17,30 +17,49 @@ ShadowRendererShaderSetup::ShadowRendererShaderSetup(ShaderManager *shaderManage
 
 void ShadowRendererShaderSetup::onSceneLoaded(Shader *shader)
 {
-    this->shaderManager->setupUniformLocation(shader, ShaderVariables::FAR_PLANE);
-
     char variable[32];
     for (uint32_t i = 0; i < this->lightManager->pointLights.size(); i++)
     {
-        sprintf_s(variable, SHADOW_MAPS_FORMAT, i);
+        sprintf_s(variable, POINT_SHADOW_MAPS_FORMAT, i);
+        this->shaderManager->setupUniformLocation(shader, variable);
+    }
+
+    for (uint32_t i = 0; i < this->lightManager->directionalLights.size(); i++)
+    {
+        sprintf_s(variable, DIRECTIONAL_SHADOW_MAPS_FORMAT, i);
+        this->shaderManager->setupUniformLocation(shader, variable);
+
+        sprintf_s(variable, DIRECTIONAL_LIGHT_SPACE_FORMAT, i);
         this->shaderManager->setupUniformLocation(shader, variable);
     }
 }
 
 void ShadowRendererShaderSetup::setupShaderValues(Shader *shader)
 {
+    // ### NAO VAI FUNCIONAR COM OS 2
+    // COLOCAR TEXTURA COMO ATRIBUTO DAS LUZES
     char variable[32];
     for (uint32_t i = 0; i < this->lightManager->pointLights.size(); i++)
     {
-        sprintf_s(variable, SHADOW_MAPS_FORMAT, i);
-        this->shaderManager->setInt(shader, variable, EMaterialMap::SHADOW + i);
-
         PointLightComponent *pointLight = this->lightManager->pointLights[i];
-        this->graphicsWrapper->activateShadowMapTexture(pointLight->depthCubemap, EMaterialMap::SHADOW + i);
+        this->graphicsWrapper->activateShadowMapTexture(pointLight->depthMap, EMaterialMap::SHADOW + i, true);
+
+        sprintf_s(variable, POINT_SHADOW_MAPS_FORMAT, i);
+        this->shaderManager->setInt(shader, variable, EMaterialMap::SHADOW + i);
     }
 
-    float farPlane = 50.0f;
-    this->shaderManager->setFloat(shader, ShaderVariables::FAR_PLANE, farPlane);
+    for (uint32_t i = 0; i < this->lightManager->directionalLights.size(); i++)
+    {
+        DirectionalLightComponent *light = this->lightManager->directionalLights[i];
+
+        this->graphicsWrapper->activateShadowMapTexture(light->depthMap, EMaterialMap::SHADOW + i);
+
+        sprintf_s(variable, DIRECTIONAL_SHADOW_MAPS_FORMAT, i);
+        this->shaderManager->setInt(shader, variable, EMaterialMap::SHADOW + i);
+
+        sprintf_s(variable, DIRECTIONAL_LIGHT_SPACE_FORMAT, i);
+        this->shaderManager->setMat4(shader, ShaderVariables::LIGHT_SPACE_MATRIX, &light->lightSpaceMatrix[0][0]);
+    }
 }
 
 } // namespace

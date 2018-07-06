@@ -10,28 +10,24 @@ SampleApplication::SampleApplication() : RenderEngine()
 void SampleApplication::onInit()
 {
     // cube //
-    this->cube = this->sceneManager->createCubeEntity();
-    this->cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 2.0f));
-    MeshComponent *cubeMesh = this->cube->getComponent<MeshComponent>();
+    Entity *cube;
+    cube = this->sceneManager->createCubeEntity();
+    cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 2.0f));
+    MeshComponent *cubeMesh = cube->getComponent<MeshComponent>();
     cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
     
-    this->sceneManager->addEntity(this->cube);
+    this->sceneManager->addEntity(cube);
 
-    // floor //
-    Entity *plane = this->sceneManager->createPlaneEntity(20);
-    TransformComponent *transform = plane->getTransform();
-    transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
-    MeshComponent *planeMesh = plane->getComponent<MeshComponent>();
-    planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/wood.png");
-    planeMesh->getMaterial()->setCastsShadow(false);
-    /* ###
-    planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
-    planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
-    planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
+    /*
+    cube = this->sceneManager->createCubeEntity();
+    cube->getTransform()->setPosition(glm::vec3(3.0f, 4.0f, 0.0f));
+    cubeMesh = cube->getComponent<MeshComponent>();
+    cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
+
+    this->sceneManager->addEntity(cube);
     */
 
-    this->sceneManager->addEntity(plane);
-
+    this->createRoom();
     /*
     Entity *nanosuit = this->sceneManager->createModelEntity("../../media/nanosuit/nanosuit.obj");
     nanosuit->getTransform()->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
@@ -39,39 +35,55 @@ void SampleApplication::onInit()
     */
     
     // light //
-    /* ###
     DirectionalLightComponent *dLight1 = this->sceneManager->addDirectionalLight();
     dLight1->setDirection(glm::vec3(0.0f, -1.0f, -1.0f));
-    dLight1->setColor(glm::vec3(0.75f, 0.75f, 0.75f));
+    dLight1->setColor(glm::vec3(1.0f));
     
+/*
     DirectionalLightComponent *dLight2 = this->sceneManager->addDirectionalLight();
     dLight2->setDirection(glm::vec3(0.0f, -1.0f, -1.0f));
     dLight2->setColor(glm::vec3(0.75f, 0.75f, 0.75f));
     */
 
+    /*
     PointLightComponent *pLight1 = this->sceneManager->addPointLight();
-    pLight1->getTransform()->setPosition(glm::vec3(2.0f, 2.0f, 5.0f));
-    pLight1->setColor(glm::vec3(0.25f, 0.25f, 0.25f));
+    pLight1->getTransform()->setPosition(glm::vec3(3.0f, 2.0f, 3.0f));
+    pLight1->setColor(glm::vec3(1.0f));
 
-    Entity *l1 = this->sceneManager->createCubeEntity();
-    l1->getTransform()->setPosition(pLight1->getPosition());
-    l1->getTransform()->setScale(glm::vec3(0.25f));
-    cubeMesh = this->cube->getComponent<MeshComponent>();
+    Entity *lightCube = this->sceneManager->createCubeEntity();
+    lightCube->getTransform()->setPosition(pLight1->getPosition());
+    lightCube->getTransform()->setScale(glm::vec3(0.2f));
+    cubeMesh = lightCube->getComponent<MeshComponent>();
     cubeMesh->getMaterial()->setCastsShadow(false);
     cubeMesh->getMaterial()->setReceivesLight(false);
-    this->sceneManager->addEntity(l1);
+    this->sceneManager->addEntity(lightCube);
 
     PointLightComponent *pLight2 = this->sceneManager->addPointLight();
-    pLight2->getTransform()->setPosition(glm::vec3(-2.0f, 2.0f, 5.0f));
-    pLight2->setColor(glm::vec3(0.25f, 0.25f, 0.25f));
+    pLight2->getTransform()->setPosition(glm::vec3(-3.0f, 3.0f, 5.0f));
+    pLight2->setColor(glm::vec3(0.5f, 0.5f, 0.5f));
 
-    Entity *l2 = this->sceneManager->createCubeEntity();
-    l2->getTransform()->setPosition(pLight2->getPosition());
-    l2->getTransform()->setScale(glm::vec3(0.25f));
-    cubeMesh = this->cube->getComponent<MeshComponent>();
+    lightCube = this->sceneManager->createCubeEntity();
+    lightCube->getTransform()->setPosition(pLight2->getPosition());
+    lightCube->getTransform()->setScale(glm::vec3(0.2f));
+    cubeMesh = lightCube->getComponent<MeshComponent>();
     cubeMesh->getMaterial()->setCastsShadow(false);
     cubeMesh->getMaterial()->setReceivesLight(false);
-    this->sceneManager->addEntity(l2);
+    this->sceneManager->addEntity(lightCube);
+    */
+
+    /*
+    PointLightComponent *pLight3 = this->sceneManager->addPointLight();
+    pLight3->getTransform()->setPosition(glm::vec3(0.0f, 3.0f, -5.0f));
+    pLight3->setColor(glm::vec3(0.25f, 0.25f, 0.25f));
+
+    cube = this->sceneManager->createCubeEntity();
+    cube->getTransform()->setPosition(pLight3->getPosition());
+    cube->getTransform()->setScale(glm::vec3(0.25f));
+    cubeMesh = cube->getComponent<MeshComponent>();
+    cubeMesh->getMaterial()->setCastsShadow(false);
+    cubeMesh->getMaterial()->setReceivesLight(false);
+    this->sceneManager->addEntity(cube);
+    */
     
     // GUI //
     /*
@@ -112,5 +124,98 @@ void SampleApplication::onUpdate(unsigned int elapsedTime)
     glm::vec3 position = this->cube->getTransform()->getPosition();
     position.x += 0.001f * elapsedTime;
     this->cube->getTransform()->setPosition(position);
+    */
+}
+
+void SampleApplication::createRoom()
+{
+    Entity *plane;
+
+    // bottom //
+    plane = this->sceneManager->createPlaneEntity(20);
+    TransformComponent *transform = plane->getTransform();
+    transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
+    MeshComponent *planeMesh = plane->getComponent<MeshComponent>();
+    planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/wood.png");
+    planeMesh->getMaterial()->setCastsShadow(false);
+    // planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
+    //planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
+    //planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
+
+    this->sceneManager->addEntity(plane);
+
+    /*
+    // back //
+    plane = this->sceneManager->createPlaneEntity(20);
+    transform = plane->getTransform();
+    transform->setPosition(glm::vec3(0, 0, -10));
+    planeMesh = plane->getComponent<MeshComponent>();
+    planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
+    planeMesh->getMaterial()->setCastsShadow(false);
+    planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
+    planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
+    planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
+
+    this->sceneManager->addEntity(plane);
+
+
+    // left //
+    plane = this->sceneManager->createPlaneEntity(20);
+    transform = plane->getTransform();
+    transform->setPosition(glm::vec3(-10, 0, 0));
+    transform->setRotation(glm::vec3(0, 1, 0), -90);
+    planeMesh = plane->getComponent<MeshComponent>();
+    planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
+    planeMesh->getMaterial()->setCastsShadow(false);
+    planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
+    planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
+    planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
+
+    this->sceneManager->addEntity(plane);
+
+
+    // right //
+    plane = this->sceneManager->createPlaneEntity(20);
+    transform = plane->getTransform();
+    transform->setPosition(glm::vec3(10, 0, 0));
+    transform->setRotation(glm::vec3(0, 1, 0), 90);
+    planeMesh = plane->getComponent<MeshComponent>();
+    planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
+    planeMesh->getMaterial()->setCastsShadow(false);
+    planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
+    planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
+    planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
+
+    this->sceneManager->addEntity(plane);
+
+
+    // front //
+    plane = this->sceneManager->createPlaneEntity(20);
+    transform = plane->getTransform();
+    transform->setPosition(glm::vec3(0, 0, 10));
+    transform->setRotation(glm::vec3(1, 0, 0), -180);
+    planeMesh = plane->getComponent<MeshComponent>();
+    planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
+    planeMesh->getMaterial()->setCastsShadow(false);
+    planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
+    planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
+    planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
+
+    this->sceneManager->addEntity(plane);
+
+
+    // top //
+    plane = this->sceneManager->createPlaneEntity(20);
+    transform = plane->getTransform();
+    transform->setPosition(glm::vec3(0, 10, 0));
+    transform->setRotation(glm::vec3(1, 0, 0), -90);
+    planeMesh = plane->getComponent<MeshComponent>();
+    planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
+    planeMesh->getMaterial()->setCastsShadow(false);
+    planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
+    planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
+    planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
+
+    this->sceneManager->addEntity(plane);
     */
 }

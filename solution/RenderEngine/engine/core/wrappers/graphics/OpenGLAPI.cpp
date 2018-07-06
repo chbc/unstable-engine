@@ -134,7 +134,6 @@ void OpenGLAPI::enableVertexPositions()
 
 void OpenGLAPI::enableVertexNormals()
 {
-	int offset = sizeof(glm::vec3) + (sizeof(float) * 2);
 	glEnableVertexAttribArray(EAttribLocation::NORMAL);
 	glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getNormalOffset());
 }
@@ -147,14 +146,12 @@ void OpenGLAPI::enableTexCoords()
 
 void OpenGLAPI::enableVertexTangents()
 {
-	int offset = (sizeof(glm::vec3) * 2) + (sizeof(float) * 2);
 	glEnableVertexAttribArray(EAttribLocation::TANGENT);
 	glVertexAttribPointer(EAttribLocation::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getTangentOffset());
 }
 
 void OpenGLAPI::enableVertexBitangents()
 {
-	int offset = (sizeof(glm::vec3) * 3) + (sizeof(float) * 2);
 	glEnableVertexAttribArray(EAttribLocation::BITANGENT);
 	glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getBitangentOffset());
 }
@@ -189,10 +186,10 @@ void OpenGLAPI::activateAOTexture(uint32_t textureId)
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-void OpenGLAPI::activateShadowMapTexture(uint32_t unit, uint32_t textureId)
+void OpenGLAPI::activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap)
 {
-    glActiveTexture(GL_TEXTURE5 + unit);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
+    glActiveTexture(GL_TEXTURE0 + unit);
+    glBindTexture(cubeMap ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D, textureId);
 }
 
 void OpenGLAPI::setupBufferSubData(const MeshData<GUIVertexData> *meshData)

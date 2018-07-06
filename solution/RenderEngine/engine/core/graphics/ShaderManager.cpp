@@ -32,14 +32,14 @@ Shader *ShaderManager::loadGUIShader()
     return this->loadShader(vertexContent, fragmentContent, false);
 }
 
-Shader *ShaderManager::loadDepthShader()
+Shader *ShaderManager::loadPointLightDepthShader()
 {
     std::string vertexContent;
     std::string fragmentContent;
     std::string geometryContent;
 
     ShaderContentFactory contentFactory;
-    contentFactory.createDepthShaderContent(vertexContent, fragmentContent, geometryContent);
+    contentFactory.createPointLightDepthShaderContent(vertexContent, fragmentContent, geometryContent);
 
     uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);
     uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentContent);
@@ -51,6 +51,17 @@ Shader *ShaderManager::loadDepthShader()
     this->shaders.emplace_back(shader);
 
     return shader;
+}
+
+Shader *ShaderManager::loadDirectionalLightDepthShader()
+{
+    std::string vertexContent;
+    std::string fragmentContent;
+
+    ShaderContentFactory contentFactory;
+    contentFactory.createDirectionalLightDepthShaderContent(vertexContent, fragmentContent);
+
+    return this->loadShader(vertexContent, fragmentContent, false);
 }
 
 Shader *ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent, bool isLit)

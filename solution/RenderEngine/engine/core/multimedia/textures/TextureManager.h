@@ -37,9 +37,6 @@ private:
     Texture *loadExistingTexture(const std::string &fileName, EMaterialMap::Type mapType);
     void deleteTexture(uint32_t id);
 
-public:
-    ~TextureManager();
-
 friend class RenderManager;
 friend class SingletonsManager;
 friend class ShadowRenderer;

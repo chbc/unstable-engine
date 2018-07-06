@@ -41,8 +41,8 @@ void ShaderContentFactory::createShaderContent(const std::bitset<SIZE> &componen
     }
 
     // ###
-    this->loadShadowsContentHeader(fragmentContentHeader);
-    this->loadShadowsContentImplementation(fragmentContentImpl);
+    this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
+    this->loadShadowsContentImplementation(vertexContentImpl, fragmentContentImpl);
 
     outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
     outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;

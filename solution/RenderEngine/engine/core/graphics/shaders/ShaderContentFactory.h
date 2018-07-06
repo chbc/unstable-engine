@@ -13,7 +13,8 @@ private:
     template <size_t SIZE>
     void createShaderContent(const std::bitset<SIZE> &componentsBitset, std::string &outVertexContent, std::string &outFragmentContent);
     void createGUIShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
-    void createDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent, std::string &outGeometryContent);
+    void createPointLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent, std::string &outGeometryContent);
+    void createDirectionalLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
 
     void loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
     void loadColorContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
@@ -30,8 +31,8 @@ private:
     void loadAOMapContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
     void loadAOMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 
-    void loadShadowsContentHeader(std::string &outFragmentContent);
-    void loadShadowsContentImplementation(std::string &outFragmentContent);
+    void loadShadowsContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
+    void loadShadowsContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 
     void uncommentCode(std::string &outShaderContent, const std::string &mark); // throws "didn't find code mark
 

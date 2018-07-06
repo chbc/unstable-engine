@@ -6,13 +6,7 @@ void main(void)
     vec3 kd = vec3(0.0);
     vec3 ks = vec3(0.0);
 
-    vec3 normal = normalize(var_normal);
-    vec3 toCameraDirection = normalize(var_toCameraVector);
-
-    // [NORMAL] normal = Normal_computeNormal();
-
-    Lights_computeDirectionalLights(normal, toCameraDirection, kd, ks);
-    Lights_computePointLights(normal, toCameraDirection, kd, ks);
+    Lights_computeDiffuseAndSpecularLights(kd, ks);
 
     ka *= materialColor.rgb;
     kd *= materialColor.rgb;

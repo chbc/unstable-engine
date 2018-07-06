@@ -34,7 +34,7 @@ public:
     inline void setReceivesLight(bool value)    { this->receivesLight = value; }
 
 private:
-    Material(bool arg_receivesLight = true, bool arg_receivesShadow = true, bool arg_castsShadow = true, float arg_shininess = 15.0);
+    Material(bool arg_receivesLight = true, bool arg_receivesShadow = true, bool arg_castsShadow = true, float arg_shininess = 50.0);
 
     template <typename T, typename... TArgs>
     T *addComponent(TArgs&&... mArgs)

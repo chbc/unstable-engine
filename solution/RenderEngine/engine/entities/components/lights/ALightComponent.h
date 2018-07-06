@@ -14,7 +14,10 @@ class ALightComponent : public AEntityComponent
 {
 private:
 	glm::vec3 color;
-    int variableColorLocation;
+
+protected:
+    uint32_t fbo;
+    uint32_t depthMap;
 
 protected:
 	ALightComponent(Entity *entity);
@@ -24,6 +27,8 @@ public:
 	glm::vec3 getColor();
 
 friend class LightManager;
+friend class ShadowRenderer;
+friend class ShadowRendererShaderSetup;
 };
 
 } // namespace

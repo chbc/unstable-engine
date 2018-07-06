@@ -4,6 +4,10 @@
 namespace sre
 {
 
+PointLightComponent::PointLightComponent(Entity *entity) 
+    : ALightComponent(entity), range(20.0f), intensity(2.0f)
+{ }
+
 void PointLightComponent::setPosition(const glm::vec3 &position)
 {
 	this->getTransform()->setPosition(position);
@@ -32,12 +36,6 @@ void PointLightComponent::setIntensity(float intensity)
 float PointLightComponent::getIntensity()
 {
 	return this->intensity;
-}
-
-PointLightComponent::PointLightComponent(Entity *entity) : ALightComponent(entity)
-{
-	this->range = 15.0f;
-	this->intensity = 1.0;
 }
 
 } // namespace

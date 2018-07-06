@@ -1,8 +1,13 @@
 // SHADOWS_H //
 
 // Uniform variables
-uniform samplerCube shadowMaps[2];
-uniform float farPlane;
+// ### uniform samplerCube pointShadowMaps[4];
+uniform sampler2D directionalShadowMaps[4];
+
+// Varying variables
+in vec3 var_lightToFragmentVectors[4];
+in vec4 var_fragPosDirectionalLightSpace[4];
 
 // Functions
-float Shadows_computeShadow(vec3 toFragmentVector, int XXX_lightIndex);
+float Shadows_computePointLightShadow(int lightIndex);
+float Shadows_computeDirectionalLightShadow(vec3 normal, vec3 toLightDirection, int lightIndex);

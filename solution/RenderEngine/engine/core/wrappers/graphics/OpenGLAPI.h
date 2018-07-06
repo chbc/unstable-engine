@@ -76,7 +76,7 @@ protected:
     void bindFrameBuffer(uint32_t fbo) override;
     void unbindFrameBuffer() override;
     void setViewport(uint32_t width, uint32_t height) override;
-    void activateShadowMapTexture(uint32_t unit, uint32_t textureId) override;
+    void activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap) override;
     void enableFrontCullFace() override;
     void disableFrontCullFace() override;
 

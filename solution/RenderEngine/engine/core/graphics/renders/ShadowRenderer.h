@@ -14,11 +14,11 @@ private:
     class AGraphicsWrapper *graphicsWrapper;
     class LightManager *lightManager;
 
-    class Shader *depthShader;
+    class Shader *pointLightDepthShader;
+    class Shader *directionalLightDepthShader;
+
     glm::mat4 shadowMatrices[6];
-    glm::mat4 projection;
-    float farPlane;
-    const char *SHADOW_MATRICES_FORMAT = "shadowMatrices[%d]";
+    const char *POINT_SHADOW_MATRICES_FORMAT = "pointShadowMatrices[%d]";
 
     std::vector<class MeshComponent *> items;
 
@@ -26,10 +26,14 @@ private:
     ShadowRenderer();
 
     void onSceneLoaded();
+    void setupPointLightShader(class TextureManager *textureManager);
+    void setupDirectionalLightShader(class TextureManager *textureManager);
     void addItem(MeshComponent *item);
     void render();
+    void renderPointLightShadows();
+    void renderDirectionalLightShadows();
     void removeDestroyedEntities();
-    void updateShadowMatrices(const glm::vec3 &lightPosition);
+    void updateShadowMatrices(const glm::vec3 &lightPosition, float range);
 
 friend class RenderManager;
 };

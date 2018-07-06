@@ -49,17 +49,13 @@ Texture *TextureManager::loadAOTexture(const std::string &fileName)
 Texture *TextureManager::loadShadowTexture(uint32_t width, uint32_t height)
 {
     std::string name{ "_shadow_map_" + std::to_string(this->shadowIndex) };
+
+    uint32_t id = this->graphicsWrapper->setupTexture(width, height, EMaterialMap::SHADOW + this->shadowIndex);
+
+    Texture *result = new Texture{ id, width, height, EMaterialMap::SHADOW, name };
+    this->textures.emplace_back(result);
+
     this->shadowIndex++;
-    Texture *result = this->loadExistingTexture(name, EMaterialMap::SHADOW);
-
-    if (result == nullptr)
-    {
-        uint32_t id = this->graphicsWrapper->setupTexture(width, height, EMaterialMap::SHADOW);
-
-        result = new Texture{ id, width, height, EMaterialMap::SHADOW, name };
-        this->textures.emplace_back(result);
-    }
-
     return result;
 }
 

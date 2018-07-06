@@ -41,8 +41,8 @@ struct MeshData
 	std::vector<T> vertexData;
 	std::vector<uint32_t> indices;
 
-	MeshData(const std::vector<T> &vertexData, const std::vector<uint32_t> &indices)
-		: vertexData(vertexData), indices(indices)
+	MeshData(const std::vector<T> &arg_vertexData, const std::vector<uint32_t> &arg_indices)
+		: vertexData(arg_vertexData), indices(arg_indices)
 	{
 	}
 

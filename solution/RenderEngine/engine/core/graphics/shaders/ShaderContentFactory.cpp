@@ -11,11 +11,17 @@ void ShaderContentFactory::createGUIShaderContent(std::string &outVertexContent,
     FileUtils::loadFile(ShaderFiles::GUI_F, outFragmentContent);
 }
 
-void ShaderContentFactory::createDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent, std::string &outGeometryContent)
+void ShaderContentFactory::createPointLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent, std::string &outGeometryContent)
 {
-    FileUtils::loadFile(ShaderFiles::DEPTH_V, outVertexContent);
-    FileUtils::loadFile(ShaderFiles::DEPTH_F, outFragmentContent);
-    FileUtils::loadFile(ShaderFiles::DEPTH_G, outGeometryContent);
+    FileUtils::loadFile(ShaderFiles::POINT_SHADOW_DEPTH_V, outVertexContent);
+    FileUtils::loadFile(ShaderFiles::POINT_SHADOW_DEPTH_F, outFragmentContent);
+    FileUtils::loadFile(ShaderFiles::POINT_SHADOW_DEPTH_G, outGeometryContent);
+}
+
+void ShaderContentFactory::createDirectionalLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent)
+{
+    FileUtils::loadFile(ShaderFiles::DIRECTIONAL_SHADOW_DEPTH_V, outVertexContent);
+    FileUtils::loadFile(ShaderFiles::DIRECTIONAL_SHADOW_DEPTH_F, outFragmentContent);
 }
 
 // Load methods
@@ -131,29 +137,42 @@ void ShaderContentFactory::loadAOMapContentImplementation(std::string &outVertex
     this->uncommentCode(outFragmentContent, "// [AO] ");
 }
 
-void ShaderContentFactory::loadShadowsContentHeader(std::string &outFragmentContent)
+void ShaderContentFactory::loadShadowsContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
 {
-    std::string shaderContent;
-    FileUtils::loadFile(ShaderFiles::SHADOWS_H_F, shaderContent);
+    std::string vertexContent;
+    std::string fragmentContent;
 
-    outFragmentContent = shaderContent + outFragmentContent;
+    FileUtils::loadFile(ShaderFiles::SHADOWS_H_V, vertexContent);
+    FileUtils::loadFile(ShaderFiles::SHADOWS_H_F, fragmentContent);
+
+    outVertexContent = vertexContent + outVertexContent;
+    outFragmentContent = fragmentContent + outFragmentContent;
 }
 
-void ShaderContentFactory::loadShadowsContentImplementation(std::string &outFragmentContent)
+void ShaderContentFactory::loadShadowsContentImplementation(std::string &outVertexContent, std::string &outFragmentContent)
 {
     std::string shaderContent;
     FileUtils::loadFile(ShaderFiles::SHADOWS_IMPL_F, shaderContent);
 
     outFragmentContent = shaderContent + outFragmentContent;
+    this->uncommentCode(outVertexContent, "// [SHADOWS]");
     this->uncommentCode(outFragmentContent, "// [SHADOWS]");
 }
 
 void ShaderContentFactory::uncommentCode(std::string &outShaderContent, const std::string &mark)
 {
+    bool result = false;
+
     std::size_t position = outShaderContent.find(mark);
-    if (position != std::string::npos)
+    while (position != std::string::npos)
+    {
+        result = true;
         outShaderContent = outShaderContent.erase(position, mark.size());
-    else
+
+        position = outShaderContent.find(mark, position);
+    }
+
+    if (!result)
         throw "[ShaderContentFactory] - Didn't find code mark!";
 }
 

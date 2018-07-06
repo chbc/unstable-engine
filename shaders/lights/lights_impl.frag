@@ -1,60 +1,88 @@
 // LIGHTS_IMPL
 
 // Functions
-void Lights_computeEnergies(vec3 normal, vec3 toCameraDirection, vec3 toLightVector, vec3 lightColor, inout float diffuseEnergy, inout float specularEnergy, int XXX_lightIndex)
+vec3 Lights_computeAmbientLight(vec3 materialColor)
 {
-    vec3 toLightDirection = normalize(toLightVector);
-    vec3 halfVector = normalize(toLightDirection + toCameraDirection);
+    return lights.ambientLightColor * materialColor;
+}
 
-    float shadow = 0;
-    // [SHADOWS] shadow = Shadows_computeShadow(-toLightVector, XXX_lightIndex);
+void Lights_computeDiffuseAndSpecularLights(inout vec3 kd, inout vec3 ks)
+{
+    vec3 normal = normalize(var_normal);
+    vec3 toCameraDirection = normalize(var_toCameraVector);
 
-    diffuseEnergy = max(dot(normal, toLightVector) * (1 - shadow), 0.0);
-    specularEnergy = max(dot(normal, halfVector) * (1 - shadow), 0.0);
-    if (specularEnergy > 0.0)
-        specularEnergy  = pow(specularEnergy, shininess);
+    // [NORMAL] normal = Normal_computeNormal();
+    Lights_computeDirectionalLights(normal, toCameraDirection, kd, ks);
+    Lights_computePointLights(normal, toCameraDirection, kd, ks);
 }
 
 void Lights_computeDirectionalLights(vec3 normal, vec3 toCameraDirection, inout vec3 kd, inout vec3 ks)
 {
-    float diffuseEnergy =  0.0;
+    float diffuseEnergy = 0.0;
     float specularEnergy = 0.0;
 
     for (int i = 0; i < lights.directionalLightsCount; i++)
     {
         vec3 lightColor = lights.directionalLights[i].color;
-        // ### Lights_computeEnergies(normal, toCameraDirection, -var_directionalLightVectors[i], lightColor, diffuseEnergy, specularEnergy);
+        vec3 toLightDirection = normalize(-var_directionalLightVectors[i]);
+
+        Lights_computeEnergies(normal, toCameraDirection, toLightDirection, diffuseEnergy, specularEnergy);
+
+        float shadow = 0;
+        // [SHADOWS] shadow = Shadows_computeDirectionalLightShadow(normal, toLightDirection, i);
+
+        diffuseEnergy *= (1 - shadow);
+        specularEnergy *= (1 - shadow);
 
         kd = kd + (lightColor * diffuseEnergy);
-        ks = ks + (vec3(1.0) * specularEnergy);
+        ks = ks + (lightColor * specularEnergy);
     }
 }
- 
+
 void Lights_computePointLights(vec3 normal, vec3 toCameraDirection, inout vec3 kd, inout vec3 ks)
 {
-    float diffuseEnergy = 0.0;
-    float specularEnergy = 0.0;
-
+    float diffuseEnergy = 0;
+    float specularEnergy = 0;
     for (int i = 0; i < lights.pointLightsCount; i++)
     {
-        vec3 lightVector = var_toPointLightVectors[i];
-        float distance = length(lightVector);
+        Lights_computeEnergies(normal, toCameraDirection, normalize(var_toPointLightVectors[i]), diffuseEnergy, specularEnergy);
 
-        if (distance < lights.pointLights[i].range)
+        if ((diffuseEnergy > 0) && (length(var_toPointLightVectors[i]) < lights.pointLights[i].range))
         {
+            float shadow = 0;
+            // [SHADOWS] shadow = Shadows_computePointLightShadow(i);
+
+            diffuseEnergy *= (1 - shadow);
+            specularEnergy *= (1 - shadow);
+
+            float attenuation = Lights_getAttenuation(i);
+
             vec3 lightColor = lights.pointLights[i].color;
-            Lights_computeEnergies(normal, toCameraDirection, lightVector, lightColor, diffuseEnergy, specularEnergy, i);
 
-            float attenuation = 1 - (distance / lights.pointLights[i].range);
-            attenuation *= lights.pointLights[i].intensity;
-
-            kd = kd + (lightColor * diffuseEnergy * attenuation);
-            ks = ks + (vec3(1.0) * specularEnergy * attenuation);
+            kd += lightColor * diffuseEnergy * attenuation;
+            ks += lightColor * specularEnergy * attenuation;
         }
     }
 }
 
-vec3 Lights_computeAmbientLight(vec3 materialColor)
+void Lights_computeEnergies(vec3 normal, vec3 toCameraDirection, vec3 toLightDirection, inout float diffuseEnergy, inout float specularEnergy)
 {
-    return lights.ambientLightColor * materialColor;
+    vec3 halfVector = normalize(toLightDirection + toCameraDirection);
+
+    diffuseEnergy = max(dot(normal, toLightDirection), 0.0);
+    specularEnergy = max(dot(normal, halfVector), 0.0);
+
+    if (specularEnergy > 0.0)
+        specularEnergy = pow(specularEnergy, shininess);
+}
+
+float Lights_getAttenuation(int lightIndex)
+{
+    float result = 0.0f;
+
+    float distance = length(var_toPointLightVectors[lightIndex]);
+    result = 1 - (distance / lights.pointLights[lightIndex].range);
+    result *= lights.pointLights[lightIndex].intensity;
+
+    return result;
 }

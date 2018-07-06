@@ -80,7 +80,7 @@ protected:
     virtual void bindFrameBuffer(uint32_t fbo) =0;
     virtual void unbindFrameBuffer() =0;
     virtual void setViewport(uint32_t width, uint32_t height) =0;
-    virtual void activateShadowMapTexture(uint32_t unit, uint32_t textureId) =0;
+    virtual void activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap = false) =0;
     virtual void enableFrontCullFace() =0;
     virtual void disableFrontCullFace() =0;
 

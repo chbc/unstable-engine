@@ -22,9 +22,12 @@ namespace ShaderFiles
     const std::string LIGHTS_H_F    = "../../shaders/lights/lights_h.frag";
     const std::string LIGHTS_IMPL_F = "../../shaders/lights/lights_impl.frag";
 
-    const std::string DEPTH_V = "../../shaders/shadows/point_shadow_depth.vert";
-    const std::string DEPTH_F = "../../shaders/shadows/point_shadow_depth.frag";
-    const std::string DEPTH_G = "../../shaders/shadows/point_shadow_depth.geom";
+    const std::string POINT_SHADOW_DEPTH_V = "../../shaders/shadows/point_shadow_depth.vert";
+    const std::string POINT_SHADOW_DEPTH_F = "../../shaders/shadows/point_shadow_depth.frag";
+    const std::string POINT_SHADOW_DEPTH_G = "../../shaders/shadows/point_shadow_depth.geom";
+
+    const std::string DIRECTIONAL_SHADOW_DEPTH_V = "../../shaders/shadows/directional_shadow_depth.vert";
+    const std::string DIRECTIONAL_SHADOW_DEPTH_F = "../../shaders/shadows/directional_shadow_depth.frag";
 
     const std::string DIFFUSE_H_F       = "../../shaders/diffuse/diffuse_h.frag";
     const std::string DIFFUSE_IMPL_F    = "../../shaders/diffuse/diffuse_impl.frag";
@@ -40,6 +43,7 @@ namespace ShaderFiles
     const std::string AMBIENT_OCCLUSION_H_F     = "../../shaders/ambientOcclusion/ambientOcclusion_h.frag";
     const std::string AMBIENT_OCCLUSION_IMPL_F  = "../../shaders/ambientOcclusion/ambientOcclusion_impl.frag";
 
+    const std::string SHADOWS_H_V = "../../shaders/shadows/shadows_h.vert";
     const std::string SHADOWS_H_F = "../../shaders/shadows/shadows_h.frag";
     const std::string SHADOWS_IMPL_F = "../../shaders/shadows/shadows_impl.frag";
 }

@@ -10,15 +10,15 @@ using namespace sre;
 */
 class SampleApplication : public RenderEngine
 {
-private:
-	Entity *cube;
-
 public:
 	SampleApplication();
 
 protected:
 	void onInit();
 	void onUpdate(unsigned int elapsedTime);
+
+private:
+    void createRoom();
 };
 
 #endif
