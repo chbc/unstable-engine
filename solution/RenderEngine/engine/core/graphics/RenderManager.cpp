@@ -84,7 +84,6 @@ void RenderManager::addMesh(MeshComponent *mesh)
     if (renderer == nullptr)
     {
         renderer = new Renderer{mesh->getMaterial(), this->shaderManager, this->graphicsWrapper};
-        renderer->loadShader();
         this->renders.emplace_back(renderer);
     }
     

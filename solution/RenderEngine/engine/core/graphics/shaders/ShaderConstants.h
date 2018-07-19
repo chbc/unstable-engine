@@ -22,6 +22,16 @@ namespace ShaderFiles
     const std::string LIGHTS_H_F    = "../../shaders/lights/lights_h.frag";
     const std::string LIGHTS_IMPL_F = "../../shaders/lights/lights_impl.frag";
 
+    const std::string DIRECTIONAL_LIGHTS_H_V    = "../../shaders/lights/directional_lights_h.vert";
+    const std::string DIRECTIONAL_LIGHTS_IMPL_V = "../../shaders/lights/directional_lights_impl.vert";
+    const std::string DIRECTIONAL_LIGHTS_H_F    = "../../shaders/lights/directional_lights_h.frag";
+    const std::string DIRECTIONAL_LIGHTS_IMPL_F = "../../shaders/lights/directional_lights_impl.frag";
+
+    const std::string POINT_LIGHTS_H_V      = "../../shaders/lights/point_lights_h.vert";
+    const std::string POINT_LIGHTS_IMPL_V   = "../../shaders/lights/point_lights_impl.vert";
+    const std::string POINT_LIGHTS_H_F      = "../../shaders/lights/point_lights_h.frag";
+    const std::string POINT_LIGHTS_IMPL_F   = "../../shaders/lights/point_lights_impl.frag";
+
     const std::string POINT_SHADOW_DEPTH_V = "../../shaders/shadows/point_shadow_depth.vert";
     const std::string POINT_SHADOW_DEPTH_F = "../../shaders/shadows/point_shadow_depth.frag";
     const std::string POINT_SHADOW_DEPTH_G = "../../shaders/shadows/point_shadow_depth.geom";
@@ -37,6 +47,12 @@ namespace ShaderFiles
     const std::string NORMAL_H_F    = "../../shaders/normal/normal_h.frag";
     const std::string NORMAL_IMPL_F = "../../shaders/normal/normal_impl.frag";
 
+    const std::string NORMAL_DIRECTIONAL_H_V = "../../shaders/normal/normal_directional_h.vert";
+    const std::string NORMAL_DIRECTIONAL_IMPL_V = "../../shaders/normal/normal_directional_impl.vert";
+
+    const std::string NORMAL_POINT_H_V = "../../shaders/normal/normal_point_h.vert";
+    const std::string NORMAL_POINT_IMPL_V = "../../shaders/normal/normal_point_impl.vert";
+
     const std::string SPECULAR_H_F      = "../../shaders/specular/specular_h.frag";
     const std::string SPECULAR_IMPL_F   = "../../shaders/specular/specular_impl.frag";
 
@@ -45,6 +61,7 @@ namespace ShaderFiles
 
     const std::string SHADOWS_H_V = "../../shaders/shadows/shadows_h.vert";
     const std::string SHADOWS_H_F = "../../shaders/shadows/shadows_h.frag";
+    const std::string SHADOWS_IMPL_V = "../../shaders/shadows/shadows_impl.vert";
     const std::string SHADOWS_IMPL_F = "../../shaders/shadows/shadows_impl.frag";
 }
 
@@ -67,10 +84,7 @@ namespace ShaderVariables
         const std::string NORMAL_TEXTURE        = "normalTexture";
         const std::string SPECULAR_TEXTURE      = "specularTexture";
         const std::string SHADOW_MAP            = "shadowMap";
-
-        const std::string AMBIENT_LIGHT_COLOR       = "lights.ambientLightColor";
-        const std::string DIRECTIONAL_LIGHTS_COUNT  = "lights.directionalLightsCount";
-        const std::string POINT_LIGHTS_COUNT        = "lights.pointLightsCount";
+        const std::string AMBIENT_LIGHT_COLOR   = "ambientLightColor";
     }
 
     enum Type
@@ -93,9 +107,7 @@ namespace ShaderVariables
         SPECULAR_TEXTURE,
         SHADOW_MAP,
 
-        AMBIENT_LIGHT_COLOR,
-        DIRECTIONAL_LIGHTS_COUNT,
-        POINT_LIGHTS_COUNT
+        AMBIENT_LIGHT_COLOR
     };
 
     const std::unordered_map<ShaderVariables::Type, std::string> Map
@@ -118,8 +130,6 @@ namespace ShaderVariables
         { SPECULAR_TEXTURE,             Names::SPECULAR_TEXTURE             },
         { SHADOW_MAP,                   Names::SHADOW_MAP                   },
         { AMBIENT_LIGHT_COLOR,          Names::AMBIENT_LIGHT_COLOR          },
-        { DIRECTIONAL_LIGHTS_COUNT,     Names::DIRECTIONAL_LIGHTS_COUNT     },
-        { POINT_LIGHTS_COUNT,           Names::POINT_LIGHTS_COUNT           }
     };
 }
 

@@ -1,11 +1,13 @@
 // SHADOWS_IMPL
+
+/* // ### POINT LIGHT 
 vec3 sampleOffsetDirections[5] = vec3[]
 (
-    vec3(1, 1, 1),  /*vec3(1, -1, 1),     vec3(-1, -1, 1),    /*vec3(-1, 1, 1), */
-    vec3(1, 1, -1), /*vec3(1, -1, -1),    vec3(-1, -1, -1),   /*vec3(-1, 1, -1),*/
-    vec3(1, 1, 0),  /*vec3(1, -1, 0),     vec3(-1, -1, 0),    /*vec3(-1, 1, 0), */
-    vec3(1, 0, 1),  /*vec3(-1, 0, 1),     vec3(1, 0, -1),     /*vec3(-1, 0, -1),*/
-    vec3(0, 1, 1)  /*vec3(0, -1, 1),     vec3(0, -1, -1)    /*vec3(0, 1, -1)  */
+    vec3(1, 1, 1),  /*vec3(1, -1, 1),     vec3(-1, -1, 1),    /*vec3(-1, 1, 1), 
+    vec3(1, 1, -1), /*vec3(1, -1, -1),    vec3(-1, -1, -1),   /*vec3(-1, 1, -1),
+    vec3(1, 1, 0),  /*vec3(1, -1, 0),     vec3(-1, -1, 0),    /*vec3(-1, 1, 0), 
+    vec3(1, 0, 1),  /*vec3(-1, 0, 1),     vec3(1, 0, -1),     /*vec3(-1, 0, -1),
+    vec3(0, 1, 1)   /*vec3(0, -1, 1),     vec3(0, -1, -1)    /*vec3(0, 1, -1)  
 );
 
 float Shadows_computePointLightShadow(int lightIndex)
@@ -37,10 +39,11 @@ float Shadows_computePointLightShadow(int lightIndex)
     float closestDepth = texture(shadowMaps[XXX_lightIndex], toFragmentVector).r * farPlane;
     if (currentDepth - bias > closestDepth)
     result = 1.0;
-    */
+    * /
 
     return result;
 }
+*/
 
 float Shadows_computeDirectionalLightShadow(vec3 normal, vec3 toLightDirection, int lightIndex)
 {

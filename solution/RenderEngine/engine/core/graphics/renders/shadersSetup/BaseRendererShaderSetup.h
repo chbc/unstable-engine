@@ -1,6 +1,8 @@
 #ifndef _BASE_RENDERER_SHADER_SETUP_H_
 #define _BASE_RENDERER_SHADER_SETUP_H_
 
+#include <engine/core/graphics/shaders/ShaderLightData.h>
+
 namespace sre
 {
 
@@ -22,6 +24,7 @@ public:
 private:
     virtual void onSceneLoaded(Shader *shader);
     virtual void setupShaderValues(Shader *shader);
+    virtual void getLightData(struct ShaderLightData &lightData) { }
 
 friend class Renderer;
 };

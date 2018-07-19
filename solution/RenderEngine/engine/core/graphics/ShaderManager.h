@@ -7,6 +7,7 @@
 #include "engine/utils/memory_aliases.h"
 #include "shaders/ShaderContentFactory.h"
 #include "shaders/Shader.h"
+#include "shaders/ShaderLightData.h"
 
 namespace sre
 {
@@ -29,13 +30,13 @@ private:
 
     // main load function
     template <size_t SIZE> 
-    Shader *loadShader(const std::bitset<SIZE> &componentsBitset)
+    Shader *loadShader(const std::bitset<SIZE> &componentsBitset, const ShaderLightData &lightData)
     {
         std::string vertexContent;
         std::string fragmentContent;
 
         ShaderContentFactory contentFactory;
-        contentFactory.createShaderContent(componentsBitset, vertexContent, fragmentContent);
+        contentFactory.createShaderContent(componentsBitset, vertexContent, fragmentContent, lightData);
 
         return this->loadShader(vertexContent, fragmentContent);
     }

@@ -6,11 +6,10 @@
 namespace sre
 {
 
-class FileUtils
+namespace FileUtils
 {
-	public:
-		static void loadFile(const std::string &fileName, std::string &dest); // throws "file can't be found"
-};
+    void loadFile(const std::string &fileName, std::string &dest); // throws "file can't be found"
+}
 
 } // namespace
 #endif

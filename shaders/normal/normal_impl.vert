@@ -3,17 +3,13 @@
 void Normal_setup()
 {
     mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));
-    vec3 T = normalize(normalMatrix * in_tangent);
-    vec3 B = normalize(normalMatrix * in_bitangent);
-    vec3 N = normalize(normalMatrix * in_normal);    
-    
-    mat3 TBN = transpose(mat3(T, B, N));  
-	var_toCameraVector = TBN * var_toCameraVector;
-	
-	
-	for (int i = 0; i < lights.pointLightsCount; i++)
-		var_toPointLightVectors[i] = TBN * var_toPointLightVectors[i];
-	
-	for (int i = 0; i < lights.directionalLightsCount; i++)
-		var_directionalLightVectors[i] = TBN * lights.directionalLights[i].direction;
+    vec3 tangent = normalize(normalMatrix * in_tangent);
+    vec3 bitangent = normalize(normalMatrix * in_bitangent);
+    vec3 normal = normalize(normalMatrix * in_normal);
+
+    mat3 tbnMatrix = transpose(mat3(tangent, bitangent, normal));
+    var_toCameraVector = tbnMatrix * var_toCameraVector;
+
+    // [DIRECTIONAL_LIGHTS] Normal_setupDirectionalLights(tbnMatrix, MAX_DIRECTIONAL_LIGHTS);
+    // [POINT_LIGHTS] Normal_setupPointLights(tbnMatrix, MAX_POINT_LIGHTS);
 }

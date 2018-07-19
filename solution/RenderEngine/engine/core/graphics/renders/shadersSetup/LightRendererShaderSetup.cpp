@@ -1,28 +1,25 @@
 #include "LightRendererShaderSetup.h"
 #include <engine/core/graphics/LightManager.h>
 #include <engine/core/graphics/ShaderManager.h>
+#include <engine/core/singletonsManager/SingletonsManager.h>
 #include <engine/entities/components/lights/PointLightComponent.h>
 
 namespace sre
 {
 
 LightRendererShaderSetup::LightRendererShaderSetup(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
-    : ShadowRendererShaderSetup(shaderManager, graphicsWrapper)
-{ }
+    : BaseRendererShaderSetup(shaderManager, graphicsWrapper)
+{
+    this->lightManager = SingletonsManager::getInstance()->get<LightManager>();
+}
 
 void LightRendererShaderSetup::onSceneLoaded(Shader *shader)
 {
     if (lightManager->directionalLights.size() > 0)
-    {
-        this->shaderManager->setupUniformLocation(shader, ShaderVariables::DIRECTIONAL_LIGHTS_COUNT);
         this->setupDirectionalsVariablesLocations(shader);
-    }
 
     if (this->lightManager->pointLights.size() > 0)
-    {
-        shaderManager->setupUniformLocation(shader, ShaderVariables::POINT_LIGHTS_COUNT);
         this->setupPointsVariablesLocations(shader);
-    }
 
     shaderManager->setupUniformLocation(shader, ShaderVariables::AMBIENT_LIGHT_COLOR);
 }
@@ -92,8 +89,6 @@ void LightRendererShaderSetup::setupDirectionalValues(Shader *shader)
         sprintf_s(variable, DIRECTIONAL_COLOR_FORMAT, i);
         shaderManager->setVec3(shader, variable, &color[0]);
     }
-
-    shaderManager->setInt(shader, ShaderVariables::DIRECTIONAL_LIGHTS_COUNT, count);
 }
 
 void LightRendererShaderSetup::setupPointValues(Shader *shader)
@@ -118,8 +113,13 @@ void LightRendererShaderSetup::setupPointValues(Shader *shader)
         sprintf_s(variable, POINT_INTENSITY_FORMAT, i);
         shaderManager->setFloat(shader, variable, light->getIntensity());
     }
+}
 
-    shaderManager->setInt(shader, ShaderVariables::POINT_LIGHTS_COUNT, count);
+void LightRendererShaderSetup::getLightData(ShaderLightData &lightData)
+{
+    lightData.receivesLight = true;
+    lightData.directionalLightsCount = this->lightManager->directionalLights.size();
+    lightData.pointLightsCount = this->lightManager->pointLights.size();
 }
 
 } // namespace

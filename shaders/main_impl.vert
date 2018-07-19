@@ -7,7 +7,7 @@ void main()
 	var_toCameraVector = cameraPosition - vertexPosition.xyz;
 	
 	// From lights.vert
-	Lights_setup(vertexPosition.xyz);
+	// [LIGHTS] Lights_setup(vertexPosition.xyz);
 
 	gl_Position = projectionMatrix * viewMatrix * vertexPosition;
 	

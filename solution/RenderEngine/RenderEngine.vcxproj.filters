@@ -395,6 +395,12 @@
     <ClInclude Include="engine\core\graphics\renders\ShadowRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\core\graphics\shaders\ShaderLightData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\utils\StringUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="engine\entities\components\AComponentsHolder.tpp" />

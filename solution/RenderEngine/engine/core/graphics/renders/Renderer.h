@@ -10,6 +10,7 @@
 #include <glm/vec3.hpp>
 #include <list>
 #include <unordered_map>
+#include <engine/core/graphics/shaders/ShaderLightData.h>
 
 namespace sre
 {
@@ -30,6 +31,8 @@ private:
 
     ShaderManager *shaderManager;
     AGraphicsWrapper *graphicsWrapper;
+
+    ShaderLightData lightData;
 
 public:
     virtual ~Renderer();

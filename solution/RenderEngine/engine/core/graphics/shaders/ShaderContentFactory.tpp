@@ -2,8 +2,15 @@ namespace sre
 {
 
 template <size_t SIZE>
-void ShaderContentFactory::createShaderContent(const std::bitset<SIZE> &componentsBitset, std::string &outVertexContent, std::string &outFragmentContent)
+void ShaderContentFactory::createShaderContent
+(
+    const std::bitset<SIZE> &componentsBitset, 
+    std::string &outVertexContent, std::string &outFragmentContent,
+    const ShaderLightData &lightData
+)
 {
+    this->lightData = lightData;
+
     std::string vertexContentHeader;
     std::string fragmentContentHeader;
     std::string vertexContentImpl;
@@ -40,9 +47,17 @@ void ShaderContentFactory::createShaderContent(const std::bitset<SIZE> &componen
         }
     }
 
-    // ###
-    this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
-    this->loadShadowsContentImplementation(vertexContentImpl, fragmentContentImpl);
+    if (lightData.receivesLight)
+    {
+        this->loadLightsContentHeader(vertexContentHeader, fragmentContentHeader);
+        this->loadLightsContentImplementation(vertexContentImpl, fragmentContentImpl);
+    }
+
+    if (lightData.receivesShadow)
+    {
+        this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
+        this->loadShadowsContentImplementation(vertexContentImpl, fragmentContentImpl);
+    }
 
     outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
     outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;

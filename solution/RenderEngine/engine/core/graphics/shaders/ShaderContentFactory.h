@@ -3,6 +3,7 @@
 
 #include <string>
 #include <bitset>
+#include "ShaderLightData.h"
 
 namespace sre
 {
@@ -10,8 +11,16 @@ namespace sre
 class ShaderContentFactory
 {
 private:
+    ShaderLightData lightData;
+
+private:
     template <size_t SIZE>
-    void createShaderContent(const std::bitset<SIZE> &componentsBitset, std::string &outVertexContent, std::string &outFragmentContent);
+    void createShaderContent
+    (
+        const std::bitset<SIZE> &componentsBitset, 
+        std::string &outVertexContent, std::string &outFragmentContent, 
+        const ShaderLightData &lightData
+    );
     void createGUIShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
     void createPointLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent, std::string &outGeometryContent);
     void createDirectionalLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
@@ -30,6 +39,9 @@ private:
 
     void loadAOMapContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
     void loadAOMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
+
+    void loadLightsContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
+    void loadLightsContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 
     void loadShadowsContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
     void loadShadowsContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);

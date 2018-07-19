@@ -18,14 +18,12 @@ void SampleApplication::onInit()
     
     this->sceneManager->addEntity(cube);
 
-    /*
     cube = this->sceneManager->createCubeEntity();
     cube->getTransform()->setPosition(glm::vec3(3.0f, 4.0f, 0.0f));
     cubeMesh = cube->getComponent<MeshComponent>();
     cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
 
     this->sceneManager->addEntity(cube);
-    */
 
     this->createRoom();
     /*
@@ -36,7 +34,7 @@ void SampleApplication::onInit()
     
     // light //
     DirectionalLightComponent *dLight1 = this->sceneManager->addDirectionalLight();
-    dLight1->setDirection(glm::vec3(0.0f, -1.0f, -1.0f));
+    dLight1->setDirection(glm::vec3(0.0f, -0.25f, -1.0f));
     dLight1->setColor(glm::vec3(1.0f));
     
 /*
@@ -144,7 +142,6 @@ void SampleApplication::createRoom()
 
     this->sceneManager->addEntity(plane);
 
-    /*
     // back //
     plane = this->sceneManager->createPlaneEntity(20);
     transform = plane->getTransform();
@@ -217,5 +214,4 @@ void SampleApplication::createRoom()
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
 
     this->sceneManager->addEntity(plane);
-    */
 }

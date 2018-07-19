@@ -49,12 +49,14 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
 
     if (material->receivesLight)
     {
+        this->lightData.receivesLight = true;
         item = new LightRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
         this->shaderSetupItems[typeid(LightRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
     }
 
     if (material->receivesShadow)
     {
+        this->lightData.receivesShadow = true;
         item = new ShadowRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
         this->shaderSetupItems[typeid(ShadowRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
     }
@@ -66,22 +68,23 @@ Renderer::~Renderer()
         this->graphicsWrapper->deleteBuffers(item);
 }
 
-void Renderer::loadShader()
-{
-    this->shader = this->shaderManager->loadShader(this->componentsBitset);
-}
-
 void Renderer::onSceneLoaded()
 {
+    this->loadShader();
+
     for (const auto &item : this->shaderSetupItems)
-    {
         item.second->onSceneLoaded(this->shader);
-    }
 
     for (const UPTR<ColorRendererComponent> &item : this->components)
-    {
         item->onSceneLoaded(this->shader);
-    }
+}
+
+void Renderer::loadShader()
+{
+    for (const auto &item : this->shaderSetupItems)
+        item.second->getLightData(this->lightData);
+
+    this->shader = this->shaderManager->loadShader(this->componentsBitset, this->lightData);
 }
 
 void Renderer::addMesh(MeshComponent *mesh)
@@ -97,9 +100,7 @@ void Renderer::render(MatrixManager *matrixManager, const glm::vec3 &cameraPosit
     this->shaderManager->enableShader(this->shader);
 
     for (const auto &item : this->shaderSetupItems)
-    {
         item.second->setupShaderValues(this->shader);
-    }
 
     this->shaderManager->setVec3(shader, ShaderVariables::CAMERA_POSITION, &cameraPosition[0]);
 

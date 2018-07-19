@@ -6,22 +6,26 @@
 namespace sre
 {
 
-class LightRendererShaderSetup : public ShadowRendererShaderSetup
+class LightRendererShaderSetup : public BaseRendererShaderSetup
 {
-private:
-    const char *DIRECTIONAL_DIRECTION_FORMAT = "lights.directionalLights[%d].direction";
-    const char *DIRECTIONAL_COLOR_FORMAT = "lights.directionalLights[%d].color";
+protected:
+    class LightManager *lightManager;
 
-    const char *POINT_POSITION_FORMAT = "lights.pointLights[%d].position";
-    const char *POINT_COLOR_FORMAT = "lights.pointLights[%d].color";
-    const char *POINT_RANGE_FORMAT = "lights.pointLights[%d].range";
-    const char *POINT_INTENSITY_FORMAT = "lights.pointLights[%d].intensity";
+private:
+    const char *DIRECTIONAL_DIRECTION_FORMAT = "directionalLights[%d].direction";
+    const char *DIRECTIONAL_COLOR_FORMAT = "directionalLights[%d].color";
+
+    const char *POINT_POSITION_FORMAT = "pointLights[%d].position";
+    const char *POINT_COLOR_FORMAT = "pointLights[%d].color";
+    const char *POINT_RANGE_FORMAT = "pointLights[%d].range";
+    const char *POINT_INTENSITY_FORMAT = "pointLights[%d].intensity";
 
 protected:
     LightRendererShaderSetup(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
     void onSceneLoaded(Shader *shader) override;
     void setupShaderValues(Shader *shader) override;
+    void getLightData(struct ShaderLightData &lightData) override;
 
 private:
     void setupDirectionalsVariablesLocations(Shader *shader);

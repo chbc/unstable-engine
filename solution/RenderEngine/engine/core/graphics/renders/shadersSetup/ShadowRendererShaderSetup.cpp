@@ -58,8 +58,13 @@ void ShadowRendererShaderSetup::setupShaderValues(Shader *shader)
         this->shaderManager->setInt(shader, variable, EMaterialMap::SHADOW + i);
 
         sprintf_s(variable, DIRECTIONAL_LIGHT_SPACE_FORMAT, i);
-        this->shaderManager->setMat4(shader, ShaderVariables::LIGHT_SPACE_MATRIX, &light->lightSpaceMatrix[0][0]);
+        this->shaderManager->setMat4(shader, variable, &light->lightSpaceMatrix[0][0]);
     }
+}
+
+void ShadowRendererShaderSetup::getLightData(ShaderLightData &lightData)
+{
+    lightData.receivesShadow = true;
 }
 
 } // namespace

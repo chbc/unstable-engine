@@ -4,7 +4,10 @@
 namespace sre
 {
 
-void FileUtils::loadFile(const std::string &fileName, std::string &dest)
+namespace FileUtils
+{
+
+void loadFile(const std::string &fileName, std::string &dest)
 {
 	std::ifstream in(fileName.c_str());
 
@@ -21,5 +24,7 @@ void FileUtils::loadFile(const std::string &fileName, std::string &dest)
 		dest += '\n';
 	}
 }
+
+} // namespace
 
 } // namespace
