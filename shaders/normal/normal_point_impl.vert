@@ -1,4 +1,4 @@
-// NORMAL_DIRECTIONAL_IMPL //
+// NORMAL_POINT_IMPL //
 
 void Normal_setupPointLights(mat3 tbnMatrix, int lightsCount)
 {

@@ -2,6 +2,7 @@
 
 // Uniform variables
 uniform vec4 materialColor;
+uniform float shininess;
 
 // Varying variables
 in vec3 var_normal;

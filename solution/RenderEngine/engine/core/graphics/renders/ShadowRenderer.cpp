@@ -23,34 +23,11 @@ void ShadowRenderer::onSceneLoaded()
     this->lightManager = singletonsManager->get<LightManager>();
     TextureManager *textureManager = singletonsManager->resolve<TextureManager>();
 
-    if (this->lightManager->pointLights.size() > 0)
-        this->setupPointLightShader(textureManager);
-
     if (this->lightManager->directionalLights.size() > 0)
         this->setupDirectionalLightShader(textureManager);
-}
 
-void ShadowRenderer::setupPointLightShader(TextureManager *textureManager)
-{
-    this->pointLightDepthShader = this->shaderManager->loadPointLightDepthShader();
-
-    for (PointLightComponent *item : this->lightManager->pointLights)
-    {
-        Texture *texture = textureManager->loadCubemapTexture(1024, 1024);
-        item->depthMap = texture->getId();
-        this->graphicsWrapper->generateFrameBuffer(item->fbo, item->depthMap, true);
-    }
-
-    this->shaderManager->setupUniformLocation(this->pointLightDepthShader, ShaderVariables::MODEL_MATRIX);
-    this->shaderManager->setupUniformLocation(this->pointLightDepthShader, ShaderVariables::FAR_PLANE);
-    this->shaderManager->setupUniformLocation(this->pointLightDepthShader, ShaderVariables::LIGHT_POSITION);
-
-    char variable[32];
-    for (unsigned int i = 0; i < 6; ++i)
-    {
-        sprintf_s(variable, POINT_SHADOW_MATRICES_FORMAT, i);
-        this->shaderManager->setupUniformLocation(this->pointLightDepthShader, variable);
-    }
+    if (this->lightManager->pointLights.size() > 0)
+        this->setupPointLightShader(textureManager);
 }
 
 void ShadowRenderer::setupDirectionalLightShader(TextureManager *textureManager)
@@ -65,8 +42,10 @@ void ShadowRenderer::setupDirectionalLightShader(TextureManager *textureManager)
     for (DirectionalLightComponent *item : this->lightManager->directionalLights)
     {
         Texture *texture = textureManager->loadShadowTexture(1024, 1024);
-        item->depthMap = texture->getId();
-        this->graphicsWrapper->generateFrameBuffer(item->fbo, item->depthMap);
+
+        uint32_t fbo;
+        this->graphicsWrapper->generateFrameBuffer(fbo, texture->getId());
+        UPTR<ShadowData> shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
 
         glm::vec3 position = glm::vec3(0.0f) - (item->getDirection() *  10.0f);
 
@@ -78,6 +57,31 @@ void ShadowRenderer::setupDirectionalLightShader(TextureManager *textureManager)
         );
 
         item->lightSpaceMatrix = lightProjection * lightView;
+    }
+}
+
+void ShadowRenderer::setupPointLightShader(TextureManager *textureManager)
+{
+    this->pointLightDepthShader = this->shaderManager->loadPointLightDepthShader();
+
+    for (PointLightComponent *item : this->lightManager->pointLights)
+    {
+        Texture *texture = textureManager->loadCubemapTexture(1024, 1024);
+
+        uint32_t fbo;
+        this->graphicsWrapper->generateFrameBuffer(fbo, texture->getId(), true);
+        item->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
+    }
+
+    this->shaderManager->setupUniformLocation(this->pointLightDepthShader, ShaderVariables::MODEL_MATRIX);
+    this->shaderManager->setupUniformLocation(this->pointLightDepthShader, ShaderVariables::FAR_PLANE);
+    this->shaderManager->setupUniformLocation(this->pointLightDepthShader, ShaderVariables::LIGHT_POSITION);
+
+    char variable[32];
+    for (unsigned int i = 0; i < 6; ++i)
+    {
+        sprintf_s(variable, POINT_SHADOW_MATRICES_FORMAT, i);
+        this->shaderManager->setupUniformLocation(this->pointLightDepthShader, variable);
     }
 }
 
@@ -101,6 +105,31 @@ void ShadowRenderer::render()
     this->graphicsWrapper->unbindFrameBuffer();
 }
 
+void ShadowRenderer::renderDirectionalLightShadows()
+{
+    this->shaderManager->enableShader(this->directionalLightDepthShader);
+
+    for (DirectionalLightComponent *light : this->lightManager->directionalLights)
+    {
+        this->graphicsWrapper->bindFrameBuffer(light->shadowData->fbo);
+        this->graphicsWrapper->clearDepthBuffer();
+        this->shaderManager->setMat4(this->directionalLightDepthShader, ShaderVariables::LIGHT_SPACE_MATRIX, &light->lightSpaceMatrix[0][0]);
+
+        for (MeshComponent *item : this->items)
+        {
+            TransformComponent *transform = item->getTransform();
+            glm::mat4 modelMatrix = transform->getMatrix();
+            this->shaderManager->setMat4(this->directionalLightDepthShader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
+
+            this->graphicsWrapper->bindVAO(item->vao, item->vbo);
+
+            this->graphicsWrapper->enableVertexPositions();
+            this->graphicsWrapper->drawElement(item->meshData->indices.size());
+            this->graphicsWrapper->disableVertexPositions();
+        }
+    }
+}
+
 void ShadowRenderer::renderPointLightShadows()
 {
     this->shaderManager->enableShader(this->pointLightDepthShader);
@@ -108,7 +137,7 @@ void ShadowRenderer::renderPointLightShadows()
     char variable[32];
     for (PointLightComponent *light : this->lightManager->pointLights)
     {
-        this->graphicsWrapper->bindFrameBuffer(light->fbo);
+        this->graphicsWrapper->bindFrameBuffer(light->shadowData->fbo);
         this->graphicsWrapper->clearDepthBuffer();
 
         glm::vec3 lightPosition = light->getPosition();
@@ -128,31 +157,6 @@ void ShadowRenderer::renderPointLightShadows()
             TransformComponent *transform = item->getTransform();
             glm::mat4 modelMatrix = transform->getMatrix();
             this->shaderManager->setMat4(this->pointLightDepthShader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
-
-            this->graphicsWrapper->bindVAO(item->vao, item->vbo);
-
-            this->graphicsWrapper->enableVertexPositions();
-            this->graphicsWrapper->drawElement(item->meshData->indices.size());
-            this->graphicsWrapper->disableVertexPositions();
-        }
-    }
-}
-
-void ShadowRenderer::renderDirectionalLightShadows()
-{
-    this->shaderManager->enableShader(this->directionalLightDepthShader);
-
-    for (DirectionalLightComponent *light : this->lightManager->directionalLights)
-    {
-        this->graphicsWrapper->bindFrameBuffer(light->fbo);
-        this->graphicsWrapper->clearDepthBuffer();
-        this->shaderManager->setMat4(this->directionalLightDepthShader, ShaderVariables::LIGHT_SPACE_MATRIX, &light->lightSpaceMatrix[0][0]);
-
-        for (MeshComponent *item : this->items)
-        {
-            TransformComponent *transform = item->getTransform();
-            glm::mat4 modelMatrix = transform->getMatrix();
-            this->shaderManager->setMat4(this->directionalLightDepthShader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
             this->graphicsWrapper->bindVAO(item->vao, item->vbo);
 

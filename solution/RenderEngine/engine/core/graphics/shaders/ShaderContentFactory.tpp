@@ -26,6 +26,16 @@ void ShaderContentFactory::createShaderContent
                     this->loadColorContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadColorContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
+                case EComponentId::LIT_MATERIAL:
+                    this->loadLightsContentHeader(vertexContentHeader, fragmentContentHeader);
+                    this->loadLightsContentImplementation(vertexContentImpl, fragmentContentImpl);
+
+                    if (this->lightData.hasAnyShadowCaster)
+                    {
+                        this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
+                        this->loadShadowsContentImplementation(vertexContentImpl, fragmentContentImpl);
+                    }
+                    break;
                 case EComponentId::DIFFUSE_MATERIAL:
                     this->loadDiffuseContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadDiffuseContentImplementation(vertexContentImpl, fragmentContentImpl);
@@ -46,19 +56,7 @@ void ShaderContentFactory::createShaderContent
             }
         }
     }
-
-    if (lightData.receivesLight)
-    {
-        this->loadLightsContentHeader(vertexContentHeader, fragmentContentHeader);
-        this->loadLightsContentImplementation(vertexContentImpl, fragmentContentImpl);
-    }
-
-    if (lightData.receivesShadow)
-    {
-        this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
-        this->loadShadowsContentImplementation(vertexContentImpl, fragmentContentImpl);
-    }
-
+    
     outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
     outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
 }

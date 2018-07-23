@@ -115,11 +115,4 @@ void LightRendererShaderSetup::setupPointValues(Shader *shader)
     }
 }
 
-void LightRendererShaderSetup::getLightData(ShaderLightData &lightData)
-{
-    lightData.receivesLight = true;
-    lightData.directionalLightsCount = this->lightManager->directionalLights.size();
-    lightData.pointLightsCount = this->lightManager->pointLights.size();
-}
-
 } // namespace

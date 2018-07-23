@@ -19,14 +19,14 @@ void Entity::onStart()
 {
     this->alive = true;
 
-    for (auto const &item : this->components)
-        item->onStart();
+    for (auto const &item : this->componentsMap)
+        item.second->onStart();
 }
 
 void Entity::update(uint32_t deltaTime)
 {
-	for (auto const &item : this->components)
-		item->update(deltaTime);
+	for (auto const &item : this->componentsMap)
+		item.second->update(deltaTime);
 }
 
 void Entity::addChild(Entity *child)

@@ -8,23 +8,19 @@ namespace sre
 {
 
 DiffuseMaterialComponent::DiffuseMaterialComponent(Material *material, const std::string &fileName) 
-	: AMaterialComponent(material)
+    : AMaterialComponent(material)
 {
-	this->loadTexture(fileName);
+    this->loadTexture(fileName);
 }
 
 void DiffuseMaterialComponent::loadTexture(const std::string &fileName)
 {
-	Texture *texture = SingletonsManager::getInstance()->resolve<RenderManager>()->loadDiffuseTexture(fileName);
-	this->textures.emplace_back(texture);
+    this->texture = SingletonsManager::getInstance()->resolve<RenderManager>()->loadDiffuseTexture(fileName);
 }
 
 uint32_t DiffuseMaterialComponent::getTextureID(uint32_t index)
 {
-	if (index >= this->textures.size())
-		throw "[DiffuseMaterialComponent] texture index out of range!";
-
-	return this->textures[index]->getId();
+    return this->texture->getId();
 }
 
 } // namespace

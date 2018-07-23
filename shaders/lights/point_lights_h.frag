@@ -12,7 +12,7 @@ const int MAX_POINT_LIGHTS = %d;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 
 // Varying variables
-in vec3 var_toPointLightVectors[MAX_DIRECTIONAL_LIGHTS];
+in vec3 var_toPointLightVectors[MAX_POINT_LIGHTS];
 
 // Functions
 void PointLights_compute(vec3 normal, vec3 toCameraDirection, inout vec3 kd, inout vec3 ks);

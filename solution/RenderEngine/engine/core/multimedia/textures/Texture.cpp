@@ -3,13 +3,14 @@
 namespace sre
 {
 
-Texture::Texture(uint32_t id, uint32_t width, uint32_t height, EMaterialMap::Type mapType, std::string fileName)
+Texture::Texture(uint32_t id, uint32_t width, uint32_t height, EMaterialMap::Type mapType, std::string fileName, uint32_t unitOffset)
 {
 	this->id = id;
 	this->width = width;
 	this->height = height;
 	this->mapType = mapType;
 	this->fileName = fileName;
+    this->unit = mapType + unitOffset;
 }
 
 uint32_t Texture::getId()
@@ -30,6 +31,11 @@ uint32_t Texture::getHeight()
 EMaterialMap::Type Texture::getMapType()
 {
 	return this->mapType;
+}
+
+uint32_t Texture::getUnit()
+{
+    return this->unit;
 }
 
 const std::string &Texture::getFileName()

@@ -3,31 +3,28 @@
 
 #include <engine/utils/memory_aliases.h>
 #include <bitset>
-#include <array>
+#include <unordered_map>
 #include "EComponentId.h"
 
 namespace sre
 {
 
-constexpr size_t MAX_COMPONENTS{ 12 };
+constexpr size_t MAX_COMPONENTS{ 13 };
 
 template <typename C>
 class AComponentsHolder
 {
 protected:
-    VECTOR_UPTR<C> components;
     std::bitset<MAX_COMPONENTS> componentsBitset;
-
-private:
-    std::array<C*, MAX_COMPONENTS> componentsArray;
+    std::unordered_map<size_t, UPTR<C>> componentsMap;
 
 public:
     template <typename T> T *getComponent(); // throws "Can't find component"
-    std::vector<C*> getComponents();
     template <typename T> bool hasComponent();
 
 protected:
     template <typename T> void addComponent(T *newComponent);
+    template <typename T> void removeComponent();
 
 private:
     template <typename T>
@@ -42,6 +39,7 @@ private:
 
     // Material components
     template <> std::size_t getComponentId<class ColorMaterialComponent>() { return EComponentId::COLOR_MATERIAL; }
+    template <> std::size_t getComponentId<class LitMaterialComponent>() { return EComponentId::LIT_MATERIAL; }
     template <> std::size_t getComponentId<class DiffuseMaterialComponent>() { return EComponentId::DIFFUSE_MATERIAL; }
     template <> std::size_t getComponentId<class NormalMaterialComponent>() { return EComponentId::NORMAL_MATERIAL; }
     template <> std::size_t getComponentId<class SpecularMaterialComponent>() { return EComponentId::SPECULAR_MATERIAL; }
@@ -53,6 +51,7 @@ private:
 
     // Renderer components
     template <> std::size_t getComponentId<class ColorRendererComponent>() { return EComponentId::COLOR_MATERIAL; }
+    template <> std::size_t getComponentId<class LitRendererComponent>() { return EComponentId::LIT_MATERIAL; }
     template <> std::size_t getComponentId<class DiffuseRendererComponent>() { return EComponentId::DIFFUSE_MATERIAL; }
     template <> std::size_t getComponentId<class NormalRendererComponent>() { return EComponentId::NORMAL_MATERIAL; }
     template <> std::size_t getComponentId<class SpecularRendererComponent>() { return EComponentId::SPECULAR_MATERIAL; }

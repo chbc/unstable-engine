@@ -6,6 +6,7 @@
 #include <engine/core/graphics/MatrixManager.h>
 #include <engine/core/graphics/ShaderManager.h>
 #include <engine/core/singletonsManager/SingletonsManager.h>
+#include <engine/core/graphics/LightManager.h>
 
 #include "shadersSetup/LightRendererShaderSetup.h"
 
@@ -27,6 +28,9 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
                 case EComponentId::COLOR_MATERIAL:
                     this->addComponent<ColorRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
+                case EComponentId::LIT_MATERIAL:
+                    this->addComponent<LitRendererComponent>(this->shaderManager, this->graphicsWrapper);
+                    break;
                 case EComponentId::DIFFUSE_MATERIAL:
                     this->addComponent<DiffuseRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
@@ -43,23 +47,6 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
             }
         }
     }
-
-    BaseRendererShaderSetup *item = new BaseRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
-    this->shaderSetupItems[typeid(BaseRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
-
-    if (material->receivesLight)
-    {
-        this->lightData.receivesLight = true;
-        item = new LightRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
-        this->shaderSetupItems[typeid(LightRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
-    }
-
-    if (material->receivesShadow)
-    {
-        this->lightData.receivesShadow = true;
-        item = new ShadowRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
-        this->shaderSetupItems[typeid(ShadowRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
-    }
 }
 
 Renderer::~Renderer()
@@ -70,20 +57,42 @@ Renderer::~Renderer()
 
 void Renderer::onSceneLoaded()
 {
+    this->loadShaderSetupItems();
     this->loadShader();
 
     for (const auto &item : this->shaderSetupItems)
         item.second->onSceneLoaded(this->shader);
 
-    for (const UPTR<ColorRendererComponent> &item : this->components)
-        item->onSceneLoaded(this->shader);
+    for (const auto &item : this->componentsMap)
+        item.second->onSceneLoaded(this->shader);
+}
+
+void Renderer::loadShaderSetupItems()
+{
+    BaseRendererShaderSetup *item = new BaseRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
+    this->shaderSetupItems[typeid(BaseRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
+
+    LightManager *lightManager = SingletonsManager::getInstance()->get<LightManager>();
+    if (this->hasComponent<LitRendererComponent>() && lightManager->hasAnyLight())
+    {
+        item = new LightRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
+        this->shaderSetupItems[typeid(LightRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
+
+        this->lightData.receivesLight = true;
+        this->lightData.directionalLightsCount  = lightManager->directionalLights.size();
+        this->lightData.pointLightsCount        = lightManager->pointLights.size();
+        this->lightData.hasAnyShadowCaster      = lightManager->hasAnyShadowCaster();
+
+        if (this->lightData.hasAnyShadowCaster)
+        {
+            item = new ShadowRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
+            this->shaderSetupItems[typeid(ShadowRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
+        }
+    }
 }
 
 void Renderer::loadShader()
 {
-    for (const auto &item : this->shaderSetupItems)
-        item.second->getLightData(this->lightData);
-
     this->shader = this->shaderManager->loadShader(this->componentsBitset, this->lightData);
 }
 
@@ -112,16 +121,16 @@ void Renderer::render(MatrixManager *matrixManager, const glm::vec3 &cameraPosit
         this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
         this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
-        for (const UPTR<ColorRendererComponent> &item : this->components)
+        for (const auto &item : this->componentsMap)
         {
-            item->setupShaderValues(mesh, this->shader);
-            item->preDraw();
+            item.second->setupShaderValues(mesh, this->shader);
+            item.second->preDraw();
         }
 
         this->graphicsWrapper->drawElement(mesh->meshData->indices.size());
 
-        for (const UPTR<ColorRendererComponent> &item : this->components)
-            item->postDraw();
+        for (const auto &item : this->componentsMap)
+            item.second->postDraw();
     }
 
     this->shaderManager->disableShader();
@@ -145,13 +154,7 @@ bool Renderer::contains(MeshComponent *mesh)
 
 bool Renderer::fitsWithMesh(MeshComponent *mesh)
 {
-    Material *material = mesh->getMaterial();
-    return
-    (
-        (this->componentsBitset == material->componentsBitset) &&
-        ((this->shaderSetupItems.count(typeid(LightRendererShaderSetup).name()) > 0) == material->receivesLight) &&
-        ((this->shaderSetupItems.count(typeid(ShadowRendererShaderSetup).name()) > 0) == material->receivesShadow)
-    );
+    return (this->componentsBitset == mesh->getMaterial()->componentsBitset);
 }
 
 void Renderer::removeDestroyedEntities()

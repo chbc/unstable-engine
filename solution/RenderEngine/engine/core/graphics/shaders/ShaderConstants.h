@@ -47,11 +47,11 @@ namespace ShaderFiles
     const std::string NORMAL_H_F    = "../../shaders/normal/normal_h.frag";
     const std::string NORMAL_IMPL_F = "../../shaders/normal/normal_impl.frag";
 
-    const std::string NORMAL_DIRECTIONAL_H_V = "../../shaders/normal/normal_directional_h.vert";
+    const std::string NORMAL_DIRECTIONAL_H_V    = "../../shaders/normal/normal_directional_h.vert";
     const std::string NORMAL_DIRECTIONAL_IMPL_V = "../../shaders/normal/normal_directional_impl.vert";
 
-    const std::string NORMAL_POINT_H_V = "../../shaders/normal/normal_point_h.vert";
-    const std::string NORMAL_POINT_IMPL_V = "../../shaders/normal/normal_point_impl.vert";
+    const std::string NORMAL_POINT_H_V      = "../../shaders/normal/normal_point_h.vert";
+    const std::string NORMAL_POINT_IMPL_V   = "../../shaders/normal/normal_point_impl.vert";
 
     const std::string SPECULAR_H_F      = "../../shaders/specular/specular_h.frag";
     const std::string SPECULAR_IMPL_F   = "../../shaders/specular/specular_impl.frag";
@@ -59,10 +59,15 @@ namespace ShaderFiles
     const std::string AMBIENT_OCCLUSION_H_F     = "../../shaders/ambientOcclusion/ambientOcclusion_h.frag";
     const std::string AMBIENT_OCCLUSION_IMPL_F  = "../../shaders/ambientOcclusion/ambientOcclusion_impl.frag";
 
-    const std::string SHADOWS_H_V = "../../shaders/shadows/shadows_h.vert";
-    const std::string SHADOWS_H_F = "../../shaders/shadows/shadows_h.frag";
-    const std::string SHADOWS_IMPL_V = "../../shaders/shadows/shadows_impl.vert";
-    const std::string SHADOWS_IMPL_F = "../../shaders/shadows/shadows_impl.frag";
+    const std::string SHADOWS_DIRECTIONAL_H_V       = "../../shaders/shadows/shadows_directional_h.vert";
+    const std::string SHADOWS_DIRECTIONAL_H_F       = "../../shaders/shadows/shadows_directional_h.frag";
+    const std::string SHADOWS_DIRECTIONAL_IMPL_V    = "../../shaders/shadows/shadows_directional_impl.vert";
+    const std::string SHADOWS_DIRECTIONAL_IMPL_F    = "../../shaders/shadows/shadows_directional_impl.frag";
+
+    const std::string SHADOWS_POINT_H_V     = "../../shaders/shadows/shadows_point_h.vert";
+    const std::string SHADOWS_POINT_H_F     = "../../shaders/shadows/shadows_point_h.frag";
+    const std::string SHADOWS_POINT_IMPL_V  = "../../shaders/shadows/shadows_point_impl.vert";
+    const std::string SHADOWS_POINT_IMPL_F  = "../../shaders/shadows/shadows_point_impl.frag";
 }
 
 namespace ShaderVariables

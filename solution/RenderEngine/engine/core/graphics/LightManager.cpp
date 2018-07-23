@@ -16,6 +16,20 @@ void LightManager::setAmbientLightColor(const glm::vec3 &ambientLightColor)
     this->ambientLightColor = ambientLightColor;
 }
 
+bool LightManager::hasAnyLight()
+{
+    return (!this->directionalLights.empty() || !this->pointLights.empty());
+}
+
+bool LightManager::hasAnyShadowCaster()
+{
+    return
+    (
+        (!this->directionalLights.empty() && this->directionalLights[0]->hasShadowData()) ||
+        (!this->pointLights.empty() && this->pointLights[0]->hasShadowData())
+    );
+}
+
 DirectionalLightComponent *LightManager::addDirectionalLight(Entity *entity)
 {
     DirectionalLightComponent *newLight = entity->addComponent<DirectionalLightComponent>();

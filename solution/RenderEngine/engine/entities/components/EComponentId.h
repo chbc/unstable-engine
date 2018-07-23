@@ -18,6 +18,7 @@ enum Type : std::size_t
     MESH,
 
     COLOR_MATERIAL,
+    LIT_MATERIAL,
     DIFFUSE_MATERIAL,
     NORMAL_MATERIAL,
     SPECULAR_MATERIAL,

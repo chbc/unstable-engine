@@ -150,7 +150,8 @@ CameraComponent *RenderManager::getMainCamera()
 void RenderManager::render()
 {
     // Depth rendering
-    this->shadowRenderer->render();
+    if (this->shadowRenderer.get() != nullptr)
+        this->shadowRenderer->render();
 
     // Scene rendering
     this->graphicsWrapper->setViewport(1024, 768);

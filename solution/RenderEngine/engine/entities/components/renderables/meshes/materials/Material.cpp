@@ -4,21 +4,24 @@
 namespace sre
 {
 
-Material::Material(bool arg_receivesLight, bool arg_receivesShadow, bool arg_castsShadow, float arg_shininess)
-    :   receivesLight(arg_receivesLight), receivesShadow(arg_receivesShadow),  
-        castsShadow(arg_castsShadow), shininess(arg_shininess)
+Material::Material() : castsShadow(true)
 {
-    ColorMaterialComponent *component = this->addComponent<ColorMaterialComponent>();
+    this->addComponent<ColorMaterialComponent>();
+    this->addComponent<LitMaterialComponent>();
 }
 
-void Material::setShininess(float shininess)
+void Material::setReceivesLight(bool value)
 {
-    this->shininess = shininess;
+    bool hasLit = this->hasComponent<LitMaterialComponent>();
+    if (value && !hasLit)
+        this->addComponent<LitMaterialComponent>();
+    else if (!value && hasLit)
+        this->removeComponent<LitMaterialComponent>();
 }
 
-float Material::getShininess()
+bool Material::getReceivesLight()
 {
-    return this->shininess;
+    return this->hasComponent<LitMaterialComponent>();
 }
 
 } // namespace

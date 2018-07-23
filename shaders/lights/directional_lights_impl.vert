@@ -6,6 +6,6 @@ void DirectionalLights_setup(vec3 vertexPosition)
     for (int i = 0; i < MAX_DIRECTIONAL_LIGHTS; i++)
     {
         var_directionalLightVectors[i] = directionalLights[i].direction;
-        // [SHADOWS] Shadows_setFragPosDirectionalLightSpace(vertexPosition, i);
+        // [DIRECTIONAL_SHADOWS] Shadows_setFragPosDirectionalLightSpace(vertexPosition, i);
     }
 }

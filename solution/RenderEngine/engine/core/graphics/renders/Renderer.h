@@ -2,7 +2,7 @@
 #define _RENDERER_H_
 
 #include <engine/entities/components/AComponentsHolder.h>
-#include "components/ColorRendererComponent.h"
+#include "components/LitRendererComponent.h"
 #include "components/DiffuseRendererComponent.h"
 #include "components/NormalRendererComponent.h"
 #include "components/SpecularRendererComponent.h"
@@ -40,8 +40,9 @@ public:
 private:
     Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-    void loadShader();
     void onSceneLoaded();
+    void loadShaderSetupItems();
+    void loadShader();
 
     template <typename T, typename... TArgs>
     T *addComponent(TArgs&&... mArgs)

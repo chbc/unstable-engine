@@ -9,13 +9,13 @@ namespace sre
 struct ShaderLightData
 {
     bool receivesLight;
-    bool receivesShadow;
+    bool hasAnyShadowCaster;
 
     uint32_t directionalLightsCount;
     uint32_t pointLightsCount;
 
     ShaderLightData() 
-        :   receivesLight(false), receivesShadow(false),
+        :   receivesLight(false), hasAnyShadowCaster(false),
             directionalLightsCount(0), pointLightsCount(0)
     { }
 };

@@ -2,7 +2,6 @@
 
 // Uniform variables
 uniform vec3 ambientLightColor;
-uniform float shininess;
 
 // Functions
 vec3 Lights_computeAmbientLight(vec3 materialColor);

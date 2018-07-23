@@ -183,6 +183,9 @@
     <ClCompile Include="engine\core\graphics\renders\ShadowRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\core\graphics\renders\components\LitRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\FileUtils.h">
@@ -399,6 +402,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\utils\StringUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\lights\ShadowData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\LitMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\graphics\renders\components\LitRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

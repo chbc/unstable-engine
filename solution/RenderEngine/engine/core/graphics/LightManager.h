@@ -26,6 +26,8 @@ private:
 
 public:
     void setAmbientLightColor(const glm::vec3 &ambientLightColor);
+    bool hasAnyLight();
+    bool hasAnyShadowCaster();
 
 private:
     LightManager();
@@ -37,6 +39,7 @@ private:
 
 friend class RenderManager;
 friend class SingletonsManager;
+friend class Renderer;
 friend class LightRendererShaderSetup;
 friend class ShadowRendererShaderSetup;
 friend class ShadowRenderer;

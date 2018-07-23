@@ -52,7 +52,7 @@ Texture *TextureManager::loadShadowTexture(uint32_t width, uint32_t height)
 
     uint32_t id = this->graphicsWrapper->setupTexture(width, height, EMaterialMap::SHADOW + this->shadowIndex);
 
-    Texture *result = new Texture{ id, width, height, EMaterialMap::SHADOW, name };
+    Texture *result = new Texture{ id, width, height, EMaterialMap::SHADOW, name, this->shadowIndex };
     this->textures.emplace_back(result);
 
     this->shadowIndex++;
@@ -64,7 +64,7 @@ Texture *TextureManager::loadCubemapTexture(uint32_t width, uint32_t height)
     std::string name{ "_cube_map_" + std::to_string(this->shadowIndex) };
     uint32_t id = this->graphicsWrapper->generateCubemap(width, height, EMaterialMap::SHADOW + this->shadowIndex);
 
-    Texture *result = new Texture{ id, width, height, EMaterialMap::SHADOW, name };
+    Texture *result = new Texture{ id, width, height, EMaterialMap::SHADOW, name, this->shadowIndex };
     this->textures.emplace_back(result);
 
     this->shadowIndex++;

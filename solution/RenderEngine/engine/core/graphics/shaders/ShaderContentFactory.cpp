@@ -245,22 +245,68 @@ void ShaderContentFactory::loadShadowsContentHeader(std::string &outVertexConten
     std::string vertexContent;
     std::string fragmentContent;
 
-    FileUtils::loadFile(ShaderFiles::SHADOWS_H_V, vertexContent);
-    FileUtils::loadFile(ShaderFiles::SHADOWS_H_F, fragmentContent);
+    if (this->lightData.directionalLightsCount > 0)
+    {
+        std::string directionalVertex;
+        std::string directionalFragment;
 
-    outVertexContent = vertexContent + outVertexContent;
-    outFragmentContent = fragmentContent + outFragmentContent;
+        FileUtils::loadFile(ShaderFiles::SHADOWS_DIRECTIONAL_H_V, directionalVertex);
+        FileUtils::loadFile(ShaderFiles::SHADOWS_DIRECTIONAL_H_F, directionalFragment);
+
+        vertexContent += directionalVertex;
+        fragmentContent += directionalFragment;
+    }
+
+    if (this->lightData.pointLightsCount > 0)
+    {
+        std::string pointVertex;
+        std::string pointFragment;
+
+        FileUtils::loadFile(ShaderFiles::SHADOWS_POINT_H_V, pointVertex);
+        FileUtils::loadFile(ShaderFiles::SHADOWS_POINT_H_F, pointFragment);
+
+        vertexContent   += pointVertex;
+        fragmentContent += pointFragment;
+    }
+
+    outVertexContent += vertexContent;
+    outFragmentContent += fragmentContent;
 }
 
 void ShaderContentFactory::loadShadowsContentImplementation(std::string &outVertexContent, std::string &outFragmentContent)
 {
     std::string vertexContent;
     std::string fragmentContent;
-    FileUtils::loadFile(ShaderFiles::SHADOWS_IMPL_V, vertexContent);
-    FileUtils::loadFile(ShaderFiles::SHADOWS_IMPL_F, fragmentContent);
 
-    this->uncommentCode(outVertexContent, "// [SHADOWS]");
-    this->uncommentCode(outFragmentContent, "// [SHADOWS]");
+    if (this->lightData.directionalLightsCount > 0)
+    {
+        this->uncommentCode(outVertexContent, "// [DIRECTIONAL_SHADOWS]");
+        this->uncommentCode(outFragmentContent, "// [DIRECTIONAL_SHADOWS]");
+
+        std::string directionalVertex;
+        std::string directionalFragment;
+
+        FileUtils::loadFile(ShaderFiles::SHADOWS_DIRECTIONAL_IMPL_V, directionalVertex);
+        FileUtils::loadFile(ShaderFiles::SHADOWS_DIRECTIONAL_IMPL_F, directionalFragment);
+
+        vertexContent += directionalVertex;
+        fragmentContent += directionalFragment;
+    }
+
+    if (this->lightData.pointLightsCount > 0)
+    {
+        this->uncommentCode(outVertexContent, "// [POINT_SHADOWS]");
+        this->uncommentCode(outFragmentContent, "// [POINT_SHADOWS]");
+
+        std::string pointVertex;
+        std::string pointFragment;
+
+        FileUtils::loadFile(ShaderFiles::SHADOWS_POINT_IMPL_V, pointVertex);
+        FileUtils::loadFile(ShaderFiles::SHADOWS_POINT_IMPL_F, pointFragment);
+
+        vertexContent += pointVertex;
+        fragmentContent += pointFragment;
+    }
 
     outVertexContent = vertexContent + outVertexContent;
     outFragmentContent = fragmentContent + outFragmentContent;
@@ -280,7 +326,7 @@ void ShaderContentFactory::uncommentCode(std::string &outShaderContent, const st
     }
 
     if (!result)
-        throw "[ShaderContentFactory] - Didn't find code mark!";
+        throw "[ShaderContentFactory] - Didn't find code mark: " + mark;
 }
 
 } // namespace

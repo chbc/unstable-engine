@@ -11,7 +11,7 @@ void PointLights_compute(vec3 normal, vec3 toCameraDirection, inout vec3 kd, ino
         if ((diffuseEnergy > 0) && (length(var_toPointLightVectors[i]) < pointLights[i].range))
         {
             float shadow = 0;
-            // [SHADOWS] shadow = Shadows_computePointLightShadow(i);
+            // [POINT_SHADOWS] shadow = Shadows_computePointLightShadow(i);
 
             diffuseEnergy *= (1 - shadow);
             specularEnergy *= (1 - shadow);

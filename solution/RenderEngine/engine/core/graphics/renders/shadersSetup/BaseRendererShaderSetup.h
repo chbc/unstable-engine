@@ -24,7 +24,6 @@ public:
 private:
     virtual void onSceneLoaded(Shader *shader);
     virtual void setupShaderValues(Shader *shader);
-    virtual void getLightData(struct ShaderLightData &lightData) { }
 
 friend class Renderer;
 };

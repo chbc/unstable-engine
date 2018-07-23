@@ -1,4 +1,4 @@
-// DIRECTIONAL_LIGHTS_H_IMPL
+// DIRECTIONAL_LIGHTS_IMPL
 
 void DirectionalLights_compute(vec3 normal, vec3 toCameraDirection, inout vec3 kd, inout vec3 ks)
 {
@@ -13,7 +13,7 @@ void DirectionalLights_compute(vec3 normal, vec3 toCameraDirection, inout vec3 k
         Lights_computeEnergies(normal, toCameraDirection, toLightDirection, diffuseEnergy, specularEnergy);
 
         float shadow = 0;
-        // [SHADOWS] shadow = Shadows_computeDirectionalLightShadow(normal, toLightDirection, i);
+        // [DIRECTIONAL_SHADOWS] shadow = Shadows_computeDirectionalLightShadow(normal, toLightDirection, i);
 
         diffuseEnergy *= (1 - shadow);
         specularEnergy *= (1 - shadow);

@@ -5,6 +5,7 @@
 #include "components/AMaterialComponent.h"
 #include <engine/utils/memory_aliases.h>
 #include "components/ColorMaterialComponent.h"
+#include "components/LitMaterialComponent.h"
 #include "components/DiffuseMaterialComponent.h"
 #include "components/NormalMaterialComponent.h"
 #include "components/SpecularMaterialComponent.h"
@@ -21,20 +22,15 @@ namespace sre
 class Material : public AComponentsHolder<AMaterialComponent>
 {
 private:
-    float shininess;
-    bool receivesLight;
-    bool receivesShadow;
     bool castsShadow;
 
 public:
-    void setShininess(float shininess);
-    float getShininess();
-
-    inline void setCastsShadow(bool value)      { this->castsShadow = value; }
-    inline void setReceivesLight(bool value)    { this->receivesLight = value; }
+    inline void setCastsShadow(bool value) { this->castsShadow = value; }
+    void setReceivesLight(bool value);
+    bool getReceivesLight();
 
 private:
-    Material(bool arg_receivesLight = true, bool arg_receivesShadow = true, bool arg_castsShadow = true, float arg_shininess = 50.0);
+    Material();
 
     template <typename T, typename... TArgs>
     T *addComponent(TArgs&&... mArgs)

@@ -33,8 +33,9 @@ void SampleApplication::onInit()
     */
     
     // light //
+    /*
     DirectionalLightComponent *dLight1 = this->sceneManager->addDirectionalLight();
-    dLight1->setDirection(glm::vec3(0.0f, -0.25f, -1.0f));
+    dLight1->setDirection(glm::vec3(-1.0f, -0.25f, 0.0f));
     dLight1->setColor(glm::vec3(1.0f));
     
 /*
@@ -43,10 +44,9 @@ void SampleApplication::onInit()
     dLight2->setColor(glm::vec3(0.75f, 0.75f, 0.75f));
     */
 
-    /*
     PointLightComponent *pLight1 = this->sceneManager->addPointLight();
     pLight1->getTransform()->setPosition(glm::vec3(3.0f, 2.0f, 3.0f));
-    pLight1->setColor(glm::vec3(1.0f));
+    pLight1->setColor(glm::vec3(0.5f));
 
     Entity *lightCube = this->sceneManager->createCubeEntity();
     lightCube->getTransform()->setPosition(pLight1->getPosition());
@@ -55,7 +55,7 @@ void SampleApplication::onInit()
     cubeMesh->getMaterial()->setCastsShadow(false);
     cubeMesh->getMaterial()->setReceivesLight(false);
     this->sceneManager->addEntity(lightCube);
-
+  
     PointLightComponent *pLight2 = this->sceneManager->addPointLight();
     pLight2->getTransform()->setPosition(glm::vec3(-3.0f, 3.0f, 5.0f));
     pLight2->setColor(glm::vec3(0.5f, 0.5f, 0.5f));
@@ -67,7 +67,6 @@ void SampleApplication::onInit()
     cubeMesh->getMaterial()->setCastsShadow(false);
     cubeMesh->getMaterial()->setReceivesLight(false);
     this->sceneManager->addEntity(lightCube);
-    */
 
     /*
     PointLightComponent *pLight3 = this->sceneManager->addPointLight();

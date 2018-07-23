@@ -8,9 +8,15 @@ class Material;
 
 class AMaterialComponent
 {
+
+protected:
+    Material * material;
+
+public:
+    virtual ~AMaterialComponent() {}
+
 protected:
 	AMaterialComponent(Material *material) : material(material) {}
-	Material *material;
 };
 
 }

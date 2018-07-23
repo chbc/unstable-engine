@@ -5,9 +5,10 @@
 namespace sre
 {
 
-ALightComponent::ALightComponent(Entity *entity) : AEntityComponent(entity)
+ALightComponent::ALightComponent(Entity *entity) 
+    : AEntityComponent(entity), color(glm::vec3(0.6f, 0.6f, 0.6f)),
+    shadowData(UPTR<ShadowData>{nullptr})
 {
-    this->color = glm::vec3(0.6f, 0.6f, 0.6f);
 }
 
 void ALightComponent::setColor(const glm::vec3 &color)
@@ -17,7 +18,7 @@ void ALightComponent::setColor(const glm::vec3 &color)
 
 glm::vec3 ALightComponent::getColor()
 {
-	return this->color;
+    return this->color;
 }
 
 } // namespace

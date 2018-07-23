@@ -22,8 +22,6 @@ protected:
     void onSceneLoaded(Shader *shader) override;
     void setupShaderValues(Shader *shader) override;
 
-    void getLightData(ShaderLightData &lightData) override;
-
 friend class Renderer;
 };
 

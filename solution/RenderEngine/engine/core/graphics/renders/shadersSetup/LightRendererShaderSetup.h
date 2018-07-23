@@ -25,7 +25,6 @@ protected:
 
     void onSceneLoaded(Shader *shader) override;
     void setupShaderValues(Shader *shader) override;
-    void getLightData(struct ShaderLightData &lightData) override;
 
 private:
     void setupDirectionalsVariablesLocations(Shader *shader);
