@@ -26,14 +26,12 @@ void SampleApplication::onInit()
     this->sceneManager->addEntity(cube);
 
     this->createRoom();
-    /*
+
     Entity *nanosuit = this->sceneManager->createModelEntity("../../media/nanosuit/nanosuit.obj");
     nanosuit->getTransform()->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
     this->sceneManager->addEntity(nanosuit);
-    */
     
     // light //
-    /*
     DirectionalLightComponent *dLight1 = this->sceneManager->addDirectionalLight();
     dLight1->setDirection(glm::vec3(-1.0f, -0.25f, 0.0f));
     dLight1->setColor(glm::vec3(1.0f));

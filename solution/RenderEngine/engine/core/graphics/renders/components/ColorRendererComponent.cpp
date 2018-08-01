@@ -28,13 +28,11 @@ void ColorRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shad
 void ColorRendererComponent::preDraw()
 {
     this->graphicsWrapper->enableVertexPositions();
-    this->graphicsWrapper->enableVertexNormals();
 }
 
 void ColorRendererComponent::postDraw()
 {
     this->graphicsWrapper->disableVertexPositions();
-    this->graphicsWrapper->disableVertexNormals();
 }
 
 } // namespace

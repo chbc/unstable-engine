@@ -6,29 +6,33 @@
 namespace sre
 {
 
-    LitRendererComponent::LitRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
+LitRendererComponent::LitRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper, bool hasLight)
     : ColorRendererComponent(shaderManager, graphicsWrapper)
-{ }
-
-void LitRendererComponent::onSceneLoaded(class Shader *shader)
 {
-    this->shaderManager->setupUniformLocation(shader, ShaderVariables::SHININESS);
+    this->state = UPTR<LitRendererNoLightsState>
+    (
+        hasLight ? new LitRendererLightsState{} : new LitRendererNoLightsState{}
+    );
+}
+
+void LitRendererComponent::onSceneLoaded(Shader *shader)
+{
+    this->state->onSceneLoaded(this->shaderManager, shader);
 }
 
 void LitRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
-    LitMaterialComponent *litComponent = mesh->getMaterial()->getComponent<LitMaterialComponent>();
-    this->shaderManager->setFloat(shader, ShaderVariables::SHININESS, litComponent->getShininess());
+    this->state->setupShaderValues(this->shaderManager, mesh, shader);
 }
 
 void LitRendererComponent::preDraw()
 {
-    this->graphicsWrapper->enableVertexNormals();
+    this->state->preDraw(this->graphicsWrapper);
 }
 
 void LitRendererComponent::postDraw()
 {
-    this->graphicsWrapper->disableVertexNormals();
+    this->state->postDraw(this->graphicsWrapper);
 }
 
 } // namespace

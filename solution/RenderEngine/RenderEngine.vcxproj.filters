@@ -186,6 +186,12 @@
     <ClCompile Include="engine\core\graphics\renders\components\LitRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\core\graphics\renders\components\litStates\LitRendererLightsState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\core\graphics\renders\components\litStates\LitRendererNoLightsState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\utils\FileUtils.h">
@@ -411,6 +417,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\core\graphics\renders\components\LitRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\graphics\renders\components\litStates\LitRendererLightsState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\core\graphics\renders\components\litStates\LitRendererNoLightsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

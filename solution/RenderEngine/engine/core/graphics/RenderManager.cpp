@@ -43,7 +43,7 @@ void RenderManager::init()
 
     MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
     const float FOV{120.0f};
-    this->matrixManager->setProjection(FOV, multimediaManager->getAspectRatio(), 0.01f, 100);
+    this->matrixManager->setProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 100);
 }
 
 void RenderManager::addEntity(Entity *entity)

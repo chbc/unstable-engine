@@ -21,6 +21,8 @@ void RenderEngine::run()
 
     this->onInit();
 
+    this->guiManager->onSceneLoaded();
+    this->sceneManager->onSceneLoaded();
     this->renderManager->onSceneLoaded();
 
     this->running = true;

@@ -93,12 +93,13 @@ friend class Renderer;
 friend class GUIRenderer;
 friend class ShadowRenderer;
 friend class ColorRendererComponent;
-friend class LitRendererComponent;
 friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;
 friend class SpecularRendererComponent;
 friend class AORendererComponent;
 friend class ShadowRendererShaderSetup;
+
+friend class LitRendererLightsState;
 };
 
 } // namespace

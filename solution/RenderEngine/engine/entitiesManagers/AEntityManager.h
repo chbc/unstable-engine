@@ -15,6 +15,11 @@ protected:
 
 private:
     uint32_t entityIndex;
+    bool sceneLoaded;
+
+public:
+    virtual void addEntity(Entity *entity, const std::string &name = "");
+    Entity *createEntity();
 
 protected:
     AEntityManager();
@@ -23,10 +28,10 @@ protected:
     const std::string generateEntityId();
     void removeDestroyedEntities();
 
-public:
-    void addEntity(Entity *entity, const std::string &name = "");
+private:
+    void onSceneLoaded();
 
-    Entity *createEntity();
+friend class RenderEngine;
 };
 
 } // namespace

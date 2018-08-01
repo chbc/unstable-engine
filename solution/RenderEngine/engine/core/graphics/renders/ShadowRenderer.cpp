@@ -45,7 +45,7 @@ void ShadowRenderer::setupDirectionalLightShader(TextureManager *textureManager)
 
         uint32_t fbo;
         this->graphicsWrapper->generateFrameBuffer(fbo, texture->getId());
-        UPTR<ShadowData> shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
+        item->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
 
         glm::vec3 position = glm::vec3(0.0f) - (item->getDirection() *  10.0f);
 

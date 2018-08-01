@@ -70,11 +70,12 @@ friend class SingletonsManager;
 friend class Renderer;
 friend class GUIRenderer;
 friend class ColorRendererComponent;
-friend class LitRendererComponent;
 friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;
 friend class SpecularRendererComponent;
 friend class AORendererComponent;
+
+friend class LitRendererLightsState;
 
 friend class BaseRendererShaderSetup;
 friend class LightRendererShaderSetup;

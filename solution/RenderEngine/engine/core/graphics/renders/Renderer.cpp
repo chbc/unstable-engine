@@ -17,7 +17,8 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
 {
     this->shaderManager = shaderManager;
     this->graphicsWrapper = graphicsWrapper;
-    
+    LightManager * lightManager = SingletonsManager::getInstance()->get<LightManager>();
+
     // ### COLOCAR NUM FACTORY
     for (int i = EComponentId::COLOR_MATERIAL; i <= EComponentId::AO_MATERIAL; i++)
     {
@@ -29,7 +30,7 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
                     this->addComponent<ColorRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
                 case EComponentId::LIT_MATERIAL:
-                    this->addComponent<LitRendererComponent>(this->shaderManager, this->graphicsWrapper);
+                    this->addComponent<LitRendererComponent>(this->shaderManager, this->graphicsWrapper, lightManager->hasAnyLight());
                     break;
                 case EComponentId::DIFFUSE_MATERIAL:
                     this->addComponent<DiffuseRendererComponent>(this->shaderManager, this->graphicsWrapper);
@@ -128,10 +129,10 @@ void Renderer::render(MatrixManager *matrixManager, const glm::vec3 &cameraPosit
         }
 
         this->graphicsWrapper->drawElement(mesh->meshData->indices.size());
-
-        for (const auto &item : this->componentsMap)
-            item.second->postDraw();
     }
+
+    for (const auto &item : this->componentsMap)
+        item.second->postDraw();
 
     this->shaderManager->disableShader();
 }
