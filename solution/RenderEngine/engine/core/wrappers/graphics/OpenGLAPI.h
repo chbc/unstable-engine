@@ -67,24 +67,21 @@ protected:
 
     void enableShader(uint32_t program) override;
     void disableShader() override;
-    void releaseShader(uint32_t program, uint32_t vertShader, uint32_t fragShader) override;
+    void releaseShader(uint32_t program, std::vector<uint32_t> components) override;
     void deleteBuffers(MeshComponent *mesh) override;
     void deleteBuffers(GUIImageComponent *guiComponent) override;
 
-    // ###
     void generateFrameBuffer(uint32_t &fbo, uint32_t textureId, bool cubemap = false) override;
     void bindFrameBuffer(uint32_t fbo) override;
     void unbindFrameBuffer() override;
     void setViewport(uint32_t width, uint32_t height) override;
     void activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap) override;
-    void enableFrontCullFace() override;
-    void disableFrontCullFace() override;
 
 private:
     uint32_t compileShader(const std::string &source, uint32_t mode);
     void checkVariableLocation(int location, const std::string &varName); // throws "invalid variable"
     void checkProgramLink(uint32_t program);	// throws "link error"
-    static void renderQuad(); // ###
+    static void DEBUG_renderQuad();
 
 friend class RenderManager;
 friend class SingletonsManager;

@@ -283,7 +283,6 @@ uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, v
     return result;
 }
 
-// ### sombra
 uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint32_t unit)
 {
     uint32_t result{ 0 };
@@ -441,12 +440,14 @@ void OpenGLAPI::disableShader()
 	glUseProgram(0);
 }
 
-void OpenGLAPI::releaseShader(uint32_t program, uint32_t vertShader, uint32_t fragShader)
+void OpenGLAPI::releaseShader(uint32_t program, std::vector<uint32_t> components)
 {
-    glDetachShader(program, vertShader);
-    glDetachShader(program, fragShader);
-    glDeleteShader(vertShader);
-    glDeleteShader(fragShader);
+    for (uint32_t item : components)
+    {
+        glDetachShader(program, item);
+        glDeleteShader(item);
+    }
+
     glDeleteProgram(program);
 }
 
@@ -464,7 +465,6 @@ void OpenGLAPI::deleteBuffers(GUIImageComponent *guiComponent)
     glDeleteVertexArrays(1, &guiComponent->vao);
 }
 
-// ###
 void OpenGLAPI::generateFrameBuffer(uint32_t &fbo, uint32_t textureId, bool cubemap)
 {
     glGenFramebuffers(1, &fbo);
@@ -485,32 +485,19 @@ void OpenGLAPI::generateFrameBuffer(uint32_t &fbo, uint32_t textureId, bool cube
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-// ###
 void OpenGLAPI::bindFrameBuffer(uint32_t fbo)
 {
     glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 }
 
-// ###
 void OpenGLAPI::unbindFrameBuffer()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-// ###
 void OpenGLAPI::setViewport(uint32_t width, uint32_t height)
 {
     glViewport(0, 0, width, height);
-}
-
-void OpenGLAPI::enableFrontCullFace()
-{
-    glCullFace(GL_FRONT);
-}
-
-void OpenGLAPI::disableFrontCullFace() 
-{
-    glCullFace(GL_BACK);
 }
 
 uint32_t OpenGLAPI::compileShader(const std::string &source, uint32_t mode)
@@ -567,7 +554,7 @@ void OpenGLAPI::checkProgramLink(uint32_t program)
 
 unsigned int quadVAO = 0;
 unsigned int quadVBO;
-void OpenGLAPI::renderQuad()
+void OpenGLAPI::DEBUG_renderQuad()
 {
     if (quadVAO == 0)
     {

@@ -44,7 +44,7 @@ private:
     Shader *loadGUIShader();
     Shader *loadPointLightDepthShader();
     Shader *loadDirectionalLightDepthShader();
-    Shader *loadShader(const std::string &vertexContent, const std::string &fragmentContent, bool isLit = true);
+    Shader *loadShader(const std::string &vertexContent, const std::string &fragmentContent);
 
     // passing values //
     void setupUniformLocation(Shader *shader, ShaderVariables::Type variableKey);

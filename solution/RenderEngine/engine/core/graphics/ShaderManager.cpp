@@ -14,8 +14,7 @@ void ShaderManager::release()
 {
     for (const UPTR<Shader> &item : this->shaders)
     {
-        // ### TRANSFORMAR ATRIBUTOS DOS SHADERS EM COMPONENTES PRA CONTEMPLAR GEOMETRY SHADER
-        this->graphicsWrapper->releaseShader(item->program, item->vertexShader, item->fragmentShader);
+        this->graphicsWrapper->releaseShader(item->program, item->components);
     }
 
     this->shaders.clear();
@@ -29,7 +28,7 @@ Shader *ShaderManager::loadGUIShader()
     ShaderContentFactory contentFactory;
     contentFactory.createGUIShaderContent(vertexContent, fragmentContent);
 
-    return this->loadShader(vertexContent, fragmentContent, false);
+    return this->loadShader(vertexContent, fragmentContent);
 }
 
 Shader *ShaderManager::loadPointLightDepthShader()
@@ -47,7 +46,7 @@ Shader *ShaderManager::loadPointLightDepthShader()
 
     uint32_t program = this->graphicsWrapper->createProgram(vertShader, fragShader, geomShader);
 
-    Shader *shader = new Shader{ program, vertShader, fragShader, geomShader, false };
+    Shader *shader = new Shader{ program, vertShader, fragShader, geomShader};
     this->shaders.emplace_back(shader);
 
     return shader;
@@ -61,17 +60,17 @@ Shader *ShaderManager::loadDirectionalLightDepthShader()
     ShaderContentFactory contentFactory;
     contentFactory.createDirectionalLightDepthShaderContent(vertexContent, fragmentContent);
 
-    return this->loadShader(vertexContent, fragmentContent, false);
+    return this->loadShader(vertexContent, fragmentContent);
 }
 
-Shader *ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent, bool isLit)
+Shader *ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent)
 {
     uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);
     uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentContent);
 
     uint32_t program = this->graphicsWrapper->createProgram(vertShader, fragShader);
 
-    Shader *shader = new Shader{ program, vertShader, fragShader, isLit };
+    Shader *shader = new Shader{ program, vertShader, fragShader };
     this->shaders.emplace_back(shader);
 
     return shader;

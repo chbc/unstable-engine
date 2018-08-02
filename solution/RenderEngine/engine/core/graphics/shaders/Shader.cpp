@@ -3,13 +3,20 @@
 namespace sre
 {
 
-Shader::Shader(uint32_t arg_program, uint32_t arg_vertexShader, uint32_t arg_fragmentShader, bool arg_isLit)
-        : program(arg_program), vertexShader(arg_vertexShader), fragmentShader(arg_fragmentShader), isLit(arg_isLit)
-{ }
+Shader::Shader(uint32_t arg_program, uint32_t vertexShader, uint32_t fragmentShader)
+        : program(arg_program)
+{
+    this->components.push_back(vertexShader);
+    this->components.push_back(fragmentShader);
+}
 
-Shader::Shader(uint32_t arg_program, uint32_t arg_vertexShader, uint32_t arg_fragmentShader, uint32_t arg_geometryShader, bool arg_isLit)
-        : program(arg_program), vertexShader(arg_vertexShader), fragmentShader(arg_fragmentShader), isLit(arg_isLit)
-{ }
+Shader::Shader(uint32_t arg_program, uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader)
+        : program(arg_program)
+{
+    this->components.push_back(vertexShader);
+    this->components.push_back(fragmentShader);
+    this->components.push_back(geometryShader);
+}
 
 void Shader::addVariableLocation(ShaderVariables::Type variable, int location)
 {

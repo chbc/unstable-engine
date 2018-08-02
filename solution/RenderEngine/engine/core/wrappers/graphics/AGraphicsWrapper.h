@@ -2,7 +2,7 @@
 #define _AGRAPHICS_WRAPPER_H_
 
 #include <engine/core/singletonsManager/ASingleton.h>
-#include <stack>
+#include <vector>
 #include <string>
 
 namespace sre
@@ -71,18 +71,15 @@ protected:
 
     virtual void enableShader(uint32_t program) =0;
     virtual void disableShader() =0;
-    virtual void releaseShader(uint32_t program, uint32_t vertShader, uint32_t fragShader) =0;
+    virtual void releaseShader(uint32_t program, std::vector<uint32_t> components) =0;
     virtual void deleteBuffers(MeshComponent *mesh) =0;
     virtual void deleteBuffers(GUIImageComponent *guiComponent) =0;
 
-    // ###
     virtual void generateFrameBuffer(uint32_t &fbo, uint32_t textureId, bool cubemap = false) =0;
     virtual void bindFrameBuffer(uint32_t fbo) =0;
     virtual void unbindFrameBuffer() =0;
     virtual void setViewport(uint32_t width, uint32_t height) =0;
     virtual void activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap = false) =0;
-    virtual void enableFrontCullFace() =0;
-    virtual void disableFrontCullFace() =0;
 
 friend class RenderManager;
 friend class ShaderManager;

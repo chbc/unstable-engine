@@ -13,9 +13,7 @@ class Shader
 
 private:
     uint32_t program;
-    uint32_t vertexShader;
-    uint32_t fragmentShader;
-    uint32_t geometryShader;
+    std::vector<uint32_t> components;
     bool isLit;
 
     std::unordered_map<ShaderVariables::Type, int> variableLocations;
@@ -27,8 +25,8 @@ public:
     int getVariableLocation(const char *variable);
 
 private:
-    Shader(uint32_t arg_program, uint32_t arg_vertexShader, uint32_t arg_fragmentShader, bool arg_isLit);
-    Shader(uint32_t arg_program, uint32_t arg_vertexShader, uint32_t arg_fragmentShader, uint32_t arg_geometryShader, bool isLit);
+    Shader(uint32_t arg_program, uint32_t vertexShader, uint32_t fragmentShader);
+    Shader(uint32_t arg_program, uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader);
 
     void addVariableLocation(ShaderVariables::Type variable, int location);
     void addVariableLocation(std::string variable, int location);
