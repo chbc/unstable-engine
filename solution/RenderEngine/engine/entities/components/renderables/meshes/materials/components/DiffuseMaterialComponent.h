@@ -9,7 +9,7 @@ namespace sre
 
 class Texture;
 
-class DiffuseMaterialComponent : public AMaterialComponent
+class SRE_API DiffuseMaterialComponent : public AMaterialComponent
 {
 private:
     Texture *texture;

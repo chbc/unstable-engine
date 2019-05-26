@@ -1,3 +1,5 @@
+#include <engine/entities/components/EComponentId.h>
+
 namespace sre
 {
 
@@ -16,7 +18,7 @@ void ShaderContentFactory::createShaderContent
     std::string vertexContentImpl;
     std::string fragmentContentImpl;
 
-    for (int i = EComponentId::COLOR_MATERIAL; i <= EComponentId::AO_MATERIAL; i++)
+    for (std::size_t i = EComponentId::COLOR_MATERIAL; i <= EComponentId::AO_MATERIAL; i++)
     {
         if (componentsBitset[i])
         {

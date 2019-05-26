@@ -16,7 +16,7 @@ namespace sre
 /*!
     Abstract application class.
 */
-class RenderEngine
+class SRE_API RenderEngine
 {
 protected:
     SingletonsManager *singletonsManager;

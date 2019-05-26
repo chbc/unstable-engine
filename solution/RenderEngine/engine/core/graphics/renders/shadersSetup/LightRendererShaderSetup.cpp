@@ -42,10 +42,10 @@ void LightRendererShaderSetup::setupDirectionalsVariablesLocations(Shader *shade
     int count = this->lightManager->directionalLights.size();
     for (int i = 0; i < count; i++)
     {
-        sprintf_s(variable, DIRECTIONAL_DIRECTION_FORMAT, i);
+        std::sprintf(variable, DIRECTIONAL_DIRECTION_FORMAT, i);
         shaderManager->setupUniformLocation(shader, variable);
 
-        sprintf_s(variable, DIRECTIONAL_COLOR_FORMAT, i);
+        std::sprintf(variable, DIRECTIONAL_COLOR_FORMAT, i);
         shaderManager->setupUniformLocation(shader, variable);
     }
 }
@@ -57,16 +57,16 @@ void LightRendererShaderSetup::setupPointsVariablesLocations(Shader *shader)
     int count = this->lightManager->pointLights.size();
     for (int i = 0; i < count; i++)
     {
-        sprintf_s(variable, POINT_POSITION_FORMAT, i);
+        std::sprintf(variable, POINT_POSITION_FORMAT, i);
         shaderManager->setupUniformLocation(shader, variable);
 
-        sprintf_s(variable, POINT_COLOR_FORMAT, i);
+        std::sprintf(variable, POINT_COLOR_FORMAT, i);
         shaderManager->setupUniformLocation(shader, variable);
 
-        sprintf_s(variable, POINT_RANGE_FORMAT, i);
+        std::sprintf(variable, POINT_RANGE_FORMAT, i);
         shaderManager->setupUniformLocation(shader, variable);
 
-        sprintf_s(variable, POINT_INTENSITY_FORMAT, i);
+        std::sprintf(variable, POINT_INTENSITY_FORMAT, i);
         shaderManager->setupUniformLocation(shader, variable);
     }
 }
@@ -83,10 +83,10 @@ void LightRendererShaderSetup::setupDirectionalValues(Shader *shader)
         glm::vec3 direction = light->getDirection();
         glm::vec3 color = light->getColor();
 
-        sprintf_s(variable, DIRECTIONAL_DIRECTION_FORMAT, i);
+        std::sprintf(variable, DIRECTIONAL_DIRECTION_FORMAT, i);
         shaderManager->setVec3(shader, variable, &direction[0]);
 
-        sprintf_s(variable, DIRECTIONAL_COLOR_FORMAT, i);
+        std::sprintf(variable, DIRECTIONAL_COLOR_FORMAT, i);
         shaderManager->setVec3(shader, variable, &color[0]);
     }
 }
@@ -101,16 +101,16 @@ void LightRendererShaderSetup::setupPointValues(Shader *shader)
     {
         light = this->lightManager->pointLights[i];
 
-        sprintf_s(variable, POINT_POSITION_FORMAT, i);
+        std::sprintf(variable, POINT_POSITION_FORMAT, i);
         shaderManager->setVec3(shader, variable, &light->getPosition()[0]);
 
-        sprintf_s(variable, POINT_COLOR_FORMAT, i);
+        std::sprintf(variable, POINT_COLOR_FORMAT, i);
         shaderManager->setVec3(shader, variable, &light->getColor()[0]);
 
-        sprintf_s(variable, POINT_RANGE_FORMAT, i);
+        std::sprintf(variable, POINT_RANGE_FORMAT, i);
         shaderManager->setFloat(shader, variable, light->getRange());
 
-        sprintf_s(variable, POINT_INTENSITY_FORMAT, i);
+        std::sprintf(variable, POINT_INTENSITY_FORMAT, i);
         shaderManager->setFloat(shader, variable, light->getIntensity());
     }
 }

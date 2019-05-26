@@ -10,12 +10,12 @@ namespace sre
 /*!
 	Class that holds information for rendering.
 */
-class MeshComponent : public ARenderableComponent<VertexData>
+class SRE_API MeshComponent : public ARenderableComponent<VertexData>
 {
 private:
     UPTR<Material> material;
 
-    MeshComponent(Entity *entity, UPTR<MeshData<VertexData>> &meshData);
+    MeshComponent(Entity *entity, MeshData<VertexData> *meshData);
 
 public:
     Material *getMaterial();

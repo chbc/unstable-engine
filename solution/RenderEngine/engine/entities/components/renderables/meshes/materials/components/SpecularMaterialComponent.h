@@ -6,7 +6,7 @@
 namespace sre
 {
 
-class SpecularMaterialComponent : public NormalMaterialComponent
+class SRE_API SpecularMaterialComponent : public NormalMaterialComponent
 {
 public:
 	SpecularMaterialComponent(Material *material, const std::string &fileName);

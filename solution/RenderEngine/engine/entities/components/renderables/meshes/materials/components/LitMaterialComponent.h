@@ -6,7 +6,7 @@
 namespace sre
 {
 
-class LitMaterialComponent : public AMaterialComponent
+class SRE_API LitMaterialComponent : public AMaterialComponent
 {
 private:
     float shininess;

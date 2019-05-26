@@ -6,16 +6,17 @@
 namespace sre
 {
 
-class GUIImageComponent : public ARenderableComponent<GUIVertexData>
+class SRE_API GUIImageComponent : public ARenderableComponent<GUIVertexData>
 {
 private:
-    uint32_t textureId;
-
     glm::vec2 uiPosition;
-    bool isDynamic; // ###
+    uint32_t textureId;
 
 protected:
     uint32_t maxItems; // ###
+
+private:
+    bool isDynamic; // ###
 
 protected:
     GUIImageComponent(Entity *entity, uint32_t arg_maxItems = 0);

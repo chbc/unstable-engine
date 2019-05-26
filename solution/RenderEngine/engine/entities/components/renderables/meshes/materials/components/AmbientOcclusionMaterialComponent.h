@@ -6,7 +6,7 @@
 namespace sre
 {
 
-class AmbientOcclusionMaterialComponent : public NormalMaterialComponent
+class SRE_API AmbientOcclusionMaterialComponent : public NormalMaterialComponent
 {
 public:
 	AmbientOcclusionMaterialComponent(Material *material, const std::string &fileName);

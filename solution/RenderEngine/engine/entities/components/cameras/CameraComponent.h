@@ -12,7 +12,7 @@ class TransformComponent;
 /*!
 	Component that handles the camera on the scene.
 */
-class CameraComponent : public AEntityComponent
+class SRE_API CameraComponent : public AEntityComponent
 {
 private:
 	TransformComponent *transform;

@@ -2,6 +2,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <engine/core/io/InputHandler.h>
+#include <cstring>
 
 namespace sre
 {
@@ -117,8 +118,8 @@ void *SDLAPI::loadTexture(const std::string &fileName, uint32_t *outWidth, uint3
 	*outBpp = surface->format->BytesPerPixel;
 
 	uint32_t size = surface->pitch * surface->h;
-	result = new char[size];
-	memcpy_s(result, size, surface->pixels, size);
+	result = malloc(sizeof(char) * size);
+	memcpy(result, surface->pixels, size);
 
 	SDL_FreeSurface(surface);
 

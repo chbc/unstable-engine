@@ -86,7 +86,7 @@ Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::
         // OpenGL //
         bool genMipmap = (mapType != EMaterialMap::GUI);
         uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data, mapType, genMipmap);
-        delete[] data;
+        free(data);
 
         result = new Texture(id, width, height, mapType, fileName);
         this->textures.emplace_back(result);

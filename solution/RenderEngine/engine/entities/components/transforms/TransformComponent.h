@@ -10,7 +10,7 @@ namespace sre
 /*!
 	Class used to apply transform operations to the entities.
 */
-class TransformComponent : public AEntityComponent
+class SRE_API TransformComponent : public AEntityComponent
 {
 private:
 	glm::mat4 worldMatrix;

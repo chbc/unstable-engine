@@ -1,12 +1,14 @@
 #ifndef _A_MATERIAL_COMPONENT_H_
 #define _A_MATERIAL_COMPONENT_H_
 
+#include <engine/core_defines.h>
+
 namespace sre
 {
 
 class Material;
 
-class AMaterialComponent
+class SRE_API AMaterialComponent
 {
 
 protected:

@@ -53,7 +53,7 @@ void OpenGLAPI::createVAO(MeshComponent *mesh)
 	// VBO
 	glGenBuffers(1, &mesh->vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-	glBufferData(GL_ARRAY_BUFFER, mesh->meshData->vertexData.size() * sizeof(VertexData), &mesh->meshData->vertexData[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, dataSize * sizeof(VertexData), &mesh->meshData->vertexData[0], GL_STATIC_DRAW);
 }
 
 void OpenGLAPI::createEBO(MeshComponent *mesh)

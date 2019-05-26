@@ -23,7 +23,8 @@ void GUIImageComponent::load(const std::string &fileName)
     glm::vec2 pixelSize(texture->getWidth(), texture->getHeight());
     glm::vec2 screenBasedSize = SingletonsManager::getInstance()->resolve<MultimediaManager>()->getNormalizedSize(pixelSize);
 
-    this->meshData = (PrimitiveMeshFactory()).createPlane2D(screenBasedSize);
+	MeshData<GUIVertexData> *plane = PrimitiveMeshFactory().createPlane2D(screenBasedSize);
+	this->meshData = UPTR<MeshData<GUIVertexData>>{ plane };
     this->textureId = texture->getId();
 }
 
@@ -33,7 +34,8 @@ void GUIImageComponent::loadFromAtlas(const std::string &fileName, const std::st
 
     const AtlasItem *atlasItem = atlas->getItem(imageId);
 
-    this->meshData = (PrimitiveMeshFactory()).createPlane2D(atlasItem->normalizedSize, atlasItem->uv);
+	MeshData<GUIVertexData> *plane = PrimitiveMeshFactory().createPlane2D(atlasItem->normalizedSize, atlasItem->uv);
+	this->meshData = UPTR<MeshData<GUIVertexData>>{ plane };
     this->textureId = atlas->getTextureId();
 }
 

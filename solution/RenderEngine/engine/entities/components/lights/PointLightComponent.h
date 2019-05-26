@@ -7,7 +7,7 @@
 namespace sre
 {
 
-class PointLightComponent : public ALightComponent
+class SRE_API PointLightComponent : public ALightComponent
 {
 private:
 	float range;

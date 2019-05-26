@@ -20,7 +20,7 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
     LightManager * lightManager = SingletonsManager::getInstance()->get<LightManager>();
 
     // ### COLOCAR NUM FACTORY
-    for (int i = EComponentId::COLOR_MATERIAL; i <= EComponentId::AO_MATERIAL; i++)
+    for (std::size_t i = EComponentId::COLOR_MATERIAL; i <= EComponentId::AO_MATERIAL; i++)
     {
         if (material->componentsBitset[i])
         {

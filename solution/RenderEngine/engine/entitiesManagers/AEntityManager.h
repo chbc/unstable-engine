@@ -7,7 +7,7 @@
 namespace sre
 {
 
-class AEntityManager
+class SRE_API AEntityManager
 {
 protected:
     std::unordered_map<std::string, UPTR<Entity>> entities;

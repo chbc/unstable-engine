@@ -1,6 +1,8 @@
 #ifndef _H_AENTITY_COMPONENT_H_
 #define _H_AENTITY_COMPONENT_H_
 
+#include <engine/core_defines.h>
+
 #include <stdint.h>
 
 namespace sre
@@ -9,7 +11,7 @@ namespace sre
 class Entity;
 class TransformComponent;
 
-class AEntityComponent
+class SRE_API AEntityComponent
 {
 private:
     Entity *entity;

@@ -45,13 +45,13 @@ void PrimitiveMeshFactory::createVerticesPlane2D(const glm::vec2 &size, const Re
 	}
 }
 
-UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size)
+MeshData<GUIVertexData>* PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size)
 {
 	Rect uv(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f));
 	return createPlane2D(size, uv);
 }
 
-UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size, const Rect &uv, float xOffset)
+MeshData<GUIVertexData>* PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size, const Rect &uv, float xOffset)
 {
 	float planeVertices[] = 
 	{ 
@@ -90,10 +90,10 @@ UPTR<MeshData<GUIVertexData>> PrimitiveMeshFactory::createPlane2D(const glm::vec
 	std::vector<uint32_t> indices;
 	createPlaneIndices(indices);
 
-	return UPTR<MeshData<GUIVertexData>>{ new MeshData<GUIVertexData>{vertexData, indices} };
+	return new MeshData<GUIVertexData>{vertexData, indices};
 }
 
-UPTR<MeshData<VertexData>> PrimitiveMeshFactory::createPlane(float size)
+MeshData<VertexData>* PrimitiveMeshFactory::createPlane(float size)
 {
 	float half = size * 0.5f;
 
@@ -159,13 +159,11 @@ UPTR<MeshData<VertexData>> PrimitiveMeshFactory::createPlane(float size)
 		}
 	}
 
-	return UPTR<MeshData<VertexData>>{ new MeshData<VertexData>{vertexData, indices} };
+	return new MeshData<VertexData>{vertexData, indices};
 }
 
-UPTR<MeshData<VertexData>> PrimitiveMeshFactory::createCube(float size)
+MeshData<VertexData>* PrimitiveMeshFactory::createCube(float size)
 {
-	UPTR<MeshData<VertexData>> result;
-
 	float half = size * 0.5f;
 
 	float cubeVertices[] = 
@@ -228,8 +226,7 @@ UPTR<MeshData<VertexData>> PrimitiveMeshFactory::createCube(float size)
 	for (int i = 0; i < 36; i++)
 		indices.push_back(cubeIndices[i]);
 
-	result = UPTR<MeshData<VertexData>>{ new MeshData<VertexData>{vertexData, indices} };
-	return result;
+	return new MeshData<VertexData>{ vertexData, indices };
 }
 
 void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint32_t> &result, int planesCount)

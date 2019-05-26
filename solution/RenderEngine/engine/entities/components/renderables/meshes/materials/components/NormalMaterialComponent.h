@@ -8,7 +8,7 @@
 namespace sre
 {
 
-class NormalMaterialComponent : public AMaterialComponent
+class SRE_API NormalMaterialComponent : public AMaterialComponent
 {
 protected:
 	UPTR<Texture> texture;

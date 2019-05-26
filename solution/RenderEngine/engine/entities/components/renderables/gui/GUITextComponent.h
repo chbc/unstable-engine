@@ -11,7 +11,7 @@ namespace sre
 
 class FontAtlas;
 
-class GUITextComponent : public GUIImageComponent
+class SRE_API GUITextComponent : public GUIImageComponent
 {
 private:
 	FontAtlas *atlas;

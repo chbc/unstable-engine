@@ -20,12 +20,12 @@ SceneManager::SceneManager() : AEntityManager()
 
 Entity *SceneManager::createPlaneEntity(float size)
 {
-    return this->createMeshEntity((PrimitiveMeshFactory()).createPlane(size));
+	return this->createMeshEntity(PrimitiveMeshFactory().createPlane(size));
 }
 
 Entity *SceneManager::createCubeEntity(float size)
 {
-    return this->createMeshEntity((PrimitiveMeshFactory()).createCube(size));
+	return this->createMeshEntity(PrimitiveMeshFactory().createCube(size));
 }
 
 Entity *SceneManager::createModelEntity(const std::string &fileName)
@@ -63,13 +63,13 @@ PointLightComponent *SceneManager::addPointLight()
 
 CameraComponent *SceneManager::getMainCamera()
 {
-    return SingletonsManager::getInstance()->resolve<RenderManager>()->getMainCamera();
+	return SingletonsManager::getInstance()->resolve<RenderManager>()->getMainCamera();
 }
 
-Entity *SceneManager::createMeshEntity(UPTR<MeshData<VertexData>> &objectData)
+Entity *SceneManager::createMeshEntity(MeshData<VertexData> *objectData)
 {
     Entity *newEntity = this->createEntity();
-    newEntity->addComponent<MeshComponent>(objectData);
+	newEntity->addComponent<MeshComponent>(objectData);
     return newEntity;
 }
 

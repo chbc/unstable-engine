@@ -10,7 +10,7 @@ namespace sre
 
 class Material;
 
-class ColorMaterialComponent : public AMaterialComponent
+class SRE_API ColorMaterialComponent : public AMaterialComponent
 {
 private:
 	glm::vec4 color; 

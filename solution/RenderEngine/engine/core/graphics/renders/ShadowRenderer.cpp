@@ -80,7 +80,7 @@ void ShadowRenderer::setupPointLightShader(TextureManager *textureManager)
     char variable[32];
     for (unsigned int i = 0; i < 6; ++i)
     {
-        sprintf_s(variable, POINT_SHADOW_MATRICES_FORMAT, i);
+        std::sprintf(variable, POINT_SHADOW_MATRICES_FORMAT, i);
         this->shaderManager->setupUniformLocation(this->pointLightDepthShader, variable);
     }
 }
@@ -145,7 +145,7 @@ void ShadowRenderer::renderPointLightShadows()
 
         for (unsigned int i = 0; i < 6; ++i)
         {
-            sprintf_s(variable, POINT_SHADOW_MATRICES_FORMAT, i);
+			std::sprintf(variable, POINT_SHADOW_MATRICES_FORMAT, i);
             this->shaderManager->setMat4(this->pointLightDepthShader, variable, &this->shadowMatrices[i][0][0]);
         }
 

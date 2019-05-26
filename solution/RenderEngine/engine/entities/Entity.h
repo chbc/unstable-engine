@@ -10,7 +10,7 @@ namespace sre
 /*!
     Class that represents a node of the scene.
 */
-class Entity : public AComponentsHolder<AEntityComponent>
+class SRE_API Entity : public AComponentsHolder<AEntityComponent>
 {
 private:
     Entity *parent;

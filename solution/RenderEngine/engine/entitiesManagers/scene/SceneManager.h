@@ -11,9 +11,9 @@ namespace sre
 {
 
 /*!
-    lass for manager scene nodes.
+    Class for manager scene nodes.
 */
-class SceneManager : public AEntityManager
+class SRE_API SceneManager : public AEntityManager
 {
 private:
     SceneManager();
@@ -30,7 +30,7 @@ public:
 
     // camera //
     class CameraComponent *getMainCamera();
-    Entity *createMeshEntity(UPTR<MeshData<VertexData>> &objectData);
+    Entity *createMeshEntity(MeshData<VertexData> *objectData);
 
 friend class RenderEngine;
 };

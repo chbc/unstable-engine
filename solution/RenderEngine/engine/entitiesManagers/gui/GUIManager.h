@@ -7,7 +7,7 @@
 namespace sre
 {
 
-class GUIManager : public AEntityManager
+class SRE_API GUIManager : public AEntityManager
 {
 public:
     Entity *createGUIImageEntity(const std::string &fileName);

@@ -19,7 +19,7 @@
 namespace sre
 {
 
-class Material : public AComponentsHolder<AMaterialComponent>
+class SRE_API Material : public AComponentsHolder<AMaterialComponent>
 {
 private:
     bool castsShadow;

@@ -97,6 +97,8 @@
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
       <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>
+      </LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glu32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -200,6 +202,7 @@
     <ClCompile Include="engine\core\multimedia\textures\atlases\FontAtlas.cpp" />
     <ClCompile Include="engine\core\singletonsManager\SingletonsManager.cpp" />
     <ClCompile Include="engine\entitiesManagers\AEntityManager.cpp" />
+    <ClCompile Include="engine\entities\components\AComponentsHolder.cpp" />
     <ClCompile Include="engine\entities\components\AEntityComponent.cpp" />
     <ClCompile Include="engine\entities\components\renderables\gui\GUIImageComponent.cpp" />
     <ClCompile Include="engine\entities\components\renderables\gui\GUITextComponent.cpp" />
@@ -242,7 +245,6 @@
     <ClCompile Include="engine\core\timer\Timer.cpp" />
     <ClCompile Include="engine\core\wrappers\graphics\OpenGLAPI.cpp" />
     <ClCompile Include="engine\core\wrappers\multimedia\SDLAPI.cpp" />
-    <ClCompile Include="engine\temp\TEMP_TextureEngine.cpp" />
     <ClCompile Include="engine\tests\TestServicesProvider.cpp" />
     <ClCompile Include="engine\utils\FileUtils.cpp" />
     <ClCompile Include="engine\utils\Log.cpp" />
@@ -260,6 +262,7 @@
     <ClInclude Include="engine\core\graphics\shaders\Shader.h" />
     <ClInclude Include="engine\core\graphics\shaders\ShaderLightData.h" />
     <ClInclude Include="engine\core\singletonsManager\ASingleton.h" />
+    <ClInclude Include="engine\core_defines.h" />
     <ClInclude Include="engine\entities\components\EComponentId.h" />
     <ClInclude Include="engine\entities\components\lights\ShadowData.h" />
     <ClInclude Include="engine\entities\components\renderables\gui\GUIImageComponent.h" />
@@ -318,7 +321,6 @@
     <ClInclude Include="engine\core\wrappers\graphics\OpenGLAPI.h" />
     <ClInclude Include="engine\core\wrappers\multimedia\AMultimediaWrapper.h" />
     <ClInclude Include="engine\core\wrappers\multimedia\SDLAPI.h" />
-    <ClInclude Include="engine\temp\TEMP_TextureEngine.h" />
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\utils\FileUtils.h" />
     <ClInclude Include="engine\utils\Log.h" />
