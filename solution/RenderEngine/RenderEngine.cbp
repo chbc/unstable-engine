@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="RendererEngine" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="../../bin/gcc/RenderEngine" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../bin/gcc" />
+				<Option object_output="../../bin/gcc/obj" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="RenderEngine" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+			</Target>
+		</Build>
+		<Compiler>
+			<Add directory="../../include" />
+			<Add directory="." />
+		</Compiler>
+		<Linker>
+			<Add option="-lSDL2main -lSDL2 -lSDL2_image" />
+			<Add option="-lGlew32d -lOpenGL32" />
+			<Add directory="../../lib/gcc" />
+		</Linker>
+		<Unit filename="application/SampleApplication.cpp" />
+		<Unit filename="application/SampleApplication.h" />
+		<Unit filename="application/events/EventReceiver.cpp" />
+		<Unit filename="application/events/EventReceiver.h" />
+		<Unit filename="engine/RenderEngine.cpp" />
+		<Unit filename="engine/RenderEngine.h" />
+		<Unit filename="engine/math/Quaternion.cpp" />
+		<Unit filename="engine/math/Quaternion.h" />
+		<Unit filename="engine/math/Transform.cpp" />
+		<Unit filename="engine/math/Transform.h" />
+		<Unit filename="engine/math/Vector.cpp" />
+		<Unit filename="engine/math/Vector.h" />
+		<Unit filename="engine/math/math_util.h" />
+		<Unit filename="engine/nodes/CameraNode.cpp" />
+		<Unit filename="engine/nodes/CameraNode.h" />
+		<Unit filename="engine/nodes/Node.cpp" />
+		<Unit filename="engine/nodes/Node.h" />
+		<Unit filename="engine/nodes/lights/DirectionalLight.cpp" />
+		<Unit filename="engine/nodes/lights/DirectionalLight.h" />
+		<Unit filename="engine/nodes/lights/LightNode.cpp" />
+		<Unit filename="engine/nodes/lights/LightNode.h" />
+		<Unit filename="engine/nodes/lights/PointLight.cpp" />
+		<Unit filename="engine/nodes/lights/PointLight.h" />
+		<Unit filename="engine/nodes/renderables/CubeNode.cpp" />
+		<Unit filename="engine/nodes/renderables/CubeNode.h" />
+		<Unit filename="engine/nodes/renderables/PlaneNode.cpp" />
+		<Unit filename="engine/nodes/renderables/PlaneNode.h" />
+		<Unit filename="engine/nodes/renderables/RenderableNode.cpp" />
+		<Unit filename="engine/nodes/renderables/RenderableNode.h" />
+		<Unit filename="engine/nodes/renderables/materials/ColorMaterial.cpp" />
+		<Unit filename="engine/nodes/renderables/materials/ColorMaterial.h" />
+		<Unit filename="engine/nodes/renderables/materials/DiffuseMaterial.cpp" />
+		<Unit filename="engine/nodes/renderables/materials/DiffuseMaterial.h" />
+		<Unit filename="engine/nodes/renderables/materials/Material.cpp" />
+		<Unit filename="engine/nodes/renderables/materials/Material.h" />
+		<Unit filename="engine/nodes/renderables/materials/ShaderConsts.h" />
+		<Unit filename="engine/nodes/renderables/materials/SpecularMaterial.cpp" />
+		<Unit filename="engine/nodes/renderables/materials/SpecularMaterial.h" />
+		<Unit filename="engine/nodes/renderables/materials/ToonMaterial.cpp" />
+		<Unit filename="engine/nodes/renderables/materials/ToonMaterial.h" />
+		<Unit filename="engine/nodes/renderables/materials/textures/Texture.cpp" />
+		<Unit filename="engine/nodes/renderables/materials/textures/Texture.h" />
+		<Unit filename="engine/nodes/renderables/meshes/Mesh.cpp" />
+		<Unit filename="engine/nodes/renderables/meshes/Mesh.h" />
+		<Unit filename="engine/nodes/renderables/meshes/VertexData.h" />
+		<Unit filename="engine/scene/SceneManager.cpp" />
+		<Unit filename="engine/scene/SceneManager.h" />
+		<Unit filename="engine/systems/graphics/LightManager.cpp" />
+		<Unit filename="engine/systems/graphics/LightManager.h" />
+		<Unit filename="engine/systems/graphics/MatrixManager.cpp" />
+		<Unit filename="engine/systems/graphics/MatrixManager.h" />
+		<Unit filename="engine/systems/graphics/RenderManager.cpp" />
+		<Unit filename="engine/systems/graphics/RenderManager.h" />
+		<Unit filename="engine/systems/graphics/ShaderManager.cpp" />
+		<Unit filename="engine/systems/graphics/ShaderManager.h" />
+		<Unit filename="engine/systems/graphics/TextureManager.cpp" />
+		<Unit filename="engine/systems/graphics/TextureManager.h" />
+		<Unit filename="engine/systems/input/InputHandler.cpp" />
+		<Unit filename="engine/systems/input/InputHandler.h" />
+		<Unit filename="engine/systems/input/button_names.h" />
+		<Unit filename="engine/systems/multimedia/MultimediaManager.cpp" />
+		<Unit filename="engine/systems/multimedia/MultimediaManager.h" />
+		<Unit filename="engine/systems/timer/Timer.cpp" />
+		<Unit filename="engine/systems/timer/Timer.h" />
+		<Unit filename="engine/util/singleton_macros.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

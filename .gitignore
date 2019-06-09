@@ -1,0 +1,17 @@
+references/
+*.exe
+fora/
+solution/.vs/
+*.sdf
+*.opensdf
+*.iobj
+*.ipdb
+solution/RenderEngine.VC.db
+solution/RenderEngine.VC.VC.opendb
+lib/vc/SRE_d.lib
+lib/vc/SRE.lib
+obj
+bin/tests
+bin/vc/SRE_d.dll
+bin/vc/SRE_d.exp
+bin/gcc/libSRE.dll
