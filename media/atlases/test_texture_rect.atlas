@@ -1,8 +1,0 @@
-char id=um x=0 y=0 width=126 height=126
-char id=dois x=126 y=0 width=126 height=126
-char id=tres x=256 y=0 width=126 height=126
-char id=quatro x=376 y=0 width=126 height=126
-char id=cinco x=0 y=126 width=126 height=126
-char id=seis x=126 y=126 width=126 height=126
-char id=sete x=256 y=126 width=126 height=126
-char id=oito x=376 y=126 width=126 height=126
