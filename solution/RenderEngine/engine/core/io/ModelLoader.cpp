@@ -103,6 +103,18 @@ void ModelLoader::processMaterials(aiMesh *inputMesh, const aiScene *scene, Mesh
 			material->GetTexture(aiTextureType_AMBIENT, 0, &fileName);
 			entityMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>(this->directory + fileName.C_Str());
 		}
+
+		if (material->GetTextureCount(aiTextureType_HEIGHT) > 0)
+		{
+			material->GetTexture(aiTextureType_HEIGHT, 0, &fileName);
+			entityMesh->addMaterialComponent<NormalMaterialComponent>(this->directory + fileName.C_Str());
+		}
+
+		if (material->GetTextureCount(aiTextureType_DISPLACEMENT) > 0)
+		{
+			material->GetTexture(aiTextureType_DISPLACEMENT, 0, &fileName);
+			entityMesh->addMaterialComponent<NormalMaterialComponent>(this->directory + fileName.C_Str());
+		}
 	}
 }
 

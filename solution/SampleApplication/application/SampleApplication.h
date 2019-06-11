@@ -18,7 +18,9 @@ protected:
 	void onUpdate(unsigned int elapsedTime);
 
 private:
+	void createLights();
     void createRoom();
+	void createHouse();
 };
 
 #endif

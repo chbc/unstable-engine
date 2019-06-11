@@ -25,9 +25,9 @@ private:
     bool castsShadow;
 
 public:
-    inline void setCastsShadow(bool value) { this->castsShadow = value; }
-    void setReceivesLight(bool value);
-    bool getReceivesLight();
+	SRE_API inline void setCastsShadow(bool value);
+	SRE_API void setReceivesLight(bool value);
+	SRE_API bool getReceivesLight();
 
 private:
     Material();

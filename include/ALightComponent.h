@@ -12,7 +12,7 @@ namespace sre
 /*!
     Base class to handle lighting.
 */
-class ALightComponent : public AEntityComponent
+class SRE_API ALightComponent : public AEntityComponent
 {
 private:
     glm::vec3 color;

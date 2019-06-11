@@ -10,6 +10,11 @@ Material::Material() : castsShadow(true)
     this->addComponent<LitMaterialComponent>();
 }
 
+void Material::setCastsShadow(bool value)
+{
+	this->castsShadow = value;
+}
+
 void Material::setReceivesLight(bool value)
 {
     bool hasLit = this->hasComponent<LitMaterialComponent>();
