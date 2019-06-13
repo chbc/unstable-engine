@@ -226,6 +226,27 @@ MeshData<VertexData>* PrimitiveMeshFactory::createCube(float size)
 	for (int i = 0; i < 36; i++)
 		indices.push_back(cubeIndices[i]);
 
+	// Tangents and bitangents
+	glm::vec3 tangent, bitangent;
+	const int FACES_COUNT = 12;
+	for (int i = 0; i < FACES_COUNT; i++)
+	{
+		MathUtils::calculateTangentAndBitangent
+		(
+			vertexData[indices[3 * i]].position, vertexData[indices[3 * i + 1]].position, vertexData[indices[3 * i + 2]].position,
+			glm::vec2(vertexData[indices[3 * i]].u, vertexData[indices[3 * i]].v),
+			glm::vec2(vertexData[indices[3 * i + 1]].u, vertexData[indices[3 * i + 1]].v),
+			glm::vec2(vertexData[indices[3 * i + 2]].u, vertexData[indices[3 * i + 2]].v),
+			tangent, bitangent
+		);
+
+		for (int j = 0; j < 2; j++)
+		{
+			vertexData[indices[3 * i + j]].tangent = tangent;
+			vertexData[indices[3 * i + j]].bitangent = bitangent;
+		}
+	}
+
 	return new MeshData<VertexData>{ vertexData, indices };
 }
 

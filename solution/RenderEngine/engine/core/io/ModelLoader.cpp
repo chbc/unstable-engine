@@ -12,7 +12,11 @@ namespace sre
 void ModelLoader::load(Entity *rootEntity, const std::string &fileName)
 {
     Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile(fileName, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals); 
+    const aiScene* scene = importer.ReadFile
+	(
+		fileName, 
+		aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_CalcTangentSpace
+	);
 
     if
     (
@@ -56,6 +60,12 @@ void ModelLoader::processMesh(aiMesh *inputMesh, const aiScene *scene, Entity *e
 		{
 			newData.u = inputMesh->mTextureCoords[0][i].x;
 			newData.v = inputMesh->mTextureCoords[0][i].y;
+		}
+
+		if ((inputMesh->mTangents != nullptr) && (inputMesh->mBitangents != nullptr))
+		{
+			newData.tangent = glm::vec3(inputMesh->mTangents[i].x, inputMesh->mTangents[i].y, inputMesh->mTangents[i].z);
+			newData.bitangent = glm::vec3(inputMesh->mBitangents[i].x, inputMesh->mBitangents[i].y, inputMesh->mBitangents[i].z);
 		}
 
 		vertexData.emplace_back(newData);

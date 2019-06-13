@@ -14,28 +14,21 @@ void SampleApplication::onInit()
 
 	this->createLights();
 
+	/*
 	createHouse();
-
 	return;
+	*/
 
     // cube //
-    Entity *cube;
-    cube = this->sceneManager->createCubeEntity();
-    cube->getTransform()->setPosition(glm::vec3(0.0f, 0.5f, 2.0f));
-    MeshComponent *cubeMesh = cube->getComponent<MeshComponent>();
-    cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
-    
-    this->sceneManager->addEntity(cube);
+	Entity* cube;
+	cube = this->createCube();
+    cube->getTransform()->setPosition(glm::vec3(-5.0f, 1.0f, 2.0f));
 
-    cube = this->sceneManager->createCubeEntity();
-    cube->getTransform()->setPosition(glm::vec3(3.0f, 4.0f, 0.0f));
-    cubeMesh = cube->getComponent<MeshComponent>();
-    cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
+	cube = this->createCube();
+    cube->getTransform()->setPosition(glm::vec3(3.0f, 1.0f, 0.0f));
 
-    this->sceneManager->addEntity(cube);
-	
     this->createRoom();
-
+	
     Entity *nanosuit = this->sceneManager->createModelEntity("../../media/nanosuit/nanosuit.obj");
     nanosuit->getTransform()->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
     this->sceneManager->addEntity(nanosuit);
@@ -79,6 +72,21 @@ void SampleApplication::onUpdate(unsigned int elapsedTime)
     */
 }
 
+Entity* SampleApplication::createCube()
+{
+	Entity* cube;
+	cube = this->sceneManager->createCubeEntity(2.0f);
+	// cube = this->sceneManager->createCubeEntity(4.0f);
+	MeshComponent* cubeMesh = cube->getComponent<MeshComponent>();
+	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
+	cubeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/crate_normal.png");
+	cubeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/crate_specular.png");
+
+	this->sceneManager->addEntity(cube);
+
+	return cube;
+}
+
 void SampleApplication::createLights()
 {
 	// light //
@@ -86,13 +94,15 @@ void SampleApplication::createLights()
 	DirectionalLightComponent* dLight1 = this->sceneManager->addDirectionalLight();
 	dLight1->setDirection(glm::vec3(-1.0f, -0.25f, 0.0f));
 	dLight1->setColor(glm::vec3(1.0f));
-
-	DirectionalLightComponent* dLight2 = this->sceneManager->addDirectionalLight();
-	dLight2->setDirection(glm::vec3(0.0f, -1.0f, -1.0f));
-	dLight2->setColor(glm::vec3(0.75f, 0.75f, 0.75f));
 	*/
 
-	/* nanosuit
+	/*
+	DirectionalLightComponent* dLight2 = this->sceneManager->addDirectionalLight();
+	dLight2->setDirection(glm::vec3(0.0f, -0.5f, 1.0f));
+	dLight2->setColor(glm::vec3(0.1f, 0.1f, 0.1f));
+	*/
+
+	// nanosuit
 	PointLightComponent * pLight1 = this->sceneManager->addPointLight();
 	pLight1->getTransform()->setPosition(glm::vec3(3.0f, 2.0f, 3.0f));
 	pLight1->setColor(glm::vec3(0.5f));
@@ -116,7 +126,6 @@ void SampleApplication::createLights()
 	cubeMesh->getMaterial()->setCastsShadow(false);
 	cubeMesh->getMaterial()->setReceivesLight(false);
 	this->sceneManager->addEntity(lightCube);
-	*/
 
 	/*
 	PointLightComponent *pLight3 = this->sceneManager->addPointLight();
@@ -133,9 +142,10 @@ void SampleApplication::createLights()
 	*/
 
 	// sponza
+	/*
 	PointLightComponent* pLight1 = this->sceneManager->addPointLight();
-	pLight1->getTransform()->setPosition(glm::vec3(0.0f, 10.0f, 0.0f));
-	pLight1->setColor(glm::vec3(0.5f));
+	pLight1->getTransform()->setPosition(glm::vec3(0.0f, 15.0f, -60.0f));
+	pLight1->setColor(glm::vec3(0.5f, 0.5f, 0.15f));
 
 	Entity* lightCube = this->sceneManager->createCubeEntity();
 	lightCube->getTransform()->setPosition(pLight1->getPosition());
@@ -146,8 +156,9 @@ void SampleApplication::createLights()
 	this->sceneManager->addEntity(lightCube);
 
 	PointLightComponent* pLight2 = this->sceneManager->addPointLight();
-	pLight2->getTransform()->setPosition(glm::vec3(-3.0f, 10.0f, 20.0f));
-	pLight2->setColor(glm::vec3(0.5f, 0.5f, 0.5f));
+	pLight2->getTransform()->setPosition(glm::vec3(-3.0f, 10.0f, -20.0f));
+	pLight2->setColor(glm::vec3(0.5f, 0.15f, 0.15f));
+	pLight2->setRange(40.0f);
 
 	lightCube = this->sceneManager->createCubeEntity();
 	lightCube->getTransform()->setPosition(pLight2->getPosition());
@@ -158,8 +169,9 @@ void SampleApplication::createLights()
 	this->sceneManager->addEntity(lightCube);
 
 	PointLightComponent* pLight3 = this->sceneManager->addPointLight();
-	pLight3->getTransform()->setPosition(glm::vec3(3.0f, 10.0f, -20.0f));
+	pLight3->getTransform()->setPosition(glm::vec3(3.0f, 10.0f, 20.0f));
 	pLight3->setColor(glm::vec3(0.5f, 0.5f, 0.5f));
+	pLight3->setRange(40.0f);
 
 	lightCube = this->sceneManager->createCubeEntity();
 	lightCube->getTransform()->setPosition(pLight3->getPosition());
@@ -168,17 +180,20 @@ void SampleApplication::createLights()
 	cubeMesh->getMaterial()->setCastsShadow(false);
 	cubeMesh->getMaterial()->setReceivesLight(false);
 	this->sceneManager->addEntity(lightCube);
+	*/
 }
 
 void SampleApplication::createRoom()
 {
-    Entity *plane;
+    Entity* plane;
+	TransformComponent* transform;
+	MeshComponent* planeMesh;
 
     // bottom //
     plane = this->sceneManager->createPlaneEntity(20);
-    TransformComponent *transform = plane->getTransform();
+    transform = plane->getTransform();
     transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
-    MeshComponent *planeMesh = plane->getComponent<MeshComponent>();
+    planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/wood.png");
     planeMesh->getMaterial()->setCastsShadow(false);
     // planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
@@ -187,9 +202,10 @@ void SampleApplication::createRoom()
 
     this->sceneManager->addEntity(plane);
 
+
     // back //
     plane = this->sceneManager->createPlaneEntity(20);
-    transform = plane->getTransform();
+	transform = plane->getTransform();
     transform->setPosition(glm::vec3(0, 0, -10));
     planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
@@ -275,17 +291,14 @@ void SampleApplication::createHouse()
 
 	// cube //
 	Entity* cube;
-	cube = this->sceneManager->createCubeEntity(3.0);
-	cube->getTransform()->setPosition(glm::vec3(3.0f, 1.5f, 2.0f));
-	MeshComponent* cubeMesh = cube->getComponent<MeshComponent>();
-	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
+	cube = this->createCube();
+	cube->getTransform()->setPosition(glm::vec3(4.0f, 2.0f, 2.0f));
 
-	this->sceneManager->addEntity(cube);
+	cube = this->createCube();
+	cube->getTransform()->setPosition(glm::vec3(-4.0f, 2.0f, -2.0f));
 
-	cube = this->sceneManager->createCubeEntity(2.0f);
-	cube->getTransform()->setPosition(glm::vec3(-3.0f, 1.0f, -2.0f));
-	cubeMesh = cube->getComponent<MeshComponent>();
-	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
-
-	this->sceneManager->addEntity(cube);
+	cube = this->createCube();
+	cube->getTransform()->setPosition(glm::vec3(-4.0f, 2.0f, -6.0f));
+	cube = this->createCube();
+	cube->getTransform()->setPosition(glm::vec3(-4.0f, 6.0f, -6.0f));
 }
