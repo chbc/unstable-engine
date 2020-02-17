@@ -6,8 +6,13 @@
 namespace sre
 {
 
+class MultimediaManager;
+
 class OpenGLAPI : public AGraphicsWrapper
 {
+private:
+	MultimediaManager* multimediaManager;
+
 protected:
     OpenGLAPI() {}
 

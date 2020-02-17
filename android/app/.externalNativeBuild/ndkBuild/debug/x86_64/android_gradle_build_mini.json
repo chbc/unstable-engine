@@ -1,0 +1,77 @@
+{
+  "buildFiles": [
+    "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk",
+    "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk"
+  ],
+  "cleanCommands": [
+    "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static clean"
+  ],
+  "libraries": {
+    "main-debug-x86_64": {
+      "artifactName": "main",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj/local/x86_64/libmain.so",
+      "abi": "x86_64",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86_64\\libmain.so"
+    },
+    "cpufeatures-debug-x86_64": {
+      "artifactName": "cpufeatures",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj/local/x86_64/libcpufeatures.a",
+      "abi": "x86_64",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86_64\\libcpufeatures.a"
+    },
+    "SRE-debug-x86_64": {
+      "artifactName": "SRE",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj/local/x86_64/libSRE.so",
+      "abi": "x86_64",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86_64\\libSRE.so"
+    },
+    "hidapi-debug-x86_64": {
+      "artifactName": "hidapi",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj/local/x86_64/libhidapi.so",
+      "abi": "x86_64",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86_64\\libhidapi.so"
+    },
+    "jpeg-debug-x86_64": {
+      "artifactName": "jpeg",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj/local/x86_64/libjpeg.a",
+      "abi": "x86_64",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86_64\\libjpeg.a"
+    },
+    "png-debug-x86_64": {
+      "artifactName": "png",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj/local/x86_64/libpng.a",
+      "abi": "x86_64",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86_64\\libpng.a"
+    },
+    "Classes-debug-x86_64": {
+      "artifactName": "Classes",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj/local/x86_64/libClasses.so",
+      "abi": "x86_64",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86_64\\libClasses.so"
+    },
+    "webpdecoder_static-debug-x86_64": {
+      "artifactName": "webpdecoder_static",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj/local/x86_64/libwebpdecoder_static.a",
+      "abi": "x86_64",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86_64\\libwebpdecoder_static.a"
+    },
+    "webp-debug-x86_64": {
+      "artifactName": "webp",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj/local/x86_64/libwebp.a",
+      "abi": "x86_64",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86_64\\libwebp.a"
+    },
+    "SDL2_image-debug-x86_64": {
+      "artifactName": "SDL2_image",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj/local/x86_64/libSDL2_image.so",
+      "abi": "x86_64",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86_64\\libSDL2_image.so"
+    },
+    "SDL2-debug-x86_64": {
+      "artifactName": "SDL2",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\jni\\Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/SDL-2.0.10-12936/build/org.sre/app/build/intermediates/ndkBuild/debug/obj/local/x86_64/libSDL2.so",
+      "abi": "x86_64",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\SDL-2.0.10-12936\\build\\org.sre\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86_64\\libSDL2.so"
+    }
+  }
+}

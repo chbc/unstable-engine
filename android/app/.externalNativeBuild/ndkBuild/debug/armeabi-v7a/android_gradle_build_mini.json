@@ -1,0 +1,77 @@
+{
+  "buildFiles": [
+    "D:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk",
+    "D:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk"
+  ],
+  "cleanCommands": [
+    "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static clean"
+  ],
+  "libraries": {
+    "webp-debug-armeabi-v7a": {
+      "artifactName": "webp",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libwebp.a",
+      "abi": "armeabi-v7a",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libwebp.a"
+    },
+    "hidapi-debug-armeabi-v7a": {
+      "artifactName": "hidapi",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libhidapi.so",
+      "abi": "armeabi-v7a",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libhidapi.so"
+    },
+    "SDL2_image-debug-armeabi-v7a": {
+      "artifactName": "SDL2_image",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libSDL2_image.so",
+      "abi": "armeabi-v7a",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libSDL2_image.so"
+    },
+    "png-debug-armeabi-v7a": {
+      "artifactName": "png",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libpng.a",
+      "abi": "armeabi-v7a",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libpng.a"
+    },
+    "webpdecoder_static-debug-armeabi-v7a": {
+      "artifactName": "webpdecoder_static",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libwebpdecoder_static.a",
+      "abi": "armeabi-v7a",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libwebpdecoder_static.a"
+    },
+    "jpeg-debug-armeabi-v7a": {
+      "artifactName": "jpeg",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libjpeg.a",
+      "abi": "armeabi-v7a",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libjpeg.a"
+    },
+    "main-debug-armeabi-v7a": {
+      "artifactName": "main",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libmain.so",
+      "abi": "armeabi-v7a",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libmain.so"
+    },
+    "SDL2-debug-armeabi-v7a": {
+      "artifactName": "SDL2",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libSDL2.so",
+      "abi": "armeabi-v7a",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libSDL2.so"
+    },
+    "Classes-debug-armeabi-v7a": {
+      "artifactName": "Classes",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libClasses.so",
+      "abi": "armeabi-v7a",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libClasses.so"
+    },
+    "SRE-debug-armeabi-v7a": {
+      "artifactName": "SRE",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libSRE.so",
+      "abi": "armeabi-v7a",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libSRE.so"
+    },
+    "cpufeatures-debug-armeabi-v7a": {
+      "artifactName": "cpufeatures",
+      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libcpufeatures.a",
+      "abi": "armeabi-v7a",
+      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libcpufeatures.a"
+    }
+  }
+}
