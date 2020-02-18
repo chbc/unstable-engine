@@ -9,22 +9,16 @@ SampleApplication::SampleApplication() : RenderEngine()
 
 void SampleApplication::onInit()
 {
-	Entity* cube = this->sceneManager->createCubeEntity(2.0f);
-	MeshComponent* cubeMesh = cube->getComponent<MeshComponent>();
-	cubeMesh->getMaterial()->setCastsShadow(false);
-	cubeMesh->getMaterial()->setReceivesLight(false);
-
-	this->sceneManager->addEntity(cube);
-
-
 	// set EventReceiver class for input handling
-	/*
 	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
 
 	this->createLights();
-	*/
 
 	/*
+	createHouse();
+	return;
+	*/
+
     // cube //
 	Entity* cube;
 	cube = this->createCube();
@@ -38,7 +32,6 @@ void SampleApplication::onInit()
     Entity *nanosuit = this->sceneManager->createModelEntity("../../media/nanosuit/nanosuit.obj");
     nanosuit->getTransform()->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
     this->sceneManager->addEntity(nanosuit);
-	*/
     
     // GUI //
     /*

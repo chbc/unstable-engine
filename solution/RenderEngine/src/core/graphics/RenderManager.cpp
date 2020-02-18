@@ -23,7 +23,7 @@ namespace sre
 RenderManager::RenderManager()
 {
     SingletonsManager *singletonsManager = SingletonsManager::getInstance();
-    this->graphicsWrapper   = singletonsManager->add<AGraphicsWrapper, OpenGLESAPI>();
+    this->graphicsWrapper   = singletonsManager->add<AGraphicsWrapper, OpenGLAPI>();
     this->matrixManager     = singletonsManager->resolve<MatrixManager>();
     this->lightManager      = singletonsManager->resolve<LightManager>();
     this->textureManager    = singletonsManager->resolve<TextureManager>();

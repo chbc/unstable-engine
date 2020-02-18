@@ -16,11 +16,11 @@ void RenderEngine::run()
     this->multimediaManager->init();
     this->renderManager->init();
 	this->sceneManager = UPTR<SceneManager>{ new SceneManager };
-	// ### this->guiManager = UPTR<GUIManager>{ new GUIManager };
+	this->guiManager = UPTR<GUIManager>{ new GUIManager };
 
     this->onInit();
 
-    // ### this->guiManager->onSceneLoaded();
+    this->guiManager->onSceneLoaded();
     this->sceneManager->onSceneLoaded();
     this->renderManager->onSceneLoaded();
 
@@ -38,7 +38,7 @@ void RenderEngine::run()
         elapsedTime = this->multimediaManager->stopTimer();
 
 #ifdef DEBUG
-        // ### this->guiManager->updateFrameIndicator(elapsedTime);
+        this->guiManager->updateFrameIndicator(elapsedTime);
 #endif
 
         this->multimediaManager->onEndFrame();
@@ -65,7 +65,7 @@ void RenderEngine::removeDestroyedEntities()
 {
     this->renderManager->removeDestroyedEntities();
     this->sceneManager->removeDestroyedEntities();
-    // ### this->guiManager->removeDestroyedEntities();
+    this->guiManager->removeDestroyedEntities();
 }
 
 void RenderEngine::render()

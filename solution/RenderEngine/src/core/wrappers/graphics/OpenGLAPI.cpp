@@ -1,10 +1,7 @@
-#ifdef __ANDROID__
-#include <SDL/SDL_opengles2.h>
-#else
 #include <windows.h>
+
 #define GLEW_STATIC
 #include <GL/glew.h>
-#endif
 
 #include "OpenGLAPI.h"
 #include "MeshComponent.h"
@@ -33,11 +30,9 @@ namespace sre
 	{
 		this->multimediaManager = SingletonsManager::getInstance()->get<MultimediaManager>();
 
-#ifndef __ANDROID__
 		glewExperimental = GL_TRUE;
 		if (glewInit() != GLEW_OK)
 			throw std::string("GLEW didn't inited");
-#endif
 
 		const GLubyte * glVersion = glGetString(GL_VERSION);
 		std::string strGLVersion((char*)(glVersion));
