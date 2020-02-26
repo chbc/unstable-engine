@@ -68,6 +68,9 @@ namespace ShaderFiles
     const std::string SHADOWS_POINT_H_F     = "../../shaders/shadows/shadows_point_h.frag";
     const std::string SHADOWS_POINT_IMPL_V  = "../../shaders/shadows/shadows_point_impl.vert";
     const std::string SHADOWS_POINT_IMPL_F  = "../../shaders/shadows/shadows_point_impl.frag";
+
+	const std::string POST_PROCESSING_DEFAULT_V = "../../shaders/postProcessing/default.vert";
+	const std::string POST_PROCESSING_DEFAULT_F = "../../shaders/postProcessing/default.frag";
 }
 
 namespace ShaderVariables
@@ -84,6 +87,7 @@ namespace ShaderVariables
         const std::string MATERIAL_COLOR        = "materialColor";
         const std::string SHININESS             = "shininess";
         const std::string GUI_TEXTURE           = "guiTexture";
+		const std::string SCREEN_TEXTURE		= "screenTexture";
         const std::string DIFFUSE_TEXTURE       = "diffuseTexture";
         const std::string AO_TEXTURE            = "aoTexture";
         const std::string NORMAL_TEXTURE        = "normalTexture";
@@ -106,6 +110,7 @@ namespace ShaderVariables
         SHININESS,
 
         GUI_TEXTURE,
+		SCREEN_TEXTURE,
         DIFFUSE_TEXTURE,
         AO_TEXTURE,
         NORMAL_TEXTURE,
@@ -129,6 +134,7 @@ namespace ShaderVariables
         { MATERIAL_COLOR,               Names::MATERIAL_COLOR               },
         { SHININESS,                    Names::SHININESS                    },
         { GUI_TEXTURE,                  Names::GUI_TEXTURE                  },
+		{ SCREEN_TEXTURE,               Names::SCREEN_TEXTURE               },
         { DIFFUSE_TEXTURE,              Names::DIFFUSE_TEXTURE              },
         { AO_TEXTURE,                   Names::AO_TEXTURE                   },
         { NORMAL_TEXTURE,               Names::NORMAL_TEXTURE               },

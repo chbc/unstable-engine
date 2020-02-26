@@ -34,14 +34,12 @@ void SampleApplication::onInit()
     this->sceneManager->addEntity(nanosuit);
     
     // GUI //
-    /*
     Entity *guiEntity;
     guiEntity = this->guiManager->createGUIImageEntityFromAtlas("../../media/atlases/test_texture_rect", "sete");
     GUIImageComponent *guiComponent = guiEntity->getComponent<GUIImageComponent>();
-    guiComponent->setUIPosition(glm::vec2(0.5f, 0.5f));
+    guiComponent->setUIPosition(glm::vec2(0.75f, 0.75f));
     
     this->guiManager->addEntity(guiEntity);
-    */
 
     /*
     std::stringstream ss;

@@ -4,10 +4,10 @@
 namespace sre
 {
 
-MeshComponent::MeshComponent(Entity *entity, MeshData<VertexData> *meshData)
+MeshComponent::MeshComponent(Entity *entity, MeshData* meshData)
     : ARenderableComponent(entity)
 {
-	this->meshData = UPTR<MeshData<VertexData>>{ meshData };
+	this->meshData = UPTR<MeshData>{ meshData };
     this->material = UPTR<Material>{ new Material{} };
 }
 

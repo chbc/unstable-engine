@@ -10,9 +10,9 @@ namespace sre
 class GUIManager : public AEntityManager
 {
 public:
-    Entity *createGUIImageEntity(const std::string &fileName);
-    Entity *createGUIImageEntityFromAtlas(const std::string &fileName, const std::string &imageId);
-    Entity *createGUITextEntity(const std::string fontFile, uint32_t maxItems = 100u);
+	SRE_API Entity *createGUIImageEntity(const std::string &fileName);
+	SRE_API Entity *createGUIImageEntityFromAtlas(const std::string &fileName, const std::string &imageId);
+	SRE_API Entity *createGUITextEntity(const std::string fontFile, uint32_t maxItems = 100u);
 
 private:
     GUIManager();

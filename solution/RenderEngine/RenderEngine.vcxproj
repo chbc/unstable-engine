@@ -197,6 +197,7 @@
     <ClCompile Include="src\core\graphics\renders\components\LitRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renders\components\litStates\LitRendererLightsState.cpp" />
     <ClCompile Include="src\core\graphics\renders\components\litStates\LitRendererNoLightsState.cpp" />
+    <ClCompile Include="src\core\graphics\renders\PostProcessingRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renders\shadersSetup\BaseRendererShaderSetup.cpp" />
     <ClCompile Include="src\core\graphics\renders\shadersSetup\LightRendererShaderSetup.cpp" />
     <ClCompile Include="src\core\graphics\renders\shadersSetup\ShadowRendererShaderSetup.cpp" />
@@ -208,6 +209,7 @@
     <ClCompile Include="src\entitiesManagers\AEntityManager.cpp" />
     <ClCompile Include="src\entities\components\AComponentsHolder.cpp" />
     <ClCompile Include="src\entities\components\AEntityComponent.cpp" />
+    <ClCompile Include="src\entities\components\cameras\PostProcessingComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\GUIImageComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\GUITextComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp" />

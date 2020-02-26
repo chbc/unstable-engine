@@ -16,6 +16,7 @@
 #include "Renderer.h"
 #include "GUIRenderer.h"
 #include "ShadowRenderer.h"
+#include "PostProcessingRenderer.h"
 
 namespace sre
 {
@@ -30,8 +31,6 @@ RenderManager::RenderManager()
     this->shaderManager     = singletonsManager->resolve<ShaderManager>();
 
     this->mainCamera = nullptr;
-    this->guiRenderer = UPTR<GUIRenderer>{ nullptr };
-    this->shadowRenderer = UPTR<ShadowRenderer>{ nullptr };
 }
 
 void RenderManager::init()
@@ -44,6 +43,10 @@ void RenderManager::init()
     MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
     const float FOV{120.0f};
     this->matrixManager->setProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 1000);
+	this->screenWidth = multimediaManager->getScreenWidth();
+	this->screenHeight = multimediaManager->getScreenHeight();
+
+	this->initPostProcessingRenderer();
 }
 
 void RenderManager::addEntity(Entity *entity)
@@ -128,6 +131,14 @@ void RenderManager::initShadowRenderer()
     }
 }
 
+void RenderManager::initPostProcessingRenderer()
+{
+	if (this->postProcessingRenderer.get() == nullptr)
+	{
+		this->postProcessingRenderer = UPTR<PostProcessingRenderer>{ new PostProcessingRenderer };
+	}
+}
+
 void RenderManager::onSceneLoaded()
 {
     if (this->shadowRenderer.get() != nullptr)
@@ -135,6 +146,9 @@ void RenderManager::onSceneLoaded()
 
     for (const UPTR<Renderer> &item : this->renders)
         item->onSceneLoaded();
+	
+	if (this->postProcessingRenderer.get() != nullptr)
+		this->postProcessingRenderer->onSceneLoaded();
 }
 
 void RenderManager::setMainCamera(CameraComponent *camera)
@@ -154,10 +168,13 @@ void RenderManager::render()
         this->shadowRenderer->render();
 
     // Scene rendering
-    this->graphicsWrapper->setViewport(1024, 768);
-    this->graphicsWrapper->clearBuffer();
+	if (this->postProcessingRenderer.get() != nullptr)
+		this->postProcessingRenderer->bindFrameBuffer();
 
-    this->renderCamera();
+    this->graphicsWrapper->setViewport(this->screenWidth, this->screenHeight);
+    this->graphicsWrapper->clearColorAndDepthBuffer();
+
+    this->updateViewMatrix();
     for (const UPTR<Renderer> &item : this->renders)
     {
         item->render
@@ -167,12 +184,16 @@ void RenderManager::render()
         );
     }
 
+	// Post processing rendering
+	if (this->postProcessingRenderer.get() != nullptr)
+		this->postProcessingRenderer->render();
+
     // GUI rendering
     if (this->guiRenderer.get() != nullptr)
         this->guiRenderer->render(this->matrixManager);
 }
 
-void RenderManager::renderCamera()
+void RenderManager::updateViewMatrix()
 {
     this->matrixManager->setView
     (
@@ -185,11 +206,6 @@ void RenderManager::renderCamera()
 void RenderManager::DEBUG_drawTriangle()
 {
     OpenGLAPI::DEBUG_drawTriangle();
-}
-
-void RenderManager::clearBuffer()
-{
-    this->graphicsWrapper->clearBuffer();
 }
 
 DirectionalLightComponent *RenderManager::addDirectionalLight(Entity *entity)
@@ -227,10 +243,10 @@ Texture *RenderManager::loadAOTexture(const std::string &fileName)
     return this->textureManager->loadAOTexture(fileName);
 }
 
-void RenderManager::setupBufferSubData(const GUIImageComponent *guiComponent)
+void RenderManager::setupBufferSubData(GUIMeshData* meshData)
 {
-    this->graphicsWrapper->bindVAO(guiComponent->vao, guiComponent->vbo);
-    this->graphicsWrapper->setupBufferSubData(guiComponent->meshData.get());
+    this->graphicsWrapper->bindVAO(meshData->vao, meshData->vbo);
+    this->graphicsWrapper->setupBufferSubData(meshData);
 }
 
 void RenderManager::removeDestroyedEntities()

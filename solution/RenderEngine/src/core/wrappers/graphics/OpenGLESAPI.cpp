@@ -44,7 +44,7 @@ namespace sre
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	void OpenGLESAPI::createVAO(MeshComponent* mesh)
+	void OpenGLESAPI::createVAO(MeshData* meshData)
 	{
 		/* ###
 		// data
@@ -61,7 +61,7 @@ namespace sre
 		*/
 	}
 
-	void OpenGLESAPI::createEBO(MeshComponent* mesh)
+	void OpenGLESAPI::createEBO(MeshData* meshData)
 	{
 		/* ###
 		// EBO
@@ -73,7 +73,7 @@ namespace sre
 		*/
 	}
 
-	void OpenGLESAPI::createGUIVAO(GUIImageComponent* guiComponent)
+	void OpenGLESAPI::createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic)
 	{
 		/* ###
 		void* data = nullptr;
@@ -99,7 +99,7 @@ namespace sre
 		*/
 	}
 
-	void OpenGLESAPI::createGUIEBO(GUIImageComponent* guiComponent)
+	void OpenGLESAPI::createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic)
 	{
 		/* ###
 		void* data = nullptr;
@@ -137,6 +137,14 @@ namespace sre
 
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
+	}
+
+	void OpenGLESAPI::enablePostProcessingSettings()
+	{
+		glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
+		glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), ABaseVertexData::getUVOffset());
+		glEnableVertexAttribArray(EAttribLocation::POSITION);
+		glVertexAttribPointer(EAttribLocation::POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), GUIVertexData::getPositionOffset());
 	}
 
 	void OpenGLESAPI::enableVertexPositions()
@@ -207,7 +215,7 @@ namespace sre
 		glBindTexture(cubeMap ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D, textureId);
 	}
 
-	void OpenGLESAPI::setupBufferSubData(const MeshData<GUIVertexData>* meshData)
+	void OpenGLESAPI::setupBufferSubData(GUIMeshData* meshData)
 	{
 		uint32_t size = meshData->indices.size() * sizeof(uint32_t);
 		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, size, &meshData->indices[0]);
@@ -270,14 +278,25 @@ namespace sre
 		glDisable(GL_BLEND);
 	}
 
-	void OpenGLESAPI::clearBuffer()
+	void OpenGLESAPI::disablePostProcessingSettings()
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glDisableVertexAttribArray(EAttribLocation::POSITION);
+		glEnable(GL_DEPTH_TEST);
+	}
+
+	void OpenGLESAPI::clearColorBuffer()
+	{
+		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
 	void OpenGLESAPI::clearDepthBuffer()
 	{
 		glClear(GL_DEPTH_BUFFER_BIT);
+	}
+
+	void OpenGLESAPI::clearColorAndDepthBuffer()
+	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	uint32_t OpenGLESAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void* data, uint32_t unit, bool genMipmap)
@@ -314,7 +333,7 @@ namespace sre
 		return result;
 	}
 
-	uint32_t OpenGLESAPI::setupTexture(uint32_t width, uint32_t height, uint32_t unit)
+	uint32_t OpenGLESAPI::createTexture(uint32_t width, uint32_t height, uint32_t unit)
 	{
 		uint32_t result{ 0 };
 		glGenTextures(1, &result);
@@ -333,6 +352,18 @@ namespace sre
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		return result;
+	}
+
+	uint32_t OpenGLESAPI::createTexture(uint32_t width, uint32_t height)
+	{
+		uint32_t result;
+		glGenTextures(1, &result);
+		glBindTexture(GL_TEXTURE_2D, result);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		return result;
 	}
@@ -486,25 +517,19 @@ namespace sre
 		glDeleteProgram(program);
 	}
 
-	void OpenGLESAPI::deleteBuffers(MeshComponent* mesh)
+	void OpenGLESAPI::deleteBuffers(AMeshData* meshData)
 	{
-		glDeleteBuffers(1, &mesh->ebo);
-		glDeleteBuffers(1, &mesh->vbo);
-		glDeleteVertexArrays(1, &mesh->vao);
+		glDeleteBuffers(1, &meshData->ebo);
+		glDeleteBuffers(1, &meshData->vbo);
+		glDeleteVertexArrays(1, &meshData->vao);
 	}
 
-	void OpenGLESAPI::deleteBuffers(GUIImageComponent* guiComponent)
+	uint32_t OpenGLESAPI::generateDepthFrameBuffer(uint32_t textureId, bool cubemap)
 	{
-		glDeleteBuffers(1, &guiComponent->ebo);
-		glDeleteBuffers(1, &guiComponent->vbo);
-		glDeleteVertexArrays(1, &guiComponent->vao);
-	}
+		uint32_t result;
+		glGenFramebuffers(1, &result);
 
-	void OpenGLESAPI::generateFrameBuffer(uint32_t& fbo, uint32_t textureId, bool cubemap)
-	{
-		glGenFramebuffers(1, &fbo);
-
-		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, result);
 
 		if (cubemap)
 			glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, textureId, 0);
@@ -515,9 +540,32 @@ namespace sre
 		glReadBuffer(GL_NONE);
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			throw "[OpenGLESAPI] - Framebuffer error!";
+			throw "[OpenGLAPI] - Depth framebuffer error!";
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		return result;
+	}
+
+	uint32_t OpenGLESAPI::generateColorFrameBuffer(uint32_t textureId, uint32_t width, uint32_t height)
+	{
+		uint32_t result;
+		glGenFramebuffers(1, &result);
+		glBindFramebuffer(GL_FRAMEBUFFER, result);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
+
+		unsigned int rbo;
+		glGenRenderbuffers(1, &rbo);
+		glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+			throw "[OpenGLAPI] - Color framebuffer error!";
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		return result;
 	}
 
 	void OpenGLESAPI::bindFrameBuffer(uint32_t fbo)

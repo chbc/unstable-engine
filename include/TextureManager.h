@@ -19,27 +19,31 @@ private:
     VECTOR_UPTR<Texture> textures;
     AGraphicsWrapper *graphicsWrapper;
     uint32_t shadowIndex;
+	uint32_t emptyIndex;
 
 protected:
     void init() override;
     void release() override;
 
 private:
-    Texture *loadGUITexture(const std::string &fileName);
-    Texture *loadDiffuseTexture(const std::string &fileName);
-    Texture *loadNormalTexture(const std::string &fileName);
-    Texture *loadSpecularTexture(const std::string &fileName);
-    Texture *loadAOTexture(const std::string &fileName);
-    Texture *loadShadowTexture(uint32_t width, uint32_t height);
-    Texture *loadCubemapTexture(uint32_t width, uint32_t height);
-    Texture *loadTexture(const std::string &fileName, EMaterialMap::Type mapType);
+    Texture* loadGUITexture(const std::string &fileName);
+    Texture* loadDiffuseTexture(const std::string &fileName);
+    Texture* loadNormalTexture(const std::string &fileName);
+    Texture* loadSpecularTexture(const std::string &fileName);
+    Texture* loadAOTexture(const std::string &fileName);
+    Texture* createShadowTexture(uint32_t width, uint32_t height);
+    Texture* createCubemapTexture(uint32_t width, uint32_t height);
+	Texture* createEmptyTexture(uint32_t width, uint32_t height);
+    Texture* loadTexture(const std::string &fileName, EMaterialMap::Type mapType);
 
-    Texture *loadExistingTexture(const std::string &fileName, EMaterialMap::Type mapType);
+    Texture* loadExistingTexture(const std::string &fileName, EMaterialMap::Type mapType);
     void deleteTexture(uint32_t id);
 
 friend class RenderManager;
 friend class SingletonsManager;
 friend class ShadowRenderer;
+friend class GUIImageComponent;
+friend class PostProcessingRenderer;
 };
 
 } // namespace

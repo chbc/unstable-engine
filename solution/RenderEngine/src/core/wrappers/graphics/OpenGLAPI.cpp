@@ -4,8 +4,7 @@
 #include <GL/glew.h>
 
 #include "OpenGLAPI.h"
-#include "MeshComponent.h"
-#include "GUIImageComponent.h"
+#include "MeshData.h"
 #include "SingletonsManager.h"
 #include "MultimediaManager.h"
 
@@ -44,71 +43,71 @@ namespace sre
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	void OpenGLAPI::createVAO(MeshComponent * mesh)
+	void OpenGLAPI::createVAO(MeshData* meshData)
 	{
 		// data
-		int dataSize = mesh->meshData->vertexData.size();
+		int dataSize = meshData->vertexData.size();
 
 		// VAO
-		glGenVertexArrays(1, &mesh->vao);
-		glBindVertexArray(mesh->vao);
+		glGenVertexArrays(1, &meshData->vao);
+		glBindVertexArray(meshData->vao);
 
 		// VBO
-		glGenBuffers(1, &mesh->vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-		glBufferData(GL_ARRAY_BUFFER, dataSize * sizeof(VertexData), &mesh->meshData->vertexData[0], GL_STATIC_DRAW);
+		glGenBuffers(1, &meshData->vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, meshData->vbo);
+		glBufferData(GL_ARRAY_BUFFER, dataSize * sizeof(VertexData), &meshData->vertexData[0], GL_STATIC_DRAW);
 	}
 
-	void OpenGLAPI::createEBO(MeshComponent * mesh)
+	void OpenGLAPI::createEBO(MeshData* meshData)
 	{
 		// EBO
-		glGenBuffers(1, &mesh->ebo);
-		int size = mesh->meshData->indices.size();
+		glGenBuffers(1, &meshData->ebo);
+		int size = meshData->indices.size();
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &mesh->meshData->indices[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->ebo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &meshData->indices[0], GL_STATIC_DRAW);
 	}
 
-	void OpenGLAPI::createGUIVAO(GUIImageComponent * guiComponent)
+	void OpenGLAPI::createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic)
 	{
 		void* data = nullptr;
-		int size = guiComponent->maxItems * 4;
+		int size = maxItems * 4;
 		GLenum usage = GL_DYNAMIC_DRAW;
 
 		// data
-		if (!guiComponent->isDynamic)
+		if (!isDynamic)
 		{
-			data = &guiComponent->meshData->vertexData[0];
-			size = guiComponent->meshData->vertexData.size();
+			data = &meshData->vertexData[0];
+			size = meshData->vertexData.size();
 			usage = GL_STATIC_DRAW;
 		}
 
 		// VAO
-		glGenVertexArrays(1, &guiComponent->vao);
-		glBindVertexArray(guiComponent->vao);
+		glGenVertexArrays(1, &meshData->vao);
+		glBindVertexArray(meshData->vao);
 
 		// VBO
-		glGenBuffers(1, &guiComponent->vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, guiComponent->vbo);
+		glGenBuffers(1, &meshData->vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, meshData->vbo);
 		glBufferData(GL_ARRAY_BUFFER, size * sizeof(GUIVertexData), data, usage);
 	}
 
-	void OpenGLAPI::createGUIEBO(GUIImageComponent * guiComponent)
+	void OpenGLAPI::createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic)
 	{
 		void* data = nullptr;
-		int size = guiComponent->maxItems * 6;
+		int size = maxItems * 6;
 		GLenum usage = GL_DYNAMIC_DRAW;
 
-		if (!guiComponent->isDynamic)
+		if (!isDynamic)
 		{
-			data = &guiComponent->meshData->indices[0];
-			size = guiComponent->meshData->indices.size();
+			data = &meshData->indices[0];
+			size = meshData->indices.size();
 			usage = GL_STATIC_DRAW;
 		}
 
 		// EBO
-		glGenBuffers(1, &guiComponent->ebo);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, guiComponent->ebo);
+		glGenBuffers(1, &meshData->ebo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->ebo);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), data, usage);
 	}
 
@@ -127,6 +126,14 @@ namespace sre
 
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
+	}
+
+	void OpenGLAPI::enablePostProcessingSettings()
+	{
+		glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
+		glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), ABaseVertexData::getUVOffset());
+		glEnableVertexAttribArray(EAttribLocation::POSITION);
+		glVertexAttribPointer(EAttribLocation::POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), GUIVertexData::getPositionOffset());
 	}
 
 	void OpenGLAPI::enableVertexPositions()
@@ -195,7 +202,7 @@ namespace sre
 		glBindTexture(cubeMap ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D, textureId);
 	}
 
-	void OpenGLAPI::setupBufferSubData(const MeshData<GUIVertexData> * meshData)
+	void OpenGLAPI::setupBufferSubData(GUIMeshData* meshData)
 	{
 		uint32_t size = meshData->indices.size() * sizeof(uint32_t);
 		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, size, &meshData->indices[0]);
@@ -242,14 +249,26 @@ namespace sre
 		glDisable(GL_BLEND);
 	}
 
-	void OpenGLAPI::clearBuffer()
+	void OpenGLAPI::disablePostProcessingSettings()
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glDisableVertexAttribArray(EAttribLocation::POSITION);
+		glEnable(GL_DEPTH_TEST);
+	}
+
+	void OpenGLAPI::clearColorBuffer()
+	{
+		glDisable(GL_DEPTH_TEST);
+		// ### glClear(GL_COLOR_BUFFER_BIT);
 	}
 
 	void OpenGLAPI::clearDepthBuffer()
 	{
 		glClear(GL_DEPTH_BUFFER_BIT);
+	}
+
+	void OpenGLAPI::clearColorAndDepthBuffer()
+	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void* data, uint32_t unit, bool genMipmap)
@@ -286,7 +305,7 @@ namespace sre
 		return result;
 	}
 
-	uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint32_t unit)
+	uint32_t OpenGLAPI::createTexture(uint32_t width, uint32_t height, uint32_t unit)
 	{
 		uint32_t result{ 0 };
 		glGenTextures(1, &result);
@@ -305,6 +324,19 @@ namespace sre
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		return result;
+	}
+
+	uint32_t OpenGLAPI::createTexture(uint32_t width, uint32_t height)
+	{
+		uint32_t result;
+		glGenTextures(1, &result);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, result);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		return result;
 	}
@@ -454,25 +486,19 @@ namespace sre
 		glDeleteProgram(program);
 	}
 
-	void OpenGLAPI::deleteBuffers(MeshComponent * mesh)
+	void OpenGLAPI::deleteBuffers(AMeshData* meshData)
 	{
-		glDeleteBuffers(1, &mesh->ebo);
-		glDeleteBuffers(1, &mesh->vbo);
-		glDeleteVertexArrays(1, &mesh->vao);
+		glDeleteBuffers(1, &meshData->ebo);
+		glDeleteBuffers(1, &meshData->vbo);
+		glDeleteVertexArrays(1, &meshData->vao);
 	}
 
-	void OpenGLAPI::deleteBuffers(GUIImageComponent * guiComponent)
+	uint32_t OpenGLAPI::generateDepthFrameBuffer(uint32_t textureId, bool cubemap)
 	{
-		glDeleteBuffers(1, &guiComponent->ebo);
-		glDeleteBuffers(1, &guiComponent->vbo);
-		glDeleteVertexArrays(1, &guiComponent->vao);
-	}
+		uint32_t result;
+		glGenFramebuffers(1, &result);
 
-	void OpenGLAPI::generateFrameBuffer(uint32_t & fbo, uint32_t textureId, bool cubemap)
-	{
-		glGenFramebuffers(1, &fbo);
-
-		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, result);
 
 		if (cubemap)
 			glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, textureId, 0);
@@ -483,9 +509,32 @@ namespace sre
 		glReadBuffer(GL_NONE);
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			throw "[OpenGLAPI] - Framebuffer error!";
+			throw "[OpenGLAPI] - Depth framebuffer error!";
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		return result;
+	}
+
+	uint32_t OpenGLAPI::generateColorFrameBuffer(uint32_t textureId, uint32_t width, uint32_t height)
+	{
+		uint32_t result;
+		glGenFramebuffers(1, &result);
+		glBindFramebuffer(GL_FRAMEBUFFER, result);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
+
+		unsigned int rbo;
+		glGenRenderbuffers(1, &rbo);
+		glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+			throw "[OpenGLAPI] - Color framebuffer error!";
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		return result;
 	}
 
 	void OpenGLAPI::bindFrameBuffer(uint32_t fbo)

@@ -63,6 +63,17 @@ Shader *ShaderManager::loadDirectionalLightDepthShader()
     return this->loadShader(vertexContent, fragmentContent);
 }
 
+Shader* ShaderManager::loadPostProcessingShader()
+{
+	std::string vertexContent;
+	std::string fragmentContent;
+
+	ShaderContentFactory contentFactory;
+	contentFactory.createPostProcessingShaderContent(vertexContent, fragmentContent);
+
+	return this->loadShader(vertexContent, fragmentContent);
+}
+
 Shader *ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent)
 {
     uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);

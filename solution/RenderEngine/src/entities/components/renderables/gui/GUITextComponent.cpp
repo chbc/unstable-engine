@@ -18,12 +18,18 @@ GUITextComponent::GUITextComponent(Entity *entity, uint32_t arg_maxItems)
 void GUITextComponent::loadFont(const std::string &fontFile)
 {
     this->atlas = SingletonsManager::getInstance()->resolve<AtlasManager>()->getFont(fontFile);
+
+	GUIMeshData* plane = PrimitiveMeshFactory().createPlaneTopDown(glm::vec2(1.0f, 1.0f));
+	this->meshData = UPTR<GUIMeshData>{ plane };
 }
 
 void GUITextComponent::onStart()
 {
-    if (this->meshData.get() != nullptr)
-        SingletonsManager::getInstance()->resolve<RenderManager>()->setupBufferSubData(this);
+	if (this->meshData.get() != nullptr)
+	{
+		GUIMeshData* guiMeshData = static_cast<GUIMeshData*>(this->meshData.get());
+		SingletonsManager::getInstance()->resolve<RenderManager>()->setupBufferSubData(guiMeshData);
+	}
 }
 
 void GUITextComponent::setText(const std::string &text)
@@ -60,9 +66,10 @@ void GUITextComponent::setText(const std::string &text)
         }
 
         meshFactory.createPlaneIndices(indices, itemsCount);
-        this->meshData = sre::make_unique<MeshData<GUIVertexData>>(vertices, indices);
+        this->meshData = sre::make_unique<GUIMeshData>(vertices, indices);
 
-        SingletonsManager::getInstance()->resolve<RenderManager>()->setupBufferSubData(this);
+		GUIMeshData* guiMeshData = static_cast<GUIMeshData*>(this->meshData.get());
+        SingletonsManager::getInstance()->resolve<RenderManager>()->setupBufferSubData(guiMeshData);
     }
 }
 

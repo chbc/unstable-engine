@@ -35,21 +35,51 @@ struct VertexData : public ABaseVertexData
 	static void *getBitangentOffset();
 };
 
-template <typename T>
-struct MeshData
+struct AMeshData
 {
-	std::vector<T> vertexData;
+	uint32_t vao;
+	uint32_t vbo;
+	uint32_t ebo;
 	std::vector<uint32_t> indices;
 
-	MeshData(const std::vector<T> &arg_vertexData, const std::vector<uint32_t> &arg_indices)
-		: vertexData(arg_vertexData), indices(arg_indices)
+	AMeshData(const std::vector<uint32_t> &arg_indices)
+		: indices(arg_indices)
 	{
 	}
 
-	~MeshData()
+	virtual ~AMeshData()
+	{
+		this->indices.clear();
+	}
+};
+
+struct MeshData : public AMeshData
+{
+	std::vector<VertexData> vertexData;
+
+	MeshData(const std::vector<VertexData>& arg_vertexData, const std::vector<uint32_t>& arg_indices)
+		: vertexData(arg_vertexData), AMeshData(arg_indices)
+	{
+	}
+
+	~MeshData() override
 	{
 		vertexData.clear();
-		this->indices.clear();
+	}
+};
+
+struct GUIMeshData : public AMeshData
+{
+	std::vector<GUIVertexData> vertexData;
+
+	GUIMeshData(const std::vector<GUIVertexData>& arg_vertexData, const std::vector<uint32_t>& arg_indices)
+		: vertexData(arg_vertexData), AMeshData(arg_indices)
+	{
+	}
+
+	~GUIMeshData() override
+	{
+		vertexData.clear();
 	}
 };
 

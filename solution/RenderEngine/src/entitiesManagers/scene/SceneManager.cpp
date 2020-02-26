@@ -66,7 +66,7 @@ CameraComponent *SceneManager::getMainCamera()
 	return SingletonsManager::getInstance()->resolve<RenderManager>()->getMainCamera();
 }
 
-Entity *SceneManager::createMeshEntity(MeshData<VertexData> *objectData)
+Entity *SceneManager::createMeshEntity(MeshData* objectData)
 {
     Entity *newEntity = this->createEntity();
 	newEntity->addComponent<MeshComponent>(objectData);

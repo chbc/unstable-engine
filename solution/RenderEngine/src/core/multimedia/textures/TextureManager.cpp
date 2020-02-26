@@ -11,6 +11,7 @@ void TextureManager::init()
 {
     this->graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
     this->shadowIndex = 0;
+	this->emptyIndex = 0;
 }
 
 void TextureManager::release()
@@ -46,11 +47,11 @@ Texture *TextureManager::loadAOTexture(const std::string &fileName)
     return this->loadTexture(fileName, EMaterialMap::AMBIENT_OCCLUSION);
 }
 
-Texture *TextureManager::loadShadowTexture(uint32_t width, uint32_t height)
+Texture *TextureManager::createShadowTexture(uint32_t width, uint32_t height)
 {
     std::string name{ "_shadow_map_" + std::to_string(this->shadowIndex) };
 
-    uint32_t id = this->graphicsWrapper->setupTexture(width, height, EMaterialMap::SHADOW + this->shadowIndex);
+    uint32_t id = this->graphicsWrapper->createTexture(width, height, EMaterialMap::SHADOW + this->shadowIndex);
 
     Texture *result = new Texture{ id, width, height, EMaterialMap::SHADOW, name, this->shadowIndex };
     this->textures.emplace_back(result);
@@ -59,7 +60,7 @@ Texture *TextureManager::loadShadowTexture(uint32_t width, uint32_t height)
     return result;
 }
 
-Texture *TextureManager::loadCubemapTexture(uint32_t width, uint32_t height)
+Texture *TextureManager::createCubemapTexture(uint32_t width, uint32_t height)
 {
     std::string name{ "_cube_map_" + std::to_string(this->shadowIndex) };
     uint32_t id = this->graphicsWrapper->generateCubemap(width, height, EMaterialMap::SHADOW + this->shadowIndex);
@@ -69,6 +70,18 @@ Texture *TextureManager::loadCubemapTexture(uint32_t width, uint32_t height)
 
     this->shadowIndex++;
     return result;
+}
+
+Texture* TextureManager::createEmptyTexture(uint32_t width, uint32_t height)
+{
+	std::string name{ "_empty_" + std::to_string(this->emptyIndex) };
+	uint32_t id = this->graphicsWrapper->createTexture(width, height);
+
+	Texture* result = new Texture{ id, width, height, EMaterialMap::GUI, name };
+	this->textures.emplace_back(result);
+
+	this->emptyIndex++;
+	return result;
 }
 
 Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::Type mapType)

@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "MeshComponent.h"
+#include "MeshData.h"
 #include "AGraphicsWrapper.h"
 #include "MatrixManager.h"
 #include "ShaderManager.h"
@@ -53,7 +54,7 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
 Renderer::~Renderer()
 {
     for (MeshComponent *item : this->meshes)
-        this->graphicsWrapper->deleteBuffers(item);
+        this->graphicsWrapper->deleteBuffers(item->meshData.get());
 }
 
 void Renderer::onSceneLoaded()
@@ -109,8 +110,11 @@ void Renderer::loadShader()
 void Renderer::addMesh(MeshComponent *mesh)
 {
     this->meshes.push_back(mesh);
-    this->graphicsWrapper->createVAO(mesh);
-    this->graphicsWrapper->createEBO(mesh);
+
+	MeshData* meshData = static_cast<MeshData*>(mesh->meshData.get());
+
+    this->graphicsWrapper->createVAO(meshData);
+    this->graphicsWrapper->createEBO(meshData);
 }
 
 void Renderer::render(MatrixManager *matrixManager, const glm::vec3 &cameraPosition)
@@ -128,7 +132,7 @@ void Renderer::render(MatrixManager *matrixManager, const glm::vec3 &cameraPosit
         glm::mat4 modelMatrix = transform->getMatrix();
         this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
-        this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
+        this->graphicsWrapper->bindVAO(mesh->meshData->vao, mesh->meshData->vbo);
         for (const auto &item : this->componentsMap)
         {
             item.second->setupShaderValues(mesh, this->shader);
@@ -173,7 +177,7 @@ void Renderer::removeDestroyedEntities()
     {
         if (!(*it)->getEntity()->isAlive())
         {
-            this->graphicsWrapper->deleteBuffers((*it));
+            this->graphicsWrapper->deleteBuffers((*it)->meshData.get());
             it = this->meshes.erase(it);
         }
         else

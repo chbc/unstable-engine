@@ -25,6 +25,12 @@ void ShaderContentFactory::createDirectionalLightDepthShaderContent(std::string 
     FileUtils::loadFile(ShaderFiles::DIRECTIONAL_SHADOW_DEPTH_F, outFragmentContent);
 }
 
+void ShaderContentFactory::createPostProcessingShaderContent(std::string& outVertexContent, std::string& outFragmentContent)
+{
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_DEFAULT_V, outVertexContent);
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_DEFAULT_F, outFragmentContent);
+}
+
 // Load methods
 void ShaderContentFactory::loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
 {

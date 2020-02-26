@@ -27,15 +27,19 @@ void GUIRenderer::loadShader()
 void GUIRenderer::addGUIComponent(GUIImageComponent *guiComponent)
 {
     this->guiComponents.push_back(guiComponent);
-    this->graphicsWrapper->createGUIVAO(guiComponent);
-    this->graphicsWrapper->createGUIEBO(guiComponent);
+
+	GUIMeshData* meshData = static_cast<GUIMeshData*>(guiComponent->meshData.get());
+    this->graphicsWrapper->createGUIVAO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
+    this->graphicsWrapper->createGUIEBO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
 }
 
 void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 {
     this->dynamicGUIComponents.push_back(guiComponent);
-    this->graphicsWrapper->createGUIVAO(guiComponent);
-    this->graphicsWrapper->createGUIEBO(guiComponent);
+	
+	GUIMeshData* meshData = static_cast<GUIMeshData*>(guiComponent->meshData.get());
+	this->graphicsWrapper->createGUIVAO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
+	this->graphicsWrapper->createGUIEBO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
 }
 
 void GUIRenderer::render(MatrixManager *matrixManager)
@@ -71,9 +75,9 @@ void GUIRenderer::setup(GUIImageComponent *guiComponent)
     glm::mat4 modelMatrix = transform->getMatrix();
     this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
-    this->graphicsWrapper->bindVAO(guiComponent->vao, guiComponent->vbo);
+    this->graphicsWrapper->bindVAO(guiComponent->meshData->vao, guiComponent->meshData->vbo);
     this->graphicsWrapper->enableGUISettings();
-    this->graphicsWrapper->activateDiffuseTexture(guiComponent->getTextureId());
+    this->graphicsWrapper->activateGUITexture(guiComponent->getTextureId());
 }
 
 void GUIRenderer::removeDestroyedEntities()
@@ -84,7 +88,7 @@ void GUIRenderer::removeDestroyedEntities()
     {
         if (!(*it)->getEntity()->isAlive())
         {
-            this->graphicsWrapper->deleteBuffers((*it));
+            this->graphicsWrapper->deleteBuffers((*it)->meshData.get());
             it = this->guiComponents.erase(it);
         }
         else

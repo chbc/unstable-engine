@@ -41,10 +41,11 @@ private:
         return this->loadShader(vertexContent, fragmentContent);
     }
 
-    Shader *loadGUIShader();
-    Shader *loadPointLightDepthShader();
-    Shader *loadDirectionalLightDepthShader();
-    Shader *loadShader(const std::string &vertexContent, const std::string &fragmentContent);
+    Shader* loadGUIShader();
+    Shader* loadPointLightDepthShader();
+    Shader* loadDirectionalLightDepthShader();
+	Shader* loadPostProcessingShader();
+    Shader* loadShader(const std::string &vertexContent, const std::string &fragmentContent);
 
     // passing values //
     void setupUniformLocation(Shader *shader, ShaderVariables::Type variableKey);
@@ -81,6 +82,7 @@ friend class BaseRendererShaderSetup;
 friend class LightRendererShaderSetup;
 friend class ShadowRendererShaderSetup;
 friend class ShadowRenderer;
+friend class PostProcessingRenderer;
 };
 
 } // namespace

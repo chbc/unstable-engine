@@ -30,7 +30,7 @@ public:
 
     // camera //
     SRE_API class CameraComponent *getMainCamera();
-    SRE_API Entity *createMeshEntity(MeshData<VertexData> *objectData);
+    SRE_API Entity *createMeshEntity(MeshData* objectData);
 
 friend class RenderEngine;
 };

@@ -10,11 +10,6 @@ namespace sre
 class MeshComponent;
 class GUIImageComponent;
 class CameraComponent;
-class AGraphicsWrapper;
-class MatrixManager;
-class ShaderManager;
-class LightManager;
-class TextureManager;
 class Texture;
 
 class Entity;
@@ -22,7 +17,8 @@ class DirectionalLightComponent;
 class PointLightComponent;
 
 struct GUIVertexData;
-template <typename T> struct MeshData;
+struct MeshData;
+struct GUIMeshData;
 
 /*!
 	Singleton Class to handle renders
@@ -31,17 +27,21 @@ class RenderManager : ASingleton
 {
 
 private:
-    ShaderManager       *shaderManager;
-    AGraphicsWrapper    *graphicsWrapper;
-    MatrixManager       *matrixManager;
-    LightManager        *lightManager;
-    TextureManager      *textureManager;
+    class ShaderManager       *shaderManager;
+    class AGraphicsWrapper    *graphicsWrapper;
+    class MatrixManager       *matrixManager;
+    class LightManager        *lightManager;
+    class TextureManager      *textureManager;
     
     VECTOR_UPTR<class Renderer> renders;
     UPTR<class ShadowRenderer> shadowRenderer;
     UPTR<class GUIRenderer> guiRenderer;
+	UPTR<class PostProcessingRenderer> postProcessingRenderer;
 
     CameraComponent *mainCamera;
+
+	uint32_t screenWidth;
+	uint32_t screenHeight;
 
 private:
     RenderManager();
@@ -57,6 +57,7 @@ private:
     void addDynamicGUIComponent(GUIImageComponent *guiComponent);
     void initGUIRenderer();
     void initShadowRenderer();
+	void initPostProcessingRenderer();
 
     void onSceneLoaded();
 
@@ -64,10 +65,9 @@ private:
     CameraComponent *getMainCamera();
 
     void render();
-    void renderCamera();
+    void updateViewMatrix();
 
     static void DEBUG_drawTriangle();
-    void clearBuffer();
 
     DirectionalLightComponent *addDirectionalLight(Entity *entity);
     PointLightComponent *addPointLight(Entity *entity);
@@ -78,7 +78,7 @@ private:
     Texture *loadSpecularTexture(const std::string &fileName);
     Texture *loadAOTexture(const std::string &fileName);
 
-    void setupBufferSubData(const GUIImageComponent *guiComponent);
+    void setupBufferSubData(GUIMeshData* meshData);
     void removeDestroyedEntities();
 
 friend class AEntityManager;

@@ -40,10 +40,9 @@ void ShadowRenderer::setupDirectionalLightShader(TextureManager *textureManager)
 
     for (DirectionalLightComponent *item : this->lightManager->directionalLights)
     {
-        Texture *texture = textureManager->loadShadowTexture(1024, 1024);
+        Texture *texture = textureManager->createShadowTexture(1024, 1024);
 
-        uint32_t fbo;
-        this->graphicsWrapper->generateFrameBuffer(fbo, texture->getId());
+        uint32_t fbo = this->graphicsWrapper->generateDepthFrameBuffer(texture->getId());
         item->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
 
         glm::vec3 position = glm::vec3(0.0f) - (item->getDirection() *  10.0f);
@@ -65,10 +64,9 @@ void ShadowRenderer::setupPointLightShader(TextureManager *textureManager)
 
     for (PointLightComponent *item : this->lightManager->pointLights)
     {
-        Texture *texture = textureManager->loadCubemapTexture(1024, 1024);
+        Texture *texture = textureManager->createCubemapTexture(1024, 1024);
 
-        uint32_t fbo;
-        this->graphicsWrapper->generateFrameBuffer(fbo, texture->getId(), true);
+        uint32_t fbo = this->graphicsWrapper->generateDepthFrameBuffer(texture->getId(), true);
         item->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
     }
 
@@ -91,7 +89,7 @@ void ShadowRenderer::addItem(MeshComponent *item)
 
 void ShadowRenderer::render()
 {
-    this->graphicsWrapper->clearBuffer();
+    this->graphicsWrapper->clearColorAndDepthBuffer();
 
     this->graphicsWrapper->setViewport(1024, 1024);
 
@@ -120,7 +118,7 @@ void ShadowRenderer::renderDirectionalLightShadows()
             glm::mat4 modelMatrix = transform->getMatrix();
             this->shaderManager->setMat4(this->directionalLightDepthShader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
-            this->graphicsWrapper->bindVAO(item->vao, item->vbo);
+            this->graphicsWrapper->bindVAO(item->meshData->vao, item->meshData->vbo);
 
             this->graphicsWrapper->enableVertexPositions();
             this->graphicsWrapper->drawElement(item->meshData->indices.size());
@@ -157,7 +155,7 @@ void ShadowRenderer::renderPointLightShadows()
             glm::mat4 modelMatrix = transform->getMatrix();
             this->shaderManager->setMat4(this->pointLightDepthShader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
-            this->graphicsWrapper->bindVAO(item->vao, item->vbo);
+            this->graphicsWrapper->bindVAO(item->meshData->vao, item->meshData->vbo);
 
             this->graphicsWrapper->enableVertexPositions();
             this->graphicsWrapper->drawElement(item->meshData->indices.size());

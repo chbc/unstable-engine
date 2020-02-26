@@ -1,6 +1,7 @@
 #include "ModelLoader.h"
 #include "Entity.h"
 #include "MeshComponent.h"
+#include "MeshData.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -79,7 +80,7 @@ void ModelLoader::processMesh(aiMesh *inputMesh, const aiScene *scene, Entity *e
 			indices.push_back(face.mIndices[j]);
 	}
 
-	MeshData<VertexData> *objectData = new MeshData<VertexData>{ vertexData, indices };
+	MeshData* objectData = new MeshData{ vertexData, indices };
 	MeshComponent *entityMesh = entity->addComponent<MeshComponent>(objectData);
 	this->processMaterials(inputMesh, scene, entityMesh);
 }

@@ -5,6 +5,7 @@ namespace sre
 
 GUIManager::GUIManager() : AEntityManager() 
 {
+	/* ###
 #ifdef DEBUG
     Entity *entity = createGUITextEntity("../../media/fonts/verdana", 6);
     this->frameMSIndicator = entity->getComponent<GUITextComponent>();
@@ -12,6 +13,7 @@ GUIManager::GUIManager() : AEntityManager()
     entity->getTransform()->setScale(glm::vec3(0.5f, 0.5f, 1.0f));
     this->addEntity(entity, "_frame_indicator");
 #endif
+*/
 }
 
 Entity *GUIManager::createGUIImageEntity(const std::string &fileName)
@@ -42,7 +44,7 @@ Entity *GUIManager::createGUITextEntity(const std::string fontFile, uint32_t max
 #ifdef DEBUG
 void GUIManager::updateFrameIndicator(int frameTime)
 {
-    this->frameMSIndicator->setText(std::to_string(frameTime));
+    // ### this->frameMSIndicator->setText(std::to_string(frameTime));
 }
 #endif
 
