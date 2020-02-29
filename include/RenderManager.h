@@ -57,7 +57,6 @@ private:
     void addDynamicGUIComponent(GUIImageComponent *guiComponent);
     void initGUIRenderer();
     void initShadowRenderer();
-	void initPostProcessingRenderer();
 
     void onSceneLoaded();
 

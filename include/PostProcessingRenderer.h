@@ -1,8 +1,7 @@
 #ifndef _POST_PROCESSING_RENDERER_H_
 #define _POST_PROCESSING_RENDERER_H_
 
-#include "memory_aliases.h"
-#include <stdint.h>
+#include "PostProcessingComponent.h"
 
 namespace sre
 {
@@ -13,6 +12,8 @@ private:
 	class ShaderManager* shaderManager;
 	class AGraphicsWrapper* graphicsWrapper;
 	
+	PostProcessingComponent* postProcessingItem;
+
 	class Shader* shader;
 	UPTR<class GUIMeshData> meshData;
 	uint32_t textureId;
@@ -22,7 +23,7 @@ private:
 private:
 	PostProcessingRenderer();
 
-	void onSceneLoaded();
+	void onSceneLoaded(PostProcessingComponent* postProcessingItem);
 	void bindFrameBuffer();
 	void render();
 

@@ -6,12 +6,13 @@
 #include "memory_aliases.h"
 #include <bitset>
 #include <unordered_map>
+#include "EComponentId.h"
 
 namespace sre
 {
 	template <typename TL> SRE_API  std::size_t getComponentId();
 
-	constexpr size_t MAX_COMPONENTS{ 13 };
+	constexpr size_t MAX_COMPONENTS{ EComponentId::SIZE };
 
 	template <typename C>
 	class AComponentsHolder

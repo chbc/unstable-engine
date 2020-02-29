@@ -16,6 +16,7 @@ enum Type : std::size_t
     DIRECTIONAL_LIGHT,
     POINT_LIGHT,
     MESH,
+	POST_PROCESSING,
 
     COLOR_MATERIAL,
     LIT_MATERIAL,

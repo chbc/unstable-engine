@@ -1,6 +1,7 @@
 #include "SampleApplication.h"
 #include <application/events/EventReceiver.h>
 #include <MeshComponent.h>
+#include <PostProcessingComponent.h>
 #include <sstream>
 
 SampleApplication::SampleApplication() : RenderEngine()
@@ -40,6 +41,10 @@ void SampleApplication::onInit()
     guiComponent->setUIPosition(glm::vec2(0.75f, 0.75f));
     
     this->guiManager->addEntity(guiEntity);
+
+	CameraComponent* camera = this->sceneManager->getMainCamera();
+	PostProcessingComponent* postProcessingComponent = camera->getEntity()->addComponent<PostProcessingComponent>();
+	postProcessingComponent->addEffect(PPE::BLOOM);
 
     /*
     std::stringstream ss;

@@ -12,8 +12,10 @@ namespace sre
 
 PostProcessingRenderer::PostProcessingRenderer() { }
 
-void PostProcessingRenderer::onSceneLoaded()
+void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* postProcessingItem)
 {
+	this->postProcessingItem = postProcessingItem;
+
 	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
 	this->graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
 	this->shaderManager = singletonsManager->get<ShaderManager>();

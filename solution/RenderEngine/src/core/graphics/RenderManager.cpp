@@ -45,8 +45,6 @@ void RenderManager::init()
     this->matrixManager->setProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 1000);
 	this->screenWidth = multimediaManager->getScreenWidth();
 	this->screenHeight = multimediaManager->getScreenHeight();
-
-	this->initPostProcessingRenderer();
 }
 
 void RenderManager::addEntity(Entity *entity)
@@ -131,14 +129,6 @@ void RenderManager::initShadowRenderer()
     }
 }
 
-void RenderManager::initPostProcessingRenderer()
-{
-	if (this->postProcessingRenderer.get() == nullptr)
-	{
-		this->postProcessingRenderer = UPTR<PostProcessingRenderer>{ new PostProcessingRenderer };
-	}
-}
-
 void RenderManager::onSceneLoaded()
 {
     if (this->shadowRenderer.get() != nullptr)
@@ -147,8 +137,13 @@ void RenderManager::onSceneLoaded()
     for (const UPTR<Renderer> &item : this->renders)
         item->onSceneLoaded();
 	
-	if (this->postProcessingRenderer.get() != nullptr)
-		this->postProcessingRenderer->onSceneLoaded();
+	Entity* cameraEntity = this->mainCamera->getEntity();
+	PostProcessingComponent* postProcessingComponent = cameraEntity->getComponent<PostProcessingComponent>();
+	if (postProcessingComponent != nullptr)
+	{
+		this->postProcessingRenderer = UPTR<PostProcessingRenderer>{ new PostProcessingRenderer };
+		this->postProcessingRenderer->onSceneLoaded(postProcessingComponent);
+	}
 }
 
 void RenderManager::setMainCamera(CameraComponent *camera)

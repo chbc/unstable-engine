@@ -13,6 +13,7 @@ namespace sre
 		template <> std::size_t SRE_API getComponentId<class DirectionalLightComponent>() { return EComponentId::DIRECTIONAL_LIGHT; }
 		template <> std::size_t SRE_API getComponentId<class PointLightComponent>() { return EComponentId::POINT_LIGHT; }
 		template <> std::size_t SRE_API getComponentId<class MeshComponent>() { return EComponentId::MESH; }
+		template <> std::size_t SRE_API getComponentId<class PostProcessingComponent>() { return EComponentId::POST_PROCESSING; }
 
 		// Material components
 		template <> std::size_t SRE_API getComponentId<class ColorMaterialComponent>() { return EComponentId::COLOR_MATERIAL; }

@@ -210,6 +210,7 @@
     <ClCompile Include="src\entities\components\AComponentsHolder.cpp" />
     <ClCompile Include="src\entities\components\AEntityComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\PostProcessingComponent.cpp" />
+    <ClCompile Include="src\entities\components\cameras\PostProcessingEffect.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\GUIImageComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\GUITextComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp" />
