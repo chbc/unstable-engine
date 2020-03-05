@@ -12,15 +12,13 @@ namespace sre
 
 PostProcessingRenderer::PostProcessingRenderer() { }
 
-void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* postProcessingItem)
+void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* component)
 {
-	this->postProcessingItem = postProcessingItem;
-
 	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
 	this->graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
 	this->shaderManager = singletonsManager->get<ShaderManager>();
 
-	this->shader = this->shaderManager->loadPostProcessingShader();
+	this->shader = this->shaderManager->loadPostProcessingShader(component);
 	this->shaderManager->setupUniformLocation(shader, ShaderVariables::SCREEN_TEXTURE);
 
 	MultimediaManager* multimediaManager = singletonsManager->get<MultimediaManager>();

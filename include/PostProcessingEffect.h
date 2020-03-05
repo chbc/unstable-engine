@@ -25,8 +25,10 @@ private:
 	PPE::Type type;
 	std::unordered_map<std::string, UPTR<void*>> parameters;
 
-public:
+private:
 	PostProcessingEffect(PPE::Type effectType);
+
+public:
 	template <typename T>
 	void setValue(const std::string& parameter, T value)
 	{
@@ -36,6 +38,7 @@ public:
 	static PostProcessingEffect* create(PPE::Type effectType);
 
 friend class PostProcessingComponent;
+friend class ShaderContentFactory;
 };
 
 } // namespace

@@ -2,6 +2,7 @@
 #include "FileUtils.h"
 #include "StringUtils.h"
 #include "ShaderConstants.h"
+#include "PostProcessingComponent.h"
 
 namespace sre
 {
@@ -25,10 +26,36 @@ void ShaderContentFactory::createDirectionalLightDepthShaderContent(std::string 
     FileUtils::loadFile(ShaderFiles::DIRECTIONAL_SHADOW_DEPTH_F, outFragmentContent);
 }
 
-void ShaderContentFactory::createPostProcessingShaderContent(std::string& outVertexContent, std::string& outFragmentContent)
+void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent)
 {
-	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_DEFAULT_V, outVertexContent);
-	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_DEFAULT_F, outFragmentContent);
+	std::string mainFragmentContentHeader;
+	std::string mainFragmentContentImpl;
+
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_MAIN_V, outVertexContent);
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_MAIN_H_F, mainFragmentContentHeader);
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_MAIN_IMPL_F, mainFragmentContentImpl);
+
+	std::string effectContent;
+
+	for (const UPTR<PostProcessingEffect>& item : component->effects)
+	{
+		switch (item->type)
+		{
+			case PPE::ANTI_ALIASING: break;
+			case PPE::BLOOM: break;
+			case PPE::DEPTH_OF_FIELD: break;
+			case PPE::GRAYSCALE: break;
+			case PPE::INVERSE:
+				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_INVERSE_F, effectContent);
+				mainFragmentContentHeader += effectContent;
+				this->uncommentCode(mainFragmentContentImpl, "// [INVERSE] ");
+				break;
+
+			default: break;
+		}
+	}
+
+	outFragmentContent = "#version 400\n" + mainFragmentContentHeader + mainFragmentContentImpl;
 }
 
 // Load methods

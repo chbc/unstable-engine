@@ -69,8 +69,13 @@ namespace ShaderFiles
     const std::string SHADOWS_POINT_IMPL_V  = "../../shaders/shadows/shadows_point_impl.vert";
     const std::string SHADOWS_POINT_IMPL_F  = "../../shaders/shadows/shadows_point_impl.frag";
 
-	const std::string POST_PROCESSING_DEFAULT_V = "../../shaders/postProcessing/default.vert";
-	const std::string POST_PROCESSING_DEFAULT_F = "../../shaders/postProcessing/default.frag";
+	// Post processing
+	const std::string POST_PROCESSING_MAIN_V = "../../shaders/postProcessing/main.vert";
+	const std::string POST_PROCESSING_MAIN_H_F = "../../shaders/postProcessing/main_h.frag";
+	const std::string POST_PROCESSING_MAIN_IMPL_F = "../../shaders/postProcessing/main_impl.frag";
+
+	const std::string POST_PROCESSING_INVERSE_F = "../../shaders/postProcessing/inverse.frag";
+	const std::string POST_PROCESSING_GRAYSCALE_F = "../../shaders/postProcessing/inverse.frag";
 }
 
 namespace ShaderVariables

@@ -20,6 +20,7 @@ public:
 	SRE_API void addEffect(PPE::Type effectType);
 
 friend class Entity;
+friend class ShaderContentFactory;
 };
 
 

@@ -44,7 +44,7 @@ void SampleApplication::onInit()
 
 	CameraComponent* camera = this->sceneManager->getMainCamera();
 	PostProcessingComponent* postProcessingComponent = camera->getEntity()->addComponent<PostProcessingComponent>();
-	postProcessingComponent->addEffect(PPE::BLOOM);
+	postProcessingComponent->addEffect(PPE::INVERSE);
 
     /*
     std::stringstream ss;

@@ -44,7 +44,7 @@ private:
     Shader* loadGUIShader();
     Shader* loadPointLightDepthShader();
     Shader* loadDirectionalLightDepthShader();
-	Shader* loadPostProcessingShader();
+	Shader* loadPostProcessingShader(class PostProcessingComponent* component);
     Shader* loadShader(const std::string &vertexContent, const std::string &fragmentContent);
 
     // passing values //

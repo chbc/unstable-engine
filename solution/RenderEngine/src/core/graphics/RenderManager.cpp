@@ -17,6 +17,7 @@
 #include "GUIRenderer.h"
 #include "ShadowRenderer.h"
 #include "PostProcessingRenderer.h"
+#include "PostProcessingComponent.h"
 
 namespace sre
 {
