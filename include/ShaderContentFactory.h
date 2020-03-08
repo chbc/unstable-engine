@@ -48,6 +48,7 @@ private:
     void loadShadowsContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 
     void uncommentCode(std::string &outShaderContent, const std::string &mark); // throws "didn't find code mark
+	void includeCallCode(std::string& outShaderContent, const std::string& module); // throws "didn't find code mark
 
 friend class ShaderManager;
 };

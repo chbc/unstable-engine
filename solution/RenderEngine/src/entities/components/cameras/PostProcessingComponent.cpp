@@ -8,10 +8,12 @@ PostProcessingComponent::PostProcessingComponent(Entity* entity)
 	: AEntityComponent(entity)
 { }
 
-void PostProcessingComponent::addEffect(PPE::Type effectType)
+PostProcessingEffect* PostProcessingComponent::enqueueEffect(PPE::Type effectType)
 {
-	PostProcessingEffect* newEffect = PostProcessingEffect::create(effectType);
-	this->effects.emplace_back(newEffect);
+	PostProcessingEffect* result = PostProcessingEffect::create(effectType);
+	this->effects.emplace_back(result);
+
+	return result;
 }
 
 } // namespace

@@ -139,9 +139,9 @@ void RenderManager::onSceneLoaded()
         item->onSceneLoaded();
 	
 	Entity* cameraEntity = this->mainCamera->getEntity();
-	PostProcessingComponent* postProcessingComponent = cameraEntity->getComponent<PostProcessingComponent>();
-	if (postProcessingComponent != nullptr)
+	if (cameraEntity->hasComponent<PostProcessingComponent>())
 	{
+		PostProcessingComponent* postProcessingComponent = cameraEntity->getComponent<PostProcessingComponent>();
 		this->postProcessingRenderer = UPTR<PostProcessingRenderer>{ new PostProcessingRenderer };
 		this->postProcessingRenderer->onSceneLoaded(postProcessingComponent);
 	}

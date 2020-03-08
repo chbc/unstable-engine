@@ -39,16 +39,26 @@ void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingCompo
 
 	for (const UPTR<PostProcessingEffect>& item : component->effects)
 	{
+		effectContent.clear();
 		switch (item->type)
 		{
 			case PPE::ANTI_ALIASING: break;
-			case PPE::BLOOM: break;
+			case PPE::BLOOM:
+				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_BLUR_F, effectContent);
+				mainFragmentContentHeader += effectContent;
+				this->includeCallCode(mainFragmentContentImpl, "Blur");
+				break;
 			case PPE::DEPTH_OF_FIELD: break;
-			case PPE::GRAYSCALE: break;
+			case PPE::GRAYSCALE:
+				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_GRAYSCALE_F, effectContent);
+				mainFragmentContentHeader += effectContent;
+				this->includeCallCode(mainFragmentContentImpl, "Grayscale");
+				break;
+
 			case PPE::INVERSE:
 				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_INVERSE_F, effectContent);
 				mainFragmentContentHeader += effectContent;
-				this->uncommentCode(mainFragmentContentImpl, "// [INVERSE] ");
+				this->includeCallCode(mainFragmentContentImpl, "Inverse");
 				break;
 
 			default: break;
@@ -360,6 +370,18 @@ void ShaderContentFactory::uncommentCode(std::string &outShaderContent, const st
 
     if (!result)
         throw "[ShaderContentFactory] - Didn't find code mark: " + mark;
+}
+
+void ShaderContentFactory::includeCallCode(std::string& outShaderContent, const std::string& module)
+{
+	std::size_t position = outShaderContent.find("// [INCLUDE]");
+	if (position != std::string::npos)
+	{
+		std::string code = "result = " + module + "_getColor(result);\n\t";
+		outShaderContent = outShaderContent.insert(position, code);
+	}
+	else
+		throw "[ShaderContentFactory] - Didn't find code mark: [INCLUDE]";
 }
 
 } // namespace

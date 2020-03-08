@@ -17,7 +17,7 @@ private:
 	SRE_API PostProcessingComponent(Entity* entity);
 
 public:
-	SRE_API void addEffect(PPE::Type effectType);
+	SRE_API PostProcessingEffect* enqueueEffect(PPE::Type effectType);
 
 friend class Entity;
 friend class ShaderContentFactory;

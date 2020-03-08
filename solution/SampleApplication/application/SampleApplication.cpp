@@ -35,16 +35,19 @@ void SampleApplication::onInit()
     this->sceneManager->addEntity(nanosuit);
     
     // GUI //
+	/*
     Entity *guiEntity;
     guiEntity = this->guiManager->createGUIImageEntityFromAtlas("../../media/atlases/test_texture_rect", "sete");
     GUIImageComponent *guiComponent = guiEntity->getComponent<GUIImageComponent>();
     guiComponent->setUIPosition(glm::vec2(0.75f, 0.75f));
     
     this->guiManager->addEntity(guiEntity);
+	*/
 
 	CameraComponent* camera = this->sceneManager->getMainCamera();
 	PostProcessingComponent* postProcessingComponent = camera->getEntity()->addComponent<PostProcessingComponent>();
-	postProcessingComponent->addEffect(PPE::INVERSE);
+	postProcessingComponent->enqueueEffect(PPE::BLOOM);
+	postProcessingComponent->enqueueEffect(PPE::GRAYSCALE);
 
     /*
     std::stringstream ss;
