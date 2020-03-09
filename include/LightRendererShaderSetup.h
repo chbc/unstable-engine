@@ -33,7 +33,7 @@ private:
     void setupDirectionalValues(Shader *shader);
     void setupPointValues(Shader *shader);
 
-friend class Renderer;
+friend class MeshRenderer;
 };
 
 } // namespace

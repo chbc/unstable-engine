@@ -1,4 +1,4 @@
-#include "Renderer.h"
+#include "MeshRenderer.h"
 
 #include "Entity.h"
 #include "MeshComponent.h"
@@ -14,7 +14,7 @@
 namespace sre
 {
 
-Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
+MeshRenderer::MeshRenderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
 {
     this->shaderManager = shaderManager;
     this->graphicsWrapper = graphicsWrapper;
@@ -51,13 +51,13 @@ Renderer::Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWr
     }
 }
 
-Renderer::~Renderer()
+MeshRenderer::~MeshRenderer()
 {
     for (MeshComponent *item : this->meshes)
         this->graphicsWrapper->deleteBuffers(item->meshData.get());
 }
 
-void Renderer::onSceneLoaded()
+void MeshRenderer::onSceneLoaded()
 {
     this->loadShaderSetupItems();
     this->loadShader();
@@ -69,7 +69,7 @@ void Renderer::onSceneLoaded()
         item.second->onSceneLoaded(this->shader);
 }
 
-void Renderer::loadShaderSetupItems()
+void MeshRenderer::loadShaderSetupItems()
 {
     BaseRendererShaderSetup *item = new BaseRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
     this->shaderSetupItems[typeid(BaseRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
@@ -102,12 +102,12 @@ void Renderer::loadShaderSetupItems()
     }
 }
 
-void Renderer::loadShader()
+void MeshRenderer::loadShader()
 {
     this->shader = this->shaderManager->loadShader(this->componentsBitset, this->lightData);
 }
 
-void Renderer::addMesh(MeshComponent *mesh)
+void MeshRenderer::addMesh(MeshComponent *mesh)
 {
     this->meshes.push_back(mesh);
 
@@ -117,7 +117,7 @@ void Renderer::addMesh(MeshComponent *mesh)
     this->graphicsWrapper->createEBO(meshData);
 }
 
-void Renderer::render(MatrixManager *matrixManager, const glm::vec3 &cameraPosition)
+void MeshRenderer::render(MatrixManager *matrixManager, const glm::vec3 &cameraPosition)
 {
     // Shader setup
     this->shaderManager->enableShader(this->shader);
@@ -148,7 +148,7 @@ void Renderer::render(MatrixManager *matrixManager, const glm::vec3 &cameraPosit
     this->shaderManager->disableShader();
 }
 
-bool Renderer::contains(MeshComponent *mesh)
+bool MeshRenderer::contains(MeshComponent *mesh)
 {
     bool result = false;
 
@@ -164,12 +164,12 @@ bool Renderer::contains(MeshComponent *mesh)
     return result;
 }
 
-bool Renderer::fitsWithMesh(MeshComponent *mesh)
+bool MeshRenderer::fitsWithMesh(MeshComponent *mesh)
 {
     return (this->componentsBitset == mesh->getMaterial()->componentsBitset);
 }
 
-void Renderer::removeDestroyedEntities()
+void MeshRenderer::removeDestroyedEntities()
 {
     std::list<MeshComponent *>::iterator it;
 

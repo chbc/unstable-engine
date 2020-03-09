@@ -49,7 +49,7 @@ private:
     }
 
 friend class MeshComponent;
-friend class Renderer;
+friend class MeshRenderer;
 friend class RenderManager;
 };
 

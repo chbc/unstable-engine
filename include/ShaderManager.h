@@ -68,7 +68,7 @@ friend class RenderManager;
 friend class LightManager;
 friend class SingletonsManager;
 
-friend class Renderer;
+friend class MeshRenderer;
 friend class GUIRenderer;
 friend class ColorRendererComponent;
 friend class DiffuseRendererComponent;

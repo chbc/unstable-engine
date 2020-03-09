@@ -39,7 +39,7 @@ private:
 
 friend class RenderManager;
 friend class SingletonsManager;
-friend class Renderer;
+friend class MeshRenderer;
 friend class LightRendererShaderSetup;
 friend class ShadowRendererShaderSetup;
 friend class ShadowRenderer;

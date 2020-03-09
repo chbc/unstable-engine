@@ -89,7 +89,7 @@ friend class ShaderManager;
 friend class TextureManager;
 friend class SingletonsManager;
 
-friend class Renderer;
+friend class MeshRenderer;
 friend class GUIRenderer;
 friend class ShadowRenderer;
 friend class PostProcessingRenderer;

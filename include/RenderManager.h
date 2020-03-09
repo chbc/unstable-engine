@@ -33,7 +33,7 @@ private:
     class LightManager        *lightManager;
     class TextureManager      *textureManager;
     
-    VECTOR_UPTR<class Renderer> renders;
+    VECTOR_UPTR<class MeshRenderer> renders;
     UPTR<class ShadowRenderer> shadowRenderer;
     UPTR<class GUIRenderer> guiRenderer;
 	UPTR<class PostProcessingRenderer> postProcessingRenderer;

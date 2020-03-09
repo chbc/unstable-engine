@@ -16,7 +16,7 @@ protected:
     void preDraw() override;
     void postDraw() override;
 
-    friend class Renderer;
+    friend class MeshRenderer;
 };
 } // namespace
 

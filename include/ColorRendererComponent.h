@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-// ### TRANSFORMAR OS COMPONENTES EM SINGLETONS
+// ### TRANSFORMAR OS COMPONENTES EM INSTÂNCIA ÚNICA
 // ### RENOMEAR PRA REFERENCIAR OS MESHES
 namespace sre
 {
@@ -26,7 +26,7 @@ protected:
     virtual void preDraw();
     virtual void postDraw();
 
-friend class Renderer;
+friend class MeshRenderer;
 };
 
 } // namespace

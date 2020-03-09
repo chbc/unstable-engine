@@ -32,7 +32,7 @@ friend class RenderManager;
 friend class Entity;
 friend class OpenGLAPI;
 friend class OpenGLESAPI;
-friend class Renderer;
+friend class MeshRenderer;
 friend class ShadowRenderer;
 friend class VertexDataFactory;
 friend class LightManager;

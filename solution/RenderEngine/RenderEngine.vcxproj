@@ -194,9 +194,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\graphics\renders\components\LitRendererComponent.cpp" />
-    <ClCompile Include="src\core\graphics\renders\components\litStates\LitRendererLightsState.cpp" />
-    <ClCompile Include="src\core\graphics\renders\components\litStates\LitRendererNoLightsState.cpp" />
+    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\LitRendererComponent.cpp" />
+    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\litStates\LitRendererLightsState.cpp" />
+    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\litStates\LitRendererNoLightsState.cpp" />
     <ClCompile Include="src\core\graphics\renders\PostProcessingRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renders\shadersSetup\BaseRendererShaderSetup.cpp" />
     <ClCompile Include="src\core\graphics\renders\shadersSetup\LightRendererShaderSetup.cpp" />
@@ -222,8 +222,8 @@
     <ClCompile Include="src\core\multimedia\textures\atlases\AtlasManager.cpp" />
     <ClCompile Include="src\core\multimedia\textures\Texture.cpp" />
     <ClCompile Include="src\entitiesManagers\gui\GUIManager.cpp" />
-    <ClCompile Include="src\core\graphics\renders\components\AORendererComponent.cpp" />
-    <ClCompile Include="src\core\graphics\renders\components\ColorRendererComponent.cpp" />
+    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\AORendererComponent.cpp" />
+    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\ColorRendererComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\CameraComponent.cpp" />
     <ClCompile Include="src\entities\components\lights\ALightComponent.cpp" />
     <ClCompile Include="src\entities\components\lights\DirectionalLightComponent.cpp" />
@@ -239,11 +239,11 @@
     <ClCompile Include="src\core\graphics\LightManager.cpp" />
     <ClCompile Include="src\core\graphics\MatrixManager.cpp" />
     <ClCompile Include="src\core\graphics\RenderManager.cpp" />
-    <ClCompile Include="src\core\graphics\renders\components\DiffuseRendererComponent.cpp" />
+    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\DiffuseRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renders\GUIRenderer.cpp" />
-    <ClCompile Include="src\core\graphics\renders\components\NormalRendererComponent.cpp" />
-    <ClCompile Include="src\core\graphics\renders\Renderer.cpp" />
-    <ClCompile Include="src\core\graphics\renders\components\SpecularRendererComponent.cpp" />
+    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\NormalRendererComponent.cpp" />
+    <ClCompile Include="src\core\graphics\renders\MeshRenderer.cpp" />
+    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\SpecularRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\ShaderManager.cpp" />
     <ClCompile Include="src\core\graphics\shaders\ShaderContentFactory.cpp" />
     <ClCompile Include="src\core\multimedia\textures\TextureManager.cpp" />

@@ -1,5 +1,5 @@
-#ifndef _RENDERER_H_
-#define _RENDERER_H_
+#ifndef _MESH_RENDERER_H_
+#define _MESH_RENDERER_H_
 
 #include "AComponentsHolder.h"
 #include "LitRendererComponent.h"
@@ -21,7 +21,7 @@ class MatrixManager;
 class AGraphicsWrapper;
 class ShaderManager;
 
-class Renderer : public AComponentsHolder<ColorRendererComponent>
+class MeshRenderer : public AComponentsHolder<ColorRendererComponent>
 {
 private:
     std::unordered_map<std::string, UPTR<class BaseRendererShaderSetup>> shaderSetupItems;
@@ -35,10 +35,10 @@ private:
     ShaderLightData lightData;
 
 public:
-    virtual ~Renderer();
+    virtual ~MeshRenderer();
 
 private:
-    Renderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
+	MeshRenderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
     void onSceneLoaded();
     void loadShaderSetupItems();

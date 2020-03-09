@@ -22,7 +22,7 @@ protected:
     void onSceneLoaded(Shader *shader) override;
     void setupShaderValues(Shader *shader, const glm::vec3& cameraPosition) override;
 
-friend class Renderer;
+friend class MeshRenderer;
 };
 
 } // namespace

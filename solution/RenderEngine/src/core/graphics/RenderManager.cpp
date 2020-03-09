@@ -13,7 +13,7 @@
 #include "MatrixManager.h"
 #include "LightManager.h"
 #include "ShaderManager.h"
-#include "Renderer.h"
+#include "MeshRenderer.h"
 #include "GUIRenderer.h"
 #include "ShadowRenderer.h"
 #include "PostProcessingRenderer.h"
@@ -73,8 +73,8 @@ void RenderManager::addEntity(Entity *entity)
 
 void RenderManager::addMesh(MeshComponent *mesh)
 {
-    Renderer *renderer = nullptr;
-    for (const UPTR<Renderer> &item : this->renders)
+    MeshRenderer *renderer = nullptr;
+    for (const UPTR<MeshRenderer> &item : this->renders)
     {
         if (item->fitsWithMesh(mesh))
         {
@@ -85,7 +85,7 @@ void RenderManager::addMesh(MeshComponent *mesh)
 
     if (renderer == nullptr)
     {
-        renderer = new Renderer{mesh->getMaterial(), this->shaderManager, this->graphicsWrapper};
+        renderer = new MeshRenderer{mesh->getMaterial(), this->shaderManager, this->graphicsWrapper};
         this->renders.emplace_back(renderer);
     }
     
@@ -135,7 +135,7 @@ void RenderManager::onSceneLoaded()
     if (this->shadowRenderer.get() != nullptr)
         this->shadowRenderer->onSceneLoaded();
 
-    for (const UPTR<Renderer> &item : this->renders)
+    for (const UPTR<MeshRenderer> &item : this->renders)
         item->onSceneLoaded();
 	
 	Entity* cameraEntity = this->mainCamera->getEntity();
@@ -171,7 +171,7 @@ void RenderManager::render()
     this->graphicsWrapper->clearColorAndDepthBuffer();
 
     this->updateViewMatrix();
-    for (const UPTR<Renderer> &item : this->renders)
+    for (const UPTR<MeshRenderer> &item : this->renders)
     {
         item->render
         (
@@ -248,13 +248,13 @@ void RenderManager::setupBufferSubData(GUIMeshData* meshData)
 void RenderManager::removeDestroyedEntities()
 {
 	/* ###
-    for (const UPTR<Renderer> &item : this->renders)
+    for (const UPTR<MeshRenderer> &item : this->renders)
         item->removeDestroyedEntities();
 
     std::experimental::erase_if
     (
         this->renders, 
-        [](const UPTR<Renderer> &item) { return item->isEmpty(); }
+        [](const UPTR<MeshRenderer> &item) { return item->isEmpty(); }
     );
 
     if (this->guiRenderer.get() != nullptr)
