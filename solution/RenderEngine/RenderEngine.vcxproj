@@ -198,6 +198,8 @@
     <ClCompile Include="src\core\graphics\renders\meshRendererComponents\litStates\LitRendererLightsState.cpp" />
     <ClCompile Include="src\core\graphics\renders\meshRendererComponents\litStates\LitRendererNoLightsState.cpp" />
     <ClCompile Include="src\core\graphics\renders\PostProcessingRenderer.cpp" />
+    <ClCompile Include="src\core\graphics\renders\postProcessingRendererComponents\BloomRendererComponent.cpp" />
+    <ClCompile Include="src\core\graphics\renders\postProcessingRendererComponents\SinglePassRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renders\shadersSetup\BaseRendererShaderSetup.cpp" />
     <ClCompile Include="src\core\graphics\renders\shadersSetup\LightRendererShaderSetup.cpp" />
     <ClCompile Include="src\core\graphics\renders\shadersSetup\ShadowRendererShaderSetup.cpp" />

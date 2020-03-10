@@ -165,7 +165,7 @@ void RenderManager::render()
 
     // Scene rendering
 	if (this->postProcessingRenderer.get() != nullptr)
-		this->postProcessingRenderer->bindFrameBuffer();
+		this->postProcessingRenderer->onPreRender();
 
     this->graphicsWrapper->setViewport(this->screenWidth, this->screenHeight);
     this->graphicsWrapper->clearColorAndDepthBuffer();
@@ -182,7 +182,7 @@ void RenderManager::render()
 
 	// Post processing rendering
 	if (this->postProcessingRenderer.get() != nullptr)
-		this->postProcessingRenderer->render();
+		this->postProcessingRenderer->onPostRender();
 
     // GUI rendering
     if (this->guiRenderer.get() != nullptr)

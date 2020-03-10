@@ -45,6 +45,8 @@ private:
     Shader* loadPointLightDepthShader();
     Shader* loadDirectionalLightDepthShader();
 	Shader* loadPostProcessingShader(class PostProcessingComponent* component);
+	Shader* loadInitialPassPostProcessingShader(class PostProcessingComponent* component);
+	Shader* loadFinalPassPostProcessingShader(class PostProcessingComponent* component);
     Shader* loadShader(const std::string &vertexContent, const std::string &fragmentContent);
 
     // passing values //
@@ -83,6 +85,9 @@ friend class LightRendererShaderSetup;
 friend class ShadowRendererShaderSetup;
 friend class ShadowRenderer;
 friend class PostProcessingRenderer;
+
+friend class BloomRendererComponent;
+friend class SinglePassRendererComponent;
 };
 
 } // namespace

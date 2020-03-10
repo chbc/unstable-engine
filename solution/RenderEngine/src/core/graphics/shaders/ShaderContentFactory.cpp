@@ -42,8 +42,7 @@ void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingCompo
 		effectContent.clear();
 		switch (item->type)
 		{
-			case PPE::ANTI_ALIASING: break;
-			case PPE::BLOOM:
+			case PPE::BLUR:
 				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_BLUR_F, effectContent);
 				mainFragmentContentHeader += effectContent;
 				this->includeCallCode(mainFragmentContentImpl, "Blur");
@@ -63,6 +62,61 @@ void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingCompo
 
 			default: break;
 		}
+	}
+
+	outFragmentContent = "#version 400\n" + mainFragmentContentHeader + mainFragmentContentImpl;
+}
+
+void ShaderContentFactory::createInitialPassPostProcessingShaderContent(PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent)
+{
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_MAIN_V, outVertexContent);
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_BLOOM_F, outFragmentContent);
+}
+
+void ShaderContentFactory::createFinalPassPostProcessingShaderContent(PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent)
+{
+	std::string mainFragmentContentHeader;
+	std::string mainFragmentContentImpl;
+
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_MAIN_V, outVertexContent);
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_COMBINE_H_F, mainFragmentContentHeader);
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_COMBINE_IMPL_F, mainFragmentContentImpl);
+
+	std::string effectContent;
+	std::string module;
+	std::string shaderFile;
+
+	for (const UPTR<PostProcessingEffect>& item : component->effects)
+	{
+		effectContent.clear();
+		module.clear();
+		shaderFile.clear();
+		switch (item->type)
+		{
+		case PPE::BLUR:
+			shaderFile = ShaderFiles::POST_PROCESSING_BLUR_F;
+			module = "Blur";
+			break;
+		case PPE::GRAYSCALE:
+			shaderFile = ShaderFiles::POST_PROCESSING_GRAYSCALE_F;
+			module = "Grayscale";
+			break;
+		case PPE::INVERSE:
+			shaderFile = ShaderFiles::POST_PROCESSING_INVERSE_F;
+			module = "Inverse";
+			break;
+		case PPE::BLOOM:
+			shaderFile = ShaderFiles::POST_PROCESSING_BLOOM_F;
+		case PPE::DEPTH_OF_FIELD: break;
+
+		default: break;
+		}
+
+		FileUtils::loadFile(shaderFile, effectContent);
+		mainFragmentContentHeader += effectContent;
+
+		if (!module.empty())
+			this->includeCallCode(mainFragmentContentImpl, module);
 	}
 
 	outFragmentContent = "#version 400\n" + mainFragmentContentHeader + mainFragmentContentImpl;

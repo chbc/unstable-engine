@@ -2,6 +2,9 @@
 #define _POST_PROCESSING_RENDERER_H_
 
 #include "memory_aliases.h"
+#include <unordered_map>
+#include "PostProcessingEffect.h"
+#include "APostProcessingRendererComponent.h"
 
 namespace sre
 {
@@ -9,21 +12,15 @@ namespace sre
 class PostProcessingRenderer
 {
 private:
-	class ShaderManager* shaderManager;
-	class AGraphicsWrapper* graphicsWrapper;
-
-	class Shader* shader;
-	UPTR<class GUIMeshData> meshData;
-	uint32_t textureId;
-	uint32_t fbo;
-
+	// std::unordered_map<PPE::Type, UPTR<APostProcessingRendererComponent>> components;
+	UPTR<APostProcessingRendererComponent> component;
 
 private:
 	PostProcessingRenderer();
 
 	void onSceneLoaded(class PostProcessingComponent* postProcessingItem);
-	void bindFrameBuffer();
-	void render();
+	void onPreRender();
+	void onPostRender();
 
 friend class RenderManager;
 };

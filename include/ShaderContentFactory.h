@@ -25,6 +25,8 @@ private:
     void createPointLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent, std::string &outGeometryContent);
     void createDirectionalLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
 	void createPostProcessingShaderContent(class PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent);
+	void createInitialPassPostProcessingShaderContent(class PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent);
+	void createFinalPassPostProcessingShaderContent(class PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent);
 
     void loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
     void loadColorContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);

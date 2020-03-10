@@ -101,6 +101,9 @@ friend class AORendererComponent;
 friend class ShadowRendererShaderSetup;
 
 friend class LitRendererLightsState;
+
+friend class BloomRendererComponent;
+friend class SinglePassRendererComponent;
 };
 
 } // namespace

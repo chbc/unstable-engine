@@ -16,7 +16,6 @@ PostProcessingEffect* PostProcessingEffect::create(PPE::Type effectType)
 		case PPE::GRAYSCALE:
 		case PPE::INVERSE:
 			break;
-		case PPE::ANTI_ALIASING: break;
 		case PPE::BLOOM: break;
 		case PPE::DEPTH_OF_FIELD: break;
 		default: break;

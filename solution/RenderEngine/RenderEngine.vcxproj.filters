@@ -201,6 +201,12 @@
     <ClCompile Include="src\core\graphics\renders\MeshRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\graphics\renders\postProcessingRendererComponents\BloomRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renders\postProcessingRendererComponents\SinglePassRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">

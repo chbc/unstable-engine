@@ -74,6 +74,28 @@ Shader* ShaderManager::loadPostProcessingShader(PostProcessingComponent* compone
 	return this->loadShader(vertexContent, fragmentContent);
 }
 
+Shader* ShaderManager::loadInitialPassPostProcessingShader(PostProcessingComponent* component)
+{
+	std::string vertexContent;
+	std::string fragmentContent;
+
+	ShaderContentFactory contentFactory;
+	contentFactory.createInitialPassPostProcessingShaderContent(component, vertexContent, fragmentContent);
+
+	return this->loadShader(vertexContent, fragmentContent);
+}
+
+Shader* ShaderManager::loadFinalPassPostProcessingShader(PostProcessingComponent* component)
+{
+	std::string vertexContent;
+	std::string fragmentContent;
+
+	ShaderContentFactory contentFactory;
+	contentFactory.createFinalPassPostProcessingShaderContent(component, vertexContent, fragmentContent);
+
+	return this->loadShader(vertexContent, fragmentContent);
+}
+
 Shader *ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent)
 {
     uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);

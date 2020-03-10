@@ -13,8 +13,9 @@ namespace PPE
 	{
 		GRAYSCALE,
 		INVERSE,
-		ANTI_ALIASING,
+		BLUR,
 		BLOOM,
+		HDR,
 		DEPTH_OF_FIELD
 	};
 } // namespace PPE

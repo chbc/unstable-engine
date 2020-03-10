@@ -70,13 +70,16 @@ namespace ShaderFiles
     const std::string SHADOWS_POINT_IMPL_F  = "../../shaders/shadows/shadows_point_impl.frag";
 
 	// Post processing
-	const std::string POST_PROCESSING_MAIN_V		= "../../shaders/postProcessing/main.vert";
-	const std::string POST_PROCESSING_MAIN_H_F		= "../../shaders/postProcessing/main_h.frag";
-	const std::string POST_PROCESSING_MAIN_IMPL_F	= "../../shaders/postProcessing/main_impl.frag";
+	const std::string POST_PROCESSING_MAIN_V			= "../../shaders/postProcessing/main.vert";
+	const std::string POST_PROCESSING_MAIN_H_F			= "../../shaders/postProcessing/main_h.frag";
+	const std::string POST_PROCESSING_MAIN_IMPL_F		= "../../shaders/postProcessing/main_impl.frag";
+	const std::string POST_PROCESSING_COMBINE_H_F		= "../../shaders/postProcessing/combine_h.frag";
+	const std::string POST_PROCESSING_COMBINE_IMPL_F	= "../../shaders/postProcessing/combine_impl.frag";
 
 	const std::string POST_PROCESSING_INVERSE_F		= "../../shaders/postProcessing/inverse.frag";
 	const std::string POST_PROCESSING_GRAYSCALE_F	= "../../shaders/postProcessing/grayscale.frag";
 	const std::string POST_PROCESSING_BLUR_F		= "../../shaders/postProcessing/blur.frag";
+	const std::string POST_PROCESSING_BLOOM_F		= "../../shaders/postProcessing/bloom.frag";
 }
 
 namespace ShaderVariables

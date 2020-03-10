@@ -44,6 +44,8 @@ friend class SingletonsManager;
 friend class ShadowRenderer;
 friend class GUIImageComponent;
 friend class PostProcessingRenderer;
+friend class BloomRendererComponent;
+friend class SinglePassRendererComponent;
 };
 
 } // namespace
