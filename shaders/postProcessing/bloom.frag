@@ -1,23 +1,14 @@
-#version 400
-
-// Uniform variables
-uniform sampler2D screenTexture;
-
-// Varing variables
-in vec2 var_textureCoords;
+// BLOOM //
 
 // Out variables
-out vec4 out_color;
+layout (location = 1) out vec4 out_brightness;
 
-void main(void)
+void Bloom_computeBloom(vec4 inputColor)
 {
-	vec4 result = texture(screenTexture, var_textureCoords);
+    float brightness = dot(inputColor.rgb, vec3(0.2126, 0.7152, 0.0722));
 	
-    float brightness = dot(result.rgb, vec3(0.2126, 0.7152, 0.0722));
-    if(brightness > 0.75)
-        result = vec4(result.rgb, 1.0);
+    if (brightness > 0.75)
+        out_brightness = vec4(inputColor.rgb, 1.0);
     else
-        result = vec4(0.0, 0.0, 0.0, 1.0);
-	
-	out_color = result;
+        out_brightness = vec4(0.0, 0.0, 0.0, 1.0);
 }

@@ -30,13 +30,19 @@ private:
 
     // main load function
     template <size_t SIZE> 
-    Shader *loadShader(const std::bitset<SIZE> &componentsBitset, const ShaderLightData &lightData)
+    Shader *loadShader(
+		const std::bitset<SIZE> &componentsBitset, 
+		const ShaderLightData &lightData, 
+		bool includeBrightnessSegmentation
+	)
     {
         std::string vertexContent;
         std::string fragmentContent;
 
         ShaderContentFactory contentFactory;
-        contentFactory.createShaderContent(componentsBitset, vertexContent, fragmentContent, lightData);
+        contentFactory.createShaderContent(
+			componentsBitset, vertexContent, fragmentContent, lightData, includeBrightnessSegmentation
+		);
 
         return this->loadShader(vertexContent, fragmentContent);
     }
@@ -45,7 +51,6 @@ private:
     Shader* loadPointLightDepthShader();
     Shader* loadDirectionalLightDepthShader();
 	Shader* loadPostProcessingShader(class PostProcessingComponent* component);
-	Shader* loadInitialPassPostProcessingShader(class PostProcessingComponent* component);
 	Shader* loadFinalPassPostProcessingShader(class PostProcessingComponent* component);
     Shader* loadShader(const std::string &vertexContent, const std::string &fragmentContent);
 
@@ -88,6 +93,7 @@ friend class PostProcessingRenderer;
 
 friend class BloomRendererComponent;
 friend class SinglePassRendererComponent;
+friend class HDRRendererComponent;
 };
 
 } // namespace

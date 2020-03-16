@@ -22,4 +22,6 @@ void main(void)
     out_color = vec4(ka + kd + ks, 1.0);
 
     // [DIFFUSE] out_color = Diffuse_computeTextureColor(ka, kd, ks);
+	
+	// [BLOOM] Bloom_computeBloom(out_color);
 }

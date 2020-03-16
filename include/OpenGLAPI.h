@@ -80,7 +80,7 @@ protected:
     void deleteBuffers(AMeshData* mesh) override;
 
     uint32_t generateDepthFrameBuffer(uint32_t textureId, bool cubemap = false) override;
-	uint32_t generateColorFrameBuffer(uint32_t textureId, uint32_t width, uint32_t height) override;
+	uint32_t generateColorFrameBuffer(const std::vector<uint32_t>& textureIds, uint32_t width, uint32_t height) override;
     void bindFrameBuffer(uint32_t fbo) override;
     void unbindFrameBuffer() override;
     void setViewport(uint32_t width, uint32_t height) override;

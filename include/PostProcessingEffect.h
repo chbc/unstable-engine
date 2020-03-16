@@ -38,6 +38,8 @@ public:
 
 	static PostProcessingEffect* create(PPE::Type effectType);
 
+	PPE::Type getType() { return this->type; }
+
 friend class PostProcessingComponent;
 friend class ShaderContentFactory;
 };

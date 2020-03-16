@@ -12,15 +12,19 @@ class BloomRendererComponent : public APostProcessingRendererComponent
 private:
 	class ShaderManager* shaderManager;
 	class AGraphicsWrapper* graphicsWrapper;
-
-	class Shader* initialPassShader;
-	class Shader* finalPassShader;
 	UPTR<struct GUIMeshData> meshData;
+
+	class Shader* blurShader;
+	class Shader* combineShader;
+	
 	uint32_t initialPassTextureId;
-	uint32_t finalPassTextureId;
+	uint32_t brightnessTextureId;
+	uint32_t blurTextureIds[2];
 
 	uint32_t initialPassFBO;
-	uint32_t finalPassFBO;
+	uint32_t brightnessFBOs[2];
+
+	uint32_t blurInteractionsCount = 10;
 
 private:
 	BloomRendererComponent(class PostProcessingComponent* component);

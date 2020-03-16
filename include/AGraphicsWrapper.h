@@ -78,7 +78,7 @@ protected:
     virtual void deleteBuffers(AMeshData* meshData) =0;
 
     virtual uint32_t generateDepthFrameBuffer(uint32_t textureId, bool cubemap = false) =0;
-	virtual uint32_t generateColorFrameBuffer(uint32_t textureId, uint32_t width, uint32_t height) =0;
+	virtual uint32_t generateColorFrameBuffer(const std::vector<uint32_t>& textureIds, uint32_t width, uint32_t height) =0;
     virtual void bindFrameBuffer(uint32_t fbo) =0;
     virtual void unbindFrameBuffer() =0;
     virtual void setViewport(uint32_t width, uint32_t height) =0;

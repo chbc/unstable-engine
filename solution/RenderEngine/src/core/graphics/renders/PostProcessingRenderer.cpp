@@ -2,19 +2,28 @@
 
 #include "BloomRendererComponent.h"
 #include "SinglePassRendererComponent.h"
-
+#include "PostProcessingComponent.h"
 
 namespace sre
 {
 
 PostProcessingRenderer::PostProcessingRenderer() { }
 
-void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* component)
+void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* postProcessingComponent)
 {
-	// ### this->components.emplace(PPE::BLOOM, new BloomRendererComponent);
-
-	BloomRendererComponent* rendererComponent = new BloomRendererComponent{ component };
+	BloomRendererComponent* rendererComponent = new BloomRendererComponent{ postProcessingComponent };
 	this->component = UPTR<APostProcessingRendererComponent>{ rendererComponent };
+
+	this->useBrightnessSegmentation = false;
+
+	for (const UPTR<PostProcessingEffect>& item : postProcessingComponent->effects)
+	{
+		if (item->getType() == PPE::BLOOM)
+		{
+			this->useBrightnessSegmentation = true;
+			break;
+		}
+	}
 }
 
 void PostProcessingRenderer::onPreRender()

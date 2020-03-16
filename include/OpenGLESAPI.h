@@ -1,3 +1,5 @@
+#if 0
+
 #ifndef _OPENGL_ES_API_H_
 #define _OPENGL_ES_API_H_
 
@@ -94,4 +96,6 @@ friend class SingletonsManager;
 };
 
 } // namespace
+#endif
+
 #endif

@@ -135,16 +135,19 @@ void RenderManager::onSceneLoaded()
     if (this->shadowRenderer.get() != nullptr)
         this->shadowRenderer->onSceneLoaded();
 
-    for (const UPTR<MeshRenderer> &item : this->renders)
-        item->onSceneLoaded();
-	
+	bool useBrightnessSegmentation = false;
 	Entity* cameraEntity = this->mainCamera->getEntity();
 	if (cameraEntity->hasComponent<PostProcessingComponent>())
 	{
 		PostProcessingComponent* postProcessingComponent = cameraEntity->getComponent<PostProcessingComponent>();
 		this->postProcessingRenderer = UPTR<PostProcessingRenderer>{ new PostProcessingRenderer };
 		this->postProcessingRenderer->onSceneLoaded(postProcessingComponent);
+
+		useBrightnessSegmentation = this->postProcessingRenderer->isUsingBrightnessSegmentation();
 	}
+
+	for (const UPTR<MeshRenderer>& item : this->renders)
+		item->onSceneLoaded(useBrightnessSegmentation);
 }
 
 void RenderManager::setMainCamera(CameraComponent *camera)

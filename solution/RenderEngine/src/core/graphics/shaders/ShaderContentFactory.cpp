@@ -37,16 +37,18 @@ void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingCompo
 
 	std::string effectContent;
 
+	/*
 	for (const UPTR<PostProcessingEffect>& item : component->effects)
 	{
 		effectContent.clear();
 		switch (item->type)
 		{
 			case PPE::BLUR:
-				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_BLUR_F, effectContent);
+			*/
+				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_PARTIAL_BLUR_F, effectContent);
 				mainFragmentContentHeader += effectContent;
-				this->includeCallCode(mainFragmentContentImpl, "Blur");
-				break;
+				this->includeCallCode(mainFragmentContentImpl, "PartialBlur");
+/*				break;
 			case PPE::DEPTH_OF_FIELD: break;
 			case PPE::GRAYSCALE:
 				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_GRAYSCALE_F, effectContent);
@@ -63,14 +65,9 @@ void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingCompo
 			default: break;
 		}
 	}
+	*/
 
 	outFragmentContent = "#version 400\n" + mainFragmentContentHeader + mainFragmentContentImpl;
-}
-
-void ShaderContentFactory::createInitialPassPostProcessingShaderContent(PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent)
-{
-	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_MAIN_V, outVertexContent);
-	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_BLOOM_F, outFragmentContent);
 }
 
 void ShaderContentFactory::createFinalPassPostProcessingShaderContent(PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent)
@@ -78,10 +75,18 @@ void ShaderContentFactory::createFinalPassPostProcessingShaderContent(PostProces
 	std::string mainFragmentContentHeader;
 	std::string mainFragmentContentImpl;
 
-	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_MAIN_V, outVertexContent);
-	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_COMBINE_H_F, mainFragmentContentHeader);
-	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_COMBINE_IMPL_F, mainFragmentContentImpl);
+	std::string combineFragmentContent;
 
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_MAIN_V, outVertexContent);
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_MAIN_H_F, mainFragmentContentHeader);
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_MAIN_IMPL_F, mainFragmentContentImpl);
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_COMBINE_F, combineFragmentContent);
+
+	mainFragmentContentHeader = mainFragmentContentHeader + combineFragmentContent;
+
+	this->includeCallCode(mainFragmentContentImpl, "Combine");
+
+	/* ###
 	std::string effectContent;
 	std::string module;
 	std::string shaderFile;
@@ -106,7 +111,8 @@ void ShaderContentFactory::createFinalPassPostProcessingShaderContent(PostProces
 			module = "Inverse";
 			break;
 		case PPE::BLOOM:
-			shaderFile = ShaderFiles::POST_PROCESSING_BLOOM_F;
+			// ### shaderFile = ShaderFiles::POST_PROCESSING_BLOOM_F;
+			break;
 		case PPE::DEPTH_OF_FIELD: break;
 
 		default: break;
@@ -118,6 +124,7 @@ void ShaderContentFactory::createFinalPassPostProcessingShaderContent(PostProces
 		if (!module.empty())
 			this->includeCallCode(mainFragmentContentImpl, module);
 	}
+	*/
 
 	outFragmentContent = "#version 400\n" + mainFragmentContentHeader + mainFragmentContentImpl;
 }
@@ -407,6 +414,15 @@ void ShaderContentFactory::loadShadowsContentImplementation(std::string &outVert
 
     outVertexContent = vertexContent + outVertexContent;
     outFragmentContent = fragmentContent + outFragmentContent;
+}
+
+void ShaderContentFactory::loadBrightnessSegmentationContent(std::string& outFragmentContentHeader, std::string& outFragmentContentImpl)
+{
+	std::string fragmentContent;
+	FileUtils::loadFile(ShaderFiles::POST_PROCESSING_BLOOM_F, fragmentContent);
+	outFragmentContentHeader = outFragmentContentHeader + fragmentContent;
+
+	this->uncommentCode(outFragmentContentImpl, "// [BLOOM]");
 }
 
 void ShaderContentFactory::uncommentCode(std::string &outShaderContent, const std::string &mark)

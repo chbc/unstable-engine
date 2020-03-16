@@ -21,6 +21,7 @@ public:
 
 friend class Entity;
 friend class ShaderContentFactory;
+friend class PostProcessingRenderer;
 };
 
 

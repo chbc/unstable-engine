@@ -17,8 +17,9 @@ BloomRendererComponent::BloomRendererComponent(PostProcessingComponent* componen
 	this->graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
 	this->shaderManager = singletonsManager->get<ShaderManager>();
 
-	this->initialPassShader = this->shaderManager->loadInitialPassPostProcessingShader(component);
-	this->shaderManager->setupUniformLocation(initialPassShader, ShaderVariables::SCREEN_TEXTURE);
+	this->blurShader = this->shaderManager->loadPostProcessingShader(component);
+	this->shaderManager->setupUniformLocation(this->blurShader, ShaderVariables::SCREEN_TEXTURE);
+	this->combineShader = this->shaderManager->loadFinalPassPostProcessingShader(component);
 
 	MultimediaManager* multimediaManager = singletonsManager->get<MultimediaManager>();
 	uint32_t width = static_cast<uint32_t>(multimediaManager->getScreenWidth());
@@ -38,10 +39,19 @@ BloomRendererComponent::BloomRendererComponent(PostProcessingComponent* componen
 	this->initialPassTextureId = texture->getId();
 
 	texture = textureManager->createEmptyTexture(width, height);
-	this->finalPassTextureId = texture->getId();
+	this->brightnessTextureId = texture->getId();
 
-	this->initialPassFBO = this->graphicsWrapper->generateColorFrameBuffer(this->initialPassTextureId, width, height);
-	this->finalPassFBO = this->graphicsWrapper->generateColorFrameBuffer(this->initialPassTextureId, width, height);
+	texture = textureManager->createEmptyTexture(width, height);
+	this->blurTextureIds[0] = texture->getId();
+
+	texture = textureManager->createEmptyTexture(width, height);
+	this->blurTextureIds[1] = texture->getId();
+
+	std::vector<uint32_t> textureIds = { this->initialPassTextureId, this->brightnessTextureId };
+
+	this->initialPassFBO = this->graphicsWrapper->generateColorFrameBuffer(textureIds, width, height);
+	this->brightnessFBOs[0] = this->graphicsWrapper->generateColorFrameBuffer(std::vector<uint32_t>{ this->blurTextureIds[0] }, width, height);
+	this->brightnessFBOs[1] = this->graphicsWrapper->generateColorFrameBuffer(std::vector<uint32_t>{ this->blurTextureIds[1] }, width, height);
 }
 
 void BloomRendererComponent::onPreRender()
@@ -51,14 +61,42 @@ void BloomRendererComponent::onPreRender()
 
 void BloomRendererComponent::onPostRender()
 {
+	// BLUR
+	bool firstIteration = true;
+	uint32_t horizontal = 1;
 	this->graphicsWrapper->bindFrameBuffer(0);
 	this->graphicsWrapper->clearColorBuffer();
-	this->shaderManager->enableShader(this->initialPassShader);
-	this->shaderManager->setInt(this->initialPassShader, ShaderVariables::SCREEN_TEXTURE, EMaterialMap::GUI);
+	this->shaderManager->enableShader(this->blurShader);
+	this->shaderManager->setInt(this->blurShader, ShaderVariables::SCREEN_TEXTURE, 0);
+
+	for (uint32_t i = 0; i < this->blurInteractionsCount; i++)
+	{
+		this->graphicsWrapper->bindFrameBuffer(this->brightnessFBOs[horizontal]);
+		this->shaderManager->setInt(this->blurShader, "horizontal", horizontal);
+		uint32_t textureId = firstIteration ? this->brightnessTextureId : this->blurTextureIds[!horizontal];
+		
+		this->graphicsWrapper->activateGUITexture(textureId);
+
+		this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
+		this->graphicsWrapper->enablePostProcessingSettings();
+		this->graphicsWrapper->drawElement(this->meshData->indices.size());
+
+		horizontal = !horizontal;
+		if (firstIteration)
+			firstIteration = false;
+	}
+
+	// COMBINE
+	this->graphicsWrapper->bindFrameBuffer(0);
+	this->graphicsWrapper->clearColorBuffer();
+	this->shaderManager->enableShader(this->combineShader);
+	this->shaderManager->setInt(this->combineShader, ShaderVariables::SCREEN_TEXTURE, 0);
+	this->shaderManager->setInt(this->combineShader, "bloom", 1);
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();
 	this->graphicsWrapper->activateGUITexture(this->initialPassTextureId);
+	this->graphicsWrapper->activateDiffuseTexture(this->blurTextureIds[0]);
 
 	this->graphicsWrapper->drawElement(this->meshData->indices.size());
 

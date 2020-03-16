@@ -8,6 +8,6 @@ in vec3 var_normal;
 in vec2 var_textureCoords;
 
 // Out variables
-out vec4 out_color;
+layout (location = 0) out vec4 out_color;
 
 void main(void);

@@ -516,18 +516,29 @@ namespace sre
 		return result;
 	}
 
-	uint32_t OpenGLAPI::generateColorFrameBuffer(uint32_t textureId, uint32_t width, uint32_t height)
+	uint32_t OpenGLAPI::generateColorFrameBuffer(const std::vector<uint32_t>& textureIds, uint32_t width, uint32_t height)
 	{
 		uint32_t result;
 		glGenFramebuffers(1, &result);
 		glBindFramebuffer(GL_FRAMEBUFFER, result);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
+
+		std::vector<uint32_t> attachments;
+		for (uint32_t i = 0; i < textureIds.size(); i++)
+		{
+			uint32_t item = GL_COLOR_ATTACHMENT0 + i;
+			attachments.push_back(item);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, item, GL_TEXTURE_2D, textureIds[i], 0);
+		}
 
 		unsigned int rbo;
 		glGenRenderbuffers(1, &rbo);
 		glBindRenderbuffer(GL_RENDERBUFFER, rbo);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+		uint32_t texturesCount = textureIds.size();
+		if (texturesCount > 1)
+			glDrawBuffers(texturesCount, &attachments[0]);
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 			throw "[OpenGLAPI] - Color framebuffer error!";

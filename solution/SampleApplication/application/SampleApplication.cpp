@@ -47,7 +47,6 @@ void SampleApplication::onInit()
 	CameraComponent* camera = this->sceneManager->getMainCamera();
 	PostProcessingComponent* postProcessingComponent = camera->getEntity()->addComponent<PostProcessingComponent>();
 	postProcessingComponent->enqueueEffect(PPE::BLOOM);
-	postProcessingComponent->enqueueEffect(PPE::GRAYSCALE);
 
     /*
     std::stringstream ss;

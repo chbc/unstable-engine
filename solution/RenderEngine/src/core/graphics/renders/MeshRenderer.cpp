@@ -57,10 +57,10 @@ MeshRenderer::~MeshRenderer()
         this->graphicsWrapper->deleteBuffers(item->meshData.get());
 }
 
-void MeshRenderer::onSceneLoaded()
+void MeshRenderer::onSceneLoaded(bool useBrightnessSegmentation)
 {
     this->loadShaderSetupItems();
-    this->loadShader();
+    this->loadShader(useBrightnessSegmentation);
 
     for (const auto &item : this->shaderSetupItems)
         item.second->onSceneLoaded(this->shader);
@@ -102,9 +102,11 @@ void MeshRenderer::loadShaderSetupItems()
     }
 }
 
-void MeshRenderer::loadShader()
+void MeshRenderer::loadShader(bool useBrightnessSegmentation)
 {
-    this->shader = this->shaderManager->loadShader(this->componentsBitset, this->lightData);
+    this->shader = this->shaderManager->loadShader(
+		this->componentsBitset, this->lightData, useBrightnessSegmentation
+	);
 }
 
 void MeshRenderer::addMesh(MeshComponent *mesh)

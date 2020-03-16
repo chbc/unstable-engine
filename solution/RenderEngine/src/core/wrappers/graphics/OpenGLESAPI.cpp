@@ -1,3 +1,5 @@
+#if 0
+
 #include <windows.h>
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -662,3 +664,5 @@ namespace sre
 		}
 	}
 } // namespace
+
+#endif

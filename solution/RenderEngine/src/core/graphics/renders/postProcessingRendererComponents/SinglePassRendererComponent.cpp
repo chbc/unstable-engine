@@ -38,7 +38,7 @@ SinglePassRendererComponent::SinglePassRendererComponent(PostProcessingComponent
 	this->textureId = texture->getId();
 
 	this->fbo = this->graphicsWrapper->generateColorFrameBuffer(
-		this->textureId, texture->getWidth(), texture->getHeight()
+		std::vector<uint32_t>{this->textureId}, texture->getWidth(), texture->getHeight()
 	);
 }
 

@@ -19,13 +19,12 @@ private:
     (
         const std::bitset<SIZE> &componentsBitset, 
         std::string &outVertexContent, std::string &outFragmentContent, 
-        const ShaderLightData &lightData
+        const ShaderLightData &lightData, bool includeBrightnessSegmentation
     );
     void createGUIShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
     void createPointLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent, std::string &outGeometryContent);
     void createDirectionalLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
 	void createPostProcessingShaderContent(class PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent);
-	void createInitialPassPostProcessingShaderContent(class PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent);
 	void createFinalPassPostProcessingShaderContent(class PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent);
 
     void loadColorContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
@@ -48,6 +47,8 @@ private:
 
     void loadShadowsContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
     void loadShadowsContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
+	
+	void loadBrightnessSegmentationContent(std::string& outFragmentContentHeader, std::string& outFragmentContentImpl);
 
     void uncommentCode(std::string &outShaderContent, const std::string &mark); // throws "didn't find code mark
 	void includeCallCode(std::string& outShaderContent, const std::string& module); // throws "didn't find code mark

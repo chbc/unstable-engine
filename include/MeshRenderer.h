@@ -40,9 +40,9 @@ public:
 private:
 	MeshRenderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-    void onSceneLoaded();
+    void onSceneLoaded(bool useBrightnessSegmentation);
     void loadShaderSetupItems();
-    void loadShader();
+    void loadShader(bool useBrightnessSegmentation);
 
     template <typename T, typename... TArgs>
     T *addComponent(TArgs&&... mArgs)
