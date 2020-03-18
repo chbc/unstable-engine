@@ -2,6 +2,8 @@
 
 #include "BloomRendererComponent.h"
 #include "SinglePassRendererComponent.h"
+#include "HDRRendererComponent.h"
+
 #include "PostProcessingComponent.h"
 
 namespace sre
@@ -11,7 +13,7 @@ PostProcessingRenderer::PostProcessingRenderer() { }
 
 void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* postProcessingComponent)
 {
-	BloomRendererComponent* rendererComponent = new BloomRendererComponent{ postProcessingComponent };
+	HDRRendererComponent* rendererComponent = new HDRRendererComponent{ postProcessingComponent };
 	this->component = UPTR<APostProcessingRendererComponent>{ rendererComponent };
 
 	this->useBrightnessSegmentation = false;

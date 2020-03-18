@@ -84,6 +84,18 @@ Texture* TextureManager::createEmptyTexture(uint32_t width, uint32_t height)
 	return result;
 }
 
+Texture* TextureManager::createEmptyFloatingPointTexture(uint32_t width, uint32_t height)
+{
+	std::string name{ "_empty_" + std::to_string(this->emptyIndex) };
+	uint32_t id = this->graphicsWrapper->createFloatingPointTexture(width, height);
+
+	Texture* result = new Texture{ id, width, height, EMaterialMap::GUI, name };
+	this->textures.emplace_back(result);
+
+	this->emptyIndex++;
+	return result;
+}
+
 Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::Type mapType)
 {
     Texture *result = this->loadExistingTexture(fileName, mapType);

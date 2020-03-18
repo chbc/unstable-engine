@@ -207,6 +207,9 @@
     <ClCompile Include="src\core\graphics\renders\postProcessingRendererComponents\SinglePassRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\graphics\renders\postProcessingRendererComponents\HDRRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">

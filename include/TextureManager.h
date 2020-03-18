@@ -34,6 +34,7 @@ private:
     Texture* createShadowTexture(uint32_t width, uint32_t height);
     Texture* createCubemapTexture(uint32_t width, uint32_t height);
 	Texture* createEmptyTexture(uint32_t width, uint32_t height);
+	Texture* createEmptyFloatingPointTexture(uint32_t width, uint32_t height);
     Texture* loadTexture(const std::string &fileName, EMaterialMap::Type mapType);
 
     Texture* loadExistingTexture(const std::string &fileName, EMaterialMap::Type mapType);
@@ -46,6 +47,7 @@ friend class GUIImageComponent;
 friend class PostProcessingRenderer;
 friend class BloomRendererComponent;
 friend class SinglePassRendererComponent;
+friend class HDRRendererComponent;
 };
 
 } // namespace

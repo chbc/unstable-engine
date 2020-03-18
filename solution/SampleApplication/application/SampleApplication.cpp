@@ -15,11 +15,8 @@ void SampleApplication::onInit()
 
 	this->createLights();
 
-	/*
-	createHouse();
-	return;
-	*/
-
+	// createHouse();
+	
     // cube //
 	Entity* cube;
 	cube = this->createCube();
@@ -46,7 +43,7 @@ void SampleApplication::onInit()
 
 	CameraComponent* camera = this->sceneManager->getMainCamera();
 	PostProcessingComponent* postProcessingComponent = camera->getEntity()->addComponent<PostProcessingComponent>();
-	postProcessingComponent->enqueueEffect(PPE::BLOOM);
+	postProcessingComponent->enqueueEffect(PPE::HDR);
 
     /*
     std::stringstream ss;
@@ -122,7 +119,7 @@ void SampleApplication::createLights()
 
 	PointLightComponent * pLight2 = this->sceneManager->addPointLight();
 	pLight2->getTransform()->setPosition(glm::vec3(-3.0f, 3.0f, 5.0f));
-	pLight2->setColor(glm::vec3(0.5f, 0.5f, 0.5f));
+	pLight2->setColor(glm::vec3(5.0f, 5.0f, 5.0f));
 
 	lightCube = this->sceneManager->createCubeEntity();
 	lightCube->getTransform()->setPosition(pLight2->getPosition());

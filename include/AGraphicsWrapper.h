@@ -55,6 +55,7 @@ protected:
     virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit, bool genMipmap) =0;
     virtual uint32_t createTexture(uint32_t width, uint32_t height, uint32_t unit) =0;
 	virtual uint32_t createTexture(uint32_t width, uint32_t height) =0;
+	virtual uint32_t createFloatingPointTexture(uint32_t width, uint32_t height) = 0;
     virtual uint32_t generateCubemap(uint32_t width, uint32_t height, uint32_t unit) =0;
     virtual void deleteTexture(uint32_t id) =0;
 
@@ -104,6 +105,7 @@ friend class LitRendererLightsState;
 
 friend class BloomRendererComponent;
 friend class SinglePassRendererComponent;
+friend class HDRRendererComponent;
 };
 
 } // namespace

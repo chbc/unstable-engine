@@ -37,18 +37,22 @@ void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingCompo
 
 	std::string effectContent;
 
-	/*
 	for (const UPTR<PostProcessingEffect>& item : component->effects)
 	{
 		effectContent.clear();
 		switch (item->type)
 		{
-			case PPE::BLUR:
-			*/
+			case PPE::BLOOM:
 				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_PARTIAL_BLUR_F, effectContent);
 				mainFragmentContentHeader += effectContent;
 				this->includeCallCode(mainFragmentContentImpl, "PartialBlur");
-/*				break;
+				break;
+			case PPE::HDR:
+				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_HDR_F, effectContent);
+				mainFragmentContentHeader += effectContent;
+				this->includeCallCode(mainFragmentContentImpl, "HDR");
+				break;
+/*
 			case PPE::DEPTH_OF_FIELD: break;
 			case PPE::GRAYSCALE:
 				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_GRAYSCALE_F, effectContent);
@@ -61,11 +65,11 @@ void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingCompo
 				mainFragmentContentHeader += effectContent;
 				this->includeCallCode(mainFragmentContentImpl, "Inverse");
 				break;
-
+*/
 			default: break;
 		}
+
 	}
-	*/
 
 	outFragmentContent = "#version 400\n" + mainFragmentContentHeader + mainFragmentContentImpl;
 }
