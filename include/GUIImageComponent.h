@@ -2,6 +2,7 @@
 #define _GUI_IMAGE_COMPONENT_H_
 
 #include "ARenderableComponent.h"
+#include <string>
 
 namespace sre
 {

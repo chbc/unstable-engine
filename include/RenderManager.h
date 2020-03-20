@@ -3,6 +3,7 @@
 
 #include "ASingleton.h"
 #include "memory_aliases.h"
+#include <string>
 
 namespace sre
 {

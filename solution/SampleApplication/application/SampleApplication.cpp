@@ -119,7 +119,7 @@ void SampleApplication::createLights()
 
 	PointLightComponent * pLight2 = this->sceneManager->addPointLight();
 	pLight2->getTransform()->setPosition(glm::vec3(-3.0f, 3.0f, 5.0f));
-	pLight2->setColor(glm::vec3(5.0f, 5.0f, 5.0f));
+	pLight2->setColor(glm::vec3(0.3f));
 
 	lightCube = this->sceneManager->createCubeEntity();
 	lightCube->getTransform()->setPosition(pLight2->getPosition());

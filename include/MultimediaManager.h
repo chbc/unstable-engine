@@ -4,6 +4,7 @@
 #include <glm/vec2.hpp>
 #include "memory_aliases.h"
 #include "ASingleton.h"
+#include <string>
 
 namespace sre
 {
