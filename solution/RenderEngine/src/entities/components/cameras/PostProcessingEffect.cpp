@@ -17,7 +17,7 @@ PostProcessingEffect* PostProcessingEffect::create(PPE::Type effectType)
 		case PPE::INVERSE:
 			break;
 		case PPE::BLOOM: break;
-		case PPE::DEPTH_OF_FIELD: break;
+		case PPE::DOF: break;
 		default: break;
 	}
 

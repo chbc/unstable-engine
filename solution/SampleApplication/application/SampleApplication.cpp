@@ -15,7 +15,12 @@ void SampleApplication::onInit()
 
 	this->createLights();
 
-	// createHouse();
+	createHouse();
+	CameraComponent* camera = this->sceneManager->getMainCamera();
+	PostProcessingComponent* postProcessingComponent = camera->getEntity()->addComponent<PostProcessingComponent>();
+	postProcessingComponent->enqueueEffect(PPE::DOF);
+
+	return;
 	
     // cube //
 	Entity* cube;
@@ -40,10 +45,6 @@ void SampleApplication::onInit()
     
     this->guiManager->addEntity(guiEntity);
 	*/
-
-	CameraComponent* camera = this->sceneManager->getMainCamera();
-	PostProcessingComponent* postProcessingComponent = camera->getEntity()->addComponent<PostProcessingComponent>();
-	postProcessingComponent->enqueueEffect(PPE::HDR);
 
     /*
     std::stringstream ss;
@@ -92,11 +93,9 @@ Entity* SampleApplication::createCube()
 void SampleApplication::createLights()
 {
 	// light //
-	/*
 	DirectionalLightComponent* dLight1 = this->sceneManager->addDirectionalLight();
 	dLight1->setDirection(glm::vec3(-1.0f, -0.25f, 0.0f));
 	dLight1->setColor(glm::vec3(1.0f));
-	*/
 
 	/*
 	DirectionalLightComponent* dLight2 = this->sceneManager->addDirectionalLight();

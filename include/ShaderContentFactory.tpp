@@ -8,7 +8,8 @@ void ShaderContentFactory::createShaderContent
 (
     const std::bitset<SIZE> &componentsBitset, 
     std::string &outVertexContent, std::string &outFragmentContent,
-    const ShaderLightData &lightData, bool includeBrightnessSegmentation
+    const ShaderLightData &lightData,
+    bool includeBrightnessSegmentation, bool includeDepth
 )
 {
     this->lightData = lightData;
@@ -61,6 +62,9 @@ void ShaderContentFactory::createShaderContent
 
 	if (includeBrightnessSegmentation)
 		this->loadBrightnessSegmentationContent(fragmentContentHeader, fragmentContentImpl);
+
+    if (includeDepth)
+        this->loadDepthContent(fragmentContentHeader, fragmentContentImpl);
     
     outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
     outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;

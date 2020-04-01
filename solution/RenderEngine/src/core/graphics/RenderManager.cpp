@@ -136,6 +136,7 @@ void RenderManager::onSceneLoaded()
         this->shadowRenderer->onSceneLoaded();
 
 	bool useBrightnessSegmentation = false;
+    bool includeDepth = false;
 	Entity* cameraEntity = this->mainCamera->getEntity();
 	if (cameraEntity->hasComponent<PostProcessingComponent>())
 	{
@@ -144,10 +145,11 @@ void RenderManager::onSceneLoaded()
 		this->postProcessingRenderer->onSceneLoaded(postProcessingComponent);
 
 		useBrightnessSegmentation = this->postProcessingRenderer->isUsingBrightnessSegmentation();
+        includeDepth = this->postProcessingRenderer->isIncludingDepth();
 	}
 
 	for (const UPTR<MeshRenderer>& item : this->renders)
-		item->onSceneLoaded(useBrightnessSegmentation);
+		item->onSceneLoaded(useBrightnessSegmentation, includeDepth);
 }
 
 void RenderManager::setMainCamera(CameraComponent *camera)

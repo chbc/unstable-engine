@@ -33,7 +33,8 @@ private:
     Shader *loadShader(
 		const std::bitset<SIZE> &componentsBitset, 
 		const ShaderLightData &lightData, 
-		bool includeBrightnessSegmentation
+		bool includeBrightnessSegmentation,
+        bool includeDepth
 	)
     {
         std::string vertexContent;
@@ -41,7 +42,8 @@ private:
 
         ShaderContentFactory contentFactory;
         contentFactory.createShaderContent(
-			componentsBitset, vertexContent, fragmentContent, lightData, includeBrightnessSegmentation
+			componentsBitset, vertexContent, fragmentContent, lightData, 
+            includeBrightnessSegmentation, includeDepth
 		);
 
         return this->loadShader(vertexContent, fragmentContent);
@@ -94,6 +96,7 @@ friend class PostProcessingRenderer;
 friend class BloomRendererComponent;
 friend class SinglePassRendererComponent;
 friend class HDRRendererComponent;
+friend class DOFRendererComponent;
 };
 
 } // namespace

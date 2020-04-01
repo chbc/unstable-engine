@@ -81,6 +81,8 @@ namespace ShaderFiles
 	const std::string POST_PROCESSING_PARTIAL_BLUR_F	= "../../shaders/postProcessing/partialBlur.frag";
 	const std::string POST_PROCESSING_BLOOM_F			= "../../shaders/postProcessing/bloom.frag";
 	const std::string POST_PROCESSING_HDR_F				= "../../shaders/postProcessing/hdr.frag";
+    const std::string POST_PROCESSING_DOF_F             = "../../shaders/postProcessing/dof.frag";
+    const std::string POST_PROCESSING_DEPTH_F           = "../../shaders/postProcessing/depth.frag";
 }
 
 namespace ShaderVariables

@@ -3,6 +3,7 @@
 #include "BloomRendererComponent.h"
 #include "SinglePassRendererComponent.h"
 #include "HDRRendererComponent.h"
+#include "DOFRendererComponent.h"
 
 #include "PostProcessingComponent.h"
 
@@ -13,17 +14,21 @@ PostProcessingRenderer::PostProcessingRenderer() { }
 
 void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* postProcessingComponent)
 {
-	HDRRendererComponent* rendererComponent = new HDRRendererComponent{ postProcessingComponent };
+	DOFRendererComponent* rendererComponent = new DOFRendererComponent{ postProcessingComponent };
 	this->component = UPTR<APostProcessingRendererComponent>{ rendererComponent };
 
 	this->useBrightnessSegmentation = false;
 
 	for (const UPTR<PostProcessingEffect>& item : postProcessingComponent->effects)
 	{
-		if (item->getType() == PPE::BLOOM)
+		switch (item->getType())
 		{
-			this->useBrightnessSegmentation = true;
-			break;
+			case PPE::BLOOM:
+				this->useBrightnessSegmentation = true;
+				break;
+			case PPE::DOF:
+				this->includeDepth = true;
+				break;
 		}
 	}
 }

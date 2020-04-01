@@ -10,9 +10,9 @@ namespace sre
 class PostProcessingRenderer
 {
 private:
-	// std::unordered_map<PPE::Type, UPTR<APostProcessingRendererComponent>> components;
 	UPTR<APostProcessingRendererComponent> component;
 	bool useBrightnessSegmentation;
+	bool includeDepth;
 
 private:
 	PostProcessingRenderer();
@@ -22,6 +22,7 @@ private:
 	void onPostRender();
 
 	bool isUsingBrightnessSegmentation() { return this->useBrightnessSegmentation; }
+	bool isIncludingDepth() { return this->includeDepth; }
 
 friend class RenderManager;
 };

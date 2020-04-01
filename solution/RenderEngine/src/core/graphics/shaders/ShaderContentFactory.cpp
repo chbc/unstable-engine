@@ -52,6 +52,11 @@ void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingCompo
 				mainFragmentContentHeader += effectContent;
 				this->includeCallCode(mainFragmentContentImpl, "HDR");
 				break;
+            case PPE::DOF:
+                FileUtils::loadFile(ShaderFiles::POST_PROCESSING_DOF_F, effectContent);
+                mainFragmentContentHeader += effectContent;
+                this->includeCallCode(mainFragmentContentImpl, "DOF");
+                break;
 /*
 			case PPE::DEPTH_OF_FIELD: break;
 			case PPE::GRAYSCALE:
@@ -427,6 +432,15 @@ void ShaderContentFactory::loadBrightnessSegmentationContent(std::string& outFra
 	outFragmentContentHeader = outFragmentContentHeader + fragmentContent;
 
 	this->uncommentCode(outFragmentContentImpl, "// [BLOOM]");
+}
+
+void ShaderContentFactory::loadDepthContent(std::string& outFragmentContentHeader, std::string& outFragmentContentImpl)
+{
+    std::string fragmentContent;
+    FileUtils::loadFile(ShaderFiles::POST_PROCESSING_DEPTH_F, fragmentContent);
+    outFragmentContentHeader = outFragmentContentHeader + fragmentContent;
+
+    this->uncommentCode(outFragmentContentImpl, "// [DEPTH]");
 }
 
 void ShaderContentFactory::uncommentCode(std::string &outShaderContent, const std::string &mark)

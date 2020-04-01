@@ -16,7 +16,7 @@ namespace PPE
 		BLUR,
 		BLOOM,
 		HDR,
-		DEPTH_OF_FIELD
+		DOF
 	};
 } // namespace PPE
 
