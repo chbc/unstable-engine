@@ -10,22 +10,25 @@ SampleApplication::SampleApplication() : RenderEngine()
 
 void SampleApplication::onInit()
 {
+	CameraComponent* camera = this->sceneManager->getMainCamera();
+	PostProcessingComponent* postProcessingComponent = camera->getEntity()->addComponent<PostProcessingComponent>();
+	postProcessingComponent->enqueueEffect(PPE::DOF);
+
 	// set EventReceiver class for input handling
 	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
 
 	this->createLights();
 
-	createHouse();
-	CameraComponent* camera = this->sceneManager->getMainCamera();
-	PostProcessingComponent* postProcessingComponent = camera->getEntity()->addComponent<PostProcessingComponent>();
-	postProcessingComponent->enqueueEffect(PPE::DOF);
-
-	return;
+	// ### createHouse();
+	// return;
 	
     // cube //
 	Entity* cube;
 	cube = this->createCube();
-    cube->getTransform()->setPosition(glm::vec3(-5.0f, 1.0f, 2.0f));
+    cube->getTransform()->setPosition(glm::vec3(-5.0f, 1.0f, -12.0f));
+
+	cube = this->createCube();
+	cube->getTransform()->setPosition(glm::vec3(5.0f, 1.0f, -10.0f));
 
 	cube = this->createCube();
     cube->getTransform()->setPosition(glm::vec3(3.0f, 1.0f, 0.0f));
@@ -93,15 +96,15 @@ Entity* SampleApplication::createCube()
 void SampleApplication::createLights()
 {
 	// light //
+	/*
 	DirectionalLightComponent* dLight1 = this->sceneManager->addDirectionalLight();
 	dLight1->setDirection(glm::vec3(-1.0f, -0.25f, 0.0f));
 	dLight1->setColor(glm::vec3(1.0f));
-
-	/*
-	DirectionalLightComponent* dLight2 = this->sceneManager->addDirectionalLight();
-	dLight2->setDirection(glm::vec3(0.0f, -0.5f, 1.0f));
-	dLight2->setColor(glm::vec3(0.1f, 0.1f, 0.1f));
 	*/
+
+	DirectionalLightComponent* dLight2 = this->sceneManager->addDirectionalLight();
+	dLight2->setDirection(glm::vec3(0.0f, -0.5f, -1.0f));
+	dLight2->setColor(glm::vec3(0.3f));
 
 	// nanosuit
 	PointLightComponent * pLight1 = this->sceneManager->addPointLight();
@@ -191,7 +194,7 @@ void SampleApplication::createRoom()
 	MeshComponent* planeMesh;
 
     // bottom //
-    plane = this->sceneManager->createPlaneEntity(20);
+    plane = this->sceneManager->createPlaneEntity(40);
     transform = plane->getTransform();
     transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
     planeMesh = plane->getComponent<MeshComponent>();
@@ -203,11 +206,13 @@ void SampleApplication::createRoom()
 
     this->sceneManager->addEntity(plane);
 
+	float DISTANCE = 20;
+	float SIZE = 40;
 
     // back //
-    plane = this->sceneManager->createPlaneEntity(20);
+    plane = this->sceneManager->createPlaneEntity(SIZE);
 	transform = plane->getTransform();
-    transform->setPosition(glm::vec3(0, 0, -10));
+    transform->setPosition(glm::vec3(0, DISTANCE, -DISTANCE));
     planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
     planeMesh->getMaterial()->setCastsShadow(false);
@@ -219,9 +224,9 @@ void SampleApplication::createRoom()
 
 
     // left //
-    plane = this->sceneManager->createPlaneEntity(20);
+    plane = this->sceneManager->createPlaneEntity(SIZE);
     transform = plane->getTransform();
-    transform->setPosition(glm::vec3(-10, 0, 0));
+    transform->setPosition(glm::vec3(-DISTANCE, DISTANCE, 0));
     transform->setRotation(glm::vec3(0, 1, 0), -90);
     planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
@@ -234,9 +239,9 @@ void SampleApplication::createRoom()
 
 
     // right //
-    plane = this->sceneManager->createPlaneEntity(20);
+    plane = this->sceneManager->createPlaneEntity(SIZE);
     transform = plane->getTransform();
-    transform->setPosition(glm::vec3(10, 0, 0));
+    transform->setPosition(glm::vec3(DISTANCE, DISTANCE, 0));
     transform->setRotation(glm::vec3(0, 1, 0), 90);
     planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
@@ -249,9 +254,9 @@ void SampleApplication::createRoom()
 
 
     // front //
-    plane = this->sceneManager->createPlaneEntity(20);
+    plane = this->sceneManager->createPlaneEntity(SIZE);
     transform = plane->getTransform();
-    transform->setPosition(glm::vec3(0, 0, 10));
+    transform->setPosition(glm::vec3(0, DISTANCE, DISTANCE));
     transform->setRotation(glm::vec3(1, 0, 0), -180);
     planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
@@ -264,9 +269,9 @@ void SampleApplication::createRoom()
 
 
     // top //
-    plane = this->sceneManager->createPlaneEntity(20);
+    plane = this->sceneManager->createPlaneEntity(SIZE);
     transform = plane->getTransform();
-    transform->setPosition(glm::vec3(0, 10, 0));
+    transform->setPosition(glm::vec3(0, DISTANCE, 0));
     transform->setRotation(glm::vec3(1, 0, 0), -90);
     planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");

@@ -9,7 +9,8 @@
 
 namespace sre
 {
-
+	// ### USAR ESSE
+	// https://developer.nvidia.com/gpugems/gpugems/part-iv-image-processing/chapter-23-depth-field-survey-techniques
 DOFRendererComponent::DOFRendererComponent(PostProcessingComponent* component)
 {
 	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
@@ -58,8 +59,8 @@ void DOFRendererComponent::onPostRender()
 	this->shaderManager->enableShader(this->shader);
 	this->shaderManager->setInt(this->shader, ShaderVariables::SCREEN_TEXTURE, 0);
 	this->shaderManager->setInt(this->shader, "depthMap", 1);
-	this->shaderManager->setFloat(this->shader, "focusNear", 0.0f);
-	this->shaderManager->setFloat(this->shader, "focusFar", 0.2f);
+	this->shaderManager->setFloat(this->shader, "focusNear", 10.0f);
+	this->shaderManager->setFloat(this->shader, "focusFar", 15.0f);
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();

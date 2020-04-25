@@ -257,8 +257,7 @@ void OpenGLAPI::disablePostProcessingSettings()
 
 void OpenGLAPI::clearColorBuffer()
 {
-	glDisable(GL_DEPTH_TEST);
-	// ### glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void OpenGLAPI::clearDepthBuffer()

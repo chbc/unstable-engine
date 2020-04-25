@@ -3,7 +3,7 @@
 vec4 HDR_getColor(vec4 inputColor)
 {
 	const float gamma = 2.2;
-	const float exposure = 0.5; // ###
+	const float exposure = 0.1; // ###
 	
 	vec3 result = inputColor.rgb;
 	

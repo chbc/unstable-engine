@@ -22,7 +22,7 @@ private:
 	uint32_t blurTextureIds[2];
 
 	uint32_t initialPassFBO;
-	uint32_t brightnessFBOs[2];
+	uint32_t blurFBOs[2];
 
 	uint32_t blurInteractionsCount = 10;
 

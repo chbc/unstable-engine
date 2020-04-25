@@ -10,12 +10,13 @@
 namespace sre
 {
 
-PostProcessingRenderer::PostProcessingRenderer() { }
+PostProcessingRenderer::PostProcessingRenderer()
+	: useBrightnessSegmentation(false), includeDepth(false)
+{ }
 
 void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* postProcessingComponent)
 {
-	DOFRendererComponent* rendererComponent = new DOFRendererComponent{ postProcessingComponent };
-	this->component = UPTR<APostProcessingRendererComponent>{ rendererComponent };
+	APostProcessingRendererComponent* rendererComponent = nullptr;
 
 	this->useBrightnessSegmentation = false;
 
@@ -24,13 +25,17 @@ void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* postProcessi
 		switch (item->getType())
 		{
 			case PPE::BLOOM:
+				rendererComponent = new BloomRendererComponent{ postProcessingComponent };
 				this->useBrightnessSegmentation = true;
 				break;
 			case PPE::DOF:
+				rendererComponent = new DOFRendererComponent{ postProcessingComponent };
 				this->includeDepth = true;
 				break;
 		}
 	}
+
+	this->component = UPTR<APostProcessingRendererComponent>{ rendererComponent };
 }
 
 void PostProcessingRenderer::onPreRender()

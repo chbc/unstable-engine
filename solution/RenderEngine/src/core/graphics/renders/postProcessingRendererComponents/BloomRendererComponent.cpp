@@ -50,8 +50,8 @@ BloomRendererComponent::BloomRendererComponent(PostProcessingComponent* componen
 	std::vector<uint32_t> textureIds = { this->initialPassTextureId, this->brightnessTextureId };
 
 	this->initialPassFBO = this->graphicsWrapper->generateColorFrameBuffer(textureIds, width, height);
-	this->brightnessFBOs[0] = this->graphicsWrapper->generateColorFrameBuffer(std::vector<uint32_t>{ this->blurTextureIds[0] }, width, height);
-	this->brightnessFBOs[1] = this->graphicsWrapper->generateColorFrameBuffer(std::vector<uint32_t>{ this->blurTextureIds[1] }, width, height);
+	this->blurFBOs[0] = this->graphicsWrapper->generateColorFrameBuffer(std::vector<uint32_t>{ this->blurTextureIds[0] }, width, height);
+	this->blurFBOs[1] = this->graphicsWrapper->generateColorFrameBuffer(std::vector<uint32_t>{ this->blurTextureIds[1] }, width, height);
 }
 
 void BloomRendererComponent::onPreRender()
@@ -71,7 +71,7 @@ void BloomRendererComponent::onPostRender()
 
 	for (uint32_t i = 0; i < this->blurInteractionsCount; i++)
 	{
-		this->graphicsWrapper->bindFrameBuffer(this->brightnessFBOs[horizontal]);
+		this->graphicsWrapper->bindFrameBuffer(this->blurFBOs[horizontal]);
 		this->shaderManager->setInt(this->blurShader, "horizontal", horizontal);
 		uint32_t textureId = firstIteration ? this->brightnessTextureId : this->blurTextureIds[!horizontal];
 		

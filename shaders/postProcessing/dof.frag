@@ -5,10 +5,12 @@ uniform sampler2D depthMap;
 uniform float focusNear;
 uniform float focusFar;
 
+const float FAR_PLANE_DISTANCE = 100.0;
+
 vec4 DOF_getBlurriedColor(vec4 inputColor)
 {
-	const float xOffset = 1.0/512.0;
-	const float yOffset = 1.0/364.0;
+	const float xOffset = 1.0 / (1024.0/4.0);
+	const float yOffset = 1.0 / (728.0/4.0);
 
     vec2 offsets[9] = vec2[]
 	(
@@ -35,12 +37,14 @@ vec4 DOF_getBlurriedColor(vec4 inputColor)
 
 vec4 DOF_getColor(vec4 inputColor)
 {
-
 	vec4 result = inputColor;
-	
+
+	float normalizedFocusNear = focusNear/FAR_PLANE_DISTANCE;
+	float normalizedFocusFar = focusFar/FAR_PLANE_DISTANCE;
 	float depthDistance = texture(depthMap, var_textureCoords).r;
-	if ((depthDistance < focusNear) || (depthDistance > focusFar))
+
+	if ((depthDistance < normalizedFocusNear) || (normalizedFocusFar < depthDistance))
 		result = DOF_getBlurriedColor(inputColor);
-	
+
 	return result;
 }
