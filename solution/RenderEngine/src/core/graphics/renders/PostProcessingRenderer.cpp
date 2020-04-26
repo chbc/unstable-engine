@@ -24,6 +24,16 @@ void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* postProcessi
 	{
 		switch (item->getType())
 		{
+			case PPE::GRAYSCALE:
+			case PPE::INVERSE:
+			case PPE::BLUR:
+				rendererComponent = new SinglePassRendererComponent{ postProcessingComponent };
+				break;
+			
+			case PPE::HDR:
+				rendererComponent = new HDRRendererComponent{ postProcessingComponent };
+				break;
+			
 			case PPE::BLOOM:
 				rendererComponent = new BloomRendererComponent{ postProcessingComponent };
 				this->useBrightnessSegmentation = true;

@@ -11,8 +11,11 @@ SampleApplication::SampleApplication() : RenderEngine()
 void SampleApplication::onInit()
 {
 	CameraComponent* camera = this->sceneManager->getMainCamera();
+
+	/* XXX
 	PostProcessingComponent* postProcessingComponent = camera->getEntity()->addComponent<PostProcessingComponent>();
-	postProcessingComponent->enqueueEffect(PPE::DOF);
+	postProcessingComponent->enqueueEffect(PPE::GRAYSCALE);
+	*/
 
 	// set EventReceiver class for input handling
 	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));

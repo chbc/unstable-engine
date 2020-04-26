@@ -134,6 +134,8 @@ void OpenGLAPI::enablePostProcessingSettings()
 	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), ABaseVertexData::getUVOffset());
 	glEnableVertexAttribArray(EAttribLocation::POSITION);
 	glVertexAttribPointer(EAttribLocation::POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), GUIVertexData::getPositionOffset());
+
+	glDisable(GL_DEPTH_TEST);
 }
 
 void OpenGLAPI::enableVertexPositions()

@@ -42,23 +42,6 @@ void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingCompo
 		effectContent.clear();
 		switch (item->type)
 		{
-			case PPE::BLOOM:
-				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_PARTIAL_BLUR_F, effectContent);
-				mainFragmentContentHeader += effectContent;
-				this->includeCallCode(mainFragmentContentImpl, "PartialBlur");
-				break;
-			case PPE::HDR:
-				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_HDR_F, effectContent);
-				mainFragmentContentHeader += effectContent;
-				this->includeCallCode(mainFragmentContentImpl, "HDR");
-				break;
-            case PPE::DOF:
-                FileUtils::loadFile(ShaderFiles::POST_PROCESSING_DOF_F, effectContent);
-                mainFragmentContentHeader += effectContent;
-                this->includeCallCode(mainFragmentContentImpl, "DOF");
-                break;
-/*
-			case PPE::DEPTH_OF_FIELD: break;
 			case PPE::GRAYSCALE:
 				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_GRAYSCALE_F, effectContent);
 				mainFragmentContentHeader += effectContent;
@@ -70,7 +53,31 @@ void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingCompo
 				mainFragmentContentHeader += effectContent;
 				this->includeCallCode(mainFragmentContentImpl, "Inverse");
 				break;
-*/
+
+            case PPE::BLUR:
+                FileUtils::loadFile(ShaderFiles::POST_PROCESSING_BLUR_F, effectContent);
+                mainFragmentContentHeader += effectContent;
+                this->includeCallCode(mainFragmentContentImpl, "Blur");
+                break;
+			
+			case PPE::BLOOM:
+				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_PARTIAL_BLUR_F, effectContent);
+				mainFragmentContentHeader += effectContent;
+				this->includeCallCode(mainFragmentContentImpl, "PartialBlur");
+				break;
+			
+			case PPE::HDR:
+				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_HDR_F, effectContent);
+				mainFragmentContentHeader += effectContent;
+				this->includeCallCode(mainFragmentContentImpl, "HDR");
+				break;
+			
+            case PPE::DOF:
+                FileUtils::loadFile(ShaderFiles::POST_PROCESSING_DOF_F, effectContent);
+                mainFragmentContentHeader += effectContent;
+                this->includeCallCode(mainFragmentContentImpl, "DOF");
+                break;
+
 			default: break;
 		}
 

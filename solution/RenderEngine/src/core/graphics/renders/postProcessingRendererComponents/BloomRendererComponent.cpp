@@ -64,8 +64,6 @@ void BloomRendererComponent::onPostRender()
 	// BLUR
 	bool firstIteration = true;
 	uint32_t horizontal = 1;
-	this->graphicsWrapper->bindFrameBuffer(0);
-	this->graphicsWrapper->clearColorBuffer();
 	this->shaderManager->enableShader(this->blurShader);
 	this->shaderManager->setInt(this->blurShader, ShaderVariables::SCREEN_TEXTURE, 0);
 
