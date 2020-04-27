@@ -103,27 +103,27 @@ void SampleApplication::createLights()
 	DirectionalLightComponent* dLight1 = this->sceneManager->addDirectionalLight();
 	dLight1->setDirection(glm::vec3(-1.0f, -0.25f, 0.0f));
 	dLight1->setColor(glm::vec3(1.0f));
-	*/
 
 	DirectionalLightComponent* dLight2 = this->sceneManager->addDirectionalLight();
 	dLight2->setDirection(glm::vec3(0.0f, -0.5f, -1.0f));
 	dLight2->setColor(glm::vec3(0.3f));
+	*/
 
 	// nanosuit
-	PointLightComponent * pLight1 = this->sceneManager->addPointLight();
-	pLight1->getTransform()->setPosition(glm::vec3(3.0f, 2.0f, 3.0f));
-	pLight1->setColor(glm::vec3(0.5f));
+	PointLightComponent* pLight1 = this->sceneManager->addPointLight();
+	pLight1->getTransform()->setPosition(glm::vec3(5.0f, 4.0f, -18.0f));
+	pLight1->setColor(glm::vec3(0.75f));
 
 	Entity * lightCube = this->sceneManager->createCubeEntity();
 	lightCube->getTransform()->setPosition(pLight1->getPosition());
-	lightCube->getTransform()->setScale(glm::vec3(0.2f));
+	lightCube->getTransform()->setScale(glm::vec3(0.5f));
 	MeshComponent* cubeMesh = lightCube->getComponent<MeshComponent>();
 	cubeMesh->getMaterial()->setCastsShadow(false);
 	cubeMesh->getMaterial()->setReceivesLight(false);
 	this->sceneManager->addEntity(lightCube);
 
-	PointLightComponent * pLight2 = this->sceneManager->addPointLight();
-	pLight2->getTransform()->setPosition(glm::vec3(-3.0f, 3.0f, 5.0f));
+	PointLightComponent* pLight2 = this->sceneManager->addPointLight();
+	pLight2->getTransform()->setPosition(glm::vec3(-5.0f, 3.0f, 5.0f));
 	pLight2->setColor(glm::vec3(0.3f));
 
 	lightCube = this->sceneManager->createCubeEntity();
@@ -196,8 +196,10 @@ void SampleApplication::createRoom()
 	TransformComponent* transform;
 	MeshComponent* planeMesh;
 
+	const float TILE = 5.0f;
+	
     // bottom //
-    plane = this->sceneManager->createPlaneEntity(40);
+    plane = this->sceneManager->createPlaneEntity(40, TILE);
     transform = plane->getTransform();
     transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
     planeMesh = plane->getComponent<MeshComponent>();
@@ -213,7 +215,7 @@ void SampleApplication::createRoom()
 	float SIZE = 40;
 
     // back //
-    plane = this->sceneManager->createPlaneEntity(SIZE);
+    plane = this->sceneManager->createPlaneEntity(SIZE, TILE);
 	transform = plane->getTransform();
     transform->setPosition(glm::vec3(0, DISTANCE, -DISTANCE));
     planeMesh = plane->getComponent<MeshComponent>();
@@ -227,7 +229,7 @@ void SampleApplication::createRoom()
 
 
     // left //
-    plane = this->sceneManager->createPlaneEntity(SIZE);
+    plane = this->sceneManager->createPlaneEntity(SIZE, TILE);
     transform = plane->getTransform();
     transform->setPosition(glm::vec3(-DISTANCE, DISTANCE, 0));
     transform->setRotation(glm::vec3(0, 1, 0), -90);
@@ -242,7 +244,7 @@ void SampleApplication::createRoom()
 
 
     // right //
-    plane = this->sceneManager->createPlaneEntity(SIZE);
+    plane = this->sceneManager->createPlaneEntity(SIZE, TILE);
     transform = plane->getTransform();
     transform->setPosition(glm::vec3(DISTANCE, DISTANCE, 0));
     transform->setRotation(glm::vec3(0, 1, 0), 90);
@@ -257,7 +259,7 @@ void SampleApplication::createRoom()
 
 
     // front //
-    plane = this->sceneManager->createPlaneEntity(SIZE);
+    plane = this->sceneManager->createPlaneEntity(SIZE, TILE);
     transform = plane->getTransform();
     transform->setPosition(glm::vec3(0, DISTANCE, DISTANCE));
     transform->setRotation(glm::vec3(1, 0, 0), -180);
@@ -272,7 +274,7 @@ void SampleApplication::createRoom()
 
 
     // top //
-    plane = this->sceneManager->createPlaneEntity(SIZE);
+    plane = this->sceneManager->createPlaneEntity(SIZE, TILE);
     transform = plane->getTransform();
     transform->setPosition(glm::vec3(0, DISTANCE, 0));
     transform->setRotation(glm::vec3(1, 0, 0), -90);

@@ -18,9 +18,9 @@ SceneManager::SceneManager() : AEntityManager()
     SingletonsManager::getInstance()->resolve<RenderManager>()->setMainCamera(cameraComponent);
 }
 
-Entity *SceneManager::createPlaneEntity(float size)
+Entity *SceneManager::createPlaneEntity(float size, float tileMultiplier)
 {
-	return this->createMeshEntity(PrimitiveMeshFactory().createPlane(size));
+	return this->createMeshEntity(PrimitiveMeshFactory().createPlane(size, tileMultiplier));
 }
 
 Entity *SceneManager::createCubeEntity(float size)

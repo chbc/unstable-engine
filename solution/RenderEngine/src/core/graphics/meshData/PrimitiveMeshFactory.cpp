@@ -119,7 +119,7 @@ GUIMeshData* PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size, const fl
 	return new GUIMeshData{vertexData, indices};
 }
 
-MeshData* PrimitiveMeshFactory::createPlane(float size)
+MeshData* PrimitiveMeshFactory::createPlane(float size, float tileMultiplier)
 {
 	float half = size * 0.5f;
 
@@ -149,14 +149,14 @@ MeshData* PrimitiveMeshFactory::createPlane(float size)
 
 		vertexData.emplace_back(newData);
 	}
-
+	
 	// UVs
 	float planeTexCoords[] = 
 	{ 
-		1, 0,
+		tileMultiplier, 0,
 		0, 0,
-		0, 1,
-		1, 1 
+		0, tileMultiplier,
+		tileMultiplier, tileMultiplier
 	};
 	getPlaneUVs(vertexData, planeTexCoords);
 

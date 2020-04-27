@@ -17,7 +17,7 @@ public:
 	GUIMeshData* createPlaneTopDown(const glm::vec2& size, const Rect& uv);
 	GUIMeshData* createPlaneBottomUp(const glm::vec2& size);
 	GUIMeshData* createPlane2D(const glm::vec2 &size, const float* texCoords);
-	MeshData* createPlane(float size);
+	MeshData* createPlane(float size, float tileMultiplier);
 	MeshData* createCube(float size);
 	void createPlaneIndices(std::vector<uint32_t> &result, int planesCount = 1);
 
