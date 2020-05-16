@@ -69,6 +69,7 @@ protected:
     virtual int getUniformLocation(uint32_t program, const std::string &varName) = 0;
     virtual void setInt(uint32_t program, int location, int value) =0;
     virtual void setFloat(uint32_t program, int location, float value) =0;
+    virtual void setVec2(uint32_t program, int location, const float* value) = 0;
     virtual void setVec3(uint32_t program, int location, const float *value) =0;
     virtual void setVec4(uint32_t program, int location, const float *value) =0;
     virtual void setMat4(uint32_t program, int location, const float *value) =0;
@@ -99,6 +100,7 @@ friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;
 friend class SpecularRendererComponent;
 friend class AORendererComponent;
+friend class OutlineRendererComponent;
 friend class ShadowRendererShaderSetup;
 
 friend class LitRendererLightsState;
@@ -107,6 +109,7 @@ friend class BloomRendererComponent;
 friend class SinglePassRendererComponent;
 friend class HDRRendererComponent;
 friend class DOFRendererComponent;
+friend class OutlineRendererPPComponent;
 };
 
 } // namespace

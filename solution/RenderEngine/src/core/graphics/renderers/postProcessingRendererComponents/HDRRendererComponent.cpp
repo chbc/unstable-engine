@@ -10,7 +10,7 @@
 
 namespace sre
 {
-
+	
 HDRRendererComponent::HDRRendererComponent(PostProcessingComponent* component)
 {
 	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
@@ -19,6 +19,8 @@ HDRRendererComponent::HDRRendererComponent(PostProcessingComponent* component)
 
 	this->shader = this->shaderManager->loadPostProcessingShader(component);
 	this->shaderManager->setupUniformLocation(shader, ShaderVariables::SCREEN_TEXTURE);
+	this->shaderManager->setupUniformLocation(this->shader, "exposure");
+	this->shaderManager->setupUniformLocation(this->shader, "enabled");
 
 	MultimediaManager* multimediaManager = singletonsManager->get<MultimediaManager>();
 	uint32_t width = static_cast<uint32_t>(multimediaManager->getScreenWidth());
@@ -40,6 +42,10 @@ HDRRendererComponent::HDRRendererComponent(PostProcessingComponent* component)
 	this->fbo = this->graphicsWrapper->generateColorFrameBuffer(
 		std::vector<uint32_t>{this->textureId}, width, height
 	);
+
+	this->effect = component->getEffect(PPE::HDR);
+	this->effect->setValue("exposure", 0.5f);
+	this->effect->setValue("enabled", 0.0f);
 }
 
 void HDRRendererComponent::onPreRender()
@@ -53,6 +59,8 @@ void HDRRendererComponent::onPostRender()
 	this->graphicsWrapper->clearColorBuffer();
 	this->shaderManager->enableShader(this->shader);
 	this->shaderManager->setInt(this->shader, ShaderVariables::SCREEN_TEXTURE, EMaterialMap::GUI);
+	this->shaderManager->setFloat(this->shader, "exposure", this->effect->getValue("exposure"));
+	this->shaderManager->setFloat(this->shader, "enabled", this->effect->getValue("enabled"));
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();

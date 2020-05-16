@@ -4,6 +4,7 @@
 #include "SinglePassRendererComponent.h"
 #include "HDRRendererComponent.h"
 #include "DOFRendererComponent.h"
+#include "OutlineRendererPPComponent.h"
 
 #include "PostProcessingComponent.h"
 
@@ -20,9 +21,9 @@ void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* postProcessi
 
 	this->useBrightnessSegmentation = false;
 
-	for (const UPTR<PostProcessingEffect>& item : postProcessingComponent->effects)
+	for (const auto& item : postProcessingComponent->effects)
 	{
-		switch (item->getType())
+		switch (item.first)
 		{
 			case PPE::GRAYSCALE:
 			case PPE::INVERSE:
@@ -41,6 +42,10 @@ void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* postProcessi
 			case PPE::DOF:
 				rendererComponent = new DOFRendererComponent{ postProcessingComponent };
 				this->includeDepth = true;
+				break;
+
+			case PPE::OUTLINE:
+				rendererComponent = new OutlineRendererPPComponent{ postProcessingComponent };
 				break;
 		}
 	}

@@ -21,19 +21,19 @@
     <ClCompile Include="src\core\graphics\meshData\PrimitiveMeshFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\shadersSetup\BaseRendererShaderSetup.cpp">
+    <ClCompile Include="src\core\graphics\renderers\shadersSetup\BaseRendererShaderSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\shadersSetup\LightRendererShaderSetup.cpp">
+    <ClCompile Include="src\core\graphics\renderers\shadersSetup\LightRendererShaderSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\shadersSetup\ShadowRendererShaderSetup.cpp">
+    <ClCompile Include="src\core\graphics\renderers\shadersSetup\ShadowRendererShaderSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\GUIRenderer.cpp">
+    <ClCompile Include="src\core\graphics\renderers\GUIRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\ShadowRenderer.cpp">
+    <ClCompile Include="src\core\graphics\renderers\ShadowRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\graphics\shaders\Shader.cpp">
@@ -105,9 +105,6 @@
     <ClCompile Include="src\entities\components\renderables\gui\GUITextComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\ColorMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -168,49 +165,61 @@
     <ClCompile Include="src\entities\components\cameras\PostProcessingComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\PostProcessingRenderer.cpp">
+    <ClCompile Include="src\core\graphics\renderers\PostProcessingRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\components\cameras\PostProcessingEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\litStates\LitRendererLightsState.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\litStates\LitRendererLightsState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\litStates\LitRendererNoLightsState.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\litStates\LitRendererNoLightsState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\AORendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\AORendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\ColorRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\ColorRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\DiffuseRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\DiffuseRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\LitRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\LitRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\NormalRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\NormalRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\meshRendererComponents\SpecularRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\SpecularRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\MeshRenderer.cpp">
+    <ClCompile Include="src\core\graphics\renderers\MeshRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\postProcessingRendererComponents\BloomRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\BloomRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\postProcessingRendererComponents\SinglePassRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\SinglePassRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\postProcessingRendererComponents\HDRRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\HDRRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renders\postProcessingRendererComponents\DOFRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\DOFRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\OutlineMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\OutlineRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\OutlineRendererPPComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AmbientOcclusionMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -260,10 +269,10 @@
     <ClInclude Include="engine\core\graphics\meshData\PrimitiveMeshFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\GUIRenderer.h">
+    <ClInclude Include="engine\core\graphics\renderers\GUIRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\Renderer.h">
+    <ClInclude Include="engine\core\graphics\renderers\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\core\graphics\shaders\ShaderContentFactory.h">
@@ -374,31 +383,31 @@
     <ClInclude Include="engine\entities\components\renderables\meshes\MeshComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\shadersSetup\ShadowRendererShaderSetup.h">
+    <ClInclude Include="engine\core\graphics\renderers\shadersSetup\ShadowRendererShaderSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\shadersSetup\BaseRendererShaderSetup.h">
+    <ClInclude Include="engine\core\graphics\renderers\shadersSetup\BaseRendererShaderSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\shadersSetup\LightRendererShaderSetup.h">
+    <ClInclude Include="engine\core\graphics\renderers\shadersSetup\LightRendererShaderSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\AORendererComponent.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\AORendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\ColorRendererComponent.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\ColorRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\DiffuseRendererComponent.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\DiffuseRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\NormalRendererComponent.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\NormalRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\SpecularRendererComponent.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\SpecularRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\ShadowRenderer.h">
+    <ClInclude Include="engine\core\graphics\renderers\ShadowRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\core\graphics\shaders\ShaderLightData.h">
@@ -410,13 +419,13 @@
     <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\LitMaterialComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\LitRendererComponent.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\LitRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\litStates\LitRendererLightsState.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\litStates\LitRendererLightsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\litStates\LitRendererNoLightsState.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\litStates\LitRendererNoLightsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

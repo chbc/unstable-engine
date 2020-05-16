@@ -16,7 +16,7 @@ MultimediaManager::MultimediaManager()
 void MultimediaManager::init()
 {
 	this->multimediaWrapper = UPTR<AMultimediaWrapper>{ new SDLAPI{} };
-	this->multimediaWrapper->init(this->screenWidth, this->screenHeight, "SudaRA Render Engine");
+	this->multimediaWrapper->init(this->screenWidth, this->screenHeight, "Aquiris Talks 2");
 	this->timer = UPTR<Timer>{ new Timer{this->multimediaWrapper.get()} };
 }
 

@@ -1,3 +1,4 @@
+
 #include <windows.h>
 
 #define GLEW_STATIC
@@ -462,6 +463,11 @@ void OpenGLAPI::setInt(uint32_t program, int location, int value)
 void OpenGLAPI::setFloat(uint32_t program, int location, float value)
 {
 	glUniform1f(location, value);
+}
+
+void OpenGLAPI::setVec2(uint32_t program, int location, const float* value)
+{
+	glUniform2fv(location, 1, value);
 }
 
 void OpenGLAPI::setVec3(uint32_t program, int location, const float* value)

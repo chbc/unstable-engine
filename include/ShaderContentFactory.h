@@ -43,6 +43,8 @@ private:
     void loadAOMapContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
     void loadAOMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 
+    void loadSecondTargetColorContentImplementation(std::string& outFragmentContent);
+
     void loadLightsContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
     void loadLightsContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 

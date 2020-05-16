@@ -71,6 +71,7 @@ protected:
     int getUniformLocation(uint32_t program, const std::string &varName) override;
     void setInt(uint32_t program, int location, int value) override;
     void setFloat(uint32_t program, int location, float value) override;
+    void setVec2(uint32_t program, int location, const float* value) override;
     void setVec3(uint32_t program, int location, const float *value) override;
     void setVec4(uint32_t program, int location, const float *value) override;
     void setMat4(uint32_t program, int location, const float *value) override;

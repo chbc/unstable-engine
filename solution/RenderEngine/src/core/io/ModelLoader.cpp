@@ -97,11 +97,13 @@ void ModelLoader::processMaterials(aiMesh *inputMesh, const aiScene *scene, Mesh
 			entityMesh->addMaterialComponent<DiffuseMaterialComponent>(this->directory + fileName.C_Str());
 		}
 
+		/*
 		if (material->GetTextureCount(aiTextureType_NORMALS) > 0)
 		{
 			material->GetTexture(aiTextureType_NORMALS, 0, &fileName);
 			entityMesh->addMaterialComponent<NormalMaterialComponent>(this->directory + fileName.C_Str());
 		}
+		*/
 
 		if (material->GetTextureCount(aiTextureType_SPECULAR) > 0)
 		{

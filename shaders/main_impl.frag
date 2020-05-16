@@ -26,4 +26,6 @@ void main(void)
 	// [BLOOM] Bloom_computeBloom(out_color);
 	
 	// [DEPTH] Depth_computeDepth();
+
+    // [SECOND_TARGET_COLOR] SecondTarget_computeColor();
 }

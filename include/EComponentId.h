@@ -24,6 +24,7 @@ enum Type : std::size_t
     NORMAL_MATERIAL,
     SPECULAR_MATERIAL,
     AO_MATERIAL,
+    SECOND_TARGET_COLOR_MATERIAL,
 
     GUI_IMAGE,
     GUI_TEXT,

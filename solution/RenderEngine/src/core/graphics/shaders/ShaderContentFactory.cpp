@@ -37,10 +37,10 @@ void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingCompo
 
 	std::string effectContent;
 
-	for (const UPTR<PostProcessingEffect>& item : component->effects)
+	for (const auto& item : component->effects)
 	{
 		effectContent.clear();
-		switch (item->type)
+		switch (item.first)
 		{
 			case PPE::GRAYSCALE:
 				FileUtils::loadFile(ShaderFiles::POST_PROCESSING_GRAYSCALE_F, effectContent);
@@ -78,9 +78,14 @@ void ShaderContentFactory::createPostProcessingShaderContent(PostProcessingCompo
                 this->includeCallCode(mainFragmentContentImpl, "DOF");
                 break;
 
+            case PPE::OUTLINE:
+                FileUtils::loadFile(ShaderFiles::POST_PROCESSING_OUTLINE_F, effectContent);
+                mainFragmentContentHeader += effectContent;
+                this->includeCallCode(mainFragmentContentImpl, "Outline");
+                break;
+
 			default: break;
 		}
-
 	}
 
 	outFragmentContent = "#version 400\n" + mainFragmentContentHeader + mainFragmentContentImpl;
@@ -272,6 +277,15 @@ void ShaderContentFactory::loadAOMapContentImplementation(std::string &outVertex
 
     outFragmentContent = aoFragment + outFragmentContent;
     this->uncommentCode(outFragmentContent, "// [AO] ");
+}
+
+void ShaderContentFactory::loadSecondTargetColorContentImplementation(std::string& outFragmentContent)
+{
+    std::string content;
+    FileUtils::loadFile(ShaderFiles::SECOND_TARGET_COLOR_F, content);
+
+    outFragmentContent = content + outFragmentContent;
+    this->uncommentCode(outFragmentContent, "// [SECOND_TARGET_COLOR]");
 }
 
 void ShaderContentFactory::loadLightsContentHeader(std::string &outVertexContent, std::string &outFragmentContent)

@@ -19,6 +19,8 @@ BloomRendererComponent::BloomRendererComponent(PostProcessingComponent* componen
 
 	this->blurShader = this->shaderManager->loadPostProcessingShader(component);
 	this->shaderManager->setupUniformLocation(this->blurShader, ShaderVariables::SCREEN_TEXTURE);
+	this->shaderManager->setupUniformLocation(this->blurShader, "horizontal");
+	this->shaderManager->setupUniformLocation(this->blurShader, "textureSize");
 	this->combineShader = this->shaderManager->loadFinalPassPostProcessingShader(component);
 
 	MultimediaManager* multimediaManager = singletonsManager->get<MultimediaManager>();
@@ -67,10 +69,14 @@ void BloomRendererComponent::onPostRender()
 	this->shaderManager->enableShader(this->blurShader);
 	this->shaderManager->setInt(this->blurShader, ShaderVariables::SCREEN_TEXTURE, 0);
 
+	// ###
+	float textureSize[2] = { 1024 * 0.25f, 728 * 0.25f};
+	
 	for (uint32_t i = 0; i < this->blurInteractionsCount; i++)
 	{
 		this->graphicsWrapper->bindFrameBuffer(this->blurFBOs[horizontal]);
 		this->shaderManager->setInt(this->blurShader, "horizontal", horizontal);
+		this->shaderManager->setVec2(this->blurShader, "textureSize", textureSize);
 		uint32_t textureId = firstIteration ? this->brightnessTextureId : this->blurTextureIds[!horizontal];
 		
 		this->graphicsWrapper->activateGUITexture(textureId);
@@ -82,6 +88,17 @@ void BloomRendererComponent::onPostRender()
 		horizontal = !horizontal;
 		if (firstIteration)
 			firstIteration = false;
+
+		if (i == 6)
+		{
+			textureSize[0] = 1024 * 0.5f;
+			textureSize[1] = 728 * 0.5f;
+		}
+		else if (i == 8)
+		{
+			textureSize[0] = 1024;
+			textureSize[1] = 728;
+		}
 	}
 
 	// COMBINE

@@ -22,6 +22,7 @@ namespace sre
 		template <> std::size_t SRE_API getComponentId<class NormalMaterialComponent>() { return EComponentId::NORMAL_MATERIAL; }
 		template <> std::size_t SRE_API getComponentId<class SpecularMaterialComponent>() { return EComponentId::SPECULAR_MATERIAL; }
 		template <> std::size_t SRE_API getComponentId<class AmbientOcclusionMaterialComponent>() { return EComponentId::AO_MATERIAL; }
+		template <> std::size_t SRE_API getComponentId<class OutlineMaterialComponent>() { return EComponentId::SECOND_TARGET_COLOR_MATERIAL; }
 
 		// GUI components
 		template <> std::size_t SRE_API getComponentId<class GUIImageComponent>() { return EComponentId::GUI_IMAGE; }
@@ -34,6 +35,7 @@ namespace sre
 		template <> std::size_t SRE_API getComponentId<class NormalRendererComponent>() { return EComponentId::NORMAL_MATERIAL; }
 		template <> std::size_t SRE_API getComponentId<class SpecularRendererComponent>() { return EComponentId::SPECULAR_MATERIAL; }
 		template <> std::size_t SRE_API getComponentId<class AORendererComponent>() { return EComponentId::AO_MATERIAL; }
+		template <> std::size_t SRE_API getComponentId<class OutlineRendererComponent>() { return EComponentId::SECOND_TARGET_COLOR_MATERIAL; }
 
 	//} // namespace id
 

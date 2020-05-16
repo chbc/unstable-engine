@@ -14,9 +14,9 @@ vec4 Blur_getColor(vec4 inputColor)
 
 	float kernel[9] = float[]
 	(
-		1.0/16,	2.0/16, 1.0/16,
-		2.0/16,	4.0/16, 2.0/16,
-		1.0/16,	2.0/16, 1.0/16  
+		1.0,	2.0, 1.0,
+		2.0,	4.0, 2.0,
+		1.0,	2.0, 1.0  
 	);
     
     vec4 result = vec4(0.0);
@@ -24,6 +24,8 @@ vec4 Blur_getColor(vec4 inputColor)
     {
          result += texture(screenTexture, var_textureCoords.st + offsets[i]) * kernel[i];
     }
+	
+	result = result / 16.0;
 
 	return result;
 }

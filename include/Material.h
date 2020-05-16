@@ -10,6 +10,7 @@
 #include "NormalMaterialComponent.h"
 #include "SpecularMaterialComponent.h"
 #include "AmbientOcclusionMaterialComponent.h"
+#include "OutlineMaterialComponent.h"
 
 /* ###
 - passar flags pelo construtor

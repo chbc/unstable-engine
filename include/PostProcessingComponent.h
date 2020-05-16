@@ -3,7 +3,7 @@
 
 #include "AEntityComponent.h"
 #include "PostProcessingEffect.h"
-#include <vector>
+#include <unordered_map>
 
 namespace sre
 {
@@ -11,13 +11,14 @@ namespace sre
 class PostProcessingComponent : public AEntityComponent
 {
 private:
-	VECTOR_UPTR<PostProcessingEffect> effects;
+	std::unordered_map<PPE::Type, UPTR<PostProcessingEffect>> effects;
 
 private:
 	SRE_API PostProcessingComponent(Entity* entity);
 
 public:
 	SRE_API PostProcessingEffect* enqueueEffect(PPE::Type effectType);
+	SRE_API PostProcessingEffect* getEffect(PPE::Type effectType);
 
 friend class Entity;
 friend class ShaderContentFactory;

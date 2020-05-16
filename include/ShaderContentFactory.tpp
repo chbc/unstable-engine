@@ -19,7 +19,7 @@ void ShaderContentFactory::createShaderContent
     std::string vertexContentImpl;
     std::string fragmentContentImpl;
 
-    for (std::size_t i = EComponentId::COLOR_MATERIAL; i <= EComponentId::AO_MATERIAL; i++)
+    for (std::size_t i = EComponentId::COLOR_MATERIAL; i <= EComponentId::SECOND_TARGET_COLOR_MATERIAL; i++)
     {
         if (componentsBitset[i])
         {
@@ -54,6 +54,9 @@ void ShaderContentFactory::createShaderContent
                 case EComponentId::AO_MATERIAL:
                     this->loadAOMapContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadAOMapContentImplementation(vertexContentImpl, fragmentContentImpl);
+                    break;
+                case EComponentId::SECOND_TARGET_COLOR_MATERIAL:
+                    this->loadSecondTargetColorContentImplementation(fragmentContentImpl);
                     break;
                 default: break;
             }

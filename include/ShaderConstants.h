@@ -59,6 +59,8 @@ namespace ShaderFiles
     const std::string AMBIENT_OCCLUSION_H_F     = "../../shaders/ambientOcclusion/ambientOcclusion_h.frag";
     const std::string AMBIENT_OCCLUSION_IMPL_F  = "../../shaders/ambientOcclusion/ambientOcclusion_impl.frag";
 
+    const std::string SECOND_TARGET_COLOR_F = "../../shaders/secondTarget/color.frag";
+
     const std::string SHADOWS_DIRECTIONAL_H_V       = "../../shaders/shadows/shadows_directional_h.vert";
     const std::string SHADOWS_DIRECTIONAL_H_F       = "../../shaders/shadows/shadows_directional_h.frag";
     const std::string SHADOWS_DIRECTIONAL_IMPL_V    = "../../shaders/shadows/shadows_directional_impl.vert";
@@ -83,6 +85,7 @@ namespace ShaderFiles
 	const std::string POST_PROCESSING_HDR_F				= "../../shaders/postProcessing/hdr.frag";
     const std::string POST_PROCESSING_DOF_F             = "../../shaders/postProcessing/dof.frag";
     const std::string POST_PROCESSING_DEPTH_F           = "../../shaders/postProcessing/depth.frag";
+    const std::string POST_PROCESSING_OUTLINE_F         = "../../shaders/postProcessing/outline.frag";
 }
 
 namespace ShaderVariables
@@ -97,6 +100,7 @@ namespace ShaderVariables
         const std::string FAR_PLANE             = "farPlane";
         const std::string LIGHT_POSITION        = "lightPosition";
         const std::string MATERIAL_COLOR        = "materialColor";
+        const std::string OUTLINE_COLOR         = "outlineColor";
         const std::string SHININESS             = "shininess";
         const std::string GUI_TEXTURE           = "guiTexture";
 		const std::string SCREEN_TEXTURE		= "screenTexture";
@@ -119,6 +123,7 @@ namespace ShaderVariables
         LIGHT_POSITION,
 
         MATERIAL_COLOR,
+        OUTLINE_COLOR,
         SHININESS,
 
         GUI_TEXTURE,
@@ -144,6 +149,7 @@ namespace ShaderVariables
         { FAR_PLANE,                    Names::FAR_PLANE                    },
         { LIGHT_POSITION,               Names::LIGHT_POSITION               },
         { MATERIAL_COLOR,               Names::MATERIAL_COLOR               },
+        { OUTLINE_COLOR,                Names::OUTLINE_COLOR                },
         { SHININESS,                    Names::SHININESS                    },
         { GUI_TEXTURE,                  Names::GUI_TEXTURE                  },
 		{ SCREEN_TEXTURE,               Names::SCREEN_TEXTURE               },

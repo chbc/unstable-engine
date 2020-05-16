@@ -131,6 +131,11 @@ void ShaderManager::setFloat(Shader *shader, const char *variable, float value)
     this->graphicsWrapper->setFloat(shader->program, shader->customVariableLocations[variable], value);
 }
 
+void ShaderManager::setVec2(Shader* shader, const char* variable, const float* value)
+{
+    this->graphicsWrapper->setVec2(shader->program, shader->customVariableLocations[variable], value);
+}
+
 void ShaderManager::setVec3(Shader *shader, ShaderVariables::Type variableKey, const float *value)
 {
     this->graphicsWrapper->setVec3(shader->program, shader->variableLocations[variableKey], value);

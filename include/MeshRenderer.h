@@ -7,6 +7,7 @@
 #include "NormalRendererComponent.h"
 #include "SpecularRendererComponent.h"
 #include "AORendererComponent.h"
+#include "OutlineRendererComponent.h"
 #include <glm/vec3.hpp>
 #include <list>
 #include <unordered_map>

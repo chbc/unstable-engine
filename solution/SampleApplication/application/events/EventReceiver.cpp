@@ -3,8 +3,10 @@
 #include <glm/glm.hpp>
 
 #include <glm/gtx/rotate_vector.hpp>
+#include <HDRRendererComponent.h>
+#include <iostream>
 
-EventReceiver::EventReceiver(SampleApplication *application, CameraComponent *camera)
+EventReceiver::EventReceiver(SampleApplication *application, CameraComponent *camera, PostProcessingEffect* effect)
 {
 	this->application = application;
 	this->camera = camera;
@@ -14,6 +16,8 @@ EventReceiver::EventReceiver(SampleApplication *application, CameraComponent *ca
 	this->cameraDistance = glm::distance(position, glm::vec3(0, 0, 0));
 
 	this->viewingActive = false;
+	this->ppEffect = effect;
+	this->effectValue = 0.5f;
 }
 
 void EventReceiver::onQuit()
@@ -25,6 +29,32 @@ void EventReceiver::onKeyPressed(KeyboardButton key)
 {
 	if (key == KEY_ESC)
 		this->application->quit();
+
+	/*
+	else if (key == KEY_1)
+	{
+		this->effectValue -= 0.025f;
+		this->ppEffect->setValue("exposure", this->effectValue);
+		std::cout << "EXPOSURE = " << this->effectValue << std::endl;
+	}
+	else if (key == KEY_2)
+	{
+		this->effectValue += 0.025f;
+		this->ppEffect->setValue("exposure", this->effectValue);
+		std::cout << "EXPOSURE = " << this->effectValue << std::endl;
+	}
+	else if (key == KEY_0)
+	{
+		int value = this->ppEffect->getValue("enabled");
+		value = (value > 0) ? 0 : 1;
+		this->ppEffect->setValue("enabled", value);
+
+		if (value > 0)
+			std::cout << "HDR ON";
+		else
+			std::cout << "HDR OFF";
+	}
+	*/
 }
 
 void EventReceiver::onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position)

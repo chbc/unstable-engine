@@ -12,13 +12,11 @@ void SampleApplication::onInit()
 {
 	CameraComponent* camera = this->sceneManager->getMainCamera();
 
-	/* XXX
 	PostProcessingComponent* postProcessingComponent = camera->getEntity()->addComponent<PostProcessingComponent>();
-	postProcessingComponent->enqueueEffect(PPE::GRAYSCALE);
-	*/
+	PostProcessingEffect* effect = postProcessingComponent->enqueueEffect(PPE::OUTLINE);
 
 	// set EventReceiver class for input handling
-	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
+	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera(), effect));
 
 	this->createLights();
 
@@ -30,8 +28,18 @@ void SampleApplication::onInit()
 	cube = this->createCube();
     cube->getTransform()->setPosition(glm::vec3(-5.0f, 1.0f, -12.0f));
 
-	cube = this->createCube();
-	cube->getTransform()->setPosition(glm::vec3(5.0f, 1.0f, -10.0f));
+
+	// OUTLINE
+	cube = this->sceneManager->createCubeEntity(2.0f);
+	// cube = this->sceneManager->createCubeEntity(4.0f);
+	MeshComponent* cubeMesh = cube->getComponent<MeshComponent>();
+	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
+	cubeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/crate_normal.png");
+	cubeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/crate_specular.png");
+	cubeMesh->addMaterialComponent<OutlineMaterialComponent>();
+	this->sceneManager->addEntity(cube, "cubo_outline");
+	cube->getTransform()->setPosition(glm::vec3(5.0f, 1.0f, -12.0f));
+	
 
 	cube = this->createCube();
     cube->getTransform()->setPosition(glm::vec3(3.0f, 1.0f, 0.0f));
@@ -110,25 +118,25 @@ void SampleApplication::createLights()
 	*/
 
 	// nanosuit
+	glm::vec3 p1Position(5.0f, 4.0f, -18.0f);
 	PointLightComponent* pLight1 = this->sceneManager->addPointLight();
-	pLight1->getTransform()->setPosition(glm::vec3(5.0f, 4.0f, -18.0f));
+	pLight1->getTransform()->setPosition(p1Position);
 	pLight1->setColor(glm::vec3(0.75f));
 
-	Entity * lightCube = this->sceneManager->createCubeEntity();
-	lightCube->getTransform()->setPosition(pLight1->getPosition());
-	lightCube->getTransform()->setScale(glm::vec3(0.5f));
+	Entity * lightCube = this->sceneManager->createCubeEntity(0.2f);
+	lightCube->getTransform()->setPosition(p1Position);
 	MeshComponent* cubeMesh = lightCube->getComponent<MeshComponent>();
 	cubeMesh->getMaterial()->setCastsShadow(false);
 	cubeMesh->getMaterial()->setReceivesLight(false);
 	this->sceneManager->addEntity(lightCube);
 
 	PointLightComponent* pLight2 = this->sceneManager->addPointLight();
-	pLight2->getTransform()->setPosition(glm::vec3(-5.0f, 3.0f, 5.0f));
-	pLight2->setColor(glm::vec3(0.3f));
+	pLight2->getTransform()->setPosition(glm::vec3(0.0f, 5.0f, 5.0f));
+	pLight2->setColor(glm::vec3(0.75f));
+	pLight2->setRange(30.f);
 
-	lightCube = this->sceneManager->createCubeEntity();
+	lightCube = this->sceneManager->createCubeEntity(0.2f);
 	lightCube->getTransform()->setPosition(pLight2->getPosition());
-	lightCube->getTransform()->setScale(glm::vec3(0.2f));
 	cubeMesh = lightCube->getComponent<MeshComponent>();
 	cubeMesh->getMaterial()->setCastsShadow(false);
 	cubeMesh->getMaterial()->setReceivesLight(false);

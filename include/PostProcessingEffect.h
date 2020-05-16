@@ -16,7 +16,8 @@ namespace PPE
 		BLUR,
 		BLOOM,
 		HDR,
-		DOF
+		DOF,
+		OUTLINE
 	};
 } // namespace PPE
 
@@ -24,16 +25,20 @@ class PostProcessingEffect
 {
 private:
 	PPE::Type type;
-	std::unordered_map<std::string, UPTR<void*>> parameters;
+	std::unordered_map<std::string, float> parameters;
 
 private:
 	PostProcessingEffect(PPE::Type effectType);
 
 public:
-	template <typename T>
-	void setValue(const std::string& parameter, T value)
+	void setValue(const std::string& parameter, float value)
 	{
 		this->parameters[parameter] = value;
+	}
+
+	float getValue(const std::string& parameter)
+	{
+		return this->parameters[parameter];
 	}
 
 	static PostProcessingEffect* create(PPE::Type effectType);

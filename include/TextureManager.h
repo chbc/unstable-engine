@@ -49,6 +49,7 @@ friend class BloomRendererComponent;
 friend class SinglePassRendererComponent;
 friend class HDRRendererComponent;
 friend class DOFRendererComponent;
+friend class OutlineRendererPPComponent;
 };
 
 } // namespace
