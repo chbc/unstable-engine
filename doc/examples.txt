@@ -7,25 +7,25 @@ Scene 1 - MaterialCombinationsExample
 	- color
 	- diffuse
 
-- entity2
-	- color
-	- diffuse
-	- normal
-
 - entity3
 	- color
 	- diffuse
 	- normal
-	- specular
 
 - entity4
 	- color
 	- diffuse
 	- normal
 	- specular
-	- ambient occlusion
 
 - entity5
+	- color
+	- diffuse
+	- normal
+	- specular
+	- ambient occlusion
+
+- entity6
 	- color
 	- diffuse
 	- normal
@@ -53,3 +53,7 @@ Scene 3 - GUIExample
 =====================
 
 Scene 4 - PostProcessingExample
+
+=====================
+
+Scene 5 - UnlitSceneExample
