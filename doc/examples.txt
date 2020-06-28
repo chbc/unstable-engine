@@ -25,14 +25,6 @@ Scene 1 - MaterialCombinationsExample
 	- specular
 	- ambient occlusion
 
-- entity6
-	- color
-	- diffuse
-	- normal
-	- specular
-	- ambient occlusion
-	- outline
-
 - point light entity
 
 ===========================

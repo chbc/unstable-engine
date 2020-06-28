@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../include;../../dependencies/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include;./;../../dependencies/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -212,6 +212,8 @@
     <ClCompile Include="src\core\multimedia\textures\atlases\FontAtlas.cpp" />
     <ClCompile Include="src\core\singletonsManager\SingletonsManager.cpp" />
     <ClCompile Include="src\core\wrappers\graphics\OpenGLESAPI.cpp" />
+    <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPI.cpp" />
+    <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPIState.cpp" />
     <ClCompile Include="src\entitiesManagers\AEntityManager.cpp" />
     <ClCompile Include="src\entities\components\AComponentsHolder.cpp" />
     <ClCompile Include="src\entities\components\AEntityComponent.cpp" />
@@ -260,6 +262,12 @@
     <ClCompile Include="src\core\wrappers\graphics\OpenGLAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\SDLAPI.cpp" />
     <ClCompile Include="src\tests\TestServicesProvider.cpp" />
+    <ClCompile Include="thirdParties\imgui\imgui.cpp" />
+    <ClCompile Include="thirdParties\imgui\imgui_demo.cpp" />
+    <ClCompile Include="thirdParties\imgui\imgui_draw.cpp" />
+    <ClCompile Include="thirdParties\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="thirdParties\imgui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="thirdParties\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\utils\FileUtils.cpp" />
     <ClCompile Include="src\utils\math\MathUtils.cpp" />
     <ClCompile Include="src\utils\math\Rect.cpp" />
@@ -333,6 +341,104 @@
     <ClInclude Include="engine\core\wrappers\multimedia\SDLAPI.h" />
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
+    <ClInclude Include="include\AComponentsHolder.h" />
+    <ClInclude Include="include\AEntityComponent.h" />
+    <ClInclude Include="include\AEntityManager.h" />
+    <ClInclude Include="include\AGraphicsWrapper.h" />
+    <ClInclude Include="include\AImGuiAPIState.h" />
+    <ClInclude Include="include\ALightComponent.h" />
+    <ClInclude Include="include\AMaterialComponent.h" />
+    <ClInclude Include="include\AmbientOcclusionMaterialComponent.h" />
+    <ClInclude Include="include\AMultimediaWrapper.h" />
+    <ClInclude Include="include\AORendererComponent.h" />
+    <ClInclude Include="include\APostProcessingRendererComponent.h" />
+    <ClInclude Include="include\ARenderableComponent.h" />
+    <ClInclude Include="include\ASingleton.h" />
+    <ClInclude Include="include\Atlas.h" />
+    <ClInclude Include="include\AtlasManager.h" />
+    <ClInclude Include="include\BaseRendererShaderSetup.h" />
+    <ClInclude Include="include\BloomRendererComponent.h" />
+    <ClInclude Include="include\button_names.h" />
+    <ClInclude Include="include\CameraComponent.h" />
+    <ClInclude Include="include\ColorMaterialComponent.h" />
+    <ClInclude Include="include\ColorRendererComponent.h" />
+    <ClInclude Include="include\core_defines.h" />
+    <ClInclude Include="include\DiffuseMaterialComponent.h" />
+    <ClInclude Include="include\DiffuseRendererComponent.h" />
+    <ClInclude Include="include\DirectionalLightComponent.h" />
+    <ClInclude Include="include\DOFRendererComponent.h" />
+    <ClInclude Include="include\EComponentId.h" />
+    <ClInclude Include="include\EMaterialMap.h" />
+    <ClInclude Include="include\Entity.h" />
+    <ClInclude Include="include\FileUtils.h" />
+    <ClInclude Include="include\FontAtlas.h" />
+    <ClInclude Include="include\GUIImageComponent.h" />
+    <ClInclude Include="include\GUIManager.h" />
+    <ClInclude Include="include\GUIRenderer.h" />
+    <ClInclude Include="include\GUITextComponent.h" />
+    <ClInclude Include="include\HDRRendererComponent.h" />
+    <ClInclude Include="include\ImGuiAPI.h" />
+    <ClInclude Include="include\ImGuiAPIEmptyState.h" />
+    <ClInclude Include="include\ImGuiAPIState.h" />
+    <ClInclude Include="include\InputHandler.h" />
+    <ClInclude Include="include\LightManager.h" />
+    <ClInclude Include="include\LightRendererShaderSetup.h" />
+    <ClInclude Include="include\LitMaterialComponent.h" />
+    <ClInclude Include="include\LitRendererComponent.h" />
+    <ClInclude Include="include\LitRendererLightsState.h" />
+    <ClInclude Include="include\LitRendererNoLightsState.h" />
+    <ClInclude Include="include\Material.h" />
+    <ClInclude Include="include\MathUtils.h" />
+    <ClInclude Include="include\MatrixManager.h" />
+    <ClInclude Include="include\memory_aliases.h" />
+    <ClInclude Include="include\MeshComponent.h" />
+    <ClInclude Include="include\MeshData.h" />
+    <ClInclude Include="include\MeshRenderer.h" />
+    <ClInclude Include="include\ModelLoader.h" />
+    <ClInclude Include="include\MultimediaManager.h" />
+    <ClInclude Include="include\NormalMaterialComponent.h" />
+    <ClInclude Include="include\NormalRendererComponent.h" />
+    <ClInclude Include="include\OpenGLAPI.h" />
+    <ClInclude Include="include\OpenGLESAPI.h" />
+    <ClInclude Include="include\OutlineMaterialComponent.h" />
+    <ClInclude Include="include\OutlineRendererComponent.h" />
+    <ClInclude Include="include\OutlineRendererPPComponent.h" />
+    <ClInclude Include="include\PointLightComponent.h" />
+    <ClInclude Include="include\PostProcessingComponent.h" />
+    <ClInclude Include="include\PostProcessingEffect.h" />
+    <ClInclude Include="include\PostProcessingRenderer.h" />
+    <ClInclude Include="include\PrimitiveMeshFactory.h" />
+    <ClInclude Include="include\Rect.h" />
+    <ClInclude Include="include\RenderEngine.h" />
+    <ClInclude Include="include\RenderManager.h" />
+    <ClInclude Include="include\SceneManager.h" />
+    <ClInclude Include="include\SDLAPI.h" />
+    <ClInclude Include="include\Shader.h" />
+    <ClInclude Include="include\ShaderConstants.h" />
+    <ClInclude Include="include\ShaderContentFactory.h" />
+    <ClInclude Include="include\ShaderLightData.h" />
+    <ClInclude Include="include\ShaderManager.h" />
+    <ClInclude Include="include\ShadowData.h" />
+    <ClInclude Include="include\ShadowRenderer.h" />
+    <ClInclude Include="include\ShadowRendererShaderSetup.h" />
+    <ClInclude Include="include\SinglePassRendererComponent.h" />
+    <ClInclude Include="include\SingletonsManager.h" />
+    <ClInclude Include="include\SpecularMaterialComponent.h" />
+    <ClInclude Include="include\SpecularRendererComponent.h" />
+    <ClInclude Include="include\StringUtils.h" />
+    <ClInclude Include="include\TestServicesProvider.h" />
+    <ClInclude Include="include\Texture.h" />
+    <ClInclude Include="include\TextureManager.h" />
+    <ClInclude Include="include\Timer.h" />
+    <ClInclude Include="include\TransformComponent.h" />
+    <ClInclude Include="thirdParties\imgui\imconfig.h" />
+    <ClInclude Include="thirdParties\imgui\imgui.h" />
+    <ClInclude Include="thirdParties\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="thirdParties\imgui\imgui_impl_sdl.h" />
+    <ClInclude Include="thirdParties\imgui\imgui_internal.h" />
+    <ClInclude Include="thirdParties\imgui\imstb_rectpack.h" />
+    <ClInclude Include="thirdParties\imgui\imstb_textedit.h" />
+    <ClInclude Include="thirdParties\imgui\imstb_truetype.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

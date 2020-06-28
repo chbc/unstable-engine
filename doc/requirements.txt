@@ -1,0 +1,15 @@
+CODE
+- review member fields name
+- updated methods to be constants
+- assert
+- change sre to unstable
+- defines (DEBUG, RELEASE, TEST, DISTRIBUTION)
+- change " *" -> "* " and " &" -> "& "
+
+THIRD PARTIES
+- change stl to STLPort
+- remove SDL
+
+FIXES
+- SRE_API warnings
+- children local transforms

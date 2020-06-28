@@ -16,7 +16,7 @@ MultimediaManager::MultimediaManager()
 void MultimediaManager::init()
 {
 	this->multimediaWrapper = UPTR<AMultimediaWrapper>{ new SDLAPI{} };
-	this->multimediaWrapper->init(this->screenWidth, this->screenHeight, "Aquiris Talks 2");
+	this->multimediaWrapper->init(this->screenWidth, this->screenHeight, "Render Engine");
 	this->timer = UPTR<Timer>{ new Timer{this->multimediaWrapper.get()} };
 }
 
@@ -83,6 +83,11 @@ void MultimediaManager::logMessage(const std::string& message)
 void MultimediaManager::logWarning(const std::string& message)
 {
 	this->multimediaWrapper->log("WARNING", message);
+}
+
+ImGuiAPI* MultimediaManager::getImGuiAPI()
+{
+	return this->multimediaWrapper->getImGuiAPI();
 }
 
 } // namespace

@@ -32,7 +32,11 @@ void RenderEngine::run()
 
         this->processInput();
         this->onUpdate(this->multimediaManager->getLastFrameTime());
-        this->render();
+    	
+        this->renderManager->render();
+        this->onGUI();
+
+    	this->multimediaManager->swapBuffers();
 
         this->removeDestroyedEntities();
         elapsedTime = this->multimediaManager->stopTimer();
@@ -66,13 +70,6 @@ void RenderEngine::removeDestroyedEntities()
     this->renderManager->removeDestroyedEntities();
     this->sceneManager->removeDestroyedEntities();
     this->guiManager->removeDestroyedEntities();
-}
-
-void RenderEngine::render()
-{
-    this->renderManager->render();
-    this->onGUI();
-    this->multimediaManager->swapBuffers();
 }
 
 void RenderEngine::setEventReceiver(InputHandler *inputHandler)

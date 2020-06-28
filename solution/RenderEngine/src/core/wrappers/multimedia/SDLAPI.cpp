@@ -34,10 +34,14 @@ void SDLAPI::init(float width, float height, const std::string &title)
 
 	if (context == NULL)
 		throw this->getError();
+
+	this->imGuiAPI = make_unique<ImGuiAPI>();
+	this->imGuiAPI->init(this->window, context);
 }
 
 void SDLAPI::swapBuffers()
 {
+	this->imGuiAPI->render();
 	SDL_GL_SwapWindow(this->window);
 }
 
@@ -48,6 +52,8 @@ void SDLAPI::processInput(InputHandler *inputHandler)
 	SDL_Event currentEvent;
 	while (SDL_PollEvent(&currentEvent))
 	{
+		this->imGuiAPI->processEvent(&currentEvent);
+		
 		switch (currentEvent.type)
 		{
 			case SDL_QUIT:		inputHandler->onQuit(); break;
@@ -77,6 +83,8 @@ void SDLAPI::processInput(InputHandler *inputHandler)
 				break;
 		}
 	}
+
+	this->imGuiAPI->onNewFrame(this->window);
 }
 
 bool SDLAPI::checkClosePressed()
@@ -129,6 +137,11 @@ void *SDLAPI::loadTexture(const std::string &fileName, uint32_t *outWidth, uint3
 void SDLAPI::log(const std::string& type, const std::string& message)
 {
 	SDL_Log("[%s]: %s", type.c_str(), message.c_str());
+}
+
+ImGuiAPI* SDLAPI::getImGuiAPI()
+{
+	return this->imGuiAPI.get();
 }
 
 void SDLAPI::release()
