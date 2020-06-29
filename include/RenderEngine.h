@@ -7,8 +7,7 @@
 #include "MultimediaManager.h"
 #include "RenderManager.h"
 #include "SingletonsManager.h"
-
-class MultimediaManager;
+#include "WorldEditor.h"
 
 namespace sre
 {
@@ -25,7 +24,7 @@ protected:
     UPTR<SceneManager> sceneManager;
 	UPTR<GUIManager> guiManager;
 	UPTR <InputHandler> inputHandler;
-
+	
     RenderEngine();
 
 public:
@@ -37,15 +36,16 @@ protected:
     virtual void onInit() =0;
     virtual void onUpdate(unsigned int){};
     virtual void onGUI(){};
+    virtual void onEditorGUI();
     virtual void onQuit(){};
 
 private:
+    UPTR<WorldEditor> worldEditor;
     bool running;
+    bool isEditorMode;
 
     void processInput();
-
     void removeDestroyedEntities();
-
     void release();
 
 	template <typename T>

@@ -17,6 +17,7 @@ void RenderEngine::run()
     this->renderManager->init();
 	this->sceneManager = UPTR<SceneManager>{ new SceneManager };
 	this->guiManager = UPTR<GUIManager>{ new GUIManager };
+    this->worldEditor = UPTR<WorldEditor>{ new WorldEditor };
 
     this->onInit();
 
@@ -24,6 +25,7 @@ void RenderEngine::run()
     this->sceneManager->onSceneLoaded();
     this->renderManager->onSceneLoaded();
 
+    this->isEditorMode = true;
     this->running = true;
     uint32_t elapsedTime = 0;
     while(this->running)
@@ -35,6 +37,7 @@ void RenderEngine::run()
     	
         this->renderManager->render();
         this->onGUI();
+        this->onEditorGUI();
 
     	this->multimediaManager->swapBuffers();
 
@@ -49,6 +52,12 @@ void RenderEngine::run()
     }
     
     this->release();
+}
+
+void RenderEngine::onEditorGUI()
+{
+    if (this->isEditorMode)
+        this->worldEditor->onGUI();
 }
 
 void RenderEngine::release()

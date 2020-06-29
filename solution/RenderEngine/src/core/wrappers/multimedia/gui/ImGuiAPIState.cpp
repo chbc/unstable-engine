@@ -29,11 +29,6 @@ namespace sre
 
 	void ImGuiAPIState::render()
 	{
-		static bool showDemo = true;
-
-		if (showDemo)
-			ImGui::ShowDemoWindow(&showDemo);
-
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}

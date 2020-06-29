@@ -5,6 +5,7 @@ CODE
 - change sre to unstable
 - defines (DEBUG, RELEASE, TEST, DISTRIBUTION)
 - change " *" -> "* " and " &" -> "& "
+- change #ifndef -> #pragma
 
 THIRD PARTIES
 - change stl to STLPort

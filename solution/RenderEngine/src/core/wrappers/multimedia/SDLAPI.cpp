@@ -35,7 +35,7 @@ void SDLAPI::init(float width, float height, const std::string &title)
 	if (context == NULL)
 		throw this->getError();
 
-	this->imGuiAPI = make_unique<ImGuiAPI>();
+	this->imGuiAPI = UPTR<ImGuiAPI>{ new ImGuiAPI };
 	this->imGuiAPI->init(this->window, context);
 }
 
