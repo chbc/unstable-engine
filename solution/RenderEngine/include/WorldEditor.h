@@ -7,7 +7,14 @@ namespace sre
 class WorldEditor
 {
 private:
-	void onGUI();
+	void onGUI(bool* enabled) const;
+
+	void drawMenu(bool* enabled) const;
+
+	void drawEntitiesWindow() const;
+	void drawSceneTreeWindow() const;
+	void drawPropertiesWindow() const;
+	void drawMediaWindow() const;
 
 friend class RenderEngine;
 };

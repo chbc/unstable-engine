@@ -13,6 +13,12 @@ namespace sre
 		ImGui::StyleColorsDark();
 		ImGui_ImplSDL2_InitForOpenGL(window, glContext);
 		ImGui_ImplOpenGL3_Init("#version 130");
+
+		ImGui::StyleColorsClassic();
+		ImGuiStyle& style = ImGui::GetStyle();
+		style.WindowRounding = 0.0f;
+		ImVec4& windowBgColor = style.Colors[ImGuiCol_WindowBg];
+		windowBgColor.w = 0.9f;
 	}
 
 	void ImGuiAPIState::processEvent(SDL_Event* event)

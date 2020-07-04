@@ -57,7 +57,7 @@ void RenderEngine::run()
 void RenderEngine::onEditorGUI()
 {
     if (this->isEditorMode)
-        this->worldEditor->onGUI();
+        this->worldEditor->onGUI(&this->isEditorMode);
 }
 
 void RenderEngine::release()
