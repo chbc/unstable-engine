@@ -1,7 +1,7 @@
 CODE
 - review member fields name
-- updated methods to be constants
-- assert
+- update methods to be constants
+- asserts
 - change sre to unstable
 - defines (DEBUG, RELEASE, TEST, DISTRIBUTION)
 - change " *" -> "* " and " &" -> "& "
@@ -14,3 +14,7 @@ THIRD PARTIES
 FIXES
 - SRE_API warnings
 - children local transforms
+
+FEATURES
+- assimp to model format converter
+- extensible world editor

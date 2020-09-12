@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include <sstream>
 
 namespace sre
 {
@@ -29,8 +30,14 @@ void Entity::update(uint32_t deltaTime)
 		item.second->update(deltaTime);
 }
 
-void Entity::addChild(Entity *child)
+void Entity::addChild(Entity *child, const std::string& name)
 {
+	std::string resultName = name;
+
+	if (name.empty())
+		resultName = generateEntityId(this->childIndex);
+
+	child->name = resultName;
 	this->children.push_back(child);
 	child->parent = this;
 }
@@ -51,6 +58,17 @@ TransformComponent *Entity::getTransform()
 void Entity::destroy()
 {
 	this->alive = false;
+}
+
+std::string Entity::generateEntityId(uint32_t& index, const std::string& duplicateName)
+{
+	std::stringstream stream;
+	std::string baseName = duplicateName.empty() ? "entity" : duplicateName;
+	stream << baseName << "_" << index;
+	std::string result = stream.str();
+	index++;
+
+	return result;
 }
 
 } // namespace

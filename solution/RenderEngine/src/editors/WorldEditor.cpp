@@ -1,10 +1,16 @@
 #include "WorldEditor.h"
+#include "SceneManager.h"
 
 #include "thirdParties/imgui/imgui.h"
 
 namespace sre
 {
 
+void WorldEditor::init(SceneManager* sceneManager)
+{
+	this->sceneManager = sceneManager;
+}
+	
 void WorldEditor::onGUI(bool* enabled) const
 {
 	this->drawMenu(enabled);
@@ -84,21 +90,41 @@ void WorldEditor::drawSceneTreeWindow() const
 	
 	if (ImGui::TreeNodeEx("scene_name", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		for (int i = 0; i < 5; i++)
+		int index = 0;
+		for (const auto& item : this->sceneManager->entities)
 		{
-			if (ImGui::TreeNode((void*)(intptr_t)i, "Entity %d", i))
+			if (item.second->getChildrenCount() == 0)
+				ImGui::TreeNodeEx("entity", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen, item.first.c_str());
+			else if (ImGui::TreeNode(reinterpret_cast<void*>(static_cast<intptr_t>(index)), item.first.c_str()))
 			{
-				ImGui::BulletText("Child %d", i);
+				this->drawEntityTree(item.second.get(), index);
 				ImGui::TreePop();
 			}
 		}
-		ImGui::BulletText("Entity 6");
-		ImGui::BulletText("Entity 7");
 		
 		ImGui::TreePop();
 	}
 	
 	ImGui::End();
+}
+
+void WorldEditor::drawEntityTree(Entity* entity, int index) const
+{
+	const char* name = entity->getName();
+	const uint32_t childrenCount = entity->getChildrenCount();
+	
+	if (childrenCount == 0)
+	{
+		ImGui::TreeNodeEx("entity", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen, name);
+	}
+	else if (ImGui::TreeNode(reinterpret_cast<void*>(static_cast<intptr_t>(index)), name))
+	{
+		for (int i = 0; i < childrenCount; i++)
+		{
+			drawEntityTree(entity->getChild(i), i);
+		}
+		ImGui::TreePop();
+	}
 }
 
 void WorldEditor::drawPropertiesWindow() const

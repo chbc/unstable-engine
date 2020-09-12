@@ -43,7 +43,7 @@ void ModelLoader::processNode(Entity *entity, aiNode *node, const aiScene *scene
     {
         Entity *childEntity = new Entity;
         this->processNode(childEntity, node->mChildren[i], scene);
-        entity->addChild(childEntity);
+        entity->addChild(childEntity, node->mChildren[i]->mName.C_Str());
         childEntity->onStart();
     }
 }

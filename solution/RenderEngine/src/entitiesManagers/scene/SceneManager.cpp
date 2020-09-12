@@ -38,18 +38,19 @@ Entity *SceneManager::createModelEntity(const std::string &fileName)
 }
 
 // light //
-DirectionalLightComponent *SceneManager::addDirectionalLight()
+DirectionalLightComponent *SceneManager::addDirectionalLight(const std::string& name)
 {
     DirectionalLightComponent *result = nullptr;
     Entity *newEntity = this->createEntity();
     RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
     result = renderManager->addDirectionalLight(newEntity);
 
-    this->addEntity(newEntity);
+    std::string resultName = name.empty() ? "directional_light" : name;
+    this->addEntity(newEntity, resultName);
     return result;
 }
 
-PointLightComponent *SceneManager::addPointLight()
+PointLightComponent *SceneManager::addPointLight(const std::string& name)
 {
     PointLightComponent *result = nullptr;
     Entity *newEntity = this->createEntity();
@@ -57,7 +58,8 @@ PointLightComponent *SceneManager::addPointLight()
     RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
     result = renderManager->addPointLight(newEntity);
 
-    this->addEntity(newEntity);
+    std::string resultName = name.empty() ? "directional_light" : name;
+    this->addEntity(newEntity, resultName);
     return result;
 }
 

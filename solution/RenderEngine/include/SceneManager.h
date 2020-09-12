@@ -25,8 +25,8 @@ public:
     SRE_API Entity *createModelEntity(const std::string &fileName);
 
     // light //
-    SRE_API DirectionalLightComponent *addDirectionalLight();
-    SRE_API PointLightComponent *addPointLight();
+    SRE_API DirectionalLightComponent *addDirectionalLight(const std::string& name = "");
+    SRE_API PointLightComponent *addPointLight(const std::string& name = "");
 
     // camera //
     SRE_API class CameraComponent *getMainCamera();

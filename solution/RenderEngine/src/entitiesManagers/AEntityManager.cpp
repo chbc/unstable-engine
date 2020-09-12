@@ -25,31 +25,24 @@ Entity *AEntityManager::createEntity()
 void AEntityManager::addEntity(Entity *entity, const std::string &name)
 {
     std::string resultName = name;
-    if (name.size() == 0)
+    if (name.empty())
     {
-        resultName = this->generateEntityId();
+        resultName = Entity::generateEntityId(this->entityIndex);
+    }
+    else if (this->entities[name] != nullptr)
+    {
+        resultName = Entity::generateEntityId(this->entityIndex, name);
     }
 
+    entity->name = resultName;
     this->entities[resultName] = std::move(this->entitiesToBeAdded[entity]);
     this->entitiesToBeAdded.erase(entity);
-
+	
     if (this->sceneLoaded)
     {
         SingletonsManager::getInstance()->resolve<RenderManager>()->addEntity(entity);
         entity->onStart();
     }
-}
-
-const std::string AEntityManager::generateEntityId()
-{
-    std::string result;
-
-    std::stringstream stream;
-    stream << "entity_" << entityIndex;
-    result = stream.str();
-    this->entityIndex++;
-
-    return result;
 }
 
 void AEntityManager::removeDestroyedEntities()

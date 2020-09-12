@@ -30,17 +30,18 @@ void SampleApplication::onInit()
 
 
 	// OUTLINE
+	/* 
 	cube = this->sceneManager->createCubeEntity(2.0f);
 	// cube = this->sceneManager->createCubeEntity(4.0f);
 	MeshComponent* cubeMesh = cube->getComponent<MeshComponent>();
 	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
 	cubeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/crate_normal.png");
 	cubeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/crate_specular.png");
-	cubeMesh->addMaterialComponent<OutlineMaterialComponent>();
-	this->sceneManager->addEntity(cube, "cubo_outline");
+	// cubeMesh->addMaterialComponent<OutlineMaterialComponent>();
+	// this->sceneManager->addEntity(cube, "cubo_outline");
 	cube->getTransform()->setPosition(glm::vec3(5.0f, 1.0f, -12.0f));
+	*/
 	
-
 	cube = this->createCube();
     cube->getTransform()->setPosition(glm::vec3(3.0f, 1.0f, 0.0f));
 
@@ -48,7 +49,7 @@ void SampleApplication::onInit()
 	
     Entity *nanosuit = this->sceneManager->createModelEntity("../../media/nanosuit/nanosuit.obj");
     nanosuit->getTransform()->setScale(glm::vec3(0.25f, 0.25f, 0.25f));
-    this->sceneManager->addEntity(nanosuit);
+    this->sceneManager->addEntity(nanosuit, "nanosuit");
     
     // GUI //
 	/*
@@ -99,7 +100,7 @@ Entity* SampleApplication::createCube()
 	cubeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/crate_normal.png");
 	cubeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/crate_specular.png");
 
-	this->sceneManager->addEntity(cube);
+	this->sceneManager->addEntity(cube, "cube");
 
 	return cube;
 }
@@ -128,7 +129,7 @@ void SampleApplication::createLights()
 	MeshComponent* cubeMesh = lightCube->getComponent<MeshComponent>();
 	cubeMesh->getMaterial()->setCastsShadow(false);
 	cubeMesh->getMaterial()->setReceivesLight(false);
-	this->sceneManager->addEntity(lightCube);
+	this->sceneManager->addEntity(lightCube, "light_cube_1");
 
 	PointLightComponent* pLight2 = this->sceneManager->addPointLight();
 	pLight2->getTransform()->setPosition(glm::vec3(0.0f, 5.0f, 5.0f));
@@ -140,7 +141,7 @@ void SampleApplication::createLights()
 	cubeMesh = lightCube->getComponent<MeshComponent>();
 	cubeMesh->getMaterial()->setCastsShadow(false);
 	cubeMesh->getMaterial()->setReceivesLight(false);
-	this->sceneManager->addEntity(lightCube);
+	this->sceneManager->addEntity(lightCube, "light_cube_2");
 
 	/*
 	PointLightComponent *pLight3 = this->sceneManager->addPointLight();
@@ -217,7 +218,7 @@ void SampleApplication::createRoom()
     //planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     //planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
 
-    this->sceneManager->addEntity(plane);
+    this->sceneManager->addEntity(plane, "floor");
 
 	float DISTANCE = 20;
 	float SIZE = 40;
@@ -233,7 +234,7 @@ void SampleApplication::createRoom()
     planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
 
-    this->sceneManager->addEntity(plane);
+    this->sceneManager->addEntity(plane, "back_wall");
 
 
     // left //
@@ -248,7 +249,7 @@ void SampleApplication::createRoom()
     planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
 
-    this->sceneManager->addEntity(plane);
+    this->sceneManager->addEntity(plane, "left_wall");
 
 
     // right //
@@ -263,7 +264,7 @@ void SampleApplication::createRoom()
     planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
 
-    this->sceneManager->addEntity(plane);
+    this->sceneManager->addEntity(plane, "right_wall");
 
 
     // front //
@@ -278,7 +279,7 @@ void SampleApplication::createRoom()
     planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
 
-    this->sceneManager->addEntity(plane);
+    this->sceneManager->addEntity(plane, "front_wall");
 
 
     // top //
@@ -293,7 +294,7 @@ void SampleApplication::createRoom()
     planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
 
-    this->sceneManager->addEntity(plane);
+    this->sceneManager->addEntity(plane, "ceiling");
 }
 
 void SampleApplication::createHouse()

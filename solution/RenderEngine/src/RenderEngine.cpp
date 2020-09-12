@@ -24,6 +24,7 @@ void RenderEngine::run()
     this->guiManager->onSceneLoaded();
     this->sceneManager->onSceneLoaded();
     this->renderManager->onSceneLoaded();
+    this->worldEditor->init(this->sceneManager.get());
 
     this->isEditorMode = true;
     this->running = true;

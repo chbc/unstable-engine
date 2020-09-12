@@ -24,14 +24,13 @@ public:
 protected:
     AEntityManager();
     virtual ~AEntityManager();
-
-    const std::string generateEntityId();
     void removeDestroyedEntities();
 
 private:
     void onSceneLoaded();
 
 friend class RenderEngine;
+friend class WorldEditor;
 };
 
 } // namespace

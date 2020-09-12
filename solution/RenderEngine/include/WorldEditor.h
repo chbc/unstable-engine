@@ -3,16 +3,23 @@
 
 namespace sre
 {
+
+class SceneManager;
 	
 class WorldEditor
 {
 private:
+	SceneManager* sceneManager;
+	
+private:
+	void init(SceneManager* sceneManager);
 	void onGUI(bool* enabled) const;
 
 	void drawMenu(bool* enabled) const;
 
 	void drawEntitiesWindow() const;
 	void drawSceneTreeWindow() const;
+	void drawEntityTree(class Entity* entity, int index) const;
 	void drawPropertiesWindow() const;
 	void drawMediaWindow() const;
 
