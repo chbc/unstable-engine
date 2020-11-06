@@ -3,14 +3,31 @@
 
 #include "thirdParties/imgui/imgui.h"
 
+#include "SingletonsManager.h"
+#include "MessagesManager.h"
+
 namespace sre
 {
 
+	struct XXX_Message
+	{
+		int a;
+	};
+	
 void WorldEditor::init(SceneManager* sceneManager)
 {
 	this->sceneManager = sceneManager;
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
+
+	Action action = [&](void* message) { this->XXX_MessageMethod(message); };
+	messagesManager->addListener<XXX_Message>(action);
 }
-	
+
+void WorldEditor::XXX_MessageMethod(void* message)
+{
+	XXX_Message* aMessage = static_cast<XXX_Message*>(message);
+}
+
 void WorldEditor::onGUI(bool* enabled) const
 {
 	this->drawMenu(enabled);
@@ -127,6 +144,8 @@ void WorldEditor::drawEntityTree(Entity* entity, int index) const
 	}
 }
 
+bool yeah = false;
+	
 void WorldEditor::drawPropertiesWindow() const
 {
 	ImGui::SetNextWindowPos(ImVec2(854.0f, 394.0f), ImGuiCond_Once);
@@ -164,6 +183,17 @@ void WorldEditor::drawPropertiesWindow() const
 		ImGui::Separator();
 
 		ImGui::TreePop();
+
+		// ### TESTE DE NOTIFICAÇÃO
+		if (!yeah)
+		{
+			MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
+			UPTR<XXX_Message> message = make_unique<XXX_Message>();
+			message->a = 15;
+			messagesManager->notify(message.get());
+
+			yeah = true;
+		}
 	}
 	ImGui::End();
 }

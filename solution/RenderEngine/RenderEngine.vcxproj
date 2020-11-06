@@ -395,6 +395,7 @@
     <ClInclude Include="include\MeshComponent.h" />
     <ClInclude Include="include\MeshData.h" />
     <ClInclude Include="include\MeshRenderer.h" />
+    <ClInclude Include="include\MessagesManager.h" />
     <ClInclude Include="include\ModelLoader.h" />
     <ClInclude Include="include\MultimediaManager.h" />
     <ClInclude Include="include\NormalMaterialComponent.h" />
@@ -441,6 +442,9 @@
     <ClInclude Include="thirdParties\imgui\imstb_rectpack.h" />
     <ClInclude Include="thirdParties\imgui\imstb_textedit.h" />
     <ClInclude Include="thirdParties\imgui\imstb_truetype.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\MessagesManager.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
