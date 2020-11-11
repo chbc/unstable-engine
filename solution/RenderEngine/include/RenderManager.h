@@ -30,7 +30,6 @@ class RenderManager : ASingleton
 private:
     class ShaderManager       *shaderManager;
     class AGraphicsWrapper    *graphicsWrapper;
-    class MatrixManager       *matrixManager;
     class LightManager        *lightManager;
     class TextureManager      *textureManager;
     
@@ -48,10 +47,11 @@ private:
     RenderManager();
 
 protected:
-    void init();
-    void release() {}
+    void init() override;
+    void preRelease();
 
 private:
+    void initCamera(CameraComponent *camera);
     void addEntity(Entity *entity);
     void addMesh(MeshComponent *mesh);
     void addGUIComponent(GUIImageComponent *guiComponent);
@@ -65,7 +65,6 @@ private:
     CameraComponent *getMainCamera();
 
     void render();
-    void updateViewMatrix();
 
     static void DEBUG_drawTriangle();
 
@@ -94,6 +93,7 @@ friend class NormalMaterialComponent;
 friend class SpecularMaterialComponent;
 friend class AmbientOcclusionMaterialComponent;
 friend class SingletonsManager;
+friend class BaseRendererShaderSetup;
 };
 
 } // namespace

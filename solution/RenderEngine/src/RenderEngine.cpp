@@ -26,7 +26,7 @@ void RenderEngine::run()
     this->renderManager->onSceneLoaded();
     this->worldEditor->init(this->sceneManager.get());
 
-    this->isEditorMode = true;
+    this->isEditorMode = false;
     this->running = true;
     uint32_t elapsedTime = 0;
     while(this->running)

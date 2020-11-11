@@ -1,8 +1,9 @@
 #include "BaseRendererShaderSetup.h"
 
 #include "ShaderManager.h"
-#include "MatrixManager.h"
 #include "SingletonsManager.h"
+#include "RenderManager.h"
+#include "CameraComponent.h"
 
 namespace sre
 {
@@ -21,10 +22,11 @@ void BaseRendererShaderSetup::onSceneLoaded(Shader *shader)
 
 void BaseRendererShaderSetup::setupShaderValues(Shader *shader, const glm::vec3& cameraPosition)
 {
-    MatrixManager *matrixManager = SingletonsManager::getInstance()->get<MatrixManager>();
+    RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+    CameraComponent* cameraComponent = renderManager->getMainCamera();
 
-    glm::mat4 viewMatrix = matrixManager->getViewMatrix();
-    glm::mat4 projectionMatrix = matrixManager->getProjectionMatrix();
+    glm::mat4 viewMatrix = cameraComponent->getViewMatrix();
+    glm::mat4 projectionMatrix = cameraComponent->getProjectionMatrix();
 
     this->shaderManager->setMat4(shader, ShaderVariables::VIEW_MATRIX, &viewMatrix[0][0]);
     this->shaderManager->setMat4(shader, ShaderVariables::PROJECTION_MATRIX, &projectionMatrix[0][0]);

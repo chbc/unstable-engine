@@ -4,12 +4,16 @@
 #include "MeshComponent.h"
 #include "MeshData.h"
 #include "AGraphicsWrapper.h"
-#include "MatrixManager.h"
 #include "ShaderManager.h"
 #include "SingletonsManager.h"
 #include "LightManager.h"
 
 #include "LightRendererShaderSetup.h"
+#include "LitRendererComponent.h"
+#include "NormalRendererComponent.h"
+#include "SpecularRendererComponent.h"
+#include "AORendererComponent.h"
+#include "OutlineRendererComponent.h"
 
 namespace sre
 {
@@ -122,7 +126,7 @@ void MeshRenderer::addMesh(MeshComponent *mesh)
     this->graphicsWrapper->createEBO(meshData);
 }
 
-void MeshRenderer::render(MatrixManager *matrixManager, const glm::vec3 &cameraPosition)
+void MeshRenderer::render(const glm::vec3 &cameraPosition)
 {
     // Shader setup
     this->shaderManager->enableShader(this->shader);

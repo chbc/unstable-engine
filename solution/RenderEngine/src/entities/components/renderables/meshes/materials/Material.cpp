@@ -4,15 +4,15 @@
 namespace sre
 {
 
-Material::Material() : castsShadow(true)
+Material::Material() : castShadow(true)
 {
     this->addComponent<ColorMaterialComponent>();
     this->addComponent<LitMaterialComponent>();
 }
 
-void Material::setCastsShadow(bool value)
+void Material::setCastShadow(bool value)
 {
-	this->castsShadow = value;
+	this->castShadow = value;
 }
 
 void Material::setReceivesLight(bool value)

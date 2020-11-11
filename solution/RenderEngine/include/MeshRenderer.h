@@ -2,12 +2,7 @@
 #define _MESH_RENDERER_H_
 
 #include "AComponentsHolder.h"
-#include "LitRendererComponent.h"
-#include "DiffuseRendererComponent.h"
-#include "NormalRendererComponent.h"
-#include "SpecularRendererComponent.h"
-#include "AORendererComponent.h"
-#include "OutlineRendererComponent.h"
+#include "ColorRendererComponent.h"
 #include <glm/vec3.hpp>
 #include <list>
 #include <unordered_map>
@@ -18,7 +13,6 @@ namespace sre
 
 class MeshComponent;
 class Material;
-class MatrixManager;
 class AGraphicsWrapper;
 class ShaderManager;
 
@@ -63,7 +57,7 @@ private:
     
     void addMesh(MeshComponent *mesh);
 
-    void render(MatrixManager *matrixManager, const glm::vec3 &cameraPosition);
+    void render(const glm::vec3 &cameraPosition);
 
     bool contains(MeshComponent *mesh);
     bool fitsWithMesh(MeshComponent *mesh);

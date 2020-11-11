@@ -10,7 +10,6 @@
 #include "MultimediaManager.h"
 #include "SingletonsManager.h"
 #include "MeshData.h"
-#include "MatrixManager.h"
 #include "LightManager.h"
 #include "ShaderManager.h"
 #include "MeshRenderer.h"
@@ -26,7 +25,6 @@ RenderManager::RenderManager()
 {
     SingletonsManager *singletonsManager = SingletonsManager::getInstance();
     this->graphicsWrapper   = singletonsManager->add<AGraphicsWrapper, OpenGLAPI>();
-    this->matrixManager     = singletonsManager->resolve<MatrixManager>();
     this->lightManager      = singletonsManager->resolve<LightManager>();
     this->textureManager    = singletonsManager->resolve<TextureManager>();
     this->shaderManager     = singletonsManager->resolve<ShaderManager>();
@@ -42,12 +40,23 @@ void RenderManager::init()
     this->lightManager->init();
 
     MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
-    const float FOV{120.0f};
-    this->matrixManager->setProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 1000);
 	this->screenWidth = multimediaManager->getScreenWidth();
 	this->screenHeight = multimediaManager->getScreenHeight();
 }
 
+void RenderManager::preRelease()
+{
+    this->renders.clear();
+}
+
+void RenderManager::initCamera(CameraComponent* camera)
+{
+    MultimediaManager* multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
+    const float FOV{ 120.0f };
+    camera->setProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 1000);
+    this->setMainCamera(camera);
+}
+	
 void RenderManager::addEntity(Entity *entity)
 {
     if (entity->hasComponent<MeshComponent>())
@@ -91,7 +100,7 @@ void RenderManager::addMesh(MeshComponent *mesh)
     
     renderer->addMesh(mesh);
 
-    if (mesh->getMaterial()->castsShadow)
+    if (mesh->getMaterial()->castShadow)
     {
         this->initShadowRenderer();
         this->shadowRenderer->addItem(mesh);
@@ -175,14 +184,10 @@ void RenderManager::render()
     this->graphicsWrapper->setViewport(this->screenWidth, this->screenHeight);
     this->graphicsWrapper->clearColorAndDepthBuffer();
 
-    this->updateViewMatrix();
+    this->mainCamera->updateView();
     for (const UPTR<MeshRenderer> &item : this->renders)
     {
-        item->render
-        (
-            this->matrixManager,
-            this->mainCamera->getTransform()->getPosition()
-        );
+        item->render(this->mainCamera->getTransform()->getPosition());
     }
 
 	// Post processing rendering
@@ -191,17 +196,7 @@ void RenderManager::render()
 
     // GUI rendering
     if (this->guiRenderer.get() != nullptr)
-        this->guiRenderer->render(this->matrixManager);
-}
-
-void RenderManager::updateViewMatrix()
-{
-    this->matrixManager->setView
-    (
-        this->mainCamera->getTransform()->getPosition(),
-        this->mainCamera->lookAtTarget,
-        this->mainCamera->up
-    );
+        this->guiRenderer->render();
 }
 
 void RenderManager::DEBUG_drawTriangle()

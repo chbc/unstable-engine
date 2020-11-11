@@ -1,6 +1,8 @@
 #ifndef _DIFFUSE_RENDERER_COMPONENT_H_
 #define _DIFFUSE_RENDERER_COMPONENT_H_
 
+#include <cstdint>
+
 #include "ColorRendererComponent.h"
 
 namespace sre

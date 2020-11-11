@@ -3,7 +3,7 @@
 
 namespace sre
 {
-
+	
 class SceneManager;
 	
 class WorldEditor
@@ -13,6 +13,8 @@ private:
 	
 private:
 	void init(SceneManager* sceneManager);
+	void XXX_MessageMethod(void* message);
+	
 	void onGUI(bool* enabled) const;
 
 	void drawMenu(bool* enabled) const;

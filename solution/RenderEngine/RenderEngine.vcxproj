@@ -247,7 +247,6 @@
     <ClCompile Include="src\RenderEngine.cpp" />
     <ClCompile Include="src\entitiesManagers\scene\SceneManager.cpp" />
     <ClCompile Include="src\core\graphics\LightManager.cpp" />
-    <ClCompile Include="src\core\graphics\MatrixManager.cpp" />
     <ClCompile Include="src\core\graphics\RenderManager.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\DiffuseRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renderers\GUIRenderer.cpp" />

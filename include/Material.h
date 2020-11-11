@@ -23,10 +23,10 @@ namespace sre
 class Material : public AComponentsHolder<AMaterialComponent>
 {
 private:
-    bool castsShadow;
+    bool castShadow;
 
 public:
-	SRE_API inline void setCastsShadow(bool value);
+	SRE_API inline void setCastShadow(bool value);
 	SRE_API void setReceivesLight(bool value);
 	SRE_API bool getReceivesLight();
 

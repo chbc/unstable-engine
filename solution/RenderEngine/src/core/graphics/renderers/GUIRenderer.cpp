@@ -3,7 +3,6 @@
 #include "Entity.h"
 #include "GUIImageComponent.h"
 #include "AGraphicsWrapper.h"
-#include "MatrixManager.h"
 #include "ShaderManager.h"
 #include "Texture.h"
 
@@ -42,7 +41,7 @@ void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 	this->graphicsWrapper->createGUIEBO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
 }
 
-void GUIRenderer::render(MatrixManager *matrixManager)
+void GUIRenderer::render()
 {
     this->shaderManager->enableShader(this->shader);
     this->shaderManager->setInt(this->shader, ShaderVariables::GUI_TEXTURE, EMaterialMap::GUI);

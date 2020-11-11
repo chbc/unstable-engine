@@ -45,9 +45,6 @@
     <ClCompile Include="src\core\graphics\LightManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\MatrixManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\graphics\RenderManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

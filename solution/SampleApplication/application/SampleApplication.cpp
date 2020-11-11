@@ -127,7 +127,7 @@ void SampleApplication::createLights()
 	Entity * lightCube = this->sceneManager->createCubeEntity(0.2f);
 	lightCube->getTransform()->setPosition(p1Position);
 	MeshComponent* cubeMesh = lightCube->getComponent<MeshComponent>();
-	cubeMesh->getMaterial()->setCastsShadow(false);
+	cubeMesh->getMaterial()->setCastShadow(false);
 	cubeMesh->getMaterial()->setReceivesLight(false);
 	this->sceneManager->addEntity(lightCube, "light_cube_1");
 
@@ -139,7 +139,7 @@ void SampleApplication::createLights()
 	lightCube = this->sceneManager->createCubeEntity(0.2f);
 	lightCube->getTransform()->setPosition(pLight2->getPosition());
 	cubeMesh = lightCube->getComponent<MeshComponent>();
-	cubeMesh->getMaterial()->setCastsShadow(false);
+	cubeMesh->getMaterial()->setCastShadow(false);
 	cubeMesh->getMaterial()->setReceivesLight(false);
 	this->sceneManager->addEntity(lightCube, "light_cube_2");
 
@@ -213,7 +213,7 @@ void SampleApplication::createRoom()
     transform->setRotation(glm::vec3(1, 0, 0), 90.0f);
     planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/wood.png");
-    planeMesh->getMaterial()->setCastsShadow(false);
+    planeMesh->getMaterial()->setCastShadow(false);
     // planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
     //planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     //planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
@@ -229,7 +229,7 @@ void SampleApplication::createRoom()
     transform->setPosition(glm::vec3(0, DISTANCE, -DISTANCE));
     planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
-    planeMesh->getMaterial()->setCastsShadow(false);
+    planeMesh->getMaterial()->setCastShadow(false);
     planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
     planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
@@ -244,7 +244,7 @@ void SampleApplication::createRoom()
     transform->setRotation(glm::vec3(0, 1, 0), -90);
     planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
-    planeMesh->getMaterial()->setCastsShadow(false);
+    planeMesh->getMaterial()->setCastShadow(false);
     planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
     planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
@@ -259,7 +259,7 @@ void SampleApplication::createRoom()
     transform->setRotation(glm::vec3(0, 1, 0), 90);
     planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
-    planeMesh->getMaterial()->setCastsShadow(false);
+    planeMesh->getMaterial()->setCastShadow(false);
     planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
     planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
@@ -274,7 +274,7 @@ void SampleApplication::createRoom()
     transform->setRotation(glm::vec3(1, 0, 0), -180);
     planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
-    planeMesh->getMaterial()->setCastsShadow(false);
+    planeMesh->getMaterial()->setCastShadow(false);
     planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
     planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");
@@ -289,7 +289,7 @@ void SampleApplication::createRoom()
     transform->setRotation(glm::vec3(1, 0, 0), -90);
     planeMesh = plane->getComponent<MeshComponent>();
     planeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/floor2_diffuse.png");
-    planeMesh->getMaterial()->setCastsShadow(false);
+    planeMesh->getMaterial()->setCastShadow(false);
     planeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/floor2_normal.png");
     planeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/floor2_specular.png");
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("../../media/floor2_ao.png");

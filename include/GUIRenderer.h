@@ -10,7 +10,6 @@ namespace sre
 class GUIImageComponent;
 class AGraphicsWrapper;
 class ShaderManager;
-class MatrixManager;
 
 class GUIRenderer
 {
@@ -31,7 +30,7 @@ private:
     void loadShader();
     void addGUIComponent(GUIImageComponent *guiComponent);
     void addDynamicGUIComponent(GUIImageComponent *guiComponent);
-    void render(MatrixManager *matrixManager);
+    void render();
     void setup(GUIImageComponent *guiComponent);
 
     void removeDestroyedEntities();

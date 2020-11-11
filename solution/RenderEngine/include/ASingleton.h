@@ -8,6 +8,7 @@ class ASingleton
 {
 protected:
     virtual void init() {};
+	virtual void preRelease() {};
     virtual void release() {};
 
 public:
