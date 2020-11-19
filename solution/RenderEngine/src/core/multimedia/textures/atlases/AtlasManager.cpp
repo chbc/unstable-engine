@@ -1,6 +1,6 @@
 #include "AtlasManager.h"
 #include "SingletonsManager.h"
-#include "RenderManager.h"
+#include "TextureManager.h"
 
 namespace sre
 {
@@ -10,7 +10,7 @@ void AtlasManager::release()
     this->atlases.clear();
 }
 
-Atlas *AtlasManager::getAtlas(const std::string &fileName)
+Atlas* AtlasManager::getAtlas(const std::string &fileName)
 {
 	Atlas *result = this->atlases[fileName].get();
 
@@ -22,12 +22,11 @@ Atlas *AtlasManager::getAtlas(const std::string &fileName)
 	return result;
 }
 
-Atlas *AtlasManager::loadAtlas(const std::string &baseFileName)
+Atlas* AtlasManager::loadAtlas(const std::string &baseFileName)
 {
 	Atlas *result;
 
-	RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
-	Texture *texture = renderManager->loadGUITexture(baseFileName + ".png");
+	Texture* texture = this->loadTexture(baseFileName);
 
 	result = new Atlas{ texture };
 	UPTR<Atlas> newItem{ result };
@@ -37,7 +36,7 @@ Atlas *AtlasManager::loadAtlas(const std::string &baseFileName)
 	return result;
 }
 
-FontAtlas *AtlasManager::getFont(const std::string &fileName)
+FontAtlas* AtlasManager::getFont(const std::string &fileName)
 {
 	FontAtlas *result = static_cast<FontAtlas *>(this->atlases[fileName].get());
 
@@ -49,12 +48,11 @@ FontAtlas *AtlasManager::getFont(const std::string &fileName)
 	return result;
 }
 
-FontAtlas *AtlasManager::loadFont(const std::string &baseFileName)
+FontAtlas* AtlasManager::loadFont(const std::string &baseFileName)
 {
 	FontAtlas *result;
 
-	RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
-	Texture *texture = renderManager->loadGUITexture(baseFileName + ".png");
+	Texture* texture = this->loadTexture(baseFileName);
 
 	result = new FontAtlas{ texture };
 	UPTR<FontAtlas> newItem{ result };
@@ -62,6 +60,11 @@ FontAtlas *AtlasManager::loadFont(const std::string &baseFileName)
 	this->atlases[baseFileName] = std::move(newItem);
 
 	return result;
+}
+
+Texture* AtlasManager::loadTexture(const std::string& baseFileName)
+{
+	return SingletonsManager::getInstance()->resolve<TextureManager>()->loadTexture(baseFileName + ".png", EMaterialMap::GUI);
 }
 
 } // namespace

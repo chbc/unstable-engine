@@ -12,11 +12,13 @@ void SampleApplication::onInit()
 {
 	CameraComponent* camera = this->sceneManager->getMainCamera();
 
+	/* 
 	PostProcessingComponent* postProcessingComponent = camera->getEntity()->addComponent<PostProcessingComponent>();
 	PostProcessingEffect* effect = postProcessingComponent->enqueueEffect(PPE::OUTLINE);
+	*/
 
 	// set EventReceiver class for input handling
-	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera(), effect));
+	// this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera(), effect));
 
 	this->createLights();
 

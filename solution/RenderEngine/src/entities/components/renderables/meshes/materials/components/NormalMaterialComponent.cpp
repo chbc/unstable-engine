@@ -1,6 +1,6 @@
 #include "NormalMaterialComponent.h"
 #include "SingletonsManager.h"
-#include "RenderManager.h"
+#include "TextureManager.h"
 
 namespace sre
 {
@@ -8,16 +8,10 @@ namespace sre
 NormalMaterialComponent::NormalMaterialComponent(Material *material, const std::string &fileName)
 	: AMaterialComponent(material)
 {
-	this->loadTexture(fileName);
+	this->texture = SingletonsManager::getInstance()->resolve<TextureManager>()->loadTexture(fileName, EMaterialMap::NORMAL);
 }
 
-void NormalMaterialComponent::loadTexture(const std::string &fileName)
-{
-	Texture *newTexture = SingletonsManager::getInstance()->resolve<RenderManager>()->loadNormalTexture(fileName);
-	this->texture = UPTR<Texture>{ newTexture };
-}
-
-uint32_t NormalMaterialComponent::getTextureID()
+uint32_t NormalMaterialComponent::getTextureID() const
 {
 	return this->texture->getId();
 }

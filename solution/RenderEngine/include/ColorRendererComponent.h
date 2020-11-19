@@ -16,6 +16,9 @@ protected:
     ShaderManager *shaderManager;
     AGraphicsWrapper *graphicsWrapper;
 
+public:
+    virtual ~ColorRendererComponent() = default;
+	
 protected:
     ColorRendererComponent(ShaderManager *shaderManager, class AGraphicsWrapper *graphicsWrapper);
 

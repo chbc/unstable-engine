@@ -27,7 +27,10 @@ public:
 	void setLookAt(const glm::vec3 &target);
 	void setPosition(const glm::vec3 &position);
 
-	void setProjection(float fov, float aspectRatio, float near, float far);
+	const glm::vec3& getLookAt() const { return this->lookAtTarget; }
+
+	void setPerspectiveProjection(float fov, float aspectRatio, float near, float far);
+	void setOrthoProjection(float width, float height);
 
 	glm::mat4 getViewMatrix();
 	glm::mat4 getProjectionMatrix();

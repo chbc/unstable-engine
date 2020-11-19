@@ -11,6 +11,7 @@
 #include "SpecularMaterialComponent.h"
 #include "AmbientOcclusionMaterialComponent.h"
 #include "OutlineMaterialComponent.h"
+#include "SpriteMaterialComponent.h"
 
 /* ###
 - passar flags pelo construtor

@@ -40,6 +40,7 @@ void ShaderContentFactory::createShaderContent
                     }
                     break;
                 case EComponentId::DIFFUSE_MATERIAL:
+                case EComponentId::SPRITE_MATERIAL:
                     this->loadDiffuseContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadDiffuseContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;

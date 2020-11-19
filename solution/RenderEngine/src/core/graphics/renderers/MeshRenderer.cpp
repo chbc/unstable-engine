@@ -14,6 +14,7 @@
 #include "SpecularRendererComponent.h"
 #include "AORendererComponent.h"
 #include "OutlineRendererComponent.h"
+#include "SpriteRendererComponent.h"
 
 namespace sre
 {
@@ -51,6 +52,9 @@ MeshRenderer::MeshRenderer(Material *material, ShaderManager *shaderManager, AGr
                     break;
                 case EComponentId::SECOND_TARGET_COLOR_MATERIAL:
                     this->addComponent<OutlineRendererComponent>(this->shaderManager, this->graphicsWrapper);
+                    break;
+                case EComponentId::SPRITE_MATERIAL:
+                    this->addComponent<SpriteRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
                 default: break;
             }

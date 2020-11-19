@@ -198,6 +198,7 @@
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\litStates\LitRendererLightsState.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\litStates\LitRendererNoLightsState.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\OutlineRendererComponent.cpp" />
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\SpriteRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renderers\PostProcessingRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\BloomRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\DOFRendererComponent.cpp" />
@@ -239,6 +240,7 @@
     <ClCompile Include="src\entities\components\lights\DirectionalLightComponent.cpp" />
     <ClCompile Include="src\entities\components\lights\PointLightComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\ColorMaterialComponent.cpp" />
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\SpriteMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\Material.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\MeshComponent.cpp" />
     <ClCompile Include="src\core\graphics\meshData\PrimitiveMeshFactory.cpp" />
@@ -426,6 +428,8 @@
     <ClInclude Include="include\SingletonsManager.h" />
     <ClInclude Include="include\SpecularMaterialComponent.h" />
     <ClInclude Include="include\SpecularRendererComponent.h" />
+    <ClInclude Include="include\SpriteMaterialComponent.h" />
+    <ClInclude Include="include\SpriteRendererComponent.h" />
     <ClInclude Include="include\StringUtils.h" />
     <ClInclude Include="include\TestServicesProvider.h" />
     <ClInclude Include="include\Texture.h" />

@@ -1,17 +1,21 @@
 #ifndef _SPECULAR_MATERIAL_COMPONENT_H_
 #define _SPECULAR_MATERIAL_COMPONENT_H_
 
-#include "NormalMaterialComponent.h"
+#include "AMaterialComponent.h"
+#include <string>
 
 namespace sre
 {
 
-class SRE_API SpecularMaterialComponent : public NormalMaterialComponent
+class SRE_API SpecularMaterialComponent : public AMaterialComponent
 {
+private:
+	class Texture* texture;
+	
 public:
 	SpecularMaterialComponent(Material *material, const std::string &fileName);
 
-	void loadTexture(const std::string &fileName) override;
+	uint32_t getTextureID(uint32_t index = 0) const;
 };
 
 } // namespace

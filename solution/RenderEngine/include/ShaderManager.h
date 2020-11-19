@@ -86,6 +86,7 @@ friend class NormalRendererComponent;
 friend class SpecularRendererComponent;
 friend class AORendererComponent;
 friend class OutlineRendererComponent;
+friend class SpriteRendererComponent;
 
 friend class LitRendererLightsState;
 

@@ -1,8 +1,6 @@
 #include "DiffuseMaterialComponent.h"
-#include <iostream>
 #include "SingletonsManager.h"
-#include "RenderManager.h"
-#include "Texture.h"
+#include "TextureManager.h"
 
 namespace sre
 {
@@ -10,15 +8,10 @@ namespace sre
 DiffuseMaterialComponent::DiffuseMaterialComponent(Material *material, const std::string &fileName) 
     : AMaterialComponent(material)
 {
-    this->loadTexture(fileName);
+    this->texture = SingletonsManager::getInstance()->resolve<TextureManager>()->loadTexture(fileName, EMaterialMap::DIFFUSE);
 }
 
-void DiffuseMaterialComponent::loadTexture(const std::string &fileName)
-{
-    this->texture = SingletonsManager::getInstance()->resolve<RenderManager>()->loadDiffuseTexture(fileName);
-}
-
-uint32_t DiffuseMaterialComponent::getTextureID(uint32_t index)
+uint32_t DiffuseMaterialComponent::getTextureID(uint32_t index) const
 {
     return this->texture->getId();
 }

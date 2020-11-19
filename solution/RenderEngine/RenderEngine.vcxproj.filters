@@ -246,6 +246,12 @@
     <ClCompile Include="src\editors\WorldEditor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\SpriteMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\SpriteRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -750,6 +756,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\MessagesManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

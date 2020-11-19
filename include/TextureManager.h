@@ -50,6 +50,15 @@ friend class SinglePassRendererComponent;
 friend class HDRRendererComponent;
 friend class DOFRendererComponent;
 friend class OutlineRendererPPComponent;
+friend class GUIImageComponent;
+friend class GUITextComponent;
+friend class DiffuseMaterialComponent;
+friend class NormalMaterialComponent;
+friend class SpecularMaterialComponent;
+friend class AmbientOcclusionMaterialComponent;
+friend class SpriteMaterialComponent;
+friend class AtlasManager;
+friend class GUITextComponent;
 };
 
 } // namespace

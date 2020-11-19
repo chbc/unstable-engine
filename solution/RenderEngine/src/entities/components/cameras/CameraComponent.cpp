@@ -35,9 +35,16 @@ void CameraComponent::updateView()
     this->view = glm::lookAt(this->transform->getPosition(), this->lookAtTarget, this->up);
 }
 
-void CameraComponent::setProjection(float fov, float aspectRatio, float near, float far)
+void CameraComponent::setPerspectiveProjection(float fov, float aspectRatio, float near, float far)
 {
     this->projection = glm::perspective(fov, aspectRatio, near, far);
+}
+
+void CameraComponent::setOrthoProjection(float width, float height)
+{
+    float halfWidth = width * 0.5f;
+    float halfHeight = height * 0.5f;
+    this->projection = glm::ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, 0.1f, 1000.0f);
 }
 
 glm::mat4 CameraComponent::getViewMatrix()

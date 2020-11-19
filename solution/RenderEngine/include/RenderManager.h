@@ -31,9 +31,8 @@ private:
     class ShaderManager       *shaderManager;
     class AGraphicsWrapper    *graphicsWrapper;
     class LightManager        *lightManager;
-    class TextureManager      *textureManager;
-    
-    VECTOR_UPTR<class MeshRenderer> renders;
+
+	VECTOR_UPTR<class MeshRenderer> renders;
     UPTR<class ShadowRenderer> shadowRenderer;
     UPTR<class GUIRenderer> guiRenderer;
 	UPTR<class PostProcessingRenderer> postProcessingRenderer;
@@ -71,12 +70,6 @@ private:
     DirectionalLightComponent *addDirectionalLight(Entity *entity);
     PointLightComponent *addPointLight(Entity *entity);
 
-    Texture *loadGUITexture(const std::string &fileName);
-    Texture *loadDiffuseTexture(const std::string &fileName);
-    Texture *loadNormalTexture(const std::string &fileName);
-    Texture *loadSpecularTexture(const std::string &fileName);
-    Texture *loadAOTexture(const std::string &fileName);
-
     void setupBufferSubData(GUIMeshData* meshData);
     void removeDestroyedEntities();
 
@@ -86,12 +79,7 @@ friend class AtlasManager;
 friend class MeshComponent;
 friend class RenderEngine;
 friend class Material;
-friend class GUIImageComponent;
 friend class GUITextComponent;
-friend class DiffuseMaterialComponent;
-friend class NormalMaterialComponent;
-friend class SpecularMaterialComponent;
-friend class AmbientOcclusionMaterialComponent;
 friend class SingletonsManager;
 friend class BaseRendererShaderSetup;
 };

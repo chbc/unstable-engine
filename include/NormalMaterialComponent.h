@@ -2,22 +2,20 @@
 #define _NORMAL_MATERIAL_COMPONENT_H_
 
 #include "AMaterialComponent.h"
-#include "memory_aliases.h"
-#include "Texture.h"
+#include <string>
 
 namespace sre
 {
 
 class SRE_API NormalMaterialComponent : public AMaterialComponent
 {
-protected:
-	UPTR<Texture> texture;
+private:
+	class Texture* texture;
 
 public:
 	NormalMaterialComponent(Material *material, const std::string &fileName);
 
-	virtual void loadTexture(const std::string &fileName);
-	uint32_t getTextureID();
+	uint32_t getTextureID() const;
 };
 
 } // namespace

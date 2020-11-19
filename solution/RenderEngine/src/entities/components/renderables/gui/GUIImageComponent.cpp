@@ -1,5 +1,4 @@
 #include "GUIImageComponent.h"
-#include "RenderManager.h"
 #include "MultimediaManager.h"
 #include "SingletonsManager.h"
 #include "TextureManager.h"
@@ -19,7 +18,7 @@ GUIImageComponent::GUIImageComponent(Entity *entity, uint32_t arg_maxItems)
 
 void GUIImageComponent::load(const std::string &fileName)
 {
-    Texture *texture = SingletonsManager::getInstance()->resolve<RenderManager>()->loadGUITexture(fileName);
+    Texture* texture = SingletonsManager::getInstance()->resolve<TextureManager>()->loadTexture(fileName, EMaterialMap::GUI);
     glm::vec2 pixelSize(texture->getWidth(), texture->getHeight());
     glm::vec2 screenBasedSize = SingletonsManager::getInstance()->resolve<MultimediaManager>()->getNormalizedSize(pixelSize);
 

@@ -20,10 +20,11 @@ protected:
     void release() override;
 
 private:
-	Atlas *getAtlas(const std::string &fileName);
-	Atlas *loadAtlas(const std::string &baseFileName);
-	FontAtlas *getFont(const std::string &fileName);
-	FontAtlas *loadFont(const std::string &baseFileName);
+	Atlas* getAtlas(const std::string &fileName);
+	Atlas* loadAtlas(const std::string &baseFileName);
+	FontAtlas* getFont(const std::string &fileName);
+	FontAtlas* loadFont(const std::string &baseFileName);
+	Texture* loadTexture(const std::string& baseFileName);
 
 friend class GUITextComponent;
 friend class GUIImageComponent;

@@ -1,6 +1,5 @@
 #include "ColorMaterialComponent.h"
 #include "Material.h"
-#include "RenderManager.h"
 
 namespace sre
 {

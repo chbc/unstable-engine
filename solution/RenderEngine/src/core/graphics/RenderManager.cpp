@@ -26,7 +26,6 @@ RenderManager::RenderManager()
     SingletonsManager *singletonsManager = SingletonsManager::getInstance();
     this->graphicsWrapper   = singletonsManager->add<AGraphicsWrapper, OpenGLAPI>();
     this->lightManager      = singletonsManager->resolve<LightManager>();
-    this->textureManager    = singletonsManager->resolve<TextureManager>();
     this->shaderManager     = singletonsManager->resolve<ShaderManager>();
 
     this->mainCamera = nullptr;
@@ -36,12 +35,14 @@ void RenderManager::init()
 {
     this->graphicsWrapper->init();
     this->shaderManager->init();
-    this->textureManager->init();
     this->lightManager->init();
 
-    MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
+    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+    MultimediaManager *multimediaManager = singletonsManager->resolve<MultimediaManager>();
 	this->screenWidth = multimediaManager->getScreenWidth();
 	this->screenHeight = multimediaManager->getScreenHeight();
+	
+    singletonsManager->resolve<TextureManager>()->init();
 }
 
 void RenderManager::preRelease()
@@ -53,10 +54,10 @@ void RenderManager::initCamera(CameraComponent* camera)
 {
     MultimediaManager* multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
     const float FOV{ 120.0f };
-    camera->setProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 1000);
+    camera->setPerspectiveProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 1000);
     this->setMainCamera(camera);
 }
-	
+
 void RenderManager::addEntity(Entity *entity)
 {
     if (entity->hasComponent<MeshComponent>())
@@ -212,31 +213,6 @@ DirectionalLightComponent *RenderManager::addDirectionalLight(Entity *entity)
 PointLightComponent *RenderManager::addPointLight(Entity *entity)
 {
     return this->lightManager->addPointLight(entity);
-}
-
-Texture *RenderManager::loadGUITexture(const std::string &fileName)
-{
-    return this->textureManager->loadGUITexture(fileName);
-}
-
-Texture *RenderManager::loadDiffuseTexture(const std::string &fileName)
-{
-    return this->textureManager->loadDiffuseTexture(fileName);
-}
-
-Texture *RenderManager::loadNormalTexture(const std::string &fileName)
-{
-    return this->textureManager->loadNormalTexture(fileName);
-}
-
-Texture *RenderManager::loadSpecularTexture(const std::string &fileName)
-{
-    return this->textureManager->loadSpecularTexture(fileName);
-}
-
-Texture *RenderManager::loadAOTexture(const std::string &fileName)
-{
-    return this->textureManager->loadAOTexture(fileName);
 }
 
 void RenderManager::setupBufferSubData(GUIMeshData* meshData)
