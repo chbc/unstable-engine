@@ -71,7 +71,7 @@ void RenderEngine::removeDestroyedEntities()
 {
     this->renderManager->removeDestroyedEntities();
     this->sceneManager->removeDestroyedEntities();
-    // ### this->guiManager->removeDestroyedEntities();
+    // XXX this->guiManager->removeDestroyedEntities();
 }
 
 void RenderEngine::render()

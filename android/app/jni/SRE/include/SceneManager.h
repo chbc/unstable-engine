@@ -20,17 +20,17 @@ private:
 
 public:
     // renderables //
-    SRE_API Entity *createPlaneEntity(float size = 1.0f);
+    SRE_API Entity *createPlaneEntity(float size = 1.0f, float tileMultiplier = 1.0f);
     SRE_API Entity *createCubeEntity(float size = 1.0f);
     SRE_API Entity *createModelEntity(const std::string &fileName);
 
     // light //
-    SRE_API DirectionalLightComponent *addDirectionalLight();
-    SRE_API PointLightComponent *addPointLight();
+    SRE_API DirectionalLightComponent *addDirectionalLight(const std::string& name = "");
+    SRE_API PointLightComponent *addPointLight(const std::string& name = "");
 
     // camera //
     SRE_API class CameraComponent *getMainCamera();
-    SRE_API Entity *createMeshEntity(MeshData<VertexData> *objectData);
+    SRE_API Entity *createMeshEntity(MeshData* objectData);
 
 friend class RenderEngine;
 };

@@ -45,32 +45,21 @@ void PrimitiveMeshFactory::createVerticesPlane2D(const glm::vec2 &size, const Re
 	}
 }
 
-MeshData<GUIVertexData>* PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size)
+GUIMeshData* PrimitiveMeshFactory::createPlaneTopDown(const glm::vec2& size)
 {
-	Rect uv(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f));
-	return createPlane2D(size, uv);
-}
-
-MeshData<GUIVertexData>* PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size, const Rect &uv, float xOffset)
-{
-	float planeVertices[] = 
-	{ 
-		-size.x + xOffset, size.y + xOffset,
-		-size.x + xOffset,-size.y + xOffset,
-		 size.x + xOffset,-size.y + xOffset,
-		 size.x + xOffset, size.y + xOffset
+	float planeTexCoords[] =
+	{
+		0, 0,
+		0, 1,
+		1, 1,
+		1, 0
 	};
 
-	std::vector<GUIVertexData> vertexData;
-	// Positions
-	for (int i = 0; i < 8; i += 2)
-	{
-		GUIVertexData newData;
-		newData.position = glm::vec2(planeVertices[i], planeVertices[i + 1]);
+	return createPlane2D(size, planeTexCoords);
+}
 
-		vertexData.emplace_back(newData);
-	}
-
+GUIMeshData* PrimitiveMeshFactory::createPlaneTopDown(const glm::vec2& size, const Rect& uv)
+{
 	// UVs
 	float x1 = uv.topLeft.x;
 	float y1 = uv.topLeft.y;
@@ -84,16 +73,53 @@ MeshData<GUIVertexData>* PrimitiveMeshFactory::createPlane2D(const glm::vec2 &si
 		x2, y2,
 		x2, y1
 	};
-	getPlaneUVs(vertexData, planeTexCoords);
 
-	// Indices
-	std::vector<uint32_t> indices;
-	createPlaneIndices(indices);
-
-	return new MeshData<GUIVertexData>{vertexData, indices};
+	return this->createPlane2D(size, planeTexCoords);
 }
 
-MeshData<VertexData>* PrimitiveMeshFactory::createPlane(float size)
+GUIMeshData* PrimitiveMeshFactory::createPlaneBottomUp(const glm::vec2& size)
+{
+	float planeTexCoords[] =
+	{
+		0, 1,
+		0, 0,
+		1, 0,
+		1, 1
+	};
+
+	return createPlane2D(size, planeTexCoords);
+}
+
+GUIMeshData* PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size, const float* texCoords)
+{
+	float planeVertices[] = 
+	{ 
+		-size.x, size.y,
+		-size.x,-size.y,
+		 size.x,-size.y,
+		 size.x, size.y
+	};
+
+	std::vector<GUIVertexData> vertexData;
+	// Positions
+	for (int i = 0; i < 8; i += 2)
+	{
+		GUIVertexData newData;
+		newData.position = glm::vec2(planeVertices[i], planeVertices[i + 1]);
+
+		vertexData.emplace_back(newData);
+	}
+
+	getPlaneUVs(vertexData, texCoords);
+
+	// Indices
+	std::vector<uint16_t> indices;
+	createPlaneIndices(indices);
+
+	return new GUIMeshData{vertexData, indices};
+}
+
+MeshData* PrimitiveMeshFactory::createPlane(float size, float tileMultiplier)
 {
 	float half = size * 0.5f;
 
@@ -123,19 +149,19 @@ MeshData<VertexData>* PrimitiveMeshFactory::createPlane(float size)
 
 		vertexData.emplace_back(newData);
 	}
-
+	
 	// UVs
 	float planeTexCoords[] = 
 	{ 
-		1, 0,
+		tileMultiplier, 0,
 		0, 0,
-		0, 1,
-		1, 1 
+		0, tileMultiplier,
+		tileMultiplier, tileMultiplier
 	};
 	getPlaneUVs(vertexData, planeTexCoords);
 
 	// Indices
-	std::vector<uint32_t> indices;
+	std::vector<uint16_t> indices;
 	createPlaneIndices(indices);
 
 	// Tangents and bitangents
@@ -159,10 +185,10 @@ MeshData<VertexData>* PrimitiveMeshFactory::createPlane(float size)
 		}
 	}
 
-	return new MeshData<VertexData>{vertexData, indices};
+	return new MeshData{vertexData, indices};
 }
 
-MeshData<VertexData>* PrimitiveMeshFactory::createCube(float size)
+MeshData* PrimitiveMeshFactory::createCube(float size)
 {
 	float half = size * 0.5f;
 
@@ -222,7 +248,7 @@ MeshData<VertexData>* PrimitiveMeshFactory::createCube(float size)
 		vertexData[i].v = cubeTexCoords[(2 * i) + 1];
 	}
 
-	std::vector<uint32_t> indices;
+	std::vector<uint16_t> indices;
 	for (int i = 0; i < 36; i++)
 		indices.push_back(cubeIndices[i]);
 
@@ -247,10 +273,15 @@ MeshData<VertexData>* PrimitiveMeshFactory::createCube(float size)
 		}
 	}
 
-	return new MeshData<VertexData>{ vertexData, indices };
+	return new MeshData{ vertexData, indices };
 }
 
-void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint32_t> &result, int planesCount)
+MeshData* PrimitiveMeshFactory::createSphere(float size)
+{
+	return nullptr;
+}
+
+void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint16_t> &result, int planesCount)
 {
 	unsigned char baseIndices[] = 
 	{ 
@@ -258,7 +289,7 @@ void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint32_t> &result, int
 		2, 3, 0,
 	};
 
-	for (int planeIndex = 0; planeIndex < planesCount; planeIndex++)
+	for (uint16_t planeIndex = 0; planeIndex < planesCount; planeIndex++)
 	{
 		for (int i = 0; i < 6; i++)
 			result.push_back(baseIndices[i] + (4 * planeIndex));

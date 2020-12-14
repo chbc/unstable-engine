@@ -10,14 +10,10 @@ namespace sre
 
 class Entity;
 
-template <typename TVertexData>
 class SRE_API ARenderableComponent : public AEntityComponent
 {
 protected:
-    uint32_t vao;
-    uint32_t vbo;
-    uint32_t ebo;
-    UPTR<MeshData<TVertexData>> meshData;
+    UPTR<AMeshData> meshData;
 
 protected:
     ARenderableComponent(Entity *entity) : AEntityComponent(entity) { }
@@ -30,6 +26,8 @@ protected:
             !this->meshData->indices.empty()
         );
     }
+
+    friend class Renderer;
 };
 
 } // namespace

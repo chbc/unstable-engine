@@ -438,6 +438,12 @@ void loop()
 int
 main(int argc, char* argv[])
 {
+	for (int i = 0; i < argc; i++)
+	{
+		SDL_Log("XXX ARGV[%d] -> %s", i, argv[i]);
+	}
+
+
 	int fsaa, accel;
 	int value;
 	int i;

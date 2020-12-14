@@ -1,9 +1,6 @@
 #include <iostream>
 #include <application/SampleApplication.h>
 
-#include <ClasseA.h>
-
-
 #include <SDL_log.h>
 
 extern "C" __attribute__((visibility("default"))) int SDL_main(int argc, char** argv);

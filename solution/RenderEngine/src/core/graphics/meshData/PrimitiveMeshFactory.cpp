@@ -276,6 +276,11 @@ MeshData* PrimitiveMeshFactory::createCube(float size)
 	return new MeshData{ vertexData, indices };
 }
 
+MeshData* PrimitiveMeshFactory::createSphere(float size)
+{
+	return nullptr;
+}
+
 void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint32_t> &result, int planesCount)
 {
 	unsigned char baseIndices[] = 

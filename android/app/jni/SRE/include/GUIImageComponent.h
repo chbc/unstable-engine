@@ -2,27 +2,26 @@
 #define _GUI_IMAGE_COMPONENT_H_
 
 #include "ARenderableComponent.h"
+#include <string>
 
 namespace sre
 {
 
-class GUIImageComponent : public ARenderableComponent<GUIVertexData>
+class GUIImageComponent : public ARenderableComponent
 {
 private:
     glm::vec2 uiPosition;
     uint32_t textureId;
+    bool isDynamic; // ###
 
 protected:
     uint32_t maxItems; // ###
-
-private:
-    bool isDynamic; // ###
 
 protected:
     GUIImageComponent(Entity *entity, uint32_t arg_maxItems = 0);
 
 public:
-    void setUIPosition(const glm::vec2 &position);
+	SRE_API void setUIPosition(const glm::vec2 &position);
     glm::vec2 getUIPosition();
     virtual uint32_t getTextureId();
     inline bool getIsDynamic() { return this->isDynamic; }

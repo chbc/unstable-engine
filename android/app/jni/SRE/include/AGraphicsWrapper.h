@@ -8,21 +8,20 @@
 namespace sre
 {
 
-class MeshComponent;
-class GUIImageComponent;
-
 struct GUIVertexData;
-template <typename T> struct MeshData;
+struct AMeshData;
+struct MeshData;
+struct GUIMeshData;
 
 class AGraphicsWrapper : ASingleton
 {
 protected:
     AGraphicsWrapper() {}
 
-    virtual void createVAO(MeshComponent *mesh) =0;
-    virtual void createEBO(MeshComponent *mesh) =0;
-    virtual void createGUIVAO(GUIImageComponent *guiComponent) =0;
-    virtual void createGUIEBO(GUIImageComponent *guiComponent) =0;
+    virtual void createVAO(MeshData* meshData) =0;
+    virtual void createEBO(MeshData* meshData) =0;
+    virtual void createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic) =0;
+    virtual void createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic) =0;
 
     virtual void bindVAO(uint32_t vao, uint32_t vbo) =0;
     virtual void enableGUISettings() =0;
@@ -37,9 +36,10 @@ protected:
     virtual void activateSpecularTexture(uint32_t textureId) =0;
     virtual void activateAOTexture(uint32_t textureId) =0;
 
-    virtual void setupBufferSubData(const MeshData<GUIVertexData> *meshData) =0;
+    virtual void setupBufferSubData(GUIMeshData* meshData) =0;
 
-    virtual void drawElement(uint32_t indicesSize) =0;
+    virtual void drawElement(uint32_t indicesSize) {}
+    virtual void drawElement(uint32_t indicesId, uint32_t indicesSize) {}
 
     virtual void disableVertexPositions() =0;
     virtual void disableVertexNormals() =0;
@@ -50,6 +50,7 @@ protected:
 
     virtual void clearBuffer() =0;
     virtual void clearDepthBuffer() =0;
+    virtual void clearColorAndDepthBuffer() =0;
     virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit, bool genMipmap) =0;
     virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint32_t unit) =0;
     virtual uint32_t generateCubemap(uint32_t width, uint32_t height, uint32_t unit) =0;
@@ -65,6 +66,7 @@ protected:
     virtual int getUniformLocation(uint32_t program, const std::string &varName) = 0;
     virtual void setInt(uint32_t program, int location, int value) =0;
     virtual void setFloat(uint32_t program, int location, float value) =0;
+    virtual void setVec2(uint32_t program, int location, const float* value) = 0;
     virtual void setVec3(uint32_t program, int location, const float *value) =0;
     virtual void setVec4(uint32_t program, int location, const float *value) =0;
     virtual void setMat4(uint32_t program, int location, const float *value) =0;
@@ -72,8 +74,7 @@ protected:
     virtual void enableShader(uint32_t program) =0;
     virtual void disableShader() =0;
     virtual void releaseShader(uint32_t program, std::vector<uint32_t> components) =0;
-    virtual void deleteBuffers(MeshComponent *mesh) =0;
-    virtual void deleteBuffers(GUIImageComponent *guiComponent) =0;
+    virtual void deleteBuffers(AMeshData *mesh) =0;
 
     virtual void generateFrameBuffer(uint32_t &fbo, uint32_t textureId, bool cubemap = false) =0;
     virtual void bindFrameBuffer(uint32_t fbo) =0;

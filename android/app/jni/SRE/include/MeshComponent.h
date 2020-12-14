@@ -10,12 +10,12 @@ namespace sre
 /*!
 	Class that holds information for rendering.
 */
-class SRE_API MeshComponent : public ARenderableComponent<VertexData>
+class SRE_API MeshComponent : public ARenderableComponent
 {
 private:
     UPTR<Material> material;
 
-    MeshComponent(Entity *entity, MeshData<VertexData> *meshData);
+    MeshComponent(Entity *entity, MeshData* meshData);
 
 public:
     Material *getMaterial();
@@ -32,7 +32,7 @@ friend class RenderManager;
 friend class Entity;
 friend class OpenGLAPI;
 friend class OpenGLESAPI;
-friend class Renderer;
+friend class MeshRenderer;
 friend class ShadowRenderer;
 friend class VertexDataFactory;
 friend class LightManager;

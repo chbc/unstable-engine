@@ -941,13 +941,9 @@ SDLTest_CommonInit(SDLTest_CommonState * state)
         }
         fullscreen_mode.refresh_rate = state->refresh_rate;
 
-		SDL_Log("XXX SDL test_common 1");
-
         state->windows =
             (SDL_Window **) SDL_calloc(state->num_windows,
                                         sizeof(*state->windows));
-										
-		SDL_Log("XXX SDL test_common 2");
 		
         state->renderers =
             (SDL_Renderer **) SDL_calloc(state->num_windows,
@@ -956,42 +952,28 @@ SDLTest_CommonInit(SDLTest_CommonState * state)
             (SDL_Texture **) SDL_calloc(state->num_windows,
                                         sizeof(*state->targets));
         if (!state->windows || !state->renderers) {
-			SDL_Log("XXX SDL test_common 3");
-            SDL_Log("Out of memory!\n");
             return SDL_FALSE;
         }
         for (i = 0; i < state->num_windows; ++i) {
             char title[1024];
 
-			SDL_Log("XXX SDL test_common 4");
-
             if (state->num_windows > 1) {
                 SDL_snprintf(title, SDL_arraysize(title), "%s %d",
                              state->window_title, i + 1);
-							 
-				 SDL_Log("XXX SDL test_common 5");
             } else {
                 SDL_strlcpy(title, state->window_title, SDL_arraysize(title));
-				SDL_Log("XXX SDL test_common 6");
             }
 			
-			SDL_Log("XXX SDL test_common 7");
             state->windows[i] =
                 SDL_CreateWindow("Titulo", state->window_x, state->window_y,
                                  state->window_w, state->window_h,
                                  state->window_flags);
 								 
-			SDL_Log("XXX SDL test_common 8");
-								 
             if (!state->windows[i]) {
                 SDL_Log("Couldn't create window: %s\n",
                         SDL_GetError());
-						
-						SDL_Log("XXX SDL test_common 9");
                 return SDL_FALSE;
             }
-			
-			SDL_Log("XXX SDL test_common 10");
 			
             if (state->window_minW || state->window_minH) {
                 SDL_SetWindowMinimumSize(state->windows[i], state->window_minW, state->window_minH);

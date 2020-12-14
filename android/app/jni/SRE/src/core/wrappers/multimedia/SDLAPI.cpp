@@ -1,56 +1,27 @@
 #include "SDLAPI.h"
-#include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_test_common.h>
 #include "InputHandler.h"
 #include <cstring>
+
+// XXX #define HAVE_OPENGLES2
+
+#include "SDL_opengles2.h"
 
 namespace sre
 {
 
 static SDLTest_CommonState* state;
 static SDL_GLContext* context = NULL;
-static int depth = 16;
-
-static void quit(int rc)
-{
-	int i;
-
-	if (context != NULL) {
-		for (i = 0; i < state->num_windows; i++) {
-			if (context[i]) {
-				SDL_GL_DeleteContext(context[i]);
-			}
-		}
-
-		SDL_free(context);
-	}
-
-	SDLTest_CommonQuit(state);
-	exit(rc);
-}
 
 void SDLAPI::init(float width, float height, const std::string &title)
 {
-	SDL_Event event;
-	Uint32 then, now, frames;
-	int status;
-
-	/* Enable standard application logging */
-	SDL_LogSetPriority(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO);
-
-	SDL_Log("XXX SDL init 1");
-
+	const int depth = 16;
+	char** argv = new char*[1];
+	argv[0] = new char[15]{"Nome do jogo"};
 
 	/* Initialize test framework */
-	char** arguments = (char**)malloc(10 * sizeof(char*));
-	arguments[0] = "T";
-	
-	state = SDLTest_CommonCreateState(arguments, SDL_INIT_VIDEO);
-	if (!state)
-		return;
-
-	SDL_Log("XXX SDL init 2");
+	state = SDLTest_CommonCreateState(argv, SDL_INIT_VIDEO);
 
 	/* Set OpenGL parameters */
 	state->window_flags |= SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_BORDERLESS;
@@ -58,65 +29,46 @@ void SDLAPI::init(float width, float height, const std::string &title)
 	state->gl_green_size = 5;
 	state->gl_blue_size = 5;
 	state->gl_depth_size = depth;
-	state->gl_major_version = 1;
-	state->gl_minor_version = 1;
+	state->gl_major_version = 2;
+	state->gl_minor_version = 0;
 	state->gl_profile_mask = SDL_GL_CONTEXT_PROFILE_ES;
 
-	if (!SDLTest_CommonInit(state)) {
-		quit(2);
-	}
-
-	delete[] arguments;
-
-	SDL_Log("XXX SDL init 3");
+	SDLTest_CommonInit(state);
 
 	context = (SDL_GLContext*)SDL_calloc(state->num_windows, sizeof(context));
-	if (context == NULL) {
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "XXX Out of memory!\n");
-		quit(2);
-	}
 
-	SDL_Log("XXX SDL init 4");
-
+	/* Create OpenGL ES contexts */
 	context[0] = SDL_GL_CreateContext(state->windows[0]);
-	if (!context[0]) {
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "XXX SDL_GL_CreateContext(): %s\n", SDL_GetError());
-		quit(2);
-	}
 
-	SDL_Log("XXX SDL init 5");
-
-	if (state->render_flags & SDL_RENDERER_PRESENTVSYNC) {
+	if (state->render_flags & SDL_RENDERER_PRESENTVSYNC)
 		SDL_GL_SetSwapInterval(1);
-	}
-	else {
+	else
 		SDL_GL_SetSwapInterval(0);
-	}
 
-	SDL_Log("XXX SDL init 6");
+	SDL_DisplayMode mode;
+	SDL_GetCurrentDisplayMode(0, &mode);
+	SDL_Log("Screen bpp: %d\n", SDL_BITSPERPIXEL(mode.format));
+	SDL_Log("\n");
+	SDL_Log("Vendor     : %s\n", glGetString(GL_VENDOR));
+	SDL_Log("Renderer   : %s\n", glGetString(GL_RENDERER));
+	SDL_Log("Version    : %s\n", glGetString(GL_VERSION));
+	SDL_Log("Extensions : %s\n", glGetString(GL_EXTENSIONS));
+	SDL_Log("\n");
 
-	status = SDL_GL_MakeCurrent(state->windows[0], context[0]);
-	if (status)
-	{
-		SDL_Log("XXX SDL_GL_MakeCurrent(): %s\n", SDL_GetError());
-	}
+	/* Set rendering settings for each context */
+	int w, h;
+	SDL_GL_MakeCurrent(state->windows[0], context[0]);
 
-	SDL_Log("XXX SDL init 7");
+	SDL_GL_GetDrawableSize(state->windows[0], &w, &h);
+	glViewport(0, 0, w, h);
 
-	this->window = state->windows[0];
-	/*
-	int imgFlags = IMG_INIT_PNG;
-	if (!(IMG_Init(imgFlags) & imgFlags))
-	{
-		SDL_Log("XXX SDL init ERROR 8: #s", IMG_GetError());
-		quit(1);
-	}
-	*/
+	delete [] argv[0];
+	delete [] argv;
 }
 
 void SDLAPI::swapBuffers()
 {
-	SDL_GL_SwapWindow(this->window);
+	SDL_GL_SwapWindow(state->windows[0]);
 }
 
 void SDLAPI::processInput(InputHandler *inputHandler)
@@ -211,9 +163,20 @@ void SDLAPI::log(const std::string& type, const std::string& message)
 
 void SDLAPI::release()
 {
-	SDL_DestroyWindow(this->window);
+	int i;
+
+	if (context != NULL) {
+		for (i = 0; i < state->num_windows; i++) {
+			if (context[i]) {
+				SDL_GL_DeleteContext(context[i]);
+			}
+		}
+
+		SDL_free(context);
+	}
+
 	IMG_Quit();
-	SDL_Quit();
+	SDLTest_CommonQuit(state);
 }
 
 std::string SDLAPI::getError()

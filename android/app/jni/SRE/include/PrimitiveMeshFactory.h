@@ -13,15 +13,18 @@ class PrimitiveMeshFactory
 {
 public:
 	void createVerticesPlane2D(const glm::vec2 &size, const Rect &uv, const glm::vec2 &offset, std::vector<GUIVertexData> &result);
-	MeshData<GUIVertexData> *createPlane2D(const glm::vec2 &size);
-	MeshData<GUIVertexData> *createPlane2D(const glm::vec2 &size, const Rect &uv, float xOffset = 0.0f);
-	MeshData<VertexData> *createPlane(float size);
-	MeshData<VertexData> *createCube(float size);
-	void createPlaneIndices(std::vector<uint32_t> &result, int planesCount = 1);
+	GUIMeshData* createPlaneTopDown(const glm::vec2 &size);
+	GUIMeshData* createPlaneTopDown(const glm::vec2& size, const Rect& uv);
+	GUIMeshData* createPlaneBottomUp(const glm::vec2& size);
+	GUIMeshData* createPlane2D(const glm::vec2 &size, const float* texCoords);
+	MeshData* createPlane(float size, float tileMultiplier);
+	MeshData* createCube(float size);
+	MeshData* createSphere(float size);
+	void createPlaneIndices(std::vector<uint16_t> &result, int planesCount = 1);
 
 private:
 	template <typename T>
-	void getPlaneUVs(std::vector<T> &vertexData, float *planeTexCoords)
+	void getPlaneUVs(std::vector<T> &vertexData, const float *planeTexCoords)
 	{
 		for (int i = 0; i < 4; i++)
 		{

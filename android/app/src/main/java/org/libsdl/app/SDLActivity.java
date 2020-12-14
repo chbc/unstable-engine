@@ -139,7 +139,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         return new String[] {
             "hidapi",
             "SDL2",
-			"Classes",
 			"SRE",
             "SDL2_image",
             // "SDL2_mixer",

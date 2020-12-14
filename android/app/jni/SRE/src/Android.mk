@@ -22,8 +22,6 @@ ALL_SRC := $(filter %.cpp, $(ALL_SRC))
 
 # LOCAL_SRC_FILES := $(ALL_SRC)
 
-
-
 #traverse all the directory and subdirectory
 define walk
   $(wildcard $(1)) $(foreach e, $(wildcard $(1)/*), $(call walk, $(e)))
@@ -34,9 +32,6 @@ ALLFILES = $(call walk, $(LOCAL_PATH))
 FILE_LIST := $(filter %.cpp, $(ALLFILES))
 
 LOCAL_SRC_FILES := $(FILE_LIST:$(LOCAL_PATH)/%=%)
-
-
-
 
 # LOCAL_CFLAGS += -Wall
 LOCAL_CFLAGS += -DSRE_ANDROID

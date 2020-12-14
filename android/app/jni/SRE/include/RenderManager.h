@@ -22,7 +22,8 @@ class DirectionalLightComponent;
 class PointLightComponent;
 
 struct GUIVertexData;
-template <typename T> struct MeshData;
+struct MeshData;
+struct GUIMeshData;
 
 /*!
 	Singleton Class to handle renders
@@ -51,6 +52,7 @@ protected:
     void release() {}
 
 private:
+    void initCamera(CameraComponent *camera);
     void addEntity(Entity *entity);
     void addMesh(MeshComponent *mesh);
     void addGUIComponent(GUIImageComponent *guiComponent);
@@ -78,7 +80,7 @@ private:
     Texture *loadSpecularTexture(const std::string &fileName);
     Texture *loadAOTexture(const std::string &fileName);
 
-    void setupBufferSubData(const GUIImageComponent *guiComponent);
+    void setupBufferSubData(GUIMeshData* meshData);
     void removeDestroyedEntities();
 
 friend class AEntityManager;

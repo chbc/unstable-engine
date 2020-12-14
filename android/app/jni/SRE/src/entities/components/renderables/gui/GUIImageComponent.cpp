@@ -1,11 +1,11 @@
 #include "GUIImageComponent.h"
-#include "RenderManager.h"
 #include "MultimediaManager.h"
 #include "SingletonsManager.h"
-#include "Texture.h"
+#include "TextureManager.h"
 #include "AtlasManager.h"
 #include "TransformComponent.h"
 #include "PrimitiveMeshFactory.h"
+#include "RenderManager.h"
 
 namespace sre
 {
@@ -19,12 +19,12 @@ GUIImageComponent::GUIImageComponent(Entity *entity, uint32_t arg_maxItems)
 
 void GUIImageComponent::load(const std::string &fileName)
 {
-    Texture *texture = SingletonsManager::getInstance()->resolve<RenderManager>()->loadGUITexture(fileName);
+    Texture* texture = SingletonsManager::getInstance()->resolve<RenderManager>()->loadGUITexture(fileName);
     glm::vec2 pixelSize(texture->getWidth(), texture->getHeight());
     glm::vec2 screenBasedSize = SingletonsManager::getInstance()->resolve<MultimediaManager>()->getNormalizedSize(pixelSize);
 
-	MeshData<GUIVertexData> *plane = PrimitiveMeshFactory().createPlane2D(screenBasedSize);
-	this->meshData = UPTR<MeshData<GUIVertexData>>{ plane };
+	GUIMeshData* plane = PrimitiveMeshFactory().createPlaneTopDown(screenBasedSize);
+	this->meshData = UPTR<GUIMeshData>{ plane };
     this->textureId = texture->getId();
 }
 
@@ -34,8 +34,8 @@ void GUIImageComponent::loadFromAtlas(const std::string &fileName, const std::st
 
     const AtlasItem *atlasItem = atlas->getItem(imageId);
 
-	MeshData<GUIVertexData> *plane = PrimitiveMeshFactory().createPlane2D(atlasItem->normalizedSize, atlasItem->uv);
-	this->meshData = UPTR<MeshData<GUIVertexData>>{ plane };
+	GUIMeshData *plane = PrimitiveMeshFactory().createPlaneTopDown(atlasItem->normalizedSize, atlasItem->uv);
+	this->meshData = UPTR<GUIMeshData>{ plane };
     this->textureId = atlas->getTextureId();
 }
 

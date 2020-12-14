@@ -9,10 +9,17 @@ namespace sre
 
 namespace ShaderFiles
 {
+#ifdef __ANDROID__
+    const std::string MAIN_H_V      = "shaders/es/main_h.vert";
+    const std::string MAIN_IMPL_V   = "shaders/es/main_impl.vert";
+    const std::string MAIN_H_F      = "shaders/es/main_h.frag";
+    const std::string MAIN_IMPL_F   = "shaders/es/main_impl.frag";
+#else    
     const std::string MAIN_H_V      = "shaders/main_h.vert";
     const std::string MAIN_IMPL_V   = "shaders/main_impl.vert";
     const std::string MAIN_H_F      = "shaders/main_h.frag";
     const std::string MAIN_IMPL_F   = "shaders/main_impl.frag";
+#endif
 
     const std::string GUI_V = "../../shaders/gui/gui.vert";
     const std::string GUI_F = "../../shaders/gui/gui.frag";

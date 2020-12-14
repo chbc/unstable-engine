@@ -15,13 +15,6 @@ public:
 
 protected:
 	void onInit();
-	void onUpdate(unsigned int elapsedTime);
-
-private:
-	Entity* createCube();
-	void createLights();
-    void createRoom();
-	void createHouse();
 };
 
 #endif

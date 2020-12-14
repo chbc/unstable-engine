@@ -23,7 +23,6 @@ void ShaderContentFactory::createShaderContent
 
 	SDL_Log("XXX ShaderContentFactory - createShaderContent 1");
 
-	/* ###
     for (std::size_t i = EComponentId::COLOR_MATERIAL; i <= EComponentId::AO_MATERIAL; i++)
     {
 		SDL_Log("XXX ShaderContentFactory - createShaderContent 2");
@@ -54,14 +53,17 @@ void ShaderContentFactory::createShaderContent
                     this->loadDiffuseContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
                 case EComponentId::NORMAL_MATERIAL:
+                    SDL_Log("XXX ShaderContentFactory - createShaderContent | NORMAL_MATERIAL");
                     this->loadNormalMapContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadNormalMapContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
                 case EComponentId::SPECULAR_MATERIAL:
+                    SDL_Log("XXX ShaderContentFactory - createShaderContent | SPECULAR_MATERIAL");
                     this->loadSpecularMapContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadSpecularMapContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
                 case EComponentId::AO_MATERIAL:
+                    SDL_Log("XXX ShaderContentFactory - createShaderContent | AO_MATERIAL");
                     this->loadAOMapContentHeader(vertexContentHeader, fragmentContentHeader);
                     this->loadAOMapContentImplementation(vertexContentImpl, fragmentContentImpl);
                     break;
@@ -69,12 +71,17 @@ void ShaderContentFactory::createShaderContent
             }
         }
     }
-	*/
 
 	SDL_Log("XXX ShaderContentFactory - createShaderContent 3");
     
+#ifdef __ANDROID__
+    outVertexContent = vertexContentHeader + vertexContentImpl;
+    outFragmentContent = fragmentContentHeader + fragmentContentImpl;
+#else
     outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
     outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
+#endif
+
 }
 
 } // namespace

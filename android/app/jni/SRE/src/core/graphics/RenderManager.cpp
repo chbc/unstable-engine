@@ -46,6 +46,14 @@ void RenderManager::init()
     this->matrixManager->setProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 1000);
 }
 
+void RenderManager::initCamera(CameraComponent* camera)
+{
+    MultimediaManager* multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
+    const float FOV{ 120.0f };
+    // XXX camera->setPerspectiveProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 1000);
+    this->setMainCamera(camera);
+}
+
 void RenderManager::addEntity(Entity *entity)
 {
     if (entity->hasComponent<MeshComponent>())
@@ -227,10 +235,10 @@ Texture *RenderManager::loadAOTexture(const std::string &fileName)
     return this->textureManager->loadAOTexture(fileName);
 }
 
-void RenderManager::setupBufferSubData(const GUIImageComponent *guiComponent)
+void RenderManager::setupBufferSubData(GUIMeshData* meshData)
 {
-    this->graphicsWrapper->bindVAO(guiComponent->vao, guiComponent->vbo);
-    this->graphicsWrapper->setupBufferSubData(guiComponent->meshData.get());
+    this->graphicsWrapper->bindVAO(meshData->vao, meshData->vbo);
+    this->graphicsWrapper->setupBufferSubData(meshData);
 }
 
 void RenderManager::removeDestroyedEntities()

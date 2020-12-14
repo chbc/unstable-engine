@@ -13,14 +13,14 @@ SceneManager::SceneManager() : AEntityManager()
 {
     Entity *mainCamera = this->createEntity();
     CameraComponent *cameraComponent = mainCamera->addComponent<CameraComponent>();
-    this->addEntity(mainCamera, "_main_camera");
+    AEntityManager::addEntity(mainCamera, "_main_camera");
 
-    SingletonsManager::getInstance()->resolve<RenderManager>()->setMainCamera(cameraComponent);
+    SingletonsManager::getInstance()->resolve<RenderManager>()->initCamera(cameraComponent);
 }
 
-Entity *SceneManager::createPlaneEntity(float size)
+Entity *SceneManager::createPlaneEntity(float size, float tileMultiplier)
 {
-	return this->createMeshEntity(PrimitiveMeshFactory().createPlane(size));
+	return this->createMeshEntity(PrimitiveMeshFactory().createPlane(size, tileMultiplier));
 }
 
 Entity *SceneManager::createCubeEntity(float size)
@@ -38,18 +38,19 @@ Entity *SceneManager::createModelEntity(const std::string &fileName)
 }
 
 // light //
-DirectionalLightComponent *SceneManager::addDirectionalLight()
+DirectionalLightComponent *SceneManager::addDirectionalLight(const std::string& name)
 {
     DirectionalLightComponent *result = nullptr;
     Entity *newEntity = this->createEntity();
     RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
     result = renderManager->addDirectionalLight(newEntity);
 
-    this->addEntity(newEntity);
+    std::string resultName = name.empty() ? "directional_light" : name;
+    this->addEntity(newEntity, resultName);
     return result;
 }
 
-PointLightComponent *SceneManager::addPointLight()
+PointLightComponent *SceneManager::addPointLight(const std::string& name)
 {
     PointLightComponent *result = nullptr;
     Entity *newEntity = this->createEntity();
@@ -57,7 +58,8 @@ PointLightComponent *SceneManager::addPointLight()
     RenderManager *renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
     result = renderManager->addPointLight(newEntity);
 
-    this->addEntity(newEntity);
+    std::string resultName = name.empty() ? "directional_light" : name;
+    this->addEntity(newEntity, resultName);
     return result;
 }
 
@@ -66,7 +68,7 @@ CameraComponent *SceneManager::getMainCamera()
 	return SingletonsManager::getInstance()->resolve<RenderManager>()->getMainCamera();
 }
 
-Entity *SceneManager::createMeshEntity(MeshData<VertexData> *objectData)
+Entity *SceneManager::createMeshEntity(MeshData* objectData)
 {
     Entity *newEntity = this->createEntity();
 	newEntity->addComponent<MeshComponent>(objectData);
