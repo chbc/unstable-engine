@@ -55,12 +55,6 @@
       "abi": "armeabi-v7a",
       "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libSDL2.so"
     },
-    "Classes-debug-armeabi-v7a": {
-      "artifactName": "Classes",
-      "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libClasses.so",
-      "abi": "armeabi-v7a",
-      "output": "D:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\armeabi-v7a\\libClasses.so"
-    },
     "SRE-debug-armeabi-v7a": {
       "artifactName": "SRE",
       "buildCommand": "D:\\Programas\\Android\\SDK\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Android.mk NDK_APPLICATION_MK\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-16 NDK_OUT\u003dD:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dD:\\Projetos\\OpenGL\\SRE\\android\\app\\build\\intermediates\\ndkBuild\\debug\\lib APP_PLATFORM\u003dandroid-16 DANDROID_STL\u003dc++_static D:/Projetos/OpenGL/SRE/android/app/build/intermediates/ndkBuild/debug/obj/local/armeabi-v7a/libSRE.so",

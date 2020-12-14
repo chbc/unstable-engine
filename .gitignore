@@ -20,3 +20,5 @@ android/app/src/main/assets/
 *.ilk
 *.pdb
 *.user
+android/app/build/
+android/app/.vscode/

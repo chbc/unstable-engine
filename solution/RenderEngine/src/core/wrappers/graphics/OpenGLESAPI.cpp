@@ -1,17 +1,106 @@
-#if 0
-
-#include <windows.h>
-#define GLEW_STATIC
-#include <GL/glew.h>
+#ifdef __ANDROID__
 
 #include "OpenGLESAPI.h"
-#include "MeshComponent.h"
+#include "MeshData.h"
 #include "GUIImageComponent.h"
 #include "MultimediaManager.h"
 #include "SingletonsManager.h"
 
+#include "SDL_test_common.h"
+
+#define HAVE_OPENGLES2
+
+#include "SDL_opengles2.h"
+
+#define GL_CHECK(x) \
+        x; \
+        { \
+          GLenum glError = glGetError(); \
+          if(glError != GL_NO_ERROR) { \
+            SDL_Log("XXX glGetError() = %i (0x%.8x) at line %i\n", glError, glError, __LINE__); \
+          } \
+        }
+
+/*
+ * Simulates gluPerspectiveMatrix
+ */
+static void
+TEST_perspective_matrix(float fovy, float aspect, float znear, float zfar, float* r)
+{
+	int i;
+	float f;
+
+	f = 1.0f / SDL_tanf(fovy * 0.5f);
+
+	for (i = 0; i < 16; i++) {
+		r[i] = 0.0;
+	}
+
+	r[0] = f / aspect;
+	r[5] = f;
+	r[10] = (znear + zfar) / (znear - zfar);
+	r[11] = -1.0f;
+	r[14] = (2.0f * znear * zfar) / (znear - zfar);
+	r[15] = 0.0f;
+}
+
+/*
+ * Multiplies lhs by rhs and writes out to r. All matrices are 4x4 and column
+ * major. In-place multiplication is supported.
+ */
+static void
+TEST_multiply_matrix(float* lhs, float* rhs, float* r)
+{
+	int i, j, k;
+	float tmp[16];
+
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			tmp[j * 4 + i] = 0.0;
+
+			for (k = 0; k < 4; k++) {
+				tmp[j * 4 + i] += lhs[k * 4 + i] * rhs[j * 4 + k];
+			}
+		}
+	}
+
+	for (i = 0; i < 16; i++) {
+		r[i] = tmp[i];
+	}
+}
+
+void TEST_process_shader(GLuint* shader, const char* source, GLint shader_type)
+{
+	GLint status = GL_FALSE;
+	const char* shaders[1] = { NULL };
+	char buffer[1024];
+	GLsizei length;
+
+	/* Create shader and load into GL. */
+	*shader = GL_CHECK(glCreateShader(shader_type));
+
+	shaders[0] = source;
+
+	GL_CHECK(glShaderSource(*shader, 1, shaders, NULL));
+
+	/* Clean up shader source. */
+	shaders[0] = NULL;
+
+	/* Try compiling the shader. */
+	GL_CHECK(glCompileShader(*shader));
+	GL_CHECK(glGetShaderiv(*shader, GL_COMPILE_STATUS, &status));
+
+	/* Dump debug info (source and log) if compilation failed. */
+	if (status != GL_TRUE) {
+		glGetProgramInfoLog(*shader, sizeof(buffer), &length, &buffer[0]);
+		buffer[length] = '\0';
+		SDL_Log("Shader compilation failed: %s", buffer); fflush(stderr);
+	}
+}
+
 namespace sre
 {
+
 	namespace EAttribLocation
 	{
 
@@ -28,372 +117,130 @@ namespace sre
 
 	void OpenGLESAPI::init()
 	{
-		this->multimediaManager = SingletonsManager::getInstance()->get<MultimediaManager>();
+		int status;
 
-#ifndef __ANDROID__
-		glewExperimental = GL_TRUE;
-		if (glewInit() != GLEW_OK)
-			throw std::string("GLEW didn't inited");
-#endif
-
-		const GLubyte* glVersion = glGetString(GL_VERSION);
-		std::string strGLVersion((char*)(glVersion));
-		multimediaManager->logMessage("OpenGL Version: " + strGLVersion);
-
-		glClearColor(0.1f, 0.1f, 0.2f, 1.0f);
-
-		glEnable(GL_CULL_FACE);
-		glEnable(GL_DEPTH_TEST);
+		GL_CHECK(glEnable(GL_CULL_FACE));
+		GL_CHECK(glEnable(GL_DEPTH_TEST));
 	}
+
+	void OpenGLESAPI::release() { }
 
 	void OpenGLESAPI::createVAO(MeshData* meshData)
 	{
-		/* ###
-		// data
-		int dataSize = mesh->meshData->vertexData.size();
-
-		// VAO
-		glGenVertexArrays(1, &mesh->vao);
-		glBindVertexArray(mesh->vao);
-
-		// VBO
-		glGenBuffers(1, &mesh->vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-		glBufferData(GL_ARRAY_BUFFER, dataSize * sizeof(VertexData), &mesh->meshData->vertexData[0], GL_STATIC_DRAW);
-		*/
+		int dataSize = meshData->vertexData.size();
+		GL_CHECK(glGenBuffers(1, &meshData->vbo));
+		GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, meshData->vbo));
+		GL_CHECK(glBufferData(GL_ARRAY_BUFFER, dataSize * sizeof(VertexData), &meshData->vertexData[0], GL_STATIC_DRAW));
 	}
 
 	void OpenGLESAPI::createEBO(MeshData* meshData)
 	{
-		/* ###
-		// EBO
-		glGenBuffers(1, &mesh->ebo);
-		int size = mesh->meshData->indices.size();
+		GL_CHECK(glGenBuffers(1, &meshData->ebo));
+		int size = meshData->indices.size();
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &mesh->meshData->indices[0], GL_STATIC_DRAW);
-		*/
+		GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->ebo));
+		GL_CHECK(glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint16_t), &meshData->indices[0], GL_STATIC_DRAW));
 	}
 
-	void OpenGLESAPI::createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic)
-	{
-		/* ###
-		void* data = nullptr;
-		int size = guiComponent->maxItems * 4;
-		GLenum usage = GL_DYNAMIC_DRAW;
+	void OpenGLESAPI::createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic) { }
 
-		// data
-		if (!guiComponent->isDynamic)
-		{
-			data = &guiComponent->meshData->vertexData[0];
-			size = guiComponent->meshData->vertexData.size();
-			usage = GL_STATIC_DRAW;
-		}
-
-		// VAO
-		glGenVertexArrays(1, &guiComponent->vao);
-		glBindVertexArray(guiComponent->vao);
-
-		// VBO
-		glGenBuffers(1, &guiComponent->vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, guiComponent->vbo);
-		glBufferData(GL_ARRAY_BUFFER, size * sizeof(GUIVertexData), data, usage);
-		*/
-	}
-
-	void OpenGLESAPI::createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic)
-	{
-		/* ###
-		void* data = nullptr;
-		int size = guiComponent->maxItems * 6;
-		GLenum usage = GL_DYNAMIC_DRAW;
-
-		if (!guiComponent->isDynamic)
-		{
-			data = &guiComponent->meshData->indices[0];
-			size = guiComponent->meshData->indices.size();
-			usage = GL_STATIC_DRAW;
-		}
-
-		// EBO
-		glGenBuffers(1, &guiComponent->ebo);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, guiComponent->ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), data, usage);
-		*/
-	}
+	void OpenGLESAPI::createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic) { }
 
 	void OpenGLESAPI::bindVAO(uint32_t vao, uint32_t vbo)
 	{
-		/* ###
-		glBindVertexArray(vao);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		*/
+		GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, vbo));
 	}
 
 	void OpenGLESAPI::enableGUISettings()
 	{
-		glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
-		glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), ABaseVertexData::getUVOffset());
-		glEnableVertexAttribArray(EAttribLocation::POSITION);
-		glVertexAttribPointer(EAttribLocation::POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), GUIVertexData::getPositionOffset());
+		GL_CHECK(glEnableVertexAttribArray(EAttribLocation::TEXCOORDS));
+		GL_CHECK(glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), ABaseVertexData::getUVOffset()));
+		GL_CHECK(glEnableVertexAttribArray(EAttribLocation::POSITION));
+		GL_CHECK(glVertexAttribPointer(EAttribLocation::POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), GUIVertexData::getPositionOffset()));
 
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glEnable(GL_BLEND);
-	}
-
-	void OpenGLESAPI::enablePostProcessingSettings()
-	{
-		glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
-		glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), ABaseVertexData::getUVOffset());
-		glEnableVertexAttribArray(EAttribLocation::POSITION);
-		glVertexAttribPointer(EAttribLocation::POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), GUIVertexData::getPositionOffset());
+		GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+		GL_CHECK(glEnable(GL_BLEND));
 	}
 
 	void OpenGLESAPI::enableVertexPositions()
 	{
-		/* ###
-		glEnableVertexAttribArray(EAttribLocation::POSITION);
-		glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getPositionOffset());
-		*/
+		GL_CHECK(glEnableVertexAttribArray(EAttribLocation::POSITION));
+		GL_CHECK(glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getPositionOffset()));
 	}
 
-	void OpenGLESAPI::enableVertexNormals()
+	void OpenGLESAPI::enableVertexNormals() { }
+
+	void OpenGLESAPI::enableTexCoords() { }
+
+	void OpenGLESAPI::enableVertexTangents() { }
+
+	void OpenGLESAPI::enableVertexBitangents() { }
+
+	void OpenGLESAPI::activateGUITexture(uint32_t textureId) { }
+
+	void OpenGLESAPI::activateDiffuseTexture(uint32_t textureId) { }
+
+	void OpenGLESAPI::activateNormalTexture(uint32_t textureId) { }
+
+	void OpenGLESAPI::activateSpecularTexture(uint32_t textureId) { }
+
+	void OpenGLESAPI::activateAOTexture(uint32_t textureId) { }
+
+	void OpenGLESAPI::activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap) { }
+
+	void OpenGLESAPI::setupBufferSubData(GUIMeshData* meshData) { }
+
+	void OpenGLESAPI::drawElement(uint32_t indicesId, uint32_t indicesSize)
 	{
-		glEnableVertexAttribArray(EAttribLocation::NORMAL);
-		glVertexAttribPointer(EAttribLocation::NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getNormalOffset());
-	}
+		GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT));
 
-	void OpenGLESAPI::enableTexCoords()
-	{
-		glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
-		glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), ABaseVertexData::getUVOffset());
-	}
-
-	void OpenGLESAPI::enableVertexTangents()
-	{
-		glEnableVertexAttribArray(EAttribLocation::TANGENT);
-		glVertexAttribPointer(EAttribLocation::TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getTangentOffset());
-	}
-
-	void OpenGLESAPI::enableVertexBitangents()
-	{
-		glEnableVertexAttribArray(EAttribLocation::BITANGENT);
-		glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getBitangentOffset());
-	}
-
-	void OpenGLESAPI::activateGUITexture(uint32_t textureId)
-	{
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textureId);
-	}
-
-	void OpenGLESAPI::activateDiffuseTexture(uint32_t textureId)
-	{
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, textureId);
-	}
-
-	void OpenGLESAPI::activateNormalTexture(uint32_t textureId)
-	{
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, textureId);
-	}
-
-	void OpenGLESAPI::activateSpecularTexture(uint32_t textureId)
-	{
-		glActiveTexture(GL_TEXTURE3);
-		glBindTexture(GL_TEXTURE_2D, textureId);
-	}
-
-	void OpenGLESAPI::activateAOTexture(uint32_t textureId)
-	{
-		glActiveTexture(GL_TEXTURE4);
-		glBindTexture(GL_TEXTURE_2D, textureId);
-	}
-
-	void OpenGLESAPI::activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap)
-	{
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(cubeMap ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D, textureId);
-	}
-
-	void OpenGLESAPI::setupBufferSubData(GUIMeshData* meshData)
-	{
-		uint32_t size = meshData->indices.size() * sizeof(uint32_t);
-		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, size, &meshData->indices[0]);
-
-		size = meshData->vertexData.size() * sizeof(GUIVertexData);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, size, &meshData->vertexData[0]);
-	}
-
-	void OpenGLESAPI::drawElement(uint32_t indicesSize)
-	{
-		static GLfloat vVertices[] = { 0.0f,  0.5f, 0.0f,
-								 -0.5f, -0.5f, 0.0f,
-								 0.5f, -0.5f, 0.0f
-		};
-
-		// Set the viewport
-		glViewport(0, 0, 800, 600);
-
-		// Clear the color buffer
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		// ### CONFERIR SE TA USANDO O SHADER
-
-		// Load the vertex data
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vVertices);
-		glEnableVertexAttribArray(0);
-
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesId));
+		GL_CHECK(glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_SHORT, nullptr));
 	}
 
 	void OpenGLESAPI::disableVertexPositions()
 	{
-		glDisableVertexAttribArray(EAttribLocation::POSITION);
+		GL_CHECK(glDisableVertexAttribArray(EAttribLocation::POSITION));
 	}
 
-	void OpenGLESAPI::disableVertexNormals()
-	{
-		glDisableVertexAttribArray(EAttribLocation::NORMAL);
-	}
+	void OpenGLESAPI::disableVertexNormals() { }
 
-	void OpenGLESAPI::disableTexCoords()
-	{
-		glDisableVertexAttribArray(EAttribLocation::TEXCOORDS);
-	}
+	void OpenGLESAPI::disableTexCoords() { }
 
-	void OpenGLESAPI::disableVertexTangents()
-	{
-		glDisableVertexAttribArray(EAttribLocation::TANGENT);
-	}
+	void OpenGLESAPI::disableVertexTangents() { }
 
-	void OpenGLESAPI::disableVertexBitangents()
-	{
-		glDisableVertexAttribArray(EAttribLocation::BITANGENT);
-	}
+	void OpenGLESAPI::disableVertexBitangents() { }
 
-	void OpenGLESAPI::disableGUISettings()
-	{
-		glDisableVertexAttribArray(EAttribLocation::POSITION);
-		glEnable(GL_DEPTH_TEST);
-		glDisable(GL_BLEND);
-	}
+	void OpenGLESAPI::disableGUISettings() { }
 
-	void OpenGLESAPI::disablePostProcessingSettings()
+	void OpenGLESAPI::clearBuffer()
 	{
-		glDisableVertexAttribArray(EAttribLocation::POSITION);
-		glEnable(GL_DEPTH_TEST);
-	}
-
-	void OpenGLESAPI::clearColorBuffer()
-	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		GL_CHECK(glClear(GL_COLOR_BUFFER_BIT));
 	}
 
 	void OpenGLESAPI::clearDepthBuffer()
 	{
-		glClear(GL_DEPTH_BUFFER_BIT);
+		GL_CHECK(glClear(GL_DEPTH_BUFFER_BIT));
 	}
 
 	void OpenGLESAPI::clearColorAndDepthBuffer()
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 	}
 
 	uint32_t OpenGLESAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void* data, uint32_t unit, bool genMipmap)
 	{
-		uint32_t result{ 0 };
-
-		glGenTextures(1, &result);
-
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(GL_TEXTURE_2D, result);
-
-		int colorFormat = (bpp == 3) ? GL_RGB : GL_RGBA;
-
-		glTexImage2D
-		(
-			GL_TEXTURE_2D, 0, colorFormat, width, height,
-			0, colorFormat, GL_UNSIGNED_BYTE, data
-		);
-
-		GLint minFilterParam = GL_LINEAR;
-		if (genMipmap)
-		{
-			glGenerateMipmap(GL_TEXTURE_2D);
-			minFilterParam = GL_LINEAR_MIPMAP_LINEAR;
-		}
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilterParam);
-
-		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-		return result;
+		return 0;
 	}
 
-	uint32_t OpenGLESAPI::createTexture(uint32_t width, uint32_t height, uint32_t unit)
+	uint32_t OpenGLESAPI::setupTexture(uint32_t width, uint32_t height, uint32_t unit)
 	{
-		uint32_t result{ 0 };
-		glGenTextures(1, &result);
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(GL_TEXTURE_2D, result);
-		glTexImage2D
-		(
-			GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height,
-			0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr
-		);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-		float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-		return result;
-	}
-
-	uint32_t OpenGLESAPI::createTexture(uint32_t width, uint32_t height)
-	{
-		uint32_t result;
-		glGenTextures(1, &result);
-		glBindTexture(GL_TEXTURE_2D, result);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		return result;
+		return 0;
 	}
 
 	uint32_t OpenGLESAPI::generateCubemap(uint32_t width, uint32_t height, uint32_t unit)
 	{
-		uint32_t result{ 0 };
-
-		glGenTextures(1, &result);
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, result);
-
-		for (uint32_t i = 0; i < 6; i++)
-		{
-			glTexImage2D
-			(
-				GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, width, height,
-				0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr
-			);
-		}
-
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
-		return result;
+		return 0;
 	}
 
 	void OpenGLESAPI::deleteTexture(uint32_t id)
@@ -401,48 +248,28 @@ namespace sre
 		glDeleteTextures(1, &id);
 	}
 
-	// Shaders
-	// ###
 	uint32_t OpenGLESAPI::loadVertexShader(const std::string& vertexContent)
 	{
-		char XXX_VERT[] =
-			"#version 300 es                          \n"
-			"layout(location = 0) in vec4 vPosition;  \n"
-			"void main()                              \n"
-			"{                                        \n"
-			"   gl_Position = vPosition;              \n"
-			"}                                        \n";
-
-		return this->compileShader(XXX_VERT, GL_VERTEX_SHADER);
+		return this->compileShader(vertexContent, GL_VERTEX_SHADER);
 	}
 
-	// ###
 	uint32_t OpenGLESAPI::loadFragmentShader(const std::string& fragmentContent)
 	{
-		char XXX_FRAG[] =
-			"#version 300 es                              \n"
-			"precision mediump float;                     \n"
-			"out vec4 fragColor;                          \n"
-			"void main()                                  \n"
-			"{                                            \n"
-			"   fragColor = vec4 ( 1.0, 0.0, 0.0, 1.0 );  \n"
-			"}											  \n";
-
-		return this->compileShader(XXX_FRAG, GL_FRAGMENT_SHADER);
+		return this->compileShader(fragmentContent, GL_FRAGMENT_SHADER);
 	}
 
 	uint32_t OpenGLESAPI::loadGeometryShader(const std::string& geometryContent)
 	{
-		return this->compileShader(geometryContent, GL_GEOMETRY_SHADER);
+		return 0;
 	}
 
 	uint32_t OpenGLESAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader)
 	{
-		uint32_t program = glCreateProgram();
-		glAttachShader(program, vertexShader);
-		glAttachShader(program, fragmentShader);
+		uint32_t program = GL_CHECK(glCreateProgram());
+		GL_CHECK(glAttachShader(program, vertexShader));
+		GL_CHECK(glAttachShader(program, fragmentShader));
 
-		glLinkProgram(program);
+		GL_CHECK(glLinkProgram(program));
 		this->checkProgramLink(program);
 
 		return program;
@@ -450,62 +277,55 @@ namespace sre
 
 	uint32_t OpenGLESAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader)
 	{
-		uint32_t program = glCreateProgram();
-		glAttachShader(program, vertexShader);
-		glAttachShader(program, fragmentShader);
-		glAttachShader(program, geometryShader);
-
-		glLinkProgram(program);
-		this->checkProgramLink(program);
-
-		return program;
+		return 0;
 	}
 
 	int OpenGLESAPI::getUniformLocation(uint32_t program, const std::string& varName)
 	{
-		return 0;
-
-		/* ### 
 		int result = glGetUniformLocation(program, varName.c_str());
 		this->checkVariableLocation(result, varName);
 
 		return result;
-		*/
 	}
 
 	void OpenGLESAPI::setInt(uint32_t program, int location, int value)
 	{
-		// ### glUniform1i(location, value);
+		GL_CHECK(glUniform1i(location, value));
 	}
 
 	void OpenGLESAPI::setFloat(uint32_t program, int location, float value)
 	{
-		// ### glUniform1f(location, value);
+		GL_CHECK(glUniform1f(location, value));
+	}
+
+	void OpenGLESAPI::setVec2(uint32_t program, int location, const float* value)
+	{
+		GL_CHECK(glUniform2fv(location, 1, value));
 	}
 
 	void OpenGLESAPI::setVec3(uint32_t program, int location, const float* value)
 	{
-		// ### glUniform3fv(location, 1, value);
+		GL_CHECK(glUniform3fv(location, 1, value));
 	}
 
 	void OpenGLESAPI::setVec4(uint32_t program, int location, const float* value)
 	{
-		// ### glUniform4fv(location, 1, value);
+		GL_CHECK(glUniform4fv(location, 1, value));
 	}
 
 	void OpenGLESAPI::setMat4(uint32_t program, int location, const float* value)
 	{
-		// ### glUniformMatrix4fv(location, 1, GL_FALSE, value);
+		GL_CHECK(glUniformMatrix4fv(location, 1, GL_FALSE, value));
 	}
 
 	void OpenGLESAPI::enableShader(uint32_t program)
 	{
-		glUseProgram(program);
+		GL_CHECK(glUseProgram(program));
 	}
 
 	void OpenGLESAPI::disableShader()
 	{
-		glUseProgram(0);
+		GL_CHECK(glUseProgram(0));
 	}
 
 	void OpenGLESAPI::releaseShader(uint32_t program, std::vector<uint32_t> components)
@@ -523,62 +343,13 @@ namespace sre
 	{
 		glDeleteBuffers(1, &meshData->ebo);
 		glDeleteBuffers(1, &meshData->vbo);
-		glDeleteVertexArrays(1, &meshData->vao);
 	}
 
-	uint32_t OpenGLESAPI::generateDepthFrameBuffer(uint32_t textureId, bool cubemap)
-	{
-		uint32_t result;
-		glGenFramebuffers(1, &result);
+	void OpenGLESAPI::generateFrameBuffer(uint32_t& fbo, uint32_t textureId, bool cubemap) { }
 
-		glBindFramebuffer(GL_FRAMEBUFFER, result);
+	void OpenGLESAPI::bindFrameBuffer(uint32_t fbo) { }
 
-		if (cubemap)
-			glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, textureId, 0);
-		else
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, textureId, 0);
-
-		glDrawBuffer(GL_NONE);
-		glReadBuffer(GL_NONE);
-
-		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			throw "[OpenGLAPI] - Depth framebuffer error!";
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-		return result;
-	}
-
-	uint32_t OpenGLESAPI::generateColorFrameBuffer(uint32_t textureId, uint32_t width, uint32_t height)
-	{
-		uint32_t result;
-		glGenFramebuffers(1, &result);
-		glBindFramebuffer(GL_FRAMEBUFFER, result);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
-
-		unsigned int rbo;
-		glGenRenderbuffers(1, &rbo);
-		glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
-		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			throw "[OpenGLAPI] - Color framebuffer error!";
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-		return result;
-	}
-
-	void OpenGLESAPI::bindFrameBuffer(uint32_t fbo)
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	}
-
-	void OpenGLESAPI::unbindFrameBuffer()
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	}
+	void OpenGLESAPI::unbindFrameBuffer() { }
 
 	void OpenGLESAPI::setViewport(uint32_t width, uint32_t height)
 	{
@@ -587,43 +358,28 @@ namespace sre
 
 	uint32_t OpenGLESAPI::compileShader(const std::string& source, uint32_t mode)
 	{
-		uint32_t id = glCreateShader(mode);
+		uint32_t id = GL_CHECK(glCreateShader(mode));
 		const char* csource = source.c_str();
 
-		glShaderSource(id, 1, &csource, NULL);
-		glCompileShader(id);
+		GL_CHECK(glShaderSource(id, 1, &csource, NULL));
+		GL_CHECK(glCompileShader(id));
 
 		int result;
-		glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+		GL_CHECK(glGetShaderiv(id, GL_COMPILE_STATUS, &result));
 
 		if (result == GL_FALSE)
 		{
-			GLint infoLen = 0;
-			glGetShaderiv(id, GL_INFO_LOG_LENGTH, &infoLen);
-			if (infoLen > 1)
+			char error[1000];
+			GL_CHECK(glGetShaderInfoLog(id, 1000, NULL, error));
+
+			std::string shaderType = "UNKNOWN";
+			switch (mode)
 			{
-				char* error = (char*) malloc(sizeof(char) * infoLen);
-
-				glGetShaderInfoLog(id, infoLen, NULL, error);
-
-				std::string shaderType = "UNKNOWN";
-				switch (mode)
-				{
-					case GL_VERTEX_SHADER:      shaderType = "VERTEX_SHADER"; break;
-					case GL_FRAGMENT_SHADER:    shaderType = "FRAGMENT_SHADER"; break;
-					case GL_GEOMETRY_SHADER:    shaderType = "GEOMETRY_SHADER"; break;
-				}
-
-				std::string errorMessage(error);
-				errorMessage = "[OpenGLESAPI] - In shader: " + shaderType + "\n" + errorMessage;
-				this->multimediaManager->logWarning(errorMessage);
-
-				free(error);
+			case GL_VERTEX_SHADER:      shaderType = "VERTEX_SHADER"; break;
+			case GL_FRAGMENT_SHADER:    shaderType = "FRAGMENT_SHADER"; break;
 			}
 
-			glDeleteShader(id);
-
-			throw "[OpenGLESAPI] - compileShader";
+			SDL_Log("XXX [OpenGLAPI] - In shader: %s | %s", shaderType.c_str(), error);
 		}
 
 		return id;
@@ -632,10 +388,7 @@ namespace sre
 	void OpenGLESAPI::checkVariableLocation(int location, const std::string& varName)
 	{
 		if (location == -1)
-		{
-			this->multimediaManager->logWarning("[OpenGLESAPI] Invalid shader variable: " + varName);
-			throw "[OpenGLESAPI] - checkVariableLocation";
-		}
+			SDL_Log("XXX [OpenGLAPI] Invalid shader variable: %s", varName.c_str());
 	}
 
 	void OpenGLESAPI::checkProgramLink(uint32_t program)
@@ -644,25 +397,14 @@ namespace sre
 		glGetProgramiv(program, GL_LINK_STATUS, &result);
 		if (result == GL_FALSE)
 		{
-			GLint infoLen = 0;
-
-			glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLen);
-
-			if (infoLen > 1)
-			{
-				char* error = (char*) malloc(sizeof(char) * infoLen);
-
-				std::string errorMessage(error);
-				errorMessage = "[OpenGLESAPI] - Error linking shader: " + errorMessage;
-				this->multimediaManager->logWarning(errorMessage);
-
-				free(error);
-			}
+			char error[1000];
+			glGetProgramInfoLog(program, 1000, NULL, error);
 
 			glDeleteProgram(program);
-			throw "[OpenGLESAP] - checkProgramLink";
+
+			SDL_Log("XXX [OpenGLAPI] - %s", error);
 		}
 	}
-} // namespace
 
+} // namespace
 #endif

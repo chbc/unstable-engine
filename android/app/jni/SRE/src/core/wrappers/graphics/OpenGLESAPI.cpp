@@ -1,5 +1,3 @@
-#define __ANDROID__
-
 #ifdef __ANDROID__
 
 #include "OpenGLESAPI.h"
