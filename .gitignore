@@ -22,3 +22,6 @@ android/app/src/main/assets/
 *.user
 android/app/build/
 android/app/.vscode/
+android/.gradle/4.10.2/fileHashes/
+android/.gradle/buildOutputCleanup/
+android/.gradle/4.10.2/taskHistory/
