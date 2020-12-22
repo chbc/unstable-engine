@@ -1,3 +1,5 @@
+#ifndef __ANDROID__
+
 #ifndef _OPENGL_API_H_
 #define _OPENGL_API_H_
 
@@ -99,4 +101,5 @@ friend class SingletonsManager;
 };
 
 } // namespace
+#endif
 #endif

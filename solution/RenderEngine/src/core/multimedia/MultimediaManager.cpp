@@ -2,20 +2,29 @@
 #include "SDLAPI.h"
 #include "Timer.h"
 
+#ifdef __ANDROID__
+#include "SDLAndroidAPI.h"
+#endif
+
 namespace sre
 {
 
 MultimediaManager::MultimediaManager()
 {
-	this->screenWidth = 1024.0f;
-	this->screenHeight = 768.0f;
+	this->screenWidth = 800.0f;
+	this->screenHeight = 1247.0f;
 
 	this->aspectRatio = this->screenWidth / this->screenHeight;
 }
 
 void MultimediaManager::init()
 {
+#ifdef __ANDROID__
+	this->multimediaWrapper = UPTR<AMultimediaWrapper>{ new SDLAndroidAPI{} };
+#else
 	this->multimediaWrapper = UPTR<AMultimediaWrapper>{ new SDLAPI{} };
+#endif
+
 	this->multimediaWrapper->init(this->screenWidth, this->screenHeight, "Render Engine");
 	this->timer = UPTR<Timer>{ new Timer{this->multimediaWrapper.get()} };
 }
@@ -83,11 +92,6 @@ void MultimediaManager::logMessage(const std::string& message)
 void MultimediaManager::logWarning(const std::string& message)
 {
 	this->multimediaWrapper->log("WARNING", message);
-}
-
-ImGuiAPI* MultimediaManager::getImGuiAPI()
-{
-	return this->multimediaWrapper->getImGuiAPI();
 }
 
 } // namespace

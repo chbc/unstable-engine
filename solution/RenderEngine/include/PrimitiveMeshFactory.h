@@ -20,7 +20,7 @@ public:
 	MeshData* createPlane(float size, float tileMultiplier);
 	MeshData* createCube(float size);
 	MeshData* createSphere(float size);
-	void createPlaneIndices(std::vector<uint32_t> &result, int planesCount = 1);
+	void createPlaneIndices(std::vector<uint16_t> &result, int planesCount = 1);
 
 private:
 	template <typename T>

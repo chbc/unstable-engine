@@ -1,6 +1,6 @@
 #include "ImGuiAPI.h"
 
-#ifdef DEBUG
+#if defined(DEBUG) && !defined(__ANDROID__)
 #include "ImGuiAPIState.h"
 #else
 #include "ImGuiAPIEmptyState.h"
@@ -11,7 +11,7 @@ namespace sre
 
 ImGuiAPI::ImGuiAPI()
 {
-#ifdef DEBUG
+#if defined(DEBUG) && !defined(__ANDROID__)
 	this->state = make_unique<ImGuiAPIState>();
 #else
 	this->state = make_unique<ImGuiAPIEmptyState>();

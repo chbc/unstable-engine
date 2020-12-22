@@ -1,3 +1,5 @@
+#if defined(DEBUG) && !defined(__ANDROID__)
+
 #ifndef _IMGUI_API_STATE_H_
 #define _IMGUI_API_STATE_H_
 
@@ -18,4 +20,5 @@ protected:
 
 } // namespace
 
+#endif
 #endif

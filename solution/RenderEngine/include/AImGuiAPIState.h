@@ -9,6 +9,9 @@ namespace sre
 
 class AImGuiAPIState
 {
+public:
+	virtual ~AImGuiAPIState() = default;
+
 protected:
 	void virtual init(SDL_Window* window, void* glContext) = 0;
 	void virtual processEvent(SDL_Event* event) = 0;

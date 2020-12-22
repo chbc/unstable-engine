@@ -14,24 +14,23 @@ namespace sre
 
 class SDLAPI : public AMultimediaWrapper
 {
-private:
+protected:
 	SDL_Window *window;
 	UPTR<ImGuiAPI> imGuiAPI;
 
 public:
-	SDLAPI() {}
+	SDLAPI() = default;
 
 protected:
-	void init(float width, float height, const std::string &title) override;
-	void swapBuffers() override;
-	void processInput(InputHandler *inputHandler) override;
+	virtual void init(float width, float height, const std::string &title) override;
+	virtual void swapBuffers() override;
+	virtual void processInput(InputHandler *inputHandler) override;
 	bool checkClosePressed() override;
 	unsigned int getTicks() override;
 	void delay(unsigned int) override;
 	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) override;
 	void log(const std::string& type, const std::string& message);
-	ImGuiAPI* getImGuiAPI() override;
-	void release() override;
+	virtual void release() override;
 
 private:
 	std::string getError();

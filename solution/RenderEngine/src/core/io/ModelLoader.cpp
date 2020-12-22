@@ -3,15 +3,18 @@
 #include "MeshComponent.h"
 #include "MeshData.h"
 
+#ifndef __ANDROID__
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#endif
 
 namespace sre
 {
 
 void ModelLoader::load(Entity *rootEntity, const std::string &fileName)
 {
+#ifndef __ANDROID__
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile
 	(
@@ -29,10 +32,12 @@ void ModelLoader::load(Entity *rootEntity, const std::string &fileName)
 
     this->directory = fileName.substr(0, fileName.find_last_of('/')) + '/';
     this->processNode(rootEntity, scene->mRootNode, scene);
+#endif
 }
 
 void ModelLoader::processNode(Entity *entity, aiNode *node, const aiScene *scene)
 {
+#ifndef __ANDROID__
     for(uint32_t i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -46,10 +51,12 @@ void ModelLoader::processNode(Entity *entity, aiNode *node, const aiScene *scene
         entity->addChild(childEntity, node->mChildren[i]->mName.C_Str());
         childEntity->onStart();
     }
+#endif
 }
 
 void ModelLoader::processMesh(aiMesh *inputMesh, const aiScene *scene, Entity *entity)
 {
+#ifndef __ANDROID__
 	std::vector<VertexData> vertexData;
 	for(uint32_t i = 0; i < inputMesh->mNumVertices; i++)
 	{
@@ -72,7 +79,7 @@ void ModelLoader::processMesh(aiMesh *inputMesh, const aiScene *scene, Entity *e
 		vertexData.emplace_back(newData);
 	}
 
-	std::vector<uint32_t> indices;
+	std::vector<uint16_t> indices;
 	for(uint32_t i = 0; i < inputMesh->mNumFaces; i++)
 	{
 		aiFace face = inputMesh->mFaces[i];
@@ -83,10 +90,12 @@ void ModelLoader::processMesh(aiMesh *inputMesh, const aiScene *scene, Entity *e
 	MeshData* objectData = new MeshData{ vertexData, indices };
 	MeshComponent *entityMesh = entity->addComponent<MeshComponent>(objectData);
 	this->processMaterials(inputMesh, scene, entityMesh);
+#endif
 }
 
 void ModelLoader::processMaterials(aiMesh *inputMesh, const aiScene *scene, MeshComponent *entityMesh)
 {
+#ifndef __ANDROID__
 	if(inputMesh->mMaterialIndex >= 0)
 	{
 		aiMaterial* material = scene->mMaterials[inputMesh->mMaterialIndex];
@@ -129,6 +138,7 @@ void ModelLoader::processMaterials(aiMesh *inputMesh, const aiScene *scene, Mesh
 			entityMesh->addMaterialComponent<NormalMaterialComponent>(this->directory + fileName.C_Str());
 		}
 	}
+#endif
 }
 
 } // namespace

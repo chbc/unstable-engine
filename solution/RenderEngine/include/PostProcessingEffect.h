@@ -25,7 +25,7 @@ class PostProcessingEffect
 {
 private:
 	PPE::Type type;
-	std::unordered_map<std::string, float> parameters;
+	// XXX std::unordered_map<std::string, float> parameters;
 
 private:
 	PostProcessingEffect(PPE::Type effectType);
@@ -33,12 +33,13 @@ private:
 public:
 	void setValue(const std::string& parameter, float value)
 	{
-		this->parameters[parameter] = value;
+		// XXX this->parameters[parameter] = value;
 	}
 
 	float getValue(const std::string& parameter)
 	{
-		return this->parameters[parameter];
+		// XXX return this->parameters[parameter];
+		return 0.0f;
 	}
 
 	static PostProcessingEffect* create(PPE::Type effectType);

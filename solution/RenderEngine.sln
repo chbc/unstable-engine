@@ -11,7 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleApplication", "Sample
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MaterialCombinationsExample", "MaterialCombinationsExample\MaterialCombinationsExample.vcxproj", "{606BAE8B-15F2-417A-AC18-97B6A6FBA6C6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2DDemo", "2DDemo\2DDemo.vcxproj", "{2404307C-D967-4E1C-9CAE-503D690BAAD8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MemoryGame", "MemoryGame\MemoryGame.vcxproj", "{2404307C-D967-4E1C-9CAE-503D690BAAD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

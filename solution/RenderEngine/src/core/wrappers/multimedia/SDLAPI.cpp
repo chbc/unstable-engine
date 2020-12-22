@@ -1,8 +1,10 @@
 #include "SDLAPI.h"
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+
+#include <SDL.h>
+#include <SDL_image.h>
+
 #include "InputHandler.h"
-#include <cstring>
+#include <string>
 
 namespace sre
 {
@@ -41,6 +43,7 @@ void SDLAPI::init(float width, float height, const std::string &title)
 
 void SDLAPI::swapBuffers()
 {
+	this->imGuiAPI->onNewFrame(this->window);
 	this->imGuiAPI->render();
 	SDL_GL_SwapWindow(this->window);
 }
@@ -83,8 +86,6 @@ void SDLAPI::processInput(InputHandler *inputHandler)
 				break;
 		}
 	}
-
-	this->imGuiAPI->onNewFrame(this->window);
 }
 
 bool SDLAPI::checkClosePressed()
@@ -137,11 +138,6 @@ void *SDLAPI::loadTexture(const std::string &fileName, uint32_t *outWidth, uint3
 void SDLAPI::log(const std::string& type, const std::string& message)
 {
 	SDL_Log("[%s]: %s", type.c_str(), message.c_str());
-}
-
-ImGuiAPI* SDLAPI::getImGuiAPI()
-{
-	return this->imGuiAPI.get();
 }
 
 void SDLAPI::release()

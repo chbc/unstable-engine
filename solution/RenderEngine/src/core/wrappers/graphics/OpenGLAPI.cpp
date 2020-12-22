@@ -1,3 +1,4 @@
+#ifndef __ANDROID__
 #include <windows.h>
 
 #define GLEW_STATIC
@@ -65,7 +66,7 @@ void OpenGLAPI::createEBO(MeshData* meshData)
 	int size = meshData->indices.size();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &meshData->indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint16_t), &meshData->indices[0], GL_STATIC_DRAW);
 }
 
 void OpenGLAPI::createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic)
@@ -215,7 +216,7 @@ void OpenGLAPI::setupBufferSubData(GUIMeshData* meshData)
 
 void OpenGLAPI::drawElement(uint32_t indicesSize)
 {
-	glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_SHORT, nullptr);
 	glBindVertexArray(0);
 }
 
@@ -666,3 +667,4 @@ void OpenGLAPI::DEBUG_renderQuad()
 }
 
 } // namespace
+#endif

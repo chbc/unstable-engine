@@ -17,14 +17,20 @@ void RenderEngine::run()
     this->renderManager->init();
 	this->sceneManager = UPTR<SceneManager>{ new SceneManager };
 	this->guiManager = UPTR<GUIManager>{ new GUIManager };
+
+#if defined(DEBUG) && !defined(__ANDROID__)
     this->worldEditor = UPTR<WorldEditor>{ new WorldEditor };
+#endif
 
     this->onInit();
 
     this->guiManager->onSceneLoaded();
     this->sceneManager->onSceneLoaded();
     this->renderManager->onSceneLoaded();
+
+#if defined(DEBUG) && !defined(__ANDROID__)
     this->worldEditor->init(this->sceneManager.get());
+#endif
 
     this->isEditorMode = false;
     this->running = true;
@@ -57,8 +63,10 @@ void RenderEngine::run()
 
 void RenderEngine::onEditorGUI()
 {
+#if defined(DEBUG) && !defined(__ANDROID__)
     if (this->isEditorMode)
         this->worldEditor->onGUI(&this->isEditorMode);
+#endif
 }
 
 void RenderEngine::release()

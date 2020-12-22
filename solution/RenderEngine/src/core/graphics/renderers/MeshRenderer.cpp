@@ -152,7 +152,11 @@ void MeshRenderer::render(const glm::vec3 &cameraPosition)
             item.second->preDraw();
         }
 
+#ifdef __ANDROID__
+        this->graphicsWrapper->drawElement(mesh->meshData->ebo, mesh->meshData->indices.size());
+#else
         this->graphicsWrapper->drawElement(mesh->meshData->indices.size());
+#endif
     }
 
     for (const auto &item : this->componentsMap)

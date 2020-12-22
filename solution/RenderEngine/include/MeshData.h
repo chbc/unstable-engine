@@ -40,9 +40,9 @@ struct AMeshData
 	uint32_t vao;
 	uint32_t vbo;
 	uint32_t ebo;
-	std::vector<uint32_t> indices;
+	std::vector<uint16_t> indices;
 
-	AMeshData(const std::vector<uint32_t> &arg_indices)
+	AMeshData(const std::vector<uint16_t> &arg_indices)
 		: indices(arg_indices)
 	{
 	}
@@ -57,7 +57,7 @@ struct MeshData : public AMeshData
 {
 	std::vector<VertexData> vertexData;
 
-	MeshData(const std::vector<VertexData>& arg_vertexData, const std::vector<uint32_t>& arg_indices)
+	MeshData(const std::vector<VertexData>& arg_vertexData, const std::vector<uint16_t>& arg_indices)
 		: vertexData(arg_vertexData), AMeshData(arg_indices)
 	{
 	}
@@ -72,7 +72,7 @@ struct GUIMeshData : public AMeshData
 {
 	std::vector<GUIVertexData> vertexData;
 
-	GUIMeshData(const std::vector<GUIVertexData>& arg_vertexData, const std::vector<uint32_t>& arg_indices)
+	GUIMeshData(const std::vector<GUIVertexData>& arg_vertexData, const std::vector<uint16_t>& arg_indices)
 		: vertexData(arg_vertexData), AMeshData(arg_indices)
 	{
 	}

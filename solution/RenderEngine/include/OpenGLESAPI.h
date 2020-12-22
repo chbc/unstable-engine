@@ -18,7 +18,6 @@ namespace sre
         OpenGLESAPI() {}
 
         void init() override;
-        void release() override;
         void createVAO(MeshData* meshData) override;
         void createEBO(MeshData* meshData) override;
         void createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic) override;
@@ -26,6 +25,7 @@ namespace sre
 
         void bindVAO(uint32_t vao, uint32_t vbo) override;
         void enableGUISettings() override;
+        void enablePostProcessingSettings() override;
         void enableVertexPositions() override;
         void enableVertexNormals() override;
         void enableTexCoords() override;
@@ -47,20 +47,22 @@ namespace sre
         void disableVertexTangents() override;
         void disableVertexBitangents() override;
         void disableGUISettings() override;
+        void disablePostProcessingSettings() override;
 
-        void clearBuffer() override;
+        void clearColorBuffer() override;
         void clearDepthBuffer() override;
         void clearColorAndDepthBuffer() override;
-        uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void* data, uint32_t unit, bool genMipmap = true) override;
-        uint32_t setupTexture(uint32_t width, uint32_t height, uint32_t unit) override;
-        uint32_t generateCubemap(uint32_t width, uint32_t height, uint32_t unit) override;
+        uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void* data, uint32_t unit, bool genMipmap) override;
+        uint32_t createTexture(uint32_t width, uint32_t height, uint32_t unit) override { return 0; }
+        uint32_t createTexture(uint32_t width, uint32_t height) override { return 0; }
+        uint32_t createFloatingPointTexture(uint32_t width, uint32_t height) override { return 0; }
+        uint32_t generateCubemap(uint32_t width, uint32_t height, uint32_t unit) override { return 0; }
         void deleteTexture(uint32_t id) override;
 
         // Shaders
         uint32_t loadVertexShader(const std::string& vertexContent) override;  // throws "file can't be found"
         uint32_t loadFragmentShader(const std::string& fragmentContent) override;  // throws "file can't be found"
         uint32_t loadGeometryShader(const std::string& geometryContent) override; // throws "file can't be found"
-
         uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) override;
         uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader) override;
 
@@ -77,7 +79,8 @@ namespace sre
         void releaseShader(uint32_t program, std::vector<uint32_t> components) override;
         void deleteBuffers(AMeshData* meshData) override;
 
-        void generateFrameBuffer(uint32_t& fbo, uint32_t textureId, bool cubemap = false) override;
+        uint32_t generateDepthFrameBuffer(uint32_t textureId, bool cubemap = false) override { return 0; }
+        uint32_t generateColorFrameBuffer(const std::vector<uint32_t>& textureIds, uint32_t width, uint32_t height) override { return 0; }
         void bindFrameBuffer(uint32_t fbo) override;
         void unbindFrameBuffer() override;
         void setViewport(uint32_t width, uint32_t height) override;

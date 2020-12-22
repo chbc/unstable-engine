@@ -47,7 +47,7 @@ private:
 
 protected:
     void init() override;
-    void preRelease();
+    void preRelease() override;
 
 private:
     void initCamera(CameraComponent *camera);

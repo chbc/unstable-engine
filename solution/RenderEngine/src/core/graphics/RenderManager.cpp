@@ -24,7 +24,13 @@ namespace sre
 RenderManager::RenderManager()
 {
     SingletonsManager *singletonsManager = SingletonsManager::getInstance();
-    this->graphicsWrapper   = singletonsManager->add<AGraphicsWrapper, OpenGLAPI>();
+
+#ifdef __ANDROID__
+    this->graphicsWrapper   = singletonsManager->add<AGraphicsWrapper, OpenGLESAPI>();
+#else
+    this->graphicsWrapper = singletonsManager->add<AGraphicsWrapper, OpenGLAPI>();
+#endif
+
     this->lightManager      = singletonsManager->resolve<LightManager>();
     this->shaderManager     = singletonsManager->resolve<ShaderManager>();
 
@@ -202,7 +208,9 @@ void RenderManager::render()
 
 void RenderManager::DEBUG_drawTriangle()
 {
+#ifndef __ANDROID__
     OpenGLAPI::DEBUG_drawTriangle();
+#endif
 }
 
 DirectionalLightComponent *RenderManager::addDirectionalLight(Entity *entity)

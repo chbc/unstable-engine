@@ -18,7 +18,7 @@ void SampleApplication::onInit()
 
 	Entity* child = this->sceneManager->createPlaneEntity(200.0f);
 	mesh = child->getComponent<MeshComponent>();
-	mesh->addMaterialComponent<SpriteMaterialComponent>("media/test_texture.png");
+	mesh->addMaterialComponent<SpriteMaterialComponent>("media/test_texture.jpg");
 	mesh->getMaterial()->setReceivesLight(false);
 
 	child->getTransform()->setPosition(glm::vec3(0.0f, -500.0f, 0.0f));

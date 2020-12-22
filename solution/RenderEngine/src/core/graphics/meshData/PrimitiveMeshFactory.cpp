@@ -113,7 +113,7 @@ GUIMeshData* PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size, const fl
 	getPlaneUVs(vertexData, texCoords);
 
 	// Indices
-	std::vector<uint32_t> indices;
+	std::vector<uint16_t> indices;
 	createPlaneIndices(indices);
 
 	return new GUIMeshData{vertexData, indices};
@@ -161,7 +161,7 @@ MeshData* PrimitiveMeshFactory::createPlane(float size, float tileMultiplier)
 	getPlaneUVs(vertexData, planeTexCoords);
 
 	// Indices
-	std::vector<uint32_t> indices;
+	std::vector<uint16_t> indices;
 	createPlaneIndices(indices);
 
 	// Tangents and bitangents
@@ -248,7 +248,7 @@ MeshData* PrimitiveMeshFactory::createCube(float size)
 		vertexData[i].v = cubeTexCoords[(2 * i) + 1];
 	}
 
-	std::vector<uint32_t> indices;
+	std::vector<uint16_t> indices;
 	for (int i = 0; i < 36; i++)
 		indices.push_back(cubeIndices[i]);
 
@@ -281,7 +281,7 @@ MeshData* PrimitiveMeshFactory::createSphere(float size)
 	return nullptr;
 }
 
-void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint32_t> &result, int planesCount)
+void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint16_t> &result, int planesCount)
 {
 	unsigned char baseIndices[] = 
 	{ 

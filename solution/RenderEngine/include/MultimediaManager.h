@@ -53,7 +53,6 @@ private:
 	void onEndFrame();
 	unsigned int getLastFrameTime();
 	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp);
-	class ImGuiAPI* getImGuiAPI();
 
 friend class RenderEngine;
 friend class TextureManager;

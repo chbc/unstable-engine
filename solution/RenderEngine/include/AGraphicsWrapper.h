@@ -39,7 +39,8 @@ protected:
 
     virtual void setupBufferSubData(GUIMeshData* meshData) =0;
 
-    virtual void drawElement(uint32_t indicesSize) =0;
+    virtual void drawElement(uint32_t indicesSize) { }
+    virtual void drawElement(uint32_t indicesId, uint32_t indicesSize) { }
 
     virtual void disableVertexPositions() =0;
     virtual void disableVertexNormals() =0;

@@ -20,10 +20,10 @@ private:
 	void processEvent(SDL_Event* event);
 	void onNewFrame(SDL_Window* window);
 	void render();
-	void changeState(AImGuiAPIState* newState);
 	void release();
 
 friend class SDLAPI;
+friend class SDLAndroidAPI;
 };
 	
 }

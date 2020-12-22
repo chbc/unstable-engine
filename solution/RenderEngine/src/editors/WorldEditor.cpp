@@ -1,3 +1,5 @@
+#if defined(DEBUG) && !defined(__ANDROID__)
+
 #include "WorldEditor.h"
 #include "SceneManager.h"
 
@@ -208,3 +210,4 @@ void WorldEditor::drawMediaWindow() const
 }
 
 } // namespace
+#endif

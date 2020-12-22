@@ -9,10 +9,17 @@ namespace sre
 
 namespace ShaderFiles
 {
-    const std::string MAIN_H_V      = "../../shaders/main_h.vert";
-    const std::string MAIN_IMPL_V   = "../../shaders/main_impl.vert";
-    const std::string MAIN_H_F      = "../../shaders/main_h.frag";
-    const std::string MAIN_IMPL_F   = "../../shaders/main_impl.frag";
+
+#ifdef __ANDROID__
+    const std::string BASE_FOLDER = "shaders/es/";
+#else
+    const std::string BASE_FOLDER = "../../shaders/";
+#endif
+
+    const std::string MAIN_H_V      = BASE_FOLDER + "main_h.vert";
+    const std::string MAIN_IMPL_V   = BASE_FOLDER + "main_impl.vert";
+    const std::string MAIN_H_F      = BASE_FOLDER + "main_h.frag";
+    const std::string MAIN_IMPL_F   = BASE_FOLDER + "main_impl.frag";
 
     const std::string GUI_V = "../../shaders/gui/gui.vert";
     const std::string GUI_F = "../../shaders/gui/gui.frag";
@@ -39,8 +46,8 @@ namespace ShaderFiles
     const std::string DIRECTIONAL_SHADOW_DEPTH_V = "../../shaders/shadows/directional_shadow_depth.vert";
     const std::string DIRECTIONAL_SHADOW_DEPTH_F = "../../shaders/shadows/directional_shadow_depth.frag";
 
-    const std::string DIFFUSE_H_F       = "../../shaders/diffuse/diffuse_h.frag";
-    const std::string DIFFUSE_IMPL_F    = "../../shaders/diffuse/diffuse_impl.frag";
+    const std::string DIFFUSE_H_F       = BASE_FOLDER + "diffuse/diffuse_h.frag";
+    const std::string DIFFUSE_IMPL_F    = BASE_FOLDER + "diffuse/diffuse_impl.frag";
 
     const std::string NORMAL_H_V    = "../../shaders/normal/normal_h.vert";
     const std::string NORMAL_IMPL_V = "../../shaders/normal/normal_impl.vert";

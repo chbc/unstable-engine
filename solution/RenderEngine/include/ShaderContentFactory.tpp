@@ -70,8 +70,13 @@ void ShaderContentFactory::createShaderContent
     if (includeDepth)
         this->loadDepthContent(fragmentContentHeader, fragmentContentImpl);
     
+#ifdef __ANDROID__
+    outVertexContent = vertexContentHeader + vertexContentImpl;
+    outFragmentContent = fragmentContentHeader + fragmentContentImpl;
+#else
     outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
     outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
+#endif
 }
 
 } // namespace

@@ -29,6 +29,10 @@ class InputHandler
 		virtual void onMouseWheel(int direction) {}
 
 	friend class SDLAPI;
+
+#ifdef __ANDROID__
+	friend class SDLAndroidAPI;
+#endif
 };
 
 } // namespace

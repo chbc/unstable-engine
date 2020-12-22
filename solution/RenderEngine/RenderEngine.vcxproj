@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>./include;./;../../dependencies/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include;./;../../dependencies/;../../dependencies/SDL2/include;../../dependencies/SDL2_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -215,6 +215,7 @@
     <ClCompile Include="src\core\wrappers\graphics\OpenGLESAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPIState.cpp" />
+    <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp" />
     <ClCompile Include="src\editors\WorldEditor.cpp" />
     <ClCompile Include="src\entitiesManagers\AEntityManager.cpp" />
     <ClCompile Include="src\entities\components\AComponentsHolder.cpp" />
@@ -416,6 +417,7 @@
     <ClInclude Include="include\RenderManager.h" />
     <ClInclude Include="include\SceneManager.h" />
     <ClInclude Include="include\SDLAPI.h" />
+    <ClInclude Include="include\SDLAndroidAPI.h" />
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\ShaderConstants.h" />
     <ClInclude Include="include\ShaderContentFactory.h" />

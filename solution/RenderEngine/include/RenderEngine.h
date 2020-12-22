@@ -7,7 +7,10 @@
 #include "MultimediaManager.h"
 #include "RenderManager.h"
 #include "SingletonsManager.h"
+
+#if defined(DEBUG) && !defined(__ANDROID__)
 #include "WorldEditor.h"
+#endif
 
 namespace sre
 {
@@ -40,7 +43,9 @@ protected:
     virtual void onQuit(){};
 
 private:
+#if defined(DEBUG) && !defined(__ANDROID__)
     UPTR<WorldEditor> worldEditor;
+#endif
     bool running;
     bool isEditorMode;
 

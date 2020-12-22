@@ -252,6 +252,9 @@
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\SpriteRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -762,6 +765,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\SpriteRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SDLAndroidAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

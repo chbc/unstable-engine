@@ -17,8 +17,6 @@ LOCAL_SRC_FILES :=  \
 		application/events/EventReceiver.cpp \
 		main.cpp
 
-# LOCAL_SRC_FILES :=  testgles2.cpp
-
 LOCAL_SHARED_LIBRARIES := \
 		SDL2 \
 		SDL2_image \
