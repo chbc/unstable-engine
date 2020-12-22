@@ -1,0 +1,40 @@
+#ifndef _SDLAPI_H_
+#define _SDLAPI_H_
+
+#include "AMultimediaWrapper.h"
+#include <string>
+#include "ImGuiAPI.h"
+#include "memory_aliases.h"
+
+struct SDL_Window;
+union SDL_Event;
+
+namespace sre
+{
+
+class SDLAPI : public AMultimediaWrapper
+{
+protected:
+	SDL_Window *window;
+	UPTR<ImGuiAPI> imGuiAPI;
+
+public:
+	SDLAPI() = default;
+
+protected:
+	virtual void init(float width, float height, const std::string &title) override;
+	virtual void swapBuffers() override;
+	virtual void processInput(InputHandler *inputHandler) override;
+	bool checkClosePressed() override;
+	unsigned int getTicks() override;
+	void delay(unsigned int) override;
+	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) override;
+	void log(const std::string& type, const std::string& message);
+	virtual void release() override;
+
+private:
+	std::string getError();
+};
+
+} // namespace sre
+#endif
