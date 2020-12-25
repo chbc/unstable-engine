@@ -155,6 +155,9 @@ void OpenGLAPI::enableTexCoords()
 {
 	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
 	glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), ABaseVertexData::getUVOffset());
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 }
 
 void OpenGLAPI::enableVertexTangents()

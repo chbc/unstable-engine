@@ -99,6 +99,9 @@ void OpenGLESAPI::enableTexCoords()
 {
 	GL_CHECK(glEnableVertexAttribArray(EAttribLocation::TEXCOORDS));
 	GL_CHECK(glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), ABaseVertexData::getUVOffset()));
+
+	GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+	GL_CHECK(glEnable(GL_BLEND));
 }
 
 void OpenGLESAPI::enableVertexTangents() { }

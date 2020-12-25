@@ -1,3 +1,5 @@
+#if defined(DEBUG) && !defined(__ANDROID__)
+
 #ifndef _WORLD_EDITOR_H_
 #define _WORLD_EDITOR_H_
 
@@ -30,4 +32,5 @@ friend class RenderEngine;
 
 } // namespace
 
+#endif
 #endif

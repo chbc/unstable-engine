@@ -58,7 +58,8 @@ const AtlasItem *Atlas::getItem(const std::string &id)
 void Atlas::load(const std::string &fontFileName)
 {
 	std::string line;
-	std::ifstream file(fontFileName);
+	const std::string ASSETS_FOLDER = "../../media/";
+	std::ifstream file(ASSETS_FOLDER + fontFileName);
 	if (file.is_open())
 	{
 		while (std::getline(file, line))

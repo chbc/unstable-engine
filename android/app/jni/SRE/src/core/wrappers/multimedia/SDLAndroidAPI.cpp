@@ -7,6 +7,7 @@
 #include "SDL_opengles2.h"
 
 #include "InputHandler.h"
+#include "EngineValues.h"
 #include <string>
 
 namespace sre
@@ -15,11 +16,11 @@ namespace sre
 static SDLTest_CommonState* state;
 static SDL_GLContext* context = NULL;
 
-void SDLAndroidAPI::init(float width, float height, const std::string& title)
+void SDLAndroidAPI::init()
 {
 	const int depth = 16;
 	char** argv = new char* [1];
-	argv[0] = new char[15]{ "Nome do jogo" };
+	argv[0] = new char[15]{ EngineValues::APPLICATION_NAME };
 
 	/* Initialize test framework */
 	state = SDLTest_CommonCreateState(argv, SDL_INIT_VIDEO);
@@ -57,11 +58,9 @@ void SDLAndroidAPI::init(float width, float height, const std::string& title)
 	SDL_Log("\n");
 
 	/* Set rendering settings for each context */
-	int w, h;
 	SDL_GL_MakeCurrent(state->windows[0], context[0]);
 
-	SDL_GL_GetDrawableSize(state->windows[0], &w, &h);
-	glViewport(0, 0, w, h); // XXX
+	SDL_GL_GetDrawableSize(state->windows[0], &EngineValues::SCREEN_WIDTH, &EngineValues::SCREEN_HEIGHT);
 
 	this->window = state->windows[0];
 	this->imGuiAPI = UPTR<ImGuiAPI>{ new ImGuiAPI };
@@ -112,7 +111,8 @@ void* SDLAndroidAPI::loadTexture(const std::string& fileName, uint32_t* outWidth
 {
 	void* result = nullptr;
 
-	SDL_RWops* file = SDL_RWFromFile(fileName.c_str(), "rb");
+	std::string resultFileName = ASSETS_FOLDER + fileName;
+	SDL_RWops* file = SDL_RWFromFile(resultFileName.c_str(), "rb");
 	SDL_Surface* surface = IMG_Load_RW(file, 1);
 
 	if (surface == nullptr)

@@ -4,12 +4,13 @@
 #include <SDL_image.h>
 
 #include "InputHandler.h"
+#include "EngineValues.h"
 #include <string>
 
 namespace sre
 {
 
-void SDLAPI::init(float width, float height, const std::string &title)
+void SDLAPI::init()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		throw this->getError();
@@ -23,9 +24,9 @@ void SDLAPI::init(float width, float height, const std::string &title)
 	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 	this->window = SDL_CreateWindow
 	(
-		title.c_str(),
+		EngineValues::APPLICATION_NAME.c_str(),
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		static_cast<int>(width), static_cast<int>(height),
+		EngineValues::SCREEN_WIDTH, EngineValues::SCREEN_HEIGHT,
 		flags
 	);
 
@@ -60,8 +61,8 @@ void SDLAPI::processInput(InputHandler *inputHandler)
 		switch (currentEvent.type)
 		{
 			case SDL_QUIT:		inputHandler->onQuit(); break;
-			case SDL_KEYDOWN:	inputHandler->onKeyPressed(currentEvent.key.keysym.sym); break;
-			case SDL_KEYUP:		inputHandler->onKeyReleased(currentEvent.key.keysym.sym); break;
+			case SDL_KEYDOWN:	inputHandler->onKeyEvent(currentEvent.key.keysym.sym, true); break;
+			case SDL_KEYUP:		inputHandler->onKeyEvent(currentEvent.key.keysym.sym, false); break;
 
 			case SDL_MOUSEMOTION:
 				position = glm::vec2{currentEvent.motion.x, currentEvent.motion.y};
@@ -73,12 +74,12 @@ void SDLAPI::processInput(InputHandler *inputHandler)
 
 			case SDL_MOUSEBUTTONDOWN:
 				position = glm::vec2{currentEvent.button.x, currentEvent.button.y};
-				inputHandler->onMouseButtonPressed(currentEvent.button.button, position);
+				inputHandler->onMouseButtonEvent(currentEvent.button.button, position, true);
 				break;
 
 			case SDL_MOUSEBUTTONUP:
 				position = glm::vec2{currentEvent.button.x, currentEvent.button.y};
-				inputHandler->onMouseButtonReleased(currentEvent.button.button, position);
+				inputHandler->onMouseButtonEvent(currentEvent.button.button, position, false);
 				break;
 
 			case SDL_MOUSEWHEEL:
@@ -117,7 +118,8 @@ void SDLAPI::delay(unsigned int timeMS)
 void *SDLAPI::loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp)
 {
 	void *result = nullptr;
-	SDL_Surface *surface = IMG_Load(fileName.c_str());
+	std::string resultFileName = ASSETS_FOLDER + fileName;
+	SDL_Surface *surface = IMG_Load(resultFileName.c_str());
 
 	if (surface == nullptr)
 		throw "[SDLAPI] Can't load texture file: " + fileName;

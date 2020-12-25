@@ -25,7 +25,7 @@ void EventReceiver::onQuit()
 	this->application->quit();
 }
 
-void EventReceiver::onKeyPressed(KeyboardButton key)
+void EventReceiver::onKeyEvent(KeyboardButton key, bool pressed)
 {
 	if (key == KEY_ESC)
 		this->application->quit();
@@ -57,21 +57,21 @@ void EventReceiver::onKeyPressed(KeyboardButton key)
 	*/
 }
 
-void EventReceiver::onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position)
+void EventReceiver::onMouseButtonEvent(MouseButton mouseButton, const glm::vec2 &position, bool pressed)
 {
-	static float yLookAt = 0.0f;
-
-	this->viewingActive = true;
-	if (mouseButton == MOUSEBUTTON_MIDDLE)
+	if (pressed)
 	{
-		yLookAt += 1.0f;
-		this->camera->setLookAt(glm::vec3(0.0f, yLookAt, 0.0f));
-	}
-}
+		static float yLookAt = 0.0f;
 
-void EventReceiver::onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position)
-{
-	this->viewingActive = false;
+		if (mouseButton == MOUSEBUTTON_MIDDLE)
+		{
+			yLookAt += 1.0f;
+			this->camera->setLookAt(glm::vec3(0.0f, yLookAt, 0.0f));
+		}
+	}
+	
+	this->viewingActive = pressed;
+
 }
 
 void EventReceiver::onMouseMoveRelative(const glm::vec2 &relativePosition)

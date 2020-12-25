@@ -11,7 +11,6 @@ using namespace sre;
 class SampleApplication : public RenderEngine
 {
 private:
-	Entity* entity;
 	glm::vec2 direction;
 	
 public:

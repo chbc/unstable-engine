@@ -10,12 +10,14 @@ namespace sre
 
 class SDLAndroidAPI : public SDLAPI
 {
+private:
+	const std::string ASSETS_FOLDER = "media/";
 
 public:
 	SDLAndroidAPI() = default;
 
 protected:
-	void init(float width, float height, const std::string& title) override;
+	void init() override;
 	void processInput(InputHandler* inputHandler) override;
 	void* loadTexture(const std::string& fileName, uint32_t* outWidth, uint32_t* outHeight, uint8_t* outBpp) override;
 	void release() override;

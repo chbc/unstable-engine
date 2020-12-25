@@ -7,7 +7,6 @@
 #include "OpenGLAPI.h"
 #include "OpenGLESAPI.h"
 #include "TextureManager.h"
-#include "MultimediaManager.h"
 #include "SingletonsManager.h"
 #include "MeshData.h"
 #include "LightManager.h"
@@ -17,6 +16,7 @@
 #include "ShadowRenderer.h"
 #include "PostProcessingRenderer.h"
 #include "PostProcessingComponent.h"
+#include "EngineValues.h"
 
 namespace sre
 {
@@ -44,9 +44,6 @@ void RenderManager::init()
     this->lightManager->init();
 
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
-    MultimediaManager *multimediaManager = singletonsManager->resolve<MultimediaManager>();
-	this->screenWidth = multimediaManager->getScreenWidth();
-	this->screenHeight = multimediaManager->getScreenHeight();
 	
     singletonsManager->resolve<TextureManager>()->init();
 }
@@ -58,9 +55,8 @@ void RenderManager::preRelease()
 
 void RenderManager::initCamera(CameraComponent* camera)
 {
-    MultimediaManager* multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
-    const float FOV{ 120.0f };
-    camera->setPerspectiveProjection(FOV, multimediaManager->getAspectRatio(), 0.1f, 1000);
+    const float FOV{ 100.0f };
+    camera->setPerspectiveProjection(FOV, EngineValues::ASPECT_RATIO, 0.1f, 1000);
     this->setMainCamera(camera);
 }
 
@@ -188,7 +184,7 @@ void RenderManager::render()
 	if (this->postProcessingRenderer.get() != nullptr)
 		this->postProcessingRenderer->onPreRender();
 
-    this->graphicsWrapper->setViewport(this->screenWidth, this->screenHeight);
+    this->graphicsWrapper->setViewport(EngineValues::SCREEN_WIDTH, EngineValues::SCREEN_HEIGHT);
     this->graphicsWrapper->clearColorAndDepthBuffer();
 
     this->mainCamera->updateView();

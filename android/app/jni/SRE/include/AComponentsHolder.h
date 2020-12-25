@@ -10,7 +10,7 @@
 
 namespace sre
 {
-	template <typename TL> SRE_API  std::size_t getComponentId();
+	template <typename TL> SRE_API std::size_t getComponentId();
 
 	constexpr size_t MAX_COMPONENTS{ EComponentId::SIZE };
 

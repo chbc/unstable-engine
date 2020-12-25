@@ -29,9 +29,8 @@ public:
 	EventReceiver(SampleApplication *application, CameraComponent *camera, PostProcessingEffect* effect);
 
 	void onQuit() override;
-	void onKeyPressed(KeyboardButton key) override;
-	void onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position) override;
-	void onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position) override;
+	void onKeyEvent(KeyboardButton key, bool pressed) override;
+	void onMouseButtonEvent(MouseButton mouseButton, const glm::vec2 &position, bool pressed) override;
 	void onMouseMoveRelative(const glm::vec2 &relativePosition) override;
 	void onMouseWheel(int direction) override;
 };

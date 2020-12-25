@@ -1,9 +1,12 @@
 #include "CameraComponent.h"
 #include "Entity.h"
 #include "TransformComponent.h"
+#include "SingletonsManager.h"
+#include "EngineValues.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
 
 namespace sre
 {
@@ -40,6 +43,11 @@ void CameraComponent::setPerspectiveProjection(float fov, float aspectRatio, flo
     this->projection = glm::perspective(fov, aspectRatio, near, far);
 }
 
+void CameraComponent::setOrthoProjection()
+{
+    this->setOrthoProjection(EngineValues::SCREEN_WIDTH, EngineValues::SCREEN_HEIGHT);
+}
+ 
 void CameraComponent::setOrthoProjection(float width, float height)
 {
     float halfWidth = width * 0.5f;

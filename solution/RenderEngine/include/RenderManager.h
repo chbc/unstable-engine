@@ -39,9 +39,6 @@ private:
 
     CameraComponent *mainCamera;
 
-	uint32_t screenWidth;
-	uint32_t screenHeight;
-
 private:
     RenderManager();
 

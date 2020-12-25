@@ -2,28 +2,31 @@
 #include "application/events/EventReceiver.h"
 #include <MeshComponent.h>
 
-SampleApplication::SampleApplication() : RenderEngine()
-{
-}
+#ifdef __ANDROID__
+SampleApplication::SampleApplication() : RenderEngine() { }
+#else
+SampleApplication::SampleApplication() : RenderEngine("Jogo da Memoria", 400, 623) { }
+#endif
 
 void SampleApplication::onInit()
 {
 	CameraComponent* camera = this->sceneManager->getMainCamera();
-	camera->setOrthoProjection(800.0f, 1247.0f);
+	camera->setOrthoProjection();
 
-	this->entity = this->sceneManager->createPlaneEntity(100.0f);
-	MeshComponent* mesh = this->entity->getComponent<MeshComponent>();
-	mesh->addMaterialComponent<SpriteMaterialComponent>("media/test_texture.png");
+	Entity* entity = this->sceneManager->createPlaneEntity(100.0f);
+	MeshComponent* mesh = entity->getComponent<MeshComponent>();
+	mesh->addMaterialComponent<SpriteMaterialComponent>("memoryGame/card_1.png");
 	mesh->getMaterial()->setReceivesLight(false);
 
 	Entity* child = this->sceneManager->createPlaneEntity(200.0f);
 	mesh = child->getComponent<MeshComponent>();
-	mesh->addMaterialComponent<SpriteMaterialComponent>("media/test_texture.png");
+	mesh->addMaterialComponent<SpriteMaterialComponent>("memoryGame/base_card.png");
 	mesh->getMaterial()->setReceivesLight(false);
 
-	child->getTransform()->setPosition(glm::vec3(0.0f, -500.0f, 0.0f));
+	glm::vec3 position = entity->getTransform()->getPosition();
+	child->getTransform()->setPosition(glm::vec3(0.0f, -(EngineValues::SCREEN_HEIGHT * 0.5f) + 50.0f, 0.0f));
 
-	this->sceneManager->addEntity(this->entity);
+	this->sceneManager->addEntity(entity, "moving_image");
 	this->sceneManager->addEntity(child);
 	
 	this->setEventReceiver(new EventReceiver(this, child));
@@ -33,9 +36,12 @@ void SampleApplication::onInit()
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)
 {
-	const glm::vec2 BORDERS(400.0f, 623.0f);
+	/* XXX
+	const glm::vec2 BORDERS(this->halfScreenWidth, this->halfScreenHeight);
 
-	glm::vec3 position = this->entity->getTransform()->getPosition();
+	Entity* entity = this->sceneManager->getEntity("moving_image");
+
+	glm::vec3 position = entity->getTransform()->getPosition();
 	float delta = static_cast<float>(elapsedTime);
 	const float SPEED = 0.1f;
 	position.x += this->direction.x * (delta * SPEED);
@@ -51,5 +57,6 @@ void SampleApplication::onUpdate(unsigned int elapsedTime)
 	else if (position.y > BORDERS.y)
 		this->direction.y = -1.0f;
 
-	this->entity->getTransform()->setPosition(position);
+	entity->getTransform()->setPosition(position);
+	*/
 }

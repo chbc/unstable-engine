@@ -20,12 +20,10 @@ class InputHandler
 
 	protected:
 		virtual void onQuit() {}
-		virtual void onKeyPressed(KeyboardButton key) {}
-		virtual void onKeyReleased(KeyboardButton key) {}
+		virtual void onKeyEvent(KeyboardButton key, bool pressed) {}
 		virtual void onMouseMove(const glm::vec2 &position) {}
 		virtual void onMouseMoveRelative(const glm::vec2 &relativePosition) {}
-		virtual void onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position) {}
-		virtual void onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position) {}
+		virtual void onMouseButtonEvent(MouseButton mouseButton, const glm::vec2 &position, bool pressed) {}
 		virtual void onMouseWheel(int direction) {}
 
 	friend class SDLAPI;

@@ -1,9 +1,12 @@
 #ifndef _MULTIMEDIA_MANAGER_H_
 #define _MULTIMEDIA_MANAGER_H_
 
-#include <glm/vec2.hpp>
 #include "memory_aliases.h"
 #include "ASingleton.h"
+#include "Timer.h"
+#include "AMultimediaWrapper.h"
+
+#include <glm/vec2.hpp>
 #include <string>
 
 namespace sre
@@ -11,7 +14,6 @@ namespace sre
 
 class AMultimediaWrapper;
 class InputHandler;
-class Timer;
 
 /*!
 	Class for window management
@@ -22,22 +24,14 @@ private:
 	UPTR<AMultimediaWrapper> multimediaWrapper;
 	UPTR<Timer> timer;
 
-	float screenWidth;
-	float screenHeight;
-	float aspectRatio;
-
 private:
-    MultimediaManager();
+	MultimediaManager() = default;
 
 protected:
     void init() override;
     void release() override;
 
 public:
-	float getScreenWidth() const { return this->screenWidth; }
-	float getScreenHeight() const { return this->screenHeight; }
-	float getAspectRatio() const { return this->aspectRatio; }
-
 	float getNormalizedWidth(float pixelWidth);
 	glm::vec2 getNormalizedSize(const glm::vec2 &pixelSize);
 

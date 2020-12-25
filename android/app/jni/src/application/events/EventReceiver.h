@@ -17,11 +17,13 @@ class EventReceiver : public InputHandler
 		SampleApplication *application;
 		Entity *entity;
 
+		bool isScreenPressed;
+
 	public:
 		EventReceiver(SampleApplication *arg_application, Entity *arg_entity);
 
 		void onQuit() override;
-		void onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position) override;
-		void onMouseMoveRelative(const glm::vec2 &relativePosition) override;
+		void onMouseButtonEvent(MouseButton mouseButton, const glm::vec2 &position, bool pressed) override;
+		void onMouseMove(const glm::vec2 &position) override;
 };
 #endif

@@ -6,7 +6,7 @@
 #include "GUIManager.h"
 #include "MultimediaManager.h"
 #include "RenderManager.h"
-#include "SingletonsManager.h"
+#include "EngineValues.h"
 
 #if defined(DEBUG) && !defined(__ANDROID__)
 #include "WorldEditor.h"
@@ -28,7 +28,8 @@ protected:
 	UPTR<GUIManager> guiManager;
 	UPTR <InputHandler> inputHandler;
 	
-    RenderEngine();
+    RenderEngine() = default;
+    RenderEngine(const std::string& applicationName, int screenWidth, int screenHeight);
 
 public:
     void setEventReceiver(InputHandler *inputHandler);

@@ -7,6 +7,7 @@
 #include "MultimediaManager.h"
 #include "PrimitiveMeshFactory.h"
 #include "PostProcessingComponent.h"
+#include "EngineValues.h"
 
 namespace sre
 {
@@ -21,8 +22,8 @@ SinglePassRendererComponent::SinglePassRendererComponent(PostProcessingComponent
 	this->shaderManager->setupUniformLocation(shader, ShaderVariables::SCREEN_TEXTURE);
 
 	MultimediaManager* multimediaManager = singletonsManager->get<MultimediaManager>();
-	uint32_t width = static_cast<uint32_t>(multimediaManager->getScreenWidth());
-	uint32_t height = static_cast<uint32_t>(multimediaManager->getScreenHeight());
+	uint32_t width = static_cast<uint32_t>(EngineValues::SCREEN_WIDTH);
+	uint32_t height = static_cast<uint32_t>(EngineValues::SCREEN_HEIGHT);
 
 	glm::vec2 pixelSize(width, height);
 	glm::vec2 screenBasedSize = SingletonsManager::getInstance()->resolve<MultimediaManager>()->getNormalizedSize(pixelSize);

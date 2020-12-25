@@ -1,6 +1,7 @@
 #include "MultimediaManager.h"
 #include "SDLAPI.h"
 #include "Timer.h"
+#include "EngineValues.h"
 
 #ifdef __ANDROID__
 #include "SDLAndroidAPI.h"
@@ -8,14 +9,6 @@
 
 namespace sre
 {
-
-MultimediaManager::MultimediaManager()
-{
-	this->screenWidth = 800.0f;
-	this->screenHeight = 1247.0f;
-
-	this->aspectRatio = this->screenWidth / this->screenHeight;
-}
 
 void MultimediaManager::init()
 {
@@ -25,7 +18,7 @@ void MultimediaManager::init()
 	this->multimediaWrapper = UPTR<AMultimediaWrapper>{ new SDLAPI{} };
 #endif
 
-	this->multimediaWrapper->init(this->screenWidth, this->screenHeight, "Render Engine");
+	this->multimediaWrapper->init();
 	this->timer = UPTR<Timer>{ new Timer{this->multimediaWrapper.get()} };
 }
 
@@ -36,12 +29,12 @@ void MultimediaManager::release()
 
 float MultimediaManager::getNormalizedWidth(float pixelWidth)
 {
-	return (pixelWidth / this->screenWidth);
+	return (pixelWidth / EngineValues::SCREEN_WIDTH);
 }
 
 glm::vec2 MultimediaManager::getNormalizedSize(const glm::vec2 &pixelSize)
 {
-	return glm::vec2(pixelSize.x / this->screenWidth, pixelSize.y / this->screenHeight);
+	return glm::vec2(pixelSize.x / EngineValues::SCREEN_WIDTH, pixelSize.y / EngineValues::SCREEN_HEIGHT);
 }
 
 void MultimediaManager::swapBuffers()

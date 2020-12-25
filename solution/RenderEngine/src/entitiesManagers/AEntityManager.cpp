@@ -45,6 +45,15 @@ void AEntityManager::addEntity(Entity *entity, const std::string &name)
     }
 }
 
+Entity* AEntityManager::getEntity(const std::string& name)
+{
+    Entity* result = nullptr;
+    if (this->entities[name] != nullptr);
+        result = this->entities[name].get();
+
+    return result;
+}
+
 void AEntityManager::removeDestroyedEntities()
 {
 	/* ###

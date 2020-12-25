@@ -1,18 +1,22 @@
 #include "RenderEngine.h"
+#include "SingletonsManager.h"
 
 namespace sre
 {
 
-RenderEngine::RenderEngine()
+RenderEngine::RenderEngine(const std::string& applicationName, int screenWidth, int screenHeight)
 {
-    this->singletonsManager = SingletonsManager::getInstance();
-
-    this->renderManager = this->singletonsManager->resolve<RenderManager>();
-    this->multimediaManager = this->singletonsManager->resolve<MultimediaManager>();
+    EngineValues::APPLICATION_NAME = applicationName;
+    EngineValues::SCREEN_WIDTH = screenWidth;
+    EngineValues::SCREEN_HEIGHT = screenHeight;
 }
 
 void RenderEngine::run()
 {
+    this->singletonsManager = SingletonsManager::getInstance();
+    this->renderManager = this->singletonsManager->resolve<RenderManager>();
+    this->multimediaManager = this->singletonsManager->resolve<MultimediaManager>();
+
     this->multimediaManager->init();
     this->renderManager->init();
 	this->sceneManager = UPTR<SceneManager>{ new SceneManager };

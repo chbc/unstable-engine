@@ -18,11 +18,14 @@ protected:
 	SDL_Window *window;
 	UPTR<ImGuiAPI> imGuiAPI;
 
+private:
+	const std::string ASSETS_FOLDER = "../../media/";
+
 public:
 	SDLAPI() = default;
 
 protected:
-	virtual void init(float width, float height, const std::string &title) override;
+	virtual void init() override;
 	virtual void swapBuffers() override;
 	virtual void processInput(InputHandler *inputHandler) override;
 	bool checkClosePressed() override;

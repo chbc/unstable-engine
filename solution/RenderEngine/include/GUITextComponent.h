@@ -18,7 +18,7 @@ private:
 
 public:
     void onStart() override;
-	void setText(const std::string &text);
+	SRE_API void setText(const std::string &text);
 
 private:
 	GUITextComponent(Entity *entity, uint32_t arg_maxItems);
