@@ -16,13 +16,14 @@ public:
 	GUIMeshData* createPlaneTopDown(const glm::vec2 &size);
 	GUIMeshData* createPlaneTopDown(const glm::vec2& size, const Rect& uv);
 	GUIMeshData* createPlaneBottomUp(const glm::vec2& size);
-	GUIMeshData* createPlane2D(const glm::vec2 &size, const float* texCoords);
 	MeshData* createPlane(float size, float tileMultiplier);
+	MeshData* createPlane(const glm::vec2& size, float tileMultiplier);
 	MeshData* createCube(float size);
 	MeshData* createSphere(float size);
 	void createPlaneIndices(std::vector<uint16_t> &result, int planesCount = 1);
 
 private:
+	GUIMeshData* createPlane2D(const glm::vec2 &size, const float* texCoords);
 	template <typename T>
 	void getPlaneUVs(std::vector<T> &vertexData, const float *planeTexCoords)
 	{

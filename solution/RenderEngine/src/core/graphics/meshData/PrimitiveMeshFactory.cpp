@@ -121,14 +121,19 @@ GUIMeshData* PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size, const fl
 
 MeshData* PrimitiveMeshFactory::createPlane(float size, float tileMultiplier)
 {
-	float half = size * 0.5f;
+	return this->createPlane(glm::vec2(size, size), tileMultiplier);
+}
+
+MeshData* PrimitiveMeshFactory::createPlane(const glm::vec2& size, float tileMultiplier)
+{
+	glm::vec2 half = size * 0.5f;
 
 	float planeVertices[] = 
 	{ 
-		half, half, 0,
-		-half, half, 0,
-		-half,-half, 0,
-		half,-half, 0 
+		half.x,	half.y, 0,
+		-half.x,half.y, 0,
+		-half.x,-half.y, 0,
+		half.x,	-half.y, 0 
 	};
 
 	float planeNormals[] = 

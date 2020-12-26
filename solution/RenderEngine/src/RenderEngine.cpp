@@ -13,9 +13,9 @@ RenderEngine::RenderEngine(const std::string& applicationName, int screenWidth, 
 
 void RenderEngine::run()
 {
-    this->singletonsManager = SingletonsManager::getInstance();
-    this->renderManager = this->singletonsManager->resolve<RenderManager>();
-    this->multimediaManager = this->singletonsManager->resolve<MultimediaManager>();
+    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+    this->renderManager = singletonsManager->resolve<RenderManager>();
+    this->multimediaManager = singletonsManager->resolve<MultimediaManager>();
 
     this->multimediaManager->init();
     this->renderManager->init();
@@ -75,7 +75,7 @@ void RenderEngine::onEditorGUI()
 
 void RenderEngine::release()
 {
-    this->singletonsManager->release();
+    SingletonsManager::getInstance()->release();
 }
 
 void RenderEngine::processInput()

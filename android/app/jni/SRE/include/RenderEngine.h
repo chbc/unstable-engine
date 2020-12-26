@@ -20,18 +20,21 @@ namespace sre
 */
 class SRE_API RenderEngine
 {
-protected:
-    SingletonsManager* singletonsManager;
-    RenderManager* renderManager;
+public:
     MultimediaManager* multimediaManager;
     UPTR<SceneManager> sceneManager;
 	UPTR<GUIManager> guiManager;
 	UPTR <InputHandler> inputHandler;
 	
+private:
+    RenderManager* renderManager;
+
+protected:
     RenderEngine() = default;
     RenderEngine(const std::string& applicationName, int screenWidth, int screenHeight);
 
 public:
+    virtual ~RenderEngine() = default;
     void setEventReceiver(InputHandler *inputHandler);
     void run();
     void quit();

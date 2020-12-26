@@ -137,11 +137,16 @@
   <ItemGroup>
     <ClCompile Include="application\events\EventReceiver.cpp" />
     <ClCompile Include="application\SampleApplication.cpp" />
+    <ClCompile Include="application\scenes\GameScene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="application\scenes\MenuScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\events\EventReceiver.h" />
     <ClInclude Include="application\SampleApplication.h" />
+    <ClInclude Include="application\scenes\IScene.h" />
+    <ClInclude Include="application\scenes\MenuScene.h" />
+    <ClInclude Include="application\scenes\GameScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

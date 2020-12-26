@@ -18,7 +18,7 @@ SceneManager::SceneManager() : AEntityManager()
     SingletonsManager::getInstance()->resolve<RenderManager>()->initCamera(cameraComponent);
 }
 
-Entity *SceneManager::createPlaneEntity(float size, float tileMultiplier)
+Entity *SceneManager::createPlaneEntity(const glm::vec2& size, float tileMultiplier)
 {
 	return this->createMeshEntity(PrimitiveMeshFactory().createPlane(size, tileMultiplier));
 }

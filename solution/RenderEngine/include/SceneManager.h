@@ -21,6 +21,7 @@ private:
 public:
     // renderables //
     SRE_API Entity *createPlaneEntity(float size = 1.0f, float tileMultiplier = 1.0f);
+    SRE_API Entity* createPlaneEntity(const glm::vec2& size, float tileMultiplier = 1.0f);
     SRE_API Entity *createCubeEntity(float size = 1.0f);
     SRE_API Entity *createModelEntity(const std::string &fileName);
 
