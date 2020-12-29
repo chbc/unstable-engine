@@ -2,6 +2,7 @@
 #define _INPUT_HANDLER_H_
 
 #include <glm/vec2.hpp>
+#include <string>
 #include "button_names.h"
 
 namespace sre
@@ -25,6 +26,7 @@ class InputHandler
 		virtual void onMouseMoveRelative(const glm::vec2 &relativePosition) {}
 		virtual void onMouseButtonEvent(MouseButton mouseButton, const glm::vec2 &position, bool pressed) {}
 		virtual void onMouseWheel(int direction) {}
+		virtual void onGUIButtonPressed(class GUIButtonComponent* guiButton, const std::string& entityName) {}
 
 	friend class SDLAPI;
 

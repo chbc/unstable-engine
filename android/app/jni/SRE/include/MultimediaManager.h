@@ -1,7 +1,6 @@
 #ifndef _MULTIMEDIA_MANAGER_H_
 #define _MULTIMEDIA_MANAGER_H_
 
-#include "memory_aliases.h"
 #include "ASingleton.h"
 #include "Timer.h"
 #include "AMultimediaWrapper.h"
@@ -14,6 +13,7 @@ namespace sre
 
 class AMultimediaWrapper;
 class InputHandler;
+class GUIButtonComponent;
 
 /*!
 	Class for window management
@@ -23,6 +23,7 @@ class MultimediaManager : public ASingleton
 private:
 	UPTR<AMultimediaWrapper> multimediaWrapper;
 	UPTR<Timer> timer;
+	std::vector<GUIButtonComponent*> guiButtons;
 
 private:
 	MultimediaManager() = default;
@@ -47,10 +48,12 @@ private:
 	void onEndFrame();
 	unsigned int getLastFrameTime();
 	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp);
+	void addGUIButton(GUIButtonComponent* guiButton);
 
 friend class RenderEngine;
 friend class TextureManager;
 friend class SingletonsManager;
+friend class GUIButtonComponent;
 };
 
 } // namespace

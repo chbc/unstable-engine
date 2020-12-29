@@ -2,6 +2,7 @@
 #include "SDLAPI.h"
 #include "Timer.h"
 #include "EngineValues.h"
+#include "GUIButtonComponent.h"
 
 #ifdef __ANDROID__
 #include "SDLAndroidAPI.h"
@@ -44,7 +45,7 @@ void MultimediaManager::swapBuffers()
 
 void MultimediaManager::processInput(InputHandler *inputHandler)
 {
-	this->multimediaWrapper->processInput(inputHandler);
+	this->multimediaWrapper->processInput(inputHandler, guiButtons);
 }
 
 bool MultimediaManager::checkClosePressed()
@@ -85,6 +86,11 @@ void MultimediaManager::logMessage(const std::string& message)
 void MultimediaManager::logWarning(const std::string& message)
 {
 	this->multimediaWrapper->log("WARNING", message);
+}
+
+void MultimediaManager::addGUIButton(GUIButtonComponent* guiButton)
+{
+	this->guiButtons.push_back(guiButton);
 }
 
 } // namespace

@@ -223,6 +223,7 @@
     <ClCompile Include="src\entities\components\AEntityComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\PostProcessingComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\PostProcessingEffect.cpp" />
+    <ClCompile Include="src\entities\components\renderables\gui\GUIButtonComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\GUIImageComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\GUITextComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AmbientOcclusionMaterialComponent.cpp" />
@@ -377,6 +378,7 @@
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\FileUtils.h" />
     <ClInclude Include="include\FontAtlas.h" />
+    <ClInclude Include="include\GUIButtonComponent.h" />
     <ClInclude Include="include\GUIImageComponent.h" />
     <ClInclude Include="include\GUIManager.h" />
     <ClInclude Include="include\GUIRenderer.h" />

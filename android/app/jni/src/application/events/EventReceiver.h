@@ -6,6 +6,7 @@
 
 using namespace sre;
 
+class ScreenManager;
 class SampleApplication;
 
 /*!
@@ -14,16 +15,13 @@ class SampleApplication;
 class EventReceiver : public InputHandler
 {
 	private:
-		SampleApplication *application;
-		Entity *entity;
-
-		bool isScreenPressed;
+		SampleApplication* application;
+		ScreenManager* screenManager;
 
 	public:
-		EventReceiver(SampleApplication *arg_application, Entity *arg_entity);
+		EventReceiver(SampleApplication* arg_sampleApplication, ScreenManager* arg_screenManager);
 
 		void onQuit() override;
-		void onMouseButtonEvent(MouseButton mouseButton, const glm::vec2 &position, bool pressed) override;
-		void onMouseMove(const glm::vec2 &position) override;
+		void onGUIButtonPressed(GUIButtonComponent* guiButton, const std::string& entityName) override;
 };
 #endif

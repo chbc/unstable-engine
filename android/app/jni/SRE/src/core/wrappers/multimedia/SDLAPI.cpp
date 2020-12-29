@@ -2,10 +2,12 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <string>
 
 #include "InputHandler.h"
 #include "EngineValues.h"
-#include <string>
+#include "GUIButtonComponent.h"
+#include "Entity.h"
 
 namespace sre
 {
@@ -49,7 +51,7 @@ void SDLAPI::swapBuffers()
 	SDL_GL_SwapWindow(this->window);
 }
 
-void SDLAPI::processInput(InputHandler *inputHandler)
+void SDLAPI::processInput(InputHandler *inputHandler, const std::vector<GUIButtonComponent*>& guiButtons)
 {
 	glm::vec2 position;
 
@@ -74,7 +76,9 @@ void SDLAPI::processInput(InputHandler *inputHandler)
 
 			case SDL_MOUSEBUTTONDOWN:
 				position = glm::vec2{currentEvent.button.x, currentEvent.button.y};
-				inputHandler->onMouseButtonEvent(currentEvent.button.button, position, true);
+
+				if (!this->checkButtonPress(inputHandler, guiButtons, position))
+					inputHandler->onMouseButtonEvent(currentEvent.button.button, position, true);
 				break;
 
 			case SDL_MOUSEBUTTONUP:
@@ -147,6 +151,21 @@ void SDLAPI::release()
 	SDL_DestroyWindow(this->window);
 	IMG_Quit();
 	SDL_Quit();
+}
+
+
+bool SDLAPI::checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, const glm::vec2& pressPosition)
+{
+	for (GUIButtonComponent* item : guiButtons)
+	{
+		if (item->isInside(pressPosition))
+		{
+			inputHandler->onGUIButtonPressed(item, item->getEntity()->getName());
+			return true;
+		}
+	}
+
+	return false;
 }
 
 std::string SDLAPI::getError()

@@ -3,6 +3,7 @@
 
 #include "AEntityManager.h"
 #include "GUITextComponent.h"
+#include "GUIButtonComponent.h"
 
 namespace sre
 {

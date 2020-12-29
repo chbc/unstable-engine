@@ -1,6 +1,5 @@
 #include "SampleApplication.h"
-#include "application/events/EventReceiver.h"
-#include <MeshComponent.h>
+#include "ScreenManager.h"
 
 #ifdef __ANDROID__
 SampleApplication::SampleApplication() : RenderEngine() { }
@@ -12,26 +11,8 @@ void SampleApplication::onInit()
 {
 	CameraComponent* camera = this->sceneManager->getMainCamera();
 	camera->setOrthoProjection();
-
-	Entity* entity = this->sceneManager->createPlaneEntity(100.0f);
-	MeshComponent* mesh = entity->getComponent<MeshComponent>();
-	mesh->addMaterialComponent<SpriteMaterialComponent>("memoryGame/card_1.png");
-	mesh->getMaterial()->setReceivesLight(false);
-
-	Entity* child = this->sceneManager->createPlaneEntity(200.0f);
-	mesh = child->getComponent<MeshComponent>();
-	mesh->addMaterialComponent<SpriteMaterialComponent>("memoryGame/base_card.png");
-	mesh->getMaterial()->setReceivesLight(false);
-
-	glm::vec3 position = entity->getTransform()->getPosition();
-	child->getTransform()->setPosition(glm::vec3(0.0f, -(EngineValues::SCREEN_HEIGHT * 0.5f) + 50.0f, 0.0f));
-
-	this->sceneManager->addEntity(entity, "moving_image");
-	this->sceneManager->addEntity(child);
 	
-	this->setEventReceiver(new EventReceiver(this, child));
-
-	this->direction = glm::vec2(1.0f, 1.0f);
+	this->screenManager.onInit(this->sceneManager.get());
 }
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)

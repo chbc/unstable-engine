@@ -25,6 +25,7 @@ namespace sre
 	// GUI components
 	template <> std::size_t SRE_API getComponentId<class GUIImageComponent>() { return EComponentId::GUI_IMAGE; }
 	template <> std::size_t SRE_API getComponentId<class GUITextComponent>() { return EComponentId::GUI_TEXT; }
+	template <> std::size_t SRE_API getComponentId<class GUIButtonComponent>() { return EComponentId::GUI_BUTTON; }
 
 	// MeshRenderer components
 	template <> std::size_t SRE_API getComponentId<class ColorRendererComponent>() { return EComponentId::COLOR_MATERIAL; }

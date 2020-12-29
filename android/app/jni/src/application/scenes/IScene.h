@@ -1,11 +1,17 @@
 #pragma once
 
-// XXX class SampleApplication;
+namespace sre
+{
+	class SceneManager;
+}
+
+using namespace sre;
 
 class IScene
 {
 public:
-	virtual ~IScene() {};
+	virtual ~IScene() = default;
 
-	virtual void onInit(/* SampleApplication* application */) { }
+	virtual void onInit(SceneManager* sceneManager) = 0;
+	virtual void onButtonPress(GUIButtonComponent* guiButton, const std::string& entityName) = 0;
 };

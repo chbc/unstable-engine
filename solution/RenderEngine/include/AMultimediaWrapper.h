@@ -2,11 +2,13 @@
 #define _AMULTIMEDIA_WRAPPER_H_
 
 #include <string>
+#include "memory_aliases.h"
 
 namespace sre
 {
 
 class InputHandler;
+class GUIButtonComponent;
 
 class AMultimediaWrapper
 {
@@ -19,7 +21,7 @@ public:
 protected:
 	virtual void init() =0; // throws sdl error
 	virtual void swapBuffers() =0;
-	virtual void processInput(InputHandler *inputHandler) =0;
+	virtual void processInput(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons) =0;
 	virtual bool checkClosePressed() =0;
 	virtual unsigned int getTicks() =0;
 	virtual void delay(unsigned int timeMS) =0;

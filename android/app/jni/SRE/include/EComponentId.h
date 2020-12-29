@@ -29,6 +29,7 @@ enum Type : std::size_t
 
     GUI_IMAGE,
     GUI_TEXT,
+    GUI_BUTTON,
 
     SIZE
 };

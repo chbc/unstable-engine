@@ -258,6 +258,9 @@
     <ClCompile Include="src\core\multimedia\EngineValues.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\gui\GUIButtonComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -774,6 +777,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\EngineValues.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GUIButtonComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

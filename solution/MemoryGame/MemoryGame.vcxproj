@@ -140,6 +140,7 @@
     <ClCompile Include="application\scenes\GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="application\scenes\MenuScene.cpp" />
+    <ClCompile Include="application\ScreenManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\events\EventReceiver.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="application\scenes\IScene.h" />
     <ClInclude Include="application\scenes\MenuScene.h" />
     <ClInclude Include="application\scenes\GameScene.h" />
+    <ClInclude Include="application\ScreenManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

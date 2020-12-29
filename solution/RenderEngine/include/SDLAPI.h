@@ -5,6 +5,7 @@
 #include <string>
 #include "ImGuiAPI.h"
 #include "memory_aliases.h"
+#include <glm/vec2.hpp>
 
 struct SDL_Window;
 union SDL_Event;
@@ -27,7 +28,7 @@ public:
 protected:
 	virtual void init() override;
 	virtual void swapBuffers() override;
-	virtual void processInput(InputHandler *inputHandler) override;
+	virtual void processInput(InputHandler *inputHandler, const std::vector<GUIButtonComponent*>& guiButtons) override;
 	bool checkClosePressed() override;
 	unsigned int getTicks() override;
 	void delay(unsigned int) override;
@@ -36,6 +37,7 @@ protected:
 	virtual void release() override;
 
 private:
+	bool checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, const glm::vec2& pressPosition);
 	std::string getError();
 };
 

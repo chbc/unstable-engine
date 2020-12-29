@@ -29,7 +29,7 @@ public:
 private:
     RenderManager* renderManager;
 
-protected:
+public:
     RenderEngine() = default;
     RenderEngine(const std::string& applicationName, int screenWidth, int screenHeight);
 

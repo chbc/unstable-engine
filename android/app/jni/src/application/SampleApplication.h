@@ -1,7 +1,6 @@
-#ifndef _SAMPLE_APPLICATION_H_
-#define _SAMPLE_APPLICATION_H_
-
+#pragma once
 #include <RenderEngine.h>
+#include "ScreenManager.h"
 
 using namespace sre;
 
@@ -11,6 +10,7 @@ using namespace sre;
 class SampleApplication : public RenderEngine
 {
 private:
+	ScreenManager screenManager;
 	glm::vec2 direction;
 	
 public:
@@ -20,5 +20,3 @@ protected:
 	void onInit();
 	void onUpdate(unsigned int elapsedTime);
 };
-
-#endif
