@@ -18,7 +18,7 @@ public:
 
 protected:
 	void init() override;
-	void processInput(InputHandler* inputHandler) override;
+	void processInput(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons) override;
 	void* loadTexture(const std::string& fileName, uint32_t* outWidth, uint32_t* outHeight, uint8_t* outBpp) override;
 	void release() override;
 };

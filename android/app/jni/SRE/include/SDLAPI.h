@@ -33,11 +33,11 @@ protected:
 	unsigned int getTicks() override;
 	void delay(unsigned int) override;
 	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) override;
-	void log(const std::string& type, const std::string& message);
+	void log(const std::string& type, const std::string& message) override;
 	virtual void release() override;
+	bool checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
 
 private:
-	bool checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
 	std::string getError();
 };
 

@@ -14,7 +14,10 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_SRC_FILES :=  \
 		application/SampleApplication.cpp \
+		application/ScreenManager.cpp \
 		application/events/EventReceiver.cpp \
+		application/scenes/GameScene.cpp \
+		application/scenes/MenuScene.cpp \
 		main.cpp
 
 LOCAL_SHARED_LIBRARIES := \

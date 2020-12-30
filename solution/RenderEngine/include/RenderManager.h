@@ -67,7 +67,7 @@ private:
     PointLightComponent *addPointLight(Entity *entity);
 
     void setupBufferSubData(GUIMeshData* meshData);
-    void removeDestroyedEntities();
+    void onRemoveDestroyedEntities();
 
 friend class AEntityManager;
 friend class SceneManager;

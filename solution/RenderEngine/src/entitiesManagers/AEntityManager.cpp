@@ -2,7 +2,7 @@
 #include <sstream>
 #include "SingletonsManager.h"
 #include "RenderManager.h"
-#include <experimental/unordered_map>
+#include "CollectionsUtils.h"
 
 namespace sre
 {
@@ -63,7 +63,7 @@ void AEntityManager::clearEntities()
 
 void AEntityManager::removeDestroyedEntities()
 {
-    std::experimental::erase_if(this->entities, [](const auto &item) { return !item.second->isAlive(); });
+    CollectionsUtils::removeIfEntityIsDestroyed(this->entities);
 }
 
 void AEntityManager::onSceneLoaded()

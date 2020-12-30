@@ -20,7 +20,8 @@ void SDLAndroidAPI::init()
 {
 	const int depth = 16;
 	char** argv = new char* [1];
-	argv[0] = new char[15]{ EngineValues::APPLICATION_NAME };
+	argv[0] = new char[15];
+	memcpy(argv[0], EngineValues::APPLICATION_NAME.c_str(), 128);
 
 	/* Initialize test framework */
 	state = SDLTest_CommonCreateState(argv, SDL_INIT_VIDEO);
@@ -69,7 +70,7 @@ void SDLAndroidAPI::init()
 	delete[] argv;
 }
 
-void SDLAndroidAPI::processInput(InputHandler* inputHandler)
+void SDLAndroidAPI::processInput(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons)
 {
 	glm::vec2 position;
 
@@ -78,31 +79,27 @@ void SDLAndroidAPI::processInput(InputHandler* inputHandler)
 	{
 		switch (currentEvent.type)
 		{
-		case SDL_QUIT:		inputHandler->onQuit(); break;
-		case SDL_KEYDOWN:	inputHandler->onKeyPressed(currentEvent.key.keysym.sym); break;
-		case SDL_KEYUP:		inputHandler->onKeyReleased(currentEvent.key.keysym.sym); break;
+			case SDL_QUIT: inputHandler->onQuit(); break;
 
-		case SDL_MOUSEMOTION:
-			position = glm::vec2{ currentEvent.motion.x, currentEvent.motion.y };
-			inputHandler->onMouseMove(position);
+			case SDL_MOUSEMOTION:
+				position = glm::vec2{ currentEvent.motion.x, currentEvent.motion.y };
+				inputHandler->onMouseMove(position);
 
-			position = glm::vec2{ currentEvent.motion.xrel, currentEvent.motion.yrel };
-			inputHandler->onMouseMoveRelative(position);
-			break;
+				position = glm::vec2{ currentEvent.motion.xrel, currentEvent.motion.yrel };
+				inputHandler->onMouseMoveRelative(position);
+				break;
 
-		case SDL_MOUSEBUTTONDOWN:
-			position = glm::vec2{ currentEvent.button.x, currentEvent.button.y };
-			inputHandler->onMouseButtonPressed(currentEvent.button.button, position);
-			break;
+			case SDL_MOUSEBUTTONDOWN:
+				position = glm::vec2{ currentEvent.button.x, currentEvent.button.y };
 
-		case SDL_MOUSEBUTTONUP:
-			position = glm::vec2{ currentEvent.button.x, currentEvent.button.y };
-			inputHandler->onMouseButtonReleased(currentEvent.button.button, position);
-			break;
+				if (!guiButtons.empty() && !this->checkButtonPress(inputHandler, guiButtons, position))
+					inputHandler->onMouseButtonEvent(currentEvent.button.button, position, true);
+				break;
 
-		case SDL_MOUSEWHEEL:
-			inputHandler->onMouseWheel(currentEvent.wheel.y);
-			break;
+			case SDL_MOUSEBUTTONUP:
+				position = glm::vec2{ currentEvent.button.x, currentEvent.button.y };
+				inputHandler->onMouseButtonEvent(currentEvent.button.button, position, false);
+				break;
 		}
 	}
 }

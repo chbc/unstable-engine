@@ -23,8 +23,6 @@ private:
     std::vector<class MeshComponent *> items;
 
 private:
-    ShadowRenderer();
-
     void onSceneLoaded();
     void setupPointLightShader(class TextureManager *textureManager);
     void setupDirectionalLightShader(class TextureManager *textureManager);

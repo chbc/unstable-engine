@@ -788,6 +788,9 @@
     <ClInclude Include="include\SceneButtonComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\CollectionsUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\MessagesManager.tpp" />

@@ -89,7 +89,8 @@ void RenderEngine::processInput()
 
 void RenderEngine::removeDestroyedEntities()
 {
-    this->renderManager->removeDestroyedEntities();
+    this->renderManager->onRemoveDestroyedEntities();
+    this->multimediaManager->onRemoveDestroyedEntities();
     this->sceneManager->removeDestroyedEntities();
     this->guiManager->removeDestroyedEntities();
 }

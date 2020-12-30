@@ -3,6 +3,8 @@
 #include "Timer.h"
 #include "EngineValues.h"
 #include "GUIButtonComponent.h"
+#include "Entity.h"
+#include "CollectionsUtils.h"
 
 #ifdef __ANDROID__
 #include "SDLAndroidAPI.h"
@@ -91,6 +93,11 @@ void MultimediaManager::logWarning(const std::string& message)
 void MultimediaManager::addGUIButton(GUIButtonComponent* guiButton)
 {
 	this->guiButtons.push_back(guiButton);
+}
+
+void MultimediaManager::onRemoveDestroyedEntities()
+{
+	CollectionsUtils::removeIfEntityIsDestroyed(this->guiButtons);
 }
 
 } // namespace

@@ -18,7 +18,7 @@
 #include "PostProcessingComponent.h"
 #include "EngineValues.h"
 
-#include <experimental/vector>
+#include "CollectionsUtils.h"
 
 namespace sre
 {
@@ -223,16 +223,12 @@ void RenderManager::setupBufferSubData(GUIMeshData* meshData)
     this->graphicsWrapper->setupBufferSubData(meshData);
 }
 
-void RenderManager::removeDestroyedEntities()
+void RenderManager::onRemoveDestroyedEntities()
 {
     for (const UPTR<MeshRenderer> &item : this->renders)
-        item->removeDestroyedEntities();
+        item->onRemoveDestroyedEntities();
 
-    std::experimental::erase_if
-    (
-        this->renders, 
-        [](const UPTR<MeshRenderer> &item) { return item->isEmpty(); }
-    );
+    CollectionsUtils::removeIfRendererIsEmpty(this->renders);
 
     if (this->guiRenderer.get() != nullptr)
         this->guiRenderer->removeDestroyedEntities();

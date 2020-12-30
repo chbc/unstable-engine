@@ -31,6 +31,7 @@ private:
 
 public:
     virtual ~MeshRenderer();
+    inline bool isEmpty() { return this->meshes.empty(); }
 
 private:
 	MeshRenderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
@@ -61,9 +62,8 @@ private:
 
     bool contains(MeshComponent *mesh);
     bool fitsWithMesh(MeshComponent *mesh);
-    inline bool isEmpty() { return this->meshes.empty(); }
 
-    void removeDestroyedEntities();
+    void onRemoveDestroyedEntities();
 
     friend class RenderManager;
 };

@@ -27,7 +27,7 @@ private:
     bool castShadow;
 
 public:
-	SRE_API inline void setCastShadow(bool value);
+	SRE_API void setCastShadow(bool value);
 	SRE_API void setReceivesLight(bool value);
 	SRE_API bool getReceivesLight();
 

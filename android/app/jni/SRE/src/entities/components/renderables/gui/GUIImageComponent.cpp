@@ -46,7 +46,8 @@ uint32_t GUIImageComponent::getTextureId()
 
 glm::vec2 GUIImageComponent::getExtent()
 {
-    return this->extent;
+    glm::vec3 scale = this->getTransform()->getScale();
+    return glm::vec2(this->extent.x * scale.x, this->extent.y * scale.y);
 }
 
 void GUIImageComponent::setPivot(const glm::vec2& pivot)

@@ -1,5 +1,4 @@
 #include "SampleApplication.h"
-#include "ScreenManager.h"
 #include "events/EventReceiver.h"
 
 #ifdef __ANDROID__

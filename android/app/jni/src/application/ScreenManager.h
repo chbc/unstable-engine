@@ -9,8 +9,8 @@ private:
 	static ScreenManager* instance;
 	SPTR<IScene> scene;
 
-	class SceneManager* sceneManager;
-	class GUIManager* guiManager;
+	SceneManager* sceneManager;
+	GUIManager* guiManager;
 
 public:
 	static ScreenManager* getInstance();

@@ -366,6 +366,7 @@
     <ClInclude Include="include\BloomRendererComponent.h" />
     <ClInclude Include="include\button_names.h" />
     <ClInclude Include="include\CameraComponent.h" />
+    <ClInclude Include="include\CollectionsUtils.h" />
     <ClInclude Include="include\ColorMaterialComponent.h" />
     <ClInclude Include="include\ColorRendererComponent.h" />
     <ClInclude Include="include\core_defines.h" />

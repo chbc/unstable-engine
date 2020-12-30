@@ -8,12 +8,10 @@
 #include "AGraphicsWrapper.h"
 #include "Entity.h"
 
-#include <experimental/vector>
+#include "CollectionsUtils.h"
 
 namespace sre
 {
-
-ShadowRenderer::ShadowRenderer() {}
 
 void ShadowRenderer::onSceneLoaded()
 {
@@ -168,11 +166,7 @@ void ShadowRenderer::renderPointLightShadows()
 
 void ShadowRenderer::removeDestroyedEntities()
 {
-    std::experimental::erase_if
-    (
-        this->items,
-        [](MeshComponent *item) { return !item->getEntity()->isAlive(); }
-    );
+    CollectionsUtils::removeIfEntityIsDestroyed(this->items);
 }
 
 void ShadowRenderer::updateShadowMatrices(const glm::vec3 &lightPosition, float range)

@@ -186,7 +186,7 @@ bool MeshRenderer::fitsWithMesh(MeshComponent *mesh)
     return (this->componentsBitset == mesh->getMaterial()->componentsBitset);
 }
 
-void MeshRenderer::removeDestroyedEntities()
+void MeshRenderer::onRemoveDestroyedEntities()
 {
     std::list<MeshComponent *>::iterator it;
 

@@ -49,6 +49,7 @@ private:
 	unsigned int getLastFrameTime();
 	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp);
 	void addGUIButton(GUIButtonComponent* guiButton);
+	void onRemoveDestroyedEntities();
 
 friend class RenderEngine;
 friend class TextureManager;
