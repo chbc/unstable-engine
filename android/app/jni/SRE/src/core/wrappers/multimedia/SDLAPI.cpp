@@ -77,7 +77,7 @@ void SDLAPI::processInput(InputHandler *inputHandler, const std::vector<GUIButto
 			case SDL_MOUSEBUTTONDOWN:
 				position = glm::vec2{currentEvent.button.x, currentEvent.button.y};
 
-				if (!this->checkButtonPress(inputHandler, guiButtons, position))
+				if (!guiButtons.empty() && !this->checkButtonPress(inputHandler, guiButtons, position))
 					inputHandler->onMouseButtonEvent(currentEvent.button.button, position, true);
 				break;
 
@@ -154,8 +154,11 @@ void SDLAPI::release()
 }
 
 
-bool SDLAPI::checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, const glm::vec2& pressPosition)
+bool SDLAPI::checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition)
 {
+	pressPosition.x /= EngineValues::SCREEN_WIDTH;
+	pressPosition.y /= EngineValues::SCREEN_HEIGHT;
+
 	for (GUIButtonComponent* item : guiButtons)
 	{
 		if (item->isInside(pressPosition))

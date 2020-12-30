@@ -1,5 +1,6 @@
 #include "SampleApplication.h"
 #include "ScreenManager.h"
+#include "events/EventReceiver.h"
 
 #ifdef __ANDROID__
 SampleApplication::SampleApplication() : RenderEngine() { }
@@ -9,10 +10,9 @@ SampleApplication::SampleApplication() : RenderEngine("Jogo da Memoria", 400, 62
 
 void SampleApplication::onInit()
 {
-	CameraComponent* camera = this->sceneManager->getMainCamera();
-	camera->setOrthoProjection();
-	
-	this->screenManager.onInit(this->sceneManager.get());
+	this->screenManager = SPTR<ScreenManager>(new ScreenManager);
+	this->screenManager->onInit(this->sceneManager.get(), this->guiManager.get());
+	this->setEventReceiver(new EventReceiver(this, this->screenManager.get()));
 }
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)

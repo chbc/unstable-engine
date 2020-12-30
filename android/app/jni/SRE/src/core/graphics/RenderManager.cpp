@@ -18,6 +18,8 @@
 #include "PostProcessingComponent.h"
 #include "EngineValues.h"
 
+#include <experimental/vector>
+
 namespace sre
 {
 
@@ -51,13 +53,6 @@ void RenderManager::init()
 void RenderManager::preRelease()
 {
     this->renders.clear();
-}
-
-void RenderManager::initCamera(CameraComponent* camera)
-{
-    const float FOV{ 100.0f };
-    camera->setPerspectiveProjection(FOV, EngineValues::ASPECT_RATIO, 0.1f, 1000);
-    this->setMainCamera(camera);
 }
 
 void RenderManager::addEntity(Entity *entity)
@@ -187,10 +182,13 @@ void RenderManager::render()
     this->graphicsWrapper->setViewport(EngineValues::SCREEN_WIDTH, EngineValues::SCREEN_HEIGHT);
     this->graphicsWrapper->clearColorAndDepthBuffer();
 
-    this->mainCamera->updateView();
-    for (const UPTR<MeshRenderer> &item : this->renders)
+    if ((this->mainCamera != nullptr) && !this->renders.empty())
     {
-        item->render(this->mainCamera->getTransform()->getPosition());
+        this->mainCamera->updateView();
+        for (const UPTR<MeshRenderer>& item : this->renders)
+        {
+            item->render(this->mainCamera->getTransform()->getPosition());
+        }
     }
 
 	// Post processing rendering
@@ -227,7 +225,6 @@ void RenderManager::setupBufferSubData(GUIMeshData* meshData)
 
 void RenderManager::removeDestroyedEntities()
 {
-	/* ###
     for (const UPTR<MeshRenderer> &item : this->renders)
         item->removeDestroyedEntities();
 
@@ -241,7 +238,6 @@ void RenderManager::removeDestroyedEntities()
         this->guiRenderer->removeDestroyedEntities();
 
     this->lightManager->removeDestroyedEntities();
-	*/
 }
 
 } // namespace

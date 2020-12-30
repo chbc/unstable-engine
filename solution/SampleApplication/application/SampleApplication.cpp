@@ -201,6 +201,7 @@ void SampleApplication::createLights()
 
 void SampleApplication::createRoom()
 {
+	/* XXX
     Entity* plane;
 	TransformComponent* transform;
 	MeshComponent* planeMesh;
@@ -295,6 +296,7 @@ void SampleApplication::createRoom()
     planeMesh->addMaterialComponent<AmbientOcclusionMaterialComponent>("floor2_ao.png");
 
     this->sceneManager->addEntity(plane, "ceiling");
+	*/
 }
 
 void SampleApplication::createHouse()

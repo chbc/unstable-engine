@@ -1,3 +1,4 @@
+
 #ifndef _CAMERA_COMPONENT_H_
 #define _CAMERA_COMPONENT_H_
 

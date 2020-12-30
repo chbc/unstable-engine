@@ -1,31 +1,40 @@
-#ifndef _GUI_BUTTON_H_
-#define _GUI_BUTTON_H_
+#ifndef _GUI_BUTTON_COMPONENT_H_
+#define _GUI_BUTTON_COMPONENT_H_
 
 #include "AEntityComponent.h"
 #include <glm/vec2.hpp>
 
 namespace sre
 {
-
-class Entity;
-
-class GUIButtonComponent : public AEntityComponent
+/*
+* pivot:
+* 00	01
+*	0.5
+* 00	11
+*/
+class SRE_API GUIButtonComponent : public AEntityComponent
 {
 private:
-	glm::vec2 halfExtent;
+	glm::vec2 extent;
+	glm::vec2 pivot;
+
+	glm::vec2 pivotizedExtent;
 
 private:
-	GUIButtonComponent(Entity* entity, glm::vec2 arg_extent);
-
-	bool isInside(const glm::vec2& pointPosition);
+	GUIButtonComponent(Entity* entity);
 
 public:
 	void onStart() override;
 
+	void setExtent(glm::vec2 extent);
+	void setPivot(glm::vec2 pivot);
+
+private:
+	bool isInside(const glm::vec2& pointPosition);
+
 	friend class SDLAPI;
-
+	friend class Entity;
 };
-
 
 } // namespace
 

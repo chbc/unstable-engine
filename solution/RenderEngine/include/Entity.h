@@ -10,8 +10,6 @@
 namespace sre
 {
 
-// ### class TransformComponent;
-
 /*!
     Class that represents a node of the scene.
 */

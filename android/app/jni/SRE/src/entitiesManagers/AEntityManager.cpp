@@ -2,6 +2,7 @@
 #include <sstream>
 #include "SingletonsManager.h"
 #include "RenderManager.h"
+#include <experimental/unordered_map>
 
 namespace sre
 {
@@ -54,11 +55,15 @@ Entity* AEntityManager::getEntity(const std::string& name)
     return result;
 }
 
+void AEntityManager::clearEntities()
+{
+    for (auto& item : this->entities)
+        item.second->destroy();
+}
+
 void AEntityManager::removeDestroyedEntities()
 {
-	/* ###
     std::experimental::erase_if(this->entities, [](const auto &item) { return !item.second->isAlive(); });
-	*/
 }
 
 void AEntityManager::onSceneLoaded()

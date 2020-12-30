@@ -1,6 +1,8 @@
 #include "LightManager.h"
 #include "Entity.h"
 
+#include <experimental/vector>
+
 namespace sre
 {
 
@@ -46,7 +48,6 @@ PointLightComponent *LightManager::addPointLight(Entity *entity)
 
 void LightManager::removeDestroyedEntities()
 {
-	/* ###
     std::experimental::erase_if
     (
         this->directionalLights, 
@@ -58,7 +59,6 @@ void LightManager::removeDestroyedEntities()
         this->pointLights,
         [](PointLightComponent *item) { return !item->getEntity()->isAlive(); }
     );
-	*/
 }
 
 } // namespace

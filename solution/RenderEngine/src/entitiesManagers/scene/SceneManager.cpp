@@ -5,17 +5,37 @@
 #include "RenderManager.h"
 #include "ModelLoader.h"
 #include "MeshComponent.h"
+#include "EngineValues.h"
 
 namespace sre
 {
 
 SceneManager::SceneManager() : AEntityManager()
 {
-    Entity *mainCamera = this->createEntity();
-    CameraComponent *cameraComponent = mainCamera->addComponent<CameraComponent>();
+}
+
+Entity* SceneManager::createPerspectiveCamera(float fov, float near, float far)
+{
+    Entity* mainCamera = this->createEntity();
+    CameraComponent* cameraComponent = mainCamera->addComponent<CameraComponent>();
+    cameraComponent->setPerspectiveProjection(fov, EngineValues::SCREEN_WIDTH / EngineValues::SCREEN_HEIGHT, near, far);
     AEntityManager::addEntity(mainCamera, "_main_camera");
 
-    SingletonsManager::getInstance()->resolve<RenderManager>()->initCamera(cameraComponent);
+    SingletonsManager::getInstance()->resolve<RenderManager>()->setMainCamera(cameraComponent);
+
+    return mainCamera;
+}
+
+Entity* SceneManager::createOrthoCamera()
+{
+    Entity* mainCamera = this->createEntity();
+    CameraComponent* cameraComponent = mainCamera->addComponent<CameraComponent>();
+    cameraComponent->setOrthoProjection();
+    AEntityManager::addEntity(mainCamera, "_main_camera");
+
+    SingletonsManager::getInstance()->resolve<RenderManager>()->setMainCamera(cameraComponent);
+
+    return mainCamera;
 }
 
 Entity *SceneManager::createPlaneEntity(const glm::vec2& size, float tileMultiplier)

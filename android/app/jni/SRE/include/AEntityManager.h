@@ -21,6 +21,7 @@ public:
 	SRE_API Entity* createEntity();
     SRE_API virtual void addEntity(Entity *entity, const std::string& name = "");
     SRE_API Entity* getEntity(const std::string& name);
+    SRE_API void clearEntities();
 
 protected:
     AEntityManager();

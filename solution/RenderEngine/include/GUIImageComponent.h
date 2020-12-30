@@ -11,6 +11,8 @@ class GUIImageComponent : public ARenderableComponent
 {
 private:
     glm::vec2 uiPosition;
+    glm::vec2 extent;
+    glm::vec2 pivot;
     uint32_t textureId;
     bool isDynamic; // ###
 
@@ -24,6 +26,8 @@ public:
 	SRE_API void setUIPosition(const glm::vec2 &position);
     glm::vec2 getUIPosition();
     virtual uint32_t getTextureId();
+    SRE_API glm::vec2 getExtent();
+    SRE_API void setPivot(const glm::vec2& pivot);
     inline bool getIsDynamic() { return this->isDynamic; }
 
 private:

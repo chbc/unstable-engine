@@ -258,7 +258,10 @@
     <ClCompile Include="src\core\multimedia\EngineValues.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entities\components\renderables\gui\GUIButtonComponent.cpp">
+    <ClCompile Include="src\entities\components\buttons\GUIButtonComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\buttons\SceneButtonComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -780,6 +783,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GUIButtonComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SceneButtonComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

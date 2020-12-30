@@ -6,6 +6,6 @@
 class MenuScene : public IScene
 {
 public:
-	void onInit(SceneManager* sceneManager) override;
+	void onInit(SceneManager* sceneManager, GUIManager* guiManager) override;
 	void onButtonPress(GUIButtonComponent* guiButton, const std::string& entityName) override;
 };

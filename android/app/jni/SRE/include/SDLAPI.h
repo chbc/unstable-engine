@@ -37,7 +37,7 @@ protected:
 	virtual void release() override;
 
 private:
-	bool checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, const glm::vec2& pressPosition);
+	bool checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
 	std::string getError();
 };
 

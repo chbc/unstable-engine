@@ -47,7 +47,6 @@ protected:
     void preRelease() override;
 
 private:
-    void initCamera(CameraComponent *camera);
     void addEntity(Entity *entity);
     void addMesh(MeshComponent *mesh);
     void addGUIComponent(GUIImageComponent *guiComponent);

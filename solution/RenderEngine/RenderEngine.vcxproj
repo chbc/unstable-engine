@@ -221,9 +221,10 @@
     <ClCompile Include="src\entitiesManagers\AEntityManager.cpp" />
     <ClCompile Include="src\entities\components\AComponentsHolder.cpp" />
     <ClCompile Include="src\entities\components\AEntityComponent.cpp" />
+    <ClCompile Include="src\entities\components\buttons\SceneButtonComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\PostProcessingComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\PostProcessingEffect.cpp" />
-    <ClCompile Include="src\entities\components\renderables\gui\GUIButtonComponent.cpp" />
+    <ClCompile Include="src\entities\components\buttons\GUIButtonComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\GUIImageComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\GUITextComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AmbientOcclusionMaterialComponent.cpp" />
@@ -419,6 +420,7 @@
     <ClInclude Include="include\Rect.h" />
     <ClInclude Include="include\RenderEngine.h" />
     <ClInclude Include="include\RenderManager.h" />
+    <ClInclude Include="include\SceneButtonComponent.h" />
     <ClInclude Include="include\SceneManager.h" />
     <ClInclude Include="include\SDLAPI.h" />
     <ClInclude Include="include\SDLAndroidAPI.h" />
