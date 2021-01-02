@@ -139,6 +139,9 @@ void RenderManager::initShadowRenderer()
 
 void RenderManager::onSceneLoaded()
 {
+    if (this->mainCamera == nullptr)
+        return;
+
     if (this->shadowRenderer.get() != nullptr)
         this->shadowRenderer->onSceneLoaded();
 

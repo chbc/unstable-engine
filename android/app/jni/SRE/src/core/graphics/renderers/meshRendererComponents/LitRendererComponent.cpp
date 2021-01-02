@@ -25,12 +25,12 @@ void LitRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader
     this->state->setupShaderValues(this->shaderManager, mesh, shader);
 }
 
-void LitRendererComponent::preDraw()
+void LitRendererComponent::preDraw(Shader* shader)
 {
     this->state->preDraw(this->graphicsWrapper);
 }
 
-void LitRendererComponent::postDraw()
+void LitRendererComponent::postDraw(Shader* shader)
 {
     this->state->postDraw(this->graphicsWrapper);
 }

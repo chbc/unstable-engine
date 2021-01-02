@@ -68,7 +68,7 @@ void DOFRendererComponent::onPostRender()
 	this->graphicsWrapper->activateGUITexture(this->initialPassTextureId);
 	this->graphicsWrapper->activateDiffuseTexture(this->depthTextureId);
 
-	this->graphicsWrapper->drawElement(this->meshData->indices.size());
+	this->graphicsWrapper->drawElement(this->meshData->ebo, this->meshData->indices.size());
 
 	this->graphicsWrapper->disablePostProcessingSettings();
 	this->shaderManager->disableShader();

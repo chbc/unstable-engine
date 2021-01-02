@@ -16,7 +16,10 @@ void MenuScene::onInit(SceneManager* sceneManager, GUIManager* guiManager)
 {
 	sceneManager->createOrthoCamera();
 
-	Entity* entity = sceneManager->createPlaneEntity(glm::vec2(EngineValues::SCREEN_WIDTH, EngineValues::SCREEN_HEIGHT));
+	Entity* entity;
+	GUIImageComponent* guiComponent;
+
+	entity = sceneManager->createPlaneEntity(glm::vec2(EngineValues::SCREEN_WIDTH, EngineValues::SCREEN_HEIGHT));
 	entity->getTransform()->setPosition(glm::vec3{ 0.0f, 0.0f, -850.0f });
 	MeshComponent* mesh = entity->getComponent<MeshComponent>();
 	mesh->addMaterialComponent<SpriteMaterialComponent>("memoryGame/menu_background.png");
@@ -25,13 +28,11 @@ void MenuScene::onInit(SceneManager* sceneManager, GUIManager* guiManager)
 
 	sceneManager->addEntity(entity, "menu_background");
 
-	/* XXX
 	entity = guiManager->createGUIImageEntity("memoryGame/game_title.png");
-	GUIImageComponent* guiComponent = entity->getComponent<GUIImageComponent>();
+	guiComponent = entity->getComponent<GUIImageComponent>();
 	guiComponent->setUIPosition(glm::vec2(0.5f, 0.25f));
 
 	guiManager->addEntity(entity, "game_title");
-
 
 	entity = guiManager->createGUIImageEntity("memoryGame/menu_start.png");
 	guiComponent = entity->getComponent<GUIImageComponent>();
@@ -47,7 +48,6 @@ void MenuScene::onInit(SceneManager* sceneManager, GUIManager* guiManager)
 	guiComponent->setUIPosition(glm::vec2(0.5f, 0.8f));
 
 	guiManager->addEntity(entity, "menu_credits");
-	*/
 }
 
 void MenuScene::onButtonPress(GUIButtonComponent* guiButton, const std::string& entityName)

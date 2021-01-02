@@ -68,7 +68,7 @@ void OutlineRendererPPComponent::onPostRender()
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();
-	this->graphicsWrapper->drawElement(this->meshData->indices.size());
+	this->graphicsWrapper->drawElement(this->meshData->ebo, this->meshData->indices.size());
 
 	// COMBINE
 	this->graphicsWrapper->bindFrameBuffer(0);
@@ -82,7 +82,7 @@ void OutlineRendererPPComponent::onPostRender()
 	this->graphicsWrapper->activateGUITexture(this->initialPassTextureId);
 	this->graphicsWrapper->activateDiffuseTexture(this->outlineTextureId);
 
-	this->graphicsWrapper->drawElement(this->meshData->indices.size());
+	this->graphicsWrapper->drawElement(this->meshData->ebo, this->meshData->indices.size());
 
 	this->graphicsWrapper->disablePostProcessingSettings();
 	this->shaderManager->disableShader();

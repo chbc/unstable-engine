@@ -18,6 +18,8 @@ static SDL_GLContext* context = NULL;
 
 void SDLAndroidAPI::init()
 {
+	SDL_Log("XXX SDL init");
+
 	const int depth = 16;
 	char** argv = new char* [1];
 	argv[0] = new char[15];
@@ -50,12 +52,12 @@ void SDLAndroidAPI::init()
 
 	SDL_DisplayMode mode;
 	SDL_GetCurrentDisplayMode(0, &mode);
-	SDL_Log("Screen bpp: %d\n", SDL_BITSPERPIXEL(mode.format));
+	SDL_Log("XXX Screen bpp: %d\n", SDL_BITSPERPIXEL(mode.format));
 	SDL_Log("\n");
-	SDL_Log("Vendor     : %s\n", glGetString(GL_VENDOR));
-	SDL_Log("Renderer   : %s\n", glGetString(GL_RENDERER));
-	SDL_Log("Version    : %s\n", glGetString(GL_VERSION));
-	SDL_Log("Extensions : %s\n", glGetString(GL_EXTENSIONS));
+	SDL_Log("XXX Vendor     : %s\n", glGetString(GL_VENDOR));
+	SDL_Log("XXX Renderer   : %s\n", glGetString(GL_RENDERER));
+	SDL_Log("XXX Version    : %s\n", glGetString(GL_VERSION));
+	SDL_Log("XXX Extensions : %s\n", glGetString(GL_EXTENSIONS));
 	SDL_Log("\n");
 
 	/* Set rendering settings for each context */
@@ -91,6 +93,8 @@ void SDLAndroidAPI::processInput(InputHandler* inputHandler, const std::vector<G
 
 			case SDL_MOUSEBUTTONDOWN:
 				position = glm::vec2{ currentEvent.button.x, currentEvent.button.y };
+
+				SDL_Log("XXX MOUSE DOWN (%.2f, %.2f)", position.x, position.y);
 
 				if (!guiButtons.empty() && !this->checkButtonPress(inputHandler, guiButtons, position))
 					inputHandler->onMouseButtonEvent(currentEvent.button.button, position, true);

@@ -15,6 +15,7 @@ DiffuseRendererComponent::DiffuseRendererComponent(ShaderManager *shaderManager,
 void DiffuseRendererComponent::onSceneLoaded(Shader *shader)
 {
     this->shaderManager->setupUniformLocation(shader, ShaderVariables::DIFFUSE_TEXTURE);
+    this->shaderManager->setupAttributeLocation(shader, ShaderVariables::IN_TEXTURE_COORDS);
 }
 
 void DiffuseRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
@@ -23,16 +24,16 @@ void DiffuseRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *sh
     this->textureId = mesh->getMaterial()->getComponent<DiffuseMaterialComponent>()->getTextureID();
 }
 
-void DiffuseRendererComponent::preDraw()
+void DiffuseRendererComponent::preDraw(Shader* shader)
 {
-    this->graphicsWrapper->enableTexCoords();
+    this->shaderManager->setVertexAttributePointer(shader, ShaderVariables::IN_TEXTURE_COORDS, 2, sizeof(VertexData), ABaseVertexData::getUVOffset());
     this->graphicsWrapper->activateDiffuseTexture(this->textureId);
 }
 
 // ### TALVEZ NÃO SEJA DESNECESSÁRIO CHAMAR MAIS DE UMA VEZ
-void DiffuseRendererComponent::postDraw()
+void DiffuseRendererComponent::postDraw(Shader* shader)
 {
-    this->graphicsWrapper->disableTexCoords();
+    this->shaderManager->disableVertexAttribute(shader, ShaderVariables::IN_POSITION);
 }
 
 } // namespace

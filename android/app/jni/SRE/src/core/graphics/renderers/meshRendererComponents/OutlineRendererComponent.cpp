@@ -20,12 +20,12 @@ void OutlineRendererComponent::setupShaderValues(MeshComponent* mesh, Shader* sh
 {
 }
 
-void OutlineRendererComponent::preDraw()
+void OutlineRendererComponent::preDraw(Shader* shader)
 {
     this->graphicsWrapper->enableVertexPositions();
 }
 
-void OutlineRendererComponent::postDraw()
+void OutlineRendererComponent::postDraw(Shader* shader)
 {
     this->graphicsWrapper->disableVertexPositions();
 }

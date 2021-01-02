@@ -57,8 +57,12 @@ private:
     Shader* loadShader(const std::string &vertexContent, const std::string &fragmentContent);
 
     // passing values //
-    void setupUniformLocation(Shader *shader, ShaderVariables::Type variableKey);
-    void setupUniformLocation(Shader *shader, const char *variable);
+    void setupUniformLocation(Shader* shader, ShaderVariables::Type variableKey);
+    void setupUniformLocation(Shader* shader, const char *variable);
+
+    void setupAttributeLocation(Shader* shader, ShaderVariables::Type variableKey);
+    void setVertexAttributePointer(Shader* shader, ShaderVariables::Type variableKey, size_t itemSize, size_t dataSize, void* dataOffset);
+    void disableVertexAttribute(Shader* shader, ShaderVariables::Type variableKey);
 
     void setInt(Shader *shader, ShaderVariables::Type variableKey, int value);
     void setInt(Shader *shader, const char *variable, int value);
@@ -70,6 +74,7 @@ private:
     void setVec4(Shader *shader, ShaderVariables::Type variableKey, const float *value);
     void setMat4(Shader *shader, ShaderVariables::Type variableKey, const float *value);
     void setMat4(Shader *shader, const char *variable, const float *value);
+
 
     void enableShader(Shader *shader);
     void disableShader();

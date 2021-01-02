@@ -16,6 +16,7 @@ ColorRendererComponent::ColorRendererComponent(ShaderManager *shaderManager, AGr
 void ColorRendererComponent::onSceneLoaded(class Shader *shader)
 {
     this->shaderManager->setupUniformLocation(shader, ShaderVariables::MATERIAL_COLOR);
+    this->shaderManager->setupAttributeLocation(shader, ShaderVariables::IN_POSITION);
 }
 
 void ColorRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
@@ -25,14 +26,14 @@ void ColorRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shad
     this->shaderManager->setVec4(shader, ShaderVariables::MATERIAL_COLOR, &color[0]);
 }
 
-void ColorRendererComponent::preDraw()
+void ColorRendererComponent::preDraw(Shader* shader)
 {
-    this->graphicsWrapper->enableVertexPositions();
+    this->shaderManager->setVertexAttributePointer(shader, ShaderVariables::IN_POSITION, 3, sizeof(VertexData), VertexData::getPositionOffset());
 }
 
-void ColorRendererComponent::postDraw()
+void ColorRendererComponent::postDraw(Shader* shader)
 {
-    this->graphicsWrapper->disableVertexPositions();
+    this->shaderManager->disableVertexAttribute(shader, ShaderVariables::IN_POSITION);
 }
 
 } // namespace

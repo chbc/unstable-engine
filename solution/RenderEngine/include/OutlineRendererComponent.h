@@ -18,8 +18,8 @@ protected:
 
     virtual void onSceneLoaded(Shader *shader) override;
     virtual void setupShaderValues(class MeshComponent *mesh, Shader *shader) override;
-    virtual void preDraw() override;
-    virtual void postDraw() override;
+    virtual void preDraw(Shader* shader) override;
+    virtual void postDraw(Shader* shader) override;
 
 friend class MeshRenderer;
 };

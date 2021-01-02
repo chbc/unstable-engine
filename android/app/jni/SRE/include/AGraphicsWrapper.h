@@ -24,6 +24,9 @@ protected:
     virtual void createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic) =0;
 
     virtual void bindVAO(uint32_t vao, uint32_t vbo) =0;
+    virtual void setVertexAttributePointer(int attributeLocation, size_t itemSize, size_t dataSize, void* dataOffset) = 0;
+
+    // XXX APAGAR
     virtual void enableGUISettings() =0;
 	virtual void enablePostProcessingSettings() = 0;
     virtual void enableVertexPositions() =0;
@@ -39,9 +42,11 @@ protected:
 
     virtual void setupBufferSubData(GUIMeshData* meshData) =0;
 
-    virtual void drawElement(uint32_t indicesSize) { }
-    virtual void drawElement(uint32_t indicesId, uint32_t indicesSize) { }
+    virtual void drawElement(uint32_t indicesId, uint32_t indicesSize) = 0;
 
+    virtual void disableVertexAttribute(int location) = 0;
+
+    // XXX APAGAR
     virtual void disableVertexPositions() =0;
     virtual void disableVertexNormals() =0;
     virtual void disableTexCoords() =0;
@@ -68,6 +73,7 @@ protected:
     virtual uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader) =0;
 
     virtual int getUniformLocation(uint32_t program, const std::string &varName) = 0;
+    virtual int getAttributeLocation(uint32_t program, const std::string& varName) = 0;
     virtual void setInt(uint32_t program, int location, int value) =0;
     virtual void setFloat(uint32_t program, int location, float value) =0;
     virtual void setVec2(uint32_t program, int location, const float* value) = 0;

@@ -13,8 +13,8 @@ protected:
 
     void onSceneLoaded(class Shader *shader) override;
     void setupShaderValues(class MeshComponent *mesh, class Shader *shader) override;
-    void preDraw() override;
-    void postDraw() override;
+    void preDraw(Shader* shader) override;
+    void postDraw(Shader* shader) override;
 
 friend class MeshRenderer;
 };

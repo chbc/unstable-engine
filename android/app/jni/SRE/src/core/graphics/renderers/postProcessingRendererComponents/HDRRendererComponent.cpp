@@ -67,7 +67,7 @@ void HDRRendererComponent::onPostRender()
 	this->graphicsWrapper->enablePostProcessingSettings();
 	this->graphicsWrapper->activateGUITexture(this->textureId);
 
-	this->graphicsWrapper->drawElement(this->meshData->indices.size());
+	this->graphicsWrapper->drawElement(this->meshData->ebo, this->meshData->indices.size());
 
 	this->graphicsWrapper->disablePostProcessingSettings();
 	this->shaderManager->disableShader();

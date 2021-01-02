@@ -18,6 +18,7 @@ void ShaderManager::release()
     }
 
     this->shaders.clear();
+
 }
 
 Shader *ShaderManager::loadGUIShader()
@@ -109,6 +110,23 @@ void ShaderManager::setupUniformLocation(Shader *shader, const char *variable)
 {
     int location = this->graphicsWrapper->getUniformLocation(shader->program, variable);
     shader->addVariableLocation(variable, location);
+}
+
+void ShaderManager::setupAttributeLocation(Shader* shader, ShaderVariables::Type variableKey)
+{
+    std::string variableName = ShaderVariables::Map.at(variableKey);
+    int location = this->graphicsWrapper->getAttributeLocation(shader->program, variableName);
+    shader->addVariableLocation(variableKey, location);
+}
+
+void ShaderManager::setVertexAttributePointer(Shader* shader, ShaderVariables::Type variableKey, size_t itemSize, size_t dataSize, void* dataOffset)
+{
+    this->graphicsWrapper->setVertexAttributePointer(shader->variableLocations[variableKey], itemSize, dataSize, dataOffset);
+}
+
+void ShaderManager::disableVertexAttribute(Shader* shader, ShaderVariables::Type variableKey)
+{
+    this->graphicsWrapper->disableVertexAttribute(shader->variableLocations[variableKey]);
 }
 
 void ShaderManager::setInt(Shader *shader, ShaderVariables::Type variableKey, int value)

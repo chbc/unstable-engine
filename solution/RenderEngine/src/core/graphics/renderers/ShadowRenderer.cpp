@@ -121,7 +121,7 @@ void ShadowRenderer::renderDirectionalLightShadows()
             this->graphicsWrapper->bindVAO(item->meshData->vao, item->meshData->vbo);
 
             this->graphicsWrapper->enableVertexPositions();
-            this->graphicsWrapper->drawElement(item->meshData->indices.size());
+            this->graphicsWrapper->drawElement(item->meshData->ebo, item->meshData->indices.size());
             this->graphicsWrapper->disableVertexPositions();
         }
     }
@@ -158,7 +158,7 @@ void ShadowRenderer::renderPointLightShadows()
             this->graphicsWrapper->bindVAO(item->meshData->vao, item->meshData->vbo);
 
             this->graphicsWrapper->enableVertexPositions();
-            this->graphicsWrapper->drawElement(item->meshData->indices.size());
+            this->graphicsWrapper->drawElement(item->meshData->ebo, item->meshData->indices.size());
             this->graphicsWrapper->disableVertexPositions();
         }
     }

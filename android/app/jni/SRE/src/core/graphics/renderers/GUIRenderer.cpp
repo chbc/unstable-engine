@@ -21,6 +21,8 @@ void GUIRenderer::loadShader()
 
     this->shaderManager->setupUniformLocation(this->shader, ShaderVariables::GUI_TEXTURE);
     this->shaderManager->setupUniformLocation(this->shader, ShaderVariables::MODEL_MATRIX);
+    this->shaderManager->setupAttributeLocation(this->shader, ShaderVariables::IN_POSITION);
+    this->shaderManager->setupAttributeLocation(this->shader, ShaderVariables::IN_TEXTURE_COORDS);
 }
 
 void GUIRenderer::addGUIComponent(GUIImageComponent *guiComponent)
@@ -50,7 +52,7 @@ void GUIRenderer::render()
     for (GUIImageComponent *item : this->guiComponents)
     {
         this->setup(item);
-        this->graphicsWrapper->drawElement(item->meshData->indices.size());
+        this->graphicsWrapper->drawElement(item->meshData->ebo, item->meshData->indices.size());
     }
 
     // Dynamic meshes
@@ -59,11 +61,11 @@ void GUIRenderer::render()
         if (item->meshData.get() != nullptr)
         {
             this->setup(item);
-            this->graphicsWrapper->drawElement(item->meshData->indices.size());
+            this->graphicsWrapper->drawElement(item->meshData->ebo, item->meshData->indices.size());
         }
     }
 
-    this->graphicsWrapper->disableGUISettings();
+    this->shaderManager->disableVertexAttribute(this->shader, ShaderVariables::IN_TEXTURE_COORDS);
     this->shaderManager->disableShader();
 }
 
@@ -75,7 +77,8 @@ void GUIRenderer::setup(GUIImageComponent *guiComponent)
     this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
     this->graphicsWrapper->bindVAO(guiComponent->meshData->vao, guiComponent->meshData->vbo);
-    this->graphicsWrapper->enableGUISettings();
+    this->shaderManager->setVertexAttributePointer(this->shader, ShaderVariables::IN_POSITION, 2, sizeof(GUIVertexData), GUIVertexData::getPositionOffset());
+    this->shaderManager->setVertexAttributePointer(this->shader, ShaderVariables::IN_TEXTURE_COORDS, 2, sizeof(GUIVertexData), ABaseVertexData::getUVOffset());
     this->graphicsWrapper->activateGUITexture(guiComponent->getTextureId());
 }
 

@@ -14,7 +14,7 @@ void TextureManager::init()
 	this->emptyIndex = 0;
 }
 
-void TextureManager::release()
+void TextureManager::preRelease()
 {
     for (const UPTR<Texture> &item : this->textures)
         this->deleteTexture(item->getId());

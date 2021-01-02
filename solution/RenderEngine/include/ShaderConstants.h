@@ -21,8 +21,8 @@ namespace ShaderFiles
     const std::string MAIN_H_F      = BASE_FOLDER + "main_h.frag";
     const std::string MAIN_IMPL_F   = BASE_FOLDER + "main_impl.frag";
 
-    const std::string GUI_V = "../../shaders/gui/gui.vert";
-    const std::string GUI_F = "../../shaders/gui/gui.frag";
+    const std::string GUI_V = BASE_FOLDER + "gui/gui.vert";
+    const std::string GUI_F = BASE_FOLDER + "gui/gui.frag";
 
     const std::string LIGHTS_H_V    = "../../shaders/lights/lights_h.vert";
     const std::string LIGHTS_IMPL_V = "../../shaders/lights/lights_impl.vert";
@@ -97,28 +97,6 @@ namespace ShaderFiles
 
 namespace ShaderVariables
 {
-    namespace Names
-    {
-        const std::string VIEW_MATRIX           = "viewMatrix";
-        const std::string PROJECTION_MATRIX     = "projectionMatrix";
-        const std::string MODEL_MATRIX          = "modelMatrix";
-        const std::string LIGHT_SPACE_MATRIX    = "lightSpaceMatrix";
-        const std::string CAMERA_POSITION       = "cameraPosition";
-        const std::string FAR_PLANE             = "farPlane";
-        const std::string LIGHT_POSITION        = "lightPosition";
-        const std::string MATERIAL_COLOR        = "materialColor";
-        const std::string OUTLINE_COLOR         = "outlineColor";
-        const std::string SHININESS             = "shininess";
-        const std::string GUI_TEXTURE           = "guiTexture";
-		const std::string SCREEN_TEXTURE		= "screenTexture";
-        const std::string DIFFUSE_TEXTURE       = "diffuseTexture";
-        const std::string AO_TEXTURE            = "aoTexture";
-        const std::string NORMAL_TEXTURE        = "normalTexture";
-        const std::string SPECULAR_TEXTURE      = "specularTexture";
-        const std::string SHADOW_MAP            = "shadowMap";
-        const std::string AMBIENT_LIGHT_COLOR   = "ambientLightColor";
-    }
-
     enum Type
     {
         VIEW_MATRIX,
@@ -141,31 +119,34 @@ namespace ShaderVariables
         SPECULAR_TEXTURE,
         SHADOW_MAP,
 
+        IN_POSITION,
+        IN_TEXTURE_COORDS,
+
         AMBIENT_LIGHT_COLOR
     };
 
     const std::unordered_map<ShaderVariables::Type, std::string> Map
     {
-        { VIEW_MATRIX,                  Names::VIEW_MATRIX                  },
-        { PROJECTION_MATRIX,            Names::PROJECTION_MATRIX            },
-        { VIEW_MATRIX,                  Names::VIEW_MATRIX                  },
-        { PROJECTION_MATRIX,            Names::PROJECTION_MATRIX            },
-        { MODEL_MATRIX,                 Names::MODEL_MATRIX                 },
-        { LIGHT_SPACE_MATRIX,           Names::LIGHT_SPACE_MATRIX           },
-        { CAMERA_POSITION,              Names::CAMERA_POSITION              },
-        { FAR_PLANE,                    Names::FAR_PLANE                    },
-        { LIGHT_POSITION,               Names::LIGHT_POSITION               },
-        { MATERIAL_COLOR,               Names::MATERIAL_COLOR               },
-        { OUTLINE_COLOR,                Names::OUTLINE_COLOR                },
-        { SHININESS,                    Names::SHININESS                    },
-        { GUI_TEXTURE,                  Names::GUI_TEXTURE                  },
-		{ SCREEN_TEXTURE,               Names::SCREEN_TEXTURE               },
-        { DIFFUSE_TEXTURE,              Names::DIFFUSE_TEXTURE              },
-        { AO_TEXTURE,                   Names::AO_TEXTURE                   },
-        { NORMAL_TEXTURE,               Names::NORMAL_TEXTURE               },
-        { SPECULAR_TEXTURE,             Names::SPECULAR_TEXTURE             },
-        { SHADOW_MAP,                   Names::SHADOW_MAP                   },
-        { AMBIENT_LIGHT_COLOR,          Names::AMBIENT_LIGHT_COLOR          },
+        { VIEW_MATRIX,                  "viewMatrix"        },
+        { PROJECTION_MATRIX,            "projectionMatrix"  },
+        { MODEL_MATRIX,                 "modelMatrix"       },
+        { LIGHT_SPACE_MATRIX,           "lightSpaceMatrix"  },
+        { CAMERA_POSITION,              "cameraPosition"    },
+        { FAR_PLANE,                    "farPlane"          },
+        { LIGHT_POSITION,               "lightPosition"     },
+        { MATERIAL_COLOR,               "materialColor"     },
+        { OUTLINE_COLOR,                "outlineColor"      },
+        { SHININESS,                    "shininess"         },
+        { GUI_TEXTURE,                  "guiTexture"        },
+        { SCREEN_TEXTURE,               "screenTexture"     },
+        { DIFFUSE_TEXTURE,              "diffuseTexture"    },
+        { AO_TEXTURE,                   "aoTexture"         },
+        { NORMAL_TEXTURE,               "normalTexture"     },
+        { SPECULAR_TEXTURE,             "specularTexture"   },
+        { SHADOW_MAP,                   "shadowMap"         },
+        { IN_POSITION,                  "in_position"       },
+        { IN_TEXTURE_COORDS,            "in_textureCoords"  },
+        { AMBIENT_LIGHT_COLOR,          "ambientLightColor" }
     };
 }
 

@@ -24,6 +24,8 @@ namespace sre
         void createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic) override;
 
         void bindVAO(uint32_t vao, uint32_t vbo) override;
+        void setVertexAttributePointer(int attributeLocation, size_t itemSize, size_t dataSize, void* dataOffset) override;
+        // XXX APAGAR
         void enableGUISettings() override;
         void enablePostProcessingSettings() override;
         void enableVertexPositions() override;
@@ -41,6 +43,9 @@ namespace sre
 
         void drawElement(uint32_t indicesId, uint32_t indicesSize) override;
 
+        void disableVertexAttribute(int location) override;
+
+        // XXX APAGAR
         void disableVertexPositions() override;
         void disableVertexNormals() override;
         void disableTexCoords() override;
@@ -67,6 +72,7 @@ namespace sre
         uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader) override;
 
         int getUniformLocation(uint32_t program, const std::string& varName) override;
+        int getAttributeLocation(uint32_t program, const std::string& varName) override;
         void setInt(uint32_t program, int location, int value) override;
         void setFloat(uint32_t program, int location, float value) override;
         void setVec2(uint32_t program, int location, const float* value) override;

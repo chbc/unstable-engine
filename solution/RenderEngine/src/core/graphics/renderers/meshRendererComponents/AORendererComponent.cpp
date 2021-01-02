@@ -24,13 +24,13 @@ void AORendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
     this->textureId = mesh->getMaterial()->getComponent<AmbientOcclusionMaterialComponent>()->getTextureID();
 }
 
-void AORendererComponent::preDraw()
+void AORendererComponent::preDraw(Shader* shader)
 {
     this->graphicsWrapper->enableTexCoords();
     this->graphicsWrapper->activateAOTexture(this->textureId);
 }
 
-void AORendererComponent::postDraw()
+void AORendererComponent::postDraw(Shader* shader)
 {
     this->graphicsWrapper->disableTexCoords();
 }

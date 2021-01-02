@@ -23,7 +23,7 @@ private:
 
 protected:
     void init() override;
-    void release() override;
+    void preRelease() override;
 
 private:
     Texture* loadGUITexture(const std::string &fileName);

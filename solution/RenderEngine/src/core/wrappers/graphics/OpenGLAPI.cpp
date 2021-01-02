@@ -1,4 +1,5 @@
 #ifndef __ANDROID__
+
 #include <windows.h>
 
 #define GLEW_STATIC
@@ -42,6 +43,9 @@ void OpenGLAPI::init()
 
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 }
 
 void OpenGLAPI::createVAO(MeshData* meshData)
@@ -109,13 +113,19 @@ void OpenGLAPI::createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDy
 	// EBO
 	glGenBuffers(1, &meshData->ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), data, usage);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint16_t), data, usage);
 }
 
 void OpenGLAPI::bindVAO(uint32_t vao, uint32_t vbo)
 {
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+}
+
+void OpenGLAPI::setVertexAttributePointer(int attributeLocation, size_t itemSize, size_t dataSize, void* dataOffset)
+{
+	glEnableVertexAttribArray(attributeLocation);
+	glVertexAttribPointer(attributeLocation, itemSize, GL_FLOAT, GL_FALSE, dataSize, dataOffset);
 }
 
 void OpenGLAPI::enableGUISettings()
@@ -217,10 +227,15 @@ void OpenGLAPI::setupBufferSubData(GUIMeshData* meshData)
 	glBufferSubData(GL_ARRAY_BUFFER, 0, size, &meshData->vertexData[0]);
 }
 
-void OpenGLAPI::drawElement(uint32_t indicesSize)
+void OpenGLAPI::drawElement(uint32_t indicesId, uint32_t indicesSize)
 {
 	glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_SHORT, nullptr);
 	glBindVertexArray(0);
+}
+
+void OpenGLAPI::disableVertexAttribute(int location)
+{
+	glDisableVertexAttribArray(location);
 }
 
 void OpenGLAPI::disableVertexPositions()
@@ -453,6 +468,14 @@ uint32_t OpenGLAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader
 int OpenGLAPI::getUniformLocation(uint32_t program, const std::string & varName)
 {
 	int result = glGetUniformLocation(program, varName.c_str());
+	this->checkVariableLocation(result, varName);
+
+	return result;
+}
+
+int OpenGLAPI::getAttributeLocation(uint32_t program, const std::string& varName)
+{
+	int result = glGetAttribLocation(program, varName.c_str());
 	this->checkVariableLocation(result, varName);
 
 	return result;

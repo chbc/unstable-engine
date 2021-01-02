@@ -84,7 +84,7 @@ void BloomRendererComponent::onPostRender()
 
 		this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 		this->graphicsWrapper->enablePostProcessingSettings();
-		this->graphicsWrapper->drawElement(this->meshData->indices.size());
+		this->graphicsWrapper->drawElement(this->meshData->ebo, this->meshData->indices.size());
 
 		horizontal = !horizontal;
 		if (firstIteration)
@@ -114,7 +114,7 @@ void BloomRendererComponent::onPostRender()
 	this->graphicsWrapper->activateGUITexture(this->initialPassTextureId);
 	this->graphicsWrapper->activateDiffuseTexture(this->blurTextureIds[0]);
 
-	this->graphicsWrapper->drawElement(this->meshData->indices.size());
+	this->graphicsWrapper->drawElement(this->meshData->ebo, this->meshData->indices.size());
 
 	this->graphicsWrapper->disablePostProcessingSettings();
 	this->shaderManager->disableShader();

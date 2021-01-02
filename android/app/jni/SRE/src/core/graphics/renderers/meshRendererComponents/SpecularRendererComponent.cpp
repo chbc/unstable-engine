@@ -24,13 +24,13 @@ void SpecularRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *s
     this->textureId = mesh->getMaterial()->getComponent<SpecularMaterialComponent>()->getTextureID();
 }
 
-void SpecularRendererComponent::preDraw()
+void SpecularRendererComponent::preDraw(Shader* shader)
 {
     this->graphicsWrapper->enableTexCoords();
     this->graphicsWrapper->activateSpecularTexture(this->textureId);
 }
 
-void SpecularRendererComponent::postDraw()
+void SpecularRendererComponent::postDraw(Shader* shader)
 {
     this->graphicsWrapper->disableTexCoords();
 }

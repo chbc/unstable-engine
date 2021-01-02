@@ -30,8 +30,7 @@ private:
     RenderManager* renderManager;
 
 public:
-    RenderEngine() = default;
-    RenderEngine(const std::string& applicationName, int screenWidth, int screenHeight);
+    RenderEngine(const std::string& applicationName = "Unstable Engine", int screenWidth = 800, int screenHeight = 600);
 
 public:
     virtual ~RenderEngine() = default;
