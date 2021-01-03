@@ -31,7 +31,8 @@ public:
     inline bool getIsDynamic() { return this->isDynamic; }
 
 private:
-    void load(const std::string &fileName);
+    void load(const std::string& fileName);
+    void load(const std::string &fileName, const glm::vec2& normalizedSize);
     void loadFromAtlas(const std::string &fileName, const std::string &imageId);
 
 friend class Entity;

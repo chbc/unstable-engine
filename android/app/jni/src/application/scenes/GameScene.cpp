@@ -34,12 +34,13 @@ void GameScene::onButtonPress(GUIButtonComponent* guiButton, const std::string& 
 
 void GameScene::setupCards(GUIManager* guiManager)
 {
-	glm::vec2 position(0.125f, 0.4f);
+	glm::vec2 position(0.125f, 0.365f);
 	Entity* baseEntity = nullptr;
 	Entity* charEntity = nullptr;
 	Entity* descriptionEntity = nullptr;
 	GUIImageComponent* guiComponent = nullptr;
-	const glm::vec3 CARD_SCALE(0.45f, 0.45f, 1.0f);
+
+	const glm::vec2 CARD_EXTENT(0.245f, 0.255f);
 	const glm::vec3 CHAR_SCALE(0.30f, 0.30f, 1.0f);
 
 	std::string cardPaths[4] =
@@ -54,10 +55,11 @@ void GameScene::setupCards(GUIManager* guiManager)
 
 	for (int i = 0; i < 4; i++)
 	{
-		baseEntity = guiManager->createGUIImageEntity("memoryGame/base_card.png");
+		baseEntity = guiManager->createGUIImageEntity("memoryGame/base_card.png", CARD_EXTENT);
 		guiComponent = baseEntity->getComponent<GUIImageComponent>();
 		guiComponent->setUIPosition(position);
 
+		/*
 		charEntity = guiManager->createGUIImageEntity(cardPaths[i]);
 		guiComponent = charEntity->getComponent<GUIImageComponent>();
 		guiComponent->setUIPosition(position + glm::vec2(0.0f, -0.025f));
@@ -65,32 +67,35 @@ void GameScene::setupCards(GUIManager* guiManager)
 		descriptionEntity = guiManager->createGUIImageEntity(descriptionPaths[i]);
 		guiComponent = descriptionEntity->getComponent<GUIImageComponent>();
 		guiComponent->setUIPosition(position + glm::vec2(0.0f, 0.05f));
-		
+		*/
+
 		/*
 		baseEntity->addChild(charEntity);
 		baseEntity->addChild(descriptionEntity);
 		baseEntity->getTransform()->setScale(CARD_SCALE);
 		*/
-		baseEntity->getTransform()->setScale(CARD_SCALE);
+
+		/*
 		charEntity->getTransform()->setScale(CHAR_SCALE);
 		descriptionEntity->getTransform()->setScale(CARD_SCALE);
+		*/
 
+		/*
 		guiManager->addEntity(charEntity);
 		guiManager->addEntity(descriptionEntity);
+		*/
 		guiManager->addEntity(baseEntity);
 
 		position.x += 0.25f;
 	}
 
 	position.x = 0.125f;
-	position.y = 0.6f;
-
+	position.y = 0.635f;
 	for (int i = 0; i < 4; i++)
 	{
-		baseEntity = guiManager->createGUIImageEntity("memoryGame/back_card.png");
+		baseEntity = guiManager->createGUIImageEntity("memoryGame/back_card.png", CARD_EXTENT);
 		guiComponent = baseEntity->getComponent<GUIImageComponent>();
 		guiComponent->setUIPosition(position);
-		baseEntity->getTransform()->setScale(CARD_SCALE);
 
 		GUIButtonComponent* button = baseEntity->addComponent<GUIButtonComponent>();
 		button->setExtent(guiComponent->getExtent());

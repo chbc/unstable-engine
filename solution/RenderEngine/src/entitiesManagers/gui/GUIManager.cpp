@@ -24,6 +24,14 @@ Entity *GUIManager::createGUIImageEntity(const std::string &fileName)
     return result;
 }
 
+Entity* GUIManager::createGUIImageEntity(const std::string& fileName, const glm::vec2& normalizedSize)
+{
+    Entity* result = this->createEntity();
+    GUIImageComponent* component = result->addComponent<GUIImageComponent>();
+    component->load(fileName, normalizedSize);
+    return result;
+}
+
 Entity *GUIManager::createGUIImageEntityFromAtlas(const std::string &fileName, const std::string &imageId)
 {
     Entity *result = this->createEntity();

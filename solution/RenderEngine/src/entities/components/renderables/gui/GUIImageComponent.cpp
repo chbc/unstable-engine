@@ -67,6 +67,17 @@ void GUIImageComponent::load(const std::string& fileName)
     this->extent = normalizedSize;
 }
 
+void GUIImageComponent::load(const std::string& fileName, const glm::vec2& normalizedSize)
+{
+    Texture* texture = SingletonsManager::getInstance()->resolve<TextureManager>()->loadTexture(fileName, EMaterialMap::GUI);
+    glm::vec2 textureSize(texture->getWidth(), texture->getHeight());
+
+    GUIMeshData* plane = PrimitiveMeshFactory().createPlaneTopDown(normalizedSize);
+    this->meshData = UPTR<GUIMeshData>{ plane };
+    this->textureId = texture->getId();
+    this->extent = normalizedSize;
+}
+
 void GUIImageComponent::loadFromAtlas(const std::string& fileName, const std::string& imageId)
 {
     Atlas* atlas = SingletonsManager::getInstance()->resolve<AtlasManager>()->getAtlas(fileName);
@@ -76,6 +87,7 @@ void GUIImageComponent::loadFromAtlas(const std::string& fileName, const std::st
     GUIMeshData* plane = PrimitiveMeshFactory().createPlaneTopDown(atlasItem->normalizedSize, atlasItem->uv);
     this->meshData = UPTR<GUIMeshData>{ plane };
     this->textureId = atlas->getTextureId();
+    this->extent = atlasItem->normalizedSize;
 }
 
 } // namespace
