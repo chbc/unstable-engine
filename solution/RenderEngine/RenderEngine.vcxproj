@@ -268,6 +268,7 @@
     <ClCompile Include="src\core\wrappers\graphics\OpenGLAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\SDLAPI.cpp" />
     <ClCompile Include="src\tests\TestServicesProvider.cpp" />
+    <ClCompile Include="src\utils\Log.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_demo.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_draw.cpp" />
@@ -396,6 +397,7 @@
     <ClInclude Include="include\LitRendererComponent.h" />
     <ClInclude Include="include\LitRendererLightsState.h" />
     <ClInclude Include="include\LitRendererNoLightsState.h" />
+    <ClInclude Include="include\Log.h" />
     <ClInclude Include="include\Material.h" />
     <ClInclude Include="include\MathUtils.h" />
     <ClInclude Include="include\MatrixManager.h" />

@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="application\entities\Card.cpp" />
     <ClCompile Include="application\events\EventReceiver.cpp" />
     <ClCompile Include="application\SampleApplication.cpp" />
     <ClCompile Include="application\scenes\GameScene.cpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="application\ScreenManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="application\entities\Card.h" />
     <ClInclude Include="application\events\EventReceiver.h" />
     <ClInclude Include="application\SampleApplication.h" />
     <ClInclude Include="application\scenes\IScene.h" />

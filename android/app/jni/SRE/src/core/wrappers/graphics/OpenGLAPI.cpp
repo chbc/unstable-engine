@@ -15,7 +15,6 @@ namespace sre
 
 namespace EAttribLocation
 {
-
 	enum Type : int
 	{
 		POSITION = 0,
@@ -24,7 +23,6 @@ namespace EAttribLocation
 		TANGENT = 3,
 		BITANGENT = 4
 	};
-
 }
 
 void OpenGLAPI::init()
@@ -236,6 +234,16 @@ void OpenGLAPI::drawElement(uint32_t indicesId, uint32_t indicesSize)
 void OpenGLAPI::disableVertexAttribute(int location)
 {
 	glDisableVertexAttribArray(location);
+}
+
+void OpenGLAPI::enableDepthTest()
+{
+	glEnable(GL_DEPTH_TEST);
+}
+
+void OpenGLAPI::disableDepthTest()
+{
+	glDisable(GL_DEPTH_TEST);
 }
 
 void OpenGLAPI::disableVertexPositions()
@@ -521,7 +529,7 @@ void OpenGLAPI::disableShader()
 	glUseProgram(0);
 }
 
-void OpenGLAPI::releaseShader(uint32_t program, std::vector<uint32_t> components)
+void OpenGLAPI::releaseShader(uint32_t program, std::vector<uint32_t>& components)
 {
 	for (uint32_t item : components)
 	{

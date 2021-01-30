@@ -65,17 +65,36 @@ void RenderEngine::run()
     this->release();
 }
 
+void RenderEngine::setEventReceiver(InputHandler* inputHandler)
+{
+    this->inputHandler = UPTR<InputHandler>{ inputHandler };
+}
+
+void RenderEngine::loadScene(const std::string& scene)
+{
+    this->guiManager->destroyAllEntities();
+    this->sceneManager->destroyAllEntities();
+
+    this->removeDestroyedEntities();
+
+    this->onInit();
+
+    this->guiManager->onSceneLoaded();
+    this->sceneManager->onSceneLoaded();
+    this->renderManager->onSceneLoaded();
+}
+
+void RenderEngine::quit()
+{
+    this->running = false;
+}
+
 void RenderEngine::onEditorGUI()
 {
 #if defined(DEBUG) && !defined(__ANDROID__)
     if (this->isEditorMode)
         this->worldEditor->onGUI(&this->isEditorMode);
 #endif
-}
-
-void RenderEngine::release()
-{
-    SingletonsManager::getInstance()->release();
 }
 
 void RenderEngine::processInput()
@@ -95,14 +114,9 @@ void RenderEngine::removeDestroyedEntities()
     this->guiManager->removeDestroyedEntities();
 }
 
-void RenderEngine::setEventReceiver(InputHandler *inputHandler)
+void RenderEngine::release()
 {
-	this->inputHandler = UPTR<InputHandler>{ inputHandler };
-}
-
-void RenderEngine::quit()
-{
-    this->running = false;
+    SingletonsManager::getInstance()->release();
 }
 
 } // namespace

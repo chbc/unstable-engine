@@ -1,5 +1,5 @@
 #include "MenuScene.h"
-#include "application/ScreenManager.h"
+#include "application/SampleApplication.h"
 #include "GameScene.h"
 
 #include <SceneManager.h>
@@ -52,5 +52,5 @@ void MenuScene::onInit(SceneManager* sceneManager, GUIManager* guiManager)
 
 void MenuScene::onButtonPress(GUIButtonComponent* guiButton, const std::string& entityName)
 {
-	ScreenManager::getInstance()->changeScene(new GameScene);
+	SampleApplication::getInstance()->changeScene(new GameScene);
 }

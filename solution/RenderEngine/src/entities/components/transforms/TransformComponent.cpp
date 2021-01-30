@@ -24,7 +24,7 @@ void TransformComponent::setPosition(const glm::vec3 &position)
 
 	this->localMatrix = this->worldMatrix; // ###
 
-	this->forwardTransform();
+	this->propagateTransform();
 }
 
 void TransformComponent::setScale(const glm::vec3 &scale)
@@ -35,7 +35,7 @@ void TransformComponent::setScale(const glm::vec3 &scale)
 
 	this->localMatrix = this->worldMatrix; // ###
 
-	this->forwardTransform();
+	this->propagateTransform();
 }
 
 void TransformComponent::setRotation(const glm::vec3 &axis, float angle)
@@ -46,7 +46,7 @@ void TransformComponent::setRotation(const glm::vec3 &axis, float angle)
 	
 	this->localMatrix = this->worldMatrix; // ###
 
-	this->forwardTransform();
+	this->propagateTransform();
 }
 
 void TransformComponent::setLocalPosition(const glm::vec3 &position)
@@ -57,7 +57,7 @@ void TransformComponent::setLocalPosition(const glm::vec3 &position)
 
 	this->worldMatrix *= this->localMatrix;
 
-	this->forwardTransform();
+	this->propagateTransform();
 }
 
 void TransformComponent::setLocalScale(const glm::vec3 &scale)
@@ -68,7 +68,7 @@ void TransformComponent::setLocalScale(const glm::vec3 &scale)
 
 	this->worldMatrix *= this->localMatrix;
 
-	this->forwardTransform();
+	this->propagateTransform();
 }
 
 void TransformComponent::setLocalRotation(const glm::vec3 &axis, float angle)
@@ -79,7 +79,7 @@ void TransformComponent::setLocalRotation(const glm::vec3 &axis, float angle)
 
 	this->worldMatrix *= this->localMatrix;
 
-	this->forwardTransform();
+	this->propagateTransform();
 }
 
 glm::vec3 TransformComponent::getPosition()
@@ -112,7 +112,7 @@ glm::vec3 TransformComponent::getLocalScale()
 	return glm::vec3(this->localMatrix[0][0], this->localMatrix[1][1], this->localMatrix[2][2]);
 }
 
-void TransformComponent::forwardTransform()
+void TransformComponent::propagateTransform()
 {
 	Entity *entity = this->getEntity();
 	uint32_t size = entity->getChildrenCount();
@@ -121,7 +121,7 @@ void TransformComponent::forwardTransform()
 		Entity *child = entity->getChild(i);
 		TransformComponent *childTransform = child->getComponent<TransformComponent>();
 		childTransform->worldMatrix = this->worldMatrix * childTransform->localMatrix;
-		childTransform->forwardTransform();
+		childTransform->propagateTransform();
 	}
 }
 

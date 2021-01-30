@@ -34,8 +34,9 @@ public:
 
 public:
     virtual ~RenderEngine() = default;
-    void setEventReceiver(InputHandler *inputHandler);
     void run();
+    void setEventReceiver(InputHandler *inputHandler);
+    void loadScene(const std::string& scene);
     void quit();
 
 protected:

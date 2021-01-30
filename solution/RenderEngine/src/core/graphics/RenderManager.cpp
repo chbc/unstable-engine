@@ -52,7 +52,8 @@ void RenderManager::init()
 
 void RenderManager::preRelease()
 {
-    this->renders.clear();
+    this->meshRenderers.clear();
+    this->guiRenderer = nullptr;
 }
 
 void RenderManager::addEntity(Entity *entity)
@@ -81,7 +82,7 @@ void RenderManager::addEntity(Entity *entity)
 void RenderManager::addMesh(MeshComponent *mesh)
 {
     MeshRenderer *renderer = nullptr;
-    for (const UPTR<MeshRenderer> &item : this->renders)
+    for (const UPTR<MeshRenderer> &item : this->meshRenderers)
     {
         if (item->fitsWithMesh(mesh))
         {
@@ -93,7 +94,7 @@ void RenderManager::addMesh(MeshComponent *mesh)
     if (renderer == nullptr)
     {
         renderer = new MeshRenderer{mesh->getMaterial(), this->shaderManager, this->graphicsWrapper};
-        this->renders.emplace_back(renderer);
+        this->meshRenderers.emplace_back(renderer);
     }
     
     renderer->addMesh(mesh);
@@ -158,7 +159,7 @@ void RenderManager::onSceneLoaded()
         includeDepth = this->postProcessingRenderer->isIncludingDepth();
 	}
 
-	for (const UPTR<MeshRenderer>& item : this->renders)
+	for (const UPTR<MeshRenderer>& item : this->meshRenderers)
 		item->onSceneLoaded(useBrightnessSegmentation, includeDepth);
 }
 
@@ -185,10 +186,10 @@ void RenderManager::render()
     this->graphicsWrapper->setViewport(EngineValues::SCREEN_WIDTH, EngineValues::SCREEN_HEIGHT);
     this->graphicsWrapper->clearColorAndDepthBuffer();
 
-    if ((this->mainCamera != nullptr) && !this->renders.empty())
+    if ((this->mainCamera != nullptr) && !this->meshRenderers.empty())
     {
         this->mainCamera->updateView();
-        for (const UPTR<MeshRenderer>& item : this->renders)
+        for (const UPTR<MeshRenderer>& item : this->meshRenderers)
         {
             item->render(this->mainCamera->getTransform()->getPosition());
         }
@@ -228,13 +229,17 @@ void RenderManager::setupBufferSubData(GUIMeshData* meshData)
 
 void RenderManager::onRemoveDestroyedEntities()
 {
-    for (const UPTR<MeshRenderer> &item : this->renders)
+    for (const UPTR<MeshRenderer> &item : this->meshRenderers)
         item->onRemoveDestroyedEntities();
 
-    CollectionsUtils::removeIfRendererIsEmpty(this->renders);
+    CollectionsUtils::removeIfRendererIsEmpty(this->meshRenderers);
 
     if (this->guiRenderer.get() != nullptr)
+    {
         this->guiRenderer->removeDestroyedEntities();
+        if (this->guiRenderer->isEmpty())
+            this->guiRenderer = nullptr;
+    }
 
     this->lightManager->removeDestroyedEntities();
 }

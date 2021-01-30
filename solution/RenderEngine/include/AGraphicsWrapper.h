@@ -45,6 +45,8 @@ protected:
     virtual void drawElement(uint32_t indicesId, uint32_t indicesSize) = 0;
 
     virtual void disableVertexAttribute(int location) = 0;
+    virtual void enableDepthTest() = 0;
+    virtual void disableDepthTest() = 0;
 
     // XXX APAGAR
     virtual void disableVertexPositions() =0;
@@ -83,7 +85,7 @@ protected:
 
     virtual void enableShader(uint32_t program) =0;
     virtual void disableShader() =0;
-    virtual void releaseShader(uint32_t program, std::vector<uint32_t> components) =0;
+    virtual void releaseShader(uint32_t program, std::vector<uint32_t>& components) =0;
     virtual void deleteBuffers(AMeshData* meshData) =0;
 
     virtual uint32_t generateDepthFrameBuffer(uint32_t textureId, bool cubemap = false) =0;

@@ -161,7 +161,7 @@ bool SDLAPI::checkButtonPress(InputHandler* inputHandler, const std::vector<GUIB
 
 	for (GUIButtonComponent* item : guiButtons)
 	{
-		if (item->isInside(pressPosition))
+		if (item->getEntity()->isEnabled() && item->isInside(pressPosition))
 		{
 			inputHandler->onGUIButtonPressed(item, item->getEntity()->getName());
 			return true;

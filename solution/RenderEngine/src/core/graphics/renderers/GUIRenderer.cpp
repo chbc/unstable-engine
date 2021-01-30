@@ -9,10 +9,23 @@
 namespace sre
 {
 
-GUIRenderer::GUIRenderer(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
+GUIRenderer::~GUIRenderer()
 {
-    this->shaderManager = shaderManager;
-    this->graphicsWrapper = graphicsWrapper;
+    for (GUIImageComponent*item : this->guiComponents)
+        this->graphicsWrapper->deleteBuffers(item->meshData.get());
+
+    for (GUIImageComponent* item : this->dynamicGUIComponents)
+        this->graphicsWrapper->deleteBuffers(item->meshData.get());
+
+    this->guiComponents.clear();
+    this->dynamicGUIComponents.clear();
+
+    this->shaderManager->releaseShader(this->shader);
+}
+
+GUIRenderer::GUIRenderer(ShaderManager *arg_shaderManager, AGraphicsWrapper *arg_graphicsWrapper) 
+    : shaderManager(arg_shaderManager), graphicsWrapper(arg_graphicsWrapper)
+{
 }
 
 void GUIRenderer::loadShader()
@@ -48,22 +61,29 @@ void GUIRenderer::render()
     this->shaderManager->enableShader(this->shader);
     this->shaderManager->setInt(this->shader, ShaderVariables::GUI_TEXTURE, EMaterialMap::GUI);
 
+    this->graphicsWrapper->disableDepthTest();
+
     // Static meshes
     for (GUIImageComponent *item : this->guiComponents)
     {
-        this->setup(item);
-        this->graphicsWrapper->drawElement(item->meshData->ebo, item->meshData->indices.size());
-    }
-
-    // Dynamic meshes
-    for (GUIImageComponent *item : this->dynamicGUIComponents)
-    {
-        if (item->meshData.get() != nullptr)
+        if (item->getEntity()->isEnabled())
         {
             this->setup(item);
             this->graphicsWrapper->drawElement(item->meshData->ebo, item->meshData->indices.size());
         }
     }
+
+    // Dynamic meshes
+    for (GUIImageComponent *item : this->dynamicGUIComponents)
+    {
+        if ((item->meshData.get() != nullptr) && item->getEntity()->isEnabled())
+        {
+            this->setup(item);
+            this->graphicsWrapper->drawElement(item->meshData->ebo, item->meshData->indices.size());
+        }
+    }
+
+    this->graphicsWrapper->enableDepthTest();
 
     this->shaderManager->disableVertexAttribute(this->shader, ShaderVariables::IN_TEXTURE_COORDS);
     this->shaderManager->disableShader();
@@ -96,6 +116,11 @@ void GUIRenderer::removeDestroyedEntities()
         else
             ++it;
     }
+}
+
+bool GUIRenderer::isEmpty()
+{
+    return (this->guiComponents.empty() && this->dynamicGUIComponents.empty());
 }
 
 } // namespace

@@ -59,11 +59,6 @@ bool GUIButtonComponent::isInside(const glm::vec2& pointPosition)
 		)
 	);
 
-	std::cout << "MOUSE POSITION (" << pointPosition.x << ", " << pointPosition.y << ")" << std::endl;
-	std::cout << "ENTITY POSITION (" << uiPosition.x << ", " << uiPosition.y << ")" << std::endl;
-	std::cout << "EXTENT (" << this->extent.x << ", " << this->extent.y << ")" << std::endl;
-	std::cout << "RESULT = " << result << std::endl;
-
 	return result;
 }
 

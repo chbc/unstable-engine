@@ -49,21 +49,16 @@ void AEntityManager::addEntity(Entity *entity, const std::string &name)
 Entity* AEntityManager::getEntity(const std::string& name)
 {
     Entity* result = nullptr;
-    if (this->entities[name] != nullptr);
+    if (this->entities[name] != nullptr)
         result = this->entities[name].get();
 
     return result;
 }
 
-void AEntityManager::clearEntities()
-{
-    for (auto& item : this->entities)
-        item.second->destroy();
-}
-
 void AEntityManager::removeDestroyedEntities()
 {
     CollectionsUtils::removeIfEntityIsDestroyed(this->entities);
+    CollectionsUtils::removeIfEntityIsDestroyed(this->entitiesToBeAdded);
 }
 
 void AEntityManager::onSceneLoaded()
@@ -77,6 +72,15 @@ void AEntityManager::onSceneLoaded()
     }
 
     this->sceneLoaded = true;
+}
+
+void AEntityManager::destroyAllEntities()
+{
+    for (auto& item : this->entities)
+        item.second->destroy();
+
+    for (auto& item : this->entitiesToBeAdded)
+        item.second->destroy();
 }
 
 } // namespace

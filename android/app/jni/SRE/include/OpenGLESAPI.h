@@ -44,6 +44,8 @@ namespace sre
         void drawElement(uint32_t indicesId, uint32_t indicesSize) override;
 
         void disableVertexAttribute(int location) override;
+        virtual void enableDepthTest() override;
+        virtual void disableDepthTest() override;
 
         // XXX APAGAR
         void disableVertexPositions() override;
@@ -82,7 +84,7 @@ namespace sre
 
         void enableShader(uint32_t program) override;
         void disableShader() override;
-        void releaseShader(uint32_t program, std::vector<uint32_t> components) override;
+        void releaseShader(uint32_t program, std::vector<uint32_t>& components) override;
         void deleteBuffers(AMeshData* meshData) override;
 
         uint32_t generateDepthFrameBuffer(uint32_t textureId, bool cubemap = false) override { return 0; }

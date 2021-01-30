@@ -32,7 +32,7 @@ private:
     class AGraphicsWrapper    *graphicsWrapper;
     class LightManager        *lightManager;
 
-	VECTOR_UPTR<class MeshRenderer> renders;
+	VECTOR_UPTR<class MeshRenderer> meshRenderers;
     UPTR<class ShadowRenderer> shadowRenderer;
     UPTR<class GUIRenderer> guiRenderer;
 	UPTR<class PostProcessingRenderer> postProcessingRenderer;

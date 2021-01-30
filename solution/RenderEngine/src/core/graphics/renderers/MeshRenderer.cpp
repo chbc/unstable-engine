@@ -66,6 +66,11 @@ MeshRenderer::~MeshRenderer()
 {
     for (MeshComponent *item : this->meshes)
         this->graphicsWrapper->deleteBuffers(item->meshData.get());
+
+    this->meshes.clear();
+    this->shaderSetupItems.clear();
+    this->shaderManager->releaseShader(this->shader);
+    this->shader = nullptr;
 }
 
 void MeshRenderer::onSceneLoaded(bool useBrightnessSegmentation, bool includeDepth)
@@ -140,19 +145,22 @@ void MeshRenderer::render(const glm::vec3 &cameraPosition)
 
     for (MeshComponent *mesh : this->meshes)
     {
-        // Matrix setup
-        TransformComponent *transform = mesh->getTransform();
-        glm::mat4 modelMatrix = transform->getMatrix();
-        this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
-
-        this->graphicsWrapper->bindVAO(mesh->meshData->vao, mesh->meshData->vbo);
-        for (const auto &item : this->componentsMap)
+        if (mesh->getEntity()->isEnabled())
         {
-            item.second->setupShaderValues(mesh, this->shader);
-            item.second->preDraw(this->shader);
-        }
+            // Matrix setup
+            TransformComponent* transform = mesh->getTransform();
+            glm::mat4 modelMatrix = transform->getMatrix();
+            this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
-        this->graphicsWrapper->drawElement(mesh->meshData->ebo, mesh->meshData->indices.size());
+            this->graphicsWrapper->bindVAO(mesh->meshData->vao, mesh->meshData->vbo);
+            for (const auto& item : this->componentsMap)
+            {
+                item.second->setupShaderValues(mesh, this->shader);
+                item.second->preDraw(this->shader);
+            }
+
+            this->graphicsWrapper->drawElement(mesh->meshData->ebo, mesh->meshData->indices.size());
+        }
     }
 
     for (const auto &item : this->componentsMap)

@@ -1,3 +1,4 @@
+/* XXX
 #pragma once
 
 #include "scenes/IScene.h"
@@ -6,16 +7,15 @@
 class ScreenManager
 {
 private:
-	static ScreenManager* instance;
 	SPTR<IScene> scene;
 
 	SceneManager* sceneManager;
 	GUIManager* guiManager;
 
 public:
-	static ScreenManager* getInstance();
-
 	void onInit(SceneManager* sceneManager, GUIManager* guiManager);
+	void onUpdate(unsigned int elapsedTime);
 	void onButtonPress(GUIButtonComponent* guiButton, const std::string& entityName);
 	void changeScene(IScene* newScene);
 };
+*/

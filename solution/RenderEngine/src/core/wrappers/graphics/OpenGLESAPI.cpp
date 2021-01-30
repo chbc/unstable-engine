@@ -67,9 +67,9 @@ void OpenGLESAPI::createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool is
 	}
 
 	// VBO
-	glGenBuffers(1, &meshData->vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, meshData->vbo);
-	glBufferData(GL_ARRAY_BUFFER, size * sizeof(GUIVertexData), data, usage);
+	GL_CHECK(glGenBuffers(1, &meshData->vbo));
+	GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, meshData->vbo));
+	GL_CHECK(glBufferData(GL_ARRAY_BUFFER, size * sizeof(GUIVertexData), data, usage));
 }
 
 void OpenGLESAPI::createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic)
@@ -86,9 +86,9 @@ void OpenGLESAPI::createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool is
 	}
 
 	// EBO
-	glGenBuffers(1, &meshData->ebo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint16_t), data, usage);
+	GL_CHECK(glGenBuffers(1, &meshData->ebo));
+	GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->ebo));
+	GL_CHECK(glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint16_t), data, usage));
 }
 
 void OpenGLESAPI::bindVAO(uint32_t vao, uint32_t vbo)
@@ -98,13 +98,13 @@ void OpenGLESAPI::bindVAO(uint32_t vao, uint32_t vbo)
 
 void OpenGLESAPI::setVertexAttributePointer(int attributeLocation, size_t itemSize, size_t dataSize, void* dataOffset)
 {
-	glEnableVertexAttribArray(attributeLocation);
-	glVertexAttribPointer(attributeLocation, itemSize, GL_FLOAT, GL_FALSE, dataSize, dataOffset);
+	GL_CHECK(glEnableVertexAttribArray(attributeLocation));
+	GL_CHECK(glVertexAttribPointer(attributeLocation, itemSize, GL_FLOAT, GL_FALSE, dataSize, dataOffset));
 }
 
 void OpenGLESAPI::enableGUISettings()
 {
-	/* XXX
+	/* XXX APAGAR
 	GL_CHECK(glEnableVertexAttribArray(EAttribLocation::TEXCOORDS));
 	GL_CHECK(glVertexAttribPointer(EAttribLocation::TEXCOORDS, 2, GL_FLOAT, GL_FALSE, sizeof(GUIVertexData), ABaseVertexData::getUVOffset()));
 	GL_CHECK(glEnableVertexAttribArray(EAttribLocation::POSITION));
@@ -115,11 +115,14 @@ void OpenGLESAPI::enableGUISettings()
 	*/
 }
 
-void OpenGLESAPI::enablePostProcessingSettings() { }
+void OpenGLESAPI::enablePostProcessingSettings()
+{
+	// XXX APAGAR
+}
 
 void OpenGLESAPI::enableVertexPositions()
 {
-	/* XXX
+	/* XXX APAGAR
 	GL_CHECK(glEnableVertexAttribArray(EAttribLocation::POSITION));
 	GL_CHECK(glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getPositionOffset()));
 	*/
@@ -180,6 +183,16 @@ void OpenGLESAPI::drawElement(uint32_t indicesId, uint32_t indicesSize)
 void OpenGLESAPI::disableVertexAttribute(int location)
 {
 	GL_CHECK(glDisableVertexAttribArray(location));
+}
+
+void OpenGLESAPI::enableDepthTest()
+{
+	glEnable(GL_DEPTH_TEST);
+}
+
+void OpenGLESAPI::disableDepthTest()
+{
+	glDisable(GL_DEPTH_TEST);
 }
 
 void OpenGLESAPI::disableVertexPositions()
@@ -343,7 +356,7 @@ void OpenGLESAPI::disableShader()
 	GL_CHECK(glUseProgram(0));
 }
 
-void OpenGLESAPI::releaseShader(uint32_t program, std::vector<uint32_t> components)
+void OpenGLESAPI::releaseShader(uint32_t program, std::vector<uint32_t>& components)
 {
 	for (uint32_t item : components)
 	{

@@ -24,6 +24,9 @@ protected:
 private:
     class Shader *shader;
 
+public:
+    ~GUIRenderer();
+
 private:
     GUIRenderer(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
@@ -34,6 +37,8 @@ private:
     void setup(GUIImageComponent *guiComponent);
 
     void removeDestroyedEntities();
+
+    bool isEmpty();
 
 friend class RenderManager;
 };

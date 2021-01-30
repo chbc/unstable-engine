@@ -18,7 +18,6 @@ void ShaderManager::release()
     }
 
     this->shaders.clear();
-
 }
 
 Shader *ShaderManager::loadGUIShader()
@@ -187,6 +186,11 @@ void ShaderManager::enableShader(Shader *shader)
 void ShaderManager::disableShader()
 {
     this->graphicsWrapper->disableShader();
+}
+
+void ShaderManager::releaseShader(Shader* shader)
+{
+    this->graphicsWrapper->releaseShader(shader->program, shader->components);
 }
 
 } // namespace

@@ -1,22 +1,23 @@
 #pragma once
 #include <RenderEngine.h>
 #include "ScreenManager.h"
+#include "scenes/IScene.h"
 
 using namespace sre;
 
-/*!
-	Concrete application class.
-*/
 class SampleApplication : public RenderEngine
 {
 private:
-	SPTR<ScreenManager> screenManager;
-	glm::vec2 direction;
+	static SampleApplication* instance;
 	
 public:
 	SampleApplication();
+	static SampleApplication* getInstance();
+
+	void onButtonPress(GUIButtonComponent* guiButton, const std::string& entityName);
+	void changeScene(IScene* newScene);
 
 protected:
-	void onInit();
-	void onUpdate(unsigned int elapsedTime);
+	void onInit() override;
+	void onUpdate(unsigned int elapsedTime) override;
 };

@@ -1,42 +1,49 @@
 #include "SampleApplication.h"
 #include "events/EventReceiver.h"
+#include "scenes/MenuScene.h"
+
+UPTR<IScene> scene;
+
+SampleApplication* SampleApplication::instance = nullptr;
 
 #ifdef __ANDROID__
-SampleApplication::SampleApplication() : RenderEngine() { }
+SampleApplication::SampleApplication() : RenderEngine()
+{
+	instance = this;
+	scene = UPTR<MenuScene>{ new MenuScene };
+	this->setEventReceiver(new EventReceiver(this));
+}
 #else
-SampleApplication::SampleApplication() : RenderEngine("Jogo da Memoria", 400, 623) { }
+SampleApplication::SampleApplication() : RenderEngine("Jogo da Memoria", 400, 623)
+{
+	instance = this;
+	scene = UPTR<MenuScene>{ new MenuScene };
+	this->setEventReceiver(new EventReceiver(this));
+}
 #endif
+
+SampleApplication* SampleApplication::getInstance()
+{
+	return instance;
+}
+
+void SampleApplication::onButtonPress(GUIButtonComponent* guiButton, const std::string& entityName)
+{
+	scene->onButtonPress(guiButton, entityName);
+}
+
+void SampleApplication::changeScene(IScene* newScene)
+{
+	scene.reset(newScene);
+	this->loadScene("");
+}
 
 void SampleApplication::onInit()
 {
-	this->screenManager = SPTR<ScreenManager>(new ScreenManager);
-	this->screenManager->onInit(this->sceneManager.get(), this->guiManager.get());
-	this->setEventReceiver(new EventReceiver(this, this->screenManager.get()));
+	scene->onInit(this->sceneManager.get(), this->guiManager.get());
 }
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)
 {
-	/* XXX
-	const glm::vec2 BORDERS(this->halfScreenWidth, this->halfScreenHeight);
-
-	Entity* entity = this->sceneManager->getEntity("moving_image");
-
-	glm::vec3 position = entity->getTransform()->getPosition();
-	float delta = static_cast<float>(elapsedTime);
-	const float SPEED = 0.1f;
-	position.x += this->direction.x * (delta * SPEED);
-	position.y += this->direction.y * (delta * SPEED);
-
-	if (position.x < -BORDERS.x)
-		this->direction.x = 1.0f;
-	else if (position.x > BORDERS.x)
-		this->direction.x = -1.0f;
-
-	if (position.y < -BORDERS.y)
-		this->direction.y = 1.0f;
-	else if (position.y > BORDERS.y)
-		this->direction.y = -1.0f;
-
-	entity->getTransform()->setPosition(position);
-	*/
+	scene->onUpdate(elapsedTime);
 }

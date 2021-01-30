@@ -22,14 +22,15 @@ private:
 	TransformComponent* transform;
 
     bool alive;
+    bool enabled;
     uint32_t childIndex{};
     std::string name;
 
-private:
-    Entity();
+protected:
+    SRE_API Entity();
 
 public:
-    ~Entity();
+    SRE_API virtual ~Entity();
 
     template <typename T, typename... TArgs>
 	T *addComponent(TArgs&&... mArgs)
@@ -58,10 +59,14 @@ public:
 	SRE_API inline bool isAlive() const { return this->alive; }
     SRE_API const char* getName() const { return this->name.c_str(); }
 
-private:
-	void onStart();
-	void update(uint32_t deltaTime);
+    SRE_API void setEnabled(bool value);
+    SRE_API bool isEnabled() const;
 
+protected:
+	void SRE_API onStart();
+	void SRE_API update(uint32_t deltaTime);
+
+private:
     static std::string generateEntityId(uint32_t& index, const std::string& duplicateName = "");
 
     friend class AEntityManager;

@@ -41,7 +41,7 @@ public:
 	inline const glm::mat4 &getMatrix() { return this->worldMatrix; }
 
 private:
-	void forwardTransform();
+	void propagateTransform();
 
 friend class Entity;
 };

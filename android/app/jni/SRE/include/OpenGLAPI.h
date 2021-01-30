@@ -44,6 +44,8 @@ protected:
     void drawElement(uint32_t indicesId, uint32_t indicesSize) override;
 
     void disableVertexAttribute(int location) override;
+    void enableDepthTest() override;
+    void disableDepthTest() override;
 
     void disableVertexPositions() override;
     void disableVertexNormals() override;
@@ -84,7 +86,7 @@ protected:
 
     void enableShader(uint32_t program) override;
     void disableShader() override;
-    void releaseShader(uint32_t program, std::vector<uint32_t> components) override;
+    void releaseShader(uint32_t program, std::vector<uint32_t>& components) override;
     void deleteBuffers(AMeshData* mesh) override;
 
     uint32_t generateDepthFrameBuffer(uint32_t textureId, bool cubemap = false) override;

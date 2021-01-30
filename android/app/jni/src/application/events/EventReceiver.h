@@ -6,7 +6,6 @@
 
 using namespace sre;
 
-class ScreenManager;
 class SampleApplication;
 
 /*!
@@ -16,10 +15,9 @@ class EventReceiver : public InputHandler
 {
 	private:
 		SampleApplication* application;
-		ScreenManager* screenManager;
 
 	public:
-		EventReceiver(SampleApplication* arg_sampleApplication, ScreenManager* arg_screenManager);
+		EventReceiver(SampleApplication* arg_sampleApplication);
 
 		void onQuit() override;
 		void onGUIButtonPressed(GUIButtonComponent* guiButton, const std::string& entityName) override;

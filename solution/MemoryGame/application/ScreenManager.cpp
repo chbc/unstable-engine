@@ -1,24 +1,21 @@
+/* XXX
 #include "ScreenManager.h"
 #include <SceneManager.h>
 #include <GUIManager.h>
 #include "scenes/MenuScene.h"
 
-ScreenManager* ScreenManager::instance = nullptr;
-
-ScreenManager* ScreenManager::getInstance()
-{
-	return instance;
-}
-
 void ScreenManager::onInit(SceneManager* sceneManager, GUIManager* guiManager)
 {
-	instance = this;
-
 	this->sceneManager = sceneManager;
 	this->guiManager = guiManager;
 
 	this->scene = SPTR<MenuScene>{ new MenuScene };
 	this->scene->onInit(sceneManager, guiManager);
+}
+
+void ScreenManager::onUpdate(unsigned int elapsedTime)
+{
+	this->scene->onUpdate(elapsedTime);
 }
 
 void ScreenManager::onButtonPress(GUIButtonComponent* guiButton, const std::string& entityName)
@@ -34,3 +31,4 @@ void ScreenManager::changeScene(IScene* newScene)
 	this->scene.reset(newScene);
 	this->scene->onInit(this->sceneManager, this->guiManager);
 }
+*/
