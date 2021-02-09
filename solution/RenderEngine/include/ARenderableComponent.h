@@ -15,10 +15,13 @@ class SRE_API ARenderableComponent : public AEntityComponent
 protected:
     UPTR<AMeshData> meshData;
 
-protected:
-    ARenderableComponent(Entity *entity) : AEntityComponent(entity) { }
+private:
+    bool opaque;
 
-    bool isAbleToBeRendered()
+protected:
+    ARenderableComponent(Entity *entity) : AEntityComponent(entity), opaque(true) { }
+
+    inline bool isAbleToBeRendered()
     {
         return
         (
@@ -26,6 +29,9 @@ protected:
             !this->meshData->indices.empty()
         );
     }
+
+    inline bool isOpaque() { return this->opaque; }
+    inline void setIsOpaque(bool value) { this->opaque = value; }
 };
 
 } // namespace

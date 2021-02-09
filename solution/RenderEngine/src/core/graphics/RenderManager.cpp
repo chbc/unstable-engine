@@ -52,7 +52,8 @@ void RenderManager::init()
 
 void RenderManager::preRelease()
 {
-    this->meshRenderers.clear();
+    this->opaqueMeshRenderers.clear();
+    this->translucentMeshRenderers.clear();
     this->guiRenderer = nullptr;
 }
 
@@ -81,8 +82,22 @@ void RenderManager::addEntity(Entity *entity)
 
 void RenderManager::addMesh(MeshComponent *mesh)
 {
-    MeshRenderer *renderer = nullptr;
-    for (const UPTR<MeshRenderer> &item : this->meshRenderers)
+    if (mesh->isOpaque())
+        this->addMesh(this->opaqueMeshRenderers, mesh);
+    else
+        this->addMesh(this->translucentMeshRenderers, mesh);
+
+    if (mesh->getMaterial()->castShadow)
+    {
+        this->initShadowRenderer();
+        this->shadowRenderer->addItem(mesh);
+    }
+}
+
+void RenderManager::addMesh(VECTOR_UPTR<MeshRenderer>& renderers, MeshComponent* mesh)
+{
+    MeshRenderer* renderer = nullptr;
+    for (const UPTR<MeshRenderer>& item : renderers)
     {
         if (item->fitsWithMesh(mesh))
         {
@@ -93,17 +108,11 @@ void RenderManager::addMesh(MeshComponent *mesh)
 
     if (renderer == nullptr)
     {
-        renderer = new MeshRenderer{mesh->getMaterial(), this->shaderManager, this->graphicsWrapper};
-        this->meshRenderers.emplace_back(renderer);
+        renderer = new MeshRenderer{ mesh->getMaterial(), this->shaderManager, this->graphicsWrapper };
+        renderers.emplace_back(renderer);
     }
-    
-    renderer->addMesh(mesh);
 
-    if (mesh->getMaterial()->castShadow)
-    {
-        this->initShadowRenderer();
-        this->shadowRenderer->addItem(mesh);
-    }
+    renderer->addMesh(mesh);
 }
 
 void RenderManager::addGUIComponent(GUIImageComponent *guiComponent)
@@ -159,8 +168,11 @@ void RenderManager::onSceneLoaded()
         includeDepth = this->postProcessingRenderer->isIncludingDepth();
 	}
 
-	for (const UPTR<MeshRenderer>& item : this->meshRenderers)
+	for (const UPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
 		item->onSceneLoaded(useBrightnessSegmentation, includeDepth);
+
+    for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
+        item->onSceneLoaded(useBrightnessSegmentation, includeDepth);
 }
 
 void RenderManager::setMainCamera(CameraComponent *camera)
@@ -186,13 +198,14 @@ void RenderManager::render()
     this->graphicsWrapper->setViewport(EngineValues::SCREEN_WIDTH, EngineValues::SCREEN_HEIGHT);
     this->graphicsWrapper->clearColorAndDepthBuffer();
 
-    if ((this->mainCamera != nullptr) && !this->meshRenderers.empty())
+    if (this->mainCamera != nullptr)
     {
         this->mainCamera->updateView();
-        for (const UPTR<MeshRenderer>& item : this->meshRenderers)
-        {
+        for (const UPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
             item->render(this->mainCamera->getTransform()->getPosition());
-        }
+
+        for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
+            item->render(this->mainCamera->getTransform()->getPosition());
     }
 
 	// Post processing rendering
@@ -229,10 +242,14 @@ void RenderManager::setupBufferSubData(GUIMeshData* meshData)
 
 void RenderManager::onRemoveDestroyedEntities()
 {
-    for (const UPTR<MeshRenderer> &item : this->meshRenderers)
+    for (const UPTR<MeshRenderer> &item : this->opaqueMeshRenderers)
         item->onRemoveDestroyedEntities();
 
-    CollectionsUtils::removeIfRendererIsEmpty(this->meshRenderers);
+    for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
+        item->onRemoveDestroyedEntities();
+
+    CollectionsUtils::removeIfRendererIsEmpty(this->opaqueMeshRenderers);
+    CollectionsUtils::removeIfRendererIsEmpty(this->translucentMeshRenderers);
 
     if (this->guiRenderer.get() != nullptr)
     {

@@ -12,7 +12,7 @@ class MeshComponent;
 class GUIImageComponent;
 class CameraComponent;
 class Texture;
-
+class MeshRenderer;
 class Entity;
 class DirectionalLightComponent;
 class PointLightComponent;
@@ -32,7 +32,8 @@ private:
     class AGraphicsWrapper    *graphicsWrapper;
     class LightManager        *lightManager;
 
-	VECTOR_UPTR<class MeshRenderer> meshRenderers;
+	VECTOR_UPTR<MeshRenderer> opaqueMeshRenderers;
+    VECTOR_UPTR<MeshRenderer> translucentMeshRenderers;
     UPTR<class ShadowRenderer> shadowRenderer;
     UPTR<class GUIRenderer> guiRenderer;
 	UPTR<class PostProcessingRenderer> postProcessingRenderer;
@@ -47,10 +48,11 @@ protected:
     void preRelease() override;
 
 private:
-    void addEntity(Entity *entity);
-    void addMesh(MeshComponent *mesh);
-    void addGUIComponent(GUIImageComponent *guiComponent);
-    void addDynamicGUIComponent(GUIImageComponent *guiComponent);
+    void addEntity(Entity* entity);
+    void addMesh(MeshComponent* mesh);
+    void addMesh(VECTOR_UPTR<MeshRenderer>& renderers, MeshComponent* mesh);
+    void addGUIComponent(GUIImageComponent* guiComponent);
+    void addDynamicGUIComponent(GUIImageComponent* guiComponent);
     void initGUIRenderer();
     void initShadowRenderer();
 

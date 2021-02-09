@@ -30,8 +30,8 @@ Card::Card(GUIManager* guiManager, const glm::vec2& position, int arg_id, int en
 	this->cover = guiManager->createGUIImageEntity("memoryGame/back_card.png", this->CARD_EXTENT);
 	this->cover->getTransform()->setLocalPosition(glm::vec3(0.0f, 0.0f, 1.0f));
 
-	baseEntity->addChild(charEntity);
 	baseEntity->addChild(descriptionEntity);
+	baseEntity->addChild(charEntity);
 	baseEntity->addChild(this->cover);
 
 	GUIButtonComponent* button = baseEntity->addComponent<GUIButtonComponent>();
