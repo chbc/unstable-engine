@@ -28,9 +28,9 @@ void GameScene::onInit(SceneManager* sceneManager, GUIManager* guiManager)
 
 	this->previousSelectedCard = nullptr;
 	this->showingSelectedCards = false;
-	this->showingCadsTime = 0.0f;
+	this->showingCadsTime = 0;
 
-	this->setupEndGameMessage(guiManager);
+	this->setupEndGameButtons(guiManager);
 	this->setupCards(guiManager);
 }
 
@@ -55,9 +55,15 @@ void GameScene::onButtonPress(GUIButtonComponent* guiButton, const std::string& 
 	if (this->showingSelectedCards)
 		return;
 
-	if (this->endGameMessage->getName() == entityName)
+	if (this->endGameRestart->getName() == entityName)
 	{
 		SampleApplication::getInstance()->changeScene(new GameScene);
+		return;
+	}
+
+	if (this->endGameBack->getName() == entityName)
+	{
+		SampleApplication::getInstance()->changeScene(new MenuScene);
 		return;
 	}
 
@@ -100,7 +106,6 @@ void GameScene::setupCards(GUIManager* guiManager)
 
 	position.x = 0.125f;
 	position.y = 0.635f;
-	Entity* baseEntity;
 	for (int i = 0; i < UNIQUE_CARDS; i++)
 	{
 		int index = rand() % ids.size();
@@ -113,17 +118,29 @@ void GameScene::setupCards(GUIManager* guiManager)
 	}
 }
 
-void GameScene::setupEndGameMessage(GUIManager* guiManager)
+void GameScene::setupEndGameButtons(GUIManager* guiManager)
 {
-	this->endGameMessage = guiManager->createGUIImageEntity("memoryGame/end_game_message.png", glm::vec2(0.75f, 0.25f));
-	GUIImageComponent* guiComponent = this->endGameMessage->getComponent<GUIImageComponent>();
+	// Restart
+	this->endGameRestart = guiManager->createGUIImageEntity("memoryGame/end_game_restart.png", glm::vec2(0.4f, 0.2f));
+	GUIImageComponent* guiComponent = this->endGameRestart->getComponent<GUIImageComponent>();
 	guiComponent->setUIPosition(glm::vec2(0.5f, 0.125f));
 	
-	GUIButtonComponent* button = this->endGameMessage->addComponent<GUIButtonComponent>();
+	GUIButtonComponent* button = this->endGameRestart->addComponent<GUIButtonComponent>();
 	button->setExtent(guiComponent->getExtent());
 
-	guiManager->addEntity(this->endGameMessage, "end_game_message");
-	this->endGameMessage->setEnabled(false);
+	guiManager->addEntity(this->endGameRestart, "end_game_restart");
+	this->endGameRestart->setEnabled(false);
+
+	// Back
+	this->endGameBack = guiManager->createGUIImageEntity("memoryGame/end_game_back.png", glm::vec2(0.4f, 0.2f));
+	guiComponent = this->endGameBack->getComponent<GUIImageComponent>();
+	guiComponent->setUIPosition(glm::vec2(0.5f, 0.875f));
+
+	button = this->endGameBack->addComponent<GUIButtonComponent>();
+	button->setExtent(guiComponent->getExtent());
+
+	guiManager->addEntity(this->endGameBack, "end_game_restart");
+	this->endGameBack->setEnabled(false);
 }
 
 void GameScene::processSelectedCard(Card* card)
@@ -160,5 +177,8 @@ void GameScene::onCardsMatch()
 	}
 
 	if (areAllCardsRevealed)
-		this->endGameMessage->setEnabled(true);
+	{
+		this->endGameRestart->setEnabled(true);
+		this->endGameBack->setEnabled(true);
+	}
 }

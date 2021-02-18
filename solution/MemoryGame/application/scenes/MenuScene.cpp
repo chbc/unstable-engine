@@ -1,6 +1,7 @@
 #include "MenuScene.h"
 #include "application/SampleApplication.h"
 #include "GameScene.h"
+#include "CreditsScene.h"
 
 #include <SceneManager.h>
 #include <GUIManager.h>
@@ -47,10 +48,16 @@ void MenuScene::onInit(SceneManager* sceneManager, GUIManager* guiManager)
 	guiComponent = entity->getComponent<GUIImageComponent>();
 	guiComponent->setUIPosition(glm::vec2(0.5f, 0.8f));
 
+	button = entity->addComponent<GUIButtonComponent>();
+	button->setExtent(guiComponent->getExtent());
+
 	guiManager->addEntity(entity, "menu_credits");
 }
 
 void MenuScene::onButtonPress(GUIButtonComponent* guiButton, const std::string& entityName)
 {
-	SampleApplication::getInstance()->changeScene(new GameScene);
+	if (entityName == "menu_start")
+		SampleApplication::getInstance()->changeScene(new GameScene);
+	else if (entityName == "menu_credits")
+		SampleApplication::getInstance()->changeScene(new CreditsScene);
 }

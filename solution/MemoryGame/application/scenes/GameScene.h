@@ -16,7 +16,8 @@ private:
 	bool showingSelectedCards;
 	int showingCadsTime;
 
-	class Entity* endGameMessage;
+	class Entity* endGameRestart;
+	class Entity* endGameBack;
 
 	const int MAX_SHOW_CARDS_TIME = 1500;
 
@@ -27,7 +28,7 @@ public:
 
 private:
 	void setupCards(GUIManager* guiManager);
-	void setupEndGameMessage(GUIManager* guiManager);
+	void setupEndGameButtons(GUIManager* guiManager);
 	void processSelectedCard(Card* card);
 	void onCardsMatch();
 };

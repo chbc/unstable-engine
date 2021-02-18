@@ -15,6 +15,8 @@ struct SRE_API EngineValues
 	static int SCREEN_WIDTH;
 	static int SCREEN_HEIGHT;
 	static float ASPECT_RATIO;
+
+	static void updateAspectRatio();
 };
 
 } // namespace

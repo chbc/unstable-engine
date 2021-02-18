@@ -23,7 +23,7 @@ void SDLAPI::init()
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
 	this->window = SDL_CreateWindow
 	(
 		EngineValues::APPLICATION_NAME.c_str(),
@@ -88,6 +88,16 @@ void SDLAPI::processInput(InputHandler *inputHandler, const std::vector<GUIButto
 
 			case SDL_MOUSEWHEEL:
 				inputHandler->onMouseWheel(currentEvent.wheel.y);
+				break;
+
+			case SDL_WINDOWEVENT:
+				const SDL_WindowEvent& window = currentEvent.window;
+				if (window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+				{
+					EngineValues::SCREEN_WIDTH = window.data1;
+					EngineValues::SCREEN_HEIGHT = window.data2;
+					EngineValues::updateAspectRatio();
+				}
 				break;
 		}
 	}
