@@ -77,7 +77,7 @@ void SDLAPI::processInput(InputHandler *inputHandler, const std::vector<GUIButto
 			case SDL_MOUSEBUTTONDOWN:
 				position = glm::vec2{currentEvent.button.x, currentEvent.button.y};
 
-				if (!guiButtons.empty() && !this->checkButtonPress(inputHandler, guiButtons, position))
+				if (guiButtons.empty() || !this->checkButtonPress(inputHandler, guiButtons, position))
 					inputHandler->onMouseButtonEvent(currentEvent.button.button, position, true);
 				break;
 

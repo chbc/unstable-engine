@@ -40,12 +40,12 @@ void CameraComponent::updateView()
 
 void CameraComponent::setPerspectiveProjection(float fov, float aspectRatio, float near, float far)
 {
-    this->projection = glm::perspective(fov, aspectRatio, near, far);
+    this->projection = glm::perspective(glm::radians(fov), aspectRatio, near, far);
 }
 
 void CameraComponent::setOrthoProjection()
 {
-    this->setOrthoProjection(EngineValues::SCREEN_WIDTH, EngineValues::SCREEN_HEIGHT);
+    this->setOrthoProjection(static_cast<float>(EngineValues::SCREEN_WIDTH), static_cast<float>(EngineValues::SCREEN_HEIGHT));
 }
  
 void CameraComponent::setOrthoProjection(float width, float height)

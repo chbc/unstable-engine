@@ -16,6 +16,6 @@ FIXES
 - children local transforms
 
 FEATURES
-- orthographic camera
+- orthographic camera [OK]
 - assimp to model format converter
 - extensible world editor

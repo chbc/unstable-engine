@@ -210,6 +210,7 @@
     <ClCompile Include="src\core\graphics\renderers\shadersSetup\ShadowRendererShaderSetup.cpp" />
     <ClCompile Include="src\core\graphics\renderers\ShadowRenderer.cpp" />
     <ClCompile Include="src\core\graphics\shaders\Shader.cpp" />
+    <ClCompile Include="src\core\io\DefaultGameValues.cpp" />
     <ClCompile Include="src\core\multimedia\EngineValues.cpp" />
     <ClCompile Include="src\core\multimedia\textures\atlases\FontAtlas.cpp" />
     <ClCompile Include="src\core\singletonsManager\SingletonsManager.cpp" />
@@ -364,6 +365,7 @@
     <ClInclude Include="include\Atlas.h" />
     <ClInclude Include="include\AtlasManager.h" />
     <ClInclude Include="include\BaseRendererShaderSetup.h" />
+    <ClInclude Include="include\Blackboard.h" />
     <ClInclude Include="include\BloomRendererComponent.h" />
     <ClInclude Include="include\button_names.h" />
     <ClInclude Include="include\CameraComponent.h" />
@@ -371,6 +373,7 @@
     <ClInclude Include="include\ColorMaterialComponent.h" />
     <ClInclude Include="include\ColorRendererComponent.h" />
     <ClInclude Include="include\core_defines.h" />
+    <ClInclude Include="include\DefaultGameValues.h" />
     <ClInclude Include="include\DiffuseMaterialComponent.h" />
     <ClInclude Include="include\DiffuseRendererComponent.h" />
     <ClInclude Include="include\DirectionalLightComponent.h" />

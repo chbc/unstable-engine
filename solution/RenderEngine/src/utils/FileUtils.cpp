@@ -74,6 +74,25 @@ void loadFile(const std::string& fileName, std::string& dest)
 #endif
 }
 
+void loadFile(const std::string& fileName, std::vector<std::string>& lines)
+{
+#ifndef __ANDROID__
+	std::ifstream in(fileName.c_str());
+
+	if (!in.is_open())
+	{
+		throw "[OpenGLAPI] - Error: " + fileName + " can't be found!";
+	}
+
+	char temp[300];
+	while (!in.eof())
+	{
+		in.getline(temp, 300);
+		lines.push_back(temp);
+	}
+#endif
+}
+
 } // namespace
 
 } // namespace

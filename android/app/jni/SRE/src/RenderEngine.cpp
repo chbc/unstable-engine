@@ -1,5 +1,6 @@
 #include "RenderEngine.h"
 #include "SingletonsManager.h"
+#include "DefaultGameValues.h"
 
 namespace sre
 {
@@ -9,6 +10,8 @@ RenderEngine::RenderEngine(const std::string& applicationName, int screenWidth, 
     EngineValues::APPLICATION_NAME = applicationName;
     EngineValues::SCREEN_WIDTH = screenWidth;
     EngineValues::SCREEN_HEIGHT = screenHeight;
+
+    DefaultGameValues::load();
 }
 
 void RenderEngine::run()

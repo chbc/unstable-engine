@@ -1,7 +1,6 @@
 #include "SampleApplication.h"
 #include <application/events/EventReceiver.h>
 #include <MeshComponent.h>
-#include <PostProcessingComponent.h>
 #include <sstream>
 
 SampleApplication::SampleApplication() : RenderEngine()
@@ -10,6 +9,7 @@ SampleApplication::SampleApplication() : RenderEngine()
 
 void SampleApplication::onInit()
 {
+	this->sceneManager->createPerspectiveCamera();
 	CameraComponent* camera = this->sceneManager->getMainCamera();
 
 	// set EventReceiver class for input handling
@@ -28,7 +28,7 @@ void SampleApplication::onInit()
 	position.x = 0.0f;
 	cube->getTransform()->setPosition(position);
 	MeshComponent* cubeMesh = cube->getComponent<MeshComponent>();
-	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
+	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("crate.png");
 	cubeMesh->getMaterial()->setCastShadow(false);
 
 	this->sceneManager->addEntity(cube);
@@ -37,8 +37,8 @@ void SampleApplication::onInit()
 	position.x = 5.0f;
 	cube->getTransform()->setPosition(position);
 	cubeMesh = cube->getComponent<MeshComponent>();
-	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
-	cubeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/crate_normal.png");
+	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("crate.png");
+	cubeMesh->addMaterialComponent<NormalMaterialComponent>("crate_normal.png");
 	cubeMesh->getMaterial()->setCastShadow(false);
 
 	this->sceneManager->addEntity(cube);
@@ -47,9 +47,9 @@ void SampleApplication::onInit()
 	position = glm::vec3(0.0f, 0.0f, -2.5f);
 	cube->getTransform()->setPosition(position);
 	cubeMesh = cube->getComponent<MeshComponent>();
-	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("../../media/crate.png");
-	cubeMesh->addMaterialComponent<NormalMaterialComponent>("../../media/crate_normal.png");
-	cubeMesh->addMaterialComponent<SpecularMaterialComponent>("../../media/crate_specular.png");
+	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("crate.png");
+	cubeMesh->addMaterialComponent<NormalMaterialComponent>("crate_normal.png");
+	cubeMesh->addMaterialComponent<SpecularMaterialComponent>("crate_specular.png");
 	cubeMesh->getMaterial()->setCastShadow(false);
 
 	this->sceneManager->addEntity(cube);

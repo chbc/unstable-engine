@@ -3,7 +3,6 @@
 #include <glm/glm.hpp>
 
 #include <glm/gtx/rotate_vector.hpp>
-#include <HDRRendererComponent.h>
 #include <iostream>
 
 EventReceiver::EventReceiver(SampleApplication *application, CameraComponent *camera)
@@ -11,7 +10,7 @@ EventReceiver::EventReceiver(SampleApplication *application, CameraComponent *ca
 	this->application = application;
 	this->camera = camera;
 
-	glm::vec3 position(0, 8, 20);
+	glm::vec3 position(0.0f, 2.5f, 10.0f);
 	this->camera->setPosition(position);
 	this->cameraDistance = glm::distance(position, glm::vec3(0, 0, 0));
 
@@ -23,27 +22,27 @@ void EventReceiver::onQuit()
 	this->application->quit();
 }
 
-void EventReceiver::onKeyPressed(KeyboardButton key)
+void EventReceiver::onKeyEvent(KeyboardButton key, bool pressed)
 {
-	if (key == KEY_ESC)
+	if (pressed && key == KEY_ESC)
 		this->application->quit();
 }
 
-void EventReceiver::onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position)
+void EventReceiver::onMouseButtonEvent(MouseButton mouseButton, const glm::vec2 &position, bool pressed)
 {
-	static float yLookAt = 0.0f;
-
-	this->viewingActive = true;
-	if (mouseButton == MOUSEBUTTON_MIDDLE)
+	if (pressed)
 	{
-		yLookAt += 1.0f;
-		this->camera->setLookAt(glm::vec3(0.0f, yLookAt, 0.0f));
-	}
-}
+		static float yLookAt = 0.0f;
 
-void EventReceiver::onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position)
-{
-	this->viewingActive = false;
+		this->viewingActive = true;
+		if (mouseButton == MOUSEBUTTON_MIDDLE)
+		{
+			yLookAt += 1.0f;
+			this->camera->setLookAt(glm::vec3(0.0f, yLookAt, 0.0f));
+		}
+	}
+	else
+		this->viewingActive = false;
 }
 
 void EventReceiver::onMouseMoveRelative(const glm::vec2 &relativePosition)
