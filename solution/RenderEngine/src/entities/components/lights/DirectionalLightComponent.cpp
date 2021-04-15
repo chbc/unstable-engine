@@ -3,6 +3,8 @@
 namespace sre
 {
 
+IMPLEMENT_COMPONENT(DirectionalLightComponent)
+
 DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightComponent(entity)
 {
 }

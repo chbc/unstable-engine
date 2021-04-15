@@ -9,6 +9,8 @@ namespace sre
 
 class SRE_API DirectionalLightComponent : public ALightComponent
 {
+DECLARE_COMPONENT()
+
 private:
 	glm::vec3 direction;
     glm::mat4 lightSpaceMatrix;

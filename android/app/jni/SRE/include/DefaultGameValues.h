@@ -14,13 +14,13 @@ public:
 	template <typename T>
 	const T operator [] (const std::string& key) const
 	{
-		return this->blackboard.Get<T>(key);
+		return this->blackboard.get<T>(key);
 	}
 
 	template <typename T>
 	static void set(const std::string& key, T value)
 	{
-		this->blackboard.set(key, value);
+		blackboard.set(key, value);
 	}
 
 private:

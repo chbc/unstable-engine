@@ -82,12 +82,6 @@ void GameScene::onButtonPress(GUIButtonComponent* guiButton, const std::string& 
 void GameScene::setupCards(GUIManager* guiManager)
 {
 	glm::vec2 position(0.125f, 0.365f);
-	Entity* charEntity = nullptr;
-	Entity* descriptionEntity = nullptr;
-	GUIImageComponent* guiComponent = nullptr;
-
-	const glm::vec2 CARD_EXTENT(0.245f, 0.255f);
-	const glm::vec3 CHAR_SCALE(0.30f, 0.30f, 1.0f);
 	const int UNIQUE_CARDS = 4;
 
 	std::vector<int> ids{ 0, 0, 1, 1, 2, 2, 3, 3 };
@@ -123,7 +117,7 @@ void GameScene::setupEndGameButtons(GUIManager* guiManager)
 	// Restart
 	this->endGameRestart = guiManager->createGUIImageEntity("memoryGame/end_game_restart.png", glm::vec2(0.4f, 0.2f));
 	GUIImageComponent* guiComponent = this->endGameRestart->getComponent<GUIImageComponent>();
-	guiComponent->setUIPosition(glm::vec2(0.5f, 0.125f));
+	guiComponent->setUIPosition(glm::vec2(0.5f, 0.875f));
 	
 	GUIButtonComponent* button = this->endGameRestart->addComponent<GUIButtonComponent>();
 	button->setExtent(guiComponent->getExtent());
@@ -132,9 +126,9 @@ void GameScene::setupEndGameButtons(GUIManager* guiManager)
 	this->endGameRestart->setEnabled(false);
 
 	// Back
-	this->endGameBack = guiManager->createGUIImageEntity("memoryGame/end_game_back.png", glm::vec2(0.4f, 0.2f));
+	this->endGameBack = guiManager->createGUIImageEntity("memoryGame/end_game_back.png", glm::vec2(0.15f, 0.15f));
 	guiComponent = this->endGameBack->getComponent<GUIImageComponent>();
-	guiComponent->setUIPosition(glm::vec2(0.5f, 0.875f));
+	guiComponent->setUIPosition(glm::vec2(0.1f, 0.075f));
 
 	button = this->endGameBack->addComponent<GUIButtonComponent>();
 	button->setExtent(guiComponent->getExtent());

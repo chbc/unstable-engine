@@ -11,6 +11,8 @@
 namespace sre
 {
 
+IMPLEMENT_COMPONENT(GUITextComponent)
+
 GUITextComponent::GUITextComponent(Entity *entity, uint32_t arg_maxItems)
     : GUIImageComponent(entity, arg_maxItems)
 { }

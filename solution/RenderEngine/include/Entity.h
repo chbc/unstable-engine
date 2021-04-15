@@ -1,11 +1,17 @@
+// XXX
+// USAR MACRO PRA SUBSTITUIR O TPP
+// USAR MACRO NO CORPO DOS COMPONENTES PRA IMPLEMENTAR O getComponent()
+
 #ifndef _ENTITY_H_
 #define _ENTITY_H_
 
-#include "AComponentsHolder.h"
 #include "AEntityComponent.h"
 #include "TransformComponent.h"
+#include "memory_aliases.h"
 
+#include <unordered_map>
 #include <vector>
+#include <string>
 
 namespace sre
 {
@@ -13,9 +19,10 @@ namespace sre
 /*!
     Class that represents a node of the scene.
 */
-class Entity : public AComponentsHolder<AEntityComponent>
+class Entity
 {
 private:
+	std::unordered_map<int, UPTR<AEntityComponent>> componentsMap;
     Entity *parent;
     std::vector<Entity*> children;
 
@@ -32,25 +39,14 @@ protected:
 public:
     SRE_API virtual ~Entity();
 
-    template <typename T, typename... TArgs>
-	T *addComponent(TArgs&&... mArgs)
-    {
-        T *newComponent{ nullptr };
-
-        if (!AComponentsHolder<AEntityComponent>::hasComponent<T>())
-        {
-            newComponent = new T{ this, std::forward<TArgs>(mArgs)... };
-            AComponentsHolder<AEntityComponent>::addComponent(newComponent);
-        }
-        else
-            throw "Can't add duplicate component!";
-
-        return newComponent;
-    }
+    template <typename T, typename... TArgs> T* addComponent(TArgs&&... mArgs);
+    template <typename T> void removeComponent();
+    template <typename T> T* getComponent();
+    template <typename T> bool hasComponent();
 
 	SRE_API void addChild(Entity *child, const std::string& name = "");
 	SRE_API inline uint32_t getChildrenCount() { return this->children.size(); }
-	SRE_API Entity *getChild(uint32_t index); // throws "Index out of range"
+	SRE_API Entity *getChild(uint32_t index);
 	SRE_API inline Entity *getParent() { return this->parent; }
 
 	SRE_API TransformComponent *getTransform();
@@ -68,6 +64,7 @@ protected:
 
 private:
     static std::string generateEntityId(uint32_t& index, const std::string& duplicateName = "");
+    template <typename T> int getComponentId();
 
     friend class AEntityManager;
     friend class ModelLoader;
@@ -76,5 +73,7 @@ private:
 };
 
 } // namespace
+
+#include "Entity.tpp"
 
 #endif

@@ -29,24 +29,20 @@ void MenuScene::onInit(SceneManager* sceneManager, GUIManager* guiManager)
 
 	sceneManager->addEntity(entity, "menu_background");
 
-	entity = guiManager->createGUIImageEntity("memoryGame/game_title.png");
-	guiComponent = entity->getComponent<GUIImageComponent>();
-	guiComponent->setUIPosition(glm::vec2(0.5f, 0.25f));
+	const glm::vec2 BUTTONS_EXTENT{ 0.3f, 0.1f };
 
-	guiManager->addEntity(entity, "game_title");
-
-	entity = guiManager->createGUIImageEntity("memoryGame/menu_start.png");
+	entity = guiManager->createGUIImageEntity("memoryGame/menu_start.png", BUTTONS_EXTENT);
 	guiComponent = entity->getComponent<GUIImageComponent>();
-	guiComponent->setUIPosition(glm::vec2(0.5f, 0.6f));
+	guiComponent->setUIPosition(glm::vec2(0.175f, 0.58f));
 	
 	GUIButtonComponent* button = entity->addComponent<GUIButtonComponent>();
 	button->setExtent(guiComponent->getExtent());
 
 	guiManager->addEntity(entity, "menu_start");
 
-	entity = guiManager->createGUIImageEntity("memoryGame/menu_credits.png");
+	entity = guiManager->createGUIImageEntity("memoryGame/menu_credits.png", BUTTONS_EXTENT);
 	guiComponent = entity->getComponent<GUIImageComponent>();
-	guiComponent->setUIPosition(glm::vec2(0.5f, 0.8f));
+	guiComponent->setUIPosition(glm::vec2(0.825f, 0.58f));
 
 	button = entity->addComponent<GUIButtonComponent>();
 	button->setExtent(guiComponent->getExtent());

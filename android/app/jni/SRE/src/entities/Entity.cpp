@@ -4,7 +4,7 @@
 namespace sre
 {
 
-Entity::Entity() : AComponentsHolder<AEntityComponent>()
+Entity::Entity()
 {
 	this->transform = this->addComponent<TransformComponent>();
 	this->parent = nullptr;

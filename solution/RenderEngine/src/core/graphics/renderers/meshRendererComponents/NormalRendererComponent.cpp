@@ -4,7 +4,7 @@
 #include "ShaderManager.h"
 #include "AGraphicsWrapper.h"
 #include "EMaterialMap.h"
-
+#include "NormalMaterialComponent.h"
 
 namespace sre
 {

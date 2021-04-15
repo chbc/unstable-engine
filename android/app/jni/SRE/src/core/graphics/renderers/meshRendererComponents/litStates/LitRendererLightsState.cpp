@@ -3,6 +3,7 @@
 #include "MeshComponent.h"
 #include "ShaderManager.h"
 #include "AGraphicsWrapper.h"
+#include "LitMaterialComponent.h"
 
 namespace sre
 {

@@ -7,9 +7,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
 namespace sre
 {
+
+IMPLEMENT_COMPONENT(CameraComponent);
 
 CameraComponent::CameraComponent(Entity *entity) : AEntityComponent(entity)
 {

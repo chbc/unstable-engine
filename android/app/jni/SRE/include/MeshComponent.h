@@ -12,6 +12,8 @@ namespace sre
 */
 class SRE_API MeshComponent : public ARenderableComponent
 {
+DECLARE_COMPONENT()
+
 private:
     UPTR<Material> material;
 

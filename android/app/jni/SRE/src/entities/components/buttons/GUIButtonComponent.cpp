@@ -8,6 +8,8 @@
 namespace sre
 {
 
+IMPLEMENT_COMPONENT(GUIButtonComponent)
+
 GUIButtonComponent::GUIButtonComponent(Entity* entity) 
 	: AEntityComponent(entity), pivot(glm::vec2{0.5f, 0.5f})
 {

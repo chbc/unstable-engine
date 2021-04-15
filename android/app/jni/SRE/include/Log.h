@@ -2,11 +2,12 @@
 #define _LOG_H_
 
 #include <string>
+#include "core_defines.h"
 
 namespace sre
 {
 
-class Log
+class SRE_API Log
 {
 public:
 	static void LogMessage(const std::string& message);

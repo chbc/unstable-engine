@@ -7,8 +7,10 @@
 namespace sre
 {
 
-class GUIImageComponent : public ARenderableComponent
+class SRE_API GUIImageComponent : public ARenderableComponent
 {
+DECLARE_COMPONENT()
+
 private:
     glm::vec2 uiPosition;
     glm::vec2 extent;
@@ -23,11 +25,11 @@ protected:
     GUIImageComponent(Entity *entity, uint32_t arg_maxItems = 0);
 
 public:
-	SRE_API void setUIPosition(const glm::vec2 &position);
+	void setUIPosition(const glm::vec2 &position);
     glm::vec2 getUIPosition();
     virtual uint32_t getTextureId();
-    SRE_API glm::vec2 getExtent();
-    SRE_API void setPivot(const glm::vec2& pivot);
+    glm::vec2 getExtent();
+    void setPivot(const glm::vec2& pivot);
     inline bool getIsDynamic() { return this->isDynamic; }
 
 private:

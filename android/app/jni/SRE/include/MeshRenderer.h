@@ -1,12 +1,14 @@
 #ifndef _MESH_RENDERER_H_
 #define _MESH_RENDERER_H_
 
-#include "AComponentsHolder.h"
-#include "ColorRendererComponent.h"
 #include <glm/vec3.hpp>
 #include <list>
 #include <unordered_map>
+#include <bitset>
+#include "ColorRendererComponent.h"
 #include "ShaderLightData.h"
+#include "EComponentId.h"
+#include "memory_aliases.h"
 
 namespace sre
 {
@@ -16,10 +18,12 @@ class Material;
 class AGraphicsWrapper;
 class ShaderManager;
 
-class MeshRenderer : public AComponentsHolder<ColorRendererComponent>
+class MeshRenderer
 {
 private:
+    std::unordered_map<int, UPTR<ColorRendererComponent>> componentsMap;
     std::unordered_map<std::string, UPTR<class BaseRendererShaderSetup>> shaderSetupItems;
+    std::bitset<EComponentId::SIZE> componentsBitset;
 
     std::list<MeshComponent *> meshes;
     class Shader *shader;
@@ -36,25 +40,15 @@ public:
 private:
 	MeshRenderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
+    template <typename T, typename... TArgs> T* addComponent(TArgs&&... mArgs);
+    template <typename T> void removeComponent();
+    template <typename T> T* getComponent();
+    template <typename T> bool hasComponent();
+    template <typename T> int getComponentId();
+
     void onSceneLoaded(bool useBrightnessSegmentation, bool includeDepth);
     void loadShaderSetupItems();
     void loadShader(bool useBrightnessSegmentation, bool includeDepth);
-
-    template <typename T, typename... TArgs>
-    T *addComponent(TArgs&&... mArgs)
-    {
-        T *newComponent{ nullptr };
-
-        if (!AComponentsHolder<ColorRendererComponent>::hasComponent<T>())
-        {
-            newComponent = new T{ std::forward<TArgs>(mArgs)... };
-            AComponentsHolder<ColorRendererComponent>::addComponent(newComponent);
-        }
-        else
-            throw "Can't add duplicate component!";
-
-        return newComponent;
-    }
     
     void addMesh(MeshComponent *mesh);
 
@@ -69,5 +63,7 @@ private:
 };
 
 } // namespace
+
+#include "MeshRenderer.tpp"
 
 #endif

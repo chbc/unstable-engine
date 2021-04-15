@@ -1,4 +1,5 @@
 #include "ColorRendererComponent.h"
+#include "ColorMaterialComponent.h"
 
 #include "MeshComponent.h"
 #include "ShaderManager.h"

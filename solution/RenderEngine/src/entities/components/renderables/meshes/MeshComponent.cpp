@@ -4,6 +4,8 @@
 namespace sre
 {
 
+IMPLEMENT_COMPONENT(MeshComponent)
+
 MeshComponent::MeshComponent(Entity *entity, MeshData* meshData)
     : ARenderableComponent(entity)
 {

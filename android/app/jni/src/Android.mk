@@ -17,6 +17,7 @@ LOCAL_SRC_FILES :=  \
 		application/events/EventReceiver.cpp \
 		application/scenes/GameScene.cpp \
 		application/scenes/MenuScene.cpp \
+		application/scenes/CreditsScene.cpp \
 		application/entities/Card.cpp \
 		main.cpp
 

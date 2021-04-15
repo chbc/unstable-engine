@@ -9,6 +9,8 @@ namespace sre
 
 class SceneButtonComponent : public AEntityComponent
 {
+DECLARE_COMPONENT()
+
 private:
 	glm::vec3 extent;
 

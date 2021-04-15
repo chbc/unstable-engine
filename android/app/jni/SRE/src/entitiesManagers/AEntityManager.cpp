@@ -30,7 +30,7 @@ void AEntityManager::addEntity(Entity *entity, const std::string &name)
     {
         resultName = Entity::generateEntityId(this->entityIndex);
     }
-    else if (this->entities[name] != nullptr)
+    else if (this->entities.count(name) > 0)
     {
         resultName = Entity::generateEntityId(this->entityIndex, name);
     }
@@ -49,7 +49,7 @@ void AEntityManager::addEntity(Entity *entity, const std::string &name)
 Entity* AEntityManager::getEntity(const std::string& name)
 {
     Entity* result = nullptr;
-    if (this->entities[name] != nullptr)
+    if (this->entities.count(name) > 0)
         result = this->entities[name].get();
 
     return result;

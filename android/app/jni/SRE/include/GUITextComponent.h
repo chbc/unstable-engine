@@ -9,10 +9,13 @@
 namespace sre
 {
 
+
 class FontAtlas;
 
 class GUITextComponent : public GUIImageComponent
 {
+DECLARE_COMPONENT()
+
 private:
 	FontAtlas *atlas;
 

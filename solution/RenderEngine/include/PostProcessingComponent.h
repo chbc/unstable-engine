@@ -10,6 +10,8 @@ namespace sre
 
 class PostProcessingComponent : public AEntityComponent
 {
+DECLARE_COMPONENT()
+
 private:
 	std::unordered_map<PPE::Type, UPTR<PostProcessingEffect>> effects;
 

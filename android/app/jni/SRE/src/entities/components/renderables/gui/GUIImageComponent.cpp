@@ -9,6 +9,8 @@
 namespace sre
 {
 
+IMPLEMENT_COMPONENT(GUIImageComponent)
+
 GUIImageComponent::GUIImageComponent(Entity *entity, uint32_t arg_maxItems)
     :   ARenderableComponent(entity),
         extent(glm::vec2(0.0f, 0.0f)), pivot(glm::vec2(0.0f, 0.0f)),

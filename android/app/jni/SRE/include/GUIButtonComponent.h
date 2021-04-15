@@ -14,6 +14,8 @@ namespace sre
 */
 class SRE_API GUIButtonComponent : public AEntityComponent
 {
+DECLARE_COMPONENT();
+
 private:
 	glm::vec2 extent;
 	glm::vec2 pivot;

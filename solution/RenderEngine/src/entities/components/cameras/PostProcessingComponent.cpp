@@ -4,6 +4,8 @@
 namespace sre
 {
 
+IMPLEMENT_COMPONENT(PostProcessingComponent)
+
 PostProcessingComponent::PostProcessingComponent(Entity* entity) 
 	: AEntityComponent(entity)
 { }

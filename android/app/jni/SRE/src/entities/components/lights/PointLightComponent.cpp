@@ -4,6 +4,8 @@
 namespace sre
 {
 
+IMPLEMENT_COMPONENT(PointLightComponent)
+
 PointLightComponent::PointLightComponent(Entity *entity) 
     : ALightComponent(entity), range(20.0f), intensity(2.0f)
 { }

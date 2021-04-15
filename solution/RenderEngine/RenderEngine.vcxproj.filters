@@ -123,9 +123,6 @@
     <ClCompile Include="src\entities\components\transforms\TransformComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entities\components\AComponentsHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\entities\components\AEntityComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -205,9 +202,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\DOFRendererComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\OutlineMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\OutlineRendererComponent.cpp">
@@ -476,9 +470,6 @@
     <ClInclude Include="engine\core\graphics\renderers\components\litStates\LitRendererNoLightsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AComponentsHolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\AEntityComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -639,9 +630,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\OpenGLESAPI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\OutlineMaterialComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\OutlineRendererComponent.h">
@@ -809,5 +797,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="include\MessagesManager.tpp" />
+    <None Include="include\Entity.tpp" />
+    <None Include="include\Material.tpp" />
+    <None Include="include\MeshRenderer.tpp" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #ifndef _SPRITE_MATERIAL_COMPONENT_H_
 #define _SPRITE_MATERIAL_COMPONENT_H_
 
-#include "AMaterialCOmponent.h"
+#include "AMaterialComponent.h"
 #include <string>
 
 namespace sre

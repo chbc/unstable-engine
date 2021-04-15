@@ -14,6 +14,8 @@ class Entity;
 */
 class SRE_API TransformComponent : public AEntityComponent
 {
+DECLARE_COMPONENT()
+
 private:
 	glm::mat4 worldMatrix;
 	glm::mat4 localMatrix;

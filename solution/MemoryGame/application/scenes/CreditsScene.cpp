@@ -22,9 +22,9 @@ void CreditsScene::onInit(SceneManager* sceneManager, GUIManager* guiManager)
 	sceneManager->addEntity(entity, "credits_background");
 
 	// Back button
-	Entity* endGameBack = guiManager->createGUIImageEntity("memoryGame/end_game_back.png", glm::vec2(0.4f, 0.2f));
+	Entity* endGameBack = guiManager->createGUIImageEntity("memoryGame/end_game_back.png", glm::vec2(0.15f, 0.15f));
 	guiComponent = endGameBack->getComponent<GUIImageComponent>();
-	guiComponent->setUIPosition(glm::vec2(0.5f, 0.875f));
+	guiComponent->setUIPosition(glm::vec2(0.1f, 0.075f));
 
 	GUIButtonComponent* button = endGameBack->addComponent<GUIButtonComponent>();
 	button->setExtent(guiComponent->getExtent());

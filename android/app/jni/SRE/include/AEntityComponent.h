@@ -2,8 +2,14 @@
 #define _H_AENTITY_COMPONENT_H_
 
 #include "core_defines.h"
-
 #include <stdint.h>
+
+#define DECLARE_COMPONENT() \
+    public: \
+        static const uint16_t ID;
+
+#define IMPLEMENT_COMPONENT(ClassName) \
+    const uint16_t ClassName::ID = AEntityComponent::generateId();
 
 namespace sre
 {
@@ -14,19 +20,23 @@ class TransformComponent;
 class SRE_API AEntityComponent
 {
 private:
-    Entity *entity;
+    Entity* entity;
+
+    static uint16_t Index;
 
 public:
-    inline Entity *getEntity() { return this->entity; }
-    TransformComponent *getTransform();
+    AEntityComponent(Entity* arg_entity) : entity(arg_entity) { }
+
+    inline Entity* getEntity() { return this->entity; }
+    TransformComponent* getTransform();
+    static uint16_t generateId();
 
 protected:
-    AEntityComponent(Entity *entity) { this->entity = entity; }
     virtual void onStart() {}
     virtual void update(uint32_t deltaTime) {}
 
-friend class Entity;
 
+friend class Entity;
 };
 
 } // namespace

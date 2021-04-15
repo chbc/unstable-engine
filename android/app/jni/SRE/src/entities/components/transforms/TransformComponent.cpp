@@ -5,6 +5,8 @@
 namespace sre
 {
 
+IMPLEMENT_COMPONENT(TransformComponent)
+
 /*
 	Matrix Format
 	00	10	20	30

@@ -9,6 +9,8 @@ namespace sre
 
 class SRE_API PointLightComponent : public ALightComponent
 {
+DECLARE_COMPONENT()
+
 private:
 	float range;
 	float intensity;

@@ -58,6 +58,8 @@ MeshRenderer::MeshRenderer(Material *material, ShaderManager *shaderManager, AGr
                     break;
                 default: break;
             }
+
+            this->componentsBitset[i] = true;
         }
     }
 }

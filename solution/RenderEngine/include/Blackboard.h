@@ -2,6 +2,7 @@
 #define _BLACKBOARD_H_
 
 #include <unordered_map>
+#include <string>
 #include "memory_aliases.h"
 
 namespace sre

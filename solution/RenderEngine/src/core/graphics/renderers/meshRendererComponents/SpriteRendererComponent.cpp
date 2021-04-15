@@ -2,6 +2,7 @@
 #include "MeshComponent.h"
 #include "ShaderManager.h"
 #include "EMaterialMap.h"
+#include "SpriteMaterialComponent.h"
 
 namespace sre
 {

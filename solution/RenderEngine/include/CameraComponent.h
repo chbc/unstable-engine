@@ -15,6 +15,8 @@ class TransformComponent;
 */
 class SRE_API CameraComponent : public AEntityComponent
 {
+DECLARE_COMPONENT();
+
 private:
 	TransformComponent *transform;
 	glm::vec3 lookAtTarget;
