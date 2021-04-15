@@ -1,0 +1,21 @@
+CODE
+- review member fields name
+- update methods to be constants
+- asserts
+- change sre to unstable
+- defines (DEBUG, RELEASE, TEST, DISTRIBUTION)
+- change " *" -> "* " and " &" -> "& "
+- change #ifndef -> #pragma
+
+THIRD PARTIES
+- change stl to STLPort
+- remove SDL
+
+FIXES
+- SRE_API warnings
+- children local transforms
+
+FEATURES
+- orthographic camera [OK]
+- assimp to model format converter
+- extensible world editor

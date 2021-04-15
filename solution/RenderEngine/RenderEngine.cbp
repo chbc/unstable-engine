@@ -80,8 +80,6 @@
 		<Unit filename="engine/scene/SceneManager.h" />
 		<Unit filename="engine/systems/graphics/LightManager.cpp" />
 		<Unit filename="engine/systems/graphics/LightManager.h" />
-		<Unit filename="engine/systems/graphics/MatrixManager.cpp" />
-		<Unit filename="engine/systems/graphics/MatrixManager.h" />
 		<Unit filename="engine/systems/graphics/RenderManager.cpp" />
 		<Unit filename="engine/systems/graphics/RenderManager.h" />
 		<Unit filename="engine/systems/graphics/ShaderManager.cpp" />

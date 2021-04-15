@@ -15,181 +15,253 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine\utils\FileUtils.cpp">
+    <ClCompile Include="src\core\graphics\meshData\MeshData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\Entity.cpp">
+    <ClCompile Include="src\core\graphics\meshData\PrimitiveMeshFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\transforms\TransformComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\shadersSetup\BaseRendererShaderSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\cameras\CameraComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\shadersSetup\LightRendererShaderSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\RenderEngine.cpp">
+    <ClCompile Include="src\core\graphics\renderers\shadersSetup\ShadowRendererShaderSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\lights\ALightComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\GUIRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\lights\DirectionalLightComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\ShadowRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\lights\PointLightComponent.cpp">
+    <ClCompile Include="src\core\graphics\shaders\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\AEntityComponent.cpp">
+    <ClCompile Include="src\core\graphics\shaders\ShaderContentFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\utils\Log.cpp">
+    <ClCompile Include="src\core\graphics\LightManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\tests\TestServicesProvider.cpp">
+    <ClCompile Include="src\core\graphics\RenderManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\utils\math\MathUtils.cpp">
+    <ClCompile Include="src\core\graphics\ShaderManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\utils\math\Rect.cpp">
+    <ClCompile Include="src\core\io\ModelLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entitiesManagers\gui\GUIManager.cpp">
+    <ClCompile Include="src\core\multimedia\textures\atlases\Atlas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entitiesManagers\scene\SceneManager.cpp">
+    <ClCompile Include="src\core\multimedia\textures\atlases\AtlasManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entitiesManagers\AEntityManager.cpp">
+    <ClCompile Include="src\core\multimedia\textures\atlases\FontAtlas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\meshData\MeshData.cpp">
+    <ClCompile Include="src\core\multimedia\textures\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\meshData\PrimitiveMeshFactory.cpp">
+    <ClCompile Include="src\core\multimedia\textures\TextureManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\GUIRenderer.cpp">
+    <ClCompile Include="src\core\multimedia\MultimediaManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\Renderer.cpp">
+    <ClCompile Include="src\core\singletonsManager\SingletonsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\shaders\ShaderContentFactory.cpp">
+    <ClCompile Include="src\core\timer\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\LightManager.cpp">
+    <ClCompile Include="src\core\wrappers\graphics\OpenGLAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\MatrixManager.cpp">
+    <ClCompile Include="src\core\wrappers\multimedia\SDLAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\RenderManager.cpp">
+    <ClCompile Include="src\entities\components\cameras\CameraComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\ShaderManager.cpp">
+    <ClCompile Include="src\entities\components\lights\ALightComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\io\ModelLoader.cpp">
+    <ClCompile Include="src\entities\components\lights\DirectionalLightComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\multimedia\textures\atlases\Atlas.cpp">
+    <ClCompile Include="src\entities\components\lights\PointLightComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\multimedia\textures\atlases\AtlasManager.cpp">
+    <ClCompile Include="src\entities\components\renderables\gui\GUIImageComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\multimedia\textures\Texture.cpp">
+    <ClCompile Include="src\entities\components\renderables\gui\GUITextComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\multimedia\textures\TextureManager.cpp">
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\ColorMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\multimedia\MultimediaManager.cpp">
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\DiffuseMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\timer\Timer.cpp">
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\NormalMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\wrappers\graphics\OpenGLAPI.cpp">
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\SpecularMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\wrappers\multimedia\SDLAPI.cpp">
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\multimedia\textures\atlases\FontAtlas.cpp">
+    <ClCompile Include="src\entities\components\renderables\meshes\MeshComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\singletonsManager\SingletonsManager.cpp">
+    <ClCompile Include="src\entities\components\transforms\TransformComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\shaders\Shader.cpp">
+    <ClCompile Include="src\entities\components\AEntityComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\renderables\gui\GUIImageComponent.cpp">
+    <ClCompile Include="src\entities\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\renderables\gui\GUITextComponent.cpp">
+    <ClCompile Include="src\entitiesManagers\gui\GUIManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\AmbientOCclusionMaterialComponent.cpp">
+    <ClCompile Include="src\entitiesManagers\scene\SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\ColorMaterialComponent.cpp">
+    <ClCompile Include="src\entitiesManagers\AEntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\DiffuseMaterialComponent.cpp">
+    <ClCompile Include="src\tests\TestServicesProvider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\NormalMaterialComponent.cpp">
+    <ClCompile Include="src\utils\math\MathUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\renderables\meshes\materials\components\SpecularMaterialComponent.cpp">
+    <ClCompile Include="src\utils\math\Rect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\renderables\meshes\materials\Material.cpp">
+    <ClCompile Include="src\utils\FileUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\renderables\meshes\MeshComponent.cpp">
+    <ClCompile Include="src\RenderEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\shadersSetup\BaseRendererShaderSetup.cpp">
+    <ClCompile Include="src\core\wrappers\graphics\OpenGLESAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\shadersSetup\LightRendererShaderSetup.cpp">
+    <ClCompile Include="src\entities\components\cameras\PostProcessingComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\shadersSetup\ShadowRendererShaderSetup.cpp">
+    <ClCompile Include="src\core\graphics\renderers\PostProcessingRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\components\AORendererComponent.cpp">
+    <ClCompile Include="src\entities\components\cameras\PostProcessingEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\components\ColorRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\litStates\LitRendererLightsState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\components\DiffuseRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\litStates\LitRendererNoLightsState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\components\NormalRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\AORendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\components\SpecularRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\ColorRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\ShadowRenderer.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\DiffuseRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\components\LitRendererComponent.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\LitRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\components\litStates\LitRendererLightsState.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\NormalRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\core\graphics\renders\components\litStates\LitRendererNoLightsState.cpp">
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\SpecularRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entities\components\AComponentsHolder.cpp">
+    <ClCompile Include="src\core\graphics\renderers\MeshRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\BloomRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\SinglePassRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\HDRRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\DOFRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\OutlineRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\OutlineRendererPPComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AmbientOcclusionMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPIState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdParties\imgui\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdParties\imgui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdParties\imgui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdParties\imgui\imgui_impl_opengl3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdParties\imgui\imgui_impl_sdl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdParties\imgui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editors\WorldEditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\SpriteMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\SpriteRendererComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\multimedia\EngineValues.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\buttons\GUIButtonComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\buttons\SceneButtonComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\io\DefaultGameValues.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -239,10 +311,10 @@
     <ClInclude Include="engine\core\graphics\meshData\PrimitiveMeshFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\GUIRenderer.h">
+    <ClInclude Include="engine\core\graphics\renderers\GUIRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\Renderer.h">
+    <ClInclude Include="engine\core\graphics\renderers\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\core\graphics\shaders\ShaderContentFactory.h">
@@ -353,31 +425,31 @@
     <ClInclude Include="engine\entities\components\renderables\meshes\MeshComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\shadersSetup\ShadowRendererShaderSetup.h">
+    <ClInclude Include="engine\core\graphics\renderers\shadersSetup\ShadowRendererShaderSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\shadersSetup\BaseRendererShaderSetup.h">
+    <ClInclude Include="engine\core\graphics\renderers\shadersSetup\BaseRendererShaderSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\shadersSetup\LightRendererShaderSetup.h">
+    <ClInclude Include="engine\core\graphics\renderers\shadersSetup\LightRendererShaderSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\AORendererComponent.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\AORendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\ColorRendererComponent.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\ColorRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\DiffuseRendererComponent.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\DiffuseRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\NormalRendererComponent.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\NormalRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\SpecularRendererComponent.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\SpecularRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\ShadowRenderer.h">
+    <ClInclude Include="engine\core\graphics\renderers\ShadowRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\core\graphics\shaders\ShaderLightData.h">
@@ -389,14 +461,344 @@
     <ClInclude Include="engine\entities\components\renderables\meshes\materials\components\LitMaterialComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\LitRendererComponent.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\LitRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\litStates\LitRendererLightsState.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\litStates\LitRendererLightsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\core\graphics\renders\components\litStates\LitRendererNoLightsState.h">
+    <ClInclude Include="engine\core\graphics\renderers\components\litStates\LitRendererNoLightsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\AEntityComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AEntityManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AGraphicsWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ALightComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AmbientOcclusionMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AMultimediaWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AORendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\APostProcessingRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ARenderableComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ASingleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Atlas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AtlasManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BaseRendererShaderSetup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BloomRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\button_names.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CameraComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ColorMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ColorRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core_defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DiffuseMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DiffuseRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DirectionalLightComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DOFRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EComponentId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EMaterialMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FontAtlas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GUIImageComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GUIManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GUIRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GUITextComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HDRRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InputHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LightManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LightRendererShaderSetup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LitMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LitRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LitRendererLightsState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LitRendererNoLightsState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MathUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MatrixManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\memory_aliases.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MeshComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MeshData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MeshRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ModelLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MultimediaManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NormalMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NormalRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenGLAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenGLESAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OutlineRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OutlineRendererPPComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PointLightComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PostProcessingComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PostProcessingEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PostProcessingRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PrimitiveMeshFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Rect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RenderEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RenderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SDLAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShaderConstants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShaderContentFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShaderLightData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShaderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShadowData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShadowRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShadowRendererShaderSetup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SinglePassRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SingletonsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpecularMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpecularRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StringUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TestServicesProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TransformComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImGuiAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImGuiAPIEmptyState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AImGuiAPIState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImGuiAPIState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdParties\imgui\imconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdParties\imgui\imgui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdParties\imgui\imgui_impl_opengl3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdParties\imgui\imgui_impl_sdl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdParties\imgui\imgui_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdParties\imgui\imstb_rectpack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdParties\imgui\imstb_textedit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdParties\imgui\imstb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WorldEditor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MessagesManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpriteRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SDLAndroidAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EngineValues.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GUIButtonComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SceneButtonComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CollectionsUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DefaultGameValues.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Blackboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\MessagesManager.tpp" />
+    <None Include="include\Entity.tpp" />
+    <None Include="include\Material.tpp" />
+    <None Include="include\MeshRenderer.tpp" />
   </ItemGroup>
 </Project>

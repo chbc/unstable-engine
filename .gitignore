@@ -16,3 +16,17 @@ bin/vc/SRE_d.dll
 bin/vc/SRE_d.exp
 bin/gcc/libSRE.dll
 bin/vc/SRE_d.lib
+android/app/src/main/assets/
+*.ilk
+*.pdb
+*.user
+android/app/build/
+android/app/.vscode/
+android/.gradle/4.10.2/fileHashes/
+android/.gradle/buildOutputCleanup/
+android/.gradle/4.10.2/taskHistory/
+android/.gradle/4.10.2/javaCompile/javaCompile.lock
+android/app/.externalNativeBuild/ndkBuild/release/armeabi-v7a/android_gradle_build.json
+android/app/.externalNativeBuild/ndkBuild/release/armeabi-v7a/android_gradle_build_mini.json
+android/app/.externalNativeBuild/ndkBuild/release/armeabi-v7a/ndkBuild_build_command.txt
+android/app/.externalNativeBuild/ndkBuild/release/armeabi-v7a/ndkBuild_build_output.txt

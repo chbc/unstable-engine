@@ -3,8 +3,10 @@
 #include <glm/glm.hpp>
 
 #include <glm/gtx/rotate_vector.hpp>
+#include <HDRRendererComponent.h>
+#include <iostream>
 
-EventReceiver::EventReceiver(SampleApplication *application, CameraComponent *camera)
+EventReceiver::EventReceiver(SampleApplication *application, CameraComponent *camera, PostProcessingEffect* effect)
 {
 	this->application = application;
 	this->camera = camera;
@@ -14,6 +16,8 @@ EventReceiver::EventReceiver(SampleApplication *application, CameraComponent *ca
 	this->cameraDistance = glm::distance(position, glm::vec3(0, 0, 0));
 
 	this->viewingActive = false;
+	this->ppEffect = effect;
+	this->effectValue = 0.5f;
 }
 
 void EventReceiver::onQuit()
@@ -21,27 +25,53 @@ void EventReceiver::onQuit()
 	this->application->quit();
 }
 
-void EventReceiver::onKeyPressed(KeyboardButton key)
+void EventReceiver::onKeyEvent(KeyboardButton key, bool pressed)
 {
 	if (key == KEY_ESC)
 		this->application->quit();
-}
 
-void EventReceiver::onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position)
-{
-	static float yLookAt = 0.0f;
-
-	this->viewingActive = true;
-	if (mouseButton == MOUSEBUTTON_MIDDLE)
+	/*
+	else if (key == KEY_1)
 	{
-		yLookAt += 1.0f;
-		this->camera->setLookAt(glm::vec3(0.0f, yLookAt, 0.0f));
+		this->effectValue -= 0.025f;
+		this->ppEffect->setValue("exposure", this->effectValue);
+		std::cout << "EXPOSURE = " << this->effectValue << std::endl;
 	}
+	else if (key == KEY_2)
+	{
+		this->effectValue += 0.025f;
+		this->ppEffect->setValue("exposure", this->effectValue);
+		std::cout << "EXPOSURE = " << this->effectValue << std::endl;
+	}
+	else if (key == KEY_0)
+	{
+		int value = this->ppEffect->getValue("enabled");
+		value = (value > 0) ? 0 : 1;
+		this->ppEffect->setValue("enabled", value);
+
+		if (value > 0)
+			std::cout << "HDR ON";
+		else
+			std::cout << "HDR OFF";
+	}
+	*/
 }
 
-void EventReceiver::onMouseButtonReleased(MouseButton mouseButton, const glm::vec2 &position)
+void EventReceiver::onMouseButtonEvent(MouseButton mouseButton, const glm::vec2 &position, bool pressed)
 {
-	this->viewingActive = false;
+	if (pressed)
+	{
+		static float yLookAt = 0.0f;
+
+		if (mouseButton == MOUSEBUTTON_MIDDLE)
+		{
+			yLookAt += 1.0f;
+			this->camera->setLookAt(glm::vec3(0.0f, yLookAt, 0.0f));
+		}
+	}
+	
+	this->viewingActive = pressed;
+
 }
 
 void EventReceiver::onMouseMoveRelative(const glm::vec2 &relativePosition)
