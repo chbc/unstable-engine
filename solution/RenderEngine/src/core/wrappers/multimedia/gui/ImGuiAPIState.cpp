@@ -1,8 +1,8 @@
 #if defined(DEBUG) && !defined(__ANDROID__)
 
 #include "ImGuiAPIState.h"
-#include "thirdParties/imgui/imgui_impl_opengl3.h"
-#include "thirdParties/imgui/imgui_impl_sdl.h"
+#include "imgui/imgui_impl_opengl3.h"
+#include "imgui/imgui_impl_sdl.h"
 
 #include <SDL.h>
 

@@ -3,7 +3,7 @@
 #include "WorldEditor.h"
 #include "SceneManager.h"
 
-#include "thirdParties/imgui/imgui.h"
+#include "imgui/imgui.h"
 
 #include "SingletonsManager.h"
 #include "MessagesManager.h"
