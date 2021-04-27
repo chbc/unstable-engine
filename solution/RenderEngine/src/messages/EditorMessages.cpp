@@ -3,6 +3,6 @@
 namespace sre
 {
 
-IMPLEMENT_MESSAGE(XXX_Message)
+IMPLEMENT_MESSAGE(EntitySelectionMessage)
 
 } // namespace

@@ -18,11 +18,14 @@ private:
 	UPTR<IEditorWindow> windows[3];
 	bool showDemo;
 	
+public:
+	WorldEditor(SceneManager* arg_sceneManager, bool* editorEnabled);
+
 private:
-	void init(SceneManager* sceneManager, bool* editorEnabled);
-	void XXX_MessageMethod(void* message);
+	void init();
 	
 	void onEditorGUI();
+	void release();
 
 friend class RenderEngine;
 };

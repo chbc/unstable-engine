@@ -1,7 +1,10 @@
 #if defined(DEBUG) && !defined(__ANDROID__)
 
 #include "EditorSceneTree.h"
+#include "SingletonsManager.h"
 #include "SceneManager.h"
+#include "MessagesManager.h"
+#include "EditorMessages.h"
 
 #include "imgui/imgui.h"
 
@@ -14,28 +17,18 @@ EditorSceneTree::EditorSceneTree(SceneManager* arg_sceneManager) : sceneManager(
 void EditorSceneTree::onEditorGUI()
 {
 	ImGui::SetNextWindowPos(ImVec2(854.0f, 19.0f), ImGuiCond_Once);
-	ImGui::SetNextWindowSize(ImVec2(170.0f, 375.0f), ImGuiCond_Once);
+	ImGui::SetNextWindowSize(ImVec2(170.0f, 728.0f), ImGuiCond_Once);
 
-	ImGui::Begin("Scene Tree");
+	ImGui::Begin("Hierarchy");
 
-	if (ImGui::TreeNodeEx("scene_name", ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("Scene Tree") && ImGui::TreeNodeEx("scene_name", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		int index = 0;
 		for (const auto& item : this->sceneManager->entities)
-		{
-			if (item.second->getChildrenCount() == 0)
-				ImGui::TreeNodeEx("entity", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen, item.first.c_str());
-			else if (ImGui::TreeNode(reinterpret_cast<void*>(static_cast<intptr_t>(index)), item.first.c_str()))
-			{
-				this->drawEntityTree(item.second.get(), index);
-				ImGui::TreePop();
-			}
-		}
+			this->drawEntityTree(item.second.get(), index);
 
 		ImGui::TreePop();
 	}
-
-	ImGui::End();
 }
 
 void EditorSceneTree::drawEntityTree(Entity* entity, int index) const
@@ -45,7 +38,12 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index) const
 
 	if (childrenCount == 0)
 	{
-		ImGui::TreeNodeEx("entity", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen, name);
+		if (ImGui::Selectable(name, false))
+		{
+			MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
+			EntitySelectionMessage message(entity);
+			messagesManager->notify(&message);
+		}
 	}
 	else if (ImGui::TreeNode(reinterpret_cast<void*>(static_cast<intptr_t>(index)), name))
 	{

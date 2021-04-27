@@ -7,10 +7,14 @@
 namespace sre
 {
 
-struct XXX_Message : public BaseMessage
+struct EntitySelectionMessage : public BaseMessage
 {
 	DECLARE_MESSAGE()
-	int a;
+
+public:
+	class Entity* entity;
+
+	EntitySelectionMessage(class Entity* arg_entity) : entity(arg_entity) {}
 };
 
 } // namespace

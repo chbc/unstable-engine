@@ -26,7 +26,7 @@ void RenderEngine::run()
 	this->guiManager = UPTR<GUIManager>{ new GUIManager };
 
 #if defined(DEBUG) && !defined(__ANDROID__)
-    this->worldEditor = UPTR<WorldEditor>{ new WorldEditor };
+    this->worldEditor = UPTR<WorldEditor>( new WorldEditor{ this->sceneManager.get(), &this->isEditorMode });
 #endif
 
     this->onInit();
@@ -36,7 +36,7 @@ void RenderEngine::run()
     this->renderManager->onSceneLoaded();
 
 #if defined(DEBUG) && !defined(__ANDROID__)
-    this->worldEditor->init(this->sceneManager.get(), &this->isEditorMode);
+    this->worldEditor->init();
 #endif
 
     this->isEditorMode = false;
