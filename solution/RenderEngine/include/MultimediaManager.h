@@ -41,6 +41,7 @@ public:
 
 private:
 	void swapBuffers();
+	void setEditorMode(bool value);
 	void processInput(InputHandler *inputHandler);
 	bool checkClosePressed();
 	void onBeginFrame();

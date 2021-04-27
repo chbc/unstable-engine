@@ -9,7 +9,7 @@ T* Entity::addComponent(TArgs&&... mArgs)
     assert(!this->hasComponent<T>());
 
     newComponent = new T{ this, std::forward<TArgs>(mArgs)... };
-    int id = this->getComponentId<T>();
+    uint16_t id = this->getComponentId<T>();
     this->componentsMap[id] = UPTR<T>{ newComponent };
 
     return newComponent;
@@ -20,7 +20,7 @@ void Entity::removeComponent()
 {
     if (this->hasComponent<T>())
     {
-        int id = getComponentId<T>();
+        uint16_t id = getComponentId<T>();
         componentsMap.erase(id);
     }
 }
@@ -32,7 +32,7 @@ T* Entity::getComponent()
 
     if (this->hasComponent<T>())
     {
-        int id = this->getComponentId<T>();
+        uint16_t id = this->getComponentId<T>();
         component = static_cast<T*>(componentsMap[id].get());
     }
 
@@ -42,12 +42,12 @@ T* Entity::getComponent()
 template<typename T>
 bool Entity::hasComponent()
 {
-    int id = this->getComponentId<T>();
+    uint16_t id = this->getComponentId<T>();
     return (this->componentsMap.count(id) > 0);
 }
 
 template<typename T>
-int Entity::getComponentId()
+uint16_t Entity::getComponentId()
 {
     return T::ID;
 }

@@ -45,6 +45,11 @@ void MultimediaManager::swapBuffers()
 	this->multimediaWrapper->swapBuffers();
 }
 
+void MultimediaManager::setEditorMode(bool value)
+{
+	this->multimediaWrapper->setEditorMode(value);
+}
+
 void MultimediaManager::processInput(InputHandler *inputHandler)
 {
 	this->multimediaWrapper->processInput(inputHandler, guiButtons);
@@ -57,6 +62,7 @@ bool MultimediaManager::checkClosePressed()
 
 void MultimediaManager::onBeginFrame()
 {
+	this->multimediaWrapper->onBeginFrame();
 	this->timer->start();
 }
 

@@ -1,26 +1,22 @@
 #include "ImGuiAPI.h"
 
-#if defined(DEBUG) && !defined(__ANDROID__)
 #include "ImGuiAPIState.h"
-#else
 #include "ImGuiAPIEmptyState.h"
-#endif
 
 namespace sre
 {
 
 ImGuiAPI::ImGuiAPI()
 {
-#if defined(DEBUG) && !defined(__ANDROID__)
-	this->state = make_unique<ImGuiAPIState>();
-#else
-	this->state = make_unique<ImGuiAPIEmptyState>();
-#endif
+	this->concreteState = make_unique<ImGuiAPIState>();
+	this->emptyState = make_unique<ImGuiAPIEmptyState>();
+	this->state = this->concreteState;
 }
-	
+
 void ImGuiAPI::init(SDL_Window* window, void* glContext)
 {
 	this->state->init(window, glContext);
+	this->setEditorMode(false);
 }
 
 void ImGuiAPI::processEvent(SDL_Event* event)
@@ -38,9 +34,17 @@ void ImGuiAPI::render()
 	this->state->render();
 }
 
+void ImGuiAPI::setEditorMode(bool value)
+{
+	if (value)
+		this->state = this->concreteState;
+	else
+		this->state = this->emptyState;
+}
+
 void ImGuiAPI::release()
 {
-	this->state->release();
+	this->concreteState->release();
 }
 
 } // namespace

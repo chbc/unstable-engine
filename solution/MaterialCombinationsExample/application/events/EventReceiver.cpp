@@ -24,8 +24,13 @@ void EventReceiver::onQuit()
 
 void EventReceiver::onKeyEvent(KeyboardButton key, bool pressed)
 {
-	if (pressed && key == KEY_ESC)
-		this->application->quit();
+	if (pressed)
+	{
+		if (key == KEY_ESC)
+			this->application->quit();
+		else if (key == KEY_e)
+			this->application->toggleEditorMode();
+	}
 }
 
 void EventReceiver::onMouseButtonEvent(MouseButton mouseButton, const glm::vec2 &position, bool pressed)

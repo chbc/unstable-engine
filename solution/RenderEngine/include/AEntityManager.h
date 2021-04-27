@@ -32,7 +32,7 @@ private:
     void destroyAllEntities();
 
 friend class RenderEngine;
-friend class WorldEditor;
+friend class EditorSceneTree;
 };
 
 } // namespace

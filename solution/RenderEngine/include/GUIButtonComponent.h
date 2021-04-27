@@ -36,6 +36,10 @@ private:
 
 	friend class SDLAPI;
 	friend class Entity;
+
+#ifdef __ANDROID__
+	friend class SDLAndroidAPI;
+#endif
 };
 
 } // namespace

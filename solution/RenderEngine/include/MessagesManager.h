@@ -2,10 +2,11 @@
 #define _MESSAGES_MANAGER_H_
 
 #include <unordered_map>
-#include <typeindex>
 #include <functional>
 #include <list>
 #include "ASingleton.h"
+
+#include "core_defines.h"
 
 namespace sre
 {
@@ -16,7 +17,7 @@ class MessagesManager : public ASingleton
 {
 private:
 	// <type, callback>
-	std::unordered_map<std::type_index, std::list<Action>> data;
+	std::unordered_map<uint16_t, std::list<Action>> data;
 	
 private:
 	MessagesManager() = default;

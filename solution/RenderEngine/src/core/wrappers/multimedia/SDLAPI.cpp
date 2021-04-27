@@ -44,11 +44,20 @@ void SDLAPI::init()
 	this->imGuiAPI->init(this->window, context);
 }
 
-void SDLAPI::swapBuffers()
+void SDLAPI::onBeginFrame()
 {
 	this->imGuiAPI->onNewFrame(this->window);
+}
+
+void SDLAPI::swapBuffers()
+{
 	this->imGuiAPI->render();
 	SDL_GL_SwapWindow(this->window);
+}
+
+void SDLAPI::setEditorMode(bool value)
+{
+	this->imGuiAPI->setEditorMode(value);
 }
 
 void SDLAPI::processInput(InputHandler *inputHandler, const std::vector<GUIButtonComponent*>& guiButtons)

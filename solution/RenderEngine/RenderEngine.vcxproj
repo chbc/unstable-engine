@@ -218,6 +218,10 @@
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPIState.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp" />
+    <ClCompile Include="src\messages\BaseMessage.cpp" />
+    <ClCompile Include="src\editors\windows\EditorEntityProperties.cpp" />
+    <ClCompile Include="src\editors\windows\EditorMenuBar.cpp" />
+    <ClCompile Include="src\editors\windows\EditorSceneTree.cpp" />
     <ClCompile Include="src\editors\WorldEditor.cpp" />
     <ClCompile Include="src\entitiesManagers\AEntityManager.cpp" />
     <ClCompile Include="src\entities\components\AEntityComponent.cpp" />
@@ -249,6 +253,7 @@
     <ClCompile Include="src\core\graphics\meshData\PrimitiveMeshFactory.cpp" />
     <ClCompile Include="src\entities\Entity.cpp" />
     <ClCompile Include="src\entities\components\transforms\TransformComponent.cpp" />
+    <ClCompile Include="src\messages\EditorMessages.cpp" />
     <ClCompile Include="src\RenderEngine.cpp" />
     <ClCompile Include="src\entitiesManagers\scene\SceneManager.cpp" />
     <ClCompile Include="src\core\graphics\LightManager.cpp" />
@@ -354,6 +359,7 @@
     <ClInclude Include="include\ALightComponent.h" />
     <ClInclude Include="include\AMaterialComponent.h" />
     <ClInclude Include="include\AmbientOcclusionMaterialComponent.h" />
+    <ClInclude Include="include\BaseMessage.h" />
     <ClInclude Include="include\AMultimediaWrapper.h" />
     <ClInclude Include="include\AORendererComponent.h" />
     <ClInclude Include="include\APostProcessingRendererComponent.h" />
@@ -376,6 +382,10 @@
     <ClInclude Include="include\DirectionalLightComponent.h" />
     <ClInclude Include="include\DOFRendererComponent.h" />
     <ClInclude Include="include\EComponentId.h" />
+    <ClInclude Include="include\EditorEntityProperties.h" />
+    <ClInclude Include="include\EditorMenuBar.h" />
+    <ClInclude Include="include\EditorMessages.h" />
+    <ClInclude Include="include\EditorSceneTree.h" />
     <ClInclude Include="include\EMaterialMap.h" />
     <ClInclude Include="include\EngineValues.h" />
     <ClInclude Include="include\Entity.h" />
@@ -387,6 +397,7 @@
     <ClInclude Include="include\GUIRenderer.h" />
     <ClInclude Include="include\GUITextComponent.h" />
     <ClInclude Include="include\HDRRendererComponent.h" />
+    <ClInclude Include="include\IEditorWindow.h" />
     <ClInclude Include="include\ImGuiAPI.h" />
     <ClInclude Include="include\ImGuiAPIEmptyState.h" />
     <ClInclude Include="include\ImGuiAPIState.h" />
@@ -461,6 +472,7 @@
     <None Include="include\Material.tpp" />
     <None Include="include\MeshRenderer.tpp" />
     <None Include="include\MessagesManager.tpp" />
+    <None Include="include\ShaderContentFactory.tpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

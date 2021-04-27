@@ -5,10 +5,12 @@
 #include <SDL_image.h>
 #include <SDL_test_common.h>
 #include "SDL_opengles2.h"
+#include <string>
 
 #include "InputHandler.h"
 #include "EngineValues.h"
-#include <string>
+#include "GUIButtonComponent.h"
+#include "Entity.h"
 
 namespace sre
 {
@@ -66,11 +68,19 @@ void SDLAndroidAPI::init()
 	SDL_GL_GetDrawableSize(state->windows[0], &EngineValues::SCREEN_WIDTH, &EngineValues::SCREEN_HEIGHT);
 
 	this->window = state->windows[0];
-	this->imGuiAPI = UPTR<ImGuiAPI>{ new ImGuiAPI };
 
 	delete[] argv[0];
 	delete[] argv;
 }
+
+void SDLAndroidAPI::onBeginFrame() { }
+
+void SDLAndroidAPI::swapBuffers()
+{
+	SDL_GL_SwapWindow(this->window);
+}
+
+void SDLAndroidAPI::setEditorMode(bool value) { }
 
 void SDLAndroidAPI::processInput(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons)
 {
@@ -108,6 +118,32 @@ void SDLAndroidAPI::processInput(InputHandler* inputHandler, const std::vector<G
 	}
 }
 
+bool SDLAndroidAPI::checkClosePressed()
+{
+	bool result = false;
+	SDL_Event currentEvent;
+	while (SDL_PollEvent(&currentEvent))
+	{
+		if (currentEvent.type == SDL_QUIT)
+		{
+			result = true;
+			break;
+		}
+	}
+
+	return result;
+}
+
+unsigned int SDLAndroidAPI::getTicks()
+{
+	return SDL_GetTicks();
+}
+
+void SDLAndroidAPI::delay(unsigned int timeMS)
+{
+	SDL_Delay(timeMS);
+}
+
 void* SDLAndroidAPI::loadTexture(const std::string& fileName, uint32_t* outWidth, uint32_t* outHeight, uint8_t* outBpp)
 {
 	void* result = nullptr;
@@ -132,6 +168,11 @@ void* SDLAndroidAPI::loadTexture(const std::string& fileName, uint32_t* outWidth
 	return result;
 }
 
+void SDLAndroidAPI::log(const std::string& type, const std::string& message)
+{
+	SDL_Log("[%s]: %s", type.c_str(), message.c_str());
+}
+
 void SDLAndroidAPI::release()
 {
 	int i;
@@ -148,6 +189,23 @@ void SDLAndroidAPI::release()
 
 	IMG_Quit();
 	SDLTest_CommonQuit(state);
+}
+
+bool SDLAndroidAPI::checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition)
+{
+	pressPosition.x /= EngineValues::SCREEN_WIDTH;
+	pressPosition.y /= EngineValues::SCREEN_HEIGHT;
+
+	for (GUIButtonComponent* item : guiButtons)
+	{
+		if (item->getEntity()->isEnabled() && item->isInside(pressPosition))
+		{
+			inputHandler->onGUIButtonPressed(item, item->getEntity()->getName());
+			return true;
+		}
+	}
+
+	return false;
 }
 
 } // namespace

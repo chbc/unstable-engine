@@ -11,8 +11,11 @@ namespace sre
 class ImGuiAPI
 {
 private:
-	UPTR<AImGuiAPIState> state;
+	SPTR<AImGuiAPIState> state;
 	
+	SPTR<AImGuiAPIState> emptyState;
+	SPTR<AImGuiAPIState> concreteState;
+
 private:
 	ImGuiAPI();
 	
@@ -20,6 +23,7 @@ private:
 	void processEvent(SDL_Event* event);
 	void onNewFrame(SDL_Window* window);
 	void render();
+	void setEditorMode(bool value);
 	void release();
 
 friend class SDLAPI;

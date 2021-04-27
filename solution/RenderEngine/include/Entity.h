@@ -22,7 +22,7 @@ namespace sre
 class Entity
 {
 private:
-	std::unordered_map<int, UPTR<AEntityComponent>> componentsMap;
+	std::unordered_map<uint16_t, UPTR<AEntityComponent>> componentsMap;
     Entity *parent;
     std::vector<Entity*> children;
 
@@ -64,7 +64,7 @@ protected:
 
 private:
     static std::string generateEntityId(uint32_t& index, const std::string& duplicateName = "");
-    template <typename T> int getComponentId();
+    template <typename T> uint16_t getComponentId();
 
     friend class AEntityManager;
     friend class ModelLoader;

@@ -264,6 +264,21 @@
     <ClCompile Include="src\core\io\DefaultGameValues.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\editors\windows\EditorMenuBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editors\windows\EditorSceneTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editors\windows\EditorEntityProperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\messages\BaseMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\messages\EditorMessages.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -794,11 +809,30 @@
     <ClInclude Include="include\Blackboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\IEditorWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EditorMenuBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EditorSceneTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EditorEntityProperties.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EditorMessages.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BaseMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="include\MessagesManager.tpp" />
     <None Include="include\Entity.tpp" />
     <None Include="include\Material.tpp" />
     <None Include="include\MeshRenderer.tpp" />
+    <None Include="include\ShaderContentFactory.tpp" />
+    <None Include="include\MessagesManager.tpp" />
   </ItemGroup>
 </Project>

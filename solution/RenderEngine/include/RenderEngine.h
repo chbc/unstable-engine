@@ -28,15 +28,23 @@ public:
 	
 private:
     RenderManager* renderManager;
+    bool running;
+    bool isEditorMode;
+    bool wasEditorMode;
+
+#if defined(DEBUG) && !defined(__ANDROID__)
+    UPTR<WorldEditor> worldEditor;
+#endif
 
 public:
-    RenderEngine(const std::string& applicationName = "Unstable Engine", int screenWidth = 800, int screenHeight = 600);
+    RenderEngine(const std::string& applicationName = "Unstable Engine", int screenWidth = 1024, int screenHeight = 768);
 
 public:
     virtual ~RenderEngine() = default;
     void run();
     void setEventReceiver(InputHandler *inputHandler);
     void loadScene(const std::string& scene);
+    void toggleEditorMode();
     void quit();
 
 protected:
@@ -47,23 +55,10 @@ protected:
     virtual void onQuit(){};
 
 private:
-#if defined(DEBUG) && !defined(__ANDROID__)
-    UPTR<WorldEditor> worldEditor;
-#endif
-    bool running;
-    bool isEditorMode;
-
     void processInput();
+    void onEndFrame();
     void removeDestroyedEntities();
     void release();
-
-	template <typename T>
-	void safeDelete(T* pointer)
-	{
-		if (pointer != nullptr)
-			delete pointer;
-	}
-
 };
 
 } // namespace

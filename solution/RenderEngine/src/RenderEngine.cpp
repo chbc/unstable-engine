@@ -36,13 +36,14 @@ void RenderEngine::run()
     this->renderManager->onSceneLoaded();
 
 #if defined(DEBUG) && !defined(__ANDROID__)
-    this->worldEditor->init(this->sceneManager.get());
+    this->worldEditor->init(this->sceneManager.get(), &this->isEditorMode);
 #endif
 
     this->isEditorMode = false;
+    this->wasEditorMode = false;
     this->running = true;
     uint32_t elapsedTime = 0;
-    while(this->running)
+    while (this->running)
     {
         this->multimediaManager->onBeginFrame();
 
@@ -62,7 +63,7 @@ void RenderEngine::run()
         this->guiManager->updateFrameIndicator(elapsedTime);
 #endif
 
-        this->multimediaManager->onEndFrame();
+        this->onEndFrame();
     }
     
     this->release();
@@ -87,6 +88,11 @@ void RenderEngine::loadScene(const std::string& scene)
     this->renderManager->onSceneLoaded();
 }
 
+void RenderEngine::toggleEditorMode()
+{
+    this->isEditorMode = !this->isEditorMode;
+}
+
 void RenderEngine::quit()
 {
     this->running = false;
@@ -95,8 +101,8 @@ void RenderEngine::quit()
 void RenderEngine::onEditorGUI()
 {
 #if defined(DEBUG) && !defined(__ANDROID__)
-    if (this->isEditorMode)
-        this->worldEditor->onGUI(&this->isEditorMode);
+    if (this->isEditorMode && this->wasEditorMode)
+        this->worldEditor->onEditorGUI();
 #endif
 }
 
@@ -107,6 +113,16 @@ void RenderEngine::processInput()
         this->multimediaManager->processInput(inputHandlerPtr);
     else
         this->running = !this->multimediaManager->checkClosePressed();
+}
+
+void RenderEngine::onEndFrame()
+{
+    this->multimediaManager->onEndFrame();
+    if (this->isEditorMode != this->wasEditorMode)
+    {
+        this->wasEditorMode = this->isEditorMode;
+        this->multimediaManager->setEditorMode(this->isEditorMode);
+    }
 }
 
 void RenderEngine::removeDestroyedEntities()

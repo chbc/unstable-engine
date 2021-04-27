@@ -1,40 +1,41 @@
 
 namespace sre
 {
-	template <typename T>
-	void MessagesManager::addListener(Action& callback)
-	{
-		std::type_index type = typeid(T);
-		std::list<Action>& callbackList = this->data[type];
+	
+template <typename T>
+void MessagesManager::addListener(Action& callback)
+{
+	uint16_t id = T::ID;
+	std::list<Action>& callbackList = this->data[id];
 
-		callbackList.push_back(callback);
+	callbackList.push_back(callback);
+}
+
+template <typename T>
+void MessagesManager::removeListener(Action& callback)
+{
+	uint16_t id = T::ID;
+	std::list<Action>& callbackList = this->data[id];
+
+	callbackList.erase(callback);
+	if (callbackList.empty())
+	{
+		this->data.erase(id);
 	}
+}
 
-	template <typename T>
-	void MessagesManager::removeListener(Action& callback)
+template <typename T>
+void MessagesManager::notify(T* message) const
+{
+	uint16_t id = T::ID;
+	if (this->data.find(id) != this->data.end())
 	{
-		std::type_index type = typeid(T);
-		std::list<Action>& callbackList = this->data[type];
-
-		callbackList.erase(callback);
-		if (callbackList.empty())
+		const std::list<Action>& callbackList = this->data.at(id);
+		for (Action item : callbackList)
 		{
-			this->data.erase(type);
+			item(message);
 		}
 	}
-
-	template <typename T>
-	void MessagesManager::notify(T* message) const
-	{
-		std::type_index type = typeid(T);
-		if (this->data.find(type) != this->data.end())
-		{
-			const std::list<Action>& callbackList = this->data.at(type);
-			for (Action item : callbackList)
-			{
-				item(message);
-			}
-		}
-	}
+}
 
 } // namespace

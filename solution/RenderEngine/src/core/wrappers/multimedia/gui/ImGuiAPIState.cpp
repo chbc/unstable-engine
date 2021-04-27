@@ -16,7 +16,6 @@ void ImGuiAPIState::init(SDL_Window* window, void* glContext)
 	ImGui_ImplSDL2_InitForOpenGL(window, glContext);
 	ImGui_ImplOpenGL3_Init("#version 130");
 
-	ImGui::StyleColorsClassic();
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.WindowRounding = 0.0f;
 	ImVec4& windowBgColor = style.Colors[ImGuiCol_WindowBg];
