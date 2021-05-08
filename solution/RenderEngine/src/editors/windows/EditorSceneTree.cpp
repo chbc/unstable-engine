@@ -5,23 +5,27 @@
 #include "SceneManager.h"
 #include "MessagesManager.h"
 #include "EditorMessages.h"
+#include "EngineValues.h"
 
 #include "imgui/imgui.h"
 
 namespace sre
 {
 
-EditorSceneTree::EditorSceneTree(SceneManager* arg_sceneManager) : sceneManager(arg_sceneManager)
+EditorSceneTree::EditorSceneTree(SceneManager* arg_sceneManager) 
+	: sceneManager(arg_sceneManager), selectedEntity(nullptr)
 { }
+
+void EditorSceneTree::onInit()
+{
+	this->selectedEntity = nullptr;
+}
 
 void EditorSceneTree::onEditorGUI()
 {
-	ImGui::SetNextWindowPos(ImVec2(854.0f, 19.0f), ImGuiCond_Once);
-	ImGui::SetNextWindowSize(ImVec2(170.0f, 728.0f), ImGuiCond_Once);
-
 	ImGui::Begin("Hierarchy");
 
-	if (ImGui::CollapsingHeader("Scene Tree") && ImGui::TreeNodeEx("scene_name", ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("Scene Tree", ImGuiTreeNodeFlags_DefaultOpen) && ImGui::TreeNodeEx("scene_name", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		int index = 0;
 		for (const auto& item : this->sceneManager->entities)
@@ -31,15 +35,16 @@ void EditorSceneTree::onEditorGUI()
 	}
 }
 
-void EditorSceneTree::drawEntityTree(Entity* entity, int index) const
+void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 {
 	const char* name = entity->getName();
 	const uint32_t childrenCount = entity->getChildrenCount();
 
 	if (childrenCount == 0)
 	{
-		if (ImGui::Selectable(name, false))
+		if (ImGui::Selectable(name, entity == this->selectedEntity))
 		{
+			this->selectedEntity = entity;
 			MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
 			EntitySelectionMessage message(entity);
 			messagesManager->notify(&message);

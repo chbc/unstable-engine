@@ -3,6 +3,10 @@
 #pragma once
 
 #include "IEditorWindow.h"
+#include "AEntityComponent.h"
+#include <glm/vec3.hpp>
+#include <vector>
+#include <unordered_map>
 
 namespace sre
 {
@@ -15,8 +19,10 @@ private:
 public:
 	EditorEntityProperties();
 	void onEditorGUI() override;
+	void onRelease() override;
 
 private:
+	void drawVec3(const SPTR<EditorVariable>& editorVariable);
 	void onEntitySelected(void* data);
 };
 

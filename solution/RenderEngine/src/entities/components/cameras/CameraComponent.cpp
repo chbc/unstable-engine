@@ -10,10 +10,13 @@
 namespace sre
 {
 
-IMPLEMENT_COMPONENT(CameraComponent);
+IMPLEMENT_COMPONENT(CameraComponent)
 
 CameraComponent::CameraComponent(Entity *entity) : AEntityComponent(entity)
 {
+    this->addEditorVariable<glm::vec3>("Look At Target", TypeId::VEC3, &this->lookAtTarget);
+    this->addEditorVariable<glm::vec3>("Up", TypeId::VEC3, &this->up);
+
     this->up = glm::vec3(0.0f, 1.0f, 0.0f);
     this->lookAtTarget = glm::vec3(0.0f, 0.0f, 0.0f);
 

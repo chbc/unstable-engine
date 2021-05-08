@@ -1,6 +1,7 @@
 #if defined(DEBUG) && !defined(__ANDROID__)
 
 #include "EditorMenuBar.h"
+#include "EngineValues.h"
 #include "imgui/imgui.h"
 
 namespace sre
@@ -12,7 +13,7 @@ EditorMenuBar::EditorMenuBar(bool* editorEnabled, bool* demoEnabled)
 void EditorMenuBar::onEditorGUI()
 {
 	ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
-	ImGui::SetNextWindowSize(ImVec2(1024, 10));
+	ImGui::SetNextWindowSize(ImVec2(EngineValues::SCREEN_WIDTH, 10));
 
 	ImGui::Begin
 	(

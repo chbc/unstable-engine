@@ -1,6 +1,7 @@
 #include "TransformComponent.h"
 #include "Entity.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/euler_angles.hpp>
 
 namespace sre
 {
@@ -43,9 +44,22 @@ void TransformComponent::setScale(const glm::vec3 &scale)
 void TransformComponent::setRotation(const glm::vec3 &axis, float angle)
 {
 	glm::mat4 rotationMatrix;
+
 	rotationMatrix = glm::rotate(rotationMatrix, glm::radians(angle), axis);
 	this->worldMatrix *= glm::transpose(rotationMatrix);
 	
+	this->localMatrix = this->worldMatrix; // ###
+
+	this->propagateTransform();
+}
+
+void TransformComponent::setRotation(float* angles)
+{
+	glm::mat4 rotationMatrix;
+
+	rotationMatrix = glm::eulerAngleXYZ(glm::radians(angles[0]), glm::radians(angles[1]), glm::radians(angles[2]));
+	this->worldMatrix *= glm::transpose(rotationMatrix);
+
 	this->localMatrix = this->worldMatrix; // ###
 
 	this->propagateTransform();
@@ -112,6 +126,54 @@ glm::quat TransformComponent::getLocalRotation()
 glm::vec3 TransformComponent::getLocalScale()
 {
 	return glm::vec3(this->localMatrix[0][0], this->localMatrix[1][1], this->localMatrix[2][2]);
+}
+
+void TransformComponent::getPosition(float* result)
+{
+	result[0] = this->worldMatrix[3][0];
+	result[1] = this->worldMatrix[3][1];
+	result[2] = this->worldMatrix[3][2];
+}
+
+void TransformComponent::getRotation(float* result)
+{
+	glm::quat quaternion = glm::quat_cast(this->worldMatrix);
+	glm::vec3 angles = glm::eulerAngles(quaternion);
+
+	result[0] = angles.x;
+	result[1] = angles.y;
+	result[2] = angles.z;
+}
+
+void TransformComponent::getScale(float* result)
+{
+	result[0] = this->worldMatrix[0][0];
+	result[1] = this->worldMatrix[1][1];
+	result[2] = this->worldMatrix[2][2];
+}
+
+void TransformComponent::getLocalPosition(float* result)
+{
+	result[0] = this->localMatrix[3][0];
+	result[1] = this->localMatrix[3][1];
+	result[2] = this->localMatrix[3][2];
+}
+
+void TransformComponent::getLocalRotation(float* result)
+{
+	glm::quat quaternion = glm::quat_cast(this->localMatrix);
+	glm::vec3 angles = glm::eulerAngles(quaternion);
+
+	result[0] = angles.x;
+	result[1] = angles.y;
+	result[2] = angles.z;
+}
+
+void TransformComponent::getLocalScale(float* result)
+{
+	result[0] = this->localMatrix[0][0];
+	result[1] = this->localMatrix[1][1];
+	result[2] = this->localMatrix[2][2];
 }
 
 void TransformComponent::propagateTransform()

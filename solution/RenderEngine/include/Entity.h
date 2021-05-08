@@ -70,6 +70,7 @@ private:
     friend class ModelLoader;
 
     friend class TestServicesProvider;
+    friend class EditorEntityProperties;
 };
 
 } // namespace

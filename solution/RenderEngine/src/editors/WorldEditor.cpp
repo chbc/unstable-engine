@@ -29,6 +29,7 @@ void WorldEditor::onEditorGUI()
 		ImGui::ShowDemoWindow(&this->showDemo);
 	else
 	{
+		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 		for (const auto& item : this->windows)
 			item->onEditorGUI();
 	}

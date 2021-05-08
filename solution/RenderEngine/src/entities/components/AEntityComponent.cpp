@@ -8,14 +8,19 @@ namespace sre
 
 uint16_t AEntityComponent::Index = 0;
 
-TransformComponent *AEntityComponent::getTransform()
+AEntityComponent::~AEntityComponent()
 {
-	return this->entity->getTransform();
+	this->editorVariables.clear();
 }
 
 uint16_t AEntityComponent::generateId()
 {
 	return Index++;
+}
+
+TransformComponent *AEntityComponent::getTransform()
+{
+	return this->entity->getTransform();
 }
 
 } // namespace

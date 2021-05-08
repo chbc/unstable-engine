@@ -33,7 +33,6 @@ void DefaultGameValues::load()
 #else
 				const std::string BASE_FOLDER = "../../scenes/";
 #endif
-
 				std::string sceneValue = BASE_FOLDER + value + ".scene";
 				blackboard.set("START_UP_SCENE", sceneValue);
 			}

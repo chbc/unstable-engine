@@ -27,6 +27,7 @@ public:
 	void setPosition(const glm::vec3 &position);
 	void setScale(const glm::vec3 &scale);
 	void setRotation(const glm::vec3 &axis, float angle);
+	void setRotation(float* angles);
 
 	void setLocalPosition(const glm::vec3 &position);
 	void setLocalScale(const glm::vec3 &scale);
@@ -35,10 +36,16 @@ public:
 	glm::vec3 getPosition();
 	glm::quat getRotation();
 	glm::vec3 getScale();
-
 	glm::vec3 getLocalPosition();
 	glm::quat getLocalRotation();
 	glm::vec3 getLocalScale();
+
+	void getPosition(float* result);
+	void getRotation(float* result);
+	void getScale(float* result);
+	void getLocalPosition(float* result);
+	void getLocalRotation(float* result);
+	void getLocalScale(float* result);
 
 	inline const glm::mat4 &getMatrix() { return this->worldMatrix; }
 

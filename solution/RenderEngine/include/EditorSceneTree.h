@@ -13,13 +13,15 @@ class EditorSceneTree : public IEditorWindow
 {
 private:
 	SceneManager* sceneManager;
+	class Entity* selectedEntity;
 
 public:
 	EditorSceneTree(SceneManager* arg_sceneManager);
+	void onInit() override;
 	void onEditorGUI() override;
 
 private:
-	void drawEntityTree(class Entity* entity, int index) const;
+	void drawEntityTree(class Entity* entity, int index);
 };
 
 } // namespace

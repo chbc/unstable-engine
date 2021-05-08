@@ -35,10 +35,6 @@ void RenderEngine::run()
     this->sceneManager->onSceneLoaded();
     this->renderManager->onSceneLoaded();
 
-#if defined(DEBUG) && !defined(__ANDROID__)
-    this->worldEditor->init();
-#endif
-
     this->isEditorMode = false;
     this->wasEditorMode = false;
     this->running = true;
@@ -122,6 +118,11 @@ void RenderEngine::onEndFrame()
     {
         this->wasEditorMode = this->isEditorMode;
         this->multimediaManager->setEditorMode(this->isEditorMode);
+
+        if (this->isEditorMode)
+            this->worldEditor->init();
+        else
+            this->worldEditor->release();
     }
 }
 

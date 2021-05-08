@@ -15,7 +15,7 @@ class TransformComponent;
 */
 class SRE_API CameraComponent : public AEntityComponent
 {
-DECLARE_COMPONENT();
+DECLARE_COMPONENT()
 
 private:
 	TransformComponent *transform;
