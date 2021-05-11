@@ -273,15 +273,16 @@
     <ClCompile Include="src\core\wrappers\multimedia\SDLAPI.cpp" />
     <ClCompile Include="src\tests\TestServicesProvider.cpp" />
     <ClCompile Include="src\utils\Log.cpp" />
+    <ClCompile Include="src\utils\FileUtils.cpp" />
+    <ClCompile Include="src\utils\math\MathUtils.cpp" />
+    <ClCompile Include="src\utils\math\Rect.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_demo.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_draw.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_impl_sdl.cpp" />
+    <ClCompile Include="thirdParties\imgui\imgui_tables.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\utils\FileUtils.cpp" />
-    <ClCompile Include="src\utils\math\MathUtils.cpp" />
-    <ClCompile Include="src\utils\math\Rect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\core\graphics\renderers\components\LitRendererComponent.h" />
