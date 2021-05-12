@@ -74,6 +74,11 @@ void RenderManager::addEntity(Entity *entity)
         GUITextComponent *guiComponent = entity->getComponent<GUITextComponent>();
         this->addDynamicGUIComponent(guiComponent);
     }
+
+    if (entity->hasComponent<DirectionalLightComponent>())
+        this->lightManager->addDirectionalLight(entity);
+    if (entity->hasComponent<PointLightComponent>())
+        this->lightManager->addPointLight(entity);
     
     uint32_t size = entity->getChildrenCount();
     for (uint32_t i = 0; i < size; i++)
@@ -222,16 +227,6 @@ void RenderManager::DEBUG_drawTriangle()
 #ifndef __ANDROID__
     OpenGLAPI::DEBUG_drawTriangle();
 #endif
-}
-
-DirectionalLightComponent *RenderManager::addDirectionalLight(Entity *entity)
-{
-    return this->lightManager->addDirectionalLight(entity);
-}
-
-PointLightComponent *RenderManager::addPointLight(Entity *entity)
-{
-    return this->lightManager->addPointLight(entity);
 }
 
 void RenderManager::setupBufferSubData(GUIMeshData* meshData)

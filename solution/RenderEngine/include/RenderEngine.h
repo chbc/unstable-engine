@@ -37,10 +37,9 @@ private:
 #endif
 
 public:
-    RenderEngine(const std::string& applicationName = "Unstable Engine", int screenWidth = 1024, int screenHeight = 768);
+    RenderEngine(const std::string& applicationName = "Unstable Engine", int screenWidth = 1500, int screenHeight = 768);
 
 public:
-    virtual ~RenderEngine() = default;
     void run();
     void setEventReceiver(InputHandler *inputHandler);
     void loadScene(const std::string& scene);

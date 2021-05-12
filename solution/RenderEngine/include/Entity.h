@@ -24,7 +24,8 @@ class Entity
 private:
 	std::unordered_map<uint16_t, UPTR<AEntityComponent>> componentsMap;
     Entity *parent;
-    std::vector<Entity*> children;
+    std::unordered_map<std::string, UPTR<Entity>> children;
+    std::vector<Entity*> childrenList;
 
 	TransformComponent* transform;
 
@@ -37,14 +38,14 @@ protected:
     SRE_API Entity();
 
 public:
-    SRE_API virtual ~Entity();
+    SRE_API ~Entity();
 
     template <typename T, typename... TArgs> T* addComponent(TArgs&&... mArgs);
     template <typename T> void removeComponent();
     template <typename T> T* getComponent();
     template <typename T> bool hasComponent();
 
-	SRE_API void addChild(Entity *child, const std::string& name = "");
+	SRE_API void addChild(Entity *child, const std::string& childName = "");
 	SRE_API inline uint32_t getChildrenCount() { return this->children.size(); }
 	SRE_API Entity *getChild(uint32_t index);
 	SRE_API inline Entity *getParent() { return this->parent; }

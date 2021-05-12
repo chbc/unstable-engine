@@ -65,9 +65,6 @@ private:
 
     static void DEBUG_drawTriangle();
 
-    DirectionalLightComponent *addDirectionalLight(Entity *entity);
-    PointLightComponent *addPointLight(Entity *entity);
-
     void setupBufferSubData(GUIMeshData* meshData);
     void onRemoveDestroyedEntities();
 

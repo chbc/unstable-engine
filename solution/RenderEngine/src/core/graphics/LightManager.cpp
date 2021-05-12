@@ -31,7 +31,7 @@ bool LightManager::hasAnyShadowCaster()
 
 DirectionalLightComponent *LightManager::addDirectionalLight(Entity *entity)
 {
-    DirectionalLightComponent *newLight = entity->addComponent<DirectionalLightComponent>();
+    DirectionalLightComponent *newLight = entity->getComponent<DirectionalLightComponent>();
     this->directionalLights.push_back(newLight);
 
     return newLight;
@@ -39,7 +39,7 @@ DirectionalLightComponent *LightManager::addDirectionalLight(Entity *entity)
 
 PointLightComponent *LightManager::addPointLight(Entity *entity)
 {
-    PointLightComponent *newLight = entity->addComponent<PointLightComponent>();
+    PointLightComponent *newLight = entity->getComponent<PointLightComponent>();
     this->pointLights.push_back(newLight);
 
     return newLight;

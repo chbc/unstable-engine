@@ -12,17 +12,6 @@ EditorMenuBar::EditorMenuBar(bool* editorEnabled, bool* demoEnabled)
 
 void EditorMenuBar::onEditorGUI()
 {
-	ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
-	ImGui::SetNextWindowSize(ImVec2(EngineValues::SCREEN_WIDTH, 10));
-
-	ImGui::Begin
-	(
-		"Menu", nullptr,
-		ImGuiWindowFlags_MenuBar |
-		ImGuiWindowFlags_NoDecoration |
-		ImGuiWindowFlags_NoBackground |
-		ImGuiWindowFlags_NoMove
-	);
 	if (ImGui::BeginMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
@@ -54,7 +43,6 @@ void EditorMenuBar::onEditorGUI()
 
 		ImGui::EndMenuBar();
 	}
-	ImGui::End();
 }
 
 } // namespace

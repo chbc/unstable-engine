@@ -2,7 +2,7 @@
 #define _H_AENTITY_COMPONENT_H_
 
 #include "core_defines.h"
-#include <stdint.h>
+#include "memory_aliases.h"
 #include <string>
 
 #include "EditorVariable.h"
@@ -34,7 +34,7 @@ private:
 
 public:
     AEntityComponent(Entity* arg_entity) : entity(arg_entity) { }
-    virtual ~AEntityComponent();
+    ~AEntityComponent();
 
     template <typename T> void addEditorVariable(const char* name, TypeId::Type typeId, T* pointer)
     {

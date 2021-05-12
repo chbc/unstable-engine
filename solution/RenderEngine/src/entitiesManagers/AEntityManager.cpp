@@ -9,41 +9,25 @@ namespace sre
 
 AEntityManager::AEntityManager() : entityIndex(0), sceneLoaded(false) { }
 
-AEntityManager::~AEntityManager()
-{
-    this->entities.clear();
-    this->entitiesToBeAdded.clear();
-}
-
-Entity *AEntityManager::createEntity()
+Entity *AEntityManager::createEntity(const std::string& name, Entity* parent)
 {
     Entity *result = new Entity;
-    this->entitiesToBeAdded[result] = UPTR<Entity>{ result };
+
+    if (parent != nullptr)
+        parent->addChild(result, name);
+    else
+    {
+        std::string resultName = name;
+        if (name.empty())
+            resultName = Entity::generateEntityId(this->entityIndex);
+        else if (this->entities.count(name) > 0)
+            resultName = Entity::generateEntityId(this->entityIndex, name);
+
+        result->name = resultName;
+        this->entities[resultName] = UPTR<Entity>{ result };
+    }
 
     return result;
-}
-
-void AEntityManager::addEntity(Entity *entity, const std::string &name)
-{
-    std::string resultName = name;
-    if (name.empty())
-    {
-        resultName = Entity::generateEntityId(this->entityIndex);
-    }
-    else if (this->entities.count(name) > 0)
-    {
-        resultName = Entity::generateEntityId(this->entityIndex, name);
-    }
-
-    entity->name = resultName;
-    this->entities[resultName] = std::move(this->entitiesToBeAdded[entity]);
-    this->entitiesToBeAdded.erase(entity);
-	
-    if (this->sceneLoaded)
-    {
-        SingletonsManager::getInstance()->resolve<RenderManager>()->addEntity(entity);
-        entity->onStart();
-    }
 }
 
 Entity* AEntityManager::getEntity(const std::string& name)
@@ -58,7 +42,6 @@ Entity* AEntityManager::getEntity(const std::string& name)
 void AEntityManager::removeDestroyedEntities()
 {
     CollectionsUtils::removeIfEntityIsDestroyed(this->entities);
-    CollectionsUtils::removeIfEntityIsDestroyed(this->entitiesToBeAdded);
 }
 
 void AEntityManager::onSceneLoaded()
@@ -78,9 +61,11 @@ void AEntityManager::destroyAllEntities()
 {
     for (auto& item : this->entities)
         item.second->destroy();
+}
 
-    for (auto& item : this->entitiesToBeAdded)
-        item.second->destroy();
+void AEntityManager::release()
+{
+    this->entities.clear();
 }
 
 } // namespace

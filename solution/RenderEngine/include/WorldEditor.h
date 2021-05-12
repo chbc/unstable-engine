@@ -15,7 +15,8 @@ class WorldEditor
 {
 private:
 	SceneManager* sceneManager;
-	UPTR<IEditorWindow> windows[3];
+	UPTR<IEditorWindow> menuBar;
+	UPTR<IEditorWindow> windows[2];
 	bool showDemo;
 	
 public:

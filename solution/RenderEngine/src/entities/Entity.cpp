@@ -14,6 +14,8 @@ Entity::Entity()
 
 Entity::~Entity()
 {
+	this->componentsMap.clear();
+	this->childrenList.clear();
 	this->children.clear();
 }
 
@@ -41,7 +43,7 @@ void Entity::onStart()
     for (auto const &item : this->componentsMap)
         item.second->onStart();
 
-	for (Entity* item : this->children)
+	for (Entity* item : this->childrenList)
 		item->onStart();
 }
 
@@ -52,21 +54,24 @@ void Entity::update(uint32_t deltaTime)
 		for (auto const& item : this->componentsMap)
 			item.second->update(deltaTime);
 
-		for (Entity* item : this->children)
+		for (Entity* item : this->childrenList)
 			item->update(deltaTime);
 	}
 }
 
-void Entity::addChild(Entity *child, const std::string& name)
+void Entity::addChild(Entity *child, const std::string& childName)
 {
-	std::string resultName = name;
+	std::string resultName = childName;
 
-	if (name.empty())
+	if (childName.empty())
 		resultName = generateEntityId(this->childIndex);
+	else if (this->children.count(childName) > 0)
+		resultName = generateEntityId(this->childIndex, childName);
 
 	child->name = resultName;
-	this->children.push_back(child);
+	this->children[resultName] = UPTR<Entity>(child);
 	child->parent = this;
+	this->childrenList.push_back(child);
 
 	this->transform->propagateTransform();
 }
@@ -76,7 +81,7 @@ Entity *Entity::getChild(uint32_t index)
 	if (index >= this->children.size())
 		throw "[Entity] - getChild - Index out of range!";
 
-	return this->children[index];
+	return this->childrenList[index];
 }
 
 TransformComponent *Entity::getTransform()
@@ -88,7 +93,7 @@ void Entity::destroy()
 {
 	this->alive = false;
 	this->enabled = false;
-	for (Entity* item : this->children)
+	for (Entity* item : this->childrenList)
 		item->destroy();
 }
 

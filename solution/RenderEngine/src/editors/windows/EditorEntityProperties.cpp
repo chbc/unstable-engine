@@ -37,7 +37,7 @@ void EditorEntityProperties::onEditorGUI()
 					switch (variable->typeId)
 					{
 						case TypeId::VEC3:
-							this->drawVec3(variable);
+							this->drawVec3(variable.get());
 							break;
 					}
 				}
@@ -72,9 +72,9 @@ void EditorEntityProperties::onRelease()
 	this->entity = nullptr;
 }
 
-void EditorEntityProperties::drawVec3(const SPTR<EditorVariable>& editorVariable)
+void EditorEntityProperties::drawVec3(const EditorVariable* editorVariable)
 {
-	glm::vec3* vector = static_cast<glm::vec3*>(editorVariable->pointer.get());
+	glm::vec3* vector = static_cast<glm::vec3*>(editorVariable->pointer);
 	float values[3] = { vector->x, vector->y, vector->z };
 
 	ImGui::Columns(2);

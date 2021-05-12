@@ -137,6 +137,8 @@ void RenderEngine::removeDestroyedEntities()
 void RenderEngine::release()
 {
     SingletonsManager::getInstance()->release();
+
+    this->sceneManager->release();
 }
 
 } // namespace
