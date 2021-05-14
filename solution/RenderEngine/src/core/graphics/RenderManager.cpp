@@ -74,11 +74,6 @@ void RenderManager::addEntity(Entity *entity)
         GUITextComponent *guiComponent = entity->getComponent<GUITextComponent>();
         this->addDynamicGUIComponent(guiComponent);
     }
-
-    if (entity->hasComponent<DirectionalLightComponent>())
-        this->lightManager->addDirectionalLight(entity);
-    if (entity->hasComponent<PointLightComponent>())
-        this->lightManager->addPointLight(entity);
     
     uint32_t size = entity->getChildrenCount();
     for (uint32_t i = 0; i < size; i++)
@@ -254,6 +249,16 @@ void RenderManager::onRemoveDestroyedEntities()
     }
 
     this->lightManager->removeDestroyedEntities();
+}
+
+DirectionalLightComponent* RenderManager::AddDirectionalLight(Entity* entity)
+{
+    return this->lightManager->addDirectionalLight(entity);
+}
+
+PointLightComponent* RenderManager::AddPointLight(Entity* entity)
+{
+    return this->lightManager->addPointLight(entity);
 }
 
 } // namespace

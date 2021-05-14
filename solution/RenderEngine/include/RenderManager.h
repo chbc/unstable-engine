@@ -68,6 +68,9 @@ private:
     void setupBufferSubData(GUIMeshData* meshData);
     void onRemoveDestroyedEntities();
 
+    DirectionalLightComponent* AddDirectionalLight(Entity* entity);
+    PointLightComponent* AddPointLight(Entity* entity);
+
 friend class AEntityManager;
 friend class SceneManager;
 friend class AtlasManager;

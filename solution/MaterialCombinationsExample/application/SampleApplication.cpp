@@ -25,7 +25,6 @@ void SampleApplication::onInit()
 	cube = this->sceneManager->createCubeEntity(2.0f);
 	cube->getTransform()->setPosition(position);
 	cubeMesh = cube->getComponent<MeshComponent>();
-	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("crate.png");
 	cubeMesh->getMaterial()->setCastShadow(false);
 
 	cube = this->sceneManager->createCubeEntity(2.0f);
@@ -40,10 +39,9 @@ void SampleApplication::onInit()
 	cube->getTransform()->setPosition(position);
 	cubeMesh = cube->getComponent<MeshComponent>();
 	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("crate.png");
-	// XXX cubeMesh->addMaterialComponent<NormalMaterialComponent>("crate_normal.png");
+	cubeMesh->addMaterialComponent<NormalMaterialComponent>("crate_normal.png");
 	cubeMesh->getMaterial()->setCastShadow(false);
 
-	/*
 	cube = this->sceneManager->createCubeEntity(2.0f);
 	position = glm::vec3(0.0f, 0.0f, -2.5f);
 	cube->getTransform()->setPosition(position);
@@ -52,12 +50,10 @@ void SampleApplication::onInit()
 	cubeMesh->addMaterialComponent<NormalMaterialComponent>("crate_normal.png");
 	cubeMesh->addMaterialComponent<SpecularMaterialComponent>("crate_specular.png");
 	cubeMesh->getMaterial()->setCastShadow(false);
-	*/
 }
 
 void SampleApplication::createLights()
 {
-	/*
 	glm::vec3 p1Position(0.0f, 5.0f, 0.0f);
 	PointLightComponent* pLight1 = this->sceneManager->createPointLight();
 	pLight1->getTransform()->setPosition(p1Position);
@@ -68,7 +64,6 @@ void SampleApplication::createLights()
 	MeshComponent* cubeMesh = lightCube->getComponent<MeshComponent>();
 	cubeMesh->getMaterial()->setCastShadow(false);
 	cubeMesh->getMaterial()->setReceivesLight(false);
-	*/
 
 	DirectionalLightComponent* dLight1 = this->sceneManager->createDirectionalLight();
 	dLight1->setDirection(glm::vec3(0.0f, -0.1f, -1.0f));
