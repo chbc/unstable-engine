@@ -37,6 +37,7 @@ RenderManager::RenderManager()
     this->shaderManager     = singletonsManager->resolve<ShaderManager>();
 
     this->mainCamera = nullptr;
+    this->targetFBO = 0;
 }
 
 void RenderManager::init()
@@ -192,8 +193,11 @@ void RenderManager::render()
         this->shadowRenderer->render();
 
     // Scene rendering
-	if (this->postProcessingRenderer.get() != nullptr)
-		this->postProcessingRenderer->onPreRender();
+    uint32_t fbo = this->targetFBO;
+    if (this->postProcessingRenderer.get() != nullptr)
+        fbo = this->postProcessingRenderer->getFirstPassFBO();
+    
+    this->graphicsWrapper->bindFrameBuffer(fbo);
 
     this->graphicsWrapper->setViewport(EngineValues::SCREEN_WIDTH, EngineValues::SCREEN_HEIGHT);
     this->graphicsWrapper->clearColorAndDepthBuffer();
@@ -210,11 +214,13 @@ void RenderManager::render()
 
 	// Post processing rendering
 	if (this->postProcessingRenderer.get() != nullptr)
-		this->postProcessingRenderer->onPostRender();
+		this->postProcessingRenderer->onPostRender(this->targetFBO);
 
     // GUI rendering
     if (this->guiRenderer.get() != nullptr)
         this->guiRenderer->render();
+
+    this->graphicsWrapper->unbindFrameBuffer();
 }
 
 void RenderManager::DEBUG_drawTriangle()
@@ -259,6 +265,11 @@ DirectionalLightComponent* RenderManager::AddDirectionalLight(Entity* entity)
 PointLightComponent* RenderManager::AddPointLight(Entity* entity)
 {
     return this->lightManager->addPointLight(entity);
+}
+
+void RenderManager::setTargetFBO(uint32_t fbo)
+{
+    this->targetFBO = fbo;
 }
 
 } // namespace

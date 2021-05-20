@@ -52,17 +52,12 @@ BloomRendererComponent::BloomRendererComponent(PostProcessingComponent* componen
 
 	std::vector<uint32_t> textureIds = { this->initialPassTextureId, this->brightnessTextureId };
 
-	this->initialPassFBO = this->graphicsWrapper->generateColorFrameBuffer(textureIds, width, height);
+	this->firstPassFBO = this->graphicsWrapper->generateColorFrameBuffer(textureIds, width, height);
 	this->blurFBOs[0] = this->graphicsWrapper->generateColorFrameBuffer(std::vector<uint32_t>{ this->blurTextureIds[0] }, width, height);
 	this->blurFBOs[1] = this->graphicsWrapper->generateColorFrameBuffer(std::vector<uint32_t>{ this->blurTextureIds[1] }, width, height);
 }
 
-void BloomRendererComponent::onPreRender()
-{
-	this->graphicsWrapper->bindFrameBuffer(this->initialPassFBO);
-}
-
-void BloomRendererComponent::onPostRender()
+void BloomRendererComponent::onPostRender(uint32_t targetFBO)
 {
 	// BLUR
 	bool firstIteration = true;
@@ -103,7 +98,7 @@ void BloomRendererComponent::onPostRender()
 	}
 
 	// COMBINE
-	this->graphicsWrapper->bindFrameBuffer(0);
+	this->graphicsWrapper->bindFrameBuffer(targetFBO);
 	this->graphicsWrapper->clearColorBuffer();
 	this->shaderManager->enableShader(this->combineShader);
 	this->shaderManager->setInt(this->combineShader, ShaderVariables::SCREEN_TEXTURE, 0);

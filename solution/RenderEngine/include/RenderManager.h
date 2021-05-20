@@ -39,6 +39,7 @@ private:
 	UPTR<class PostProcessingRenderer> postProcessingRenderer;
 
     CameraComponent *mainCamera;
+    uint32_t targetFBO;
 
 private:
     RenderManager();
@@ -71,6 +72,8 @@ private:
     DirectionalLightComponent* AddDirectionalLight(Entity* entity);
     PointLightComponent* AddPointLight(Entity* entity);
 
+    void setTargetFBO(uint32_t fbo);
+
 friend class AEntityManager;
 friend class SceneManager;
 friend class AtlasManager;
@@ -80,6 +83,7 @@ friend class Material;
 friend class GUITextComponent;
 friend class SingletonsManager;
 friend class BaseRendererShaderSetup;
+friend class EditorSceneViewport;
 };
 
 } // namespace

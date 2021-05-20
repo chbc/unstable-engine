@@ -21,7 +21,6 @@ private:
 	uint32_t brightnessTextureId;
 	uint32_t blurTextureIds[2];
 
-	uint32_t initialPassFBO;
 	uint32_t blurFBOs[2];
 
 	uint32_t blurInteractionsCount = 10;
@@ -30,8 +29,7 @@ private:
 	BloomRendererComponent(class PostProcessingComponent* component);
 
 protected:
-	void onPreRender();
-	void onPostRender();
+	void onPostRender(uint32_t targetFBO) override;
 
 friend class PostProcessingRenderer;
 };

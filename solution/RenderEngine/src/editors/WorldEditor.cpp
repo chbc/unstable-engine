@@ -4,6 +4,8 @@
 #include "EditorMenuBar.h"
 #include "EditorSceneTree.h"
 #include "EditorEntityProperties.h"
+#include "EditorSceneViewport.h"
+
 #include "imgui/imgui.h"
 
 namespace sre
@@ -15,6 +17,7 @@ WorldEditor::WorldEditor(SceneManager* arg_sceneManager, bool* editorEnabled)
 	this->menuBar = UPTR<IEditorWindow>(new EditorMenuBar{ editorEnabled, &this->showDemo });
 	this->windows[0] = UPTR<IEditorWindow>(new EditorSceneTree{ sceneManager });
 	this->windows[1] = UPTR<IEditorWindow>(new EditorEntityProperties);
+    this->windows[2] = UPTR<EditorSceneViewport>(new EditorSceneViewport);
 }
 
 void WorldEditor::init()
@@ -29,18 +32,11 @@ void WorldEditor::init()
 
 void WorldEditor::onEditorGUI()
 {
-	/*
-	if (this->showDemo)
-		ImGui::ShowDemoWindow(&this->showDemo);
-	else
-	{
-		// this->menubar->onEditorGUI();
-
-		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-		for (const auto& item : this->windows)
-			item->onEditorGUI();
-	}
-	*/
+    if (this->showDemo)
+    {
+        ImGui::ShowDemoWindow(&this->showDemo);
+        return;
+    }
 
     static bool opt_fullscreen = true;
     static bool opt_padding = false;

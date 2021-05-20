@@ -21,15 +21,13 @@ private:
 	uint32_t colorSourceTextureId;
 	uint32_t outlineTextureId;
 
-	uint32_t initialPassFBO;
 	uint32_t outlinePassFBO;
 
 private:
 	OutlineRendererPPComponent(class PostProcessingComponent* component);
 
 protected:
-	void onPreRender();
-	void onPostRender();
+	void onPostRender(uint32_t targetFBO) override;
 
 friend class PostProcessingRenderer;
 };

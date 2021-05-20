@@ -17,7 +17,6 @@ private:
 
 	class Shader* shader;
 	
-	uint32_t fbo;
 	uint32_t textureId;
 	PostProcessingEffect* effect;
 
@@ -25,8 +24,7 @@ private:
 	HDRRendererComponent(class PostProcessingComponent* component);
 
 protected:
-	void onPreRender();
-	void onPostRender();
+	void onPostRender(uint32_t targetFBO) override;
 
 friend class PostProcessingRenderer;
 };

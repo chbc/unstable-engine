@@ -16,14 +16,12 @@ private:
 	class Shader* shader;
 	UPTR<struct GUIMeshData> meshData;
 	uint32_t textureId;
-	uint32_t fbo;
 
 private:
 	SinglePassRendererComponent(class PostProcessingComponent* component);
 
 protected:
-	void onPreRender();
-	void onPostRender();
+	void onPostRender(uint32_t targetFBO) override;
 
 friend class PostProcessingRenderer;
 };

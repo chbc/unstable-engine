@@ -53,14 +53,14 @@ void PostProcessingRenderer::onSceneLoaded(PostProcessingComponent* postProcessi
 	this->component = UPTR<APostProcessingRendererComponent>{ rendererComponent };
 }
 
-void PostProcessingRenderer::onPreRender()
+void PostProcessingRenderer::onPostRender(uint32_t targetFBO)
 {
-	this->component->onPreRender();
+	this->component->onPostRender(targetFBO);
 }
 
-void PostProcessingRenderer::onPostRender()
+uint32_t PostProcessingRenderer::getFirstPassFBO()
 {
-	this->component->onPostRender();
+	return this->component->firstPassFBO;
 }
 
 } // namespace

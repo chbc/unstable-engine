@@ -218,6 +218,7 @@
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPIState.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp" />
+    <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
     <ClCompile Include="src\messages\BaseMessage.cpp" />
     <ClCompile Include="src\editors\windows\EditorEntityProperties.cpp" />
     <ClCompile Include="src\editors\windows\EditorMenuBar.cpp" />
@@ -387,6 +388,7 @@
     <ClInclude Include="include\EditorMenuBar.h" />
     <ClInclude Include="include\EditorMessages.h" />
     <ClInclude Include="include\EditorSceneTree.h" />
+    <ClInclude Include="include\EditorSceneViewport.h" />
     <ClInclude Include="include\EMaterialMap.h" />
     <ClInclude Include="include\EngineValues.h" />
     <ClInclude Include="include\Entity.h" />

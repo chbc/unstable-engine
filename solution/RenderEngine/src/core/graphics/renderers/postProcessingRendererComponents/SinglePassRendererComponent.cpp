@@ -38,19 +38,14 @@ SinglePassRendererComponent::SinglePassRendererComponent(PostProcessingComponent
 	Texture* texture = textureManager->createEmptyTexture(width, height);
 	this->textureId = texture->getId();
 
-	this->fbo = this->graphicsWrapper->generateColorFrameBuffer(
+	this->firstPassFBO = this->graphicsWrapper->generateColorFrameBuffer(
 		std::vector<uint32_t>{this->textureId}, texture->getWidth(), texture->getHeight()
 	);
 }
 
-void SinglePassRendererComponent::onPreRender()
+void SinglePassRendererComponent::onPostRender(uint32_t targetFBO)
 {
-	this->graphicsWrapper->bindFrameBuffer(this->fbo);
-}
-
-void SinglePassRendererComponent::onPostRender()
-{
-	this->graphicsWrapper->bindFrameBuffer(0);
+	this->graphicsWrapper->bindFrameBuffer(targetFBO);
 	this->graphicsWrapper->clearColorBuffer();
 	this->shaderManager->enableShader(this->shader);
 	this->shaderManager->setInt(this->shader, ShaderVariables::SCREEN_TEXTURE, EMaterialMap::GUI);

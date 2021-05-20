@@ -18,11 +18,11 @@ private:
 	PostProcessingRenderer();
 
 	void onSceneLoaded(class PostProcessingComponent* postProcessingItem);
-	void onPreRender();
-	void onPostRender();
+	void onPostRender(uint32_t targetFBO);
 
 	bool isUsingBrightnessSegmentation() { return this->useBrightnessSegmentation; }
 	bool isIncludingDepth() { return this->includeDepth; }
+	uint32_t getFirstPassFBO();
 
 friend class RenderManager;
 };

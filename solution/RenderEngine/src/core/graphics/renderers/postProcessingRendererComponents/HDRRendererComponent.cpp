@@ -40,7 +40,7 @@ HDRRendererComponent::HDRRendererComponent(PostProcessingComponent* component)
 	Texture* texture = textureManager->createEmptyFloatingPointTexture(width, height);
 	this->textureId = texture->getId();
 
-	this->fbo = this->graphicsWrapper->generateColorFrameBuffer(
+	this->firstPassFBO = this->graphicsWrapper->generateColorFrameBuffer(
 		std::vector<uint32_t>{this->textureId}, width, height
 	);
 
@@ -49,14 +49,9 @@ HDRRendererComponent::HDRRendererComponent(PostProcessingComponent* component)
 	this->effect->setValue("enabled", 0.0f);
 }
 
-void HDRRendererComponent::onPreRender()
+void HDRRendererComponent::onPostRender(uint32_t targetFBO)
 {
-	this->graphicsWrapper->bindFrameBuffer(this->fbo);
-}
-
-void HDRRendererComponent::onPostRender()
-{
-	this->graphicsWrapper->bindFrameBuffer(0);
+	this->graphicsWrapper->bindFrameBuffer(targetFBO);
 	this->graphicsWrapper->clearColorBuffer();
 	this->shaderManager->enableShader(this->shader);
 	this->shaderManager->setInt(this->shader, ShaderVariables::SCREEN_TEXTURE, EMaterialMap::GUI);

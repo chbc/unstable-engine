@@ -48,16 +48,11 @@ OutlineRendererPPComponent::OutlineRendererPPComponent(PostProcessingComponent* 
 
 	std::vector<uint32_t> textureIds = { this->initialPassTextureId, this->colorSourceTextureId };
 
-	this->initialPassFBO = this->graphicsWrapper->generateColorFrameBuffer(textureIds, width, height);
+	this->firstPassFBO = this->graphicsWrapper->generateColorFrameBuffer(textureIds, width, height);
 	this->outlinePassFBO = this->graphicsWrapper->generateColorFrameBuffer(std::vector<uint32_t>{ this->outlineTextureId }, width, height);
 }
 
-void OutlineRendererPPComponent::onPreRender()
-{
-	this->graphicsWrapper->bindFrameBuffer(this->initialPassFBO);
-}
-
-void OutlineRendererPPComponent::onPostRender()
+void OutlineRendererPPComponent::onPostRender(uint32_t targetFBO)
 {
 	// OUTLINE
 	this->shaderManager->enableShader(this->outlineShader);
@@ -71,7 +66,7 @@ void OutlineRendererPPComponent::onPostRender()
 	this->graphicsWrapper->drawElement(this->meshData->ebo, this->meshData->indices.size());
 
 	// COMBINE
-	this->graphicsWrapper->bindFrameBuffer(0);
+	this->graphicsWrapper->bindFrameBuffer(targetFBO);
 	this->graphicsWrapper->clearColorBuffer();
 	this->shaderManager->enableShader(this->combineShader);
 	this->shaderManager->setInt(this->combineShader, ShaderVariables::SCREEN_TEXTURE, 0);

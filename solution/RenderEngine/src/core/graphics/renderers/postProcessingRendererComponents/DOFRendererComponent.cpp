@@ -45,17 +45,12 @@ DOFRendererComponent::DOFRendererComponent(PostProcessingComponent* component)
 	this->depthTextureId = texture->getId();
 
 	std::vector<uint32_t> textureIds = { this->initialPassTextureId, this->depthTextureId };
-	this->fbo = this->graphicsWrapper->generateColorFrameBuffer(textureIds, width, height);
+	this->firstPassFBO = this->graphicsWrapper->generateColorFrameBuffer(textureIds, width, height);
 }
 
-void DOFRendererComponent::onPreRender()
+void DOFRendererComponent::onPostRender(uint32_t targetFBO)
 {
-	this->graphicsWrapper->bindFrameBuffer(this->fbo);
-}
-
-void DOFRendererComponent::onPostRender()
-{
-	this->graphicsWrapper->bindFrameBuffer(0);
+	this->graphicsWrapper->bindFrameBuffer(targetFBO);
 	this->graphicsWrapper->clearColorBuffer();
 	this->shaderManager->enableShader(this->shader);
 	this->shaderManager->setInt(this->shader, ShaderVariables::SCREEN_TEXTURE, 0);

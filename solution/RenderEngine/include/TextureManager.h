@@ -59,6 +59,7 @@ friend class AmbientOcclusionMaterialComponent;
 friend class SpriteMaterialComponent;
 friend class AtlasManager;
 friend class GUITextComponent;
+friend class EditorSceneViewport;
 };
 
 } // namespace
