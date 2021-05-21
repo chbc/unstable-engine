@@ -1,4 +1,5 @@
 #include "DirectionalLightComponent.h"
+#include "ColorEditorProperty.h"
 
 namespace sre
 {
@@ -7,6 +8,7 @@ IMPLEMENT_COMPONENT(DirectionalLightComponent)
 
 DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightComponent(entity)
 {
+	this->addEditorProperty(new ColorEditorProperty{ "Direction", this->direction });
 }
 
 void DirectionalLightComponent::setDirection(const glm::vec3 &direction)

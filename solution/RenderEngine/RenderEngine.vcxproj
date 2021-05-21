@@ -218,6 +218,8 @@
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPIState.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp" />
+    <ClCompile Include="src\editors\properties\ColorEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\XYZEditorProperty.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
     <ClCompile Include="src\messages\BaseMessage.cpp" />
     <ClCompile Include="src\editors\windows\EditorEntityProperties.cpp" />
@@ -375,6 +377,7 @@
     <ClInclude Include="include\button_names.h" />
     <ClInclude Include="include\CameraComponent.h" />
     <ClInclude Include="include\CollectionsUtils.h" />
+    <ClInclude Include="include\ColorEditorProperty.h" />
     <ClInclude Include="include\ColorMaterialComponent.h" />
     <ClInclude Include="include\ColorRendererComponent.h" />
     <ClInclude Include="include\core_defines.h" />
@@ -392,7 +395,6 @@
     <ClInclude Include="include\EMaterialMap.h" />
     <ClInclude Include="include\EngineValues.h" />
     <ClInclude Include="include\Entity.h" />
-    <ClInclude Include="include\TypeId.h" />
     <ClInclude Include="include\FileUtils.h" />
     <ClInclude Include="include\FontAtlas.h" />
     <ClInclude Include="include\GUIButtonComponent.h" />
@@ -461,8 +463,9 @@
     <ClInclude Include="include\TextureManager.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\TransformComponent.h" />
-    <ClInclude Include="include\EditorVariable.h" />
+    <ClInclude Include="include\AEditorProperty.h" />
     <ClInclude Include="include\WorldEditor.h" />
+    <ClInclude Include="include\XYZEditorProperty.h" />
     <ClInclude Include="thirdParties\imgui\imconfig.h" />
     <ClInclude Include="thirdParties\imgui\imgui.h" />
     <ClInclude Include="thirdParties\imgui\imgui_impl_opengl3.h" />

@@ -10,7 +10,12 @@ uint16_t AEntityComponent::Index = 0;
 
 AEntityComponent::~AEntityComponent()
 {
-	this->editorVariables.clear();
+	this->editorProperties.clear();
+}
+
+void AEntityComponent::addEditorProperty(AEditorProperty* editorProperty)
+{
+	this->editorProperties.emplace_back(editorProperty);
 }
 
 uint16_t AEntityComponent::generateId()

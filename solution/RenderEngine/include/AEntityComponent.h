@@ -5,7 +5,7 @@
 #include "memory_aliases.h"
 #include <string>
 
-#include "EditorVariable.h"
+#include "AEditorProperty.h"
 
 #define DECLARE_COMPONENT() \
     public: \
@@ -30,16 +30,13 @@ private:
 
     static uint16_t Index;
 
-    std::vector<SPTR<EditorVariable>> editorVariables;
+    std::vector<SPTR<AEditorProperty>> editorProperties;
 
 public:
     AEntityComponent(Entity* arg_entity) : entity(arg_entity) { }
     ~AEntityComponent();
 
-    template <typename T> void addEditorVariable(const char* name, TypeId::Type typeId, T* pointer)
-    {
-        this->editorVariables.push_back(SPTR<EditorVariable>(new EditorVariable{ name, typeId, pointer }));
-    }
+    void addEditorProperty(AEditorProperty* editorProperty);
 
     inline Entity* getEntity() { return this->entity; }
 

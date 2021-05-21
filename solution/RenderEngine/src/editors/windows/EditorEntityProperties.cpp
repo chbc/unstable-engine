@@ -26,20 +26,14 @@ void EditorEntityProperties::onEditorGUI()
 		ImGui::CollapsingHeader("Properties", ImGuiTreeNodeFlags_DefaultOpen)
 	)
 	{
-		// https://en.cppreference.com/w/cpp/keyword/reflexpr
 		for (const auto& component : this->entity->componentsMap)
 		{
 			const char* componentName = component.second->getClassName();
 			if (ImGui::TreeNodeEx(componentName, ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				for (const auto& variable : component.second->editorVariables)
+				for (const auto& property : component.second->editorProperties)
 				{
-					switch (variable->typeId)
-					{
-						case TypeId::VEC3:
-							this->drawVec3(variable.get());
-							break;
-					}
+					property->draw();
 				}
 				ImGui::Separator();
 				ImGui::TreePop();
@@ -70,19 +64,6 @@ void EditorEntityProperties::onEditorGUI()
 void EditorEntityProperties::onRelease()
 {
 	this->entity = nullptr;
-}
-
-void EditorEntityProperties::drawVec3(const EditorVariable* editorVariable)
-{
-	glm::vec3* vector = static_cast<glm::vec3*>(editorVariable->pointer);
-	float values[3] = { vector->x, vector->y, vector->z };
-
-	ImGui::Columns(2);
-	ImGui::Text(editorVariable->title.c_str());
-	ImGui::NextColumn();
-	ImGui::SetNextItemWidth(-1);
-	ImGui::DragFloat3(editorVariable->label.c_str(), values, 0.1f, 0.0f, 0.0f, "%.1f");
-	ImGui::Columns(1);
 }
 
 /*

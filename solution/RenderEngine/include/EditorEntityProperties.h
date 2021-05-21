@@ -22,7 +22,6 @@ public:
 	void onRelease() override;
 
 private:
-	void drawVec3(const EditorVariable* editorVariable);
 	void onEntitySelected(void* data);
 };
 

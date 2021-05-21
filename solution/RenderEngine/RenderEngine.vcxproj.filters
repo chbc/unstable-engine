@@ -285,6 +285,12 @@
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\editors\properties\XYZEditorProperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editors\properties\ColorEditorProperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -809,10 +815,7 @@
     <ClInclude Include="include\BaseMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\EditorVariable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\TypeId.h">
+    <ClInclude Include="include\AEditorProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="thirdParties\imgui\imconfig.h">
@@ -840,6 +843,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\EditorSceneViewport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\XYZEditorProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ColorEditorProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

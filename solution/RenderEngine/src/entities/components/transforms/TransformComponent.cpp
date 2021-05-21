@@ -1,5 +1,7 @@
 #include "TransformComponent.h"
 #include "Entity.h"
+#include "XYZEditorProperty.h"
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/euler_angles.hpp>
 
@@ -17,6 +19,8 @@ IMPLEMENT_COMPONENT(TransformComponent)
 */
 TransformComponent::TransformComponent(Entity *entity) : AEntityComponent(entity)
 {
+	this->addEditorProperty(new XYZEditorProperty{ "Position", glm::value_ptr(this->worldMatrix[3]) });
+	this->addEditorProperty(new XYZEditorProperty{ "Scale", &this->worldMatrix[0][0], &this->worldMatrix[1][1], &this->worldMatrix[2][2] });
 }
 
 void TransformComponent::setPosition(const glm::vec3 &position)
