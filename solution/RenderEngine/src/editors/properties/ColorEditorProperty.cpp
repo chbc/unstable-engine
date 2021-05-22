@@ -20,11 +20,8 @@ void ColorEditorProperty::draw()
 	ImGui::Text(this->title.c_str());
 	ImGui::NextColumn();
 
-	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0.0f, 0.0f });
+	ImGui::ColorEdit3("##id", this->values);
 
-	ImGui::ColorEdit3("##id", this->values, ImGuiColorEditFlags_Float);
-
-	ImGui::PopStyleVar();
 	ImGui::Columns(1);
 
 	ImGui::PopID();

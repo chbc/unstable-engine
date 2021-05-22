@@ -1,5 +1,6 @@
 #include "PointLightComponent.h"
 #include "TransformComponent.h"
+#include "FloatEditorProperty.h"
 
 namespace sre
 {
@@ -8,7 +9,10 @@ IMPLEMENT_COMPONENT(PointLightComponent)
 
 PointLightComponent::PointLightComponent(Entity *entity) 
     : ALightComponent(entity), range(20.0f), intensity(2.0f)
-{ }
+{
+	this->addEditorProperty(new FloatEditorProperty{ "Intensity", &this->intensity });
+	this->addEditorProperty(new FloatEditorProperty{ "Range", &this->range });
+}
 
 void PointLightComponent::setPosition(const glm::vec3 &position)
 {

@@ -219,6 +219,7 @@
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPIState.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp" />
     <ClCompile Include="src\editors\properties\ColorEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\FloatEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\XYZEditorProperty.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
     <ClCompile Include="src\messages\BaseMessage.cpp" />
@@ -396,6 +397,7 @@
     <ClInclude Include="include\EngineValues.h" />
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\FileUtils.h" />
+    <ClInclude Include="include\FloatEditorProperty.h" />
     <ClInclude Include="include\FontAtlas.h" />
     <ClInclude Include="include\GUIButtonComponent.h" />
     <ClInclude Include="include\GUIImageComponent.h" />

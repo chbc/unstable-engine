@@ -7,7 +7,7 @@ namespace sre
 
 class AEditorProperty
 {
-public:
+protected:
 	std::string title;
 
 public:

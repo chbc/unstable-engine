@@ -53,7 +53,7 @@ void XYZEditorProperty::draw()
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	ImGui::DragFloat("##X", values[0], 0.1f);
+	ImGui::DragFloat("##X", values[0], 0.1f, 0.0f, 0.0f, "%.2f");
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -65,7 +65,7 @@ void XYZEditorProperty::draw()
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	ImGui::DragFloat("##Y", values[1], 0.1f);
+	ImGui::DragFloat("##Y", values[1], 0.1f, 0.0f, 0.0f, "%.2f");
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -77,7 +77,7 @@ void XYZEditorProperty::draw()
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	ImGui::DragFloat("##Z", values[2], 0.1f);
+	ImGui::DragFloat("##Z", values[2], 0.1f, 0.0f, 0.0f, "%.2f");
 	ImGui::PopItemWidth();
 
 	ImGui::PopStyleVar();
