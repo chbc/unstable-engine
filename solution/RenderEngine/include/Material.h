@@ -58,6 +58,7 @@ private:
 friend class MeshComponent;
 friend class MeshRenderer;
 friend class RenderManager;
+friend class MaterialEditorProperty;
 };
 
 } // namespace

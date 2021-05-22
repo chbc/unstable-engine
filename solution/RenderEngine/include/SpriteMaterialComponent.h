@@ -6,9 +6,11 @@
 
 namespace sre
 {
-	
+
 class SRE_API SpriteMaterialComponent : public AMaterialComponent
 {
+DECLARE_MATERIAL_COMPONENT()
+
 private:
 	class Texture* texture;
 	

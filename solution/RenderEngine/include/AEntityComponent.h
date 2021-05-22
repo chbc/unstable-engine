@@ -36,7 +36,6 @@ public:
     AEntityComponent(Entity* arg_entity) : entity(arg_entity) { }
     ~AEntityComponent();
 
-    void addEditorProperty(AEditorProperty* editorProperty);
 
     inline Entity* getEntity() { return this->entity; }
 
@@ -47,6 +46,7 @@ public:
 protected:
     virtual void onStart() {}
     virtual void update(uint32_t deltaTime) {}
+    void addEditorProperty(AEditorProperty* editorProperty);
 
 
 friend class Entity;

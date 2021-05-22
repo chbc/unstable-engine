@@ -8,16 +8,16 @@ namespace sre
 
 class LitMaterialComponent : public AMaterialComponent
 {
+DECLARE_MATERIAL_COMPONENT()
+
 private:
     float shininess;
 
 public:
-    LitMaterialComponent(Material *material)
-        : AMaterialComponent(material), shininess(50)
-    { }
+    LitMaterialComponent(Material* material);
     
-    inline void setShininess(float shininess) { this->shininess = shininess; }
-    inline float getShininess() { return this->shininess; }
+    void setShininess(float shininess);
+    float getShininess();
 };
 
 } // namespace

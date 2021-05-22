@@ -294,6 +294,18 @@
     <ClCompile Include="src\editors\properties\FloatEditorProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\editors\properties\MaterialEditorProperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -855,6 +867,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\FloatEditorProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MaterialEditorProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextureEditorProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

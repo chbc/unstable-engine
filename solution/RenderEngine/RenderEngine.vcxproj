@@ -220,8 +220,12 @@
     <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp" />
     <ClCompile Include="src\editors\properties\ColorEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\FloatEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\MaterialEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\XYZEditorProperty.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp" />
     <ClCompile Include="src\messages\BaseMessage.cpp" />
     <ClCompile Include="src\editors\windows\EditorEntityProperties.cpp" />
     <ClCompile Include="src\editors\windows\EditorMenuBar.cpp" />
@@ -418,6 +422,7 @@
     <ClInclude Include="include\LitRendererNoLightsState.h" />
     <ClInclude Include="include\Log.h" />
     <ClInclude Include="include\Material.h" />
+    <ClInclude Include="include\MaterialEditorProperty.h" />
     <ClInclude Include="include\MathUtils.h" />
     <ClInclude Include="include\MatrixManager.h" />
     <ClInclude Include="include\memory_aliases.h" />
@@ -462,6 +467,7 @@
     <ClInclude Include="include\StringUtils.h" />
     <ClInclude Include="include\TestServicesProvider.h" />
     <ClInclude Include="include\Texture.h" />
+    <ClInclude Include="include\TextureEditorProperty.h" />
     <ClInclude Include="include\TextureManager.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\TransformComponent.h" />

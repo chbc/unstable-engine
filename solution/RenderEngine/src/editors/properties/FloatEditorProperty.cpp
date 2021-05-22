@@ -17,7 +17,7 @@ void FloatEditorProperty::draw()
 	ImGui::SetColumnWidth(0, 100.0f);
 	ImGui::Text(this->title.c_str());
 	ImGui::NextColumn();
-	//ImGui::SetColumnWidth(0, 50.0f);
+	ImGui::SetColumnWidth(0, 100.0f);
 
 	ImGui::DragFloat("##id", this->value, 0.1f, 0.0f, 0.0f, "%.2f");
 

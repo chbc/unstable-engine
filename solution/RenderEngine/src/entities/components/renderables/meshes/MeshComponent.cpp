@@ -1,5 +1,6 @@
 #include "MeshComponent.h"
 #include "MeshData.h"
+#include "MaterialEditorProperty.h"
 
 namespace sre
 {
@@ -11,6 +12,8 @@ MeshComponent::MeshComponent(Entity *entity, MeshData* meshData)
 {
 	this->meshData = UPTR<MeshData>{ meshData };
     this->material = UPTR<Material>{ new Material{} };
+    
+    this->addEditorProperty(new MaterialEditorProperty{ "Material", this->material.get() });
 }
 
 Material *MeshComponent::getMaterial()

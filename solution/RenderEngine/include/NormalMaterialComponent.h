@@ -9,6 +9,8 @@ namespace sre
 
 class SRE_API NormalMaterialComponent : public AMaterialComponent
 {
+DECLARE_MATERIAL_COMPONENT()
+
 private:
 	class Texture* texture;
 

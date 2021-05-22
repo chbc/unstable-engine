@@ -11,6 +11,8 @@ class Texture;
 
 class SRE_API DiffuseMaterialComponent : public AMaterialComponent
 {
+DECLARE_MATERIAL_COMPONENT()
+
 private:
     class Texture* texture;
 	

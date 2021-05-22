@@ -75,8 +75,6 @@ void WorldEditor::onEditorGUI()
     if (!opt_padding)
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
-
-
     ImGui::Begin("DockSpace Demo", &openDockspace, window_flags);
     if (!opt_padding)
         ImGui::PopStyleVar();
@@ -91,7 +89,6 @@ void WorldEditor::onEditorGUI()
         ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
         ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
     }
-
 
     this->menuBar->onEditorGUI();
 

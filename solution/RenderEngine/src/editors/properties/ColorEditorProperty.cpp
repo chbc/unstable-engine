@@ -6,7 +6,13 @@
 namespace sre
 {
 ColorEditorProperty::ColorEditorProperty(const char* arg_title, glm::vec3& arg_values)
-	: AEditorProperty(arg_title)
+	: AEditorProperty(arg_title), hasAlpha(false)
+{
+	this->values = glm::value_ptr(arg_values);
+}
+
+ColorEditorProperty::ColorEditorProperty(const char* arg_title, glm::vec4& arg_values)
+	: AEditorProperty(arg_title), hasAlpha(true)
 {
 	this->values = glm::value_ptr(arg_values);
 }
@@ -20,7 +26,10 @@ void ColorEditorProperty::draw()
 	ImGui::Text(this->title.c_str());
 	ImGui::NextColumn();
 
-	ImGui::ColorEdit3("##id", this->values);
+	if (hasAlpha)
+		ImGui::ColorEdit4("##id", this->values);
+	else
+		ImGui::ColorEdit3("##id", this->values);
 
 	ImGui::Columns(1);
 

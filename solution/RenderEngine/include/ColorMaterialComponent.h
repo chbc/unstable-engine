@@ -12,6 +12,8 @@ class Material;
 
 class SRE_API ColorMaterialComponent : public AMaterialComponent
 {
+DECLARE_MATERIAL_COMPONENT()
+
 private:
 	glm::vec4 color; 
 
@@ -20,6 +22,7 @@ public:
 
 	void setColor(const glm::vec4 &color);
 	glm::vec4 getColor();
+	void getColor(float* result);
 };
 
 } // namespace
