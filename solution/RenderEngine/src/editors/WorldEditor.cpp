@@ -6,13 +6,16 @@
 #include "EditorEntityProperties.h"
 #include "EditorSceneViewport.h"
 
+#include "SingletonsManager.h"
+#include "RenderManager.h"
+
 #include "imgui/imgui.h"
 
 namespace sre
 {
 
 WorldEditor::WorldEditor(SceneManager* arg_sceneManager, bool* editorEnabled)
-	: sceneManager(arg_sceneManager), showDemo(false)
+	: sceneManager(arg_sceneManager), showDemo(false), wasShowingDemo(false)
 {
 	this->menuBar = UPTR<IEditorWindow>(new EditorMenuBar{ editorEnabled, &this->showDemo });
 	this->windows[0] = UPTR<IEditorWindow>(new EditorSceneTree{ sceneManager });
@@ -34,10 +37,22 @@ void WorldEditor::onEditorGUI()
 {
     if (this->showDemo)
     {
+        if (!this->wasShowingDemo)
+        {
+            this->wasShowingDemo = true;
+            SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+            singletonsManager->get<RenderManager>()->setTargetFBO(0);
+        }
+
         ImGui::ShowDemoWindow(&this->showDemo);
         return;
     }
-
+    else if (this->wasShowingDemo)
+    {
+        this->wasShowingDemo = false;
+        SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+        singletonsManager->get<RenderManager>()->setTargetFBO(EditorSceneViewport::Fbo);
+    }
     static bool opt_fullscreen = true;
     static bool opt_padding = false;
     static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
@@ -100,6 +115,9 @@ void WorldEditor::onEditorGUI()
 
 void WorldEditor::release()
 {
+    this->showDemo = false;
+    this->wasShowingDemo = false;
+
 	for (const auto& item : this->windows)
 		item->onRelease();
 }

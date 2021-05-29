@@ -25,24 +25,32 @@ void EditorSceneTree::onEditorGUI()
 {
 	ImGui::Begin("Hierarchy");
 
-	if (ImGui::CollapsingHeader("Scene Tree", ImGuiTreeNodeFlags_DefaultOpen) && ImGui::TreeNodeEx("scene_name", ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("scene_name", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		int index = 0;
 		for (const auto& item : this->sceneManager->entities)
-			this->drawEntityTree(item.second.get(), index);
-
-		ImGui::TreePop();
+			this->drawEntityTree(item.second.get(), 0);
 	}
+
+	if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
+	{
+		this->selectedEntity = nullptr;
+		MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
+		EntitySelectionMessage message(nullptr);
+		messagesManager->notify(&message);
+	}
+
+	ImGui::End();
 }
 
 void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 {
 	const char* name = entity->getName();
 	const uint32_t childrenCount = entity->getChildrenCount();
+	const ImGuiTreeNodeFlags BASE_FLAGS = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick; // XXX | ImGuiTreeNodeFlags_Selected;
 
 	if (childrenCount == 0)
 	{
-		if (ImGui::Selectable(name, entity == this->selectedEntity))
+		if (ImGui::Selectable(name, entity == this->selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
 		{
 			this->selectedEntity = entity;
 			MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
@@ -50,13 +58,30 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 			messagesManager->notify(&message);
 		}
 	}
-	else if (ImGui::TreeNode(reinterpret_cast<void*>(static_cast<intptr_t>(index)), name))
+	else
 	{
-		for (int i = 0; i < childrenCount; i++)
+		ImGuiTreeNodeFlags flags = BASE_FLAGS;
+		if (entity == this->selectedEntity)
+			flags |= ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_Selected;
+
+		bool open = ImGui::TreeNodeEx(reinterpret_cast<void*>(entity), flags, name);
+
+		if (ImGui::IsItemClicked())
 		{
-			drawEntityTree(entity->getChild(i), i);
+			this->selectedEntity = entity;
+			MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
+			EntitySelectionMessage message{ entity };
+			messagesManager->notify(&message);
 		}
-		ImGui::TreePop();
+
+		if (open)
+		{
+			for (int i = 0; i < childrenCount; i++)
+			{
+				drawEntityTree(entity->getChild(i), i);
+			}
+			ImGui::TreePop();
+		}
 	}
 }
 

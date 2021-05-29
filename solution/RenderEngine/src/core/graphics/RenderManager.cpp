@@ -219,8 +219,6 @@ void RenderManager::render()
     // GUI rendering
     if (this->guiRenderer.get() != nullptr)
         this->guiRenderer->render();
-
-    this->graphicsWrapper->unbindFrameBuffer();
 }
 
 void RenderManager::DEBUG_drawTriangle()
@@ -270,6 +268,11 @@ PointLightComponent* RenderManager::AddPointLight(Entity* entity)
 void RenderManager::setTargetFBO(uint32_t fbo)
 {
     this->targetFBO = fbo;
+}
+
+void RenderManager::unbindFrameBuffer()
+{
+    this->graphicsWrapper->unbindFrameBuffer();
 }
 
 } // namespace

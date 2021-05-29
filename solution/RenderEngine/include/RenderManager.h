@@ -73,6 +73,7 @@ private:
     PointLightComponent* AddPointLight(Entity* entity);
 
     void setTargetFBO(uint32_t fbo);
+    void unbindFrameBuffer();
 
 friend class AEntityManager;
 friend class SceneManager;
@@ -84,6 +85,7 @@ friend class GUITextComponent;
 friend class SingletonsManager;
 friend class BaseRendererShaderSetup;
 friend class EditorSceneViewport;
+friend class WorldEditor;
 };
 
 } // namespace

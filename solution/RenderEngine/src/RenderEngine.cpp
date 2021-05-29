@@ -48,6 +48,7 @@ void RenderEngine::run()
     	
         this->renderManager->render();
         this->onGUI();
+        this->renderManager->unbindFrameBuffer();
         this->onEditorGUI();
 
     	this->multimediaManager->swapBuffers();

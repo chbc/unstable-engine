@@ -11,7 +11,7 @@ class EditorSceneViewport : public IEditorWindow
 private:
 	class RenderManager* renderManager;
 
-	uint32_t fbo;
+	static uint32_t Fbo;
 	void* textureId;
 
 public:
@@ -20,6 +20,8 @@ public:
 	void onInit() override;
 	void onEditorGUI() override;
 	void onRelease() override;
+
+friend class WorldEditor;
 };
 
 } // namespace

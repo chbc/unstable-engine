@@ -18,6 +18,7 @@ private:
 	UPTR<IEditorWindow> menuBar;
 	UPTR<IEditorWindow> windows[3];
 	bool showDemo;
+	bool wasShowingDemo;
 	
 public:
 	WorldEditor(SceneManager* arg_sceneManager, bool* editorEnabled);

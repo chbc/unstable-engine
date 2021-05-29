@@ -11,7 +11,9 @@
 namespace sre
 {
 
-EditorSceneViewport::EditorSceneViewport() : renderManager(nullptr), fbo(0), textureId(nullptr)
+uint32_t EditorSceneViewport::Fbo = 0;
+
+EditorSceneViewport::EditorSceneViewport() : renderManager(nullptr), textureId(nullptr)
 { }
 
 void EditorSceneViewport::onInit()
@@ -29,7 +31,7 @@ void EditorSceneViewport::onInit()
 		uint32_t id = texture->getId();
 
 		AGraphicsWrapper* graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
-		this->fbo = graphicsWrapper->generateColorFrameBuffer(
+		Fbo = graphicsWrapper->generateColorFrameBuffer(
 			std::vector<uint32_t>{id}, texture->getWidth(), texture->getHeight()
 		);
 		this->textureId = reinterpret_cast<void*>(id);
@@ -37,7 +39,7 @@ void EditorSceneViewport::onInit()
 		this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 	}
 
-	this->renderManager->setTargetFBO(this->fbo);
+	this->renderManager->setTargetFBO(Fbo);
 }
 
 void EditorSceneViewport::onEditorGUI()

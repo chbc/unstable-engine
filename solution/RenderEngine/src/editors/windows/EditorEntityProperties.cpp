@@ -20,26 +20,24 @@ EditorEntityProperties::EditorEntityProperties() : entity(nullptr)
 
 void EditorEntityProperties::onEditorGUI()
 {
-	if 
-	(
-		(this->entity != nullptr) &&
-		ImGui::CollapsingHeader("Properties", ImGuiTreeNodeFlags_DefaultOpen)
-	)
+	ImGui::Begin("Properties");
+
+	if (this->entity != nullptr)
 	{
 		for (const auto& component : this->entity->componentsMap)
 		{
 			const char* componentName = component.second->getClassName();
-			if (ImGui::TreeNodeEx(componentName, ImGuiTreeNodeFlags_DefaultOpen))
+			if (ImGui::CollapsingHeader(componentName, ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				for (const auto& property : component.second->editorProperties)
 				{
 					property->draw();
 				}
-				ImGui::Separator();
-				ImGui::TreePop();
+				// ImGui::Separator();
 			}
 		}
 	}
+
 	ImGui::End();
 }
 

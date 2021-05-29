@@ -42,7 +42,7 @@ void SampleApplication::onInit()
 	cubeMesh->addMaterialComponent<NormalMaterialComponent>("crate_normal.png");
 	cubeMesh->getMaterial()->setCastShadow(false);
 
-	cube = this->sceneManager->createCubeEntity(2.0f);
+	cube = this->sceneManager->createCubeEntity(2.0f, "caixa_filha", cube);
 	position = glm::vec3(0.0f, 0.0f, -2.5f);
 	cube->getTransform()->setPosition(position);
 	cubeMesh = cube->getComponent<MeshComponent>();
@@ -55,15 +55,16 @@ void SampleApplication::onInit()
 void SampleApplication::createLights()
 {
 	glm::vec3 p1Position(0.0f, 5.0f, 0.0f);
-	PointLightComponent* pLight1 = this->sceneManager->createPointLight();
-	pLight1->getTransform()->setPosition(p1Position);
-	pLight1->setColor(glm::vec3(0.5f));
 
 	Entity* lightCube = this->sceneManager->createCubeEntity(0.2f);
 	lightCube->getTransform()->setPosition(p1Position);
 	MeshComponent* cubeMesh = lightCube->getComponent<MeshComponent>();
 	cubeMesh->getMaterial()->setCastShadow(false);
 	cubeMesh->getMaterial()->setReceivesLight(false);
+
+	PointLightComponent* pLight1 = this->sceneManager->createPointLight("p_light_1", lightCube);
+	// pLight1->getTransform()->setPosition(p1Position);
+	pLight1->setColor(glm::vec3(0.5f));
 
 	DirectionalLightComponent* dLight1 = this->sceneManager->createDirectionalLight();
 	dLight1->setDirection(glm::vec3(0.0f, -0.1f, -1.0f));
