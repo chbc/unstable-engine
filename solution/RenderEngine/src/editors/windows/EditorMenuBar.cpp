@@ -2,13 +2,17 @@
 
 #include "EditorMenuBar.h"
 #include "EngineValues.h"
+#include "MessagesManager.h"
+#include "SingletonsManager.h"
+#include "EditorMessages.h"
+
 #include "imgui/imgui.h"
 
 namespace sre
 {
 
-EditorMenuBar::EditorMenuBar(bool* editorEnabled, bool* demoEnabled) 
-	: isEditorEnabled(editorEnabled), isDemoEnabled(demoEnabled) { }
+EditorMenuBar::EditorMenuBar(bool* demoEnabled) 
+	: isDemoEnabled(demoEnabled) { }
 
 void EditorMenuBar::onEditorGUI()
 {
@@ -21,7 +25,7 @@ void EditorMenuBar::onEditorGUI()
 			ImGui::MenuItem("Save scene");
 			ImGui::MenuItem("Save scene as");
 			if (ImGui::MenuItem("Exit"))
-				*this->isEditorEnabled = false;
+				this->exitEditor();
 
 			ImGui::EndMenu();
 		}
@@ -43,6 +47,16 @@ void EditorMenuBar::onEditorGUI()
 
 		ImGui::EndMenuBar();
 	}
+
+	if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Escape), false))
+		exitEditor();
+}
+
+void EditorMenuBar::exitEditor()
+{
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
+	ExitEditorMessage message;
+	messagesManager->notify(&message);
 }
 
 } // namespace

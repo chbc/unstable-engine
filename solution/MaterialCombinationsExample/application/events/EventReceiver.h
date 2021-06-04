@@ -18,17 +18,11 @@ private:
 	SampleApplication *application;
 	CameraComponent *camera;
 
-	float cameraDistance;
-
-	bool viewingActive;
-
 public:
 	EventReceiver(SampleApplication *application, CameraComponent *camera);
 
 	void onQuit() override;
 	void onKeyEvent(KeyboardButton key, bool pressed) override;
 	void onMouseButtonEvent(MouseButton mouseButton, const glm::vec2& position, bool pressed) override;
-	void onMouseMoveRelative(const glm::vec2 &relativePosition) override;
-	void onMouseWheel(int direction) override;
 };
 #endif

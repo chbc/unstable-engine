@@ -29,6 +29,7 @@ public:
 	CameraComponent(Entity *entity);
 	void setLookAt(const glm::vec3 &target);
 	void setPosition(const glm::vec3 &position);
+	const glm::vec3& getPosition();
 
 	const glm::vec3& getLookAt() const { return this->lookAtTarget; }
 

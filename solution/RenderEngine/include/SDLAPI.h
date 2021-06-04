@@ -8,6 +8,7 @@
 #include <glm/vec2.hpp>
 
 struct SDL_Window;
+union SDL_Event;
 
 namespace sre
 {
@@ -17,6 +18,7 @@ class SDLAPI : public AMultimediaWrapper
 private:
 	SDL_Window *window;
 	UPTR<ImGuiAPI> imGuiAPI;
+	bool isEditorMode;
 
 	const std::string ASSETS_FOLDER = "../../media/";
 
@@ -37,6 +39,7 @@ protected:
 	void release() override;
 
 private:
+	void processInput(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, SDL_Event& currentEvent);
 	bool checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
 	std::string getError();
 };

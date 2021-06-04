@@ -72,6 +72,7 @@ private:
 
     friend class TestServicesProvider;
     friend class EditorEntityProperties;
+    friend class EditorSceneViewport;
 };
 
 } // namespace

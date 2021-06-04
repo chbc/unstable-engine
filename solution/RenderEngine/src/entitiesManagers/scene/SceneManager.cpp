@@ -12,26 +12,29 @@ namespace sre
 
 SceneManager::SceneManager() : AEntityManager()
 {
+    this->renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
 }
 
-Entity* SceneManager::createPerspectiveCamera(float fov, float near, float far, Entity* parent)
+Entity* SceneManager::createPerspectiveCamera(float fov, float near, float far, Entity* parent, bool isMainCamera)
 {
     Entity* mainCamera = this->createEntity("_main_camera", parent);
     CameraComponent* cameraComponent = mainCamera->addComponent<CameraComponent>();
     cameraComponent->setPerspectiveProjection(fov, EngineValues::SCREEN_WIDTH / EngineValues::SCREEN_HEIGHT, near, far);
 
-    SingletonsManager::getInstance()->resolve<RenderManager>()->setMainCamera(cameraComponent);
+    if (isMainCamera)
+        this->renderManager->setMainCamera(cameraComponent);
 
     return mainCamera;
 }
 
-Entity* SceneManager::createOrthoCamera(Entity* parent)
+Entity* SceneManager::createOrthoCamera(Entity* parent, bool isMainCamera)
 {
     Entity* mainCamera = this->createEntity("_main_camera", parent);
     CameraComponent* cameraComponent = mainCamera->addComponent<CameraComponent>();
     cameraComponent->setOrthoProjection();
 
-    SingletonsManager::getInstance()->resolve<RenderManager>()->setMainCamera(cameraComponent);
+    if (isMainCamera)
+        this->renderManager->setMainCamera(cameraComponent);
 
     return mainCamera;
 }
@@ -62,7 +65,7 @@ DirectionalLightComponent *SceneManager::createDirectionalLight(const std::strin
     Entity *newEntity = this->createEntity(resultName, parent);
 
     newEntity->addComponent<DirectionalLightComponent>();
-    return SingletonsManager::getInstance()->get<RenderManager>()->AddDirectionalLight(newEntity);
+    return this->renderManager->AddDirectionalLight(newEntity);
 }
 
 PointLightComponent *SceneManager::createPointLight(const std::string& name, Entity* parent)
@@ -71,12 +74,12 @@ PointLightComponent *SceneManager::createPointLight(const std::string& name, Ent
     Entity *newEntity = this->createEntity(resultName, parent);
 
     newEntity->addComponent<PointLightComponent>();
-    return SingletonsManager::getInstance()->get<RenderManager>()->AddPointLight(newEntity);
+    return this->renderManager->AddPointLight(newEntity);
 }
 
 CameraComponent *SceneManager::getMainCamera()
 {
-	return SingletonsManager::getInstance()->resolve<RenderManager>()->getMainCamera();
+	return this->renderManager->getMainCamera();
 }
 
 Entity *SceneManager::createMeshEntity(MeshData* objectData, const std::string& name, Entity* parent)
@@ -84,6 +87,11 @@ Entity *SceneManager::createMeshEntity(MeshData* objectData, const std::string& 
     Entity *newEntity = this->createEntity(name, parent);
 	newEntity->addComponent<MeshComponent>(objectData);
     return newEntity;
+}
+
+void SceneManager::setMainCamera(CameraComponent* camera)
+{
+    this->renderManager->setMainCamera(camera);
 }
 
 } // namespace

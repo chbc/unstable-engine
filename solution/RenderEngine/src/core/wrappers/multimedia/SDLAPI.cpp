@@ -57,58 +57,19 @@ void SDLAPI::swapBuffers()
 
 void SDLAPI::setEditorMode(bool value)
 {
+	this->isEditorMode = value;
 	this->imGuiAPI->setEditorMode(value);
 }
 
 void SDLAPI::processInput(InputHandler *inputHandler, const std::vector<GUIButtonComponent*>& guiButtons)
 {
-	glm::vec2 position;
-
 	SDL_Event currentEvent;
 	while (SDL_PollEvent(&currentEvent))
 	{
 		this->imGuiAPI->processEvent(&currentEvent);
 		
-		switch (currentEvent.type)
-		{
-			case SDL_QUIT:		inputHandler->onQuit(); break;
-			case SDL_KEYDOWN:	inputHandler->onKeyEvent(currentEvent.key.keysym.sym, true); break;
-			case SDL_KEYUP:		inputHandler->onKeyEvent(currentEvent.key.keysym.sym, false); break;
-
-			case SDL_MOUSEMOTION:
-				position = glm::vec2{currentEvent.motion.x, currentEvent.motion.y};
-				inputHandler->onMouseMove(position);
-
-				position = glm::vec2{currentEvent.motion.xrel, currentEvent.motion.yrel};
-				inputHandler->onMouseMoveRelative(position);
-				break;
-
-			case SDL_MOUSEBUTTONDOWN:
-				position = glm::vec2{currentEvent.button.x, currentEvent.button.y};
-
-				if (guiButtons.empty() || !this->checkButtonPress(inputHandler, guiButtons, position))
-					inputHandler->onMouseButtonEvent(currentEvent.button.button, position, true);
-				break;
-
-			case SDL_MOUSEBUTTONUP:
-				position = glm::vec2{currentEvent.button.x, currentEvent.button.y};
-				inputHandler->onMouseButtonEvent(currentEvent.button.button, position, false);
-				break;
-
-			case SDL_MOUSEWHEEL:
-				inputHandler->onMouseWheel(currentEvent.wheel.y);
-				break;
-
-			case SDL_WINDOWEVENT:
-				const SDL_WindowEvent& window = currentEvent.window;
-				if (window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
-				{
-					EngineValues::SCREEN_WIDTH = window.data1;
-					EngineValues::SCREEN_HEIGHT = window.data2;
-					EngineValues::updateAspectRatio();
-				}
-				break;
-		}
+		if (!this->isEditorMode)
+			this->processInput(inputHandler, guiButtons, currentEvent);
 	}
 }
 
@@ -172,6 +133,51 @@ void SDLAPI::release()
 	SDL_Quit();
 }
 
+void SDLAPI::processInput(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, SDL_Event& currentEvent)
+{
+	glm::vec2 position;
+
+	switch (currentEvent.type)
+	{
+		case SDL_QUIT:		inputHandler->onQuit(); break;
+		case SDL_KEYDOWN:	inputHandler->onKeyEvent(currentEvent.key.keysym.sym, true); break;
+		case SDL_KEYUP:		inputHandler->onKeyEvent(currentEvent.key.keysym.sym, false); break;
+
+		case SDL_MOUSEMOTION:
+			position = glm::vec2{ currentEvent.motion.x, currentEvent.motion.y };
+			inputHandler->onMouseMove(position);
+
+			position = glm::vec2{ currentEvent.motion.xrel, currentEvent.motion.yrel };
+			inputHandler->onMouseMoveRelative(position);
+			break;
+
+		case SDL_MOUSEBUTTONDOWN:
+			position = glm::vec2{ currentEvent.button.x, currentEvent.button.y };
+
+			if (guiButtons.empty() || !this->checkButtonPress(inputHandler, guiButtons, position))
+				inputHandler->onMouseButtonEvent(currentEvent.button.button, position, true);
+			break;
+
+		case SDL_MOUSEBUTTONUP:
+			position = glm::vec2{ currentEvent.button.x, currentEvent.button.y };
+			inputHandler->onMouseButtonEvent(currentEvent.button.button, position, false);
+			break;
+
+		case SDL_MOUSEWHEEL:
+			inputHandler->onMouseWheel(currentEvent.wheel.y);
+			break;
+
+		case SDL_WINDOWEVENT:
+			const SDL_WindowEvent& window = currentEvent.window;
+			if (window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+			{
+				EngineValues::SCREEN_WIDTH = window.data1;
+				EngineValues::SCREEN_HEIGHT = window.data2;
+				EngineValues::updateAspectRatio();
+			}
+			break;
+	}
+}
 
 bool SDLAPI::checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition)
 {

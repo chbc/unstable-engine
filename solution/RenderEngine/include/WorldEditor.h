@@ -21,7 +21,7 @@ private:
 	bool wasShowingDemo;
 	
 public:
-	WorldEditor(SceneManager* arg_sceneManager, bool* editorEnabled);
+	WorldEditor(SceneManager* arg_sceneManager);
 
 private:
 	void init();

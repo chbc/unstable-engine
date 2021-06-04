@@ -10,13 +10,15 @@ namespace sre
 class EditorMenuBar : public IEditorWindow
 {
 private:
-	bool* isEditorEnabled;
 	bool* isDemoEnabled;
 
 public:
-	EditorMenuBar(bool* editorEnabled, bool* demoEnabled);
+	EditorMenuBar(bool* demoEnabled);
 
 	void onEditorGUI() override;
+
+private:
+	void exitEditor();
 };
 
 } // namespace

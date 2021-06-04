@@ -16,11 +16,12 @@ namespace sre
 class SceneManager : public AEntityManager
 {
 private:
+    class RenderManager* renderManager;
     SceneManager();
 
 public:
-    SRE_API Entity* createPerspectiveCamera(float fov = 100.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr);
-    SRE_API Entity* createOrthoCamera(Entity* parent = nullptr);
+    SRE_API Entity* createPerspectiveCamera(float fov = 100.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr, bool isMainCamera = true);
+    SRE_API Entity* createOrthoCamera(Entity* parent = nullptr, bool isMainCamera = true);
 
     // renderables //
     SRE_API Entity* createPlaneEntity(const glm::vec2& size, float tileMultiplier = 1.0f, const std::string& name = "", Entity* parent = nullptr);
@@ -34,6 +35,7 @@ public:
     // camera //
     SRE_API class CameraComponent *getMainCamera();
     SRE_API Entity *createMeshEntity(MeshData* objectData, const std::string& name = "", Entity* parent = nullptr);
+    SRE_API void setMainCamera(CameraComponent* camera);
 
 friend class RenderEngine;
 };

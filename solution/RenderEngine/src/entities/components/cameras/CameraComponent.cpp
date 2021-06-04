@@ -38,6 +38,11 @@ void CameraComponent::setPosition(const glm::vec3 &position)
     this->transform->setPosition(position);
 }
 
+const glm::vec3& CameraComponent::getPosition()
+{
+    return this->transform->getPosition();
+}
+
 void CameraComponent::updateView()
 {
     this->view = glm::lookAt(this->transform->getPosition(), this->lookAtTarget, this->up);

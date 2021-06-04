@@ -20,7 +20,7 @@ namespace sre
 */
 class SRE_API RenderEngine
 {
-public:
+protected:
     MultimediaManager* multimediaManager;
     UPTR<SceneManager> sceneManager;
 	UPTR<GUIManager> guiManager;
@@ -28,6 +28,7 @@ public:
 	
 private:
     RenderManager* renderManager;
+    CameraComponent* applicationCamera;
     bool running;
     bool isEditorMode;
     bool wasEditorMode;
@@ -43,7 +44,7 @@ public:
     void run();
     void setEventReceiver(InputHandler *inputHandler);
     void loadScene(const std::string& scene);
-    void toggleEditorMode();
+    void setEditorMode(bool value);
     void quit();
 
 protected:
@@ -54,6 +55,7 @@ protected:
     virtual void onQuit(){};
 
 private:
+    void init();
     void processInput();
     void onEndFrame();
     void removeDestroyedEntities();

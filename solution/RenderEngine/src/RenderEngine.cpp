@@ -1,6 +1,8 @@
 #include "RenderEngine.h"
 #include "SingletonsManager.h"
 #include "DefaultGameValues.h"
+#include "EditorMessages.h"
+#include "MessagesManager.h"
 
 namespace sre
 {
@@ -16,28 +18,8 @@ RenderEngine::RenderEngine(const std::string& applicationName, int screenWidth, 
 
 void RenderEngine::run()
 {
-    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
-    this->renderManager = singletonsManager->resolve<RenderManager>();
-    this->multimediaManager = singletonsManager->resolve<MultimediaManager>();
+    this->init();
 
-    this->multimediaManager->init();
-    this->renderManager->init();
-	this->sceneManager = UPTR<SceneManager>{ new SceneManager };
-	this->guiManager = UPTR<GUIManager>{ new GUIManager };
-
-#if defined(DEBUG) && !defined(__ANDROID__)
-    this->worldEditor = UPTR<WorldEditor>( new WorldEditor{ this->sceneManager.get(), &this->isEditorMode });
-#endif
-
-    this->onInit();
-
-    this->guiManager->onSceneLoaded();
-    this->sceneManager->onSceneLoaded();
-    this->renderManager->onSceneLoaded();
-
-    this->isEditorMode = false;
-    this->wasEditorMode = false;
-    this->running = true;
     uint32_t elapsedTime = 0;
     while (this->running)
     {
@@ -85,9 +67,14 @@ void RenderEngine::loadScene(const std::string& scene)
     this->renderManager->onSceneLoaded();
 }
 
-void RenderEngine::toggleEditorMode()
+void RenderEngine::setEditorMode(bool value)
 {
-    this->isEditorMode = !this->isEditorMode;
+    this->isEditorMode = value;
+
+    if (this->isEditorMode)
+        this->applicationCamera = this->renderManager->getMainCamera();
+    else
+        this->renderManager->setMainCamera(this->applicationCamera);
 }
 
 void RenderEngine::quit()
@@ -101,6 +88,36 @@ void RenderEngine::onEditorGUI()
     if (this->isEditorMode && this->wasEditorMode)
         this->worldEditor->onEditorGUI();
 #endif
+}
+
+void RenderEngine::init()
+{
+    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+    this->renderManager = singletonsManager->resolve<RenderManager>();
+    this->multimediaManager = singletonsManager->resolve<MultimediaManager>();
+
+    this->multimediaManager->init();
+    this->renderManager->init();
+    this->sceneManager = UPTR<SceneManager>{ new SceneManager };
+    this->guiManager = UPTR<GUIManager>{ new GUIManager };
+
+#if defined(DEBUG) && !defined(__ANDROID__)
+    this->worldEditor = UPTR<WorldEditor>(new WorldEditor{ this->sceneManager.get() });
+#endif
+
+    this->onInit();
+
+    this->guiManager->onSceneLoaded();
+    this->sceneManager->onSceneLoaded();
+    this->renderManager->onSceneLoaded();
+
+    this->isEditorMode = false;
+    this->wasEditorMode = false;
+    this->running = true;
+
+    MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
+    Action action = [&](void* message) { this->setEditorMode(false); };
+    messagesManager->addListener<ExitEditorMessage>(action);
 }
 
 void RenderEngine::processInput()
