@@ -26,8 +26,7 @@ protected:
 	void onBeginFrame() override;
 	void swapBuffers() override;
 	void setEditorMode(bool value) override;
-	void processInput(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons) override;
-	bool checkClosePressed() override;
+	void processInput(const std::vector<GUIButtonComponent*>& guiButtons) override;
 	unsigned int getTicks() override;
 	void delay(unsigned int) override;
 	void* loadTexture(const std::string& fileName, uint32_t* outWidth, uint32_t* outHeight, uint8_t* outBpp) override;
@@ -35,7 +34,7 @@ protected:
 	void release() override;
 
 private:
-	bool checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
+	bool checkButtonPress(const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
 };
 
 } // namespace sre

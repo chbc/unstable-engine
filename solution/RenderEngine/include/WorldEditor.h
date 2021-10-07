@@ -1,4 +1,4 @@
-#if defined(DEBUG) && !defined(__ANDROID__)
+#if !defined(RELEASE) && !defined(__ANDROID__)
 
 #ifndef _WORLD_EDITOR_H_
 #define _WORLD_EDITOR_H_

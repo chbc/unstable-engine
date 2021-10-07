@@ -7,7 +7,6 @@
 #include "SDL_opengles2.h"
 #include <string>
 
-#include "InputHandler.h"
 #include "EngineValues.h"
 #include "GUIButtonComponent.h"
 #include "Entity.h"
@@ -82,7 +81,7 @@ void SDLAndroidAPI::swapBuffers()
 
 void SDLAndroidAPI::setEditorMode(bool value) { }
 
-void SDLAndroidAPI::processInput(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons)
+void SDLAndroidAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons)
 {
 	glm::vec2 position;
 
@@ -191,18 +190,23 @@ void SDLAndroidAPI::release()
 	SDLTest_CommonQuit(state);
 }
 
-bool SDLAndroidAPI::checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition)
+bool SDLAndroidAPI::checkButtonPress(const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition)
 {
 	pressPosition.x /= EngineValues::SCREEN_WIDTH;
 	pressPosition.y /= EngineValues::SCREEN_HEIGHT;
 
+	bool done = false;
+
 	for (GUIButtonComponent* item : guiButtons)
 	{
-		if (item->getEntity()->isEnabled() && item->isInside(pressPosition))
+		bool pressed = false;
+		if (!done && item->getEntity()->isEnabled() && item->isInside(pressPosition))
 		{
-			inputHandler->onGUIButtonPressed(item, item->getEntity()->getName());
-			return true;
+			pressed = true;
+			done = true;
 		}
+
+		item->setPressed(pressed);
 	}
 
 	return false;

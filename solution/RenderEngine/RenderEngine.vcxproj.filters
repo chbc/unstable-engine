@@ -306,6 +306,9 @@
     <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\multimedia\Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -614,9 +617,6 @@
     <ClInclude Include="include\HDRRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\InputHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\LightManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -873,6 +873,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\TextureEditorProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

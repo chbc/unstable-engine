@@ -26,7 +26,9 @@ void RenderEngine::run()
         this->multimediaManager->onBeginFrame();
 
         this->processInput();
-        this->onUpdate(this->multimediaManager->getLastFrameTime());
+
+        if (!this->isEditorMode)
+            this->onUpdate(this->multimediaManager->getLastFrameTime());
     	
         this->renderManager->render();
         this->onGUI();
@@ -48,11 +50,6 @@ void RenderEngine::run()
     this->release();
 }
 
-void RenderEngine::setEventReceiver(InputHandler* inputHandler)
-{
-    this->inputHandler = UPTR<InputHandler>{ inputHandler };
-}
-
 void RenderEngine::loadScene(const std::string& scene)
 {
     this->guiManager->destroyAllEntities();
@@ -70,11 +67,6 @@ void RenderEngine::loadScene(const std::string& scene)
 void RenderEngine::setEditorMode(bool value)
 {
     this->isEditorMode = value;
-
-    if (this->isEditorMode)
-        this->applicationCamera = this->renderManager->getMainCamera();
-    else
-        this->renderManager->setMainCamera(this->applicationCamera);
 }
 
 void RenderEngine::quit()
@@ -101,7 +93,7 @@ void RenderEngine::init()
     this->sceneManager = UPTR<SceneManager>{ new SceneManager };
     this->guiManager = UPTR<GUIManager>{ new GUIManager };
 
-#if defined(DEBUG) && !defined(__ANDROID__)
+#if !defined(RELEASE) && !defined(__ANDROID__)
     this->worldEditor = UPTR<WorldEditor>(new WorldEditor{ this->sceneManager.get() });
 #endif
 
@@ -122,11 +114,8 @@ void RenderEngine::init()
 
 void RenderEngine::processInput()
 {
-	InputHandler* inputHandlerPtr = inputHandler.get();
-    if (inputHandlerPtr != nullptr)
-        this->multimediaManager->processInput(inputHandlerPtr);
-    else
-        this->running = !this->multimediaManager->checkClosePressed();
+    this->multimediaManager->processInput();
+    this->running = !this->multimediaManager->checkClosePressed();
 }
 
 void RenderEngine::onEndFrame()
@@ -138,9 +127,15 @@ void RenderEngine::onEndFrame()
         this->multimediaManager->setEditorMode(this->isEditorMode);
 
         if (this->isEditorMode)
+        {
+            this->applicationCamera = this->renderManager->getMainCamera();
             this->worldEditor->init();
+        }
         else
+        {
             this->worldEditor->release();
+            this->renderManager->setMainCamera(this->applicationCamera);
+        }
     }
 }
 

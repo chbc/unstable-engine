@@ -33,6 +33,11 @@ void GUIButtonComponent::setPivot(glm::vec2 pivot)
 	this->pivotizedExtent = this->extent * this->pivot;
 }
 
+bool GUIButtonComponent::isPressed()
+{
+	return this->pressed;
+}
+
 bool GUIButtonComponent::isInside(const glm::vec2& pointPosition)
 {
 	// 0 <-> -1
@@ -62,6 +67,11 @@ bool GUIButtonComponent::isInside(const glm::vec2& pointPosition)
 	);
 
 	return result;
+}
+
+void GUIButtonComponent::setPressed(bool value)
+{
+	this->pressed = value;
 }
 
 } // namespace

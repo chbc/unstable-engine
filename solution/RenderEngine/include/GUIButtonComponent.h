@@ -19,8 +19,8 @@ DECLARE_COMPONENT();
 private:
 	glm::vec2 extent;
 	glm::vec2 pivot;
-
 	glm::vec2 pivotizedExtent;
+	bool pressed;
 
 private:
 	GUIButtonComponent(Entity* entity);
@@ -30,16 +30,20 @@ public:
 
 	void setExtent(glm::vec2 extent);
 	void setPivot(glm::vec2 pivot);
+	bool isPressed();
 
 private:
 	bool isInside(const glm::vec2& pointPosition);
+	void setPressed(bool value);
 
-	friend class SDLAPI;
 	friend class Entity;
 
 #ifdef __ANDROID__
 	friend class SDLAndroidAPI;
+#else
+	friend class SDLAPI;
 #endif
+
 };
 
 } // namespace

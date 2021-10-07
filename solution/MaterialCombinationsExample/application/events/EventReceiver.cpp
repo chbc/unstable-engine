@@ -1,9 +1,8 @@
 #include "EventReceiver.h"
 #include "application/SampleApplication.h"
-#include <glm/glm.hpp>
+#include <Input.h>
 
-#include <glm/gtx/rotate_vector.hpp>
-#include <iostream>
+#include <glm/vec3.hpp>
 
 EventReceiver::EventReceiver(SampleApplication *application, CameraComponent *camera)
 {
@@ -14,32 +13,32 @@ EventReceiver::EventReceiver(SampleApplication *application, CameraComponent *ca
 	this->camera->setPosition(position);
 }
 
-void EventReceiver::onQuit()
+void EventReceiver::processInput()
 {
-	this->application->quit();
+	this->processKeys();
+	this->processMouse();
 }
 
-void EventReceiver::onKeyEvent(KeyboardButton key, bool pressed)
+void EventReceiver::processKeys()
 {
-	if (pressed)
-	{
-		if (key == KEY_ESC)
-			this->application->quit();
-		else if (key == KEY_e)
-			this->application->setEditorMode(true);
-	}
+	if (Input::isKeyDown(KEY_ESC))
+		this->application->quit();
+	else if (Input::isKeyDown(KEY_e))
+		this->application->setEditorMode(true);
 }
 
-void EventReceiver::onMouseButtonEvent(MouseButton mouseButton, const glm::vec2 &position, bool pressed)
+void EventReceiver::processMouse()
 {
-	if (pressed)
+	if (Input::isMouseButtonDown(MOUSEBUTTON_LEFT))
 	{
 		glm::vec3 position = this->camera->getPosition();
-		if (mouseButton == MOUSEBUTTON_LEFT)
-			position.x -= 1.0f;
-		else
-			position.x += 1.0f;
-
+		position.x -= 1.0f;
+		this->camera->setPosition(position);
+	}
+	else if (Input::isMouseButtonDown(MOUSEBUTTON_RIGHT))
+	{
+		glm::vec3 position = this->camera->getPosition();
+		position.x += 1.0f;
 		this->camera->setPosition(position);
 	}
 }

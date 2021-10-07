@@ -12,7 +12,6 @@ namespace sre
 {
 
 class AMultimediaWrapper;
-class InputHandler;
 class GUIButtonComponent;
 
 /*!
@@ -42,7 +41,7 @@ public:
 private:
 	void swapBuffers();
 	void setEditorMode(bool value);
-	void processInput(InputHandler *inputHandler);
+	void processInput();
 	bool checkClosePressed();
 	void onBeginFrame();
     uint32_t stopTimer();

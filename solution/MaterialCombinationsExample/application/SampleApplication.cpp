@@ -1,7 +1,8 @@
 #include "SampleApplication.h"
 #include <application/events/EventReceiver.h>
 #include <MeshComponent.h>
-#include <sstream>
+#include <Input.h>
+#include <glm/vec3.hpp>
 
 SampleApplication::SampleApplication() : RenderEngine()
 {
@@ -11,10 +12,7 @@ void SampleApplication::onInit()
 {
 	this->sceneManager->createPerspectiveCamera();
 	
-	CameraComponent* camera = this->sceneManager->getMainCamera();
-
-	// set EventReceiver class for input handling
-	this->setEventReceiver(new EventReceiver(this, this->sceneManager->getMainCamera()));
+	this->camera = this->sceneManager->getMainCamera();
 
 	this->createLights();
 
@@ -52,6 +50,11 @@ void SampleApplication::onInit()
 	cubeMesh->getMaterial()->setCastShadow(false);
 }
 
+void SampleApplication::onUpdate(unsigned int elapsedTime)
+{
+	this->processInput();
+}
+
 void SampleApplication::createLights()
 {
 	glm::vec3 p1Position(0.0f, 5.0f, 0.0f);
@@ -69,4 +72,34 @@ void SampleApplication::createLights()
 	DirectionalLightComponent* dLight1 = this->sceneManager->createDirectionalLight();
 	dLight1->setDirection(glm::vec3(0.0f, -0.1f, -1.0f));
 	dLight1->setColor(glm::vec3(0.5f));
+}
+
+void SampleApplication::processInput()
+{
+	this->processKeys();
+	this->processMouse();
+}
+
+void SampleApplication::processKeys()
+{
+	if (Input::isKeyDown(KEY_ESC))
+		this->quit();
+	else if (Input::isKeyDown(KEY_e))
+		this->setEditorMode(true);
+}
+
+void SampleApplication::processMouse()
+{
+	if (Input::isMouseButtonDown(MOUSEBUTTON_LEFT))
+	{
+		glm::vec3 position = this->camera->getPosition();
+		position.x -= 1.0f;
+		this->camera->setPosition(position);
+	}
+	else if (Input::isMouseButtonDown(MOUSEBUTTON_RIGHT))
+	{
+		glm::vec3 position = this->camera->getPosition();
+		position.x += 1.0f;
+		this->camera->setPosition(position);
+	}
 }

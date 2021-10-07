@@ -212,6 +212,7 @@
     <ClCompile Include="src\core\graphics\shaders\Shader.cpp" />
     <ClCompile Include="src\core\io\DefaultGameValues.cpp" />
     <ClCompile Include="src\core\multimedia\EngineValues.cpp" />
+    <ClCompile Include="src\core\multimedia\Input.cpp" />
     <ClCompile Include="src\core\multimedia\textures\atlases\FontAtlas.cpp" />
     <ClCompile Include="src\core\singletonsManager\SingletonsManager.cpp" />
     <ClCompile Include="src\core\wrappers\graphics\OpenGLESAPI.cpp" />
@@ -413,7 +414,7 @@
     <ClInclude Include="include\ImGuiAPI.h" />
     <ClInclude Include="include\ImGuiAPIEmptyState.h" />
     <ClInclude Include="include\ImGuiAPIState.h" />
-    <ClInclude Include="include\InputHandler.h" />
+    <ClInclude Include="include\Input.h" />
     <ClInclude Include="include\LightManager.h" />
     <ClInclude Include="include\LightRendererShaderSetup.h" />
     <ClInclude Include="include\LitMaterialComponent.h" />

@@ -1,16 +1,12 @@
 #ifndef _RENDER_ENGINE_H_
 #define _RENDER_ENGINE_H_
 
-#include "InputHandler.h"
 #include "SceneManager.h"
 #include "GUIManager.h"
 #include "MultimediaManager.h"
 #include "RenderManager.h"
 #include "EngineValues.h"
-
-#if defined(DEBUG) && !defined(__ANDROID__)
 #include "WorldEditor.h"
-#endif
 
 namespace sre
 {
@@ -24,7 +20,6 @@ protected:
     MultimediaManager* multimediaManager;
     UPTR<SceneManager> sceneManager;
 	UPTR<GUIManager> guiManager;
-	UPTR <InputHandler> inputHandler;
 	
 private:
     RenderManager* renderManager;
@@ -33,7 +28,7 @@ private:
     bool isEditorMode;
     bool wasEditorMode;
 
-#if defined(DEBUG) && !defined(__ANDROID__)
+#if !defined(RELEASE) && !defined(__ANDROID__)
     UPTR<WorldEditor> worldEditor;
 #endif
 
@@ -42,7 +37,6 @@ public:
 
 public:
     void run();
-    void setEventReceiver(InputHandler *inputHandler);
     void loadScene(const std::string& scene);
     void setEditorMode(bool value);
     void quit();

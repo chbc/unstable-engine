@@ -1,5 +1,5 @@
 /*
-	This file is part of SudaRA.
+	This file is part of Unstable Engine.
 
     SudaRA is free software: you can redistribute it and/or modify
 	it under the terms of the GNU Lesser General Public License as published
@@ -15,72 +15,162 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef _BUTTONNAMES_H_
-#define _BUTTONNAMES_H_
+#pragma once
 
 namespace sre
 {
 
-typedef unsigned short MouseButton;
-typedef unsigned int KeyboardButton;
+#define SCANCODE_MASK (1<<30)
+#define SCANCODE_TO_KEYCODE(X)  (X | SCANCODE_MASK)
 
-#define KEY_a 97
-#define KEY_b 98
-#define KEY_c 99
-#define KEY_d 100
-#define KEY_e 101
-#define KEY_f 102
-#define KEY_g 103
-#define KEY_h 104
-#define KEY_i 105
-#define KEY_j 106
-#define KEY_k 107
-#define KEY_l 108
-#define KEY_m 109
-#define KEY_n 110
-#define KEY_o 111
-#define KEY_p 112
-#define KEY_q 113
-#define KEY_r 114
-#define KEY_s 115
-#define KEY_t 116
-#define KEY_u 117
-#define KEY_v 118
-#define KEY_w 119
-#define KEY_x 120
-#define KEY_y 121
-#define KEY_z 122
+enum ScanCode
+{
+	SCANCODE_F1 = 58,
+	SCANCODE_F2 = 59,
+	SCANCODE_F3 = 60,
+	SCANCODE_F4 = 61,
+	SCANCODE_F5 = 62,
+	SCANCODE_F6 = 63,
+	SCANCODE_F7 = 64,
+	SCANCODE_F8 = 65,
+	SCANCODE_F9 = 66,
+	SCANCODE_F10 = 67,
+	SCANCODE_F11 = 68,
+	SCANCODE_F12 = 69,
 
-#define KEY_0 48
-#define KEY_1 49
-#define KEY_2 50
-#define KEY_3 51
-#define KEY_4 52
-#define KEY_5 53
-#define KEY_6 54
-#define KEY_7 55
-#define KEY_8 56
-#define KEY_9 57
+	SCANCODE_PRINTSCREEN = 70,
+	SCANCODE_SCROLLLOCK = 71,
+	SCANCODE_PAUSE = 72,
+	SCANCODE_INSERT = 73,
 
-#define KEY_UP			273
-#define KEY_DOWN		274
-#define KEY_RIGHT		275
-#define KEY_LEFT		276
-#define KEY_INSERT		277
-#define KEY_HOME		278
-#define KEY_END			279
-#define KEY_PAGEUP		280
-#define KEY_PAGEDOWN	281
+	SCANCODE_HOME = 74,
+	SCANCODE_PAGEUP = 75,
+	SCANCODE_DELETE = 76,
+	SCANCODE_END = 77,
+	SCANCODE_PAGEDOWN = 78,
+	SCANCODE_RIGHT = 79,
+	SCANCODE_LEFT = 80,
+	SCANCODE_DOWN = 81,
+	SCANCODE_UP = 82,
 
-#define KEY_RETURN	13
-#define KEY_ESC		27
-#define KEY_SPACE	32
+	SCANCODE_KP_DIVIDE = 84,
+	SCANCODE_KP_MULTIPLY = 85,
+	SCANCODE_KP_MINUS = 86,
+	SCANCODE_KP_PLUS = 87,
+	SCANCODE_KP_ENTER = 88,
+	SCANCODE_KP_1 = 89,
+	SCANCODE_KP_2 = 90,
+	SCANCODE_KP_3 = 91,
+	SCANCODE_KP_4 = 92,
+	SCANCODE_KP_5 = 93,
+	SCANCODE_KP_6 = 94,
+	SCANCODE_KP_7 = 95,
+	SCANCODE_KP_8 = 96,
+	SCANCODE_KP_9 = 97,
+	SCANCODE_KP_0 = 98,
+	SCANCODE_KP_PERIOD = 99,
 
+	SCANCODE_LCTRL	= 224,
+	SCANCODE_LSHIFT = 225,
+	SCANCODE_LALT	= 226,
+	SCANCODE_LGUI	= 227,
+	SCANCODE_RCTRL	= 228,
+	SCANCODE_RSHIFT = 229,
+	SCANCODE_RALT	= 230
+};
 
-#define MOUSEBUTTON_LEFT	1
-#define MOUSEBUTTON_MIDDLE	2
-#define MOUSEBUTTON_RIGHT	3
+enum Key
+{
+	KEY_a = 'a',
+	KEY_b = 'b',
+	KEY_c = 'c',
+	KEY_d = 'd',
+	KEY_e = 'e',
+	KEY_f = 'f',
+	KEY_g = 'g',
+	KEY_h = 'h',
+	KEY_i = 'i',
+	KEY_j = 'j',
+	KEY_k = 'k',
+	KEY_l = 'l',
+	KEY_m = 'm',
+	KEY_n = 'n',
+	KEY_o = 'o',
+	KEY_p = 'p',
+	KEY_q = 'q',
+	KEY_r = 'r',
+	KEY_s = 's',
+	KEY_t = 't',
+	KEY_u = 'u',
+	KEY_v = 'v',
+	KEY_w = 'w',
+	KEY_x = 'x',
+	KEY_y = 'y',
+	KEY_z = 'z',
+
+	KEY_0 = '0',
+	KEY_1 = '1',
+	KEY_2 = '2',
+	KEY_3 = '3',
+	KEY_4 = '4',
+	KEY_5 = '5',
+	KEY_6 = '6',
+	KEY_7 = '7',
+	KEY_8 = '8',
+	KEY_9 = '9',
+	
+	KEY_RETURN		= '\r',
+	KEY_ESC			= '\033',
+	KEY_SPACE		= ' ',
+	KEY_BACKSPACE	= '\b',
+	KEY_TAB			= '\t',
+
+	KEY_UP			= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_UP),
+	KEY_DOWN		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_DOWN),
+	KEY_LEFT		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_LEFT),
+	KEY_RIGHT		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_RIGHT),
+	KEY_INSERT		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_INSERT),
+	KEY_HOME		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_HOME),
+	KEY_END			= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_END),
+	KEY_PAGEUP		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_PAGEUP),
+	KEY_PAGEDOWN	= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_PAGEDOWN),
+	KEY_DELETE		= '\177',
+
+	KEYPAD_DIVIDE	= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_DIVIDE),
+	KEYPAD_MULTIPLY	= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_MULTIPLY),
+	KEYPAD_MINUS	= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_MINUS),
+	KEYPAD_PLUS		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_PLUS),
+	KEYPAD_ENTER	= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_ENTER),
+	KEYPAD_1		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_1),
+	KEYPAD_2		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_2),
+	KEYPAD_3		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_3),
+	KEYPAD_4		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_4),
+	KEYPAD_5		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_5),
+	KEYPAD_6		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_6),
+	KEYPAD_7		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_7),
+	KEYPAD_8		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_8),
+	KEYPAD_9		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_9),
+	KEYPAD_0		= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_0),
+	KEYPAD_PERIOD	= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_KP_PERIOD),
+
+	KEY_LCTRL	= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_LCTRL),
+	KEY_LSHIFT	= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_LSHIFT),
+	KEY_LALT	= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_LALT),
+	KEY_RCTRL	= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_RCTRL),
+	KEY_RSHIFT	= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_RSHIFT),
+	KEY_RALT	= SCANCODE_TO_KEYCODE(ScanCode::SCANCODE_RALT)
+};
+
+enum MouseButton
+{
+	MOUSEBUTTON_LEFT = 1,
+	MOUSEBUTTON_MIDDLE = 2,
+	MOUSEBUTTON_RIGHT = 3,
+	MOUSEBUTTON_4 = 4,
+	MOUSEBUTTON_5 = 5,
+	MOUSEBUTTON_6 = 6,
+	MOUSEBUTTON_7 = 7,
+	MOUSEBUTTON_8 = 8
+};
 
 } // namespace
-
-#endif

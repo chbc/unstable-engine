@@ -10,14 +10,22 @@ using namespace sre;
 */
 class SampleApplication : public RenderEngine
 {
+private:
+	class CameraComponent* camera;
+
 public:
 	SampleApplication();
 
 protected:
 	void onInit();
+	void onUpdate(unsigned int elapsedTime);
 
 private:
 	void createLights();
+
+	void processInput();
+	void processKeys();
+	void processMouse();
 };
 
 #endif

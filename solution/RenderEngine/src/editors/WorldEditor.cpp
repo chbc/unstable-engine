@@ -1,4 +1,4 @@
-#if defined(DEBUG) && !defined(__ANDROID__)
+#if !defined(RELEASE) && !defined(__ANDROID__)
 
 #include "WorldEditor.h"
 #include "EditorMenuBar.h"
@@ -20,7 +20,7 @@ WorldEditor::WorldEditor(SceneManager* arg_sceneManager)
 	this->menuBar = UPTR<IEditorWindow>(new EditorMenuBar{ &this->showDemo });
 	this->windows[0] = UPTR<IEditorWindow>(new EditorSceneTree{ sceneManager });
 	this->windows[1] = UPTR<IEditorWindow>(new EditorEntityProperties);
-    this->windows[2] = UPTR<EditorSceneViewport>(new EditorSceneViewport{ sceneManager });
+    this->windows[2] = UPTR<IEditorWindow>(new EditorSceneViewport{ sceneManager });
 }
 
 void WorldEditor::init()

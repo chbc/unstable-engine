@@ -4,10 +4,10 @@
 #include <SDL_image.h>
 #include <string>
 
-#include "InputHandler.h"
 #include "EngineValues.h"
 #include "GUIButtonComponent.h"
 #include "Entity.h"
+#include "Input.h"
 
 namespace sre
 {
@@ -57,36 +57,19 @@ void SDLAPI::swapBuffers()
 
 void SDLAPI::setEditorMode(bool value)
 {
-	this->isEditorMode = value;
 	this->imGuiAPI->setEditorMode(value);
 }
 
-void SDLAPI::processInput(InputHandler *inputHandler, const std::vector<GUIButtonComponent*>& guiButtons)
+void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons)
 {
 	SDL_Event currentEvent;
+
+	Input::clear();
 	while (SDL_PollEvent(&currentEvent))
 	{
 		this->imGuiAPI->processEvent(&currentEvent);
-		
-		if (!this->isEditorMode)
-			this->processInput(inputHandler, guiButtons, currentEvent);
+		this->processInput(guiButtons, currentEvent);
 	}
-}
-
-bool SDLAPI::checkClosePressed()
-{
-	bool result = false;
-	SDL_Event currentEvent;
-	while (SDL_PollEvent(&currentEvent))
-	{
-		if (currentEvent.type == SDL_QUIT)
-		{
-			result = true;
-			break;
-		}
-	}
-
-	return result;
 }
 
 unsigned int SDLAPI::getTicks()
@@ -133,38 +116,28 @@ void SDLAPI::release()
 	SDL_Quit();
 }
 
-void SDLAPI::processInput(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, SDL_Event& currentEvent)
+void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons, SDL_Event& currentEvent)
 {
 	glm::vec2 position;
 
 	switch (currentEvent.type)
 	{
-		case SDL_QUIT:		inputHandler->onQuit(); break;
-		case SDL_KEYDOWN:	inputHandler->onKeyEvent(currentEvent.key.keysym.sym, true); break;
-		case SDL_KEYUP:		inputHandler->onKeyEvent(currentEvent.key.keysym.sym, false); break;
+		case SDL_QUIT:		Input::CloseButton = true; break;
+		case SDL_KEYDOWN:	Input::addKey(static_cast<Key>(currentEvent.key.keysym.sym)); break;
 
 		case SDL_MOUSEMOTION:
-			position = glm::vec2{ currentEvent.motion.x, currentEvent.motion.y };
-			inputHandler->onMouseMove(position);
-
-			position = glm::vec2{ currentEvent.motion.xrel, currentEvent.motion.yrel };
-			inputHandler->onMouseMoveRelative(position);
+			Input::setMousePosition(currentEvent.motion.x, currentEvent.motion.y);
+			Input::setMouseDeltaPosition(currentEvent.motion.xrel, currentEvent.motion.yrel);
 			break;
 
 		case SDL_MOUSEBUTTONDOWN:
 			position = glm::vec2{ currentEvent.button.x, currentEvent.button.y };
-
-			if (guiButtons.empty() || !this->checkButtonPress(inputHandler, guiButtons, position))
-				inputHandler->onMouseButtonEvent(currentEvent.button.button, position, true);
-			break;
-
-		case SDL_MOUSEBUTTONUP:
-			position = glm::vec2{ currentEvent.button.x, currentEvent.button.y };
-			inputHandler->onMouseButtonEvent(currentEvent.button.button, position, false);
+			if (guiButtons.empty() || !this->checkButtonPress(guiButtons, position))
+				Input::addMouseButton(static_cast<MouseButton>(currentEvent.button.button));
 			break;
 
 		case SDL_MOUSEWHEEL:
-			inputHandler->onMouseWheel(currentEvent.wheel.y);
+			Input::setMouseWheel(currentEvent.wheel.y);
 			break;
 
 		case SDL_WINDOWEVENT:
@@ -179,18 +152,23 @@ void SDLAPI::processInput(InputHandler* inputHandler, const std::vector<GUIButto
 	}
 }
 
-bool SDLAPI::checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition)
+bool SDLAPI::checkButtonPress(const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition)
 {
 	pressPosition.x /= EngineValues::SCREEN_WIDTH;
 	pressPosition.y /= EngineValues::SCREEN_HEIGHT;
 
+	bool done = false;
+
 	for (GUIButtonComponent* item : guiButtons)
 	{
-		if (item->getEntity()->isEnabled() && item->isInside(pressPosition))
+		bool pressed = false;
+		if (!done && item->getEntity()->isEnabled() && item->isInside(pressPosition))
 		{
-			inputHandler->onGUIButtonPressed(item, item->getEntity()->getName());
-			return true;
+			pressed = true;
+			done = true;
 		}
+
+		item->setPressed(pressed);
 	}
 
 	return false;

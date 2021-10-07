@@ -18,20 +18,18 @@ class SDLAPI : public AMultimediaWrapper
 private:
 	SDL_Window *window;
 	UPTR<ImGuiAPI> imGuiAPI;
-	bool isEditorMode;
 
 	const std::string ASSETS_FOLDER = "../../media/";
 
 public:
-	SDLAPI() = default;
+	SDLAPI() : window(nullptr), imGuiAPI(nullptr) { }
 
 protected:
 	void init() override;
 	void onBeginFrame() override;
 	void swapBuffers() override;
 	void setEditorMode(bool value) override;
-	void processInput(InputHandler *inputHandler, const std::vector<GUIButtonComponent*>& guiButtons) override;
-	bool checkClosePressed() override;
+	void processInput(const std::vector<GUIButtonComponent*>& guiButtons) override;
 	unsigned int getTicks() override;
 	void delay(unsigned int) override;
 	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) override;
@@ -39,8 +37,8 @@ protected:
 	void release() override;
 
 private:
-	void processInput(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, SDL_Event& currentEvent);
-	bool checkButtonPress(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
+	void processInput(const std::vector<GUIButtonComponent*>& guiButtons, SDL_Event& currentEvent);
+	bool checkButtonPress(const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
 	std::string getError();
 };
 

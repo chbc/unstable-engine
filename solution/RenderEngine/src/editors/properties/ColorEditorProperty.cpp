@@ -27,9 +27,9 @@ void ColorEditorProperty::draw()
 	ImGui::NextColumn();
 
 	if (hasAlpha)
-		ImGui::ColorEdit4("##id", this->values);
+		ImGui::ColorEdit4("##id", this->values, ImGuiColorEditFlags_NoInputs);
 	else
-		ImGui::ColorEdit3("##id", this->values);
+		ImGui::ColorEdit3("##id", this->values, ImGuiColorEditFlags_NoInputs);
 
 	ImGui::Columns(1);
 

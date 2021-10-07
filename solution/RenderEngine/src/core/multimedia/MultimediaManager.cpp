@@ -5,6 +5,7 @@
 #include "GUIButtonComponent.h"
 #include "Entity.h"
 #include "CollectionsUtils.h"
+#include "Input.h"
 
 #ifdef __ANDROID__
 #include "SDLAndroidAPI.h"
@@ -50,14 +51,14 @@ void MultimediaManager::setEditorMode(bool value)
 	this->multimediaWrapper->setEditorMode(value);
 }
 
-void MultimediaManager::processInput(InputHandler *inputHandler)
+void MultimediaManager::processInput()
 {
-	this->multimediaWrapper->processInput(inputHandler, guiButtons);
+	this->multimediaWrapper->processInput(this->guiButtons);
 }
 
 bool MultimediaManager::checkClosePressed()
 {
-	return this->multimediaWrapper->checkClosePressed();
+	return Input::isCloseButtonDown();
 }
 
 void MultimediaManager::onBeginFrame()

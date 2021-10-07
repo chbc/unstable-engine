@@ -7,7 +7,6 @@
 namespace sre
 {
 
-class InputHandler;
 class GUIButtonComponent;
 
 class AMultimediaWrapper
@@ -23,8 +22,7 @@ protected:
 	virtual void onBeginFrame() = 0;
 	virtual void swapBuffers() =0;
 	virtual void setEditorMode(bool value) = 0;
-	virtual void processInput(InputHandler* inputHandler, const std::vector<GUIButtonComponent*>& guiButtons) =0;
-	virtual bool checkClosePressed() =0;
+	virtual void processInput(const std::vector<GUIButtonComponent*>& guiButtons) =0;
 	virtual unsigned int getTicks() =0;
 	virtual void delay(unsigned int timeMS) =0;
 	virtual void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) =0;
