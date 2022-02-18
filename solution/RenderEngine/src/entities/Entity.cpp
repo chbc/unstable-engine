@@ -47,15 +47,18 @@ void Entity::onStart()
 		item->onStart();
 }
 
-void Entity::update(uint32_t deltaTime)
+void Entity::onUpdate(uint32_t deltaTime)
 {
 	if (this->enabled)
 	{
 		for (auto const& item : this->componentsMap)
-			item.second->update(deltaTime);
+		{
+			if (item.second->isEnabled())
+				item.second->onUpdate(deltaTime);
+		}
 
 		for (Entity* item : this->childrenList)
-			item->update(deltaTime);
+			item->onUpdate(deltaTime);
 	}
 }
 

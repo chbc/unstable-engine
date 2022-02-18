@@ -13,11 +13,6 @@ AEntityComponent::~AEntityComponent()
 	this->editorProperties.clear();
 }
 
-void AEntityComponent::addEditorProperty(AEditorProperty* editorProperty)
-{
-	this->editorProperties.emplace_back(editorProperty);
-}
-
 uint16_t AEntityComponent::generateId()
 {
 	return Index++;
@@ -26,6 +21,21 @@ uint16_t AEntityComponent::generateId()
 TransformComponent *AEntityComponent::getTransform()
 {
 	return this->entity->getTransform();
+}
+
+void AEntityComponent::setEnabled(bool value)
+{
+	this->enabled = value;
+}
+
+bool AEntityComponent::isEnabled() const
+{
+	return this->enabled;
+}
+
+void AEntityComponent::addEditorProperty(AEditorProperty* editorProperty)
+{
+	this->editorProperties.emplace_back(editorProperty);
 }
 
 } // namespace

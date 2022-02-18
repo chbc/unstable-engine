@@ -309,6 +309,12 @@
     <ClCompile Include="src\core\multimedia\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\components\cameras\FlyingCameraComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\cameras\OrbitCameraComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -876,6 +882,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FlyingCameraComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OrbitCameraComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

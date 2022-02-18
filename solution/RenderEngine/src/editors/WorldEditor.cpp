@@ -33,6 +33,12 @@ void WorldEditor::init()
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 }
 
+void WorldEditor::onUpdate(uint32_t elapsedTime)
+{
+    for (const auto& item : this->windows)
+        item->onUpdate(elapsedTime);
+}
+
 void WorldEditor::onEditorGUI()
 {
     if (this->showDemo)
@@ -47,7 +53,8 @@ void WorldEditor::onEditorGUI()
         ImGui::ShowDemoWindow(&this->showDemo);
         return;
     }
-    else if (this->wasShowingDemo)
+    
+    if (this->wasShowingDemo)
     {
         this->wasShowingDemo = false;
         SingletonsManager* singletonsManager = SingletonsManager::getInstance();

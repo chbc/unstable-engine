@@ -39,6 +39,8 @@ public:
 	glm::vec3 getLocalPosition();
 	glm::quat getLocalRotation();
 	glm::vec3 getLocalScale();
+	glm::vec3 getForwardVector();
+	glm::vec3 getRightVector();
 
 	void getPosition(float* result);
 	void getRotation(float* result);

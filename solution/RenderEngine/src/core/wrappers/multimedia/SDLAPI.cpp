@@ -124,6 +124,7 @@ void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons, SD
 	{
 		case SDL_QUIT:		Input::CloseButton = true; break;
 		case SDL_KEYDOWN:	Input::addKey(static_cast<Key>(currentEvent.key.keysym.sym)); break;
+		case SDL_KEYUP:		Input::removeKeyDown(static_cast<Key>(currentEvent.key.keysym.sym)); break;
 
 		case SDL_MOUSEMOTION:
 			Input::setMousePosition(currentEvent.motion.x, currentEvent.motion.y);
@@ -134,6 +135,10 @@ void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons, SD
 			position = glm::vec2{ currentEvent.button.x, currentEvent.button.y };
 			if (guiButtons.empty() || !this->checkButtonPress(guiButtons, position))
 				Input::addMouseButton(static_cast<MouseButton>(currentEvent.button.button));
+			break;
+
+		case SDL_MOUSEBUTTONUP:
+			Input::removeMouseButtonDown(static_cast<MouseButton>(currentEvent.button.button));
 			break;
 
 		case SDL_MOUSEWHEEL:

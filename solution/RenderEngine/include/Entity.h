@@ -60,8 +60,8 @@ public:
     SRE_API bool isEnabled() const;
 
 protected:
-	void SRE_API onStart();
-	void SRE_API update(uint32_t deltaTime);
+	virtual void onStart();
+	virtual void onUpdate(uint32_t deltaTime);
 
 private:
     static std::string generateEntityId(uint32_t& index, const std::string& duplicateName = "");

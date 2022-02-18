@@ -12,24 +12,30 @@ namespace sre
 class SRE_API Input
 {
 private:
-	static std::unordered_map<Key, bool> Keys;
-	static std::unordered_map<MouseButton, bool> MouseButtons;
+	static std::unordered_map<Key, bool> JustPressedKeys;
+	static std::unordered_map<MouseButton, bool> JustPressedMouseButtons;
+	static std::unordered_map<Key, bool> KeysDown;
+	static std::unordered_map<MouseButton, bool> MouseButtonsDown;
 	static glm::ivec2 MousePosition;
 	static glm::ivec2 MouseDeltaPosition;
 	static int MouseWheelDirection;
 	static bool CloseButton;
 
 public:
+	static bool isKeyJustPressed(Key key);
+	static bool isMouseButtonJustPressed(MouseButton button);
 	static bool isKeyDown(Key key);
 	static bool isMouseButtonDown(MouseButton button);
 	static bool isCloseButtonDown();
 	static const glm::ivec2& getMousePosition();
 	static const glm::ivec2& getMouseDeltaPosition();
-	static int GetMouseWheel();
+	static int getMouseWheel();
 
 private:
 	static void addKey(Key key);
 	static void addMouseButton(MouseButton button);
+	static void removeKeyDown(Key key);
+	static void removeMouseButtonDown(MouseButton button);
 	static void setMousePosition(int x, int y);
 	static void setMouseDeltaPosition(int x, int y);
 	static void setMouseWheel(int direction);

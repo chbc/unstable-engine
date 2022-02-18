@@ -25,10 +25,13 @@ void RenderEngine::run()
     {
         this->multimediaManager->onBeginFrame();
 
-        this->processInput();
+        this->processMultimediaInput();
 
-        if (!this->isEditorMode)
-            this->onUpdate(this->multimediaManager->getLastFrameTime());
+        elapsedTime = this->multimediaManager->getLastFrameTime();
+        if (this->isEditorMode)
+            this->worldEditor->onUpdate(elapsedTime);
+        else
+            this->onUpdate(elapsedTime);
     	
         this->renderManager->render();
         this->onGUI();
@@ -112,7 +115,7 @@ void RenderEngine::init()
     messagesManager->addListener<ExitEditorMessage>(action);
 }
 
-void RenderEngine::processInput()
+void RenderEngine::processMultimediaInput()
 {
     this->multimediaManager->processInput();
     this->running = !this->multimediaManager->checkClosePressed();

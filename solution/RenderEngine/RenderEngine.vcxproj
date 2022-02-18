@@ -225,6 +225,8 @@
     <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\XYZEditorProperty.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
+    <ClCompile Include="src\entities\components\cameras\FlyingCameraComponent.cpp" />
+    <ClCompile Include="src\entities\components\cameras\OrbitCameraComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp" />
     <ClCompile Include="src\messages\BaseMessage.cpp" />
@@ -403,6 +405,7 @@
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\FileUtils.h" />
     <ClInclude Include="include\FloatEditorProperty.h" />
+    <ClInclude Include="include\FlyingCameraComponent.h" />
     <ClInclude Include="include\FontAtlas.h" />
     <ClInclude Include="include\GUIButtonComponent.h" />
     <ClInclude Include="include\GUIImageComponent.h" />
@@ -437,6 +440,7 @@
     <ClInclude Include="include\NormalRendererComponent.h" />
     <ClInclude Include="include\OpenGLAPI.h" />
     <ClInclude Include="include\OpenGLESAPI.h" />
+    <ClInclude Include="include\OrbitCameraComponent.h" />
     <ClInclude Include="include\OutlineRendererComponent.h" />
     <ClInclude Include="include\OutlineRendererPPComponent.h" />
     <ClInclude Include="include\PointLightComponent.h" />

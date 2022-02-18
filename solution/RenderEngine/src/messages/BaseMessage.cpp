@@ -10,5 +10,4 @@ uint16_t BaseMessage::generateId()
 	return Index++;
 }
 
-
 } // namespace

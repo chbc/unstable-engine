@@ -39,6 +39,14 @@ Entity* AEntityManager::getEntity(const std::string& name)
     return result;
 }
 
+void AEntityManager::update(uint32_t elapsedTime)
+{
+    for (const auto& item : this->entities)
+    {
+        item.second->onUpdate(elapsedTime);
+    }
+}
+
 void AEntityManager::removeDestroyedEntities()
 {
     CollectionsUtils::removeIfEntityIsDestroyed(this->entities);

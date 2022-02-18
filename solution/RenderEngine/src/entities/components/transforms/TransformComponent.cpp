@@ -180,6 +180,16 @@ void TransformComponent::getLocalScale(float* result)
 	result[2] = this->localMatrix[2][2];
 }
 
+glm::vec3 TransformComponent::getForwardVector()
+{
+	return glm::vec3{ 0.0f };
+}
+
+glm::vec3 TransformComponent::getRightVector()
+{
+	return glm::vec3{ 0.0f };
+}
+
 void TransformComponent::propagateTransform()
 {
 	Entity *entity = this->getEntity();

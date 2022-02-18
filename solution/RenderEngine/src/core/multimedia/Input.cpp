@@ -3,21 +3,33 @@
 namespace sre
 {
 
-std::unordered_map<Key, bool> Input::Keys;
-std::unordered_map<MouseButton, bool> Input::MouseButtons;
+std::unordered_map<Key, bool> Input::JustPressedKeys;
+std::unordered_map<MouseButton, bool> Input::JustPressedMouseButtons;
+std::unordered_map<Key, bool> Input::KeysDown;
+std::unordered_map<MouseButton, bool> Input::MouseButtonsDown;
 glm::ivec2 Input::MousePosition;
 glm::ivec2 Input::MouseDeltaPosition;
 int Input::MouseWheelDirection;
 bool Input::CloseButton;
 
+bool Input::isKeyJustPressed(Key key)
+{
+	return JustPressedKeys[key];
+}
+
+bool Input::isMouseButtonJustPressed(MouseButton button)
+{
+	return JustPressedMouseButtons[button];
+}
+
 bool Input::isKeyDown(Key key)
 {
-	return (Keys.count(key) > 0);
+	return KeysDown[key];
 }
 
 bool Input::isMouseButtonDown(MouseButton button)
 {
-	return (MouseButtons[button]);
+	return MouseButtonsDown[button];
 }
 
 bool Input::isCloseButtonDown()
@@ -35,19 +47,33 @@ const glm::ivec2& Input::getMouseDeltaPosition()
 	return MouseDeltaPosition;
 }
 
-int Input::GetMouseWheel()
+int Input::getMouseWheel()
 {
 	return MouseWheelDirection;
 }
 
 void Input::addKey(Key key)
 {
-	Keys[key] = true;
+	JustPressedKeys[key] = true;
+	KeysDown[key] = true;
 }
 
 void Input::addMouseButton(MouseButton button)
 {
-	MouseButtons[button] = true;
+	JustPressedMouseButtons[button] = true;
+	MouseButtonsDown[button] = true;
+}
+
+void Input::removeKeyDown(Key key)
+{
+	if (KeysDown[key])
+		KeysDown[key] = false;
+}
+
+void Input::removeMouseButtonDown(MouseButton button)
+{
+	if (MouseButtonsDown[button])
+		MouseButtonsDown[button] = false;
 }
 
 void Input::setMousePosition(int x, int y)
@@ -69,8 +95,8 @@ void Input::setMouseWheel(int direction)
 
 void Input::clear()
 {
-	Keys.clear();
-	MouseButtons.clear();
+	JustPressedKeys.clear();
+	JustPressedMouseButtons.clear();
 	MouseDeltaPosition.x = 0;
 	MouseDeltaPosition.y = 0;
 	MouseWheelDirection = 0;

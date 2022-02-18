@@ -27,13 +27,14 @@ class SRE_API AEntityComponent
 {
 private:
     Entity* entity;
+    bool enabled;
 
     static uint16_t Index;
 
     std::vector<SPTR<AEditorProperty>> editorProperties;
 
 public:
-    AEntityComponent(Entity* arg_entity) : entity(arg_entity) { }
+    AEntityComponent(Entity* arg_entity) : entity(arg_entity), enabled(true) { }
     ~AEntityComponent();
 
 
@@ -43,11 +44,13 @@ public:
     TransformComponent* getTransform();
     virtual const char* getClassName() = 0;
 
+    void setEnabled(bool value);
+    bool isEnabled() const;
+
 protected:
     virtual void onStart() {}
-    virtual void update(uint32_t deltaTime) {}
+    virtual void onUpdate(uint32_t elapsedTime) {}
     void addEditorProperty(AEditorProperty* editorProperty);
-
 
 friend class Entity;
 friend class EditorEntityProperties;

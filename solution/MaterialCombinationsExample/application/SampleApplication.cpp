@@ -82,21 +82,21 @@ void SampleApplication::processInput()
 
 void SampleApplication::processKeys()
 {
-	if (Input::isKeyDown(KEY_ESC))
+	if (Input::isKeyJustPressed(KEY_ESC))
 		this->quit();
-	else if (Input::isKeyDown(KEY_e))
+	else if (Input::isKeyJustPressed(KEY_e))
 		this->setEditorMode(true);
 }
 
 void SampleApplication::processMouse()
 {
-	if (Input::isMouseButtonDown(MOUSEBUTTON_LEFT))
+	if (Input::isMouseButtonJustPressed(MOUSEBUTTON_LEFT))
 	{
 		glm::vec3 position = this->camera->getPosition();
 		position.x -= 1.0f;
 		this->camera->setPosition(position);
 	}
-	else if (Input::isMouseButtonDown(MOUSEBUTTON_RIGHT))
+	else if (Input::isMouseButtonJustPressed(MOUSEBUTTON_RIGHT))
 	{
 		glm::vec3 position = this->camera->getPosition();
 		position.x += 1.0f;

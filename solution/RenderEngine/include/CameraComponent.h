@@ -1,4 +1,3 @@
-
 #ifndef _CAMERA_COMPONENT_H_
 #define _CAMERA_COMPONENT_H_
 
@@ -17,7 +16,7 @@ class SRE_API CameraComponent : public AEntityComponent
 {
 DECLARE_COMPONENT()
 
-private:
+protected:
 	TransformComponent *transform;
 	glm::vec3 lookAtTarget;
 	glm::vec3 up;
