@@ -28,19 +28,24 @@ CameraComponent::CameraComponent(Entity *entity) : AEntityComponent(entity)
     this->projection = glm::mat4(1.0f);
 }
 
-void CameraComponent::setLookAt(const glm::vec3 &target)
+void CameraComponent::setLookAt(const glm::vec3& target)
 {
     this->lookAtTarget = target;
 }
 
-void CameraComponent::setPosition(const glm::vec3 &position)
+void CameraComponent::setPosition(const glm::vec3& position)
 {
     this->transform->setPosition(position);
 }
 
-const glm::vec3& CameraComponent::getPosition()
+glm::vec3 CameraComponent::getPosition() const
 {
     return this->transform->getPosition();
+}
+
+glm::vec3 CameraComponent::getLookAt() const
+{
+    return this->lookAtTarget;
 }
 
 void CameraComponent::updateView()

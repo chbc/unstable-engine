@@ -26,11 +26,11 @@ protected:
 
 public:
 	CameraComponent(Entity *entity);
-	void setLookAt(const glm::vec3 &target);
-	void setPosition(const glm::vec3 &position);
-	const glm::vec3& getPosition();
+	void setLookAt(const glm::vec3& target);
+	void setPosition(const glm::vec3& position);
+	glm::vec3 getPosition() const;
 
-	const glm::vec3& getLookAt() const { return this->lookAtTarget; }
+	glm::vec3 getLookAt() const;
 
 	void setPerspectiveProjection(float fov, float aspectRatio, float near, float far);
 	void setOrthoProjection();

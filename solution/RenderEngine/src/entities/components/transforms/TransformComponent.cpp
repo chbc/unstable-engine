@@ -102,32 +102,32 @@ void TransformComponent::setLocalRotation(const glm::vec3 &axis, float angle)
 	this->propagateTransform();
 }
 
-glm::vec3 TransformComponent::getPosition()
+glm::vec3 TransformComponent::getPosition() const
 {
 	return glm::vec3(this->worldMatrix[3][0], this->worldMatrix[3][1], this->worldMatrix[3][2]);
 }
 
-glm::quat TransformComponent::getRotation()
+glm::quat TransformComponent::getRotation() const
 {
 	return glm::quat_cast(this->worldMatrix);
 }
 
-glm::vec3 TransformComponent::getScale()
+glm::vec3 TransformComponent::getScale() const
 {
 	return glm::vec3(this->worldMatrix[0][0], this->worldMatrix[1][1], this->worldMatrix[2][2]);
 }
 
-glm::vec3 TransformComponent::getLocalPosition()
+glm::vec3 TransformComponent::getLocalPosition() const
 {
 	return glm::vec3(this->localMatrix[3][0], this->localMatrix[3][1], this->localMatrix[3][2]);
 }
 
-glm::quat TransformComponent::getLocalRotation()
+glm::quat TransformComponent::getLocalRotation() const
 {
 	return glm::quat_cast(this->localMatrix);
 }
 
-glm::vec3 TransformComponent::getLocalScale()
+glm::vec3 TransformComponent::getLocalScale() const
 {
 	return glm::vec3(this->localMatrix[0][0], this->localMatrix[1][1], this->localMatrix[2][2]);
 }
@@ -180,12 +180,12 @@ void TransformComponent::getLocalScale(float* result)
 	result[2] = this->localMatrix[2][2];
 }
 
-glm::vec3 TransformComponent::getForwardVector()
+glm::vec3 TransformComponent::getForwardVector() const
 {
 	return glm::vec3{ 0.0f };
 }
 
-glm::vec3 TransformComponent::getRightVector()
+glm::vec3 TransformComponent::getRightVector() const
 {
 	return glm::vec3{ 0.0f };
 }

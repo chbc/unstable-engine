@@ -12,13 +12,12 @@ DECLARE_COMPONENT()
 private:
 	glm::vec3 moveDirection;
 	glm::vec3 rotateDirection;
-	float targetDistance;
+	glm::ivec2 lastMousePosition;
 
 public:
 	FlyingCameraComponent(Entity* entity);
 
 protected:
-	void onStart() override;
     void onUpdate(uint32_t elapsedTime) override;
 
 private:

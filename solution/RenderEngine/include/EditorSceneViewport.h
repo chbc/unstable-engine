@@ -22,8 +22,7 @@ private:
 
 	static uint32_t Fbo;
 	void* textureId;
-	float cameraDistance;
-	bool isFocused;
+	bool canUpdate;
 
 public:
 	EditorSceneViewport(SceneManager* arg_sceneManager);
@@ -36,7 +35,7 @@ public:
 private:
 	void processInput();
 	void updateViewingState();
-	void processMouseButtons();
+	void processMouseWheel();
 
 friend class WorldEditor;
 };

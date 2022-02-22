@@ -9,19 +9,15 @@ class OrbitCameraComponent : public CameraComponent
 {
 	DECLARE_COMPONENT()
 
-private:
-	float targetDistance;
-
 public:
 	OrbitCameraComponent(Entity* entity);
 
 protected:
 	void onStart() override;
-	void onUpdate(uint32_t deltaTime) override;
+	void onUpdate(uint32_t elapsedTime) override;
 
 private:
-	void processMouseWheel();
-	void processMouseMotion();
+	void processMouseMotion(uint32_t elapsedTime);
 };
 
 } // namespace

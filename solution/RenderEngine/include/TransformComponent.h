@@ -33,14 +33,14 @@ public:
 	void setLocalScale(const glm::vec3 &scale);
 	void setLocalRotation(const glm::vec3 &axis, float angle);
 
-	glm::vec3 getPosition();
-	glm::quat getRotation();
-	glm::vec3 getScale();
-	glm::vec3 getLocalPosition();
-	glm::quat getLocalRotation();
-	glm::vec3 getLocalScale();
-	glm::vec3 getForwardVector();
-	glm::vec3 getRightVector();
+	glm::vec3 getPosition() const;
+	glm::quat getRotation() const;
+	glm::vec3 getScale() const;
+	glm::vec3 getLocalPosition() const;
+	glm::quat getLocalRotation() const;
+	glm::vec3 getLocalScale() const;
+	glm::vec3 getForwardVector() const;
+	glm::vec3 getRightVector() const;
 
 	void getPosition(float* result);
 	void getRotation(float* result);
