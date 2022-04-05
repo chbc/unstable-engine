@@ -9,12 +9,12 @@ struct ImGuiIO;
 namespace sre
 {
 
-class SceneManager;
+class ScenesManager;
 
 class EditorSceneViewport : public IEditorWindow
 {
 private:
-	SceneManager* sceneManager;
+	ScenesManager* scenesManager;
 	class RenderManager* renderManager;
 	SPTR<class Entity> cameraEntity;
 	class FlyingCameraComponent* flyingCamera;
@@ -25,7 +25,7 @@ private:
 	bool canUpdate;
 
 public:
-	EditorSceneViewport(SceneManager* arg_sceneManager);
+	EditorSceneViewport(ScenesManager* arg_scenesManager);
 
 	void onInit() override;
 	void onUpdate(uint32_t elapsedTime) override;

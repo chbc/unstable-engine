@@ -14,13 +14,13 @@
 namespace sre
 {
 
-WorldEditor::WorldEditor(SceneManager* arg_sceneManager)
-	: sceneManager(arg_sceneManager), showDemo(false), wasShowingDemo(false)
+WorldEditor::WorldEditor(ScenesManager* arg_scenesManager)
+	: scenesManager(arg_scenesManager), showDemo(false), wasShowingDemo(false)
 {
 	this->menuBar = UPTR<IEditorWindow>(new EditorMenuBar{ &this->showDemo });
-	this->windows[0] = UPTR<IEditorWindow>(new EditorSceneTree{ sceneManager });
+	this->windows[0] = UPTR<IEditorWindow>(new EditorSceneTree{ scenesManager });
 	this->windows[1] = UPTR<IEditorWindow>(new EditorEntityProperties);
-    this->windows[2] = UPTR<IEditorWindow>(new EditorSceneViewport{ sceneManager });
+    this->windows[2] = UPTR<IEditorWindow>(new EditorSceneViewport{ scenesManager });
 }
 
 void WorldEditor::init()

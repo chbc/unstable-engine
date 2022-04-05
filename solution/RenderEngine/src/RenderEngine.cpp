@@ -3,6 +3,7 @@
 #include "DefaultGameValues.h"
 #include "EditorMessages.h"
 #include "MessagesManager.h"
+#include "GUIScene.h"
 
 namespace sre
 {
@@ -44,7 +45,7 @@ void RenderEngine::run()
         elapsedTime = this->multimediaManager->stopTimer();
 
 #ifdef DEBUG
-        this->guiManager->updateFrameIndicator(elapsedTime);
+        GUIScene::updateFrameIndicator(elapsedTime);
 #endif
 
         this->onEndFrame();
@@ -55,15 +56,13 @@ void RenderEngine::run()
 
 void RenderEngine::loadScene(const std::string& scene)
 {
-    this->guiManager->destroyAllEntities();
-    this->sceneManager->destroyAllEntities();
+    this->scenesManager->destroyAllEntities();
 
     this->removeDestroyedEntities();
 
     this->onInit();
 
-    this->guiManager->onSceneLoaded();
-    this->sceneManager->onSceneLoaded();
+    this->scenesManager->onScenesLoaded();
     this->renderManager->onSceneLoaded();
 }
 
@@ -93,17 +92,15 @@ void RenderEngine::init()
 
     this->multimediaManager->init();
     this->renderManager->init();
-    this->sceneManager = UPTR<SceneManager>{ new SceneManager };
-    this->guiManager = UPTR<GUIManager>{ new GUIManager };
+    this->scenesManager = UPTR<ScenesManager>{ new ScenesManager };
 
 #if !defined(RELEASE) && !defined(__ANDROID__)
-    this->worldEditor = UPTR<WorldEditor>(new WorldEditor{ this->sceneManager.get() });
+    this->worldEditor = UPTR<WorldEditor>(new WorldEditor{ this->scenesManager.get() });
 #endif
 
     this->onInit();
 
-    this->guiManager->onSceneLoaded();
-    this->sceneManager->onSceneLoaded();
+    this->scenesManager->onScenesLoaded();
     this->renderManager->onSceneLoaded();
 
     this->isEditorMode = false;
@@ -146,15 +143,14 @@ void RenderEngine::removeDestroyedEntities()
 {
     this->renderManager->onRemoveDestroyedEntities();
     this->multimediaManager->onRemoveDestroyedEntities();
-    this->sceneManager->removeDestroyedEntities();
-    this->guiManager->removeDestroyedEntities();
+    this->scenesManager->removeDestroyedEntities();
 }
 
 void RenderEngine::release()
 {
     SingletonsManager::getInstance()->release();
 
-    this->sceneManager->release();
+    this->scenesManager->release();
 }
 
 } // namespace

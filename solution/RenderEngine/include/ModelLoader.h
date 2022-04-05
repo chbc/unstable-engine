@@ -25,7 +25,7 @@ private:
     void processMesh(aiMesh *inputMesh, const aiScene *scene, Entity *entity);
     void processMaterials(aiMesh *inputMesh, const aiScene *scene, MeshComponent *entityMesh);
 
-friend class SceneManager;
+friend class Scene;
 };
 
 } // namespace

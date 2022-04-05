@@ -211,6 +211,7 @@
     <ClCompile Include="src\core\graphics\renderers\ShadowRenderer.cpp" />
     <ClCompile Include="src\core\graphics\shaders\Shader.cpp" />
     <ClCompile Include="src\core\io\DefaultGameValues.cpp" />
+    <ClCompile Include="src\core\io\SceneLoader.cpp" />
     <ClCompile Include="src\core\multimedia\EngineValues.cpp" />
     <ClCompile Include="src\core\multimedia\Input.cpp" />
     <ClCompile Include="src\core\multimedia\textures\atlases\FontAtlas.cpp" />
@@ -225,6 +226,7 @@
     <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\XYZEditorProperty.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
+    <ClCompile Include="src\entitiesManagers\scene\AScene.cpp" />
     <ClCompile Include="src\entities\components\cameras\FlyingCameraComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\OrbitCameraComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
@@ -234,7 +236,7 @@
     <ClCompile Include="src\editors\windows\EditorMenuBar.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneTree.cpp" />
     <ClCompile Include="src\editors\WorldEditor.cpp" />
-    <ClCompile Include="src\entitiesManagers\AEntityManager.cpp" />
+    <ClCompile Include="src\entitiesManagers\ScenesManager.cpp" />
     <ClCompile Include="src\entities\components\AEntityComponent.cpp" />
     <ClCompile Include="src\entities\components\buttons\SceneButtonComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\PostProcessingComponent.cpp" />
@@ -250,7 +252,7 @@
     <ClCompile Include="src\core\multimedia\textures\atlases\Atlas.cpp" />
     <ClCompile Include="src\core\multimedia\textures\atlases\AtlasManager.cpp" />
     <ClCompile Include="src\core\multimedia\textures\Texture.cpp" />
-    <ClCompile Include="src\entitiesManagers\gui\GUIManager.cpp" />
+    <ClCompile Include="src\entitiesManagers\gui\GUIScene.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\AORendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\ColorRendererComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\CameraComponent.cpp" />
@@ -266,7 +268,7 @@
     <ClCompile Include="src\entities\components\transforms\TransformComponent.cpp" />
     <ClCompile Include="src\messages\EditorMessages.cpp" />
     <ClCompile Include="src\RenderEngine.cpp" />
-    <ClCompile Include="src\entitiesManagers\scene\SceneManager.cpp" />
+    <ClCompile Include="src\entitiesManagers\scene\Scene.cpp" />
     <ClCompile Include="src\core\graphics\LightManager.cpp" />
     <ClCompile Include="src\core\graphics\RenderManager.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\DiffuseRendererComponent.cpp" />
@@ -365,7 +367,7 @@
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
     <ClInclude Include="include\AEntityComponent.h" />
-    <ClInclude Include="include\AEntityManager.h" />
+    <ClInclude Include="include\ScenesManager.h" />
     <ClInclude Include="include\AGraphicsWrapper.h" />
     <ClInclude Include="include\AImGuiAPIState.h" />
     <ClInclude Include="include\ALightComponent.h" />
@@ -409,7 +411,7 @@
     <ClInclude Include="include\FontAtlas.h" />
     <ClInclude Include="include\GUIButtonComponent.h" />
     <ClInclude Include="include\GUIImageComponent.h" />
-    <ClInclude Include="include\GUIManager.h" />
+    <ClInclude Include="include\GUIScene.h" />
     <ClInclude Include="include\GUIRenderer.h" />
     <ClInclude Include="include\GUITextComponent.h" />
     <ClInclude Include="include\HDRRendererComponent.h" />
@@ -451,8 +453,10 @@
     <ClInclude Include="include\Rect.h" />
     <ClInclude Include="include\RenderEngine.h" />
     <ClInclude Include="include\RenderManager.h" />
+    <ClInclude Include="include\AScene.h" />
     <ClInclude Include="include\SceneButtonComponent.h" />
-    <ClInclude Include="include\SceneManager.h" />
+    <ClInclude Include="include\SceneLoader.h" />
+    <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\SDLAPI.h" />
     <ClInclude Include="include\SDLAndroidAPI.h" />
     <ClInclude Include="include\Shader.h" />

@@ -7,6 +7,7 @@
 #include "EditorMessages.h"
 
 #include "imgui/imgui.h"
+#include "SceneLoader.h"
 
 namespace sre
 {
@@ -21,7 +22,11 @@ void EditorMenuBar::onEditorGUI()
 		if (ImGui::BeginMenu("File"))
 		{
 			ImGui::MenuItem("New scene");
-			ImGui::MenuItem("Open scene");
+			if (ImGui::MenuItem("Open scene"))
+			{
+				SceneLoader::load(nullptr);
+			}
+
 			ImGui::MenuItem("Save scene");
 			ImGui::MenuItem("Save scene as");
 			if (ImGui::MenuItem("Exit"))

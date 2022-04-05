@@ -129,13 +129,13 @@
     <ClCompile Include="src\entities\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entitiesManagers\gui\GUIManager.cpp">
+    <ClCompile Include="src\entitiesManagers\gui\GUIScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entitiesManagers\scene\SceneManager.cpp">
+    <ClCompile Include="src\entitiesManagers\scene\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entitiesManagers\AEntityManager.cpp">
+    <ClCompile Include="src\entitiesManagers\ScenesManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\tests\TestServicesProvider.cpp">
@@ -313,6 +313,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\components\cameras\OrbitCameraComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entitiesManagers\scene\AScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\io\SceneLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -524,7 +530,7 @@
     <ClInclude Include="include\AEntityComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AEntityManager.h">
+    <ClInclude Include="include\ScenesManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\AGraphicsWrapper.h">
@@ -611,7 +617,7 @@
     <ClInclude Include="include\GUIImageComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GUIManager.h">
+    <ClInclude Include="include\GUIScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GUIRenderer.h">
@@ -710,7 +716,7 @@
     <ClInclude Include="include\RenderManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\SceneManager.h">
+    <ClInclude Include="include\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\SDLAPI.h">
@@ -891,6 +897,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="thirdParties\imgui\imgui_impl_opengl3_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SceneLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

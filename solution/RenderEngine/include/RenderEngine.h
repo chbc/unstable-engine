@@ -1,8 +1,7 @@
 #ifndef _RENDER_ENGINE_H_
 #define _RENDER_ENGINE_H_
 
-#include "SceneManager.h"
-#include "GUIManager.h"
+#include "ScenesManager.h"
 #include "MultimediaManager.h"
 #include "RenderManager.h"
 #include "EngineValues.h"
@@ -18,8 +17,7 @@ class SRE_API RenderEngine
 {
 protected:
     MultimediaManager* multimediaManager;
-    UPTR<SceneManager> sceneManager;
-	UPTR<GUIManager> guiManager;
+    UPTR<ScenesManager> scenesManager;
 	
 private:
     RenderManager* renderManager;

@@ -29,7 +29,7 @@ private:
 	void loadFont(const std::string &fontFile);
 	uint32_t getTextureId() override;
 
-friend class GUIManager;
+friend class GUIScene;
 friend class Entity;
 };
 

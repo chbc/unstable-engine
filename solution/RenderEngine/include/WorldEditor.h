@@ -9,19 +9,19 @@
 namespace sre
 {
 	
-class SceneManager;
+class ScenesManager;
 	
 class WorldEditor
 {
 private:
-	SceneManager* sceneManager;
+	ScenesManager* scenesManager;
 	UPTR<IEditorWindow> menuBar;
 	UPTR<IEditorWindow> windows[3];
 	bool showDemo;
 	bool wasShowingDemo;
 	
 public:
-	WorldEditor(SceneManager* arg_sceneManager);
+	WorldEditor(ScenesManager* arg_scenesManager);
 
 private:
 	void init();

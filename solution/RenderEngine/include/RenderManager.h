@@ -75,8 +75,8 @@ private:
     void setTargetFBO(uint32_t fbo);
     void unbindFrameBuffer();
 
-friend class AEntityManager;
-friend class SceneManager;
+friend class AScene;
+friend class Scene;
 friend class AtlasManager;
 friend class MeshComponent;
 friend class RenderEngine;

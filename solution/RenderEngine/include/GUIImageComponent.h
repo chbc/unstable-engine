@@ -41,7 +41,7 @@ friend class Entity;
 friend class OpenGLAPI;
 friend class OpenGLESAPI;
 friend class GUIRenderer;
-friend class GUIManager;
+friend class GUIScene;
 friend class RenderManager;
 };
 

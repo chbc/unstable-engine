@@ -67,7 +67,7 @@ private:
     static std::string generateEntityId(uint32_t& index, const std::string& duplicateName = "");
     template <typename T> uint16_t getComponentId();
 
-    friend class AEntityManager;
+    friend class AScene;
     friend class ModelLoader;
 
     friend class TestServicesProvider;

@@ -7,16 +7,16 @@
 namespace sre
 {
 
-class SceneManager;
+class ScenesManager;
 
 class EditorSceneTree : public IEditorWindow
 {
 private:
-	SceneManager* sceneManager;
+	ScenesManager* scenesManager;
 	class Entity* selectedEntity;
 
 public:
-	EditorSceneTree(SceneManager* arg_sceneManager);
+	EditorSceneTree(ScenesManager* arg_scenesManager);
 	void onInit() override;
 	void onEditorGUI() override;
 

@@ -2,7 +2,7 @@
 
 #include "EditorSceneTree.h"
 #include "SingletonsManager.h"
-#include "SceneManager.h"
+#include "ScenesManager.h"
 #include "MessagesManager.h"
 #include "EditorMessages.h"
 #include "EngineValues.h"
@@ -12,8 +12,8 @@
 namespace sre
 {
 
-EditorSceneTree::EditorSceneTree(SceneManager* arg_sceneManager) 
-	: sceneManager(arg_sceneManager), selectedEntity(nullptr)
+EditorSceneTree::EditorSceneTree(ScenesManager* arg_scenesManager) 
+	: scenesManager(arg_scenesManager), selectedEntity(nullptr)
 { }
 
 void EditorSceneTree::onInit()
@@ -27,7 +27,7 @@ void EditorSceneTree::onEditorGUI()
 
 	if (ImGui::CollapsingHeader("scene_name", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		for (const auto& item : this->sceneManager->entities)
+		for (const auto& item : this->scenesManager->runtimeScene->entities)
 			this->drawEntityTree(item.second.get(), 0);
 	}
 

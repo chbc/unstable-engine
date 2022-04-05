@@ -1,28 +1,26 @@
-#ifndef _ENTITY_MANAGER_H_
-#define _ENTITY_MANAGER_H_
+#pragma once
 
 #include "Entity.h"
-#include "StringUtils.h"
 #include <unordered_map>
 
 namespace sre
 {
 
-class AEntityManager
+class AScene
 {
 protected:
     std::unordered_map<std::string, UPTR<Entity>> entities;
 
 private:
-    uint32_t entityIndex;
+    std::string name;
     bool sceneLoaded;
 
 public:
-	SRE_API Entity* createEntity(const std::string& name = "", Entity* parent = nullptr);
-    SRE_API Entity* getEntity(const std::string& name);
+    Entity* getEntity(const std::string& arg_name);
 
 protected:
-    AEntityManager();
+    AScene(std::string name);
+    Entity* createEntity(uint32_t &index, const std::string& name = "", Entity* parent = nullptr);
     void removeDestroyedEntities();
 
 private:
@@ -33,10 +31,8 @@ private:
 
     void release();
 
-friend class RenderEngine;
+friend class ScenesManager;
 friend class EditorSceneTree;
 };
 
 } // namespace
-
-#endif

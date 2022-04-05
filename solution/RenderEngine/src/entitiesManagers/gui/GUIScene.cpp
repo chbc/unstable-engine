@@ -1,9 +1,11 @@
-#include "GUIManager.h"
+#include "GUIScene.h"
 
 namespace sre
 {
 
-GUIManager::GUIManager() : AEntityManager() 
+GUITextComponent* GUIScene::frameMSIndicator = nullptr;
+
+GUIScene::GUIScene() : AScene("guiScene")
 {
 	/* ###
 #ifdef DEBUG
@@ -16,33 +18,33 @@ GUIManager::GUIManager() : AEntityManager()
 */
 }
 
-Entity *GUIManager::createGUIImageEntity(const std::string &fileName)
+Entity *GUIScene::createGUIImageEntity(uint32_t& index, const std::string &fileName)
 {
-    Entity *result = this->createEntity();
+    Entity *result = this->createEntity(index);
     GUIImageComponent *component = result->addComponent<GUIImageComponent>();
     component->load(fileName);
     return result;
 }
 
-Entity* GUIManager::createGUIImageEntity(const std::string& fileName, const glm::vec2& normalizedSize)
+Entity* GUIScene::createGUIImageEntity(uint32_t& index, const std::string& fileName, const glm::vec2& normalizedSize)
 {
-    Entity* result = this->createEntity();
+    Entity* result = this->createEntity(index);
     GUIImageComponent* component = result->addComponent<GUIImageComponent>();
     component->load(fileName, normalizedSize);
     return result;
 }
 
-Entity *GUIManager::createGUIImageEntityFromAtlas(const std::string &fileName, const std::string &imageId)
+Entity *GUIScene::createGUIImageEntityFromAtlas(uint32_t& index, const std::string &fileName, const std::string &imageId)
 {
-    Entity *result = this->createEntity();
+    Entity *result = this->createEntity(index);
     GUIImageComponent *component = result->addComponent<GUIImageComponent>();
     component->loadFromAtlas(fileName, imageId);
     return result;
 }
 
-Entity *GUIManager::createGUITextEntity(const std::string fontFile, uint32_t maxItems)
+Entity *GUIScene::createGUITextEntity(uint32_t& index, const std::string fontFile, uint32_t maxItems)
 {
-    Entity *result = this->createEntity();
+    Entity *result = this->createEntity(index);
     GUITextComponent *component = result->addComponent<GUITextComponent>(maxItems);
     component->loadFont(fontFile);
 
@@ -50,9 +52,9 @@ Entity *GUIManager::createGUITextEntity(const std::string fontFile, uint32_t max
 }
 
 #ifdef DEBUG
-void GUIManager::updateFrameIndicator(int frameTime)
+void GUIScene::updateFrameIndicator(int frameTime)
 {
-    // ### this->frameMSIndicator->setText(std::to_string(frameTime));
+    frameMSIndicator->setText(std::to_string(frameTime));
 }
 #endif
 
