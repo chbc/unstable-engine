@@ -68,9 +68,12 @@ void GUITextComponent::setText(const std::string &text)
         }
 
         meshFactory.createPlaneIndices(indices, itemsCount);
-        this->meshData = sre::make_unique<GUIMeshData>(vertices, indices);
 
-		GUIMeshData* guiMeshData = static_cast<GUIMeshData*>(this->meshData.get());
+        GUIMeshData* guiMeshData = static_cast<GUIMeshData*>(this->meshData.get());
+
+        guiMeshData->vertexData = vertices;
+        guiMeshData->indices = indices;
+
         SingletonsManager::getInstance()->resolve<RenderManager>()->setupBufferSubData(guiMeshData);
     }
 }

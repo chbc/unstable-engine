@@ -5,20 +5,17 @@ namespace sre
 
 GUITextComponent* GUIScene::frameMSIndicator = nullptr;
 
-GUIScene::GUIScene() : AScene("guiScene")
+GUIScene::GUIScene(uint32_t& index) : AScene("guiScene")
 {
-	/* ###
 #ifdef DEBUG
-    Entity *entity = createGUITextEntity("../../media/fonts/verdana", 6);
+    Entity *entity = createGUITextEntity(index, "fonts/verdana", 6, "_frame_indicator");
     this->frameMSIndicator = entity->getComponent<GUITextComponent>();
     this->frameMSIndicator->setUIPosition(glm::vec2(0.025f, 0.025f));
     entity->getTransform()->setScale(glm::vec3(0.5f, 0.5f, 1.0f));
-    this->addEntity(entity, "_frame_indicator");
 #endif
-*/
 }
 
-Entity *GUIScene::createGUIImageEntity(uint32_t& index, const std::string &fileName)
+Entity *GUIScene::createGUIImageEntity(uint32_t& index, const std::string &fileName, const std::string& name)
 {
     Entity *result = this->createEntity(index);
     GUIImageComponent *component = result->addComponent<GUIImageComponent>();
@@ -26,7 +23,7 @@ Entity *GUIScene::createGUIImageEntity(uint32_t& index, const std::string &fileN
     return result;
 }
 
-Entity* GUIScene::createGUIImageEntity(uint32_t& index, const std::string& fileName, const glm::vec2& normalizedSize)
+Entity* GUIScene::createGUIImageEntity(uint32_t& index, const std::string& fileName, const glm::vec2& normalizedSize, const std::string& name)
 {
     Entity* result = this->createEntity(index);
     GUIImageComponent* component = result->addComponent<GUIImageComponent>();
@@ -34,7 +31,7 @@ Entity* GUIScene::createGUIImageEntity(uint32_t& index, const std::string& fileN
     return result;
 }
 
-Entity *GUIScene::createGUIImageEntityFromAtlas(uint32_t& index, const std::string &fileName, const std::string &imageId)
+Entity *GUIScene::createGUIImageEntityFromAtlas(uint32_t& index, const std::string &fileName, const std::string &imageId, const std::string& name)
 {
     Entity *result = this->createEntity(index);
     GUIImageComponent *component = result->addComponent<GUIImageComponent>();
@@ -42,7 +39,7 @@ Entity *GUIScene::createGUIImageEntityFromAtlas(uint32_t& index, const std::stri
     return result;
 }
 
-Entity *GUIScene::createGUITextEntity(uint32_t& index, const std::string fontFile, uint32_t maxItems)
+Entity *GUIScene::createGUITextEntity(uint32_t& index, const std::string fontFile, uint32_t maxItems, const std::string& name)
 {
     Entity *result = this->createEntity(index);
     GUITextComponent *component = result->addComponent<GUITextComponent>(maxItems);

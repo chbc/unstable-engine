@@ -10,9 +10,9 @@ SampleApplication::SampleApplication() : RenderEngine()
 
 void SampleApplication::onInit()
 {
-	this->sceneManager->createPerspectiveCamera();
+	this->scenesManager->createPerspectiveCamera();
 	
-	this->camera = this->sceneManager->getMainCamera();
+	this->camera = this->scenesManager->getMainCamera();
 
 	this->createLights();
 
@@ -20,19 +20,19 @@ void SampleApplication::onInit()
 	Entity* cube;
 	MeshComponent* cubeMesh;
 
-	cube = this->sceneManager->createCubeEntity(2.0f);
+	cube = this->scenesManager->createCubeEntity(2.0f);
 	cube->getTransform()->setPosition(position);
 	cubeMesh = cube->getComponent<MeshComponent>();
 	cubeMesh->getMaterial()->setCastShadow(false);
 
-	cube = this->sceneManager->createCubeEntity(2.0f);
+	cube = this->scenesManager->createCubeEntity(2.0f);
 	position.x = 0.0f;
 	cube->getTransform()->setPosition(position);
 	cubeMesh = cube->getComponent<MeshComponent>();
 	cubeMesh->addMaterialComponent<DiffuseMaterialComponent>("crate.png");
 	cubeMesh->getMaterial()->setCastShadow(false);
 
-	cube = this->sceneManager->createCubeEntity(2.0f);
+	cube = this->scenesManager->createCubeEntity(2.0f);
 	position.x = 5.0f;
 	cube->getTransform()->setPosition(position);
 	cubeMesh = cube->getComponent<MeshComponent>();
@@ -40,7 +40,7 @@ void SampleApplication::onInit()
 	cubeMesh->addMaterialComponent<NormalMaterialComponent>("crate_normal.png");
 	cubeMesh->getMaterial()->setCastShadow(false);
 
-	cube = this->sceneManager->createCubeEntity(2.0f, "caixa_filha", cube);
+	cube = this->scenesManager->createCubeEntity(2.0f, "caixa_filha", cube);
 	position = glm::vec3(0.0f, 0.0f, -2.5f);
 	cube->getTransform()->setPosition(position);
 	cubeMesh = cube->getComponent<MeshComponent>();
@@ -59,17 +59,17 @@ void SampleApplication::createLights()
 {
 	glm::vec3 p1Position(0.0f, 5.0f, 0.0f);
 
-	Entity* lightCube = this->sceneManager->createCubeEntity(0.2f);
+	Entity* lightCube = this->scenesManager->createCubeEntity(0.2f);
 	lightCube->getTransform()->setPosition(p1Position);
 	MeshComponent* cubeMesh = lightCube->getComponent<MeshComponent>();
 	cubeMesh->getMaterial()->setCastShadow(false);
 	cubeMesh->getMaterial()->setReceivesLight(false);
 
-	PointLightComponent* pLight1 = this->sceneManager->createPointLight("p_light_1", lightCube);
+	PointLightComponent* pLight1 = this->scenesManager->createPointLight("p_light_1", lightCube);
 	// pLight1->getTransform()->setPosition(p1Position);
 	pLight1->setColor(glm::vec3(0.5f));
 
-	DirectionalLightComponent* dLight1 = this->sceneManager->createDirectionalLight();
+	DirectionalLightComponent* dLight1 = this->scenesManager->createDirectionalLight();
 	dLight1->setDirection(glm::vec3(0.0f, -0.1f, -1.0f));
 	dLight1->setColor(glm::vec3(0.5f));
 }

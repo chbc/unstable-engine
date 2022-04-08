@@ -8,7 +8,7 @@ namespace sre
 ScenesManager::ScenesManager() : entityIndex(0)
 {
     this->runtimeScene = UPTR<Scene>(new Scene{ "runtimeScene" });
-    this->guiScene = UPTR<GUIScene>(new GUIScene);
+    this->guiScene = UPTR<GUIScene>(new GUIScene{ this->entityIndex });
 }
 
 Entity *ScenesManager::createEntity(const std::string& name, Entity* parent)
