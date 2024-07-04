@@ -3,10 +3,9 @@
 namespace sre
 {
 
-Material::Material() : castShadow(true)
+Material::Material() : castShadow(false)
 {
     this->addComponent<ColorMaterialComponent>();
-    this->addComponent<LitMaterialComponent>();
 }
 
 void Material::setCastShadow(bool value)

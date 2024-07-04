@@ -56,6 +56,7 @@ void RenderEngine::run()
 
 void RenderEngine::loadScene(const std::string& scene)
 {
+    /* XXX
     this->scenesManager->destroyAllEntities();
 
     this->removeDestroyedEntities();
@@ -64,6 +65,7 @@ void RenderEngine::loadScene(const std::string& scene)
 
     this->scenesManager->onScenesLoaded();
     this->renderManager->onSceneLoaded();
+    */
 }
 
 void RenderEngine::setEditorMode(bool value)
@@ -100,7 +102,7 @@ void RenderEngine::init()
 
     this->onInit();
 
-    this->scenesManager->onScenesLoaded();
+    this->scenesManager->loadStartUpScene();
     this->renderManager->onSceneLoaded();
 
     this->isEditorMode = false;

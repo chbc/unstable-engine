@@ -5,6 +5,8 @@
 
 namespace sre
 {
+uint32_t AScene::EntityIndex = 0;
+
 AScene::AScene(std::string arg_name) : name(arg_name), sceneLoaded(false) { }
 
 Entity* AScene::getEntity(const std::string& name)
@@ -16,7 +18,7 @@ Entity* AScene::getEntity(const std::string& name)
     return result;
 }
 
-Entity* AScene::createEntity(uint32_t&index, const std::string& name, Entity* parent)
+Entity* AScene::createEntity(const std::string& name, Entity* parent)
 {
     Entity* result = new Entity;
 
@@ -26,9 +28,9 @@ Entity* AScene::createEntity(uint32_t&index, const std::string& name, Entity* pa
     {
         std::string resultName = name;
         if (name.empty())
-            resultName = Entity::generateEntityId(index);
+            resultName = Entity::generateEntityId(EntityIndex);
         else if (this->entities.count(name) > 0)
-            resultName = Entity::generateEntityId(index, name);
+            resultName = Entity::generateEntityId(EntityIndex, name);
 
         result->name = resultName;
         this->entities[resultName] = UPTR<Entity>{ result };

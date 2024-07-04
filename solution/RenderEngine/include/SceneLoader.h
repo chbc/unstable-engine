@@ -5,12 +5,14 @@ namespace sre
 
 class Scene;
 
-namespace SceneLoader
+class SceneLoader
 {
+private:
+	static void load(Scene* scene);
+	static void save(Scene* scene);
 
-void load(Scene* scene);
-void save(Scene* scene);
-
+friend class EditorMenuBar;
+friend class ScenesManager;
 };
 
 } // namespace

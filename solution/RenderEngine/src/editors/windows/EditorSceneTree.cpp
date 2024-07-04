@@ -25,12 +25,13 @@ void EditorSceneTree::onEditorGUI()
 {
 	ImGui::Begin("Hierarchy");
 
-	if (ImGui::CollapsingHeader("scene_name", ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		for (const auto& item : this->scenesManager->runtimeScene->entities)
-			this->drawEntityTree(item.second.get(), 0);
-	}
+	this->drawScene(this->scenesManager->runtimeScene.get());
 
+	for (const auto& item : this->scenesManager->scenes)
+		drawScene(item.get());
+
+	this->drawScene(this->scenesManager->guiScene.get());
+	
 	if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
 	{
 		this->selectedEntity = nullptr;
@@ -40,6 +41,18 @@ void EditorSceneTree::onEditorGUI()
 	}
 
 	ImGui::End();
+}
+
+void EditorSceneTree::drawScene(AScene* scene)
+{
+	if (!scene->entities.empty())
+	{
+		if (ImGui::CollapsingHeader(scene->name.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+		{
+			for (const auto& item : scene->entities)
+				this->drawEntityTree(item.second.get(), 0);
+		}
+	}
 }
 
 void EditorSceneTree::drawEntityTree(Entity* entity, int index)

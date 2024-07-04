@@ -86,6 +86,7 @@ friend class SingletonsManager;
 friend class BaseRendererShaderSetup;
 friend class EditorSceneViewport;
 friend class WorldEditor;
+friend class EditorMenuBar;
 };
 
 } // namespace

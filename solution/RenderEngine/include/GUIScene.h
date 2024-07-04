@@ -11,13 +11,13 @@ namespace sre
 class GUIScene : public AScene
 {
 private:
-    GUIScene(uint32_t& index);
+    GUIScene();
 
 private:
-	Entity* createGUIImageEntity(uint32_t& index, const std::string& fileName, const std::string& name = "");
-	Entity* createGUIImageEntity(uint32_t& index, const std::string& fileName, const glm::vec2& normalizedSize, const std::string& name = "");
-	Entity* createGUIImageEntityFromAtlas(uint32_t& index, const std::string& fileName, const std::string& imageId, const std::string& name = "");
-	Entity* createGUITextEntity(uint32_t& index, const std::string fontFile, uint32_t maxItems = 100u, const std::string& name = "");
+	Entity* createGUIImageEntity(const std::string& fileName, const std::string& name = "");
+	Entity* createGUIImageEntity(const std::string& fileName, const glm::vec2& normalizedSize, const std::string& name = "");
+	Entity* createGUIImageEntityFromAtlas(const std::string& fileName, const std::string& imageId, const std::string& name = "");
+	Entity* createGUITextEntity(const std::string fontFile, uint32_t maxItems = 100u, const std::string& name = "");
 
 #ifdef DEBUG
     static GUITextComponent *frameMSIndicator;

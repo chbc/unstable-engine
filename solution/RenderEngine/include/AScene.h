@@ -10,6 +10,7 @@ class AScene
 {
 protected:
     std::unordered_map<std::string, UPTR<Entity>> entities;
+    static uint32_t EntityIndex;
 
 private:
     std::string name;
@@ -20,7 +21,7 @@ public:
 
 protected:
     AScene(std::string name);
-    Entity* createEntity(uint32_t &index, const std::string& name = "", Entity* parent = nullptr);
+    Entity* createEntity(const std::string& name = "", Entity* parent = nullptr);
     void removeDestroyedEntities();
 
 private:
@@ -33,6 +34,7 @@ private:
 
 friend class ScenesManager;
 friend class EditorSceneTree;
+friend class EditorMenuBar;
 };
 
 } // namespace

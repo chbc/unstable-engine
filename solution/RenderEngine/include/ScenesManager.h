@@ -7,13 +7,6 @@
 namespace sre
 {
 
-/* XXX
-* MUDAR PARA AScenesManager
-* CRIAR UMA CENA PADRÃO
-* REDIRECIONAR OS MÉTODOS PRA DENTRO DE Scene
-* TRANSFERIR O "entities" PRA Scene
-* 
-*/ 
 class ScenesManager
 {
 protected:
@@ -21,10 +14,9 @@ protected:
     VECTOR_UPTR<Scene> scenes;
     UPTR<GUIScene> guiScene;
 
-private:
-    uint32_t entityIndex;
-
 public:
+    SRE_API Scene* createScene(const std::string& name);
+
 	SRE_API Entity* createEntity(const std::string& name = "", Entity* parent = nullptr);
     SRE_API Entity* getEntity(const std::string& name);
 
@@ -63,6 +55,7 @@ private:
 
 friend class RenderEngine;
 friend class EditorSceneTree;
+friend class EditorMenuBar;
 };
 
 } // namespace

@@ -5,15 +5,27 @@
 #include "MessagesManager.h"
 #include "SingletonsManager.h"
 #include "EditorMessages.h"
+#include "SceneLoader.h"
+#include "ScenesManager.h"
+#include "SingletonsManager.h"
+#include "RenderManager.h"
 
 #include "imgui/imgui.h"
-#include "SceneLoader.h"
 
 namespace sre
 {
 
-EditorMenuBar::EditorMenuBar(bool* demoEnabled) 
-	: isDemoEnabled(demoEnabled) { }
+EditorMenuBar::EditorMenuBar(bool* demoEnabled, ScenesManager* arg_scenesManager)
+	: isDemoEnabled(demoEnabled), scenesManager(arg_scenesManager)
+{
+	/* XXX
+	Scene* scene = this->scenesManager->createScene("new_scene");
+	SceneLoader::load(scene);
+
+	this->scenesManager->onScenesLoaded();
+	SingletonsManager::getInstance()->get<RenderManager>()->onSceneLoaded();
+	*/
+}
 
 void EditorMenuBar::onEditorGUI()
 {
@@ -24,7 +36,11 @@ void EditorMenuBar::onEditorGUI()
 			ImGui::MenuItem("New scene");
 			if (ImGui::MenuItem("Open scene"))
 			{
-				SceneLoader::load(nullptr);
+				Scene* scene = this->scenesManager->createScene("new_scene");
+				SceneLoader::load(scene);
+				
+				this->scenesManager->onScenesLoaded();
+				SingletonsManager::getInstance()->get<RenderManager>()->onSceneLoaded();
 			}
 
 			ImGui::MenuItem("Save scene");

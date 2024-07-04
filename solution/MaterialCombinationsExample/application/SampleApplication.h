@@ -23,7 +23,6 @@ protected:
 private:
 	void createLights();
 
-	void processInput();
 	void processKeys();
 	void processMouse();
 };

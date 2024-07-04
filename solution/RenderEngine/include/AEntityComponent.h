@@ -17,6 +17,16 @@
     const uint16_t ComponentClass::ID = AEntityComponent::generateId(); \
     const char* ComponentClass::CLASS_NAME = #ComponentClass;
 
+namespace c4
+{
+    namespace yml
+    {
+        class ConstNodeRef;
+    }
+}
+
+using SerializedNode = c4::yml::ConstNodeRef;
+
 namespace sre
 {
 
@@ -51,6 +61,7 @@ protected:
     virtual void onStart() {}
     virtual void onUpdate(uint32_t elapsedTime) {}
     void addEditorProperty(AEditorProperty* editorProperty);
+    virtual void deserialize(SerializedNode& node) {}
 
 friend class Entity;
 friend class EditorEntityProperties;

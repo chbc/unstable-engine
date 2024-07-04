@@ -23,7 +23,8 @@ uint32_t EditorSceneViewport::Fbo = 0;
 
 EditorSceneViewport::EditorSceneViewport(ScenesManager* arg_scenesManager) 
 	: scenesManager(arg_scenesManager), renderManager(nullptr), 
-	cameraEntity(nullptr), textureId(nullptr)
+	cameraEntity(nullptr), textureId(nullptr), canUpdate(false),
+	flyingCamera(nullptr), orbitCamera(nullptr)
 { }
 
 void EditorSceneViewport::onInit()

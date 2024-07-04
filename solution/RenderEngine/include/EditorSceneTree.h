@@ -21,6 +21,7 @@ public:
 	void onEditorGUI() override;
 
 private:
+	void drawScene(class AScene* scene);
 	void drawEntityTree(class Entity* entity, int index);
 };
 

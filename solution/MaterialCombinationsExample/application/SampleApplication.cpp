@@ -1,17 +1,17 @@
 #include "SampleApplication.h"
-#include <application/events/EventReceiver.h>
 #include <MeshComponent.h>
 #include <Input.h>
 #include <glm/vec3.hpp>
 
-SampleApplication::SampleApplication() : RenderEngine()
+SampleApplication::SampleApplication() : RenderEngine(), camera(nullptr)
 {
 }
 
 void SampleApplication::onInit()
 {
+	/*
 	this->scenesManager->createPerspectiveCamera();
-	
+
 	this->camera = this->scenesManager->getMainCamera();
 
 	this->createLights();
@@ -48,15 +48,18 @@ void SampleApplication::onInit()
 	cubeMesh->addMaterialComponent<NormalMaterialComponent>("crate_normal.png");
 	cubeMesh->addMaterialComponent<SpecularMaterialComponent>("crate_specular.png");
 	cubeMesh->getMaterial()->setCastShadow(false);
+	*/
 }
 
 void SampleApplication::onUpdate(unsigned int elapsedTime)
 {
-	this->processInput();
+	this->processKeys();
+	this->processMouse();
 }
 
 void SampleApplication::createLights()
 {
+	/* XXX
 	glm::vec3 p1Position(0.0f, 5.0f, 0.0f);
 
 	Entity* lightCube = this->scenesManager->createCubeEntity(0.2f);
@@ -72,12 +75,7 @@ void SampleApplication::createLights()
 	DirectionalLightComponent* dLight1 = this->scenesManager->createDirectionalLight();
 	dLight1->setDirection(glm::vec3(0.0f, -0.1f, -1.0f));
 	dLight1->setColor(glm::vec3(0.5f));
-}
-
-void SampleApplication::processInput()
-{
-	this->processKeys();
-	this->processMouse();
+	*/
 }
 
 void SampleApplication::processKeys()
@@ -90,6 +88,7 @@ void SampleApplication::processKeys()
 
 void SampleApplication::processMouse()
 {
+	/* XXX
 	if (Input::isMouseButtonJustPressed(MOUSEBUTTON_LEFT))
 	{
 		glm::vec3 position = this->camera->getPosition();
@@ -102,4 +101,5 @@ void SampleApplication::processMouse()
 		position.x += 1.0f;
 		this->camera->setPosition(position);
 	}
+	*/
 }
