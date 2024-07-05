@@ -1,3 +1,4 @@
+/*
 #include "EventReceiver.h"
 #include "application/SampleApplication.h"
 #include <glm/glm.hpp>
@@ -24,7 +25,7 @@ void EventReceiver::onKeyPressed(KeyboardButton key)
 	if (key == KEY_ESC)
 		this->application->quit();
 
-	/*
+
 	else if (key == KEY_1)
 	{
 		this->effectValue -= 0.025f;
@@ -48,7 +49,6 @@ void EventReceiver::onKeyPressed(KeyboardButton key)
 		else
 			std::cout << "HDR OFF";
 	}
-	*/
 }
 
 void EventReceiver::onMouseButtonPressed(MouseButton mouseButton, const glm::vec2 &position)
@@ -91,3 +91,4 @@ void EventReceiver::onMouseWheel(int direction)
 
 	this->camera->setPosition(position);
 }
+*/

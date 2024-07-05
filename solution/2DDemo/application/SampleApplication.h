@@ -7,15 +7,11 @@ using namespace sre;
 
 class SampleApplication : public RenderEngine
 {
-private:
-	Entity* entity;
-	
 public:
 	SampleApplication();
 
 protected:
-	void onInit();
-	void onUpdate(unsigned int elapsedTime);
+	void onInit() override;
 };
 
 #endif

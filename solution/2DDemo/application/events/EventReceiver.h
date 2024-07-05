@@ -1,3 +1,4 @@
+/*
 #ifndef _EVENT_RECEIVER_H_
 #define _EVENT_RECEIVER_H_
 
@@ -8,9 +9,6 @@ using namespace sre;
 
 class SampleApplication;
 
-/*!
-	Class that turns input events into application events
-*/
 class EventReceiver : public InputHandler
 {
 private:
@@ -31,3 +29,4 @@ public:
 	void onMouseWheel(int direction) override;
 };
 #endif
+*/
