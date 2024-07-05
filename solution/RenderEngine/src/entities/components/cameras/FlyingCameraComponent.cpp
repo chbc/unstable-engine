@@ -11,7 +11,7 @@ IMPLEMENT_COMPONENT(FlyingCameraComponent)
 
 FlyingCameraComponent::FlyingCameraComponent(Entity* entity) : CameraComponent(entity){}
 
-void FlyingCameraComponent::onUpdate(uint32_t elapsedTime)
+void FlyingCameraComponent::onUpdate(float elapsedTime)
 {
 	if (Input::isMouseButtonDown(MouseButton::MOUSEBUTTON_RIGHT))
 	{
@@ -43,7 +43,7 @@ void FlyingCameraComponent::processKeys()
 		this->moveDirection -= forward;
 }
 
-void FlyingCameraComponent::processMouseMotion(uint32_t elapsedTime)
+void FlyingCameraComponent::processMouseMotion(float elapsedTime)
 {
 	const glm::ivec2& mousePosition = Input::getMousePosition();
 	const glm::ivec2& mouseDelta = mousePosition - this->lastMousePosition;
@@ -52,7 +52,7 @@ void FlyingCameraComponent::processMouseMotion(uint32_t elapsedTime)
 		float deltaX = static_cast<float>(mouseDelta.x);
 		float deltaY = static_cast<float>(-mouseDelta.y);
 
-		const float SPEED = 0.002f;
+		const float SPEED = 2.0f;
 		glm::vec3 position = this->getPosition();
 
 		this->rotateDirection = glm::normalize(this->lookAtTarget - position);
@@ -66,11 +66,11 @@ void FlyingCameraComponent::processMouseMotion(uint32_t elapsedTime)
 	}
 }
 
-void FlyingCameraComponent::updateMovement(uint32_t elapsedTime)
+void FlyingCameraComponent::updateMovement(float elapsedTime)
 {
 	if ((this->moveDirection.x != 0.0f) || (this->moveDirection.y != 0.0f) || (this->moveDirection.z != 0.0f))
 	{
-		const float SPEED = 0.01f;
+		const float SPEED = 10.0f;
 		glm::vec3 position = this->getPosition();
 
 		glm::vec3 step = glm::normalize(this->moveDirection) * (SPEED * elapsedTime);

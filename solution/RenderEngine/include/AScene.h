@@ -25,7 +25,7 @@ protected:
     void removeDestroyedEntities();
 
 private:
-    void update(uint32_t elapsedTime);
+    void update(float elapsedTime);
 
     void onSceneLoaded();
     void destroyAllEntities();

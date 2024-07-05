@@ -61,7 +61,7 @@ public:
 
 protected:
 	virtual void onStart();
-	virtual void onUpdate(uint32_t deltaTime);
+	virtual void onUpdate(float deltaTime);
 
 private:
     static std::string generateEntityId(uint32_t& index, const std::string& duplicateName = "");

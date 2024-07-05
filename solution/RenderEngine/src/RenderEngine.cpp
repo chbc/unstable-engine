@@ -22,6 +22,7 @@ void RenderEngine::run()
     this->init();
 
     uint32_t elapsedTime = 0;
+    float elapsedSeconds = 0.0f;
     while (this->running)
     {
         this->multimediaManager->onBeginFrame();
@@ -29,10 +30,11 @@ void RenderEngine::run()
         this->processMultimediaInput();
 
         elapsedTime = this->multimediaManager->getLastFrameTime();
+        elapsedSeconds = elapsedTime * 0.001f;
         if (this->isEditorMode)
-            this->worldEditor->onUpdate(elapsedTime);
+            this->worldEditor->onUpdate(elapsedSeconds);
         else
-            this->onUpdate(elapsedTime);
+            this->update(elapsedSeconds);
     	
         this->renderManager->render();
         this->onGUI();
@@ -112,6 +114,12 @@ void RenderEngine::init()
     MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
     Action action = [&](void* message) { this->setEditorMode(false); };
     messagesManager->addListener<ExitEditorMessage>(action);
+}
+
+void RenderEngine::update(float elapsedTime)
+{
+    this->onUpdate(elapsedTime);
+    this->scenesManager->update(elapsedTime);
 }
 
 void RenderEngine::processMultimediaInput()

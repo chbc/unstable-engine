@@ -18,12 +18,12 @@ public:
 	FlyingCameraComponent(Entity* entity);
 
 protected:
-    void onUpdate(uint32_t elapsedTime) override;
+    void onUpdate(float elapsedTime) override;
 
 private:
 	void processKeys();
-	void processMouseMotion(uint32_t elapsedTime);
-	void updateMovement(uint32_t elapsedTime);
+	void processMouseMotion(float elapsedTime);
+	void updateMovement(float elapsedTime);
 };
 
 } // namespace

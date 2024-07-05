@@ -25,7 +25,7 @@ public:
 
 private:
 	void init();
-	void onUpdate(uint32_t elapsedTime);
+	void onUpdate(float elapsedTime);
 	void onEditorGUI();
 	void release();
 

@@ -44,7 +44,7 @@ void AScene::removeDestroyedEntities()
     CollectionsUtils::removeIfEntityIsDestroyed(this->entities);
 }
 
-void AScene::update(uint32_t elapsedTime)
+void AScene::update(float elapsedTime)
 {
     for (const auto& item : this->entities)
     {

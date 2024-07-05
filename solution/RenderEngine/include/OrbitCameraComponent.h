@@ -14,10 +14,10 @@ public:
 
 protected:
 	void onStart() override;
-	void onUpdate(uint32_t elapsedTime) override;
+	void onUpdate(float elapsedTime) override;
 
 private:
-	void processMouseMotion(uint32_t elapsedTime);
+	void processMouseMotion(float elapsedTime);
 };
 
 } // namespace

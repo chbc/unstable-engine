@@ -17,8 +17,8 @@ public:
 	SampleApplication();
 
 protected:
-	void onInit();
-	void onUpdate(unsigned int elapsedTime);
+	void onInit() override;
+	void onUpdate(float elapsedTime) override;
 
 private:
 	void createLights();

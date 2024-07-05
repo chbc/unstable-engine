@@ -41,13 +41,14 @@ public:
 
 protected:
     virtual void onInit() =0;
-    virtual void onUpdate(uint32_t elapsedTime){};
+    virtual void onUpdate(float elapsedTime) {}
     virtual void onGUI(){};
     virtual void onEditorGUI();
     virtual void onQuit(){};
 
 private:
     void init();
+    void update(float elapsedTime);
     void processMultimediaInput();
     void onEndFrame();
     void removeDestroyedEntities();

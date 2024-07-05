@@ -125,7 +125,7 @@ void ScenesManager::loadStartUpScene()
     this->onScenesLoaded();
 }
 
-void ScenesManager::update(uint32_t elapsedTime)
+void ScenesManager::update(float elapsedTime)
 {
     this->runtimeScene->update(elapsedTime);
 

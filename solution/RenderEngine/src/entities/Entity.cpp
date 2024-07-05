@@ -47,7 +47,7 @@ void Entity::onStart()
 		item->onStart();
 }
 
-void Entity::onUpdate(uint32_t deltaTime)
+void Entity::onUpdate(float deltaTime)
 {
 	if (this->enabled)
 	{

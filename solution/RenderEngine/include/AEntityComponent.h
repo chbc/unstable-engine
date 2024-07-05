@@ -59,7 +59,7 @@ public:
 
 protected:
     virtual void onStart() {}
-    virtual void onUpdate(uint32_t elapsedTime) {}
+    virtual void onUpdate(float elapsedTime) {}
     void addEditorProperty(AEditorProperty* editorProperty);
     virtual void deserialize(SerializedNode& node) {}
 

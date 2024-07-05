@@ -54,7 +54,7 @@ void SampleApplication::onInit()
 	cubeMesh->getMaterial()->setCastShadow(false);
 }
 
-void SampleApplication::onUpdate(unsigned int elapsedTime)
+void SampleApplication::onUpdate(float elapsedTime)
 {
 	this->processKeys();
 	this->processMouse();

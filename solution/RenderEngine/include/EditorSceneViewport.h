@@ -28,7 +28,7 @@ public:
 	EditorSceneViewport(ScenesManager* arg_scenesManager);
 
 	void onInit() override;
-	void onUpdate(uint32_t elapsedTime) override;
+	void onUpdate(float elapsedTime) override;
 	void onEditorGUI() override;
 	void onRelease() override;
 

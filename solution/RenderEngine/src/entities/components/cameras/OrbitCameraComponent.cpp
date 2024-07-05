@@ -15,12 +15,12 @@ void OrbitCameraComponent::onStart()
 {
 }
 
-void OrbitCameraComponent::onUpdate(uint32_t elapsedTime)
+void OrbitCameraComponent::onUpdate(float elapsedTime)
 {
 	processMouseMotion(elapsedTime);
 }
 
-void OrbitCameraComponent::processMouseMotion(uint32_t elapsedTime)
+void OrbitCameraComponent::processMouseMotion(float elapsedTime)
 {
 	const glm::ivec2& mouseDelta = Input::getMouseDeltaPosition();
 	if ((mouseDelta.x != 0) || (mouseDelta.y != 0))
@@ -28,7 +28,7 @@ void OrbitCameraComponent::processMouseMotion(uint32_t elapsedTime)
 		float deltaX = static_cast<float>(mouseDelta.x);
 		float deltaY = static_cast<float>(mouseDelta.y);
 
-		const float SPEED = 0.001f;
+		const float SPEED = 1.0f;
 		glm::vec3 position = this->getPosition();
 		glm::vec3 toPlayer = position - this->lookAtTarget;
 		glm::vec3 direction = glm::normalize(toPlayer);

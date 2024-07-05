@@ -68,7 +68,7 @@ void EditorSceneViewport::onInit()
 	this->canUpdate = false;
 }
 
-void EditorSceneViewport::onUpdate(uint32_t elapsedTime)
+void EditorSceneViewport::onUpdate(float elapsedTime)
 {
 	if (this->canUpdate)
 		this->cameraEntity->onUpdate(elapsedTime);

@@ -47,7 +47,7 @@ private:
     ScenesManager();
 
     void loadStartUpScene();
-    void update(uint32_t elapsedTime);
+    void update(float elapsedTime);
     void onScenesLoaded();
     void removeDestroyedEntities();
     void destroyAllEntities();

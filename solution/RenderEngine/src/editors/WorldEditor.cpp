@@ -33,7 +33,7 @@ void WorldEditor::init()
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 }
 
-void WorldEditor::onUpdate(uint32_t elapsedTime)
+void WorldEditor::onUpdate(float elapsedTime)
 {
     for (const auto& item : this->windows)
         item->onUpdate(elapsedTime);
