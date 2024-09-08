@@ -9,6 +9,6 @@ void main()
 
 	gl_Position = projectionMatrix * viewMatrix * vertexPosition;
 	
-	var_textureCoords = in_textureCoords;
+	var_textureCoords = vec2(uvOffset.x + (in_textureCoords.x * uvTiling.x), uvOffset.y + (in_textureCoords.y * uvTiling.y));
 	// [NORMAL] Normal_setup();
 }

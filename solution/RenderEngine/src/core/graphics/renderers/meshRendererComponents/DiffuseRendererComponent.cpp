@@ -16,13 +16,24 @@ DiffuseRendererComponent::DiffuseRendererComponent(ShaderManager *shaderManager,
 void DiffuseRendererComponent::onSceneLoaded(Shader *shader)
 {
     this->shaderManager->setupUniformLocation(shader, ShaderVariables::DIFFUSE_TEXTURE);
+    this->shaderManager->setupUniformLocation(shader, ShaderVariables::UV_OFFSET);
+    this->shaderManager->setupUniformLocation(shader, ShaderVariables::UV_TILING);
     this->shaderManager->setupAttributeLocation(shader, ShaderVariables::IN_TEXTURE_COORDS);
 }
 
 void DiffuseRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
     this->shaderManager->setInt(shader, ShaderVariables::DIFFUSE_TEXTURE, EMaterialMap::DIFFUSE);
-    this->textureId = mesh->getMaterial()->getComponent<DiffuseMaterialComponent>()->getTextureID();
+
+    Material* material = mesh->getMaterial();
+    glm::vec2 uvOffset = material->getUVOffset();
+    float uvOffsetData[2] = { uvOffset.x, uvOffset.y };
+    glm::vec2 uvTiling = material->getUVTiling();
+    float uvTilingData[2] = { uvTiling.x, uvTiling.y };
+
+    this->shaderManager->setVec2(shader, ShaderVariables::UV_OFFSET, uvOffsetData);
+    this->shaderManager->setVec2(shader, ShaderVariables::UV_TILING, uvTilingData);
+    this->textureId = material->getComponent<DiffuseMaterialComponent>()->getTextureID();
 }
 
 void DiffuseRendererComponent::preDraw(Shader* shader)

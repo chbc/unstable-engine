@@ -68,6 +68,7 @@ private:
     void setInt(Shader* shader, const char *variable, int value);
     void setFloat(Shader* shader, ShaderVariables::Type variableKey, float value);
     void setFloat(Shader* shader, const char *variable, float value);
+    void setVec2(Shader* shader, ShaderVariables::Type variableKey, const float* value);
     void setVec2(Shader* shader, const char* variable, const float* value);
     void setVec3(Shader* shader, ShaderVariables::Type variableKey, const float *value);
     void setVec3(Shader* shader, const char *variable, const float *value);

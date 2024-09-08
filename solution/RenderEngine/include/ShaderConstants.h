@@ -121,6 +121,8 @@ namespace ShaderVariables
 
         IN_POSITION,
         IN_TEXTURE_COORDS,
+        UV_OFFSET,
+        UV_TILING,
 
         AMBIENT_LIGHT_COLOR
     };
@@ -146,6 +148,8 @@ namespace ShaderVariables
         { SHADOW_MAP,                   "shadowMap"         },
         { IN_POSITION,                  "in_position"       },
         { IN_TEXTURE_COORDS,            "in_textureCoords"  },
+        { UV_OFFSET,                    "uvOffset"         },
+        { UV_TILING,                    "uvTiling"         },
         { AMBIENT_LIGHT_COLOR,          "ambientLightColor" }
     };
 }

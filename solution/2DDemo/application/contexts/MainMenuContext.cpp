@@ -10,5 +10,5 @@ void MainMenuContext::load(ScenesManager* scenesManager)
 
 	Entity* entity = scenesManager->createPlaneEntity(glm::vec2{ 128.0f });
 	MeshComponent* mesh = entity->getComponent<MeshComponent>();
-	mesh->addMaterialComponent<SpriteMaterialComponent>("test_texture.png");
+	mesh->addMaterialComponent<DiffuseMaterialComponent>("test_texture.png");
 }

@@ -3,7 +3,7 @@
 namespace sre
 {
 
-Material::Material() : castShadow(false), tiling(1.0f)
+Material::Material() : castShadow(false), uvOffset(glm::vec2(0.0f)), uvTiling(glm::vec2(1.0f))
 {
     this->addComponent<ColorMaterialComponent>();
 }
@@ -25,6 +25,26 @@ void Material::setReceivesLight(bool value)
 bool Material::getReceivesLight()
 {
     return this->hasComponent<LitMaterialComponent>();
+}
+
+void Material::setUVOffset(glm::vec2 uvOffset)
+{
+    this->uvOffset = uvOffset;
+}
+
+void Material::setUVTiling(glm::vec2 uvTiling)
+{
+    this->uvTiling = uvTiling;
+}
+
+glm::vec2 Material::getUVOffset()
+{
+    return uvOffset;
+}
+
+glm::vec2 Material::getUVTiling()
+{
+    return uvTiling;
 }
 
 namespace material

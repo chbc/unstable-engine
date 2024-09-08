@@ -15,6 +15,7 @@
 #include "EComponentId.h"
 #include <unordered_map>
 #include <bitset>
+#include <glm/gtc/type_ptr.hpp>
 
 /* XXX
 - passar flags pelo construtor
@@ -35,6 +36,8 @@ private:
     bool castShadow;
     std::unordered_map<size_t, UPTR<AMaterialComponent>> componentsMap;
     std::bitset<EComponentId::SIZE> componentsBitset;
+    glm::vec2 uvOffset;
+    glm::vec2 uvTiling;
 
 public:
     template <typename T, typename... TArgs> T* addComponent(TArgs&&... mArgs);
@@ -45,6 +48,10 @@ public:
 	SRE_API void setCastShadow(bool value);
 	SRE_API void setReceivesLight(bool value);
 	SRE_API bool getReceivesLight();
+    SRE_API void setUVOffset(glm::vec2 uvOffset);
+    SRE_API void setUVTiling(glm::vec2 tiling);
+    SRE_API glm::vec2 getUVOffset();
+    SRE_API glm::vec2 getUVTiling();
 
 private:
     Material();
