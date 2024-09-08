@@ -3,16 +3,18 @@
 namespace sre
 {
 
-GUITextComponent* GUIScene::frameMSIndicator = nullptr;
+// GUITextComponent* GUIScene::frameMSIndicator = nullptr;
 
 GUIScene::GUIScene() : AScene("guiScene")
 {
+/*
 #ifdef DEBUG
     Entity *entity = createGUITextEntity("fonts/verdana", 6, "_frame_indicator");
     this->frameMSIndicator = entity->getComponent<GUITextComponent>();
     this->frameMSIndicator->setUIPosition(glm::vec2(0.025f, 0.025f));
     entity->getTransform()->setScale(glm::vec3(0.5f, 0.5f, 1.0f));
 #endif
+*/
 }
 
 Entity *GUIScene::createGUIImageEntity(const std::string &fileName, const std::string& name)
@@ -51,7 +53,9 @@ Entity *GUIScene::createGUITextEntity(const std::string fontFile, uint32_t maxIt
 #ifdef DEBUG
 void GUIScene::updateFrameIndicator(int frameTime)
 {
+    /*
     frameMSIndicator->setText(std::to_string(frameTime));
+    */
 }
 #endif
 

@@ -6,6 +6,7 @@
 #include "RenderManager.h"
 #include "EngineValues.h"
 #include "WorldEditor.h"
+#include <functional>
 
 namespace sre
 {
@@ -36,6 +37,7 @@ public:
 public:
     void run();
     void loadScene(const std::string& scene);
+    void TEMP_loadScene(std::function<void()>& loadFunction);
     void setEditorMode(bool value);
     void quit();
 

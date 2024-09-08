@@ -3,7 +3,7 @@
 namespace sre
 {
 
-Material::Material() : castShadow(false)
+Material::Material() : castShadow(false), tiling(1.0f)
 {
     this->addComponent<ColorMaterialComponent>();
 }

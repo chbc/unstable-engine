@@ -20,7 +20,8 @@ private:
 	Entity* createGUITextEntity(const std::string fontFile, uint32_t maxItems = 100u, const std::string& name = "");
 
 #ifdef DEBUG
-    static GUITextComponent *frameMSIndicator;
+	// MOVER PARA ScenesManager
+    // XXX static GUITextComponent *frameMSIndicator;
     static void updateFrameIndicator(int frameTime);
 #endif
 

@@ -12,6 +12,7 @@ public:
 
 protected:
 	void onInit() override;
+	void onUpdate(float elapsedTime) override;
 };
 
 #endif

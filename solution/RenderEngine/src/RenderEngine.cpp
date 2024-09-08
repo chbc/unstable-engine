@@ -70,6 +70,20 @@ void RenderEngine::loadScene(const std::string& scene)
     */
 }
 
+void RenderEngine::TEMP_loadScene(std::function<void()>& loadFunction)
+{
+    this->scenesManager->destroyAllEntities();
+    this->removeDestroyedEntities();
+    this->renderManager->setMainCamera(nullptr);
+
+    loadFunction();
+
+    this->applicationCamera = this->renderManager->getMainCamera();
+
+    this->scenesManager->onScenesLoaded();
+    this->renderManager->onSceneLoaded();
+}
+
 void RenderEngine::setEditorMode(bool value)
 {
     this->isEditorMode = value;

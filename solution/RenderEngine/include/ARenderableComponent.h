@@ -21,6 +21,10 @@ private:
 protected:
     ARenderableComponent(Entity *entity) : AEntityComponent(entity), opaque(true) { }
 
+public:
+    inline void setIsOpaque(bool value) { this->opaque = value; }
+
+protected:
     inline bool isAbleToBeRendered()
     {
         return
@@ -31,7 +35,6 @@ protected:
     }
 
     inline bool isOpaque() { return this->opaque; }
-    inline void setIsOpaque(bool value) { this->opaque = value; }
 };
 
 } // namespace
