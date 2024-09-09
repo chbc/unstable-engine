@@ -1,7 +1,6 @@
 #include "SampleApplication.h"
 #include "contexts/MainMenuContext.h"
 #include "contexts/GameContext.h"
-#include <Input.h>
 #include <MeshComponent.h>
 
 SampleApplication::SampleApplication() : RenderEngine()

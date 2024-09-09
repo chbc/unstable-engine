@@ -134,6 +134,9 @@ void RenderEngine::update(float elapsedTime)
 {
     this->onUpdate(elapsedTime);
     this->scenesManager->update(elapsedTime);
+
+    if (Input::isKeyJustPressed(KEY_HOME))
+        this->setEditorMode(true);
 }
 
 void RenderEngine::processMultimediaInput()

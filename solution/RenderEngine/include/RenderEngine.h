@@ -6,6 +6,7 @@
 #include "RenderManager.h"
 #include "EngineValues.h"
 #include "WorldEditor.h"
+#include "Input.h"
 #include <functional>
 
 namespace sre
