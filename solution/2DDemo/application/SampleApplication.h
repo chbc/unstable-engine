@@ -7,6 +7,10 @@ using namespace sre;
 
 class SampleApplication : public RenderEngine
 {
+private:
+	float time = 0;
+	int indice = 0;
+
 public:
 	SampleApplication();
 

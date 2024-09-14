@@ -5,10 +5,10 @@
 #include "MessagesManager.h"
 #include "SingletonsManager.h"
 #include "EditorMessages.h"
-#include "SceneLoader.h"
-#include "ScenesManager.h"
 #include "SingletonsManager.h"
 #include "RenderManager.h"
+#include "RenderEngine.h"
+#include "SceneLoader.h"
 
 #include "imgui/imgui.h"
 
@@ -36,14 +36,14 @@ void EditorMenuBar::onEditorGUI()
 			ImGui::MenuItem("New scene");
 			if (ImGui::MenuItem("Open scene"))
 			{
-				Scene* scene = this->scenesManager->createScene("new_scene");
-				SceneLoader::load(scene);
-				
-				this->scenesManager->onScenesLoaded();
-				SingletonsManager::getInstance()->get<RenderManager>()->onSceneLoaded();
+				RenderEngine::getInstance()->loadScene("../../scenes/test.scene");
 			}
 
-			ImGui::MenuItem("Save scene");
+			if (ImGui::MenuItem("Save scene"))
+			{
+				SceneLoader::save(this->scenesManager->runtimeScene.get());
+			}
+
 			ImGui::MenuItem("Save scene as");
 			if (ImGui::MenuItem("Exit"))
 				this->exitEditor();

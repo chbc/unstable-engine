@@ -318,7 +318,13 @@
     <ClCompile Include="src\entitiesManagers\scene\AScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\io\SceneLoader.cpp">
+    <ClCompile Include="src\core\io\sceneLoader\ComponentParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\io\sceneLoader\EntityParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\io\sceneLoader\SceneLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -903,6 +909,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\AScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ComponentParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EntityParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

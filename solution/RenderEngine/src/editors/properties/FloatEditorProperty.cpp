@@ -1,6 +1,10 @@
 #include "FloatEditorProperty.h"
 
+#include <sstream>
+
+// XXX MOVER IMGUI PRA UM WRAPPER
 #include "imgui/imgui.h"
+
 
 namespace sre
 {
@@ -24,6 +28,12 @@ void FloatEditorProperty::draw()
 	ImGui::Columns(1);
 
 	ImGui::PopID();
+}
+
+void FloatEditorProperty::parseValue(std::ostringstream& result, bool& isSequence)
+{
+	isSequence = false;
+	result << *value;
 }
 
 } // namespace

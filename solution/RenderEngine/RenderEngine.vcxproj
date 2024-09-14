@@ -211,7 +211,9 @@
     <ClCompile Include="src\core\graphics\renderers\ShadowRenderer.cpp" />
     <ClCompile Include="src\core\graphics\shaders\Shader.cpp" />
     <ClCompile Include="src\core\io\DefaultGameValues.cpp" />
-    <ClCompile Include="src\core\io\SceneLoader.cpp" />
+    <ClCompile Include="src\core\io\sceneLoader\ComponentParser.cpp" />
+    <ClCompile Include="src\core\io\sceneLoader\EntityParser.cpp" />
+    <ClCompile Include="src\core\io\sceneLoader\SceneLoader.cpp" />
     <ClCompile Include="src\core\multimedia\EngineValues.cpp" />
     <ClCompile Include="src\core\multimedia\Input.cpp" />
     <ClCompile Include="src\core\multimedia\textures\atlases\FontAtlas.cpp" />
@@ -367,6 +369,8 @@
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
     <ClInclude Include="include\AEntityComponent.h" />
+    <ClInclude Include="include\ComponentParser.h" />
+    <ClInclude Include="include\EntityParser.h" />
     <ClInclude Include="include\ScenesManager.h" />
     <ClInclude Include="include\AGraphicsWrapper.h" />
     <ClInclude Include="include\AImGuiAPIState.h" />

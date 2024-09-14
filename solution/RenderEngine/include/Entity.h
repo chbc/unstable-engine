@@ -69,6 +69,7 @@ private:
 
     friend class AScene;
     friend class ModelLoader;
+    friend class EntityParser;
 
     friend class TestServicesProvider;
     friend class EditorEntityProperties;

@@ -3,7 +3,6 @@
 
 #include "ScenesManager.h"
 #include "MultimediaManager.h"
-#include "RenderManager.h"
 #include "EngineValues.h"
 #include "WorldEditor.h"
 #include "Input.h"
@@ -15,14 +14,16 @@ namespace sre
 /*!
     Abstract application class.
 */
-class SRE_API RenderEngine
+class SRE_API RenderEngine : public ASingleton
 {
 protected:
     MultimediaManager* multimediaManager;
     UPTR<ScenesManager> scenesManager;
 	
 private:
-    RenderManager* renderManager;
+    static RenderEngine* instance;
+
+    class RenderManager* renderManager;
     CameraComponent* applicationCamera;
     bool running;
     bool isEditorMode;
@@ -36,8 +37,9 @@ public:
     RenderEngine(const std::string& applicationName = "Unstable Engine", int screenWidth = 1500, int screenHeight = 768);
 
 public:
+    static RenderEngine* getInstance();
     void run();
-    void loadScene(const std::string& scene);
+    void loadScene(const char* sceneName);
     void TEMP_loadScene(std::function<void()>& loadFunction);
     void setEditorMode(bool value);
     void quit();

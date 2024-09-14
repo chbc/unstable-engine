@@ -12,7 +12,7 @@ namespace FileUtils
 {
 
 #ifdef __ANDROID__
-void loadFromAndroidFile(const std::string& fileName, std::string& dest)
+void loadFile(const std::string& fileName, std::string& dest)
 {
 	SDL_RWops* file = SDL_RWFromFile(fileName.c_str(), "rb");
 	if (file != nullptr)
@@ -46,13 +46,13 @@ void loadFromAndroidFile(const std::string& fileName, std::string& dest)
 	}
 }
 #else
-void loadFromPCFile(const std::string& fileName, std::string& dest)
+void loadFile(const std::string& fileName, std::string& dest)
 {
-	std::ifstream in(fileName.c_str());
+	std::ifstream in{ fileName };
 
 	if (!in.is_open())
 	{
-		throw "[OpenGLAPI] - Error: " + fileName + " can't be found!";
+		throw "[FileUtils] - Error: " + fileName + " can't be found!";
 	}
 
 	char temp[300];
@@ -63,20 +63,9 @@ void loadFromPCFile(const std::string& fileName, std::string& dest)
 		dest += '\n';
 	}
 }
-#endif
-
-void loadFile(const std::string& fileName, std::string& dest)
-{
-#ifdef __ANDROID__
-	loadFromAndroidFile(fileName, dest);
-#else
-	loadFromPCFile(fileName, dest);
-#endif
-}
 
 void loadFile(const std::string& fileName, std::vector<std::string>& lines)
 {
-#ifndef __ANDROID__
 	std::ifstream in(fileName.c_str());
 
 	if (!in.is_open())
@@ -90,8 +79,20 @@ void loadFile(const std::string& fileName, std::vector<std::string>& lines)
 		in.getline(temp, 300);
 		lines.push_back(temp);
 	}
-#endif
 }
+
+void saveFile(const std::string& fileName, const std::string& content)
+{
+	std::ofstream out{ fileName };
+
+	if (!out.is_open())
+	{
+		throw "[FileUtils] - Error: " + fileName + " can't be found!";
+	}
+
+	out << content;
+}
+#endif
 
 } // namespace
 

@@ -4,17 +4,32 @@
 #include "EditorMessages.h"
 #include "MessagesManager.h"
 #include "GUIScene.h"
+#include "RenderManager.h"
+#include "SceneLoader.h"
 
 namespace sre
 {
 
+RenderEngine* RenderEngine::instance = nullptr;
+
 RenderEngine::RenderEngine(const std::string& applicationName, int screenWidth, int screenHeight)
 {
+    instance = this;
     EngineValues::APPLICATION_NAME = applicationName;
     EngineValues::SCREEN_WIDTH = screenWidth;
     EngineValues::SCREEN_HEIGHT = screenHeight;
 
     DefaultGameValues::load();
+}
+
+RenderEngine* RenderEngine::getInstance()
+{
+    if (instance == nullptr)
+    {
+        throw "[RenderEngine] instance is null!";
+    }
+
+    return instance;
 }
 
 void RenderEngine::run()
@@ -56,18 +71,19 @@ void RenderEngine::run()
     this->release();
 }
 
-void RenderEngine::loadScene(const std::string& scene)
+void RenderEngine::loadScene(const char* sceneName)
 {
-    /* XXX
     this->scenesManager->destroyAllEntities();
-
     this->removeDestroyedEntities();
+    this->renderManager->setMainCamera(nullptr);
 
-    this->onInit();
+    Scene* scene = this->scenesManager->createScene("test_scene");
+    SceneLoader::load(scene, sceneName);
+
+    this->applicationCamera = this->renderManager->getMainCamera();
 
     this->scenesManager->onScenesLoaded();
     this->renderManager->onSceneLoaded();
-    */
 }
 
 void RenderEngine::TEMP_loadScene(std::function<void()>& loadFunction)

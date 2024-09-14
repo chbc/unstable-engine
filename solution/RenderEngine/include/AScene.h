@@ -35,6 +35,7 @@ private:
 friend class ScenesManager;
 friend class EditorSceneTree;
 friend class EditorMenuBar;
+friend class SceneLoader;
 };
 
 } // namespace

@@ -17,6 +17,7 @@ public:
 	XYZEditorProperty(const char* arg_title, float* x, float* y, float* z);
 
 	void draw() override;
+	void parseValue(std::ostringstream& result, bool& isSequence) override;
 };
 
 } // namespace

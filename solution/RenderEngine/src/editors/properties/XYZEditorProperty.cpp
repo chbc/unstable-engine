@@ -2,6 +2,7 @@
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_internal.h"
+
 #include <glm/gtc/type_ptr.hpp>
 
 namespace sre
@@ -84,6 +85,12 @@ void XYZEditorProperty::draw()
 	ImGui::Columns(1);
 
 	ImGui::PopID();
+}
+
+void XYZEditorProperty::parseValue(std::ostringstream& result, bool& isSequence)
+{
+	isSequence = true;
+	result << "[" << *this->values[0] << "," << *this->values[1] << "," << *this->values[2] << "]";
 }
 
 } // namespace

@@ -15,6 +15,7 @@ public:
 	FloatEditorProperty(const char* title, float* arg_value);
 
 	void draw() override;
+	void parseValue(std::ostringstream& result, bool& isSequence) override;
 };
 
 } // namespace

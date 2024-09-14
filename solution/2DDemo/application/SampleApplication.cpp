@@ -12,9 +12,6 @@ void SampleApplication::onInit()
 	GameContext::load(this->scenesManager.get());
 }
 
-float time = 0;
-int indice = 0;
-
 void SampleApplication::onUpdate(float elapsedTime)
 {
 	if (Input::isKeyJustPressed(KEY_a))
@@ -36,7 +33,10 @@ void SampleApplication::onUpdate(float elapsedTime)
 		glm::vec2 uvOffset{ indice * 0.1666f, 0.0f };
 
 		Entity* entity = this->scenesManager->getEntity("coin");
-		Material* material = entity->getComponent<MeshComponent>()->getMaterial();
-		material->setUVOffset(uvOffset);
+		if (entity != nullptr)
+		{
+			Material* material = entity->getComponent<MeshComponent>()->getMaterial();
+			material->setUVOffset(uvOffset);
+		}
 	}
 }

@@ -65,6 +65,7 @@ protected:
 
 friend class Entity;
 friend class EditorEntityProperties;
+friend class ComponentParser;
 };
 
 } // namespace
