@@ -4,6 +4,8 @@
 #include "SingletonsManager.h"
 #include "EngineValues.h"
 #include "XYZEditorProperty.h"
+#include "SingletonsManager.h"
+#include "RenderManager.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -13,7 +15,7 @@ namespace sre
 
 IMPLEMENT_COMPONENT(CameraComponent)
 
-CameraComponent::CameraComponent(Entity *entity) : AEntityComponent(entity)
+CameraComponent::CameraComponent(Entity *entity, bool isMainCamera) : AEntityComponent(entity)
 {
     this->addEditorProperty(new XYZEditorProperty{ "Look At Target", this->lookAtTarget });
     this->addEditorProperty(new XYZEditorProperty{ "Up", this->up });
@@ -22,10 +24,15 @@ CameraComponent::CameraComponent(Entity *entity) : AEntityComponent(entity)
     this->lookAtTarget = glm::vec3(0.0f, 0.0f, 0.0f);
 
     this->transform = this->getEntity()->getTransform();
-    this->setPosition(glm::vec3(0.0f, 0.0f, 2.0f));
 
     this->view = glm::mat4(1.0f);
     this->projection = glm::mat4(1.0f);
+
+    if (isMainCamera)
+    {
+        RenderManager* renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
+        renderManager->setMainCamera(this);
+    }
 }
 
 void CameraComponent::setLookAt(const glm::vec3& target)

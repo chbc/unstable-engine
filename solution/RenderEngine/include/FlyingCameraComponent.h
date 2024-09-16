@@ -15,7 +15,7 @@ private:
 	glm::ivec2 lastMousePosition;
 
 public:
-	FlyingCameraComponent(Entity* entity);
+	FlyingCameraComponent(Entity* entity, bool isMainCamera = true);
 
 protected:
     void onUpdate(float elapsedTime) override;

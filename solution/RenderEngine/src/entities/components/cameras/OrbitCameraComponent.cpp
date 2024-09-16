@@ -9,7 +9,7 @@ namespace sre
 
 IMPLEMENT_COMPONENT(OrbitCameraComponent)
 
-OrbitCameraComponent::OrbitCameraComponent(Entity* entity) : CameraComponent(entity){ }
+OrbitCameraComponent::OrbitCameraComponent(Entity* entity, bool isMainCamera) : CameraComponent(entity, isMainCamera){ }
 
 void OrbitCameraComponent::onStart()
 {

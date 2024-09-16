@@ -21,9 +21,6 @@ Entity* Scene::createPerspectiveCamera(float fov, float near, float far, Entity*
     CameraComponent* cameraComponent = mainCamera->addComponent<CameraComponent>();
     cameraComponent->setPerspectiveProjection(fov, EngineValues::SCREEN_WIDTH / EngineValues::SCREEN_HEIGHT, near, far);
 
-    if (isMainCamera)
-        this->renderManager->setMainCamera(cameraComponent);
-
     return mainCamera;
 }
 
@@ -32,9 +29,6 @@ Entity* Scene::createOrthoCamera(Entity* parent, bool isMainCamera)
     Entity* mainCamera = this->createEntity("_main_camera", parent);
     CameraComponent* cameraComponent = mainCamera->addComponent<CameraComponent>();
     cameraComponent->setOrthoProjection();
-
-    if (isMainCamera)
-        this->renderManager->setMainCamera(cameraComponent);
 
     return mainCamera;
 }

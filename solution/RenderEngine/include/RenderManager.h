@@ -78,6 +78,7 @@ private:
 friend class AScene;
 friend class Scene;
 friend class AtlasManager;
+friend class CameraComponent;
 friend class MeshComponent;
 friend class RenderEngine;
 friend class Material;

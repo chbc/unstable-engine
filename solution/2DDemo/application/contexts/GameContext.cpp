@@ -6,9 +6,9 @@ using namespace sre;
 
 void GameContext::load(ScenesManager* scenesManager)
 {
-	scenesManager->createOrthoCamera();
+	Entity* cameraEntity = scenesManager->createOrthoCamera();
+	cameraEntity->getTransform()->setPosition(glm::vec3{ 0.0f, 0.0f, 3.0f });
 
-	/*
 	Entity* entity = scenesManager->createPlaneEntity(glm::vec2{ 128.0f }, 1.0, "coin");
 	MeshComponent* mesh = entity->getComponent<MeshComponent>();
 	DiffuseMaterialComponent* sprite = mesh->addMaterialComponent<DiffuseMaterialComponent>("coin_animation.png");
@@ -16,5 +16,4 @@ void GameContext::load(ScenesManager* scenesManager)
 	
 	Material* material = mesh->getMaterial();
 	material->setUVTiling(glm::vec2(0.1666f, 1.0f));
-	*/
 }

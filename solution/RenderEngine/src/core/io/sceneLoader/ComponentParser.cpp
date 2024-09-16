@@ -6,6 +6,7 @@
 #include "CameraComponent.h"
 #include "MeshComponent.h"
 #include "PrimitiveMeshFactory.h"
+#include "EngineValues.h"
 
 namespace sre
 {
@@ -50,10 +51,11 @@ void ComponentParser::deserialize(c4::yml::ConstNodeRef& componentNode, Entity* 
 	{
 		CameraComponent* camera = entity->addComponent<CameraComponent>();
 		camera->setLookAt(glm::vec3{ 0.0f });
+		camera->setPerspectiveProjection(90.0f, EngineValues::SCREEN_WIDTH / EngineValues::SCREEN_HEIGHT, 0.1f, 1000.0f);
 	}
 	else if (type == "MeshComponent")
 	{
-		MeshData* meshData = PrimitiveMeshFactory().createPlane(1.0f, 1.0f);
+		MeshData* meshData = PrimitiveMeshFactory().createCube(2.0f);
 		MeshComponent* mesh = entity->addComponent<MeshComponent>(meshData);
 	}
 }

@@ -10,7 +10,7 @@ class OrbitCameraComponent : public CameraComponent
 	DECLARE_COMPONENT()
 
 public:
-	OrbitCameraComponent(Entity* entity);
+	OrbitCameraComponent(Entity* entity, bool isMainCamera = true);
 
 protected:
 	void onStart() override;

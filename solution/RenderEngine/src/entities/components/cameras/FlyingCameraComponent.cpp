@@ -9,7 +9,7 @@ namespace sre
 
 IMPLEMENT_COMPONENT(FlyingCameraComponent)
 
-FlyingCameraComponent::FlyingCameraComponent(Entity* entity) : CameraComponent(entity){}
+FlyingCameraComponent::FlyingCameraComponent(Entity* entity, bool isMainCamera) : CameraComponent(entity, isMainCamera){}
 
 void FlyingCameraComponent::onUpdate(float elapsedTime)
 {

@@ -32,7 +32,9 @@ void SceneLoader::load(Scene* scene, const char* sceneName)
 	c4::yml::ConstNodeRef root = tree.crootref();
 	for (c4::yml::ConstNodeRef entityNode : root.children())
 	{
-		Entity* entity = scene->createEntity(entityNode.key().str);
+		std::ostringstream keyStream;
+		keyStream << entityNode.key();
+		Entity* entity = scene->createEntity(keyStream.str());
 		EntityParser::deserialize(entityNode, entity);
 	}
 }
