@@ -1,18 +1,18 @@
 #pragma once
 
 #include "AEditorProperty.h"
+#include <glm/vec3.hpp>
 
 namespace sre
 {
 
-class FloatEditorProperty : public AEditorProperty
+class Vec3EditorProperty : public AEditorProperty
 {
-
 private:
-	float* value;
+	glm::vec3* values;
 
 public:
-	FloatEditorProperty(const char* title, float* arg_value);
+	Vec3EditorProperty(const char* arg_title, glm::vec3* arg_values);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

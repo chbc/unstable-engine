@@ -79,7 +79,8 @@ CameraComponent *Scene::getMainCamera()
 Entity *Scene::createMeshEntity(MeshData* objectData, const std::string& name, Entity* parent)
 {
     Entity *newEntity = this->createEntity(name, parent);
-	newEntity->addComponent<MeshComponent>(objectData);
+	MeshComponent* meshComponent = newEntity->addComponent<MeshComponent>();
+    meshComponent->setMeshData(objectData);
     return newEntity;
 }
 

@@ -4,6 +4,7 @@
 
 // XXX MOVER IMGUI PRA UM WRAPPER
 #include "imgui/imgui.h"
+#include <rapidyaml/rapidyaml.hpp>
 
 
 namespace sre
@@ -30,10 +31,14 @@ void FloatEditorProperty::draw()
 	ImGui::PopID();
 }
 
-void FloatEditorProperty::parseValue(std::ostringstream& result, bool& isSequence)
+void FloatEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
-	isSequence = false;
-	result << *value;
+	propertyNode << *value;
+}
+
+void FloatEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+{
+	propertyNode >> *value;
 }
 
 } // namespace

@@ -173,6 +173,8 @@ void ScenesManager::release()
         item->release();
 
     this->guiScene->release();
+
+    EntityComponentTypes::release();
 }
 
 } // namespace

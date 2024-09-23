@@ -194,6 +194,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\ARenderableComponent.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\LitRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\litStates\LitRendererLightsState.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\litStates\LitRendererNoLightsState.cpp" />
@@ -224,13 +225,16 @@
     <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp" />
     <ClCompile Include="src\editors\properties\ColorEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\FloatEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\Mat4EditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\MaterialEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\MeshEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp" />
-    <ClCompile Include="src\editors\properties\XYZEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\Vec3EditorProperty.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
     <ClCompile Include="src\entitiesManagers\scene\AScene.cpp" />
     <ClCompile Include="src\entities\components\cameras\FlyingCameraComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\OrbitCameraComponent.cpp" />
+    <ClCompile Include="src\entities\components\EntityComponentTypes.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp" />
     <ClCompile Include="src\messages\BaseMessage.cpp" />
@@ -370,7 +374,10 @@
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
     <ClInclude Include="include\AEntityComponent.h" />
     <ClInclude Include="include\ComponentParser.h" />
+    <ClInclude Include="include\EntityComponentTypes.h" />
     <ClInclude Include="include\EntityParser.h" />
+    <ClInclude Include="include\Mat4EditorProperty.h" />
+    <ClInclude Include="include\MeshEditorProperty.h" />
     <ClInclude Include="include\ScenesManager.h" />
     <ClInclude Include="include\AGraphicsWrapper.h" />
     <ClInclude Include="include\AImGuiAPIState.h" />
@@ -486,7 +493,7 @@
     <ClInclude Include="include\TransformComponent.h" />
     <ClInclude Include="include\AEditorProperty.h" />
     <ClInclude Include="include\WorldEditor.h" />
-    <ClInclude Include="include\XYZEditorProperty.h" />
+    <ClInclude Include="include\Vec3EditorProperty.h" />
     <ClInclude Include="thirdParties\imgui\imconfig.h" />
     <ClInclude Include="thirdParties\imgui\imgui.h" />
     <ClInclude Include="thirdParties\imgui\imgui_impl_opengl3.h" />

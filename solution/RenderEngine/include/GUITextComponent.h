@@ -20,12 +20,11 @@ private:
 	FontAtlas *atlas;
 
 public:
+	GUITextComponent(Entity *entity);
     void onStart() override;
 	SRE_API void setText(const std::string &text);
 
 private:
-	GUITextComponent(Entity *entity, uint32_t arg_maxItems);
-
 	void loadFont(const std::string &fontFile);
 	uint32_t getTextureId() override;
 

@@ -14,9 +14,10 @@ DECLARE_COMPONENT()
 private:
 	glm::vec3 extent;
 
-private:
-	SceneButtonComponent(Entity* entity, const glm::vec3& arg_extent);
+public:
+	SceneButtonComponent(Entity* entity, const glm::vec3& arg_extent = glm::vec3{1.0f, 1.0f, 1.0f});
 
+private:
 	bool isInside();
 };
 

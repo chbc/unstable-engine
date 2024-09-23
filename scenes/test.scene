@@ -2,8 +2,7 @@ _main_camera:
   enabled: 1
   TransformComponent:
     enabled: 1
-    Position: [0,5,5]
-    Scale: [1,1,1]
+    World Matrix: [1,0,0,0,0,1,0,0,0,0,1,0,0,0,3,1]
   CameraComponent:
     enabled: 1
     Look At Target: [0,0,0]
@@ -12,8 +11,8 @@ coin:
   enabled: 1
   TransformComponent:
     enabled: 1
-    Position: [0,0,0]
-    Scale: [1,1,1]
+    World Matrix: [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
   MeshComponent:
     enabled: 1
-    Material: ''
+    MeshType: ../../media/cube.mesh
+    Material: Material Properties

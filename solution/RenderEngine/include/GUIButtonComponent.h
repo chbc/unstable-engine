@@ -22,10 +22,8 @@ private:
 	glm::vec2 pivotizedExtent;
 	bool pressed;
 
-private:
-	GUIButtonComponent(Entity* entity);
-
 public:
+	GUIButtonComponent(Entity* entity);
 	void onStart() override;
 
 	void setExtent(glm::vec2 extent);

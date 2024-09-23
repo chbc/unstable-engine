@@ -3,16 +3,6 @@
 #include <rapidyaml/rapidyaml.hpp>
 #include "Entity.h"
 
-/*
-namespace c4
-{
-	namespace yml
-	{
-		class NodeRef;
-	}
-}
-*/
-
 namespace sre
 {
 

@@ -21,10 +21,9 @@ private:
 protected:
     uint32_t maxItems; // ###
 
-protected:
-    GUIImageComponent(Entity *entity, uint32_t arg_maxItems = 0);
-
 public:
+    GUIImageComponent(Entity *entity);
+    void setMaxItems(uint32_t arg_maxItems);
 	void setUIPosition(const glm::vec2 &position);
     glm::vec2 getUIPosition();
     virtual uint32_t getTextureId();

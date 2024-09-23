@@ -13,9 +13,11 @@ namespace sre
 
 IMPLEMENT_COMPONENT(GUITextComponent)
 
-GUITextComponent::GUITextComponent(Entity *entity, uint32_t arg_maxItems)
-    : GUIImageComponent(entity, arg_maxItems)
-{ }
+GUITextComponent::GUITextComponent(Entity *entity)
+    : GUIImageComponent(entity), atlas(nullptr)
+{
+    this->setMaxItems(10);
+}
 
 void GUITextComponent::loadFont(const std::string &fontFile)
 {

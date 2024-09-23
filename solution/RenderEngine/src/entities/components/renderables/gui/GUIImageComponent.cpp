@@ -11,12 +11,17 @@ namespace sre
 
 IMPLEMENT_COMPONENT(GUIImageComponent)
 
-GUIImageComponent::GUIImageComponent(Entity *entity, uint32_t arg_maxItems)
+GUIImageComponent::GUIImageComponent(Entity *entity)
     :   ARenderableComponent(entity),
         extent(glm::vec2(0.0f, 0.0f)), pivot(glm::vec2(0.0f, 0.0f)),
-        maxItems(arg_maxItems), isDynamic(arg_maxItems > 0)
+        maxItems(0), isDynamic(false)
 {
     this->setUIPosition(glm::vec2(0.0f, 0.0f));
+}
+
+void GUIImageComponent::setMaxItems(uint32_t arg_maxItems)
+{
+    maxItems = arg_maxItems;
 }
 
 void GUIImageComponent::setUIPosition(const glm::vec2 &position)

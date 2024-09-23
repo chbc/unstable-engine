@@ -20,10 +20,8 @@ private:
 	glm::mat4 worldMatrix;
 	glm::mat4 localMatrix;
 
-private:
-	TransformComponent(Entity *entity);
-
 public:
+	TransformComponent(Entity *entity);
 	void setPosition(const glm::vec3 &position);
 	void setScale(const glm::vec3 &scale);
 	void setRotation(const glm::vec3 &axis, float angle);

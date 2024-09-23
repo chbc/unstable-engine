@@ -25,7 +25,8 @@ protected:
 	glm::mat4 projection;
 
 public:
-	CameraComponent(Entity *entity, bool isMainCamera = true);
+	CameraComponent(Entity *entity);
+	void setMainCamera();
 	void setLookAt(const glm::vec3& target);
 	void setPosition(const glm::vec3& position);
 	glm::vec3 getPosition() const;

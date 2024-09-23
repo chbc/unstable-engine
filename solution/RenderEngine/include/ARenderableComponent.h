@@ -19,10 +19,11 @@ private:
     bool opaque;
 
 protected:
-    ARenderableComponent(Entity *entity) : AEntityComponent(entity), opaque(true) { }
+    ARenderableComponent(Entity* entity);
 
 public:
     inline void setIsOpaque(bool value) { this->opaque = value; }
+    void setMeshData(MeshData* meshData);
 
 protected:
     inline bool isAbleToBeRendered()

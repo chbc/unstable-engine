@@ -1,14 +1,14 @@
 namespace sre
 {
 
-template <typename T, typename... TArgs>
-T* Entity::addComponent(TArgs&&... mArgs)
+template <typename T>
+T* Entity::addComponent()
 {
     T* newComponent{ nullptr };
 
     assert(!this->hasComponent<T>());
 
-    newComponent = new T{ this, std::forward<TArgs>(mArgs)... };
+    newComponent = new T{ this };
     uint16_t id = this->getComponentId<T>();
     this->componentsMap[id] = UPTR<T>{ newComponent };
 

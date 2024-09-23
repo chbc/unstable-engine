@@ -1,18 +1,18 @@
 #pragma once
 
 #include "AEditorProperty.h"
+#include <glm/gtc/type_ptr.hpp>
 
 namespace sre
 {
 
-class FloatEditorProperty : public AEditorProperty
+class Mat4EditorProperty : public AEditorProperty
 {
-
 private:
-	float* value;
+	glm::mat4* values;
 
 public:
-	FloatEditorProperty(const char* title, float* arg_value);
+	Mat4EditorProperty(const char* arg_title, glm::mat4* arg_values);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

@@ -4,53 +4,57 @@
 #include "core_defines.h"
 #include "memory_aliases.h"
 #include <string>
+#include <unordered_map>
+#include <functional>
 
 #include "AEditorProperty.h"
+#include "SingletonsManager.h"
+#include "EntityComponentTypes.h"
+
+namespace sre
+{
+class AEntityComponent;
+class Entity;
+class TransformComponent;
 
 #define DECLARE_COMPONENT() \
     public: \
         static const uint16_t ID; \
         static const char* CLASS_NAME; \
-        const char* getClassName() override { return CLASS_NAME; }
+        const char* getClassName() override { return CLASS_NAME; } \
+        uint16_t getId() override { return ID; }
 
 #define IMPLEMENT_COMPONENT(ComponentClass) \
-    const uint16_t ComponentClass::ID = AEntityComponent::generateId(); \
+    const uint16_t ComponentClass::ID = AEntityComponent::generateId<ComponentClass>(#ComponentClass); \
     const char* ComponentClass::CLASS_NAME = #ComponentClass;
-
-namespace c4
-{
-    namespace yml
-    {
-        class ConstNodeRef;
-    }
-}
-
-using SerializedNode = c4::yml::ConstNodeRef;
-
-namespace sre
-{
-
-class Entity;
-class TransformComponent;
 
 class SRE_API AEntityComponent
 {
 private:
     Entity* entity;
     bool enabled;
-
-    static uint16_t Index;
-
     std::vector<SPTR<AEditorProperty>> editorProperties;
+
+private:
+    static uint16_t Index;
 
 public:
     AEntityComponent(Entity* arg_entity) : entity(arg_entity), enabled(true) { }
     ~AEntityComponent();
 
+    template <typename Type>
+    static uint16_t generateId(const char* className)
+    {
+        EntityComponentTypes* types = EntityComponentTypes::getInstance();
+        types->addType<Type>(className);
+
+        return Index++;
+    }
+
+    static AEntityComponent* Create(const char* className, Entity* entity);
 
     inline Entity* getEntity() { return this->entity; }
 
-    static uint16_t generateId();
     TransformComponent* getTransform();
     virtual const char* getClassName() = 0;
 
@@ -58,10 +62,10 @@ public:
     bool isEnabled() const;
 
 protected:
+    virtual uint16_t getId() = 0;
     virtual void onStart() {}
     virtual void onUpdate(float elapsedTime) {}
     void addEditorProperty(AEditorProperty* editorProperty);
-    virtual void deserialize(SerializedNode& node) {}
 
 friend class Entity;
 friend class EditorEntityProperties;

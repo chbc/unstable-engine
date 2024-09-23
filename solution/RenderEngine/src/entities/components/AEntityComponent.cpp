@@ -13,9 +13,15 @@ AEntityComponent::~AEntityComponent()
 	this->editorProperties.clear();
 }
 
-uint16_t AEntityComponent::generateId()
+AEntityComponent* AEntityComponent::Create(const char* className, Entity* entity)
 {
-	return Index++;
+	EntityComponentTypes* types = EntityComponentTypes::getInstance(); // SingletonsManager::getInstance()->resolve<EntityComponentTypes>();
+	int key = std::hash<std::string>{}(className);
+
+	assert(types->typesMap.count(key) > 0);
+
+	AEntityComponent* result = types->typesMap[key](entity);
+	return result;
 }
 
 TransformComponent *AEntityComponent::getTransform()

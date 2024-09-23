@@ -17,9 +17,8 @@ DECLARE_COMPONENT()
 private:
     UPTR<Material> material;
 
-    MeshComponent(Entity *entity, MeshData* meshData);
-
 public:
+    MeshComponent(Entity *entity);
     Material *getMaterial();
     void setMaterial(UPTR<Material> &material);
 

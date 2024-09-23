@@ -2,6 +2,7 @@
 #include "Material.h"
 
 #include <imgui/imgui.h>
+#include <rapidyaml/rapidyaml.hpp>
 
 namespace sre
 {
@@ -25,6 +26,15 @@ void MaterialEditorProperty::draw()
 			ImGui::TreePop();
 		}
 	}
+}
+
+void MaterialEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
+{
+	propertyNode << "Material Properties";
+}
+
+void MaterialEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+{
 }
 
 } // namespace

@@ -36,4 +36,12 @@ void ColorEditorProperty::draw()
 	ImGui::PopID();
 }
 
+void ColorEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
+{
+}
+
+void ColorEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+{
+}
+
 } // namespace

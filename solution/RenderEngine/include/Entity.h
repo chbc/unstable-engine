@@ -40,10 +40,13 @@ protected:
 public:
     SRE_API ~Entity();
 
-    template <typename T, typename... TArgs> T* addComponent(TArgs&&... mArgs);
+
+    template <typename T> T* addComponent();
     template <typename T> void removeComponent();
     template <typename T> T* getComponent();
     template <typename T> bool hasComponent();
+
+    AEntityComponent* addComponent(const char* className);
 
 	SRE_API void addChild(Entity *child, const std::string& childName = "");
 	SRE_API inline uint32_t getChildrenCount() { return this->children.size(); }

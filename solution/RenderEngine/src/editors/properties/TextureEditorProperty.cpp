@@ -28,4 +28,12 @@ void TextureEditorProperty::draw()
 	ImGui::PopID();
 }
 
+void TextureEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
+{
+}
+
+void TextureEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+{
+}
+
 } // namespace

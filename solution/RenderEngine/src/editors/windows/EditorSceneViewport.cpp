@@ -51,10 +51,10 @@ void EditorSceneViewport::onInit()
 
 		this->cameraEntity = UPTR<Entity>(new Entity{});
 		float aspectRatio = static_cast<float>(EngineValues::SCREEN_WIDTH) / static_cast<float>(EngineValues::SCREEN_HEIGHT);
-		this->flyingCamera = cameraEntity->addComponent<FlyingCameraComponent>(false);
+		this->flyingCamera = cameraEntity->addComponent<FlyingCameraComponent>();
 		this->flyingCamera->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
 
-		this->orbitCamera = cameraEntity->addComponent<OrbitCameraComponent>(false);
+		this->orbitCamera = cameraEntity->addComponent<OrbitCameraComponent>();
 		this->orbitCamera->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
 		
 		this->cameraEntity->getTransform()->setPosition({ 0.0f, 2.5f, 10.0f });
@@ -64,7 +64,7 @@ void EditorSceneViewport::onInit()
 	}
 
 	this->renderManager->setTargetFBO(Fbo);
-	this->renderManager->setMainCamera(this->flyingCamera);
+	this->flyingCamera->setMainCamera();
 	this->canUpdate = false;
 }
 

@@ -44,7 +44,8 @@ Entity *GUIScene::createGUIImageEntityFromAtlas(const std::string &fileName, con
 Entity *GUIScene::createGUITextEntity(const std::string fontFile, uint32_t maxItems, const std::string& name)
 {
     Entity *result = this->createEntity();
-    GUITextComponent *component = result->addComponent<GUITextComponent>(maxItems);
+    GUITextComponent *component = result->addComponent<GUITextComponent>();
+    component->setMaxItems(maxItems);
     component->loadFont(fontFile);
 
     return result;

@@ -15,10 +15,8 @@ DECLARE_COMPONENT()
 private:
 	std::unordered_map<PPE::Type, UPTR<PostProcessingEffect>> effects;
 
-private:
-	SRE_API PostProcessingComponent(Entity* entity);
-
 public:
+	SRE_API PostProcessingComponent(Entity* entity);
 	SRE_API PostProcessingEffect* enqueueEffect(PPE::Type effectType);
 	SRE_API PostProcessingEffect* getEffect(PPE::Type effectType);
 

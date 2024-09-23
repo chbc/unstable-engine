@@ -19,6 +19,57 @@ Entity::~Entity()
 	this->children.clear();
 }
 
+AEntityComponent* Entity::addComponent(const char* className)
+{
+	AEntityComponent* newComponent{ nullptr };
+
+	newComponent = AEntityComponent::Create(className, this);
+	uint16_t id = newComponent->getId();
+	assert(this->componentsMap.count(id) == 0);
+
+	this->componentsMap.emplace(id, newComponent);
+
+	return newComponent;
+}
+
+void Entity::addChild(Entity* child, const std::string& childName)
+{
+	std::string resultName = childName;
+
+	if (childName.empty())
+		resultName = generateEntityId(this->childIndex);
+	else if (this->children.count(childName) > 0)
+		resultName = generateEntityId(this->childIndex, childName);
+
+	child->name = resultName;
+	this->children[resultName] = UPTR<Entity>(child);
+	child->parent = this;
+	this->childrenList.push_back(child);
+
+	this->transform->propagateTransform();
+}
+
+Entity* Entity::getChild(uint32_t index)
+{
+	if (index >= this->children.size())
+		throw "[Entity] - getChild - Index out of range!";
+
+	return this->childrenList[index];
+}
+
+TransformComponent* Entity::getTransform()
+{
+	return this->transform;
+}
+
+void Entity::destroy()
+{
+	this->alive = false;
+	this->enabled = false;
+	for (Entity* item : this->childrenList)
+		item->destroy();
+}
+
 void Entity::setEnabled(bool value)
 {
 	this->enabled = value;
@@ -60,44 +111,6 @@ void Entity::onUpdate(float deltaTime)
 		for (Entity* item : this->childrenList)
 			item->onUpdate(deltaTime);
 	}
-}
-
-void Entity::addChild(Entity *child, const std::string& childName)
-{
-	std::string resultName = childName;
-
-	if (childName.empty())
-		resultName = generateEntityId(this->childIndex);
-	else if (this->children.count(childName) > 0)
-		resultName = generateEntityId(this->childIndex, childName);
-
-	child->name = resultName;
-	this->children[resultName] = UPTR<Entity>(child);
-	child->parent = this;
-	this->childrenList.push_back(child);
-
-	this->transform->propagateTransform();
-}
-
-Entity *Entity::getChild(uint32_t index)
-{
-	if (index >= this->children.size())
-		throw "[Entity] - getChild - Index out of range!";
-
-	return this->childrenList[index];
-}
-
-TransformComponent *Entity::getTransform()
-{
-	return this->transform;
-}
-
-void Entity::destroy()
-{
-	this->alive = false;
-	this->enabled = false;
-	for (Entity* item : this->childrenList)
-		item->destroy();
 }
 
 std::string Entity::generateEntityId(uint32_t& index, const std::string& duplicateName)

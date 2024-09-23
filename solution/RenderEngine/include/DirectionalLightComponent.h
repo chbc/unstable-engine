@@ -16,11 +16,9 @@ private:
     glm::mat4 lightSpaceMatrix;
 
 public:
+	DirectionalLightComponent(Entity *entity);
 	void setDirection(const glm::vec3 &direction);
 	glm::vec3 getDirection();
-
-private:
-	DirectionalLightComponent(Entity *entity);
 
 friend class Entity;
 friend class ShadowRenderer;

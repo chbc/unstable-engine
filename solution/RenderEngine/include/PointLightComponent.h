@@ -15,10 +15,8 @@ private:
 	float range;
 	float intensity;
 
-private:
-    PointLightComponent(Entity *entity);
-
 public:
+    PointLightComponent(Entity *entity);
 	void setPosition(const glm::vec3 &position);
 	glm::vec3 getPosition();
 

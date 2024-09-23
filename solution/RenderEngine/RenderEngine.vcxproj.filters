@@ -285,7 +285,7 @@
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\editors\properties\XYZEditorProperty.cpp">
+    <ClCompile Include="src\editors\properties\Vec3EditorProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\editors\properties\ColorEditorProperty.cpp">
@@ -325,6 +325,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\io\sceneLoader\SceneLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\EntityComponentTypes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editors\properties\Mat4EditorProperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\ARenderableComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editors\properties\MeshEditorProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -878,7 +890,7 @@
     <ClInclude Include="include\EditorSceneViewport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\XYZEditorProperty.h">
+    <ClInclude Include="include\Vec3EditorProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ColorEditorProperty.h">
@@ -915,6 +927,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\EntityParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EntityComponentTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mat4EditorProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MeshEditorProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

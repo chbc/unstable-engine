@@ -7,10 +7,9 @@ namespace sre
 
 IMPLEMENT_COMPONENT(MeshComponent)
 
-MeshComponent::MeshComponent(Entity *entity, MeshData* meshData)
+MeshComponent::MeshComponent(Entity *entity)
     : ARenderableComponent(entity)
 {
-	this->meshData = UPTR<MeshData>{ meshData };
     this->material = UPTR<Material>{ new Material{} };
     
     this->addEditorProperty(new MaterialEditorProperty{ "Material", this->material.get() });

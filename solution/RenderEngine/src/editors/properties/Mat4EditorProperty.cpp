@@ -1,38 +1,26 @@
-#include "XYZEditorProperty.h"
-
-#include "imgui/imgui.h"
-#include "imgui/imgui_internal.h"
+#include "Mat4EditorProperty.h"
 
 #include <glm/gtc/type_ptr.hpp>
 
+#include "imgui/imgui.h"
+#include "imgui/imgui_internal.h"
+#include <rapidyaml/rapidyaml.hpp>
+
 namespace sre
 {
-XYZEditorProperty::XYZEditorProperty(const char* arg_title, float* arg_values) 
+
+Mat4EditorProperty::Mat4EditorProperty(const char* arg_title, glm::mat4* arg_values)
 	: AEditorProperty(arg_title)
 {
-	this->values[0] = &arg_values[0];
-	this->values[1] = &arg_values[1];
-	this->values[2] = &arg_values[2];
+	this->values = arg_values;
 }
 
-XYZEditorProperty::XYZEditorProperty(const char* arg_title, glm::vec3& arg_values) 
-	: AEditorProperty(arg_title)
+void Mat4EditorProperty::draw()
 {
-	this->values[0] = &arg_values.x;
-	this->values[1] = &arg_values.y;
-	this->values[2] = &arg_values.z;
-}
+	float *x = glm::value_ptr(this->values[3][0]);
+	float *y = glm::value_ptr(this->values[3][1]);
+	float* z = glm::value_ptr(this->values[3][2]);
 
-XYZEditorProperty::XYZEditorProperty(const char* arg_title, float* x, float* y, float* z)
-	: AEditorProperty(arg_title)
-{
-	this->values[0] = x;
-	this->values[1] = y;
-	this->values[2] = z;
-}
-
-void XYZEditorProperty::draw()
-{
 	ImGui::PushID(this->title.c_str());
 
 	ImGui::Columns(2);
@@ -50,11 +38,11 @@ void XYZEditorProperty::draw()
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
 	if (ImGui::Button("X", buttonSize))
-		*values[0] = 0.0f;
+		*x = 0.0f;
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	ImGui::DragFloat("##X", values[0], 0.1f, 0.0f, 0.0f, "%.2f");
+	ImGui::DragFloat("##X", x, 0.1f, 0.0f, 0.0f, "%.2f");
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -62,11 +50,11 @@ void XYZEditorProperty::draw()
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
 	if (ImGui::Button("Y", buttonSize))
-		*values[1] = 0.0f;
+		*y = 0.0f;
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	ImGui::DragFloat("##Y", values[1], 0.1f, 0.0f, 0.0f, "%.2f");
+	ImGui::DragFloat("##Y", y, 0.1f, 0.0f, 0.0f, "%.2f");
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -74,11 +62,11 @@ void XYZEditorProperty::draw()
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.35f, 0.9f, 1.0f });
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
 	if (ImGui::Button("Z", buttonSize))
-		*values[2] = 0.0f;
+		*z = 0.0f;
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	ImGui::DragFloat("##Z", values[2], 0.1f, 0.0f, 0.0f, "%.2f");
+	ImGui::DragFloat("##Z", z, 0.1f, 0.0f, 0.0f, "%.2f");
 	ImGui::PopItemWidth();
 
 	ImGui::PopStyleVar();
@@ -87,10 +75,20 @@ void XYZEditorProperty::draw()
 	ImGui::PopID();
 }
 
-void XYZEditorProperty::parseValue(std::ostringstream& result, bool& isSequence)
+void Mat4EditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
-	isSequence = true;
-	result << "[" << *this->values[0] << "," << *this->values[1] << "," << *this->values[2] << "]";
+	propertyNode |= c4::yml::SEQ | c4::yml::CONTAINER_STYLE;
+
+	const float* valuesArray = glm::value_ptr(*this->values);
+	for (int i = 0; i < 16; ++i)
+		propertyNode.append_child() << valuesArray[i];
+}
+
+void Mat4EditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+{
+	float* valuesArray = glm::value_ptr(*this->values);
+	for (int i = 0; i < 16; ++i)
+		propertyNode[i] >> valuesArray[i];
 }
 
 } // namespace

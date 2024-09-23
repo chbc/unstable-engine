@@ -3,7 +3,7 @@
 #include "TransformComponent.h"
 #include "SingletonsManager.h"
 #include "EngineValues.h"
-#include "XYZEditorProperty.h"
+#include "Vec3EditorProperty.h"
 #include "SingletonsManager.h"
 #include "RenderManager.h"
 
@@ -15,10 +15,10 @@ namespace sre
 
 IMPLEMENT_COMPONENT(CameraComponent)
 
-CameraComponent::CameraComponent(Entity *entity, bool isMainCamera) : AEntityComponent(entity)
+CameraComponent::CameraComponent(Entity *entity) : AEntityComponent(entity)
 {
-    this->addEditorProperty(new XYZEditorProperty{ "Look At Target", this->lookAtTarget });
-    this->addEditorProperty(new XYZEditorProperty{ "Up", this->up });
+    this->addEditorProperty(new Vec3EditorProperty{ "Look At Target", &this->lookAtTarget });
+    this->addEditorProperty(new Vec3EditorProperty{ "Up", &this->up });
 
     this->up = glm::vec3(0.0f, 1.0f, 0.0f);
     this->lookAtTarget = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -28,11 +28,13 @@ CameraComponent::CameraComponent(Entity *entity, bool isMainCamera) : AEntityCom
     this->view = glm::mat4(1.0f);
     this->projection = glm::mat4(1.0f);
 
-    if (isMainCamera)
-    {
-        RenderManager* renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
-        renderManager->setMainCamera(this);
-    }
+    setMainCamera();
+}
+
+void CameraComponent::setMainCamera()
+{
+    RenderManager* renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
+    renderManager->setMainCamera(this);
 }
 
 void CameraComponent::setLookAt(const glm::vec3& target)
