@@ -1,6 +1,7 @@
 #include "Mat4EditorProperty.h"
 
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/euler_angles.hpp>
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_internal.h"
@@ -17,15 +18,35 @@ Mat4EditorProperty::Mat4EditorProperty(const char* arg_title, glm::mat4* arg_val
 
 void Mat4EditorProperty::draw()
 {
-	float *x = glm::value_ptr(this->values[3][0]);
-	float *y = glm::value_ptr(this->values[3][1]);
-	float* z = glm::value_ptr(this->values[3][2]);
+	float* matrix = glm::value_ptr(*this->values);
 
-	ImGui::PushID(this->title.c_str());
+	this->drawXYZ("Position", &matrix[12], &matrix[13], &matrix[14]);
+	this->drawXYZ("Scale", &matrix[0], &matrix[5], &matrix[10]);
+}
+
+void Mat4EditorProperty::serialize(c4::yml::NodeRef& propertyNode)
+{
+	propertyNode |= c4::yml::SEQ | c4::yml::CONTAINER_STYLE;
+
+	const float* valuesArray = glm::value_ptr(*this->values);
+	for (int i = 0; i < 16; ++i)
+		propertyNode.append_child() << valuesArray[i];
+}
+
+void Mat4EditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+{
+	float* valuesArray = glm::value_ptr(*this->values);
+	for (int i = 0; i < 16; ++i)
+		propertyNode[i] >> valuesArray[i];
+}
+
+void Mat4EditorProperty::drawXYZ(const char* itemTitle, float* x, float* y, float* z)
+{
+	ImGui::PushID(itemTitle);
 
 	ImGui::Columns(2);
 	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Text(this->title.c_str());
+	ImGui::Text(itemTitle);
 	ImGui::NextColumn();
 
 	ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
@@ -73,22 +94,6 @@ void Mat4EditorProperty::draw()
 	ImGui::Columns(1);
 
 	ImGui::PopID();
-}
-
-void Mat4EditorProperty::serialize(c4::yml::NodeRef& propertyNode)
-{
-	propertyNode |= c4::yml::SEQ | c4::yml::CONTAINER_STYLE;
-
-	const float* valuesArray = glm::value_ptr(*this->values);
-	for (int i = 0; i < 16; ++i)
-		propertyNode.append_child() << valuesArray[i];
-}
-
-void Mat4EditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
-{
-	float* valuesArray = glm::value_ptr(*this->values);
-	for (int i = 0; i < 16; ++i)
-		propertyNode[i] >> valuesArray[i];
 }
 
 } // namespace

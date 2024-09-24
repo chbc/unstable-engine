@@ -25,6 +25,7 @@ void SampleApplication::onUpdate(float elapsedTime)
 		TEMP_loadScene(loadFunction);
 	}
 
+	/*
 	time += elapsedTime;
 	if (time > 0.1f)
 	{
@@ -39,4 +40,5 @@ void SampleApplication::onUpdate(float elapsedTime)
 			material->setUVOffset(uvOffset);
 		}
 	}
+	*/
 }

@@ -17,6 +17,9 @@ public:
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;
 	void deserialize(c4::yml::ConstNodeRef& propertyNode) override;
+
+private:
+	void drawXYZ(const char* itemTitle, float* x, float* y, float* z);
 };
 
 } // namespace
