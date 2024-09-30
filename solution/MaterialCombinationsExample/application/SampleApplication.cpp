@@ -56,7 +56,6 @@ void SampleApplication::onInit()
 
 void SampleApplication::onUpdate(float elapsedTime)
 {
-	this->processKeys();
 	this->processMouse();
 }
 
@@ -73,20 +72,6 @@ void SampleApplication::createLights()
 	PointLightComponent* pLight1 = this->scenesManager->createPointLight("p_light_1", lightCube);
 	pLight1->getTransform()->setPosition(p1Position);
 	pLight1->setColor(glm::vec3(0.5f));
-
-	/* XXX
-	DirectionalLightComponent* dLight1 = this->scenesManager->createDirectionalLight();
-	dLight1->setDirection(glm::vec3(0.0f, -0.1f, -1.0f));
-	dLight1->setColor(glm::vec3(0.5f));
-	*/
-}
-
-void SampleApplication::processKeys()
-{
-	if (Input::isKeyJustPressed(KEY_ESC))
-		this->quit();
-	else if (Input::isKeyJustPressed(KEY_e))
-		this->setEditorMode(true);
 }
 
 void SampleApplication::processMouse()

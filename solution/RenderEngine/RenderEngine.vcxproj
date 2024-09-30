@@ -225,7 +225,6 @@
     <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp" />
     <ClCompile Include="src\editors\properties\ColorEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\FloatEditorProperty.cpp" />
-    <ClCompile Include="src\editors\properties\Mat4EditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\MaterialEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\MeshEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp" />
@@ -376,7 +375,6 @@
     <ClInclude Include="include\ComponentParser.h" />
     <ClInclude Include="include\EntityComponentTypes.h" />
     <ClInclude Include="include\EntityParser.h" />
-    <ClInclude Include="include\Mat4EditorProperty.h" />
     <ClInclude Include="include\MeshEditorProperty.h" />
     <ClInclude Include="include\ScenesManager.h" />
     <ClInclude Include="include\AGraphicsWrapper.h" />

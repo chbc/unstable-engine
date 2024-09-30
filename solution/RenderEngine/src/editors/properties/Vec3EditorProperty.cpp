@@ -9,14 +9,19 @@
 namespace sre
 {
 
-Vec3EditorProperty::Vec3EditorProperty(const char* arg_title, glm::vec3* arg_values)
-	: AEditorProperty(arg_title)
-{
-	this->values = arg_values;
-}
+Vec3EditorProperty::Vec3EditorProperty(const char* arg_title, glm::vec3* arg_values, float arg_defaultValue)
+	: AEditorProperty(arg_title), values(arg_values), defaultValue(arg_defaultValue)
+{ }
+
+Vec3EditorProperty::Vec3EditorProperty(const char* arg_title, glm::vec3* arg_values,
+	std::function<void()> arg_onValuesChanged, float arg_defaultValue)
+	: AEditorProperty(arg_title), values(arg_values), onValuesChanged(arg_onValuesChanged), defaultValue(arg_defaultValue)
+{ }
 
 void Vec3EditorProperty::draw()
 {
+	bool valueChanged = false;
+
 	ImGui::PushID(this->title.c_str());
 
 	ImGui::Columns(2);
@@ -34,11 +39,17 @@ void Vec3EditorProperty::draw()
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
 	if (ImGui::Button("X", buttonSize))
-		this->values->x = 0.0f;
+	{
+		this->values->x = this->defaultValue;
+		valueChanged = true;
+	}
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	ImGui::DragFloat("##X", &this->values->x, 0.1f, 0.0f, 0.0f, "%.2f");
+	if (ImGui::DragFloat("##X", &this->values->x, 0.1f, 0.0f, 0.0f, "%.2f"))
+	{
+		valueChanged = true;
+	}
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -46,11 +57,17 @@ void Vec3EditorProperty::draw()
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
 	if (ImGui::Button("Y", buttonSize))
-		this->values->y = 0.0f;
+	{
+		this->values->y = this->defaultValue;
+		valueChanged = true;
+	}
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	ImGui::DragFloat("##Y", &this->values->y, 0.1f, 0.0f, 0.0f, "%.2f");
+	if (ImGui::DragFloat("##Y", &this->values->y, 0.1f, 0.0f, 0.0f, "%.2f"))
+	{
+		valueChanged = true;
+	}
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -58,17 +75,28 @@ void Vec3EditorProperty::draw()
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.35f, 0.9f, 1.0f });
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
 	if (ImGui::Button("Z", buttonSize))
-		this->values->z = 0.0f;
+	{
+		this->values->z = this->defaultValue;
+		valueChanged = true;
+	}
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	ImGui::DragFloat("##Z", &this->values->z, 0.1f, 0.0f, 0.0f, "%.2f");
+	if (ImGui::DragFloat("##Z", &this->values->z, 0.1f, 0.0f, 0.0f, "%.2f"))
+	{
+		valueChanged = true;
+	}
 	ImGui::PopItemWidth();
 
 	ImGui::PopStyleVar();
 	ImGui::Columns(1);
 
 	ImGui::PopID();
+
+	if (valueChanged && (this->onValuesChanged != nullptr))
+	{
+		this->onValuesChanged();
+	}
 }
 
 void Vec3EditorProperty::serialize(c4::yml::NodeRef& propertyNode)

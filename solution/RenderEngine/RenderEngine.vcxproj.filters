@@ -330,9 +330,6 @@
     <ClCompile Include="src\entities\components\EntityComponentTypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\editors\properties\Mat4EditorProperty.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="include\ARenderableComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -930,9 +927,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\EntityComponentTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Mat4EditorProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\MeshEditorProperty.h">
