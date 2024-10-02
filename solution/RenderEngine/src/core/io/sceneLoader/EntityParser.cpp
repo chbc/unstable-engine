@@ -14,6 +14,13 @@ void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity)
 		c4::yml::NodeRef componentNode = entityNode[component->getClassName()];
 		ComponentParser::serialize(componentNode, component);
 	}
+
+	/* XXX PAREI AQUI
+	for (Entity* item : entity->childrenList)
+	{
+		serialize(entityNode.append_child(), item);
+	}
+	*/
 }
 
 void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, Entity* entity)

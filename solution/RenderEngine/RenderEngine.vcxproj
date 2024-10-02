@@ -223,6 +223,7 @@
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPIState.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp" />
+    <ClCompile Include="src\editors\properties\BoolEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\ColorEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\FloatEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\MaterialEditorProperty.cpp" />
@@ -372,6 +373,7 @@
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
     <ClInclude Include="include\AEntityComponent.h" />
+    <ClInclude Include="include\BoolEditorProperty.h" />
     <ClInclude Include="include\ComponentParser.h" />
     <ClInclude Include="include\EntityComponentTypes.h" />
     <ClInclude Include="include\EntityParser.h" />

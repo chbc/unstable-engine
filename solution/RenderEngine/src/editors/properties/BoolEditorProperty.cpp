@@ -1,4 +1,4 @@
-#include "FloatEditorProperty.h"
+#include "BoolEditorProperty.h"
 
 #include <sstream>
 
@@ -10,11 +10,11 @@
 namespace sre
 {
 
-FloatEditorProperty::FloatEditorProperty(const char* title, float* arg_values)
-	: AEditorProperty(title), value(arg_values)
+BoolEditorProperty::BoolEditorProperty(const char* title, bool* arg_value)
+	: AEditorProperty(title), value(arg_value)
 { }
 
-void FloatEditorProperty::draw()
+void BoolEditorProperty::draw()
 {
 	ImGui::PushID(this->title.c_str());
 
@@ -24,7 +24,7 @@ void FloatEditorProperty::draw()
 	ImGui::NextColumn();
 	ImGui::SetColumnWidth(0, 100.0f);
 
-	if (ImGui::DragFloat("##id", this->value, 0.1f, 0.0f, 0.0f, "%.2f"))
+	if (ImGui::Checkbox("##id", this->value))
 	{
 		this->onValueChanged();
 	}
@@ -34,12 +34,12 @@ void FloatEditorProperty::draw()
 	ImGui::PopID();
 }
 
-void FloatEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
+void BoolEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
 	propertyNode << *value;
 }
 
-void FloatEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+void BoolEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
 	propertyNode >> *value;
 

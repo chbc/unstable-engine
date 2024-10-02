@@ -54,6 +54,9 @@ public:
 
 	inline const glm::mat4 &getMatrix() { return this->worldMatrix; }
 
+protected:
+	void onValueChanged() override;
+
 private:
 	void updateMatrix();
 	void propagateTransform();

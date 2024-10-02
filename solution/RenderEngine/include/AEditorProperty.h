@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sstream>
+#include <functional>
 
 namespace c4
 {
@@ -18,15 +19,18 @@ class AEditorProperty
 {
 protected:
 	std::string title;
+	std::function<void(void)> onValueChanged;
 
 public:
-	AEditorProperty(const char* arg_title) : title(arg_title) { }
+	AEditorProperty(const char* arg_title)
+		: title(arg_title) { }
 
 	virtual void draw() = 0;
 	virtual void serialize(c4::yml::NodeRef& propertyNode) = 0;
 	virtual void deserialize(c4::yml::ConstNodeRef& propertyNode) = 0;
 
 friend class ComponentParser;
+friend class AEntityComponent;
 };
 
 } // namespace

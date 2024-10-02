@@ -69,8 +69,12 @@ void EditorMenuBar::onEditorGUI()
 		ImGui::EndMenuBar();
 	}
 
-	if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Escape), false))
+	if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Escape), false) ||
+		ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Home), false)
+	)
+	{
 		exitEditor();
+	}
 }
 
 void EditorMenuBar::exitEditor()

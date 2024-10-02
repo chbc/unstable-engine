@@ -41,6 +41,7 @@ bool AEntityComponent::isEnabled() const
 
 void AEntityComponent::addEditorProperty(AEditorProperty* editorProperty)
 {
+	editorProperty->onValueChanged = std::bind(&AEntityComponent::onValueChanged, this);
 	this->editorProperties.emplace_back(editorProperty);
 }
 

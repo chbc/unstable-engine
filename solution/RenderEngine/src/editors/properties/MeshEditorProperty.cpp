@@ -39,7 +39,7 @@ void MeshEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 
 void MeshEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
-	this->meshData->reset(PrimitiveMeshFactory().createCube(5.0f));
+	this->meshData->reset(PrimitiveMeshFactory().createCube(2.0f));
 }
 
 } // namespace

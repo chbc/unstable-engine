@@ -1,19 +1,18 @@
 #pragma once
 
 #include "AEditorProperty.h"
-#include <glm/vec3.hpp>
 
 namespace sre
 {
 
-class Vec3EditorProperty : public AEditorProperty
+class BoolEditorProperty : public AEditorProperty
 {
+
 private:
-	glm::vec3* values;
-	float defaultValue;
+	bool* value;
 
 public:
-	Vec3EditorProperty(const char* arg_title, glm::vec3* arg_values, float arg_defaultValue = 0.0f);
+	BoolEditorProperty(const char* title, bool* arg_value);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

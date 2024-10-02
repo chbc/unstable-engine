@@ -24,6 +24,12 @@ protected:
 	glm::mat4 view;
 	glm::mat4 projection;
 
+private:
+	bool isPerspective;
+	float fov;
+	float orthoWidth;
+	float orthoHeight;
+
 public:
 	CameraComponent(Entity *entity);
 	void setMainCamera();
@@ -33,12 +39,15 @@ public:
 
 	glm::vec3 getLookAt() const;
 
-	void setPerspectiveProjection(float fov, float aspectRatio, float near, float far);
+	void setPerspectiveProjection(float arg_fov, float aspectRatio, float near, float far);
 	void setOrthoProjection();
 	void setOrthoProjection(float width, float height);
 
 	glm::mat4 getViewMatrix();
 	glm::mat4 getProjectionMatrix();
+
+protected:
+	void onValueChanged() override;
 
 private:
 	void updateView();

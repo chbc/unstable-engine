@@ -13,11 +13,6 @@ Vec3EditorProperty::Vec3EditorProperty(const char* arg_title, glm::vec3* arg_val
 	: AEditorProperty(arg_title), values(arg_values), defaultValue(arg_defaultValue)
 { }
 
-Vec3EditorProperty::Vec3EditorProperty(const char* arg_title, glm::vec3* arg_values,
-	std::function<void()> arg_onValuesChanged, float arg_defaultValue)
-	: AEditorProperty(arg_title), values(arg_values), onValuesChanged(arg_onValuesChanged), defaultValue(arg_defaultValue)
-{ }
-
 void Vec3EditorProperty::draw()
 {
 	bool valueChanged = false;
@@ -93,9 +88,9 @@ void Vec3EditorProperty::draw()
 
 	ImGui::PopID();
 
-	if (valueChanged && (this->onValuesChanged != nullptr))
+	if (valueChanged && (this->onValueChanged != nullptr))
 	{
-		this->onValuesChanged();
+		this->onValueChanged();
 	}
 }
 
@@ -112,6 +107,11 @@ void Vec3EditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 	propertyNode[0] >> this->values->x;
 	propertyNode[1] >> this->values->y;
 	propertyNode[2] >> this->values->z;
+
+	if (this->onValueChanged != nullptr)
+	{
+		this->onValueChanged();
+	}
 }
 
 } // namespace

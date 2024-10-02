@@ -21,11 +21,9 @@ IMPLEMENT_COMPONENT(TransformComponent)
 TransformComponent::TransformComponent(Entity *entity) : AEntityComponent(entity),
 	worldMatrix{1.0f}, localMatrix{1.0f}, position{0.0f}, eulerAngles{0.0f}, scale{1.0f}
 {
-	std::function<void()> callback = std::bind(&TransformComponent::updateMatrix, this);
-
-	this->addEditorProperty(new Vec3EditorProperty{ "Position", &this->position, callback });
-	this->addEditorProperty(new Vec3EditorProperty{ "Rotation", &this->eulerAngles, callback });
-	this->addEditorProperty(new Vec3EditorProperty{ "Scale", &this->scale, callback, 1.0f });
+	this->addEditorProperty(new Vec3EditorProperty{ "Position", &this->position });
+	this->addEditorProperty(new Vec3EditorProperty{ "Rotation", &this->eulerAngles });
+	this->addEditorProperty(new Vec3EditorProperty{ "Scale", &this->scale, 1.0f });
 }
 
 void TransformComponent::setPosition(const glm::vec3& arg_position)
@@ -189,6 +187,11 @@ glm::vec3 TransformComponent::getForwardVector()
 glm::vec3 TransformComponent::getRightVector()
 {
 	return glm::vec3{ 0.0f };
+}
+
+void TransformComponent::onValueChanged()
+{
+	this->updateMatrix();
 }
 
 void TransformComponent::updateMatrix()
