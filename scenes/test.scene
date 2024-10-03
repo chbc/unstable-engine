@@ -1,46 +1,63 @@
 entity_2:
-  enabled: 1
-  TransformComponent:
-    enabled: 1
-    Position: [5,0,'-2.5']
-    Rotation: [0,0,0]
-    Scale: [1,1,1]
-  MeshComponent:
-    enabled: 1
-    MeshType: ../../media/cube.mesh
-    Material: Material Properties
+  Enabled: 1
+  Components:
+    TransformComponent:
+      enabled: 1
+      Position: [5,0,'-2.5']
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      enabled: 1
+      MeshType: ../../media/cube.mesh
+      Material: Material Properties
+  Entities:
+    caixa_filha:
+      Enabled: 1
+      Components:
+        TransformComponent:
+          enabled: 1
+          Position: [0,0,'-5']
+          Rotation: [0,0,0]
+          Scale: [1,1,1]
+        MeshComponent:
+          enabled: 1
+          MeshType: ../../media/cube.mesh
+          Material: Material Properties
 _main_camera:
-  enabled: 1
-  TransformComponent:
-    enabled: 1
-    Position: [0,5,5]
-    Rotation: [0,0,0]
-    Scale: [1,1,1]
-  CameraComponent:
-    enabled: 1
-    Perspective: 1
-    Look At Target: [0,0,0]
-    Up: [0,1,0]
-    FOV: 90
+  Enabled: 1
+  Components:
+    TransformComponent:
+      enabled: 1
+      Position: [0,5,5]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    CameraComponent:
+      enabled: 1
+      Perspective: 1
+      Look At Target: [0,0,0]
+      Up: [0,1,0]
+      FOV: 90
 entity_0:
-  enabled: 1
-  TransformComponent:
-    enabled: 1
-    Position: ['-5',0,'-2.5']
-    Rotation: [0,0,0]
-    Scale: [1,1,1]
-  MeshComponent:
-    enabled: 1
-    MeshType: ../../media/cube.mesh
-    Material: Material Properties
+  Enabled: 1
+  Components:
+    TransformComponent:
+      enabled: 1
+      Position: ['-5',0,'-2.5']
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      enabled: 1
+      MeshType: ../../media/cube.mesh
+      Material: Material Properties
 entity_1:
-  enabled: 1
-  TransformComponent:
-    enabled: 1
-    Position: [0,0,'-2.5']
-    Rotation: [0,0,0]
-    Scale: [1,1,1]
-  MeshComponent:
-    enabled: 1
-    MeshType: ../../media/cube.mesh
-    Material: Material Properties
+  Enabled: 1
+  Components:
+    TransformComponent:
+      enabled: 1
+      Position: [0,0,'-2.5']
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      enabled: 1
+      MeshType: ../../media/cube.mesh
+      Material: Material Properties

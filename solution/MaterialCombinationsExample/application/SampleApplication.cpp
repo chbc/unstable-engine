@@ -22,7 +22,6 @@ void SampleApplication::onInit()
 	cube = this->scenesManager->createCubeEntity(2.0f);
 	cube->getTransform()->setPosition(position);
 	cubeMesh = cube->getComponent<MeshComponent>();
-	/*
 	cubeMesh->getMaterial()->setReceivesLight(true);
 	cubeMesh->getMaterial()->setCastShadow(false);
 
@@ -52,7 +51,6 @@ void SampleApplication::onInit()
 	cubeMesh->addMaterialComponent<SpecularMaterialComponent>("crate_specular.png");
 	cubeMesh->getMaterial()->setReceivesLight(true);
 	cubeMesh->getMaterial()->setCastShadow(false);
-	*/
 }
 
 void SampleApplication::onUpdate(float elapsedTime)

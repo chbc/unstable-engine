@@ -35,7 +35,7 @@ void SceneLoader::load(Scene* scene, const char* sceneName)
 		std::ostringstream keyStream;
 		keyStream << entityNode.key();
 		Entity* entity = scene->createEntity(keyStream.str());
-		EntityParser::deserialize(entityNode, entity);
+		EntityParser::deserialize(scene, entityNode, entity);
 	}
 }
 

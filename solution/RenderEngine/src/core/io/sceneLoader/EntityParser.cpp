@@ -1,4 +1,6 @@
 #include "EntityParser.h"
+#include "Scene.h"
+#include <sstream>
 
 namespace sre
 {
@@ -6,34 +8,53 @@ void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity)
 {
 	entityNode |= ryml::MAP;
 
-	entityNode["enabled"] << entity->isEnabled();
-
+	entityNode["Enabled"] << entity->isEnabled(); // XXX
+	
+	c4::yml::NodeRef ComponentsNode = entityNode["Components"];
+	ComponentsNode |= ryml::MAP;
 	for (const auto& componentItem : entity->componentsMap)
 	{
 		AEntityComponent* component = componentItem.second.get();
-		c4::yml::NodeRef componentNode = entityNode[component->getClassName()];
-		ComponentParser::serialize(componentNode, component);
+		c4::yml::NodeRef itemtNode = ComponentsNode[component->getClassName()];
+		ComponentParser::serialize(itemtNode, component);
 	}
 
-	/* XXX PAREI AQUI
-	for (Entity* item : entity->childrenList)
+	if (entity->getChildrenCount() > 0)
 	{
-		serialize(entityNode.append_child(), item);
+		c4::yml::NodeRef childNode = entityNode["Entities"];
+		childNode |= ryml::MAP;
+		for (Entity* item : entity->childrenList)
+		{
+			c4::yml::NodeRef itemNode = childNode[item->getName()];
+			serialize(itemNode, item);
+		}
 	}
-	*/
 }
 
-void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, Entity* entity)
+void EntityParser::deserialize(Scene* scene, c4::yml::ConstNodeRef& entityNode, Entity* entity)
 {
 	bool enabled;
-	entityNode["enabled"] >> enabled;
+	entityNode["Enabled"] >> enabled;
 	entity->setEnabled(enabled);
 
-	for (c4::yml::ConstNodeRef componentNode : entityNode.children())
+	for (c4::yml::ConstNodeRef propertyNode : entityNode.children())
 	{
-		if (componentNode.is_map())
+		if (propertyNode.key() == "Components")
 		{
-			ComponentParser::deserialize(componentNode, entity);
+			for (c4::yml::ConstNodeRef componentNode : propertyNode.children())
+			{
+				ComponentParser::deserialize(componentNode, entity);
+			}
+		}
+		else if (propertyNode.key() == "Entities")
+		{
+			for (c4::yml::ConstNodeRef childEntityNode : propertyNode.children())
+			{
+				std::ostringstream keyStream;
+				keyStream << childEntityNode.key();
+				Entity* childEntity = scene->createEntity(keyStream.str(), entity);
+				deserialize(scene, childEntityNode, childEntity);
+			}
 		}
 	}
 }
