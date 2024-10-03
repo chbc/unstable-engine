@@ -58,8 +58,7 @@ DirectionalLightComponent *Scene::createDirectionalLight(const std::string& name
     std::string resultName = name.empty() ? "directional_light" : name;
     Entity *newEntity = this->createEntity(resultName, parent);
 
-    newEntity->addComponent<DirectionalLightComponent>();
-    return this->renderManager->AddDirectionalLight(newEntity);
+    return newEntity->addComponent<DirectionalLightComponent>();
 }
 
 PointLightComponent *Scene::createPointLight(const std::string& name, Entity* parent)
@@ -67,8 +66,7 @@ PointLightComponent *Scene::createPointLight(const std::string& name, Entity* pa
     std::string resultName = name.empty() ? "point_light" : name;
     Entity *newEntity = this->createEntity(resultName, parent);
 
-    newEntity->addComponent<PointLightComponent>();
-    return this->renderManager->AddPointLight(newEntity);
+    return newEntity->addComponent<PointLightComponent>();
 }
 
 CameraComponent *Scene::getMainCamera()

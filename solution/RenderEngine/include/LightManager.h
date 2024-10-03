@@ -32,8 +32,8 @@ public:
 private:
     LightManager();
     
-    DirectionalLightComponent *addDirectionalLight(Entity *entity);
-    PointLightComponent *addPointLight(Entity *entity);
+    void addDirectionalLight(DirectionalLightComponent* item);
+    void addPointLight(PointLightComponent* item);
 
     void removeDestroyedEntities();
 
@@ -43,6 +43,8 @@ friend class MeshRenderer;
 friend class LightRendererShaderSetup;
 friend class ShadowRendererShaderSetup;
 friend class ShadowRenderer;
+friend class DirectionalLightComponent;
+friend class PointLightComponent;
 };
 
 } // namespace

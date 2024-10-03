@@ -45,25 +45,9 @@ void ComponentParser::deserialize(c4::yml::ConstNodeRef& componentNode, Entity* 
 	{
 		c4::yml::ConstNodeRef& propertyNode = componentNode[property->title.c_str()];
 		property->deserialize(propertyNode);
-		// std::istringstream stream;
-		// propertyNode >> stream;
 
 		std::cout << propertyNode << std::endl;
 	}
-
-	/* XXX
-	else if (type == "CameraComponent")
-	{
-		CameraComponent* camera = entity->addComponent<CameraComponent>();
-		camera->setLookAt(glm::vec3{ 0.0f });
-		camera->setPerspectiveProjection(90.0f, EngineValues::SCREEN_WIDTH / EngineValues::SCREEN_HEIGHT, 0.1f, 1000.0f);
-	}
-	else if (type == "MeshComponent")
-	{
-		MeshData* meshData = PrimitiveMeshFactory().createCube(2.0f);
-		MeshComponent* mesh = entity->addComponent<MeshComponent>(meshData);
-	}
-	*/
 }
 
 } // namespace

@@ -2,6 +2,7 @@
 
 #include "imgui/imgui.h"
 #include <glm/gtc/type_ptr.hpp>
+#include <rapidyaml/rapidyaml.hpp>
 
 namespace sre
 {
@@ -38,10 +39,23 @@ void ColorEditorProperty::draw()
 
 void ColorEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
+	propertyNode |= c4::yml::SEQ | c4::yml::CONTAINER_STYLE;
+	propertyNode.append_child() << this->values[0];
+	propertyNode.append_child() << this->values[1];
+	propertyNode.append_child() << this->values[2];
+
+	if (this->hasAlpha)
+	{
+		propertyNode.append_child() << this->values[3];
+	}
 }
 
 void ColorEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
+	for (size_t i = 0; i < propertyNode.num_children(); ++i)
+	{
+		propertyNode[i] >> this->values[i];
+	}
 }
 
 } // namespace

@@ -255,16 +255,6 @@ void RenderManager::onRemoveDestroyedEntities()
     this->lightManager->removeDestroyedEntities();
 }
 
-DirectionalLightComponent* RenderManager::AddDirectionalLight(Entity* entity)
-{
-    return this->lightManager->addDirectionalLight(entity);
-}
-
-PointLightComponent* RenderManager::AddPointLight(Entity* entity)
-{
-    return this->lightManager->addPointLight(entity);
-}
-
 void RenderManager::setTargetFBO(uint32_t fbo)
 {
     this->targetFBO = fbo;

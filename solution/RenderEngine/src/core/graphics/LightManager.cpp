@@ -29,20 +29,14 @@ bool LightManager::hasAnyShadowCaster()
     );
 }
 
-DirectionalLightComponent *LightManager::addDirectionalLight(Entity *entity)
+void LightManager::addDirectionalLight(DirectionalLightComponent* item)
 {
-    DirectionalLightComponent *newLight = entity->getComponent<DirectionalLightComponent>();
-    this->directionalLights.push_back(newLight);
-
-    return newLight;
+    this->directionalLights.push_back(item);
 }
 
-PointLightComponent *LightManager::addPointLight(Entity *entity)
+void LightManager::addPointLight(PointLightComponent* item)
 {
-    PointLightComponent *newLight = entity->getComponent<PointLightComponent>();
-    this->pointLights.push_back(newLight);
-
-    return newLight;
+    this->pointLights.push_back(item);
 }
 
 void LightManager::removeDestroyedEntities()

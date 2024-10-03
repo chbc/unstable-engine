@@ -1,6 +1,8 @@
 #include "PointLightComponent.h"
 #include "TransformComponent.h"
 #include "FloatEditorProperty.h"
+#include "SingletonsManager.h"
+#include "LightManager.h"
 
 namespace sre
 {
@@ -12,6 +14,10 @@ PointLightComponent::PointLightComponent(Entity *entity)
 {
 	this->addEditorProperty(new FloatEditorProperty{ "Intensity", &this->intensity });
 	this->addEditorProperty(new FloatEditorProperty{ "Range", &this->range });
+
+	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+	LightManager* lightManager = singletonsManager->resolve<LightManager>();
+	lightManager->addPointLight(this);
 }
 
 void PointLightComponent::setPosition(const glm::vec3 &position)

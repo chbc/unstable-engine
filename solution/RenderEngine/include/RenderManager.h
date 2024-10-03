@@ -69,9 +69,6 @@ private:
     void setupBufferSubData(GUIMeshData* meshData);
     void onRemoveDestroyedEntities();
 
-    DirectionalLightComponent* AddDirectionalLight(Entity* entity);
-    PointLightComponent* AddPointLight(Entity* entity);
-
     void setTargetFBO(uint32_t fbo);
     void unbindFrameBuffer();
 
