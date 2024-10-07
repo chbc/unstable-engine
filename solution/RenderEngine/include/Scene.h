@@ -30,10 +30,8 @@ private:
     DirectionalLightComponent* createDirectionalLight(const std::string& name = "", Entity* parent = nullptr);
     PointLightComponent* createPointLight(const std::string& name = "", Entity* parent = nullptr);
 
-    // camera //
-    class CameraComponent *getMainCamera();
+    // mesh //
     Entity *createMeshEntity(MeshData* objectData, const std::string& name = "", Entity* parent = nullptr);
-    void setMainCamera(CameraComponent* camera);
 
 friend class ScenesManager;
 friend class SceneLoader;

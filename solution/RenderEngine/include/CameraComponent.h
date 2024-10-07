@@ -27,12 +27,13 @@ protected:
 private:
 	bool isPerspective;
 	float fov;
+	bool isMainCamera;
+	bool isApplicationCamera;
 	float orthoWidth;
 	float orthoHeight;
 
 public:
 	CameraComponent(Entity *entity);
-	void setMainCamera();
 	void setLookAt(const glm::vec3& target);
 	void setPosition(const glm::vec3& position);
 	glm::vec3 getPosition() const;
@@ -42,6 +43,7 @@ public:
 	void setPerspectiveProjection(float arg_fov, float aspectRatio, float near, float far);
 	void setOrthoProjection();
 	void setOrthoProjection(float width, float height);
+	void setMainCamera();
 
 	glm::mat4 getViewMatrix();
 	glm::mat4 getProjectionMatrix();
@@ -53,6 +55,7 @@ private:
 	void updateView();
 
 friend class RenderManager;
+friend class EditorSceneViewport;
 };
 
 } // namespace

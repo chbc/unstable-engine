@@ -61,11 +61,13 @@ void EditorSceneViewport::onInit()
 
 		this->cameraEntity->onStart();
 		this->orbitCamera->setEnabled(false);
+
+		this->renderManager->setEditorCamera(this->flyingCamera);
 	}
 
 	this->renderManager->setTargetFBO(Fbo);
-	this->flyingCamera->setMainCamera();
 	this->canUpdate = false;
+	this->renderManager->setEditorMode(false);
 }
 
 void EditorSceneViewport::onUpdate(float elapsedTime)
@@ -112,7 +114,7 @@ void EditorSceneViewport::updateViewingState()
 			this->orbitCamera->setLookAt(lookAt);
 			this->flyingCamera->setEnabled(false);
 			this->orbitCamera->setEnabled(true);
-			this->renderManager->setMainCamera(this->orbitCamera);
+			this->renderManager->setEditorCamera(this->orbitCamera);
 		}
 	}
 	else if (!this->flyingCamera->isEnabled())
@@ -121,7 +123,7 @@ void EditorSceneViewport::updateViewingState()
 		this->flyingCamera->setLookAt(lookAt);
 		this->orbitCamera->setEnabled(false);
 		this->flyingCamera->setEnabled(true);
-		this->renderManager->setMainCamera(this->flyingCamera);
+		this->renderManager->setEditorCamera(this->flyingCamera);
 	}
 }
 

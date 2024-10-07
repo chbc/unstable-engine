@@ -38,7 +38,9 @@ private:
     UPTR<class GUIRenderer> guiRenderer;
 	UPTR<class PostProcessingRenderer> postProcessingRenderer;
 
-    CameraComponent *mainCamera;
+    CameraComponent* applicationCamera;
+    CameraComponent* editorCamera;
+    CameraComponent* currentCamera;
     uint32_t targetFBO;
 
 private:
@@ -59,8 +61,10 @@ private:
 
     void onSceneLoaded();
 
-    void setMainCamera(CameraComponent *camera);
-    CameraComponent *getMainCamera();
+    void setApplicationCamera(CameraComponent *camera);
+    void setEditorCamera(CameraComponent* camera);
+    void setEditorMode(bool isEditorMode);
+    CameraComponent* getCurrentCamera();
 
     void render();
 

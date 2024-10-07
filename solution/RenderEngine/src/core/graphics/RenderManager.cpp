@@ -36,7 +36,9 @@ RenderManager::RenderManager()
     this->lightManager      = singletonsManager->resolve<LightManager>();
     this->shaderManager     = singletonsManager->resolve<ShaderManager>();
 
-    this->mainCamera = nullptr;
+    this->applicationCamera = nullptr;
+    this->editorCamera = nullptr;
+    this->currentCamera = nullptr;
     this->targetFBO = 0;
 }
 
@@ -74,6 +76,19 @@ void RenderManager::addEntity(Entity *entity)
     {
         GUITextComponent *guiComponent = entity->getComponent<GUITextComponent>();
         this->addDynamicGUIComponent(guiComponent);
+    }
+    else if (entity->hasComponent<CameraComponent>())
+    {
+        CameraComponent* newCamera = entity->getComponent<CameraComponent>();
+        if ((this->applicationCamera == nullptr) || newCamera->isApplicationCamera && newCamera->isMainCamera)
+        {
+            this->applicationCamera = newCamera;
+            
+            if (this->currentCamera == nullptr)
+            {
+                this->currentCamera = newCamera;
+            }
+        }
     }
     
     uint32_t size = entity->getChildrenCount();
@@ -150,7 +165,7 @@ void RenderManager::initShadowRenderer()
 
 void RenderManager::onSceneLoaded()
 {
-    if (this->mainCamera == nullptr)
+    if (this->currentCamera == nullptr)
         return;
 
     if (this->shadowRenderer.get() != nullptr)
@@ -158,7 +173,7 @@ void RenderManager::onSceneLoaded()
 
 	bool useBrightnessSegmentation = false;
     bool includeDepth = false;
-	Entity* cameraEntity = this->mainCamera->getEntity();
+	Entity* cameraEntity = this->currentCamera->getEntity();
 	if (cameraEntity->hasComponent<PostProcessingComponent>())
 	{
 		PostProcessingComponent* postProcessingComponent = cameraEntity->getComponent<PostProcessingComponent>();
@@ -176,14 +191,24 @@ void RenderManager::onSceneLoaded()
         item->onSceneLoaded(useBrightnessSegmentation, includeDepth);
 }
 
-void RenderManager::setMainCamera(CameraComponent *camera)
+void RenderManager::setApplicationCamera(CameraComponent *camera)
 {
-    this->mainCamera = camera;
+    this->applicationCamera = camera;
 }
 
-CameraComponent *RenderManager::getMainCamera()
+void RenderManager::setEditorCamera(CameraComponent* camera)
 {
-    return this->mainCamera;
+    this->editorCamera = camera;
+}
+
+void RenderManager::setEditorMode(bool isEditorMode)
+{
+    this->currentCamera = isEditorMode ? this->editorCamera : this->applicationCamera;
+}
+
+CameraComponent* RenderManager::getCurrentCamera()
+{
+    return this->currentCamera;
 }
 
 void RenderManager::render()
@@ -202,14 +227,15 @@ void RenderManager::render()
     this->graphicsWrapper->setViewport(EngineValues::SCREEN_WIDTH, EngineValues::SCREEN_HEIGHT);
     this->graphicsWrapper->clearColorAndDepthBuffer();
 
-    if (this->mainCamera != nullptr)
+    if (this->currentCamera != nullptr)
     {
-        this->mainCamera->updateView();
+        this->currentCamera->updateView();
+        glm::vec3 cameraPosition = this->currentCamera->getTransform()->getPosition();
         for (const UPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
-            item->render(this->mainCamera->getTransform()->getPosition());
+            item->render(cameraPosition);
 
         for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
-            item->render(this->mainCamera->getTransform()->getPosition());
+            item->render(cameraPosition);
     }
 
 	// Post processing rendering

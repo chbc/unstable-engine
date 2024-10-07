@@ -73,31 +73,7 @@ void RenderEngine::run()
 
 void RenderEngine::loadScene(const char* sceneName)
 {
-    this->scenesManager->destroyAllEntities();
-    this->removeDestroyedEntities();
-    this->renderManager->setMainCamera(nullptr);
-
-    Scene* scene = this->scenesManager->createScene("test_scene");
-    SceneLoader::load(scene, sceneName);
-
-    this->applicationCamera = this->renderManager->getMainCamera();
-
-    this->scenesManager->onScenesLoaded();
-    this->renderManager->onSceneLoaded();
-}
-
-void RenderEngine::TEMP_loadScene(std::function<void()>& loadFunction)
-{
-    this->scenesManager->destroyAllEntities();
-    this->removeDestroyedEntities();
-    this->renderManager->setMainCamera(nullptr);
-
-    loadFunction();
-
-    this->applicationCamera = this->renderManager->getMainCamera();
-
-    this->scenesManager->onScenesLoaded();
-    this->renderManager->onSceneLoaded();
+    this->loadScene(sceneName, false);
 }
 
 void RenderEngine::setEditorMode(bool value)
@@ -171,15 +147,34 @@ void RenderEngine::onEndFrame()
 
         if (this->isEditorMode)
         {
-            this->applicationCamera = this->renderManager->getMainCamera();
             this->worldEditor->init();
         }
         else
         {
             this->worldEditor->release();
-            this->renderManager->setMainCamera(this->applicationCamera);
         }
+
+        this->renderManager->setEditorMode(this->isEditorMode);
     }
+}
+
+void RenderEngine::loadEditorScene(const char* sceneName)
+{
+    this->loadScene(sceneName, true);
+}
+
+void RenderEngine::loadScene(const char* sceneName, bool isEditorMode)
+{
+    this->scenesManager->destroyAllEntities();
+    this->removeDestroyedEntities();
+
+    Scene* scene = this->scenesManager->createScene("test_scene");
+    SceneLoader::load(scene, sceneName);
+
+    this->renderManager->setEditorMode(isEditorMode);
+
+    this->scenesManager->onScenesLoaded();
+    this->renderManager->onSceneLoaded();
 }
 
 void RenderEngine::removeDestroyedEntities()

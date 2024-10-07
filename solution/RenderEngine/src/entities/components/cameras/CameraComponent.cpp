@@ -19,9 +19,11 @@ IMPLEMENT_COMPONENT(CameraComponent)
 
 CameraComponent::CameraComponent(Entity *entity) : AEntityComponent(entity),
     lookAtTarget(0.0f), up(0.0f), view(1.0f), projection(1.0f),
-    isPerspective(true), fov(90.0f), orthoWidth(1.0f), orthoHeight(1.0f)
+    isPerspective(true), fov(90.0f), orthoWidth(1.0f), orthoHeight(1.0f),
+    isMainCamera(false), isApplicationCamera(true)
 {
     this->addEditorProperty(new BoolEditorProperty{ "Perspective", &this->isPerspective });
+    this->addEditorProperty(new BoolEditorProperty{ "Main Camera", &this->isMainCamera });
     this->addEditorProperty(new Vec3EditorProperty{ "Look At Target", &this->lookAtTarget });
     this->addEditorProperty(new Vec3EditorProperty{ "Up", &this->up });
     this->addEditorProperty(new FloatEditorProperty{ "FOV", &this->fov });
@@ -33,14 +35,6 @@ CameraComponent::CameraComponent(Entity *entity) : AEntityComponent(entity),
 
     this->view = glm::mat4(1.0f);
     this->projection = glm::mat4(1.0f);
-
-    setMainCamera();
-}
-
-void CameraComponent::setMainCamera()
-{
-    RenderManager* renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
-    renderManager->setMainCamera(this);
 }
 
 void CameraComponent::setLookAt(const glm::vec3& target)
@@ -85,6 +79,13 @@ void CameraComponent::setOrthoProjection(float width, float height)
     this->projection = glm::ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, 0.1f, 1000.0f);
 }
 
+void CameraComponent::setMainCamera()
+{
+    this->isMainCamera = true;
+    RenderManager* renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
+    renderManager->setApplicationCamera(this);
+}
+
 glm::mat4 CameraComponent::getViewMatrix()
 {
     return this->view;
@@ -108,6 +109,11 @@ void CameraComponent::onValueChanged()
     }
 
     this->updateView();
+
+    if (this->isMainCamera)
+    {
+        this->setMainCamera();
+    }
 }
 
 void CameraComponent::updateView()

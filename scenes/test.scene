@@ -21,6 +21,7 @@ _main_camera:
     CameraComponent:
       enabled: 1
       Perspective: 1
+      Main Camera: 1
       Look At Target: [0,0,0]
       Up: [0,1,0]
       FOV: 90

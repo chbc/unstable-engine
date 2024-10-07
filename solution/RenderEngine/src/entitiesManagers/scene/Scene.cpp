@@ -69,22 +69,12 @@ PointLightComponent *Scene::createPointLight(const std::string& name, Entity* pa
     return newEntity->addComponent<PointLightComponent>();
 }
 
-CameraComponent *Scene::getMainCamera()
-{
-	return this->renderManager->getMainCamera();
-}
-
 Entity *Scene::createMeshEntity(MeshData* objectData, const std::string& name, Entity* parent)
 {
     Entity *newEntity = this->createEntity(name, parent);
 	MeshComponent* meshComponent = newEntity->addComponent<MeshComponent>();
     meshComponent->setMeshData(objectData);
     return newEntity;
-}
-
-void Scene::setMainCamera(CameraComponent* camera)
-{
-    this->renderManager->setMainCamera(camera);
 }
 
 } // namespace

@@ -23,7 +23,7 @@ void BaseRendererShaderSetup::onSceneLoaded(Shader *shader)
 void BaseRendererShaderSetup::setupShaderValues(Shader *shader, const glm::vec3& cameraPosition)
 {
     RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
-    CameraComponent* cameraComponent = renderManager->getMainCamera();
+    CameraComponent* cameraComponent = renderManager->getCurrentCamera();
 
     glm::mat4 viewMatrix = cameraComponent->getViewMatrix();
     glm::mat4 projectionMatrix = cameraComponent->getProjectionMatrix();

@@ -79,19 +79,9 @@ PointLightComponent* ScenesManager::createPointLight(const std::string& name, En
     return this->runtimeScene->createPointLight(name, parent);
 }
 
-CameraComponent* ScenesManager::getMainCamera()
-{
-    return this->runtimeScene->getMainCamera();
-}
-
 Entity* ScenesManager::createMeshEntity(MeshData* objectData, const std::string& name, Entity* parent)
 {
     return this->runtimeScene->createMeshEntity(objectData, name, parent);
-}
-
-void ScenesManager::setMainCamera(CameraComponent* camera)
-{
-    this->runtimeScene->setMainCamera(camera);
 }
 
 Entity* ScenesManager::createGUIImageEntity(const std::string& fileName)

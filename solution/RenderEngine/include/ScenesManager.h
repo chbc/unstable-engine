@@ -33,9 +33,7 @@ public:
     SRE_API PointLightComponent* createPointLight(const std::string& name = "", Entity* parent = nullptr);
 
     // camera //
-    SRE_API class CameraComponent* getMainCamera();
     SRE_API Entity* createMeshEntity(MeshData* objectData, const std::string& name = "", Entity* parent = nullptr);
-    SRE_API void setMainCamera(CameraComponent* camera);
 
     // GUI //
     SRE_API Entity* createGUIImageEntity(const std::string& fileName);

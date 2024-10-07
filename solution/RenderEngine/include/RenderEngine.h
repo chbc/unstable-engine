@@ -24,7 +24,6 @@ private:
     static RenderEngine* instance;
 
     class RenderManager* renderManager;
-    CameraComponent* applicationCamera;
     bool running;
     bool isEditorMode;
     bool wasEditorMode;
@@ -40,7 +39,6 @@ public:
     static RenderEngine* getInstance();
     void run();
     void loadScene(const char* sceneName);
-    void TEMP_loadScene(std::function<void()>& loadFunction);
     void setEditorMode(bool value);
     void quit();
 
@@ -56,8 +54,13 @@ private:
     void update(float elapsedTime);
     void processMultimediaInput();
     void onEndFrame();
+    void loadEditorScene(const char* sceneName);
+    void loadScene(const char* sceneName, bool isEditorMode);
     void removeDestroyedEntities();
     void release();
+
+
+friend class EditorMenuBar;
 };
 
 } // namespace

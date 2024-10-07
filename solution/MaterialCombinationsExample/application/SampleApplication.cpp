@@ -9,9 +9,8 @@ SampleApplication::SampleApplication() : RenderEngine(), camera(nullptr)
 
 void SampleApplication::onInit()
 {
-	this->scenesManager->createPerspectiveCamera(90.0f);
-
-	this->camera = this->scenesManager->getMainCamera();
+	Entity* cameraEntity = this->scenesManager->createPerspectiveCamera(90.0f);
+	this->camera = cameraEntity->getComponent<CameraComponent>();
 	this->camera->setPosition({ 0.0f, 5.0f, 5.0f });
 
 	// this->createLights();

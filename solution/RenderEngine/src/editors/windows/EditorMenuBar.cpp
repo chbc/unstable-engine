@@ -36,7 +36,7 @@ void EditorMenuBar::onEditorGUI()
 			ImGui::MenuItem("New scene");
 			if (ImGui::MenuItem("Open scene"))
 			{
-				RenderEngine::getInstance()->loadScene("../../scenes/test.scene");
+				RenderEngine::getInstance()->loadEditorScene("../../scenes/test.scene");
 			}
 
 			if (ImGui::MenuItem("Save scene"))
