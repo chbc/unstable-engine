@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MemoryGame", "MemoryGame\Me
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2DDemo", "2DDemo\2DDemo.vcxproj", "{A67EC720-6E83-45EC-9515-19FA3072FA44}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicShapesGenerator", "BasicShapesGenerator\BasicShapesGenerator.vcxproj", "{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -115,6 +117,22 @@ Global
 		{A67EC720-6E83-45EC-9515-19FA3072FA44}.Test|Win32.Build.0 = Debug|Win32
 		{A67EC720-6E83-45EC-9515-19FA3072FA44}.Test|x64.ActiveCfg = Debug|x64
 		{A67EC720-6E83-45EC-9515-19FA3072FA44}.Test|x64.Build.0 = Debug|x64
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Debug|Win32.Build.0 = Debug|Win32
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Debug|x64.ActiveCfg = Debug|x64
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Debug|x64.Build.0 = Debug|x64
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Release|Win32.ActiveCfg = Release|Win32
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Release|Win32.Build.0 = Release|Win32
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Release|x64.ActiveCfg = Release|x64
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Release|x64.Build.0 = Release|x64
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Test_Debug|Win32.ActiveCfg = Debug|Win32
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Test_Debug|Win32.Build.0 = Debug|Win32
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Test_Debug|x64.ActiveCfg = Debug|x64
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Test_Debug|x64.Build.0 = Debug|x64
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Test|Win32.ActiveCfg = Debug|Win32
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Test|Win32.Build.0 = Debug|Win32
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Test|x64.ActiveCfg = Debug|x64
+		{A28C76A0-B8BB-4501-9B7C-A42CD3D401AA}.Test|x64.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
