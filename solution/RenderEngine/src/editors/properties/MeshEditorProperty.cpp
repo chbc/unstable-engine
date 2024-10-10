@@ -1,12 +1,11 @@
 #include "MeshEditorProperty.h"
 
-#include "MeshData.h"
-#include "PrimitiveMeshFactory.h"
+#include "SingletonsManager.h"
+#include "AssetsManager.h"
 
 // XXX MOVER IMGUI PRA UM WRAPPER
 #include "imgui/imgui.h"
 #include <rapidyaml/rapidyaml.hpp>
-
 
 namespace sre
 {
@@ -34,12 +33,18 @@ void MeshEditorProperty::draw()
 
 void MeshEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
-	propertyNode << "../../media/cube.mesh";
+	propertyNode << "../../media/Cube.mesh";
 }
 
 void MeshEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
-	this->meshData->reset(PrimitiveMeshFactory().createCube(2.0f));
+	std::string fileName;
+	propertyNode >> fileName;
+
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->resolve<AssetsManager>();
+
+	MeshData* meshData = assetsManager->loadMesh(fileName.c_str());
+	this->meshData->reset(meshData);
 }
 
 } // namespace

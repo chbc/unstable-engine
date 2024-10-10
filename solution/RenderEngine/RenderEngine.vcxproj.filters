@@ -318,13 +318,13 @@
     <ClCompile Include="src\entitiesManagers\scene\AScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\io\sceneLoader\ComponentParser.cpp">
+    <ClCompile Include="src\core\io\parsers\ComponentParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\io\sceneLoader\EntityParser.cpp">
+    <ClCompile Include="src\core\io\parsers\EntityParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\io\sceneLoader\SceneLoader.cpp">
+    <ClCompile Include="src\core\io\assetsLoader\SceneLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\components\EntityComponentTypes.cpp">
@@ -337,6 +337,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\editors\properties\BoolEditorProperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\io\AssetsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\io\assetsLoader\MeshLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -936,6 +942,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\BoolEditorProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AssetsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MeshLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

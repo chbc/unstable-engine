@@ -2,24 +2,49 @@
 #include <iostream>
 #include <fstream>
 
-#define WRITE 1
+#define WRITE 0
 
 
 using namespace sre;
 
 void print(MeshData* mesh);
+void saveMesh(MeshData* mesh, const char* fileName);
 
 int main()
 {
-
+    PrimitiveMeshFactory meshFactory;
 #if WRITE
     // WRITE
-    PrimitiveMeshFactory meshFactory;
-    MeshData* mesh = meshFactory.createCube(1.0f);
+    MeshData* cubeMesh = meshFactory.createCube(1.0f);
+    MeshData* planeMesh = meshFactory.createPlane(1.0f, 1.0f);
+
+    saveMesh(cubeMesh, "Cube.mesh");
+    saveMesh(planeMesh, "Plane.mesh");
+
+    delete cubeMesh;
+    delete planeMesh;
+    //
+#else
+    // READ
+
+    MeshData* readMesh = meshFactory.load("Cube.Mesh");
+    print(readMesh);
+
+    delete readMesh;
+
+    system("pause");
+#endif
+    //
+
+    return 0;
+}
+
+void saveMesh(MeshData* mesh, const char* fileName)
+{
     size_t vertexSize = mesh->vertexData.size();
     size_t indicesSize = mesh->indices.size();
 
-    std::ofstream saveStream("Cube.mesh", std::ios::out | std::ios::binary);
+    std::ofstream saveStream(fileName, std::ios::out | std::ios::binary);
     if (saveStream)
     {
         saveStream.write(reinterpret_cast<const char*>(&vertexSize), sizeof(size_t));
@@ -35,43 +60,6 @@ int main()
         }
     }
     saveStream.close();
-    delete mesh;
-    //
-#else
-    // READ
-    std::vector<VertexData> vertexData;
-    std::vector<uint16_t> indices;
-    std::ifstream readStream("Cube.mesh", std::ios::out | std::ios::binary);
-    if (readStream)
-    {
-        size_t size;
-        readStream.read((char*)&size, sizeof(size_t));
-        for (size_t i = 0; i < size; i++)
-        {
-            VertexData item;
-            readStream.read((char*)&item, sizeof(VertexData));
-            vertexData.push_back(item);
-        }
-
-        readStream.read((char*)&size, sizeof(size_t));
-        for (size_t i = 0; i < size; i++)
-        {
-            uint16_t item;
-            readStream.read((char*)&item, sizeof(uint16_t));
-            indices.push_back(item);
-        }
-    }
-
-    readStream.close();
-
-    MeshData* readMesh = new MeshData{ vertexData, indices };
-    print(readMesh);
-
-    delete readMesh;
-#endif
-    //
-
-    return 0;
 }
 
 void print(MeshData* mesh)
@@ -80,7 +68,10 @@ void print(MeshData* mesh)
 
     for (const VertexData& item : mesh->vertexData)
     {
-        std::cout << item.position.x << "\t" << item.position.y << "\t" << item.position.z << std::endl;
+        std::cout << "position: " << item.position.x << "\t" << item.position.y << "\t" << item.position.z << std::endl;
+        std::cout << "normal: " << item.normal.x << "\t" << item.normal.y << "\t" << item.normal.z << "\t" << std::endl;
+        std::cout << "UV: " << item.u << "\t" << item.v << std::endl;
+        std::cout << std::endl;
     }
 
     std::cout << "indices" << std::endl;

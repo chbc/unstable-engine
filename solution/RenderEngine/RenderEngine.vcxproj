@@ -97,8 +97,7 @@
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
       <PreprocessorDefinitions>DEBUG;SRE_DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <LanguageStandard>
-      </LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glew32s.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -125,6 +124,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>SRE_TEST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glu32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -152,6 +152,7 @@
       <AdditionalIncludeDirectories>../../include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SRE_DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -178,6 +179,7 @@
       <DebugInformationFormat>None</DebugInformationFormat>
       <AdditionalIncludeDirectories>../../include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SRE_TEST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -195,6 +197,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\ARenderableComponent.cpp" />
+    <ClCompile Include="src\core\io\assetsLoader\MeshLoader.cpp" />
+    <ClCompile Include="src\core\io\AssetsManager.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\LitRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\litStates\LitRendererLightsState.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\litStates\LitRendererNoLightsState.cpp" />
@@ -212,9 +216,9 @@
     <ClCompile Include="src\core\graphics\renderers\ShadowRenderer.cpp" />
     <ClCompile Include="src\core\graphics\shaders\Shader.cpp" />
     <ClCompile Include="src\core\io\DefaultGameValues.cpp" />
-    <ClCompile Include="src\core\io\sceneLoader\ComponentParser.cpp" />
-    <ClCompile Include="src\core\io\sceneLoader\EntityParser.cpp" />
-    <ClCompile Include="src\core\io\sceneLoader\SceneLoader.cpp" />
+    <ClCompile Include="src\core\io\parsers\ComponentParser.cpp" />
+    <ClCompile Include="src\core\io\parsers\EntityParser.cpp" />
+    <ClCompile Include="src\core\io\assetsLoader\SceneLoader.cpp" />
     <ClCompile Include="src\core\multimedia\EngineValues.cpp" />
     <ClCompile Include="src\core\multimedia\Input.cpp" />
     <ClCompile Include="src\core\multimedia\textures\atlases\FontAtlas.cpp" />
@@ -373,11 +377,13 @@
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
     <ClInclude Include="include\AEntityComponent.h" />
+    <ClInclude Include="include\AssetsManager.h" />
     <ClInclude Include="include\BoolEditorProperty.h" />
     <ClInclude Include="include\ComponentParser.h" />
     <ClInclude Include="include\EntityComponentTypes.h" />
     <ClInclude Include="include\EntityParser.h" />
     <ClInclude Include="include\MeshEditorProperty.h" />
+    <ClInclude Include="include\MeshLoader.h" />
     <ClInclude Include="include\ScenesManager.h" />
     <ClInclude Include="include\AGraphicsWrapper.h" />
     <ClInclude Include="include\AImGuiAPIState.h" />
