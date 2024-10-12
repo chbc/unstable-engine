@@ -199,17 +199,10 @@ void TransformComponent::updateMatrix()
 	glm::mat4 transformMatrix{ 1.0f };
 
 	transformMatrix = glm::translate(transformMatrix, this->position);
-	transformMatrix = glm::rotate(transformMatrix, glm::radians(this->eulerAngles.x), glm::vec3{ 1.0f, 0.0f, 0.0f });
-	transformMatrix = glm::rotate(transformMatrix, glm::radians(this->eulerAngles.y), glm::vec3{ 0.0f, 1.0f, 0.0f });
-	transformMatrix = glm::rotate(transformMatrix, glm::radians(this->eulerAngles.z), glm::vec3{ 0.0f, 0.0f, 1.0f });
+	transformMatrix = glm::rotate(transformMatrix, glm::radians(this->eulerAngles.x), glm::vec3{ -1.0f, 0.0f, 0.0f });
+	transformMatrix = glm::rotate(transformMatrix, glm::radians(this->eulerAngles.y), glm::vec3{ 0.0f, -1.0f, 0.0f });
+	transformMatrix = glm::rotate(transformMatrix, glm::radians(this->eulerAngles.z), glm::vec3{ 0.0f, 0.0f, -1.0f });
 	this->worldMatrix = glm::scale(transformMatrix, this->scale);
-
-	/*
-	this->rotationMatrix = glm::eulerAngleXYZ(
-		glm::radians(this->eulerAngles.x), glm::radians(this->eulerAngles.y), glm::radians(this->eulerAngles.z)
-	);
-	this->rotationMatrix *= glm::transpose(rotationMatrix);
-	*/
 
 	this->localMatrix = this->worldMatrix; // XXX
 

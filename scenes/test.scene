@@ -3,12 +3,12 @@ entity_2:
   Components:
     TransformComponent:
       enabled: 1
-      Position: [0,0,'-2.5']
-      Rotation: [0,0,0]
-      Scale: [1,1,1]
+      Position: [0,0,0]
+      Rotation: [90,0,0]
+      Scale: [5,5,1]
     MeshComponent:
       enabled: 1
-      Mesh: ../../media/Cube.mesh
+      Mesh: ../../media/Plane.mesh
 _main_camera:
   Enabled: 1
   Components:

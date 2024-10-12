@@ -33,7 +33,7 @@ void MeshEditorProperty::draw()
 
 void MeshEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
-	propertyNode << this->mesh->get()->fileName; // XXX "../../media/Cube.mesh";
+	propertyNode << this->mesh->get()->fileName;
 }
 
 void MeshEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
