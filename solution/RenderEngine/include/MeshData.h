@@ -1,9 +1,10 @@
 #ifndef _MESH_DATA_H_
 #define _MESH_DATA_H_
 
+#include <vector>
+
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
-#include "memory_aliases.h"
 
 namespace sre
 {

@@ -3,7 +3,7 @@
 
 #include "AEntityComponent.h"
 #include "memory_aliases.h"
-#include "MeshData.h"
+#include "Mesh.h"
 
 namespace sre
 {
@@ -13,7 +13,7 @@ class Entity;
 class SRE_API ARenderableComponent : public AEntityComponent
 {
 protected:
-    UPTR<AMeshData> meshData;
+    UPTR<Mesh> mesh;
 
 private:
     bool opaque;
@@ -23,15 +23,14 @@ protected:
 
 public:
     inline void setIsOpaque(bool value) { this->opaque = value; }
-    void setMeshData(MeshData* meshData);
 
 protected:
     inline bool isAbleToBeRendered()
     {
         return
         (
-            (this->meshData.get() != nullptr) &&
-            !this->meshData->indices.empty()
+            (this->mesh->meshData.get() != nullptr) &&
+            !this->mesh->meshData->indices.empty()
         );
     }
 

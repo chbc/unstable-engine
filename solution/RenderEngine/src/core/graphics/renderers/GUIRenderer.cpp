@@ -12,10 +12,10 @@ namespace sre
 GUIRenderer::~GUIRenderer()
 {
     for (GUIImageComponent*item : this->guiComponents)
-        this->graphicsWrapper->deleteBuffers(item->meshData.get());
+        this->graphicsWrapper->deleteBuffers(item->mesh->meshData.get());
 
     for (GUIImageComponent* item : this->dynamicGUIComponents)
-        this->graphicsWrapper->deleteBuffers(item->meshData.get());
+        this->graphicsWrapper->deleteBuffers(item->mesh->meshData.get());
 
     this->guiComponents.clear();
     this->dynamicGUIComponents.clear();
@@ -42,7 +42,7 @@ void GUIRenderer::addGUIComponent(GUIImageComponent *guiComponent)
 {
     this->guiComponents.push_back(guiComponent);
 
-	GUIMeshData* meshData = static_cast<GUIMeshData*>(guiComponent->meshData.get());
+	GUIMeshData* meshData = static_cast<GUIMeshData*>(guiComponent->mesh->meshData.get());
     this->graphicsWrapper->createGUIVAO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
     this->graphicsWrapper->createGUIEBO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
 }
@@ -51,7 +51,7 @@ void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 {
     this->dynamicGUIComponents.push_back(guiComponent);
 	
-	GUIMeshData* meshData = static_cast<GUIMeshData*>(guiComponent->meshData.get());
+	GUIMeshData* meshData = static_cast<GUIMeshData*>(guiComponent->mesh->meshData.get());
 	this->graphicsWrapper->createGUIVAO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
 	this->graphicsWrapper->createGUIEBO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
 }
@@ -69,17 +69,17 @@ void GUIRenderer::render()
         if (item->getEntity()->isEnabled())
         {
             this->setup(item);
-            this->graphicsWrapper->drawElement(item->meshData->ebo, item->meshData->indices.size());
+            this->graphicsWrapper->drawElement(item->mesh->meshData->ebo, item->mesh->meshData->indices.size());
         }
     }
 
     // Dynamic meshes
     for (GUIImageComponent *item : this->dynamicGUIComponents)
     {
-        if ((item->meshData.get() != nullptr) && item->getEntity()->isEnabled())
+        if ((item->mesh->meshData.get() != nullptr) && item->getEntity()->isEnabled())
         {
             this->setup(item);
-            this->graphicsWrapper->drawElement(item->meshData->ebo, item->meshData->indices.size());
+            this->graphicsWrapper->drawElement(item->mesh->meshData->ebo, item->mesh->meshData->indices.size());
         }
     }
 
@@ -96,7 +96,7 @@ void GUIRenderer::setup(GUIImageComponent *guiComponent)
     glm::mat4 modelMatrix = transform->getMatrix();
     this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
-    this->graphicsWrapper->bindVAO(guiComponent->meshData->vao, guiComponent->meshData->vbo);
+    this->graphicsWrapper->bindVAO(guiComponent->mesh->meshData->vao, guiComponent->mesh->meshData->vbo);
     this->shaderManager->setVertexAttributePointer(this->shader, ShaderVariables::IN_POSITION, 2, sizeof(GUIVertexData), GUIVertexData::getPositionOffset());
     this->shaderManager->setVertexAttributePointer(this->shader, ShaderVariables::IN_TEXTURE_COORDS, 2, sizeof(GUIVertexData), ABaseVertexData::getUVOffset());
     this->graphicsWrapper->activateGUITexture(guiComponent->getTextureId());
@@ -110,7 +110,7 @@ void GUIRenderer::removeDestroyedEntities()
     {
         if (!(*it)->getEntity()->isAlive())
         {
-            this->graphicsWrapper->deleteBuffers((*it)->meshData.get());
+            this->graphicsWrapper->deleteBuffers((*it)->mesh->meshData.get());
             it = this->guiComponents.erase(it);
         }
         else

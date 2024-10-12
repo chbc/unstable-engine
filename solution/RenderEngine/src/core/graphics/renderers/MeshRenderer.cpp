@@ -67,7 +67,7 @@ MeshRenderer::MeshRenderer(Material *material, ShaderManager *shaderManager, AGr
 MeshRenderer::~MeshRenderer()
 {
     for (MeshComponent *item : this->meshes)
-        this->graphicsWrapper->deleteBuffers(item->meshData.get());
+        this->graphicsWrapper->deleteBuffers(item->mesh->meshData.get());
 
     this->meshes.clear();
     this->shaderSetupItems.clear();
@@ -131,7 +131,7 @@ void MeshRenderer::addMesh(MeshComponent *mesh)
 {
     this->meshes.push_back(mesh);
 
-	MeshData* meshData = static_cast<MeshData*>(mesh->meshData.get());
+	MeshData* meshData = static_cast<MeshData*>(mesh->mesh->meshData.get());
 
     this->graphicsWrapper->createVAO(meshData);
     this->graphicsWrapper->createEBO(meshData);
@@ -154,14 +154,14 @@ void MeshRenderer::render(const glm::vec3 &cameraPosition)
             glm::mat4 modelMatrix = transform->getMatrix();
             this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
-            this->graphicsWrapper->bindVAO(mesh->meshData->vao, mesh->meshData->vbo);
+            this->graphicsWrapper->bindVAO(mesh->mesh->meshData->vao, mesh->mesh->meshData->vbo);
             for (const auto& item : this->componentsMap)
             {
                 item.second->setupShaderValues(mesh, this->shader);
                 item.second->preDraw(this->shader);
             }
 
-            this->graphicsWrapper->drawElement(mesh->meshData->ebo, mesh->meshData->indices.size());
+            this->graphicsWrapper->drawElement(mesh->mesh->meshData->ebo, mesh->mesh->meshData->indices.size());
         }
     }
 
@@ -200,7 +200,7 @@ void MeshRenderer::onRemoveDestroyedEntities()
     {
         if (!(*it)->getEntity()->isAlive())
         {
-            this->graphicsWrapper->deleteBuffers((*it)->meshData.get());
+            this->graphicsWrapper->deleteBuffers((*it)->mesh->meshData.get());
             it = this->meshes.erase(it);
         }
         else

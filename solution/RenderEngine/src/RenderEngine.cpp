@@ -108,10 +108,7 @@ void RenderEngine::init()
     this->worldEditor = UPTR<WorldEditor>(new WorldEditor{ this->scenesManager.get() });
 #endif
 
-    this->onInit();
-
-    this->scenesManager->loadStartUpScene();
-    this->renderManager->onSceneLoaded();
+    this->loadScene("../../scenes/default.scene");
 
     this->isEditorMode = false;
     this->wasEditorMode = false;
@@ -120,6 +117,8 @@ void RenderEngine::init()
     MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
     Action action = [&](void* message) { this->setEditorMode(false); };
     messagesManager->addListener<ExitEditorMessage>(action);
+
+    this->onInit();
 }
 
 void RenderEngine::update(float elapsedTime)

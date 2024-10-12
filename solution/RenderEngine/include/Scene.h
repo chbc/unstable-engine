@@ -22,16 +22,11 @@ private:
     Entity* createOrthoCamera(Entity* parent = nullptr, bool isMainCamera = true);
 
     // renderables //
-    Entity* createPlaneEntity(const glm::vec2& size, float tileMultiplier = 1.0f, const std::string& name = "", Entity* parent = nullptr);
-    Entity *createCubeEntity(float size = 1.0f, const std::string& name = "", Entity* parent = nullptr);
     Entity *createModelEntity(const std::string &fileName, const std::string& name = "", Entity* parent = nullptr);
 
     // light //
     DirectionalLightComponent* createDirectionalLight(const std::string& name = "", Entity* parent = nullptr);
     PointLightComponent* createPointLight(const std::string& name = "", Entity* parent = nullptr);
-
-    // mesh //
-    Entity *createMeshEntity(MeshData* objectData, const std::string& name = "", Entity* parent = nullptr);
 
 friend class ScenesManager;
 friend class SceneLoader;

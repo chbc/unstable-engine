@@ -2,8 +2,7 @@
 #pragma once
 
 #include "AEditorProperty.h"
-#include "memory_aliases.h"
-#include "MeshData.h"
+#include "Mesh.h"
 
 namespace sre
 {
@@ -11,10 +10,11 @@ namespace sre
 class MeshEditorProperty : public AEditorProperty
 {
 private:
-	UPTR<AMeshData>* meshData;
+	UPTR<Mesh>* mesh;
+	std::string fileName;
 
 public:
-	MeshEditorProperty(const char* title, UPTR<AMeshData>* arg_meshData);
+	MeshEditorProperty(const char* title, UPTR<Mesh>* arg_mesh);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

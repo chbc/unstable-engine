@@ -1,32 +1,26 @@
-entities:
-  - id: 0
-    name: "camera"
-    enabled: true
-    components:
-      Transform:
-        name: "TransformComponent"
-        worldMatrix: 1
-        localMatrix: 1
-      Camera:
-        name: "CameraComponent"
-        lookAtTarget: [0.0f 0.0f 0.0f]
-        up: [0.0f 0.0f 0.0f]
-        view: 1
-        projection: 1
-  - id: 1
-    name: "cube_0"
-    enabled: true
-    components:
-      Transform:
-        name: "TransformComponent"
-        worldMatrix: 1
-        localMatrix: 1
-      Mesh:
-        name: "MeshComponent"
-        primitiveData: "Cube"
-        material: 1
-        castShadow: false
-        materialComponents:
-          Color:
-            name: "ColorMaterialComponent"
-            color: [0.5f 0.5f 0.5f 1.0f]
+entity_0:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      enabled: 1
+      Position: [0,0,'-2.5']
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      enabled: 1
+      Mesh: ../../media/Cube.mesh
+_main_camera:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      enabled: 1
+      Position: [0,5,5]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    CameraComponent:
+      enabled: 1
+      Perspective: 1
+      Main Camera: 1
+      Look At Target: [0,0,0]
+      Up: [0,1,0]
+      FOV: 90

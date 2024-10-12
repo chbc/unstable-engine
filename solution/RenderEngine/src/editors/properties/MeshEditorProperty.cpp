@@ -10,8 +10,8 @@
 namespace sre
 {
 
-MeshEditorProperty::MeshEditorProperty(const char* title, UPTR<AMeshData>* arg_meshData)
-	: AEditorProperty(title), meshData(arg_meshData)
+MeshEditorProperty::MeshEditorProperty(const char* title, UPTR<Mesh>* arg_mesh)
+	: AEditorProperty(title), mesh(arg_mesh)
 { }
 
 void MeshEditorProperty::draw()
@@ -21,10 +21,10 @@ void MeshEditorProperty::draw()
 	ImGui::Columns(2);
 	ImGui::SetColumnWidth(0, 100.0f);
 	ImGui::Text(this->title.c_str());
+
 	ImGui::NextColumn();
 	ImGui::SetColumnWidth(0, 100.0f);
-	
-	ImGui::Text("XXX");
+	ImGui::Text(this->fileName.c_str());
 
 	ImGui::Columns(1);
 
@@ -33,18 +33,21 @@ void MeshEditorProperty::draw()
 
 void MeshEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
-	propertyNode << "../../media/Cube.mesh";
+	propertyNode << this->mesh->get()->fileName; // XXX "../../media/Cube.mesh";
 }
 
 void MeshEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
-	std::string fileName;
-	propertyNode >> fileName;
+	propertyNode >> this->fileName;
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->resolve<AssetsManager>();
 
 	MeshData* meshData = assetsManager->loadMesh(fileName.c_str());
-	this->meshData->reset(meshData);
+	Mesh* newMesh = new Mesh{};
+	newMesh->meshData.reset(meshData);
+	newMesh->fileName = this->fileName;
+
+	this->mesh->reset(newMesh);
 }
 
 } // namespace

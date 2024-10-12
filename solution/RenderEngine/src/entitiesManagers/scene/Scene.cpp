@@ -4,7 +4,6 @@
 #include "SingletonsManager.h"
 #include "RenderManager.h"
 #include "ModelLoader.h"
-#include "MeshComponent.h"
 #include "EngineValues.h"
 
 namespace sre
@@ -33,16 +32,6 @@ Entity* Scene::createOrthoCamera(Entity* parent, bool isMainCamera)
     return mainCamera;
 }
 
-Entity *Scene::createPlaneEntity(const glm::vec2& size, float tileMultiplier, const std::string& name, Entity* parent)
-{
-	return this->createMeshEntity(PrimitiveMeshFactory().createPlane(size, tileMultiplier), name, parent);
-}
-
-Entity *Scene::createCubeEntity(float size, const std::string& name, Entity* parent)
-{
-	return this->createMeshEntity(PrimitiveMeshFactory().createCube(size), name, parent);
-}
-
 Entity *Scene::createModelEntity(const std::string &fileName, const std::string& name, Entity* parent)
 {
     ModelLoader modelLoader;
@@ -67,14 +56,6 @@ PointLightComponent *Scene::createPointLight(const std::string& name, Entity* pa
     Entity *newEntity = this->createEntity(resultName, parent);
 
     return newEntity->addComponent<PointLightComponent>();
-}
-
-Entity *Scene::createMeshEntity(MeshData* objectData, const std::string& name, Entity* parent)
-{
-    Entity *newEntity = this->createEntity(name, parent);
-	MeshComponent* meshComponent = newEntity->addComponent<MeshComponent>();
-    meshComponent->setMeshData(objectData);
-    return newEntity;
 }
 
 } // namespace

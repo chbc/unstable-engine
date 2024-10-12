@@ -9,6 +9,7 @@ SampleApplication::SampleApplication() : RenderEngine(), camera(nullptr)
 
 void SampleApplication::onInit()
 {
+	/*
 	Entity* cameraEntity = this->scenesManager->createPerspectiveCamera(90.0f);
 	this->camera = cameraEntity->getComponent<CameraComponent>();
 	this->camera->setPosition({ 0.0f, 5.0f, 5.0f });
@@ -20,6 +21,7 @@ void SampleApplication::onInit()
 
 	cube = this->scenesManager->createCubeEntity(2.0f);
 	cube->getTransform()->setPosition(position);
+	*/
 	/*
 	cubeMesh = cube->getComponent<MeshComponent>();
 	cubeMesh->getMaterial()->setReceivesLight(true);
@@ -61,6 +63,7 @@ void SampleApplication::onUpdate(float elapsedTime)
 
 void SampleApplication::createLights()
 {
+	/*
 	glm::vec3 p1Position(0.0f, 5.0f, 0.0f);
 
 	Entity* lightCube = this->scenesManager->createCubeEntity(0.2f);
@@ -72,10 +75,12 @@ void SampleApplication::createLights()
 	PointLightComponent* pLight1 = this->scenesManager->createPointLight("p_light_1", lightCube);
 	pLight1->getTransform()->setPosition(p1Position);
 	pLight1->setColor(glm::vec3(0.5f));
+	*/
 }
 
 void SampleApplication::processMouse()
 {
+	/*
 	if (Input::isMouseButtonJustPressed(MOUSEBUTTON_LEFT))
 	{
 		glm::vec3 position = this->camera->getPosition();
@@ -88,4 +93,5 @@ void SampleApplication::processMouse()
 		position.x += 1.0f;
 		this->camera->setPosition(position);
 	}
+	*/
 }

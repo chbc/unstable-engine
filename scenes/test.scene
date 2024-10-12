@@ -8,8 +8,7 @@ entity_2:
       Scale: [1,1,1]
     MeshComponent:
       enabled: 1
-      MeshType: ../../media/Cube.mesh
-      Material: Material Properties
+      Mesh: ../../media/Cube.mesh
 _main_camera:
   Enabled: 1
   Components:
@@ -35,8 +34,7 @@ entity_0:
       Scale: [1,1,1]
     MeshComponent:
       enabled: 1
-      MeshType: ../../media/Cube.mesh
-      Material: Material Properties
+      Mesh: ../../media/Cube.mesh
   Entities:
     p_light_1:
       Enabled: 1
@@ -61,8 +59,7 @@ entity_1:
       Scale: [1,1,1]
     MeshComponent:
       enabled: 1
-      MeshType: ../../media/Cube.mesh
-      Material: Material Properties
+      Mesh: ../../media/Cube.mesh
 entity_3:
   Enabled: 1
   Components:
@@ -73,8 +70,7 @@ entity_3:
       Scale: [1,1,1]
     MeshComponent:
       enabled: 1
-      MeshType: ../../media/Cube.mesh
-      Material: Material Properties
+      Mesh: ../../media/Cube.mesh
   Entities:
     caixa_filha:
       Enabled: 1
@@ -86,5 +82,4 @@ entity_3:
           Scale: [1,1,1]
         MeshComponent:
           enabled: 1
-          MeshType: ../../media/Cube.mesh
-          Material: Material Properties
+          Mesh: ../../media/Cube.mesh

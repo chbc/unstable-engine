@@ -89,7 +89,7 @@ void ModelLoader::processMesh(aiMesh *inputMesh, const aiScene *scene, Entity *e
 
 	MeshData* objectData = new MeshData{ vertexData, indices };
 	MeshComponent *entityMesh = entity->addComponent<MeshComponent>();
-	entityMesh->setMeshData(objectData);
+	// XXX entityMesh->setMeshData(objectData);
 	this->processMaterials(inputMesh, scene, entityMesh);
 #endif
 }

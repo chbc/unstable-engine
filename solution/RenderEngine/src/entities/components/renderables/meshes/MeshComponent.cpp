@@ -12,7 +12,7 @@ MeshComponent::MeshComponent(Entity *entity)
 {
     this->material = UPTR<Material>{ new Material{} };
     
-    this->addEditorProperty(new MaterialEditorProperty{ "Material", this->material.get() });
+    // this->addEditorProperty(new MaterialEditorProperty{ "Material", this->material.get() });
 }
 
 Material *MeshComponent::getMaterial()

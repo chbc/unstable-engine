@@ -54,16 +54,6 @@ Entity* ScenesManager::createOrthoCamera(Entity* parent, bool isMainCamera)
     return this->runtimeScene->createOrthoCamera(parent, isMainCamera);
 }
 
-Entity* ScenesManager::createPlaneEntity(const glm::vec2& size, float tileMultiplier, const std::string& name, Entity* parent)
-{
-    return this->runtimeScene->createPlaneEntity(size, tileMultiplier, name, parent);
-}
-
-Entity* ScenesManager::createCubeEntity(float size, const std::string& name, Entity* parent)
-{
-    return this->runtimeScene->createCubeEntity(size, name, parent);
-}
-
 Entity* ScenesManager::createModelEntity(const std::string& fileName, const std::string& name, Entity* parent)
 {
     return this->runtimeScene->createModelEntity(fileName, name, parent);
@@ -77,11 +67,6 @@ DirectionalLightComponent* ScenesManager::createDirectionalLight(const std::stri
 PointLightComponent* ScenesManager::createPointLight(const std::string& name, Entity* parent)
 {
     return this->runtimeScene->createPointLight(name, parent);
-}
-
-Entity* ScenesManager::createMeshEntity(MeshData* objectData, const std::string& name, Entity* parent)
-{
-    return this->runtimeScene->createMeshEntity(objectData, name, parent);
 }
 
 Entity* ScenesManager::createGUIImageEntity(const std::string& fileName)
