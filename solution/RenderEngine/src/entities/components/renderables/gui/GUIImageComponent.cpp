@@ -12,7 +12,7 @@ namespace sre
 IMPLEMENT_COMPONENT(GUIImageComponent)
 
 GUIImageComponent::GUIImageComponent(Entity *entity)
-    :   ARenderableComponent(entity),
+    :   MeshComponent(entity),
         extent(glm::vec2(0.0f, 0.0f)), pivot(glm::vec2(0.0f, 0.0f)),
         maxItems(0), isDynamic(false)
 {

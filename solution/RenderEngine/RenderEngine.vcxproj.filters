@@ -330,9 +330,6 @@
     <ClCompile Include="src\entities\components\EntityComponentTypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="include\ARenderableComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\editors\properties\MeshEditorProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -576,9 +573,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\APostProcessingRendererComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ARenderableComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ASingleton.h">

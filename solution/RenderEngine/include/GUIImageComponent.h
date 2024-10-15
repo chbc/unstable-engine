@@ -1,13 +1,13 @@
 #ifndef _GUI_IMAGE_COMPONENT_H_
 #define _GUI_IMAGE_COMPONENT_H_
 
-#include "ARenderableComponent.h"
+#include "MeshComponent.h"
 #include <string>
 
 namespace sre
 {
 
-class SRE_API GUIImageComponent : public ARenderableComponent
+class SRE_API GUIImageComponent : public MeshComponent
 {
 DECLARE_COMPONENT()
 

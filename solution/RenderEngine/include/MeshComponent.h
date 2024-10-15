@@ -1,7 +1,9 @@
 #ifndef _MESH_H_
 #define _MESH_H_
 
-#include "ARenderableComponent.h"
+#include "AEntityComponent.h"
+#include "memory_aliases.h"
+#include "Mesh.h"
 #include "Material.h"
 
 namespace sre
@@ -10,11 +12,15 @@ namespace sre
 /*!
 	Class that holds information for rendering.
 */
-class SRE_API MeshComponent : public ARenderableComponent
+class SRE_API MeshComponent : public AEntityComponent
 {
 DECLARE_COMPONENT()
 
+protected:
+    UPTR<Mesh> mesh;
+
 private:
+    bool opaque;
     UPTR<Material> material;
 
 public:
@@ -28,6 +34,12 @@ public:
         T * result = this->material->addComponent<T>(std::forward<TArgs>(mArgs)...);
         return result;
     }
+
+    void setIsOpaque(bool value);
+
+protected:
+    bool isAbleToBeRendered();
+    bool isOpaque();
 
 friend class RenderManager;
 friend class Entity;

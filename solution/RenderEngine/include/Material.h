@@ -17,11 +17,6 @@
 #include <bitset>
 #include <glm/gtc/type_ptr.hpp>
 
-/* XXX
-- passar flags pelo construtor
-- adicionar components baseado nas flags
-*/
-
 namespace sre
 {
 

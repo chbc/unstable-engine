@@ -196,7 +196,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="include\ARenderableComponent.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MeshLoader.cpp" />
     <ClCompile Include="src\core\io\AssetsManager.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\LitRendererComponent.cpp" />
@@ -395,7 +394,6 @@
     <ClInclude Include="include\AMultimediaWrapper.h" />
     <ClInclude Include="include\AORendererComponent.h" />
     <ClInclude Include="include\APostProcessingRendererComponent.h" />
-    <ClInclude Include="include\ARenderableComponent.h" />
     <ClInclude Include="include\ASingleton.h" />
     <ClInclude Include="include\Atlas.h" />
     <ClInclude Include="include\AtlasManager.h" />

@@ -1,6 +1,7 @@
 #include "MeshComponent.h"
 #include "MeshData.h"
 #include "MaterialEditorProperty.h"
+#include "MeshEditorProperty.h"
 
 namespace sre
 {
@@ -8,10 +9,9 @@ namespace sre
 IMPLEMENT_COMPONENT(MeshComponent)
 
 MeshComponent::MeshComponent(Entity *entity)
-    : ARenderableComponent(entity)
+    : AEntityComponent(entity), opaque(true), material(new Material{}), mesh(new Mesh{})
 {
-    this->material = UPTR<Material>{ new Material{} };
-    
+    this->addEditorProperty(new MeshEditorProperty{ "Mesh", &this->mesh });
     // this->addEditorProperty(new MaterialEditorProperty{ "Material", this->material.get() });
 }
 
@@ -23,6 +23,25 @@ Material *MeshComponent::getMaterial()
 void MeshComponent::setMaterial(UPTR<Material> &material)
 {
     this->material = std::move(material);
+}
+
+void MeshComponent::setIsOpaque(bool value)
+{
+    this->opaque = value;
+}
+
+bool MeshComponent::isAbleToBeRendered()
+{
+    return
+    (
+        (this->mesh->meshData.get() != nullptr) &&
+        !this->mesh->meshData->indices.empty()
+    );
+}
+
+bool MeshComponent::isOpaque()
+{
+    return this->opaque;
 }
 
 } // namespace
