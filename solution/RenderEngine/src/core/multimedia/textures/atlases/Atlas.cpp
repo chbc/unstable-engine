@@ -35,7 +35,7 @@ AtlasItem *Atlas::createItem(std::unordered_map<std::string, std::string> &prope
 
 	glm::vec2 uvPositions(positions.x / textureWidth, positions.y / textureHeight);
 	glm::vec2 uvSize(pixelSize.x / textureWidth, pixelSize.y / textureHeight);
-	glm::vec2 screenBasedSize = SingletonsManager::getInstance()->resolve<MultimediaManager>()->getNormalizedSize(pixelSize);
+	glm::vec2 screenBasedSize = SingletonsManager::getInstance()->get<MultimediaManager>()->getNormalizedSize(pixelSize);
 
 	return new AtlasItem(Rect(uvPositions, uvSize), pixelSize, screenBasedSize);
 }

@@ -22,7 +22,7 @@ private:
     std::vector<DirectionalLightComponent *> directionalLights;
     std::vector<PointLightComponent *> pointLights;
 
-    glm::vec3 ambientLightColor;
+    glm::vec3 ambientLightColor{ 0.15f };
 
 public:
     void setAmbientLightColor(const glm::vec3 &ambientLightColor);
@@ -30,12 +30,11 @@ public:
     bool hasAnyShadowCaster();
 
 private:
-    LightManager();
-    
     void addDirectionalLight(DirectionalLightComponent* item);
     void addPointLight(PointLightComponent* item);
 
     void removeDestroyedEntities();
+    void removeAllLights();
 
 friend class RenderManager;
 friend class SingletonsManager;

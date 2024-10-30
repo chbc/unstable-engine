@@ -40,7 +40,7 @@ void MeshEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
 	propertyNode >> this->fileName;
 
-	AssetsManager* assetsManager = SingletonsManager::getInstance()->resolve<AssetsManager>();
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 
 	MeshData* meshData = assetsManager->loadMesh(fileName.c_str());
 	Mesh* newMesh = new Mesh{};

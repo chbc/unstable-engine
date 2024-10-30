@@ -44,7 +44,7 @@ void SDLAPI::init()
 	this->imGuiAPI->init(this->window, context);
 }
 
-void SDLAPI::onBeginFrame()
+void SDLAPI::onFrameBegin()
 {
 	this->imGuiAPI->onNewFrame(this->window);
 }

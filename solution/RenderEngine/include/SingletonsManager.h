@@ -15,33 +15,9 @@ private:
     std::unordered_map<std::string, UPTR<ASingleton>> singletons;
     static UPTR<SingletonsManager> instance;
 
-    void release();
-
 public:
-    static SingletonsManager *getInstance()
-    {
-        if (instance.get() == nullptr)
-            instance = sre::make_unique<SingletonsManager>();
-
-        return instance.get();
-    }
-
-    template <typename AbstractType, typename ConcretType, typename... TArgs>
-    ConcretType* add(TArgs... arguments)
-    {
-        ConcretType* result = nullptr;
-        std::string type = typeid(AbstractType).name();
-
-        if (this->singletons.count(type) > 0)
-            result = static_cast<ConcretType *>(this->singletons[type].get());
-        else
-        {
-            result = new ConcretType{ std::forward<TArgs>(arguments)... };
-            this->singletons[type] = UPTR<ASingleton>{ result };
-        }
-
-        return result;
-    }
+    SingletonsManager();
+    static SingletonsManager* getInstance();
 
     template <typename T> T* get()
     {
@@ -56,6 +32,7 @@ public:
         return result;
     }
 
+    /*
     template <typename T> T* resolve()
     {
         T* result = nullptr;
@@ -71,8 +48,36 @@ public:
 
         return result;
     }
+    */
 
-    friend class RenderEngine;
+private:
+    void init();
+
+    template <typename T> T* add()
+    {
+        std::string type = typeid(T).name();
+
+        T* result = new T;
+        this->singletons[type] = UPTR<ASingleton>{ result };
+
+        return result;
+    }
+
+    template <typename AbstractType, typename ConcretType>
+    ConcretType* add()
+    {
+        ConcretType* result = nullptr;
+        std::string type = typeid(AbstractType).name();
+
+        result = new ConcretType;
+        this->singletons[type] = UPTR<ASingleton>{ result };
+
+        return result;
+    }
+
+    void release();
+
+friend class RenderEngine;
 };
 
 } // namespace

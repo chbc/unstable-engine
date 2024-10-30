@@ -13,7 +13,7 @@ namespace sre
 
 EditorEntityProperties::EditorEntityProperties() : entity(nullptr)
 {
-	MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	Action action = [&](void* message) { this->onEntitySelected(message); };
 	messagesManager->addListener<EntitySelectionMessage>(action);
 }

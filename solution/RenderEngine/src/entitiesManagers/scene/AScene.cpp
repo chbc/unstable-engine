@@ -44,6 +44,14 @@ void AScene::removeDestroyedEntities()
     CollectionsUtils::removeIfEntityIsDestroyed(this->entities);
 }
 
+void AScene::initEntities()
+{
+    for (const auto& item : this->entities)
+    {
+        item.second->onInit();
+    }
+}
+
 void AScene::update(float elapsedTime)
 {
     for (const auto& item : this->entities)
@@ -54,12 +62,11 @@ void AScene::update(float elapsedTime)
 
 void AScene::onSceneLoaded()
 {
-    RenderManager* renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
+    RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 
     for (const auto& item : this->entities)
     {
         renderManager->addEntity(item.second.get());
-        item.second->onStart();
     }
 
     this->sceneLoaded = true;

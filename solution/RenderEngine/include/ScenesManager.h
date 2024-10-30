@@ -3,11 +3,12 @@
 
 #include "Scene.h"
 #include "GUIScene.h"
+#include "ASingleton.h"
 
 namespace sre
 {
 
-class ScenesManager
+class ScenesManager : public ASingleton
 {
 protected:
     UPTR<Scene> runtimeScene;
@@ -36,19 +37,24 @@ public:
     SRE_API Entity* createGUIImageEntityFromAtlas(const std::string& fileName, const std::string& imageId);
     SRE_API Entity* createGUITextEntity(const std::string fontFile, uint32_t maxItems = 100u);
 
-private:
-    ScenesManager();
+protected:
+    void init() override;
 
-    void loadStartUpScene();
+private:
+    void loadScene(const char* fileName);
+    Scene* getScene(const std::string& name);
+    void initEntities();
     void update(float elapsedTime);
-    void onScenesLoaded();
     void removeDestroyedEntities();
     void destroyAllEntities();
-    void release();
+    void release() override;
 
 friend class RenderEngine;
+friend class AExecutionStrategy;
+friend class ApplicationStrategy;
 friend class EditorSceneTree;
-friend class EditorMenuBar;
+friend class EditorsController;
+friend class SingletonsManager;
 };
 
 } // namespace

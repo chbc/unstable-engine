@@ -7,3 +7,5 @@
 #else
 	#define SRE_API __declspec(dllimport)
 #endif
+
+#define UNSTABLE_EDITOR !defined(RELEASE) && !defined(__ANDROID__)

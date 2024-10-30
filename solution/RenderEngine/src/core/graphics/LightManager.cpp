@@ -5,11 +5,6 @@
 namespace sre
 {
 
-LightManager::LightManager()
-{
-    this->ambientLightColor = glm::vec3(0.15f, 0.15f, 0.15f);
-}
-
 void LightManager::setAmbientLightColor(const glm::vec3 &ambientLightColor)
 {
     this->ambientLightColor = ambientLightColor;
@@ -43,6 +38,12 @@ void LightManager::removeDestroyedEntities()
 {
     CollectionsUtils::removeIfEntityIsDestroyed(this->directionalLights);
     CollectionsUtils::removeIfEntityIsDestroyed(this->pointLights);
+}
+
+void LightManager::removeAllLights()
+{
+    this->directionalLights.clear();
+    this->pointLights.clear();
 }
 
 } // namespace

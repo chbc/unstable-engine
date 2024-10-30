@@ -15,7 +15,7 @@ GUIButtonComponent::GUIButtonComponent(Entity* entity)
 {
 }
 
-void GUIButtonComponent::onStart()
+void GUIButtonComponent::onInit()
 {
 	MultimediaManager* multimediaManager = SingletonsManager::getInstance()->get<MultimediaManager>();
 	multimediaManager->addGUIButton(this);

@@ -64,7 +64,7 @@ FontAtlas* AtlasManager::loadFont(const std::string &baseFileName)
 
 Texture* AtlasManager::loadTexture(const std::string& baseFileName)
 {
-	return SingletonsManager::getInstance()->resolve<TextureManager>()->loadTexture(baseFileName + ".png", EMaterialMap::GUI);
+	return SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(baseFileName + ".png", EMaterialMap::GUI);
 }
 
 } // namespace

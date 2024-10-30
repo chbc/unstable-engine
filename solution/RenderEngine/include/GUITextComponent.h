@@ -21,7 +21,7 @@ private:
 
 public:
 	GUITextComponent(Entity *entity);
-    void onStart() override;
+    void onInit() override;
 	SRE_API void setText(const std::string &text);
 
 private:

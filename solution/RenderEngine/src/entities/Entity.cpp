@@ -87,15 +87,15 @@ bool Entity::isEnabled() const
 	);
 }
 
-void Entity::onStart()
+void Entity::onInit()
 {
     this->alive = true;
 
     for (auto const &item : this->componentsMap)
-        item.second->onStart();
+        item.second->onInit();
 
 	for (Entity* item : this->childrenList)
-		item->onStart();
+		item->onInit();
 }
 
 void Entity::onUpdate(float deltaTime)

@@ -63,7 +63,7 @@ public:
 
 protected:
     virtual uint16_t getId() = 0;
-    virtual void onStart() {}
+    virtual void onInit() {}
     virtual void onUpdate(float elapsedTime) {}
     virtual void onValueChanged() {}
     void addEditorProperty(AEditorProperty* editorProperty);

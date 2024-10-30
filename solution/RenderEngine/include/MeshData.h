@@ -44,7 +44,7 @@ struct AMeshData
 	std::vector<uint16_t> indices;
 
 	AMeshData(const std::vector<uint16_t> &arg_indices)
-		: indices(arg_indices)
+		: indices(arg_indices), vao(0), vbo(0), ebo(0)
 	{
 	}
 

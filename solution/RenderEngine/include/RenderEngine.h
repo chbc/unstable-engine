@@ -1,36 +1,22 @@
-#ifndef _RENDER_ENGINE_H_
-#define _RENDER_ENGINE_H_
+#pragma once
 
-#include "ScenesManager.h"
-#include "MultimediaManager.h"
-#include "EngineValues.h"
-#include "WorldEditor.h"
-#include "Input.h"
-#include <functional>
+#include "AExecutionStrategy.h"
+#include "memory_aliases.h"
+#include "core_defines.h"
+#include <string>
 
 namespace sre
 {
 
-/*!
-    Abstract application class.
-*/
-class SRE_API RenderEngine : public ASingleton
+class SRE_API RenderEngine
 {
-protected:
-    MultimediaManager* multimediaManager;
-    UPTR<ScenesManager> scenesManager;
-	
 private:
-    static RenderEngine* instance;
-
-    class RenderManager* renderManager;
     bool running;
-    bool isEditorMode;
-    bool wasEditorMode;
+    UPTR<AExecutionStrategy> applicationStrategy;
+    UPTR<AExecutionStrategy> editorStrategy;
+    AExecutionStrategy* currentStrategy;
 
-#if !defined(RELEASE) && !defined(__ANDROID__)
-    UPTR<WorldEditor> worldEditor;
-#endif
+    static RenderEngine* instance;
 
 public:
     RenderEngine(const std::string& applicationName = "Unstable Engine", int screenWidth = 1500, int screenHeight = 768);
@@ -38,30 +24,23 @@ public:
 public:
     static RenderEngine* getInstance();
     void run();
-    void loadScene(const char* sceneName);
-    void setEditorMode(bool value);
     void quit();
+    void loadScene(const char* sceneName);
 
 protected:
     virtual void onInit() =0;
     virtual void onUpdate(float elapsedTime) {}
-    virtual void onGUI(){};
-    virtual void onEditorGUI();
-    virtual void onQuit(){};
+    virtual void onGUI() {}
+    virtual void onEditorGUI() {}
+    virtual void onQuit() {};
 
 private:
-    void init();
-    void update(float elapsedTime);
-    void processMultimediaInput();
-    void onEndFrame();
-    void loadEditorScene(const char* sceneName);
-    void loadScene(const char* sceneName, bool isEditorMode);
-    void removeDestroyedEntities();
+    void changeStrategy(bool application);
     void release();
 
-
-friend class EditorMenuBar;
+friend class AExecutionStrategy;
+friend class ApplicationStrategy;
+friend class EditorStrategy;
 };
 
 } // namespace
-#endif

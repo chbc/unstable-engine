@@ -105,7 +105,7 @@ Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::
         uint32_t width = 0;
         uint32_t height = 0;
         uint8_t bpp = 0;
-        MultimediaManager *multimediaManager = SingletonsManager::getInstance()->resolve<MultimediaManager>();
+        MultimediaManager *multimediaManager = SingletonsManager::getInstance()->get<MultimediaManager>();
         void *data = multimediaManager->loadTexture(fileName, &width, &height, &bpp);
 
         // OpenGL //

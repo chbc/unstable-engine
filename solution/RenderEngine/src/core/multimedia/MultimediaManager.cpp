@@ -61,9 +61,9 @@ bool MultimediaManager::checkClosePressed()
 	return Input::isCloseButtonDown();
 }
 
-void MultimediaManager::onBeginFrame()
+void MultimediaManager::onFrameBegin()
 {
-	this->multimediaWrapper->onBeginFrame();
+	this->multimediaWrapper->onFrameBegin();
 	this->timer->start();
 }
 
@@ -72,7 +72,7 @@ uint32_t MultimediaManager::stopTimer()
     return this->timer->stop();
 }
 
-void MultimediaManager::onEndFrame()
+void MultimediaManager::delay()
 {
 	this->timer->delay();
 }
@@ -102,9 +102,14 @@ void MultimediaManager::addGUIButton(GUIButtonComponent* guiButton)
 	this->guiButtons.push_back(guiButton);
 }
 
-void MultimediaManager::onRemoveDestroyedEntities()
+void MultimediaManager::removeDestroyedEntities()
 {
 	CollectionsUtils::removeIfEntityIsDestroyed(this->guiButtons);
+}
+
+void MultimediaManager::clearButtons()
+{
+	this->guiButtons.clear();
 }
 
 } // namespace

@@ -57,7 +57,8 @@ private:
     bool contains(MeshComponent *mesh);
     bool fitsWithMesh(MeshComponent *mesh);
 
-    void onRemoveDestroyedEntities();
+    void removeDestroyedEntities();
+    void destroyAllMeshes();
 
     friend class RenderManager;
 };

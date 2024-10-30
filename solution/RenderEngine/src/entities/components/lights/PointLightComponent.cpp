@@ -16,7 +16,7 @@ PointLightComponent::PointLightComponent(Entity *entity)
 	this->addEditorProperty(new FloatEditorProperty{ "Range", &this->range });
 
 	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
-	LightManager* lightManager = singletonsManager->resolve<LightManager>();
+	LightManager* lightManager = singletonsManager->get<LightManager>();
 	lightManager->addPointLight(this);
 }
 

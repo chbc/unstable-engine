@@ -28,4 +28,14 @@ size_t AssetsManager::generateKey(const char* input)
 	return this->hash(std::string(input));
 }
 
+void AssetsManager::release()
+{
+	for (auto& item : this->meshesMap)
+	{
+		item.second.reset();
+	}
+
+	this->meshesMap.clear();
+}
+
 } // namespace

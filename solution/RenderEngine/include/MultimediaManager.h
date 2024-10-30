@@ -24,9 +24,6 @@ private:
 	UPTR<Timer> timer;
 	std::vector<GUIButtonComponent*> guiButtons;
 
-private:
-	MultimediaManager() = default;
-
 protected:
     void init() override;
     void release() override;
@@ -43,15 +40,18 @@ private:
 	void setEditorMode(bool value);
 	void processInput();
 	bool checkClosePressed();
-	void onBeginFrame();
+	void onFrameBegin();
     uint32_t stopTimer();
-	void onEndFrame();
+	void delay();
 	unsigned int getLastFrameTime();
 	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp);
 	void addGUIButton(GUIButtonComponent* guiButton);
-	void onRemoveDestroyedEntities();
+	void removeDestroyedEntities();
+	void clearButtons();
 
-friend class RenderEngine;
+friend class AExecutionStrategy;
+friend class EditorStrategy;
+friend class ApplicationStrategy;
 friend class TextureManager;
 friend class SingletonsManager;
 friend class GUIButtonComponent;

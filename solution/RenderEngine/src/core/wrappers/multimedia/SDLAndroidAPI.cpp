@@ -72,7 +72,7 @@ void SDLAndroidAPI::init()
 	delete[] argv;
 }
 
-void SDLAndroidAPI::onBeginFrame() { }
+void SDLAndroidAPI::onFrameBegin() { }
 
 void SDLAndroidAPI::swapBuffers()
 {

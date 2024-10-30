@@ -133,8 +133,11 @@ void MeshRenderer::addMesh(MeshComponent *mesh)
 
 	MeshData* meshData = static_cast<MeshData*>(mesh->mesh->meshData.get());
 
-    this->graphicsWrapper->createVAO(meshData);
-    this->graphicsWrapper->createEBO(meshData);
+    if (meshData->ebo == 0)
+    {
+        this->graphicsWrapper->createVAO(meshData);
+        this->graphicsWrapper->createEBO(meshData);
+    }
 }
 
 void MeshRenderer::render(const glm::vec3 &cameraPosition)
@@ -192,7 +195,7 @@ bool MeshRenderer::fitsWithMesh(MeshComponent *mesh)
     return (this->componentsBitset == mesh->getMaterial()->componentsBitset);
 }
 
-void MeshRenderer::onRemoveDestroyedEntities()
+void MeshRenderer::removeDestroyedEntities()
 {
     std::list<MeshComponent *>::iterator it;
 
@@ -205,6 +208,20 @@ void MeshRenderer::onRemoveDestroyedEntities()
         }
         else
             ++it;
+    }
+}
+
+void MeshRenderer::destroyAllMeshes()
+{
+    this->componentsMap.clear();
+    this->shaderSetupItems.clear();
+    componentsBitset.reset();
+
+    std::list<MeshComponent*>::iterator it;
+    for (it = this->meshes.begin(); it != this->meshes.end(); )
+    {
+        this->graphicsWrapper->deleteBuffers((*it)->mesh->meshData.get());
+        it = this->meshes.erase(it);
     }
 }
 

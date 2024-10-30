@@ -33,7 +33,6 @@ public:
 	void onRelease() override;
 
 private:
-	void processInput();
 	void updateViewingState();
 	void processMouseWheel();
 

@@ -63,7 +63,7 @@ public:
     SRE_API bool isEnabled() const;
 
 protected:
-	virtual void onStart();
+	virtual void onInit();
 	virtual void onUpdate(float deltaTime);
 
 private:

@@ -19,9 +19,6 @@ private:
 	// <type, callback>
 	std::unordered_map<uint16_t, std::list<Action>> data;
 	
-private:
-	MessagesManager() = default;
-	
 public:
 	template <typename T>
 	void addListener(Action& callback);

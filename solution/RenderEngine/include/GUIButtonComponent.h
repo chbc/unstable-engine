@@ -24,7 +24,7 @@ private:
 
 public:
 	GUIButtonComponent(Entity* entity);
-	void onStart() override;
+	void onInit() override;
 
 	void setExtent(glm::vec2 extent);
 	void setPivot(glm::vec2 pivot);

@@ -6,6 +6,12 @@
 namespace sre
 {
 
+#ifdef __ANDROID__
+	const std::string BASE_FOLDER = "scenes/es/";
+#else
+	const std::string BASE_FOLDER = "../../scenes/";
+#endif
+
 void SceneLoader::save(Scene* scene)
 {
 	c4::yml::Tree tree;
@@ -25,7 +31,8 @@ void SceneLoader::save(Scene* scene)
 void SceneLoader::load(Scene* scene, const char* sceneName)
 {
 	std::string fileContent;
-	FileUtils::loadFile(sceneName, fileContent);
+	std::string filePath = BASE_FOLDER + sceneName + std::string{ ".scene" };
+	FileUtils::loadFile(filePath, fileContent);
 
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
 

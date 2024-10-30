@@ -10,7 +10,7 @@ IMPLEMENT_MATERIAL_COMPONENT(AmbientOcclusionMaterialComponent)
 AmbientOcclusionMaterialComponent::AmbientOcclusionMaterialComponent(Material *material, const std::string &fileName)
 	: AMaterialComponent(material)
 {
-	this->texture = SingletonsManager::getInstance()->resolve<TextureManager>()->loadTexture(fileName, EMaterialMap::AMBIENT_OCCLUSION);
+	this->texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, EMaterialMap::AMBIENT_OCCLUSION);
 	this->addEditorProperty(new TextureEditorProperty{ "Ambient Occlusion", this->texture->getId() });
 }
 

@@ -13,7 +13,7 @@ public:
 	OrbitCameraComponent(Entity* entity);
 
 protected:
-	void onStart() override;
+	void onInit() override;
 	void onUpdate(float elapsedTime) override;
 
 private:

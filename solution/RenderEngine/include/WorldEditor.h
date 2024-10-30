@@ -5,6 +5,7 @@
 
 #include "memory_aliases.h"
 #include "IEditorWindow.h"
+#include "EditorsController.h"
 
 namespace sre
 {
@@ -17,6 +18,7 @@ private:
 	ScenesManager* scenesManager;
 	UPTR<IEditorWindow> menuBar;
 	UPTR<IEditorWindow> windows[3];
+	UPTR<EditorsController> controller;
 	bool showDemo;
 	bool wasShowingDemo;
 	
@@ -29,7 +31,7 @@ private:
 	void onEditorGUI();
 	void release();
 
-friend class RenderEngine;
+friend class EditorStrategy;
 };
 
 } // namespace

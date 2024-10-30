@@ -6,7 +6,7 @@
 namespace sre
 {
 
-ScenesManager::ScenesManager()
+void ScenesManager::init()
 {
     this->runtimeScene = UPTR<Scene>(new Scene{ "runtimeScene" });
     this->guiScene = UPTR<GUIScene>(new GUIScene{});
@@ -89,15 +89,29 @@ Entity* ScenesManager::createGUITextEntity(const std::string fontFile, uint32_t 
     return this->guiScene->createGUITextEntity(fontFile, maxItems);
 }
 
-void ScenesManager::loadStartUpScene()
+void ScenesManager::loadScene(const char* fileName)
 {
-    /*
-    SceneLoader::load(this->runtimeScene.get());
-    for (const auto& item : this->scenes)
-        SceneLoader::load(item.get());
-    */
+    // XXX
+    Scene* scene = this->createScene("test_scene");
+    SceneLoader::load(scene, fileName);
 
-    this->onScenesLoaded();
+    for (const auto& item : this->scenes)
+        item->onSceneLoaded();
+
+    this->guiScene->onSceneLoaded();
+}
+
+Scene* ScenesManager::getScene(const std::string& name)
+{
+    return this->scenes.front().get();
+}
+
+void ScenesManager::initEntities()
+{
+    for (const auto& item : this->scenes)
+        item->initEntities();
+
+    this->guiScene->initEntities();
 }
 
 void ScenesManager::update(float elapsedTime)
@@ -108,16 +122,6 @@ void ScenesManager::update(float elapsedTime)
         item->update(elapsedTime);
 
     this->guiScene->update(elapsedTime);
-}
-
-void ScenesManager::onScenesLoaded()
-{
-    this->runtimeScene->onSceneLoaded();
-
-    for (const auto& item : this->scenes)
-        item->onSceneLoaded();
-
-    this->guiScene->onSceneLoaded();
 }
 
 void ScenesManager::removeDestroyedEntities()

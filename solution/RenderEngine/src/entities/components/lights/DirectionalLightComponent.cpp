@@ -10,7 +10,7 @@ IMPLEMENT_COMPONENT(DirectionalLightComponent)
 DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightComponent(entity)
 {
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
-	LightManager* lightManager = singletonsManager->resolve<LightManager>();
+	LightManager* lightManager = singletonsManager->get<LightManager>();
 	lightManager->addDirectionalLight(this);
 }
 

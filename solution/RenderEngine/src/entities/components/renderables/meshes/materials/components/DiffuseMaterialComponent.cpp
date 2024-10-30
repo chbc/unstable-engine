@@ -10,7 +10,7 @@ IMPLEMENT_MATERIAL_COMPONENT(DiffuseMaterialComponent)
 DiffuseMaterialComponent::DiffuseMaterialComponent(Material *material, const std::string &fileName) 
     : AMaterialComponent(material)
 {
-    this->texture = SingletonsManager::getInstance()->resolve<TextureManager>()->loadTexture(fileName, EMaterialMap::DIFFUSE);
+    this->texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, EMaterialMap::DIFFUSE);
     this->addEditorProperty(new TextureEditorProperty{ "Diffuse", this->texture->getId() });
 }
 

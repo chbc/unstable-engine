@@ -10,7 +10,7 @@ IMPLEMENT_MATERIAL_COMPONENT(SpecularMaterialComponent)
 SpecularMaterialComponent::SpecularMaterialComponent(Material *material, const std::string &fileName)
 	: AMaterialComponent(material)
 {
-	this->texture = SingletonsManager::getInstance()->resolve<TextureManager>()->loadTexture(fileName, EMaterialMap::SPECULAR);
+	this->texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, EMaterialMap::SPECULAR);
 	this->addEditorProperty(new TextureEditorProperty{ "Specular", this->texture->getId() });
 }
 

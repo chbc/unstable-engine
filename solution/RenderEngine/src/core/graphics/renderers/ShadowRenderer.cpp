@@ -20,7 +20,7 @@ void ShadowRenderer::onSceneLoaded()
     this->shaderManager = singletonsManager->get<ShaderManager>();
 
     this->lightManager = singletonsManager->get<LightManager>();
-    TextureManager *textureManager = singletonsManager->resolve<TextureManager>();
+    TextureManager *textureManager = singletonsManager->get<TextureManager>();
 
     if (this->lightManager->directionalLights.size() > 0)
         this->setupDirectionalLightShader(textureManager);

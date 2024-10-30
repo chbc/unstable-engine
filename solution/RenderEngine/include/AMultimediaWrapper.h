@@ -19,7 +19,7 @@ public:
 
 protected:
 	virtual void init() =0; // throws sdl error
-	virtual void onBeginFrame() = 0;
+	virtual void onFrameBegin() = 0;
 	virtual void swapBuffers() =0;
 	virtual void setEditorMode(bool value) = 0;
 	virtual void processInput(const std::vector<GUIButtonComponent*>& guiButtons) =0;

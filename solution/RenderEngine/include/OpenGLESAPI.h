@@ -91,6 +91,7 @@ namespace sre
         uint32_t generateColorFrameBuffer(const std::vector<uint32_t>& textureIds, uint32_t width, uint32_t height) override { return 0; }
         void bindFrameBuffer(uint32_t fbo) override;
         void unbindFrameBuffer() override;
+        void deleteFrameBuffer(uint32_t fbo) override;
         void setViewport(uint32_t width, uint32_t height) override;
         void activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap) override;
 

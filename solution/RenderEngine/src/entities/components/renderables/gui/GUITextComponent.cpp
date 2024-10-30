@@ -21,18 +21,18 @@ GUITextComponent::GUITextComponent(Entity *entity)
 
 void GUITextComponent::loadFont(const std::string &fontFile)
 {
-    this->atlas = SingletonsManager::getInstance()->resolve<AtlasManager>()->getFont(fontFile);
+    this->atlas = SingletonsManager::getInstance()->get<AtlasManager>()->getFont(fontFile);
 
 	GUIMeshData* plane = PrimitiveMeshFactory().createPlaneTopDown(glm::vec2(1.0f, 1.0f));
 	this->mesh->meshData = UPTR<GUIMeshData>{ plane };
 }
 
-void GUITextComponent::onStart()
+void GUITextComponent::onInit()
 {
 	if (this->mesh->meshData.get() != nullptr)
 	{
 		GUIMeshData* guiMeshData = static_cast<GUIMeshData*>(this->mesh->meshData.get());
-		SingletonsManager::getInstance()->resolve<RenderManager>()->setupBufferSubData(guiMeshData);
+		SingletonsManager::getInstance()->get<RenderManager>()->setupBufferSubData(guiMeshData);
 	}
 }
 
@@ -76,7 +76,7 @@ void GUITextComponent::setText(const std::string &text)
         guiMeshData->vertexData = vertices;
         guiMeshData->indices = indices;
 
-        SingletonsManager::getInstance()->resolve<RenderManager>()->setupBufferSubData(guiMeshData);
+        SingletonsManager::getInstance()->get<RenderManager>()->setupBufferSubData(guiMeshData);
     }
 }
 

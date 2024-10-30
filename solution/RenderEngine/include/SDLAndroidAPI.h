@@ -23,7 +23,7 @@ public:
 
 protected:
 	void init() override;
-	void onBeginFrame() override;
+	void onFrameBegin() override;
 	void swapBuffers() override;
 	void setEditorMode(bool value) override;
 	void processInput(const std::vector<GUIButtonComponent*>& guiButtons) override;

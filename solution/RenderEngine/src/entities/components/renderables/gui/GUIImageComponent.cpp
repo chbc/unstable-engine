@@ -64,9 +64,9 @@ void GUIImageComponent::setPivot(const glm::vec2& pivot)
 
 void GUIImageComponent::load(const std::string& fileName)
 {
-    Texture* texture = SingletonsManager::getInstance()->resolve<TextureManager>()->loadTexture(fileName, EMaterialMap::GUI);
+    Texture* texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, EMaterialMap::GUI);
     glm::vec2 textureSize(texture->getWidth(), texture->getHeight());
-    glm::vec2 normalizedSize = SingletonsManager::getInstance()->resolve<MultimediaManager>()->getNormalizedSize(textureSize);
+    glm::vec2 normalizedSize = SingletonsManager::getInstance()->get<MultimediaManager>()->getNormalizedSize(textureSize);
 
     GUIMeshData* plane = PrimitiveMeshFactory().createPlaneTopDown(normalizedSize);
     this->mesh->meshData = UPTR<GUIMeshData>{ plane };
@@ -76,7 +76,7 @@ void GUIImageComponent::load(const std::string& fileName)
 
 void GUIImageComponent::load(const std::string& fileName, const glm::vec2& normalizedSize)
 {
-    Texture* texture = SingletonsManager::getInstance()->resolve<TextureManager>()->loadTexture(fileName, EMaterialMap::GUI);
+    Texture* texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, EMaterialMap::GUI);
     glm::vec2 textureSize(texture->getWidth(), texture->getHeight());
 
     GUIMeshData* plane = PrimitiveMeshFactory().createPlaneTopDown(normalizedSize);
@@ -87,7 +87,7 @@ void GUIImageComponent::load(const std::string& fileName, const glm::vec2& norma
 
 void GUIImageComponent::loadFromAtlas(const std::string& fileName, const std::string& imageId)
 {
-    Atlas* atlas = SingletonsManager::getInstance()->resolve<AtlasManager>()->getAtlas(fileName);
+    Atlas* atlas = SingletonsManager::getInstance()->get<AtlasManager>()->getAtlas(fileName);
 
     const AtlasItem* atlasItem = atlas->getItem(imageId);
 

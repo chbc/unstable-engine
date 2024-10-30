@@ -25,7 +25,7 @@ private:
     static void updateFrameIndicator(int frameTime);
 #endif
 
-friend class RenderEngine;
+friend class AExecutionStrategy;
 friend class ScenesManager;
 };
 

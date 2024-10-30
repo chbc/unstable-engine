@@ -1,11 +1,9 @@
 #include "RenderEngine.h"
-#include "SingletonsManager.h"
+#include "EngineValues.h"
 #include "DefaultGameValues.h"
-#include "EditorMessages.h"
-#include "MessagesManager.h"
-#include "GUIScene.h"
-#include "RenderManager.h"
-#include "SceneLoader.h"
+#include "ApplicationStrategy.h"
+#include "EditorStrategy.h"
+#include "SingletonsManager.h"
 
 namespace sre
 {
@@ -13,6 +11,7 @@ namespace sre
 RenderEngine* RenderEngine::instance = nullptr;
 
 RenderEngine::RenderEngine(const std::string& applicationName, int screenWidth, int screenHeight)
+    : running(true)
 {
     instance = this;
     EngineValues::APPLICATION_NAME = applicationName;
@@ -20,6 +19,12 @@ RenderEngine::RenderEngine(const std::string& applicationName, int screenWidth, 
     EngineValues::SCREEN_HEIGHT = screenHeight;
 
     DefaultGameValues::load();
+
+    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+    singletonsManager->init();
+
+    this->applicationStrategy = UPTR<AExecutionStrategy>(new ApplicationStrategy);
+    this->editorStrategy = UPTR<AExecutionStrategy>(new EditorStrategy);
 }
 
 RenderEngine* RenderEngine::getInstance()
@@ -34,51 +39,20 @@ RenderEngine* RenderEngine::getInstance()
 
 void RenderEngine::run()
 {
-    this->init();
+    this->changeStrategy(false);
 
     uint32_t elapsedTime = 0;
-    float elapsedSeconds = 0.0f;
     while (this->running)
     {
-        this->multimediaManager->onBeginFrame();
-
-        this->processMultimediaInput();
-
-        elapsedTime = this->multimediaManager->getLastFrameTime();
-        elapsedSeconds = elapsedTime * 0.001f;
-        if (this->isEditorMode)
-            this->worldEditor->onUpdate(elapsedSeconds);
-        else
-            this->update(elapsedSeconds);
-    	
-        this->renderManager->render();
-        this->onGUI();
-        this->renderManager->unbindFrameBuffer();
-        this->onEditorGUI();
-
-    	this->multimediaManager->swapBuffers();
-
-        this->removeDestroyedEntities();
-        elapsedTime = this->multimediaManager->stopTimer();
-
-#ifdef DEBUG
-        GUIScene::updateFrameIndicator(elapsedTime);
-#endif
-
-        this->onEndFrame();
+        elapsedTime = this->currentStrategy->beginFrame(this);
+        this->currentStrategy->update(this, elapsedTime * 0.001f);
+        this->currentStrategy->render(this);
+        this->currentStrategy->swapBuffers(this);
+        this->currentStrategy->endFrame(this);
+        this->currentStrategy->delay(this);
     }
-    
+
     this->release();
-}
-
-void RenderEngine::loadScene(const char* sceneName)
-{
-    this->loadScene(sceneName, false);
-}
-
-void RenderEngine::setEditorMode(bool value)
-{
-    this->isEditorMode = value;
 }
 
 void RenderEngine::quit()
@@ -86,59 +60,9 @@ void RenderEngine::quit()
     this->running = false;
 }
 
-void RenderEngine::onEditorGUI()
+/*
+void RenderEngine::onFrameEnd()
 {
-#if defined(DEBUG) && !defined(__ANDROID__)
-    if (this->isEditorMode && this->wasEditorMode)
-        this->worldEditor->onEditorGUI();
-#endif
-}
-
-void RenderEngine::init()
-{
-    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
-    this->renderManager = singletonsManager->resolve<RenderManager>();
-    this->multimediaManager = singletonsManager->resolve<MultimediaManager>();
-
-    this->multimediaManager->init();
-    this->renderManager->init();
-    this->scenesManager = UPTR<ScenesManager>{ new ScenesManager };
-
-#if !defined(RELEASE) && !defined(__ANDROID__)
-    this->worldEditor = UPTR<WorldEditor>(new WorldEditor{ this->scenesManager.get() });
-#endif
-
-    this->loadScene("../../scenes/default.scene");
-
-    this->isEditorMode = false;
-    this->wasEditorMode = false;
-    this->running = true;
-
-    MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
-    Action action = [&](void* message) { this->setEditorMode(false); };
-    messagesManager->addListener<ExitEditorMessage>(action);
-
-    this->onInit();
-}
-
-void RenderEngine::update(float elapsedTime)
-{
-    this->onUpdate(elapsedTime);
-    this->scenesManager->update(elapsedTime);
-
-    if (Input::isKeyJustPressed(KEY_HOME))
-        this->setEditorMode(true);
-}
-
-void RenderEngine::processMultimediaInput()
-{
-    this->multimediaManager->processInput();
-    this->running = !this->multimediaManager->checkClosePressed();
-}
-
-void RenderEngine::onEndFrame()
-{
-    this->multimediaManager->onEndFrame();
     if (this->isEditorMode != this->wasEditorMode)
     {
         this->wasEditorMode = this->isEditorMode;
@@ -155,39 +79,29 @@ void RenderEngine::onEndFrame()
 
         this->renderManager->setEditorMode(this->isEditorMode);
     }
+
+    // XXX CHAMAR COMANDOS QUE PRECISEM SER EXECUTADOS NO FIM DO FRAME
+}
+*/
+
+void RenderEngine::loadScene(const char* sceneName)
+{
+    this->currentStrategy->loadScene(sceneName);
+    this->currentStrategy->init(this);
 }
 
-void RenderEngine::loadEditorScene(const char* sceneName)
+void RenderEngine::changeStrategy(bool application)
 {
-    this->loadScene(sceneName, true);
-}
-
-void RenderEngine::loadScene(const char* sceneName, bool isEditorMode)
-{
-    this->scenesManager->destroyAllEntities();
-    this->removeDestroyedEntities();
-
-    Scene* scene = this->scenesManager->createScene("test_scene");
-    SceneLoader::load(scene, sceneName);
-
-    this->renderManager->setEditorMode(isEditorMode);
-
-    this->scenesManager->onScenesLoaded();
-    this->renderManager->onSceneLoaded();
-}
-
-void RenderEngine::removeDestroyedEntities()
-{
-    this->renderManager->onRemoveDestroyedEntities();
-    this->multimediaManager->onRemoveDestroyedEntities();
-    this->scenesManager->removeDestroyedEntities();
+    this->currentStrategy = application ? this->applicationStrategy.get() : this->editorStrategy.get();
+    this->loadScene("XXX");
 }
 
 void RenderEngine::release()
 {
-    SingletonsManager::getInstance()->release();
+    this->applicationStrategy->release();
+    this->editorStrategy->release();
 
-    this->scenesManager->release();
+    SingletonsManager::getInstance()->release();
 }
 
 } // namespace

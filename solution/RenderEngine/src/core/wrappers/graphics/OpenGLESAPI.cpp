@@ -377,6 +377,11 @@ void OpenGLESAPI::bindFrameBuffer(uint32_t fbo) { }
 
 void OpenGLESAPI::unbindFrameBuffer() { }
 
+void OpenGLESAPI::deleteFrameBuffer(uint32_t fbo)
+{
+	glDeleteFramebuffers(1, fbo);
+}
+
 void OpenGLESAPI::setViewport(uint32_t width, uint32_t height)
 {
 	GL_CHECK(glViewport(0, 0, width, height));

@@ -4,6 +4,10 @@
 #include "ASingleton.h"
 #include "memory_aliases.h"
 #include <string>
+#include "PostProcessingRenderer.h"
+#include "GUIRenderer.h"
+#include "ShadowRenderer.h"
+#include "MeshRenderer.h"
 
 namespace sre
 {
@@ -11,14 +15,8 @@ namespace sre
 class MeshComponent;
 class GUIImageComponent;
 class CameraComponent;
-class Texture;
-class MeshRenderer;
-class Entity;
-class DirectionalLightComponent;
-class PointLightComponent;
 
-struct GUIVertexData;
-struct MeshData;
+class Entity;
 struct GUIMeshData;
 
 /*!
@@ -35,16 +33,13 @@ private:
 	VECTOR_UPTR<MeshRenderer> opaqueMeshRenderers;
     VECTOR_UPTR<MeshRenderer> translucentMeshRenderers;
     UPTR<class ShadowRenderer> shadowRenderer;
-    UPTR<class GUIRenderer> guiRenderer;
-	UPTR<class PostProcessingRenderer> postProcessingRenderer;
+    UPTR<GUIRenderer> guiRenderer;
+	UPTR<PostProcessingRenderer> postProcessingRenderer;
 
-    CameraComponent* applicationCamera;
-    CameraComponent* editorCamera;
-    CameraComponent* currentCamera;
-    uint32_t targetFBO;
-
-private:
-    RenderManager();
+    CameraComponent* applicationCamera{ nullptr };
+    CameraComponent* editorCamera{ nullptr };
+    CameraComponent* currentCamera{ nullptr };
+    uint32_t targetFBO{ 0 };
 
 protected:
     void init() override;
@@ -59,7 +54,8 @@ private:
     void initGUIRenderer();
     void initShadowRenderer();
 
-    void onSceneLoaded();
+    void initRenderers();
+    void initPostProcessing();
 
     void setApplicationCamera(CameraComponent *camera);
     void setEditorCamera(CameraComponent* camera);
@@ -71,7 +67,8 @@ private:
     static void DEBUG_drawTriangle();
 
     void setupBufferSubData(GUIMeshData* meshData);
-    void onRemoveDestroyedEntities();
+    void removeDestroyedEntities();
+    void destroyAllMeshes();
 
     void setTargetFBO(uint32_t fbo);
     void unbindFrameBuffer();
@@ -81,14 +78,14 @@ friend class Scene;
 friend class AtlasManager;
 friend class CameraComponent;
 friend class MeshComponent;
-friend class RenderEngine;
+friend class AExecutionStrategy;
 friend class Material;
 friend class GUITextComponent;
 friend class SingletonsManager;
 friend class BaseRendererShaderSetup;
 friend class EditorSceneViewport;
 friend class WorldEditor;
-friend class EditorMenuBar;
+friend class EditorsController;
 };
 
 } // namespace

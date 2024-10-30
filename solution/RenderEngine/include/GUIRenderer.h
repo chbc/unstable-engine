@@ -15,7 +15,7 @@ class GUIRenderer
 {
 protected:
     std::list<GUIImageComponent *> guiComponents;
-    std::list<GUIImageComponent *> dynamicGUIComponents;
+    std::list<GUIImageComponent *> dynamicGuiComponents;
     uint32_t shaderProgram;
 
     ShaderManager *shaderManager;
@@ -37,6 +37,7 @@ private:
     void setup(GUIImageComponent *guiComponent);
 
     void removeDestroyedEntities();
+    void destroyAllMeshes();
 
     bool isEmpty();
 

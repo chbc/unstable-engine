@@ -7,16 +7,16 @@
 namespace sre
 {
 
-class ScenesManager;
+class EditorsController;
 
 class EditorMenuBar : public IEditorWindow
 {
 private:
 	bool* isDemoEnabled;
-	ScenesManager* scenesManager;
+	EditorsController* controller;
 
 public:
-	EditorMenuBar(bool* demoEnabled, ScenesManager* arg_scenesManager);
+	EditorMenuBar(bool* demoEnabled, EditorsController* arg_controller);
 
 	void onEditorGUI() override;
 

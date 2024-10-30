@@ -14,11 +14,11 @@ GUIRenderer::~GUIRenderer()
     for (GUIImageComponent*item : this->guiComponents)
         this->graphicsWrapper->deleteBuffers(item->mesh->meshData.get());
 
-    for (GUIImageComponent* item : this->dynamicGUIComponents)
+    for (GUIImageComponent* item : this->dynamicGuiComponents)
         this->graphicsWrapper->deleteBuffers(item->mesh->meshData.get());
 
     this->guiComponents.clear();
-    this->dynamicGUIComponents.clear();
+    this->dynamicGuiComponents.clear();
 
     this->shaderManager->releaseShader(this->shader);
 }
@@ -49,7 +49,7 @@ void GUIRenderer::addGUIComponent(GUIImageComponent *guiComponent)
 
 void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 {
-    this->dynamicGUIComponents.push_back(guiComponent);
+    this->dynamicGuiComponents.push_back(guiComponent);
 	
 	GUIMeshData* meshData = static_cast<GUIMeshData*>(guiComponent->mesh->meshData.get());
 	this->graphicsWrapper->createGUIVAO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
@@ -74,7 +74,7 @@ void GUIRenderer::render()
     }
 
     // Dynamic meshes
-    for (GUIImageComponent *item : this->dynamicGUIComponents)
+    for (GUIImageComponent *item : this->dynamicGuiComponents)
     {
         if ((item->mesh->meshData.get() != nullptr) && item->getEntity()->isEnabled())
         {
@@ -116,11 +116,38 @@ void GUIRenderer::removeDestroyedEntities()
         else
             ++it;
     }
+
+    for (it = this->dynamicGuiComponents.begin(); it != this->dynamicGuiComponents.end(); )
+    {
+        if (!(*it)->getEntity()->isAlive())
+        {
+            this->graphicsWrapper->deleteBuffers((*it)->mesh->meshData.get());
+            it = this->dynamicGuiComponents.erase(it);
+        }
+        else
+            ++it;
+    }
+}
+
+void GUIRenderer::destroyAllMeshes()
+{
+    std::list<GUIImageComponent*>::iterator it;
+    for (it = this->guiComponents.begin(); it != this->guiComponents.end(); )
+    {
+        this->graphicsWrapper->deleteBuffers((*it)->mesh->meshData.get());
+        it = this->guiComponents.erase(it);
+    }
+
+    for (it = this->dynamicGuiComponents.begin(); it != this->dynamicGuiComponents.end(); )
+    {
+        this->graphicsWrapper->deleteBuffers((*it)->mesh->meshData.get());
+        it = this->dynamicGuiComponents.erase(it);
+    }
 }
 
 bool GUIRenderer::isEmpty()
 {
-    return (this->guiComponents.empty() && this->dynamicGUIComponents.empty());
+    return (this->guiComponents.empty() && this->dynamicGuiComponents.empty());
 }
 
 } // namespace

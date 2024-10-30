@@ -226,6 +226,7 @@
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPIState.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp" />
+    <ClCompile Include="src\editors\controllers\EditorsController.cpp" />
     <ClCompile Include="src\editors\properties\BoolEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\ColorEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\FloatEditorProperty.cpp" />
@@ -240,6 +241,9 @@
     <ClCompile Include="src\entities\components\EntityComponentTypes.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp" />
+    <ClCompile Include="src\executionStrategies\AExecutionStrategy.cpp" />
+    <ClCompile Include="src\executionStrategies\ApplicationStrategy.cpp" />
+    <ClCompile Include="src\executionStrategies\EditorStrategy.cpp" />
     <ClCompile Include="src\messages\BaseMessage.cpp" />
     <ClCompile Include="src\editors\windows\EditorEntityProperties.cpp" />
     <ClCompile Include="src\editors\windows\EditorMenuBar.cpp" />
@@ -376,11 +380,15 @@
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
     <ClInclude Include="include\AEntityComponent.h" />
+    <ClInclude Include="include\ApplicationStrategy.h" />
     <ClInclude Include="include\AssetsManager.h" />
     <ClInclude Include="include\BoolEditorProperty.h" />
     <ClInclude Include="include\ComponentParser.h" />
+    <ClInclude Include="include\EditorStrategy.h" />
+    <ClInclude Include="include\EditorsController.h" />
     <ClInclude Include="include\EntityComponentTypes.h" />
     <ClInclude Include="include\EntityParser.h" />
+    <ClInclude Include="include\AExecutionStrategy.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\MeshEditorProperty.h" />
     <ClInclude Include="include\MeshLoader.h" />

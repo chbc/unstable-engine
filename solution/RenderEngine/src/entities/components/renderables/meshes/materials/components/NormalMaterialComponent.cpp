@@ -10,7 +10,7 @@ IMPLEMENT_MATERIAL_COMPONENT(NormalMaterialComponent)
 NormalMaterialComponent::NormalMaterialComponent(Material *material, const std::string &fileName)
 	: AMaterialComponent(material)
 {
-	this->texture = SingletonsManager::getInstance()->resolve<TextureManager>()->loadTexture(fileName, EMaterialMap::NORMAL);
+	this->texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, EMaterialMap::NORMAL);
 	this->addEditorProperty(new TextureEditorProperty{ "Normal", this->texture->getId() });
 }
 

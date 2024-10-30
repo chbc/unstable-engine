@@ -10,6 +10,12 @@ SampleApplication::SampleApplication() : RenderEngine(), camera(nullptr)
 void SampleApplication::onInit()
 {
 	/*
+	PointLightComponent* pLight1 = this->scenesManager->createPointLight("p_light_1");
+	pLight1->getTransform()->setPosition(glm::vec3{0.0f, 5.0f, 0.0f});
+	pLight1->setColor(glm::vec3(0.5f));
+	*/
+
+	/*
 	Entity* cameraEntity = this->scenesManager->createPerspectiveCamera(90.0f);
 	this->camera = cameraEntity->getComponent<CameraComponent>();
 	this->camera->setPosition({ 0.0f, 5.0f, 5.0f });

@@ -21,6 +21,8 @@ public:
 
 private:
 	size_t generateKey(const char* input);
+
+	void release() override;
 };
 
 } // namespace

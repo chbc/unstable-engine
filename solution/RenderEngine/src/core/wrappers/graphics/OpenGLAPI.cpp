@@ -612,6 +612,11 @@ void OpenGLAPI::unbindFrameBuffer()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
+void OpenGLAPI::deleteFrameBuffer(uint32_t fbo)
+{
+	glDeleteFramebuffers(1, &fbo);
+}
+
 void OpenGLAPI::setViewport(uint32_t width, uint32_t height)
 {
 	glViewport(0, 0, width, height);

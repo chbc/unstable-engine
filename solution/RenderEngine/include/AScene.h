@@ -25,6 +25,7 @@ protected:
     void removeDestroyedEntities();
 
 private:
+    void initEntities();
     void update(float elapsedTime);
 
     void onSceneLoaded();
@@ -34,7 +35,7 @@ private:
 
 friend class ScenesManager;
 friend class EditorSceneTree;
-friend class EditorMenuBar;
+friend class EditorsController;
 friend class SceneLoader;
 friend class EntityParser;
 };

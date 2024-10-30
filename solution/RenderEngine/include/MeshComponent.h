@@ -47,8 +47,8 @@ friend class OpenGLAPI;
 friend class OpenGLESAPI;
 friend class MeshRenderer;
 friend class ShadowRenderer;
-friend class VertexDataFactory;
 friend class LightManager;
+friend class EditorsController;
 };
 
 } // namespace

@@ -28,7 +28,7 @@ HDRRendererComponent::HDRRendererComponent(PostProcessingComponent* component)
 	uint32_t height = static_cast<uint32_t>(EngineValues::SCREEN_HEIGHT);
 
 	glm::vec2 pixelSize(width, height);
-	glm::vec2 screenBasedSize = SingletonsManager::getInstance()->resolve<MultimediaManager>()->getNormalizedSize(pixelSize);
+	glm::vec2 screenBasedSize = SingletonsManager::getInstance()->get<MultimediaManager>()->getNormalizedSize(pixelSize);
 
 	GUIMeshData* quad = PrimitiveMeshFactory().createPlaneBottomUp(screenBasedSize);
 	this->meshData = UPTR<GUIMeshData>{ quad };
@@ -36,7 +36,7 @@ HDRRendererComponent::HDRRendererComponent(PostProcessingComponent* component)
 	this->graphicsWrapper->createGUIVAO(quad, 0, false);
 	this->graphicsWrapper->createGUIEBO(quad, 0, false);
 
-	TextureManager* textureManager = singletonsManager->resolve<TextureManager>();
+	TextureManager* textureManager = singletonsManager->get<TextureManager>();
 	Texture* texture = textureManager->createEmptyFloatingPointTexture(width, height);
 	this->textureId = texture->getId();
 

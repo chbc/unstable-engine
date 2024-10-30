@@ -11,7 +11,7 @@ IMPLEMENT_COMPONENT(OrbitCameraComponent)
 
 OrbitCameraComponent::OrbitCameraComponent(Entity* entity) : CameraComponent(entity){ }
 
-void OrbitCameraComponent::onStart()
+void OrbitCameraComponent::onInit()
 {
 }
 

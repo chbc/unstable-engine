@@ -82,7 +82,7 @@ void CameraComponent::setOrthoProjection(float width, float height)
 void CameraComponent::setMainCamera()
 {
     this->isMainCamera = true;
-    RenderManager* renderManager = SingletonsManager::getInstance()->resolve<RenderManager>();
+    RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
     renderManager->setApplicationCamera(this);
 }
 

@@ -1,30 +1,19 @@
 #if defined(DEBUG) && !defined(__ANDROID__)
 
 #include "EditorMenuBar.h"
-#include "EngineValues.h"
 #include "MessagesManager.h"
 #include "SingletonsManager.h"
 #include "EditorMessages.h"
-#include "SingletonsManager.h"
-#include "RenderManager.h"
-#include "RenderEngine.h"
-#include "SceneLoader.h"
+#include "EditorsController.h"
 
 #include "imgui/imgui.h"
 
 namespace sre
 {
 
-EditorMenuBar::EditorMenuBar(bool* demoEnabled, ScenesManager* arg_scenesManager)
-	: isDemoEnabled(demoEnabled), scenesManager(arg_scenesManager)
+EditorMenuBar::EditorMenuBar(bool* demoEnabled, EditorsController* arg_controller)
+	: isDemoEnabled(demoEnabled), controller(arg_controller)
 {
-	/* XXX
-	Scene* scene = this->scenesManager->createScene("new_scene");
-	SceneLoader::load(scene);
-
-	this->scenesManager->onScenesLoaded();
-	SingletonsManager::getInstance()->get<RenderManager>()->onSceneLoaded();
-	*/
 }
 
 void EditorMenuBar::onEditorGUI()
@@ -36,15 +25,14 @@ void EditorMenuBar::onEditorGUI()
 			ImGui::MenuItem("New scene");
 			if (ImGui::MenuItem("Open scene"))
 			{
-				RenderEngine::getInstance()->loadEditorScene("../../scenes/test.scene");
+				this->controller->loadScene();
 			}
 
 			if (ImGui::MenuItem("Save scene"))
 			{
-				SceneLoader::save(this->scenesManager->runtimeScene.get());
+				this->controller->saveScene();
 			}
 
-			ImGui::MenuItem("Save scene as");
 			if (ImGui::MenuItem("Exit"))
 				this->exitEditor();
 
@@ -54,6 +42,41 @@ void EditorMenuBar::onEditorGUI()
 		if (ImGui::BeginMenu("Edit"))
 		{
 			ImGui::MenuItem("Preferences");
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Entities"))
+		{
+			if (ImGui::BeginMenu("Basic Shapes"))
+			{
+				if (ImGui::MenuItem("Cube"))
+				{
+					this->controller->createCube();
+				}
+
+				if (ImGui::MenuItem("Plane"))
+				{
+					this->controller->createPlane();
+				}
+
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Lights"))
+			{
+				if (ImGui::MenuItem("Directional Light"))
+				{
+
+				}
+
+				if (ImGui::MenuItem("Point Light"))
+				{
+
+				}
+
+				ImGui::EndMenu();
+			}
+
 			ImGui::EndMenu();
 		}
 
@@ -79,7 +102,7 @@ void EditorMenuBar::onEditorGUI()
 
 void EditorMenuBar::exitEditor()
 {
-	MessagesManager* messagesManager = SingletonsManager::getInstance()->resolve<MessagesManager>();
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	ExitEditorMessage message;
 	messagesManager->notify(&message);
 }

@@ -4,60 +4,30 @@
 #include "MeshComponent.h"
 #include "GUITextComponent.h"
 #include "CameraComponent.h"
-#include "OpenGLAPI.h"
-#include "OpenGLESAPI.h"
-#include "TextureManager.h"
 #include "SingletonsManager.h"
 #include "MeshData.h"
 #include "LightManager.h"
 #include "ShaderManager.h"
-#include "MeshRenderer.h"
-#include "GUIRenderer.h"
-#include "ShadowRenderer.h"
-#include "PostProcessingRenderer.h"
 #include "PostProcessingComponent.h"
 #include "EngineValues.h"
+#include "AGraphicsWrapper.h"
 
 #include "CollectionsUtils.h"
 
 namespace sre
 {
 
-RenderManager::RenderManager()
-{
-    SingletonsManager *singletonsManager = SingletonsManager::getInstance();
-
-#ifdef __ANDROID__
-    this->graphicsWrapper   = singletonsManager->add<AGraphicsWrapper, OpenGLESAPI>();
-#else
-    this->graphicsWrapper = singletonsManager->add<AGraphicsWrapper, OpenGLAPI>();
-#endif
-
-    this->lightManager      = singletonsManager->resolve<LightManager>();
-    this->shaderManager     = singletonsManager->resolve<ShaderManager>();
-
-    this->applicationCamera = nullptr;
-    this->editorCamera = nullptr;
-    this->currentCamera = nullptr;
-    this->targetFBO = 0;
-}
-
 void RenderManager::init()
 {
-    this->graphicsWrapper->init();
-    this->shaderManager->init();
-    this->lightManager->init();
-
-    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
-	
-    singletonsManager->resolve<TextureManager>()->init();
+    SingletonsManager *singletonsManager = SingletonsManager::getInstance();
+    this->graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
+    this->lightManager      = singletonsManager->get<LightManager>();
+    this->shaderManager     = singletonsManager->get<ShaderManager>();
 }
 
 void RenderManager::preRelease()
 {
-    this->opaqueMeshRenderers.clear();
-    this->translucentMeshRenderers.clear();
-    this->guiRenderer = nullptr;
+    this->destroyAllMeshes();
 }
 
 void RenderManager::addEntity(Entity *entity)
@@ -163,32 +133,35 @@ void RenderManager::initShadowRenderer()
     }
 }
 
-void RenderManager::onSceneLoaded()
+void RenderManager::initRenderers()
 {
-    if (this->currentCamera == nullptr)
-        return;
-
     if (this->shadowRenderer.get() != nullptr)
         this->shadowRenderer->onSceneLoaded();
 
-	bool useBrightnessSegmentation = false;
-    bool includeDepth = false;
-	Entity* cameraEntity = this->currentCamera->getEntity();
-	if (cameraEntity->hasComponent<PostProcessingComponent>())
-	{
-		PostProcessingComponent* postProcessingComponent = cameraEntity->getComponent<PostProcessingComponent>();
-		this->postProcessingRenderer = UPTR<PostProcessingRenderer>{ new PostProcessingRenderer };
-		this->postProcessingRenderer->onSceneLoaded(postProcessingComponent);
-
-		useBrightnessSegmentation = this->postProcessingRenderer->isUsingBrightnessSegmentation();
-        includeDepth = this->postProcessingRenderer->isIncludingDepth();
-	}
 
 	for (const UPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
-		item->onSceneLoaded(useBrightnessSegmentation, includeDepth);
+        item->onSceneLoaded(false, false); // useBrightnessSegmentation, includeDepth);
 
     for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
-        item->onSceneLoaded(useBrightnessSegmentation, includeDepth);
+        item->onSceneLoaded(false, false); // useBrightnessSegmentation, includeDepth);
+}
+
+void RenderManager::initPostProcessing()
+{
+    /*
+    bool useBrightnessSegmentation = false;
+    bool includeDepth = false;
+    Entity* cameraEntity = this->currentCamera->getEntity();
+    if (cameraEntity->hasComponent<PostProcessingComponent>())
+    {
+        PostProcessingComponent* postProcessingComponent = cameraEntity->getComponent<PostProcessingComponent>();
+        this->postProcessingRenderer = UPTR<PostProcessingRenderer>{ new PostProcessingRenderer };
+        this->postProcessingRenderer->onSceneLoaded(postProcessingComponent);
+
+        useBrightnessSegmentation = this->postProcessingRenderer->isUsingBrightnessSegmentation();
+        includeDepth = this->postProcessingRenderer->isIncludingDepth();
+    }
+    */
 }
 
 void RenderManager::setApplicationCamera(CameraComponent *camera)
@@ -249,9 +222,11 @@ void RenderManager::render()
 
 void RenderManager::DEBUG_drawTriangle()
 {
+/*
 #ifndef __ANDROID__
     OpenGLAPI::DEBUG_drawTriangle();
 #endif
+*/
 }
 
 void RenderManager::setupBufferSubData(GUIMeshData* meshData)
@@ -260,13 +235,13 @@ void RenderManager::setupBufferSubData(GUIMeshData* meshData)
     this->graphicsWrapper->setupBufferSubData(meshData);
 }
 
-void RenderManager::onRemoveDestroyedEntities()
+void RenderManager::removeDestroyedEntities()
 {
     for (const UPTR<MeshRenderer> &item : this->opaqueMeshRenderers)
-        item->onRemoveDestroyedEntities();
+        item->removeDestroyedEntities();
 
     for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
-        item->onRemoveDestroyedEntities();
+        item->removeDestroyedEntities();
 
     CollectionsUtils::removeIfRendererIsEmpty(this->opaqueMeshRenderers);
     CollectionsUtils::removeIfRendererIsEmpty(this->translucentMeshRenderers);
@@ -279,6 +254,26 @@ void RenderManager::onRemoveDestroyedEntities()
     }
 
     this->lightManager->removeDestroyedEntities();
+}
+
+void RenderManager::destroyAllMeshes()
+{
+    for (const UPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
+        item->destroyAllMeshes();
+
+    for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
+        item->destroyAllMeshes();
+
+    this->opaqueMeshRenderers.clear();
+    this->translucentMeshRenderers.clear();
+
+    if (this->guiRenderer.get() != nullptr)
+    {
+        this->guiRenderer->destroyAllMeshes();
+        this->guiRenderer.reset();
+    }
+
+    this->lightManager->removeAllLights();
 }
 
 void RenderManager::setTargetFBO(uint32_t fbo)

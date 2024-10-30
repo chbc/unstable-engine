@@ -37,7 +37,7 @@ void EditorSceneViewport::onInit()
 		uint32_t width = static_cast<uint32_t>(EngineValues::SCREEN_WIDTH);
 		uint32_t height = static_cast<uint32_t>(EngineValues::SCREEN_HEIGHT);
 
-		TextureManager* textureManager = singletonsManager->resolve<TextureManager>();
+		TextureManager* textureManager = singletonsManager->get<TextureManager>();
 		Texture* texture = textureManager->createEmptyTexture(width, height);
 		uint32_t id = texture->getId();
 
@@ -59,7 +59,7 @@ void EditorSceneViewport::onInit()
 		
 		this->cameraEntity->getTransform()->setPosition({ 0.0f, 2.5f, 10.0f });
 
-		this->cameraEntity->onStart();
+		this->cameraEntity->onInit();
 		this->orbitCamera->setEnabled(false);
 
 		this->renderManager->setEditorCamera(this->flyingCamera);
@@ -67,13 +67,17 @@ void EditorSceneViewport::onInit()
 
 	this->renderManager->setTargetFBO(Fbo);
 	this->canUpdate = false;
-	this->renderManager->setEditorMode(false);
+	this->renderManager->setEditorMode(true);
 }
 
 void EditorSceneViewport::onUpdate(float elapsedTime)
 {
 	if (this->canUpdate)
+	{
+		this->updateViewingState();
+		this->processMouseWheel();
 		this->cameraEntity->onUpdate(elapsedTime);
+	}
 }
 
 void EditorSceneViewport::onEditorGUI()
@@ -87,21 +91,18 @@ void EditorSceneViewport::onEditorGUI()
 	ImGui::Image(this->textureId, size, ImVec2{0.0f, 1.0f}, ImVec2{ 1.0f, 0.0f });
 
 	this->canUpdate = ImGui::IsWindowFocused() || ImGui::IsWindowHovered();
-	if (this->canUpdate)
-		this->processInput();
 
 	ImGui::End();
 }
 
 void EditorSceneViewport::onRelease()
 {
-	this->renderManager->setTargetFBO(0);
-}
-
-void EditorSceneViewport::processInput()
-{
-	this->updateViewingState();
-	this->processMouseWheel();
+	if (Fbo != 0)
+	{
+		this->renderManager->setTargetFBO(0);
+		AGraphicsWrapper* graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
+		graphicsWrapper->deleteFrameBuffer(Fbo);
+	}
 }
 
 void EditorSceneViewport::updateViewingState()
