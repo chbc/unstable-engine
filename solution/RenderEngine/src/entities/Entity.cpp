@@ -124,4 +124,18 @@ std::string Entity::generateEntityId(uint32_t& index, const std::string& duplica
 	return result;
 }
 
+void Entity::clean()
+{
+	for (auto const& item : this->componentsMap)
+	{
+		item.second->clean();
+	}
+	this->componentsMap.clear();
+
+	for (Entity* item : this->childrenList)
+		item->onInit();
+
+	this->childrenList.clear();
+}
+
 } // namespace

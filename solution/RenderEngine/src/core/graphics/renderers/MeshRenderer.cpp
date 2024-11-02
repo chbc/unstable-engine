@@ -211,7 +211,7 @@ void MeshRenderer::removeDestroyedEntities()
     }
 }
 
-void MeshRenderer::destroyAllMeshes()
+void MeshRenderer::clean()
 {
     this->componentsMap.clear();
     this->shaderSetupItems.clear();
@@ -221,6 +221,7 @@ void MeshRenderer::destroyAllMeshes()
     for (it = this->meshes.begin(); it != this->meshes.end(); )
     {
         this->graphicsWrapper->deleteBuffers((*it)->mesh->meshData.get());
+        (*it)->mesh->meshData->ebo = 0;
         it = this->meshes.erase(it);
     }
 }

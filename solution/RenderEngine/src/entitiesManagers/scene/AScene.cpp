@@ -72,10 +72,14 @@ void AScene::onSceneLoaded()
     this->sceneLoaded = true;
 }
 
-void AScene::destroyAllEntities()
+void AScene::clean()
 {
     for (auto& item : this->entities)
-        item.second->destroy();
+    {
+        item.second->clean();
+    }
+
+    this->entities.clear();
 }
 
 void AScene::release()

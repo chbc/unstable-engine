@@ -46,9 +46,9 @@ void MultimediaManager::swapBuffers()
 	this->multimediaWrapper->swapBuffers();
 }
 
-void MultimediaManager::setEditorMode(bool value)
+void MultimediaManager::setExecutionMode(EExecutionMode::Type mode)
 {
-	this->multimediaWrapper->setEditorMode(value);
+	this->multimediaWrapper->setExecutionMode(mode);
 }
 
 void MultimediaManager::processInput()

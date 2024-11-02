@@ -37,7 +37,7 @@ private:
     void setup(GUIImageComponent *guiComponent);
 
     void removeDestroyedEntities();
-    void destroyAllMeshes();
+    void clean();
 
     bool isEmpty();
 

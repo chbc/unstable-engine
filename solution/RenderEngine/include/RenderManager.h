@@ -8,6 +8,7 @@
 #include "GUIRenderer.h"
 #include "ShadowRenderer.h"
 #include "MeshRenderer.h"
+#include "EExecutionMode.h"
 
 namespace sre
 {
@@ -59,7 +60,7 @@ private:
 
     void setApplicationCamera(CameraComponent *camera);
     void setEditorCamera(CameraComponent* camera);
-    void setEditorMode(bool isEditorMode);
+    void setExecutionMode(EExecutionMode::Type mode);
     CameraComponent* getCurrentCamera();
 
     void render();
@@ -68,7 +69,7 @@ private:
 
     void setupBufferSubData(GUIMeshData* meshData);
     void removeDestroyedEntities();
-    void destroyAllMeshes();
+    void clean();
 
     void setTargetFBO(uint32_t fbo);
     void unbindFrameBuffer();
@@ -79,6 +80,8 @@ friend class AtlasManager;
 friend class CameraComponent;
 friend class MeshComponent;
 friend class AExecutionStrategy;
+friend class EditorStrategy;
+friend class ApplicationStrategy;
 friend class Material;
 friend class GUITextComponent;
 friend class SingletonsManager;

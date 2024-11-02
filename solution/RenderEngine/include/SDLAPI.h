@@ -28,7 +28,7 @@ protected:
 	void init() override;
 	void onFrameBegin() override;
 	void swapBuffers() override;
-	void setEditorMode(bool value) override;
+	void setExecutionMode(EExecutionMode::Type mode) override;
 	void processInput(const std::vector<GUIButtonComponent*>& guiButtons) override;
 	unsigned int getTicks() override;
 	void delay(unsigned int) override;

@@ -45,4 +45,9 @@ void AEntityComponent::addEditorProperty(AEditorProperty* editorProperty)
 	this->editorProperties.emplace_back(editorProperty);
 }
 
+void AEntityComponent::clean()
+{
+	this->editorProperties.clear();
+}
+
 } // namespace

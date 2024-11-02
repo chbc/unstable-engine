@@ -129,7 +129,7 @@ void GUIRenderer::removeDestroyedEntities()
     }
 }
 
-void GUIRenderer::destroyAllMeshes()
+void GUIRenderer::clean()
 {
     std::list<GUIImageComponent*>::iterator it;
     for (it = this->guiComponents.begin(); it != this->guiComponents.end(); )

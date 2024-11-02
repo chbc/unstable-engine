@@ -68,6 +68,9 @@ protected:
     virtual void onValueChanged() {}
     void addEditorProperty(AEditorProperty* editorProperty);
 
+private:
+    void clean();
+
 friend class Entity;
 friend class EditorEntityProperties;
 friend class ComponentParser;

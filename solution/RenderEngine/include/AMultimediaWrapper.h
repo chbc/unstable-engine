@@ -1,8 +1,9 @@
 #ifndef _AMULTIMEDIA_WRAPPER_H_
 #define _AMULTIMEDIA_WRAPPER_H_
 
-#include <string>
 #include "memory_aliases.h"
+#include "EExecutionMode.h"
+#include <string>
 
 namespace sre
 {
@@ -21,7 +22,7 @@ protected:
 	virtual void init() =0; // throws sdl error
 	virtual void onFrameBegin() = 0;
 	virtual void swapBuffers() =0;
-	virtual void setEditorMode(bool value) = 0;
+	virtual void setExecutionMode(EExecutionMode::Type mode) = 0;
 	virtual void processInput(const std::vector<GUIButtonComponent*>& guiButtons) =0;
 	virtual unsigned int getTicks() =0;
 	virtual void delay(unsigned int timeMS) =0;

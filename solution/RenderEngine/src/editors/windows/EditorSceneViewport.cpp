@@ -67,7 +67,6 @@ void EditorSceneViewport::onInit()
 
 	this->renderManager->setTargetFBO(Fbo);
 	this->canUpdate = false;
-	this->renderManager->setEditorMode(true);
 }
 
 void EditorSceneViewport::onUpdate(float elapsedTime)
@@ -99,7 +98,6 @@ void EditorSceneViewport::onRelease()
 {
 	if (Fbo != 0)
 	{
-		this->renderManager->setTargetFBO(0);
 		AGraphicsWrapper* graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
 		graphicsWrapper->deleteFrameBuffer(Fbo);
 	}

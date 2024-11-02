@@ -55,9 +55,9 @@ void SDLAPI::swapBuffers()
 	SDL_GL_SwapWindow(this->window);
 }
 
-void SDLAPI::setEditorMode(bool value)
+void SDLAPI::setExecutionMode(EExecutionMode::Type mode)
 {
-	this->imGuiAPI->setEditorMode(value);
+	this->imGuiAPI->setExecutionMode(mode);
 }
 
 void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons)

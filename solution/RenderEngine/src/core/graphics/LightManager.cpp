@@ -40,7 +40,7 @@ void LightManager::removeDestroyedEntities()
     CollectionsUtils::removeIfEntityIsDestroyed(this->pointLights);
 }
 
-void LightManager::removeAllLights()
+void LightManager::clean()
 {
     this->directionalLights.clear();
     this->pointLights.clear();

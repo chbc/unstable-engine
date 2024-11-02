@@ -1,8 +1,9 @@
 #include "ApplicationStrategy.h"
 #include "RenderEngine.h"
 #include "ScenesManager.h"
-#include "Input.h"
 #include "MultimediaManager.h"
+#include "RenderManager.h"
+#include "Input.h"
 
 namespace sre
 {
@@ -13,7 +14,9 @@ ApplicationStrategy::ApplicationStrategy()
 
 void ApplicationStrategy::init(RenderEngine* controller)
 {
-	this->multimediaManager->setEditorMode(false);
+	this->multimediaManager->setExecutionMode(EExecutionMode::APPLICATION);
+	this->renderManager->setExecutionMode(EExecutionMode::APPLICATION);
+	this->renderManager->setTargetFBO(0);
 	this->scenesManager->initEntities();
 	controller->onInit();
 }
@@ -27,7 +30,7 @@ void ApplicationStrategy::update(RenderEngine* controller, float elapsedTime)
 
 #ifdef DEBUG
 	if (Input::isKeyJustPressed(KEY_HOME))
-		controller->changeStrategy(false);
+		controller->changeStrategy(EExecutionMode::EDITOR);
 #endif
 }
 

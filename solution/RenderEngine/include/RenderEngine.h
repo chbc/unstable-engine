@@ -4,6 +4,9 @@
 #include "memory_aliases.h"
 #include "core_defines.h"
 #include <string>
+#include "EExecutionMode.h"
+#include <queue>
+#include <functional>
 
 namespace sre
 {
@@ -15,6 +18,7 @@ private:
     UPTR<AExecutionStrategy> applicationStrategy;
     UPTR<AExecutionStrategy> editorStrategy;
     AExecutionStrategy* currentStrategy;
+    std::queue<std::function<void(void)>> endFrameActions;
 
     static RenderEngine* instance;
 
@@ -35,7 +39,8 @@ protected:
     virtual void onQuit() {};
 
 private:
-    void changeStrategy(bool application);
+    void dispatchEndFrameActions();
+    void changeStrategy(const EExecutionMode::Type mode);
     void release();
 
 friend class AExecutionStrategy;

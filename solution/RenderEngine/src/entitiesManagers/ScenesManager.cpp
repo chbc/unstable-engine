@@ -92,7 +92,7 @@ Entity* ScenesManager::createGUITextEntity(const std::string fontFile, uint32_t 
 void ScenesManager::loadScene(const char* fileName)
 {
     // XXX
-    Scene* scene = this->createScene("test_scene");
+    Scene* scene = this->createScene(fileName);
     SceneLoader::load(scene, fileName);
 
     for (const auto& item : this->scenes)
@@ -134,14 +134,17 @@ void ScenesManager::removeDestroyedEntities()
     this->guiScene->removeDestroyedEntities();
 }
 
-void ScenesManager::destroyAllEntities()
+void ScenesManager::clean()
 {
-    this->runtimeScene->destroyAllEntities();
+    this->runtimeScene->clean();
 
     for (const auto& item : this->scenes)
-        item->destroyAllEntities();
+    {
+        item->clean();
+    }
+    this->scenes.clear();
 
-    this->guiScene->destroyAllEntities();
+    this->guiScene->clean();
 }
 
 void ScenesManager::release()

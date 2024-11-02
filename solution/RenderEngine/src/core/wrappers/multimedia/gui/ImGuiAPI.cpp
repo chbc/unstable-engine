@@ -16,7 +16,7 @@ ImGuiAPI::ImGuiAPI()
 void ImGuiAPI::init(SDL_Window* window, void* glContext)
 {
 	this->state->init(window, glContext);
-	this->setEditorMode(false);
+	this->setExecutionMode(EExecutionMode::APPLICATION);
 }
 
 void ImGuiAPI::processEvent(SDL_Event* event)
@@ -34,12 +34,12 @@ void ImGuiAPI::render()
 	this->state->render();
 }
 
-void ImGuiAPI::setEditorMode(bool value)
+void ImGuiAPI::setExecutionMode(EExecutionMode::Type mode)
 {
-	if (value)
-		this->state = this->concreteState;
-	else
+	if (mode == EExecutionMode::APPLICATION)
 		this->state = this->emptyState;
+	else
+		this->state = this->concreteState;
 }
 
 void ImGuiAPI::release()

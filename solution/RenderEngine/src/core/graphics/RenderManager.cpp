@@ -27,7 +27,7 @@ void RenderManager::init()
 
 void RenderManager::preRelease()
 {
-    this->destroyAllMeshes();
+    this->clean();
 }
 
 void RenderManager::addEntity(Entity *entity)
@@ -174,9 +174,9 @@ void RenderManager::setEditorCamera(CameraComponent* camera)
     this->editorCamera = camera;
 }
 
-void RenderManager::setEditorMode(bool isEditorMode)
+void RenderManager::setExecutionMode(EExecutionMode::Type mode)
 {
-    this->currentCamera = isEditorMode ? this->editorCamera : this->applicationCamera;
+    this->currentCamera = (mode == EExecutionMode::APPLICATION) ? this->applicationCamera : this->editorCamera;
 }
 
 CameraComponent* RenderManager::getCurrentCamera()
@@ -256,24 +256,26 @@ void RenderManager::removeDestroyedEntities()
     this->lightManager->removeDestroyedEntities();
 }
 
-void RenderManager::destroyAllMeshes()
+void RenderManager::clean()
 {
     for (const UPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
-        item->destroyAllMeshes();
+        item->clean();
 
     for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
-        item->destroyAllMeshes();
+        item->clean();
 
     this->opaqueMeshRenderers.clear();
     this->translucentMeshRenderers.clear();
 
     if (this->guiRenderer.get() != nullptr)
     {
-        this->guiRenderer->destroyAllMeshes();
+        this->guiRenderer->clean();
         this->guiRenderer.reset();
     }
 
-    this->lightManager->removeAllLights();
+    this->lightManager->clean();
+
+    this->currentCamera = nullptr;
 }
 
 void RenderManager::setTargetFBO(uint32_t fbo)

@@ -3,6 +3,7 @@
 
 #include "AImGuiAPIState.h"
 #include "memory_aliases.h"
+#include "EExecutionMode.h"
 
 namespace sre
 {
@@ -23,7 +24,7 @@ private:
 	void processEvent(SDL_Event* event);
 	void onNewFrame(SDL_Window* window);
 	void render();
-	void setEditorMode(bool value);
+	void setExecutionMode(EExecutionMode::Type mode);
 	void release();
 
 friend class SDLAPI;

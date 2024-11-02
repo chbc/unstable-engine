@@ -29,7 +29,7 @@ private:
     void update(float elapsedTime);
 
     void onSceneLoaded();
-    void destroyAllEntities();
+    void clean();
 
     void release();
 

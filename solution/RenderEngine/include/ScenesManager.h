@@ -46,7 +46,7 @@ private:
     void initEntities();
     void update(float elapsedTime);
     void removeDestroyedEntities();
-    void destroyAllEntities();
+    void clean();
     void release() override;
 
 friend class RenderEngine;

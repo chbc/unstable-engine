@@ -79,7 +79,7 @@ void SDLAndroidAPI::swapBuffers()
 	SDL_GL_SwapWindow(this->window);
 }
 
-void SDLAndroidAPI::setEditorMode(bool value) { }
+void SDLAndroidAPI::setExecutionMode(EExecutionMode::Type mode) { }
 
 void SDLAndroidAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons)
 {

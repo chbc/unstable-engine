@@ -37,7 +37,7 @@ public:
 
 private:
 	void swapBuffers();
-	void setEditorMode(bool value);
+	void setExecutionMode(EExecutionMode::Type mode);
 	void processInput();
 	bool checkClosePressed();
 	void onFrameBegin();
