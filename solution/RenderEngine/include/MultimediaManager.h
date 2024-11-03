@@ -47,7 +47,7 @@ private:
 	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp);
 	void addGUIButton(GUIButtonComponent* guiButton);
 	void removeDestroyedEntities();
-	void clearButtons();
+	void cleanUp();
 
 friend class AExecutionStrategy;
 friend class EditorStrategy;

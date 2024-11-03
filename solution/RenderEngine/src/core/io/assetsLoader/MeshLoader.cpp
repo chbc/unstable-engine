@@ -5,7 +5,7 @@
 namespace sre
 {
 
-MeshData* MeshLoader::load(const char* file)
+Mesh* MeshLoader::load(const char* file)
 {
 	std::vector<VertexData> vertexData;
 	std::vector<uint16_t> indices;
@@ -32,8 +32,9 @@ MeshData* MeshLoader::load(const char* file)
 
 	readStream.close();
 
-	MeshData* readMesh = new MeshData{ vertexData, indices };
-	return readMesh;
+	MeshData* meshData = new MeshData{ vertexData, indices };
+	Mesh* result = new Mesh{ meshData, file };
+	return result;
 }
 
 } // namespace

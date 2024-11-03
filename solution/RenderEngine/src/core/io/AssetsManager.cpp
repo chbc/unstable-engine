@@ -4,11 +4,11 @@
 namespace sre
 {
 
-MeshData* AssetsManager::loadMesh(const char* file)
+Mesh* AssetsManager::loadMesh(const char* file)
 {
 	size_t key = generateKey(file);
 
-	MeshData* result;
+	Mesh* result;
 	
 	if (this->meshesMap.count(key) > 0)
 	{

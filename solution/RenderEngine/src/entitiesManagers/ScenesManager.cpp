@@ -8,7 +8,7 @@ namespace sre
 
 void ScenesManager::init()
 {
-    this->runtimeScene = UPTR<Scene>(new Scene{ "runtimeScene" });
+    this->runtimeScene = UPTR<Scene>(new Scene{ "Runtime" });
     this->guiScene = UPTR<GUIScene>(new GUIScene{});
 }
 
@@ -134,17 +134,11 @@ void ScenesManager::removeDestroyedEntities()
     this->guiScene->removeDestroyedEntities();
 }
 
-void ScenesManager::clean()
+void ScenesManager::cleanUp()
 {
-    this->runtimeScene->clean();
-
-    for (const auto& item : this->scenes)
-    {
-        item->clean();
-    }
+    this->runtimeScene.reset(new Scene{"Runtime"});
+    this->guiScene.reset(new GUIScene{});
     this->scenes.clear();
-
-    this->guiScene->clean();
 }
 
 void ScenesManager::release()

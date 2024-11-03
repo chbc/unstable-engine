@@ -9,7 +9,7 @@ namespace sre
 IMPLEMENT_COMPONENT(MeshComponent)
 
 MeshComponent::MeshComponent(Entity *entity)
-    : AEntityComponent(entity), opaque(true), material(new Material{}), mesh(new Mesh{})
+    : AEntityComponent(entity), opaque(true), material(new Material{}), mesh(nullptr)
 {
     this->addEditorProperty(new MeshEditorProperty{ "Mesh", &this->mesh });
     // this->addEditorProperty(new MaterialEditorProperty{ "Material", this->material.get() });

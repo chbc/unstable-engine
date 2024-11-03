@@ -10,7 +10,7 @@
 namespace sre
 {
 
-MeshEditorProperty::MeshEditorProperty(const char* title, UPTR<Mesh>* arg_mesh)
+MeshEditorProperty::MeshEditorProperty(const char* title, Mesh** arg_mesh)
 	: AEditorProperty(title), mesh(arg_mesh)
 { }
 
@@ -33,7 +33,7 @@ void MeshEditorProperty::draw()
 
 void MeshEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
-	propertyNode << this->mesh->get()->fileName;
+	propertyNode << (*this->mesh)->fileName;
 }
 
 void MeshEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
@@ -41,13 +41,7 @@ void MeshEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 	propertyNode >> this->fileName;
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-
-	MeshData* meshData = assetsManager->loadMesh(fileName.c_str());
-	Mesh* newMesh = new Mesh{};
-	newMesh->meshData.reset(meshData);
-	newMesh->fileName = this->fileName;
-
-	this->mesh->reset(newMesh);
+	*this->mesh = assetsManager->loadMesh(fileName.c_str());
 }
 
 } // namespace

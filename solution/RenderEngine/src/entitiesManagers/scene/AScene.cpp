@@ -74,11 +74,6 @@ void AScene::onSceneLoaded()
 
 void AScene::clean()
 {
-    for (auto& item : this->entities)
-    {
-        item.second->clean();
-    }
-
     this->entities.clear();
 }
 

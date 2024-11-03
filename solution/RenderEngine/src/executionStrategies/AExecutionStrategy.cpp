@@ -63,9 +63,9 @@ void AExecutionStrategy::delay(RenderEngine* controller)
 
 void AExecutionStrategy::loadScene(const char* fileName)
 {
-    this->multimediaManager->clearButtons();
-    this->renderManager->clean();
-    this->scenesManager->clean();
+    this->multimediaManager->cleanUp();
+    this->renderManager->cleanUp();
+    this->scenesManager->cleanUp();
 
     this->scenesManager->loadScene("default");
 

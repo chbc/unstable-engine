@@ -107,7 +107,7 @@ void MultimediaManager::removeDestroyedEntities()
 	CollectionsUtils::removeIfEntityIsDestroyed(this->guiButtons);
 }
 
-void MultimediaManager::clearButtons()
+void MultimediaManager::cleanUp()
 {
 	this->guiButtons.clear();
 }

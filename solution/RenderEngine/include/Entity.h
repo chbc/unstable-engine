@@ -40,7 +40,6 @@ protected:
 public:
     SRE_API ~Entity();
 
-
     template <typename T> T* addComponent();
     template <typename T> void removeComponent();
     template <typename T> T* getComponent();
@@ -69,7 +68,6 @@ protected:
 private:
     static std::string generateEntityId(uint32_t& index, const std::string& duplicateName = "");
     template <typename T> uint16_t getComponentId();
-    void clean();
 
     friend class AScene;
     friend class ModelLoader;

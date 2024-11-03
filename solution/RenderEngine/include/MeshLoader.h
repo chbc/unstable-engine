@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MeshData.h"
+#include "Mesh.h"
 
 namespace sre
 {
@@ -8,7 +8,7 @@ namespace sre
 class MeshLoader
 {
 public:
-	MeshData* load(const char* file);
+	Mesh* load(const char* file);
 };
 
 } // namespace

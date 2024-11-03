@@ -17,7 +17,7 @@ class SRE_API MeshComponent : public AEntityComponent
 DECLARE_COMPONENT()
 
 protected:
-    UPTR<Mesh> mesh;
+    Mesh* mesh;
 
 private:
     bool opaque;

@@ -27,7 +27,7 @@ void RenderManager::init()
 
 void RenderManager::preRelease()
 {
-    this->clean();
+    this->cleanUp();
 }
 
 void RenderManager::addEntity(Entity *entity)
@@ -256,14 +256,8 @@ void RenderManager::removeDestroyedEntities()
     this->lightManager->removeDestroyedEntities();
 }
 
-void RenderManager::clean()
+void RenderManager::cleanUp()
 {
-    for (const UPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
-        item->clean();
-
-    for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
-        item->clean();
-
     this->opaqueMeshRenderers.clear();
     this->translucentMeshRenderers.clear();
 

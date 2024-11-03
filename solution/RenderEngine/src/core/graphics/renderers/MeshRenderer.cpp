@@ -2,7 +2,6 @@
 
 #include "Entity.h"
 #include "MeshComponent.h"
-#include "MeshData.h"
 #include "AGraphicsWrapper.h"
 #include "ShaderManager.h"
 #include "SingletonsManager.h"
@@ -66,13 +65,14 @@ MeshRenderer::MeshRenderer(Material *material, ShaderManager *shaderManager, AGr
 
 MeshRenderer::~MeshRenderer()
 {
-    for (MeshComponent *item : this->meshes)
-        this->graphicsWrapper->deleteBuffers(item->mesh->meshData.get());
+    for (MeshComponent* item : this->meshes)
+    {
+        AMeshData* meshData = item->mesh->meshData.get();
+        this->graphicsWrapper->deleteBuffers(meshData);
+        meshData->ebo = 0;
+    }
 
-    this->meshes.clear();
-    this->shaderSetupItems.clear();
     this->shaderManager->releaseShader(this->shader);
-    this->shader = nullptr;
 }
 
 void MeshRenderer::onSceneLoaded(bool useBrightnessSegmentation, bool includeDepth)
@@ -208,21 +208,6 @@ void MeshRenderer::removeDestroyedEntities()
         }
         else
             ++it;
-    }
-}
-
-void MeshRenderer::clean()
-{
-    this->componentsMap.clear();
-    this->shaderSetupItems.clear();
-    componentsBitset.reset();
-
-    std::list<MeshComponent*>::iterator it;
-    for (it = this->meshes.begin(); it != this->meshes.end(); )
-    {
-        this->graphicsWrapper->deleteBuffers((*it)->mesh->meshData.get());
-        (*it)->mesh->meshData->ebo = 0;
-        it = this->meshes.erase(it);
     }
 }
 
