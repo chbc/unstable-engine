@@ -1,6 +1,7 @@
 #include "DefaultGameValues.h"
 #include "FileUtils.h"
 #include <vector>
+#include <stdexcept>
 
 namespace sre
 {
@@ -24,20 +25,51 @@ void DefaultGameValues::load()
 		if (position != std::string::npos)
 		{
 			std::string key = item.substr(0, position);
-			std::string value = item.substr(position + 1);
+			std::string strValue = item.substr(position + 1);
 
-			if (key == "START_UP_SCENE")
+			int intValue{ 0 };
+			float floatValue{ 0 };
+			if (tryGetValue(strValue, intValue))
 			{
-#ifdef __ANDROID__
-				const std::string BASE_FOLDER = "scenes/";
-#else
-				const std::string BASE_FOLDER = "../../scenes/";
-#endif
-				std::string sceneValue = BASE_FOLDER + value + ".scene";
-				blackboard.set("START_UP_SCENE", sceneValue);
+				blackboard.set(key, intValue);
+			}
+			else if (tryGetValue(strValue, floatValue))
+			{
+				blackboard.set(key, floatValue);
+			}
+			else
+			{
+				blackboard.set(key, strValue);
 			}
 		}
 	}
+}
+
+bool DefaultGameValues::tryGetValue(const std::string& input, int& result)
+{
+	if (input.find('.') == std::string::npos)
+	{
+		try
+		{
+			result = std::stoi(input);
+			return true;
+		}
+		catch (...) { }
+	}
+
+	return false;
+}
+
+bool DefaultGameValues::tryGetValue(const std::string& input, float& result)
+{
+	try
+	{
+		result = std::stof(input);
+		return true;
+	}
+	catch (...) {}
+
+	return false;
 }
 
 } // namespace

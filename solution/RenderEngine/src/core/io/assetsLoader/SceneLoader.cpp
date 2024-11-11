@@ -1,6 +1,6 @@
 #include "SceneLoader.h"
 #include "FileUtils.h"
-#include "Scene.h"
+#include "AScene.h"
 #include "EntityParser.h"
 
 namespace sre
@@ -12,7 +12,7 @@ namespace sre
 	const std::string BASE_FOLDER = "../../scenes/";
 #endif
 
-void SceneLoader::save(Scene* scene)
+void SceneLoader::save(AScene* scene, const char* sceneName)
 {
 	c4::yml::Tree tree;
 	c4::yml::NodeRef root = tree.rootref();
@@ -24,11 +24,12 @@ void SceneLoader::save(Scene* scene)
 		EntityParser::serialize(entityNode, entityItem.second.get());
 	}
 
+	std::string filePath = BASE_FOLDER + sceneName + std::string{ ".scene" };
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
-	FileUtils::saveFile("../../scenes/test.scene", content);
+	FileUtils::saveFile(filePath, content);
 }
 
-void SceneLoader::load(Scene* scene, const char* sceneName)
+void SceneLoader::load(AScene* scene, const char* sceneName)
 {
 	std::string fileContent;
 	std::string filePath = BASE_FOLDER + sceneName + std::string{ ".scene" };

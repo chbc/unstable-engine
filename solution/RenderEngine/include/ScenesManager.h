@@ -17,7 +17,7 @@ protected:
 
 public:
     SRE_API Scene* createScene(const std::string& name);
-
+    SRE_API std::string getMainSceneName();
 	SRE_API Entity* createEntity(const std::string& name = "", Entity* parent = nullptr);
     SRE_API Entity* getEntity(const std::string& name);
 
@@ -41,8 +41,8 @@ protected:
     void init() override;
 
 private:
-    void loadScene(const char* fileName);
-    Scene* getScene(const std::string& name);
+    void loadScene(const char* sceneName);
+    void saveScenes();
     void initEntities();
     void update(float elapsedTime);
     void removeDestroyedEntities();

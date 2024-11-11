@@ -32,7 +32,7 @@ protected:
 	virtual void release() { }
 
 private:
-	void loadScene(const char* fileName);
+	void loadScene(const char* sceneName = "");
 
 
 friend class RenderEngine;

@@ -18,6 +18,11 @@ EditorEntityProperties::EditorEntityProperties() : entity(nullptr)
 	messagesManager->addListener<EntitySelectionMessage>(action);
 }
 
+void EditorEntityProperties::onInit()
+{
+	this->entity = nullptr;
+}
+
 void EditorEntityProperties::onEditorGUI()
 {
 	ImGui::Begin("Properties");

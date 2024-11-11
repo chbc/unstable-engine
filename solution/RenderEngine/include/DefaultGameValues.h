@@ -12,9 +12,9 @@ private:
 
 public:
 	template <typename T>
-	const T operator [] (const std::string& key) const
+	static T get(const std::string& key)
 	{
-		return this->blackboard.get<T>(key);
+		return blackboard.get<T>(key);
 	}
 
 	template <typename T>
@@ -25,6 +25,8 @@ public:
 
 private:
 	static void load();
+	static bool tryGetValue(const std::string& input, int& result);
+	static bool tryGetValue(const std::string& input, float& result);
 
 friend class RenderEngine;
 };

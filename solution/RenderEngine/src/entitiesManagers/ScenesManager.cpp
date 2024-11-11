@@ -20,6 +20,18 @@ Scene* ScenesManager::createScene(const std::string& name)
     return result;
 }
 
+SRE_API std::string ScenesManager::getMainSceneName()
+{
+    std::string result;
+
+    if (!this->scenes.empty())
+    {
+        AScene* scene = this->scenes.front().get();
+        result = scene->name;
+    }
+    return result;
+}
+
 Entity* ScenesManager::createEntity(const std::string& name, Entity* parent)
 {
     return this->runtimeScene->createEntity(name, parent);
@@ -89,11 +101,10 @@ Entity* ScenesManager::createGUITextEntity(const std::string fontFile, uint32_t 
     return this->guiScene->createGUITextEntity(fontFile, maxItems);
 }
 
-void ScenesManager::loadScene(const char* fileName)
+void ScenesManager::loadScene(const char* sceneName)
 {
-    // XXX
-    Scene* scene = this->createScene(fileName);
-    SceneLoader::load(scene, fileName);
+    Scene* scene = this->createScene(sceneName);
+    SceneLoader::load(scene, sceneName);
 
     for (const auto& item : this->scenes)
         item->onSceneLoaded();
@@ -101,9 +112,14 @@ void ScenesManager::loadScene(const char* fileName)
     this->guiScene->onSceneLoaded();
 }
 
-Scene* ScenesManager::getScene(const std::string& name)
+void ScenesManager::saveScenes()
 {
-    return this->scenes.front().get();
+    for (const auto& item : this->scenes)
+    {
+        SceneLoader::save(item.get(), item->name.c_str());
+    }
+
+    SceneLoader::save(this->guiScene.get(), this->guiScene->name.c_str());
 }
 
 void ScenesManager::initEntities()

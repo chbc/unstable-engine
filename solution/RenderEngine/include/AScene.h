@@ -27,10 +27,8 @@ protected:
 private:
     void initEntities();
     void update(float elapsedTime);
-
     void onSceneLoaded();
     void clean();
-
     void release();
 
 friend class ScenesManager;

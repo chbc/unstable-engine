@@ -3,13 +3,13 @@
 namespace sre
 {
 
-class Scene;
+class AScene;
 
 class SceneLoader
 {
 private:
-	static void save(Scene* scene);
-	static void load(Scene* scene, const char* sceneName);
+	static void save(AScene* scene, const char* sceneName);
+	static void load(AScene* scene, const char* sceneName);
 
 friend class EditorsController;
 friend class ScenesManager;

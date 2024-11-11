@@ -1,5 +1,5 @@
 #include "EntityParser.h"
-#include "Scene.h"
+#include "AScene.h"
 #include <sstream>
 
 namespace sre
@@ -31,7 +31,7 @@ void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity)
 	}
 }
 
-void EntityParser::deserialize(Scene* scene, c4::yml::ConstNodeRef& entityNode, Entity* entity)
+void EntityParser::deserialize(AScene* scene, c4::yml::ConstNodeRef& entityNode, Entity* entity)
 {
 	bool enabled;
 	entityNode["Enabled"] >> enabled;

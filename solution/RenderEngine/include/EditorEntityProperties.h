@@ -18,6 +18,7 @@ private:
 
 public:
 	EditorEntityProperties();
+	void onInit() override;
 	void onEditorGUI() override;
 	void onRelease() override;
 

@@ -61,13 +61,20 @@ void AExecutionStrategy::delay(RenderEngine* controller)
     this->multimediaManager->delay();
 }
 
-void AExecutionStrategy::loadScene(const char* fileName)
+void AExecutionStrategy::loadScene(const char* sceneName)
 {
+    std::string currentSceneName = this->scenesManager->getMainSceneName();
+    std::string newSceneName{ sceneName };
+    if (newSceneName.empty())
+    {
+        sceneName = currentSceneName.c_str();
+    }
+
     this->multimediaManager->cleanUp();
     this->renderManager->cleanUp();
     this->scenesManager->cleanUp();
 
-    this->scenesManager->loadScene("default");
+    this->scenesManager->loadScene(sceneName);
 
     this->renderManager->initRenderers();
     this->renderManager->initPostProcessing();

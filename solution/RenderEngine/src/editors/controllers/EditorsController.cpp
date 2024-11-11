@@ -15,25 +15,28 @@ EditorsController::EditorsController(ScenesManager* arg_scenesManager)
 
 void EditorsController::loadScene()
 {
-	RenderEngine::getInstance()->loadScene("../../scenes/test.scene");
+	RenderEngine::getInstance()->loadScene("default");
 }
 
 void EditorsController::saveScene()
 {
-	Scene* scene = this->scenesManager->getScene("XXX");
-	SceneLoader::save(scene);
+	this->scenesManager->saveScenes();
 }
 
 void EditorsController::createCube()
 {
+	/*
 	Scene* scene = this->scenesManager->getScene("XXX");
-	createMeshEntity(scene, "Cube", "../../media/Cube.mesh");
+	createMeshEntity(scene, "Cube", "../../media/cube.mesh");
+	*/
 }
 
 void EditorsController::createPlane()
 {
+	/*
 	Scene* scene = this->scenesManager->getScene("XXX");
-	createMeshEntity(scene, "Plane", "../../media/Plane.mesh");
+	createMeshEntity(scene, "Plane", "../../media/plane.mesh");
+	*/
 }
 
 void EditorsController::createMeshEntity(Scene* scene, const char* name, const char* filePath)

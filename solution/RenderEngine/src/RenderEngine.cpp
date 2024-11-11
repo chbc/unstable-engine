@@ -25,7 +25,7 @@ RenderEngine::RenderEngine(const std::string& applicationName, int screenWidth, 
 
     this->applicationStrategy = UPTR<AExecutionStrategy>(new ApplicationStrategy);
     this->editorStrategy = UPTR<AExecutionStrategy>(new EditorStrategy);
-    this->currentStrategy = this->applicationStrategy.get();
+    this->currentStrategy = this->editorStrategy.get();
 }
 
 RenderEngine* RenderEngine::getInstance()
@@ -40,7 +40,8 @@ RenderEngine* RenderEngine::getInstance()
 
 void RenderEngine::run()
 {
-    this->currentStrategy->loadScene("default");
+    std::string startUpSceneName = DefaultGameValues::get<std::string>("STARTUP_SCENE");
+    this->currentStrategy->loadScene(startUpSceneName.c_str());
     this->currentStrategy->init(this);
 
     uint32_t elapsedTime = 0;
@@ -64,11 +65,11 @@ void RenderEngine::quit()
     this->running = false;
 }
 
-void RenderEngine::loadScene(const char* sceneName)
+void RenderEngine::loadScene(std::string sceneName)
 {
-    std::function<void(void)> action = [&]
+    std::function<void(void)> action = [=]
     {
-        this->currentStrategy->loadScene(sceneName);
+        this->currentStrategy->loadScene(sceneName.c_str());
         this->currentStrategy->init(this);
     };
     endFrameActions.emplace(action);
@@ -92,7 +93,7 @@ void RenderEngine::changeStrategy(const EExecutionMode::Type mode)
     };
     endFrameActions.emplace(action);
 
-    this->loadScene("default");
+    this->loadScene();
 }
 
 void RenderEngine::release()
