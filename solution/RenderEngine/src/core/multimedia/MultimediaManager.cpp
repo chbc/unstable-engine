@@ -77,7 +77,7 @@ void MultimediaManager::delay()
 	this->timer->delay();
 }
 
-unsigned int MultimediaManager::getLastFrameTime()
+uint32_t MultimediaManager::getLastFrameTime()
 {
     return this->timer->getLastFrameTime();
 }

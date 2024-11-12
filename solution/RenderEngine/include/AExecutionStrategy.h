@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 namespace sre
 {
 
@@ -23,12 +25,13 @@ protected:
 
 protected:
 	virtual void init(RenderEngine* controller) { }
-	virtual inline float beginFrame(RenderEngine* controller);
+	virtual inline uint32_t beginFrame(RenderEngine* controller);
 	virtual inline void update(RenderEngine* controller, float elapsedTime);
 	virtual inline void render(RenderEngine* controller);
 	virtual inline void swapBuffers(RenderEngine* controller);
 	virtual inline void endFrame(RenderEngine* controller);
 	virtual inline void delay(RenderEngine* controller);
+	virtual void cleanUp() { }
 	virtual void release() { }
 
 private:

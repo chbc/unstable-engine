@@ -45,7 +45,7 @@ private:
     void saveScenes();
     void initEntities();
     void update(float elapsedTime);
-    void createMeshEntity(const char* name, const char* filaName);
+    Entity* createMeshEntity(const char* name, const char* filaName);
     void removeDestroyedEntities();
     void cleanUp();
     void release() override;

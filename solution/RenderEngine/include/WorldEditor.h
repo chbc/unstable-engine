@@ -29,6 +29,7 @@ private:
 	void init();
 	void onUpdate(float elapsedTime);
 	void onEditorGUI();
+	void cleanUp();
 	void release();
 
 friend class EditorStrategy;

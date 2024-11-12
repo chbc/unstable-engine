@@ -17,14 +17,14 @@ class MessagesManager : public ASingleton
 {
 private:
 	// <type, callback>
-	std::unordered_map<uint16_t, std::list<Action>> data;
+	std::unordered_map<uint16_t, std::list<Action*>> data;
 	
 public:
 	template <typename T>
-	void addListener(Action& callback);
+	void addListener(Action* callback);
 
 	template <typename T>
-	void removeListener(Action& callback);
+	void removeListener(Action* callback);
 
 	template <typename T>
 	void notify(T* message) const;

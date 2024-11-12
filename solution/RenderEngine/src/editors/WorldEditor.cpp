@@ -111,8 +111,17 @@ void WorldEditor::onEditorGUI()
     ImGui::End();
 }
 
+void WorldEditor::cleanUp()
+{
+    this->menuBar->onCleanUp();
+    for (const auto& item : this->windows)
+        item->onCleanUp();
+}
+
 void WorldEditor::release()
 {
+    this->cleanUp();
+
     this->showDemo = false;
     this->wasShowingDemo = false;
 

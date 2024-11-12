@@ -43,7 +43,7 @@ private:
 	void onFrameBegin();
     uint32_t stopTimer();
 	void delay();
-	unsigned int getLastFrameTime();
+	uint32_t getLastFrameTime();
 	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp);
 	void addGUIButton(GUIButtonComponent* guiButton);
 	void removeDestroyedEntities();

@@ -89,6 +89,7 @@ void RenderEngine::changeStrategy(const EExecutionMode::Type mode)
 {
     std::function<void(void)> action = [=]
     {
+        this->currentStrategy->cleanUp();
         this->currentStrategy = (mode == EExecutionMode::APPLICATION) ? this->applicationStrategy.get() : this->editorStrategy.get();
     };
     endFrameActions.emplace(action);

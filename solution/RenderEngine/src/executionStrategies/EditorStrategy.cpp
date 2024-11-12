@@ -37,6 +37,11 @@ void EditorStrategy::render(RenderEngine* controller)
     controller->onEditorGUI();
 }
 
+void EditorStrategy::cleanUp()
+{
+    this->worldEditor->cleanUp();
+}
+
 void EditorStrategy::release()
 {
     this->worldEditor->release();

@@ -1,6 +1,9 @@
 #include "EditorsController.h"
 #include "RenderEngine.h"
 #include "ScenesManager.h"
+#include "SingletonsManager.h"
+#include "MessagesManager.h"
+#include "EditorMessages.h"
 
 namespace sre
 {
@@ -21,12 +24,25 @@ void EditorsController::saveScene()
 
 void EditorsController::createCube()
 {
-	this->scenesManager->createMeshEntity("cube", "cube.mesh");
+	this->createEntity("cube", "cube.mesh");
 }
 
 void EditorsController::createPlane()
 {
-	this->scenesManager->createMeshEntity("plane", "plane.mesh");
+	this->createEntity("plane", "plane.mesh");
+}
+
+void EditorsController::createEntity(const char* name, const char* file)
+{
+	Entity* newEntity = this->scenesManager->createMeshEntity(name, file);
+	this->notifyNewEntity(newEntity);
+}
+
+void EditorsController::notifyNewEntity(Entity* entity)
+{
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	EntitySelectionMessage message(entity);
+	messagesManager->notify(&message);
 }
 
 } // namespace

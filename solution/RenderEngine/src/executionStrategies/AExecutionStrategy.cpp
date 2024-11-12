@@ -16,7 +16,7 @@ AExecutionStrategy::AExecutionStrategy() : entityDestroyed(false)
     this->scenesManager = singletonsManager->get<ScenesManager>();
 }
 
-float AExecutionStrategy::beginFrame(RenderEngine* controller)
+uint32_t AExecutionStrategy::beginFrame(RenderEngine* controller)
 {
     this->multimediaManager->onFrameBegin();
     return this->multimediaManager->getLastFrameTime();
