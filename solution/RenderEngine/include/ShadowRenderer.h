@@ -23,7 +23,7 @@ private:
     std::vector<class MeshComponent *> items;
 
 private:
-    void onSceneLoaded();
+    void init();
     void setupPointLightShader(class TextureManager *textureManager);
     void setupDirectionalLightShader(class TextureManager *textureManager);
     void addItem(MeshComponent *item);

@@ -140,6 +140,12 @@ void ScenesManager::update(float elapsedTime)
     this->guiScene->update(elapsedTime);
 }
 
+void ScenesManager::createMeshEntity(const char* name, const char* fileName)
+{
+    Scene* scene = this->scenes.front().get();
+    scene->createMeshEntity(name, fileName);
+}
+
 void ScenesManager::removeDestroyedEntities()
 {
     this->runtimeScene->removeDestroyedEntities();

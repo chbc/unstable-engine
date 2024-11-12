@@ -5,6 +5,7 @@
 #include "RenderManager.h"
 #include "ModelLoader.h"
 #include "EngineValues.h"
+#include "MeshComponent.h"
 
 namespace sre
 {
@@ -30,6 +31,13 @@ Entity* Scene::createOrthoCamera(Entity* parent, bool isMainCamera)
     cameraComponent->setOrthoProjection();
 
     return mainCamera;
+}
+
+void Scene::createMeshEntity(const char* name, const char* fileName)
+{
+    Entity* entity = this->createEntity(name);
+    MeshComponent* meshComponent = entity->addComponent<MeshComponent>();
+    meshComponent->load(fileName);
 }
 
 Entity *Scene::createModelEntity(const std::string &fileName, const std::string& name, Entity* parent)

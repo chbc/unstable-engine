@@ -40,6 +40,7 @@ public:
 protected:
     bool isAbleToBeRendered();
     bool isOpaque();
+    void load(const char* file);
 
 friend class RenderManager;
 friend class Entity;
@@ -48,7 +49,7 @@ friend class OpenGLESAPI;
 friend class MeshRenderer;
 friend class ShadowRenderer;
 friend class LightManager;
-friend class EditorsController;
+friend class Scene;
 };
 
 } // namespace

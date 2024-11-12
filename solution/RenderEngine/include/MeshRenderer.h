@@ -46,7 +46,7 @@ private:
     template <typename T> bool hasComponent();
     template <typename T> int getComponentId();
 
-    void onSceneLoaded(bool useBrightnessSegmentation, bool includeDepth);
+    void init(bool useBrightnessSegmentation, bool includeDepth);
     void loadShaderSetupItems();
     void loadShader(bool useBrightnessSegmentation, bool includeDepth);
     

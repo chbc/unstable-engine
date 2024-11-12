@@ -76,7 +76,6 @@ void AExecutionStrategy::loadScene(const char* sceneName)
 
     this->scenesManager->loadScene(sceneName);
 
-    this->renderManager->initRenderers();
     this->renderManager->initPostProcessing();
     //
 }

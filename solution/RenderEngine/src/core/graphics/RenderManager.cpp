@@ -96,6 +96,8 @@ void RenderManager::addMesh(VECTOR_UPTR<MeshRenderer>& renderers, MeshComponent*
     {
         renderer = new MeshRenderer{ mesh->getMaterial(), this->shaderManager, this->graphicsWrapper };
         renderers.emplace_back(renderer);
+
+        renderer->init(false, false);
     }
 
     renderer->addMesh(mesh);
@@ -130,20 +132,8 @@ void RenderManager::initShadowRenderer()
     if (this->shadowRenderer.get() == nullptr)
     {
         this->shadowRenderer = UPTR<ShadowRenderer>{ new ShadowRenderer };
+        this->shadowRenderer->init();
     }
-}
-
-void RenderManager::initRenderers()
-{
-    if (this->shadowRenderer.get() != nullptr)
-        this->shadowRenderer->onSceneLoaded();
-
-
-	for (const UPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
-        item->onSceneLoaded(false, false); // useBrightnessSegmentation, includeDepth);
-
-    for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
-        item->onSceneLoaded(false, false); // useBrightnessSegmentation, includeDepth);
 }
 
 void RenderManager::initPostProcessing()

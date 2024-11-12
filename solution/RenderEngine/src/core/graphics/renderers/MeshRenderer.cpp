@@ -75,7 +75,7 @@ MeshRenderer::~MeshRenderer()
     this->shaderManager->releaseShader(this->shader);
 }
 
-void MeshRenderer::onSceneLoaded(bool useBrightnessSegmentation, bool includeDepth)
+void MeshRenderer::init(bool useBrightnessSegmentation, bool includeDepth)
 {
     this->loadShaderSetupItems();
     this->loadShader(useBrightnessSegmentation, includeDepth);

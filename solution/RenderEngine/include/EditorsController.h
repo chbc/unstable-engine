@@ -19,9 +19,6 @@ public:
 
 	void createCube();
 	void createPlane();
-
-private:
-	void createMeshEntity(Scene* scene, const char* name, const char* filePath);
 };
 
 } // namespace

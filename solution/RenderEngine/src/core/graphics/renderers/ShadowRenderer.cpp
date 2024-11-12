@@ -13,7 +13,7 @@
 namespace sre
 {
 
-void ShadowRenderer::onSceneLoaded()
+void ShadowRenderer::init()
 {
     SingletonsManager *singletonsManager = SingletonsManager::getInstance();
     this->graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();

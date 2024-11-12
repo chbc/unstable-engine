@@ -2,6 +2,9 @@
 #include "MeshData.h"
 #include "MaterialEditorProperty.h"
 #include "MeshEditorProperty.h"
+#include "SingletonsManager.h"
+#include "AssetsManager.h"
+#include "RenderManager.h"
 
 namespace sre
 {
@@ -42,6 +45,17 @@ bool MeshComponent::isAbleToBeRendered()
 bool MeshComponent::isOpaque()
 {
     return this->opaque;
+}
+
+void MeshComponent::load(const char* file)
+{
+    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+    AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
+    this->mesh = assetsManager->loadMesh(file);
+
+    RenderManager* renderManager = singletonsManager->get<RenderManager>();
+    renderManager->addEntity(this->getEntity());
+    // XXX renderManager->onSceneLoaded();
 }
 
 } // namespace

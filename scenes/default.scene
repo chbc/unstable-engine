@@ -3,12 +3,23 @@ entity_0:
   Components:
     TransformComponent:
       enabled: 1
-      Position: [0,0,'-2.5']
+      Position: [6,0,'-2.5']
       Rotation: [0,0,0]
       Scale: [1,1,1]
     MeshComponent:
       enabled: 1
-      Mesh: ../../media/Cube.mesh
+      Mesh: cube.mesh
+plane:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      enabled: 1
+      Position: [0,0,0]
+      Rotation: [81.9,0,0]
+      Scale: [2.8,2.6,1]
+    MeshComponent:
+      enabled: 1
+      Mesh: plane.mesh
 _main_camera:
   Enabled: 1
   Components:
@@ -24,3 +35,14 @@ _main_camera:
       Look At Target: [0,0,0]
       Up: [0,1,0]
       FOV: 90
+cube:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      enabled: 1
+      Position: ['-9.6',0,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      enabled: 1
+      Mesh: cube.mesh
