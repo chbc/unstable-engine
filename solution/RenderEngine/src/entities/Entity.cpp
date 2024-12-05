@@ -1,5 +1,7 @@
 #include "Entity.h"
 #include <sstream>
+#include "MessagesManager.h"
+#include "EntityDestroyedMessage.h"
 
 namespace sre
 {
@@ -8,7 +10,7 @@ Entity::Entity()
 {
 	this->transform = this->addComponent<TransformComponent>();
 	this->parent = nullptr;
-	this->alive = false;
+	this->alive = true;
 	this->enabled = true;
 }
 
@@ -68,6 +70,10 @@ void Entity::destroy()
 	this->enabled = false;
 	for (Entity* item : this->childrenList)
 		item->destroy();
+
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	EntityDestroyedMessage message;
+	messagesManager->notify(&message);
 }
 
 void Entity::setEnabled(bool value)

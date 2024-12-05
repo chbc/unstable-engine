@@ -9,19 +9,23 @@
 namespace sre
 {
 
+using MeshPairType = std::pair<size_t, UPTR<Mesh>>;
+
 class AssetsManager : public ASingleton
 {
 private:
 	std::hash<std::string> hash;
-	std::unordered_map<size_t, UPTR<Mesh>> meshesMap;
+	// <key, <ref count, mesh>
+	std::unordered_map<size_t, MeshPairType> meshesMap;
 
 public:
 	Mesh* loadMesh(const char* file);
+	void releaseMesh(Mesh* mesh);
 
 private:
 	size_t generateKey(const char* input);
 
-	void release() override;
+	void preRelease() override;
 };
 
 } // namespace

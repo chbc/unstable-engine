@@ -55,7 +55,6 @@ private:
     void initGUIRenderer();
     void initShadowRenderer();
 
-    void initRenderers();
     void initPostProcessing();
 
     void setApplicationCamera(CameraComponent *camera);

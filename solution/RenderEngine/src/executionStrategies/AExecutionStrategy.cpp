@@ -4,6 +4,8 @@
 #include "RenderManager.h"
 #include "MultimediaManager.h"
 #include "ScenesManager.h"
+#include "MessagesManager.h"
+#include "EntityDestroyedMessage.h"
 
 namespace sre
 {
@@ -14,6 +16,12 @@ AExecutionStrategy::AExecutionStrategy() : entityDestroyed(false)
     this->renderManager = singletonsManager->get<RenderManager>();
     this->multimediaManager = singletonsManager->get<MultimediaManager>();
     this->scenesManager = singletonsManager->get<ScenesManager>();
+
+    Action* action = new Action{ [&](void* message) { this->onEntityDestroyed(message); } };
+    this->entityDestroyedAction = SPTR<Action>(action);
+
+    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+    messagesManager->addListener<EntityDestroyedMessage>(this->entityDestroyedAction.get());
 }
 
 uint32_t AExecutionStrategy::beginFrame(RenderEngine* controller)
@@ -44,6 +52,7 @@ void AExecutionStrategy::endFrame(RenderEngine* controller)
 {
     if (this->entityDestroyed)
     {
+        this->entityDestroyed = false;
         this->renderManager->removeDestroyedEntities();
         this->multimediaManager->removeDestroyedEntities();
         this->scenesManager->removeDestroyedEntities();
@@ -78,6 +87,11 @@ void AExecutionStrategy::loadScene(const char* sceneName)
 
     this->renderManager->initPostProcessing();
     //
+}
+
+void AExecutionStrategy::onEntityDestroyed(void* data)
+{
+    this->entityDestroyed = true;
 }
 
 } // namespace

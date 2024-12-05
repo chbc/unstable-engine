@@ -31,7 +31,7 @@ void OpenGLAPI::init()
 
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
-		throw std::string("GLEW didn't inited");
+		throw std::string("GLEW didn't init");
 
 	const GLubyte * glVersion = glGetString(GL_VERSION);
 	std::string strGLVersion((char*)(glVersion));

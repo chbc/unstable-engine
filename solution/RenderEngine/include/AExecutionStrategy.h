@@ -1,6 +1,7 @@
 #pragma once
 
-#include <cstdint>
+#include "memory_aliases.h"
+#include <functional>
 
 namespace sre
 {
@@ -9,6 +10,7 @@ class RenderEngine;
 class ScenesManager;
 class RenderManager;
 class MultimediaManager;
+using Action = std::function<void(void*)>;
 
 class AExecutionStrategy
 {
@@ -16,6 +18,7 @@ protected:
 	ScenesManager* scenesManager;
 	MultimediaManager* multimediaManager;
 	RenderManager* renderManager;
+	SPTR<Action> entityDestroyedAction;
 
 private:
 	bool entityDestroyed;
@@ -36,7 +39,7 @@ protected:
 
 private:
 	void loadScene(const char* sceneName = "");
-
+	void onEntityDestroyed(void* data);
 
 friend class RenderEngine;
 };

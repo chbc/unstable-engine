@@ -100,6 +100,7 @@ friend class RenderManager;
 friend class ShaderManager;
 friend class TextureManager;
 friend class SingletonsManager;
+friend class AssetsManager;
 
 friend class MeshRenderer;
 friend class GUIRenderer;

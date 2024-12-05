@@ -14,10 +14,15 @@ namespace sre
 
 EditorSceneTree::EditorSceneTree(ScenesManager* arg_scenesManager) 
 	: scenesManager(arg_scenesManager), selectedEntity(nullptr)
-{ }
+{
+	Action* action = new Action{ [&](void* message) { this->onEntitySelected(message); } };
+	this->selectionAction = SPTR<Action>(action);
+}
 
 void EditorSceneTree::onInit()
 {
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	messagesManager->addListener<EntitySelectionMessage>(this->selectionAction.get());
 	this->selectedEntity = nullptr;
 }
 
@@ -32,15 +37,24 @@ void EditorSceneTree::onEditorGUI()
 
 	this->drawScene(this->scenesManager->guiScene.get());
 	
-	if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
+	if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
 	{
-		this->selectedEntity = nullptr;
-		MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-		EntitySelectionMessage message(nullptr);
-		messagesManager->notify(&message);
+		this->notifySelection(nullptr);
+	}
+
+	if (ImGui::IsKeyPressed(ImGuiKey_Delete, false) && (this->selectedEntity != nullptr))
+	{
+		this->selectedEntity->destroy();
+		this->notifySelection(nullptr);
 	}
 
 	ImGui::End();
+}
+
+void EditorSceneTree::onCleanUp()
+{
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	messagesManager->removeListener<EntitySelectionMessage>(this->selectionAction.get());
 }
 
 void EditorSceneTree::drawScene(AScene* scene)
@@ -65,10 +79,7 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 	{
 		if (ImGui::Selectable(name, entity == this->selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
 		{
-			this->selectedEntity = entity;
-			MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-			EntitySelectionMessage message(entity);
-			messagesManager->notify(&message);
+			this->notifySelection(entity);
 		}
 	}
 	else
@@ -81,10 +92,7 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 
 		if (ImGui::IsItemClicked())
 		{
-			this->selectedEntity = entity;
-			MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-			EntitySelectionMessage message{ entity };
-			messagesManager->notify(&message);
+			this->notifySelection(entity);
 		}
 
 		if (open)
@@ -96,6 +104,19 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 			ImGui::TreePop();
 		}
 	}
+}
+
+void EditorSceneTree::notifySelection(Entity* entity)
+{
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	EntitySelectionMessage message{ entity };
+	messagesManager->notify(&message);
+}
+
+void EditorSceneTree::onEntitySelected(void* data)
+{
+	EntitySelectionMessage* message = static_cast<EntitySelectionMessage*>(data);
+	this->selectedEntity = message->entity;
 }
 
 } // namespace

@@ -6,6 +6,7 @@
 #include "ShaderManager.h"
 #include "SingletonsManager.h"
 #include "LightManager.h"
+#include "AssetsManager.h"
 
 #include "LightRendererShaderSetup.h"
 #include "LitRendererComponent.h"
@@ -65,13 +66,6 @@ MeshRenderer::MeshRenderer(Material *material, ShaderManager *shaderManager, AGr
 
 MeshRenderer::~MeshRenderer()
 {
-    for (MeshComponent* item : this->meshes)
-    {
-        AMeshData* meshData = item->mesh->meshData.get();
-        this->graphicsWrapper->deleteBuffers(meshData);
-        meshData->ebo = 0;
-    }
-
     this->shaderManager->releaseShader(this->shader);
 }
 
@@ -199,11 +193,14 @@ void MeshRenderer::removeDestroyedEntities()
 {
     std::list<MeshComponent *>::iterator it;
 
+    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+
     for (it = this->meshes.begin(); it != this->meshes.end(); )
     {
-        if (!(*it)->getEntity()->isAlive())
+        MeshComponent* item = *it;
+        if (!item->getEntity()->isAlive())
         {
-            this->graphicsWrapper->deleteBuffers((*it)->mesh->meshData.get());
+            assetsManager->releaseMesh(item->mesh);
             it = this->meshes.erase(it);
         }
         else
