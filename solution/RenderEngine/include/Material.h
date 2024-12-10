@@ -1,24 +1,16 @@
-#ifndef _MATERIAL_H_
-#define _MATERIAL_H_
+#pragma once
 
 #include "memory_aliases.h"
-
-#include "AMaterialComponent.h"
-#include "ColorMaterialComponent.h"
-#include "LitMaterialComponent.h"
-#include "DiffuseMaterialComponent.h"
-#include "NormalMaterialComponent.h"
-#include "SpecularMaterialComponent.h"
-#include "AmbientOcclusionMaterialComponent.h"
-#include "SpriteMaterialComponent.h"
-
 #include "EComponentId.h"
+#include "core_defines.h"
 #include <unordered_map>
 #include <bitset>
 #include <glm/gtc/type_ptr.hpp>
 
 namespace sre
 {
+
+class AMaterialComponent;
 
 namespace material
 {
@@ -28,8 +20,9 @@ namespace material
 class Material
 {
 private:
+    std::string fileName{ "DefaultMaterial.mat" };
     bool castShadow;
-    std::unordered_map<size_t, UPTR<AMaterialComponent>> componentsMap;
+    std::unordered_map<size_t, SPTR<AMaterialComponent>> componentsMap;
     std::bitset<EComponentId::SIZE> componentsBitset;
     glm::vec2 uvOffset;
     glm::vec2 uvTiling;
@@ -66,5 +59,3 @@ friend class MaterialEditorProperty;
 } // namespace
 
 #include "Material.tpp"
-
-#endif

@@ -1,14 +1,3 @@
-entity_0:
-  Enabled: 1
-  Components:
-    TransformComponent:
-      enabled: 1
-      Position: [6,0,'-2.5']
-      Rotation: [0,0,0]
-      Scale: [1,1,1]
-    MeshComponent:
-      enabled: 1
-      Mesh: cube.mesh
 plane:
   Enabled: 1
   Components:
@@ -20,6 +9,19 @@ plane:
     MeshComponent:
       enabled: 1
       Mesh: plane.mesh
+      Material: DefultMaterial.mat
+entity_0:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      enabled: 1
+      Position: [6,0,'-2.5']
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      enabled: 1
+      Mesh: cube.mesh
+      Material: DefultMaterial.mat
 _main_camera:
   Enabled: 1
   Components:
@@ -46,3 +48,4 @@ cube:
     MeshComponent:
       enabled: 1
       Mesh: cube.mesh
+      Material: DefultMaterial.mat

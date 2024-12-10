@@ -196,6 +196,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\io\assetsLoader\MaterialLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MeshLoader.cpp" />
     <ClCompile Include="src\core\io\AssetsManager.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\LitRendererComponent.cpp" />
@@ -392,6 +393,7 @@
     <ClInclude Include="include\EntityDestroyedMessage.h" />
     <ClInclude Include="include\EntityParser.h" />
     <ClInclude Include="include\AExecutionStrategy.h" />
+    <ClInclude Include="include\MaterialLoader.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\MeshEditorProperty.h" />
     <ClInclude Include="include\MeshLoader.h" />

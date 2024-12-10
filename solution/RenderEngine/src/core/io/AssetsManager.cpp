@@ -1,5 +1,6 @@
 #include "AssetsManager.h"
 #include "MeshLoader.h"
+#include "MaterialLoader.h"
 #include "RenderManager.h"
 #include "SingletonsManager.h"
 #include "AGraphicsWrapper.h"
@@ -20,7 +21,7 @@ Mesh* AssetsManager::loadMesh(const char* file)
 	else
 	{
 		result = MeshLoader().load(file);
-		this->meshesMap.emplace(key, std::make_pair<size_t, UPTR<Mesh>>(1, UPTR<Mesh>{result}));
+		this->meshesMap.emplace(key, std::make_pair<size_t, SPTR<Mesh>>(1, SPTR<Mesh>{result}));
 	}
 	return result;
 }
@@ -39,6 +40,41 @@ void AssetsManager::releaseMesh(Mesh* mesh)
 			this->meshesMap.erase(key);
 		}
 	}
+}
+
+Material* AssetsManager::loadMaterial(const char* file)
+{
+	Material* result = nullptr;
+	size_t key = generateKey(file);
+	if (this->materialsMap.count(key) > 0)
+	{
+		MaterialPairType& materialPair = this->materialsMap[key];
+		materialPair.first++;
+		result = materialPair.second.get();
+	}
+	else
+	{
+		result = MaterialLoader().load(file);
+		this->materialsMap.emplace(key, std::make_pair<size_t, SPTR<Material>>(1, SPTR<Material>{result}));
+	}
+	return result;
+}
+
+void AssetsManager::releaseMaterial(Material* material)
+{
+	/*
+	size_t key = this->generateKey(material->fileName.c_str());
+	if (this->materialsMap.count(key) > 0)
+	{
+		MaterialPairType& materialPair = this->materialsMap[key];
+		materialPair.first--;
+		if (materialPair.first < 1)
+		{
+			// XXX REMOVER TEXTURA DO TEXTURE MANAGER
+			this->meshesMap.erase(key);
+		}
+	}
+	*/
 }
 
 size_t AssetsManager::generateKey(const char* input)

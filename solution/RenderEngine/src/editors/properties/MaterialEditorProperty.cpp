@@ -30,7 +30,7 @@ void MaterialEditorProperty::draw()
 
 void MaterialEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
-	propertyNode << "Material Properties";
+	propertyNode << this->material->fileName;
 }
 
 void MaterialEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)

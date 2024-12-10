@@ -1,4 +1,11 @@
 #include "Material.h"
+#include "ColorMaterialComponent.h"
+#include "LitMaterialComponent.h"
+#include "DiffuseMaterialComponent.h"
+#include "NormalMaterialComponent.h"
+#include "SpecularMaterialComponent.h"
+#include "AmbientOcclusionMaterialComponent.h"
+#include "SpriteMaterialComponent.h"
 
 namespace sre
 {

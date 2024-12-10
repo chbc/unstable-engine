@@ -12,8 +12,6 @@ namespace sre
 
 Mesh* MeshLoader::load(const char* file)
 {
-
-
 	std::vector<VertexData> vertexData;
 	std::vector<uint16_t> indices;
 	std::string filePath = BASE_FOLDER + file;
