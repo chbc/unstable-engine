@@ -1,6 +1,9 @@
 #include "MaterialEditorProperty.h"
 #include "Material.h"
 #include "AMaterialComponent.h"
+#include "SingletonsManager.h"
+#include "AssetsManager.h"
+#include "MaterialLoader.h"
 
 #include <imgui/imgui.h>
 #include <rapidyaml/rapidyaml.hpp>
@@ -14,6 +17,31 @@ MaterialEditorProperty::MaterialEditorProperty(const char* title, Material* arg_
 
 void MaterialEditorProperty::draw()
 {
+	ImGui::PushID(this->title.c_str());
+
+	ImGui::Columns(2);
+	ImGui::SetColumnWidth(0, 100.0f);
+	ImGui::Text(this->title.c_str());
+
+	ImGui::NextColumn();
+	ImGui::SetColumnWidth(0, 100.0f);
+	ImGui::Text(this->fileName.c_str());
+
+	ImGui::Columns(1);
+
+	if (ImGui::BeginPopupContextItem("Save Popup"))
+	{
+		ImGui::Text("[%s]", this->title.c_str());
+		if (ImGui::Button("Save"))
+		{
+			MaterialLoader().save(this->material, this->fileName.c_str());
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
+
+	ImGui::PopID();
+
 	for (const auto& component : this->material->componentsMap)
 	{
 		const char* componentName = component.second->getClassName();
@@ -36,6 +64,12 @@ void MaterialEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 
 void MaterialEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
+	propertyNode >> this->fileName;
+
+	/*
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+	this->material = assetsManager->loadMaterial(fileName.c_str());
+	*/
 }
 
 } // namespace

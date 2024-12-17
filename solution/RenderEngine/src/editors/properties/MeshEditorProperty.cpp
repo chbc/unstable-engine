@@ -1,7 +1,7 @@
 #include "MeshEditorProperty.h"
-
 #include "SingletonsManager.h"
 #include "AssetsManager.h"
+#include "Mesh.h"
 
 // XXX MOVER IMGUI PRA UM WRAPPER
 #include "imgui/imgui.h"

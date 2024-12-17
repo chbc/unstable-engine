@@ -45,6 +45,8 @@ friend class MeshComponent;
 friend class MeshRenderer;
 friend class RenderManager;
 friend class MaterialEditorProperty;
+friend class AssetsManager;
+friend class MaterialLoader;
 };
 
 } // namespace

@@ -62,7 +62,6 @@ Material* AssetsManager::loadMaterial(const char* file)
 
 void AssetsManager::releaseMaterial(Material* material)
 {
-	/*
 	size_t key = this->generateKey(material->fileName.c_str());
 	if (this->materialsMap.count(key) > 0)
 	{
@@ -74,7 +73,6 @@ void AssetsManager::releaseMaterial(Material* material)
 			this->meshesMap.erase(key);
 		}
 	}
-	*/
 }
 
 size_t AssetsManager::generateKey(const char* input)

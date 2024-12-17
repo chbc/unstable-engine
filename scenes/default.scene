@@ -8,7 +8,7 @@ plane:
       Scale: [2.8,2.6,1]
     MeshComponent:
       enabled: 1
-      Mesh: plane.mesh
+      Mesh: Plane.mesh
       Material: DefultMaterial.mat
 entity_0:
   Enabled: 1
@@ -20,7 +20,7 @@ entity_0:
       Scale: [1,1,1]
     MeshComponent:
       enabled: 1
-      Mesh: cube.mesh
+      Mesh: Cube.mesh
       Material: DefultMaterial.mat
 _main_camera:
   Enabled: 1
@@ -47,5 +47,5 @@ cube:
       Scale: [1,1,1]
     MeshComponent:
       enabled: 1
-      Mesh: cube.mesh
+      Mesh: Cube.mesh
       Material: DefultMaterial.mat

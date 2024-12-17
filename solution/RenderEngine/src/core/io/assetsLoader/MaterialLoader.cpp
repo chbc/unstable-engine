@@ -17,19 +17,21 @@ void MaterialLoader::save(Material* material, const char* name)
 	c4::yml::Tree tree;
 	c4::yml::NodeRef root = tree.rootref();
 
-	// XXX root[""]
-	/*
 	root |= ryml::MAP;
+	root["UV Offset"] << "OPAA OFFSET!!";
+	root["UV Tiling"] << "OPAA TILING!!";
+	root["Cast Shadow"] << material->castShadow;
+	/*
 	for (const auto& entityItem : scene->entities)
 	{
 		c4::yml::NodeRef entityNode = root[entityItem.first.c_str()];
 		EntityParser::serialize(entityNode, entityItem.second.get());
 	}
+	*/
 
-	std::string filePath = BASE_FOLDER + sceneName + std::string{ ".scene" };
+	std::string filePath = BASE_FOLDER + name + std::string{ ".mat" };
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
 	FileUtils::saveFile(filePath, content);
-	*/
 }
 
 Material* sre::MaterialLoader::load(const char* fileName)

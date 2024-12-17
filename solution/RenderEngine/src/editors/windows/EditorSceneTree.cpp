@@ -81,6 +81,22 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 		{
 			this->notifySelection(entity);
 		}
+
+		if (ImGui::BeginPopupContextItem())
+		{
+			ImGui::Text("[%s]", name);
+			if (ImGui::Button("Save Entity"))
+			{
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::Button("Delete"))
+			{
+				this->selectedEntity->destroy();
+				this->notifySelection(nullptr);
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
+		}
 	}
 	else
 	{
