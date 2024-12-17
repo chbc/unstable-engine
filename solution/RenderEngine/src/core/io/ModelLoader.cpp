@@ -98,6 +98,7 @@ void ModelLoader::processMaterials(aiMesh *inputMesh, const aiScene *scene, Mesh
 #ifndef __ANDROID__
 	if(inputMesh->mMaterialIndex >= 0)
 	{
+		/*
 		aiMaterial* material = scene->mMaterials[inputMesh->mMaterialIndex];
 		aiString fileName;
 		if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
@@ -106,13 +107,11 @@ void ModelLoader::processMaterials(aiMesh *inputMesh, const aiScene *scene, Mesh
 			entityMesh->addMaterialComponent<DiffuseMaterialComponent>(this->directory + fileName.C_Str());
 		}
 
-		/*
 		if (material->GetTextureCount(aiTextureType_NORMALS) > 0)
 		{
 			material->GetTexture(aiTextureType_NORMALS, 0, &fileName);
 			entityMesh->addMaterialComponent<NormalMaterialComponent>(this->directory + fileName.C_Str());
 		}
-		*/
 
 		if (material->GetTextureCount(aiTextureType_SPECULAR) > 0)
 		{
@@ -137,6 +136,7 @@ void ModelLoader::processMaterials(aiMesh *inputMesh, const aiScene *scene, Mesh
 			material->GetTexture(aiTextureType_DISPLACEMENT, 0, &fileName);
 			entityMesh->addMaterialComponent<NormalMaterialComponent>(this->directory + fileName.C_Str());
 		}
+		*/
 	}
 #endif
 }

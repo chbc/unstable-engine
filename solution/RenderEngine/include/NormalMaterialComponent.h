@@ -1,25 +1,20 @@
-#ifndef _NORMAL_MATERIAL_COMPONENT_H_
-#define _NORMAL_MATERIAL_COMPONENT_H_
+#pragma once
 
-#include "AMaterialComponent.h"
-#include <string>
+#include "ABaseTextureMaterialComponent.h"
 
 namespace sre
 {
 
-class SRE_API NormalMaterialComponent : public AMaterialComponent
+class SRE_API NormalMaterialComponent : public ABaseTextureMaterialComponent
 {
 DECLARE_MATERIAL_COMPONENT()
 
 private:
-	class Texture* texture;
-
 public:
-	NormalMaterialComponent(Material *material, const std::string &fileName);
+	NormalMaterialComponent(Material *material);
 
-	uint32_t getTextureID() const;
+protected:
+	virtual ETextureMap::Type getTextureType();
 };
 
 } // namespace
-
-#endif

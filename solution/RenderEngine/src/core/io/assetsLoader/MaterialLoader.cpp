@@ -17,6 +17,7 @@ void MaterialLoader::save(Material* material, const char* name)
 	c4::yml::Tree tree;
 	c4::yml::NodeRef root = tree.rootref();
 
+	// XXX root[""]
 	/*
 	root |= ryml::MAP;
 	for (const auto& entityItem : scene->entities)

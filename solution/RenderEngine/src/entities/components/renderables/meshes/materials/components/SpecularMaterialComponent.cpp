@@ -1,22 +1,20 @@
 #include "SpecularMaterialComponent.h"
-#include "SingletonsManager.h"
-#include "TextureManager.h"
+#include "Texture.h"
 #include "TextureEditorProperty.h"
 
 namespace sre
 {
-IMPLEMENT_MATERIAL_COMPONENT(SpecularMaterialComponent)
+IMPLEMENT_MATERIAL_COMPONENT(SpecularMaterialComponent, SPECULAR_MATERIAL)
 
-SpecularMaterialComponent::SpecularMaterialComponent(Material *material, const std::string &fileName)
-	: AMaterialComponent(material)
+SpecularMaterialComponent::SpecularMaterialComponent(Material *material)
+	: ABaseTextureMaterialComponent(material)
 {
-	this->texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, EMaterialMap::SPECULAR);
-	this->addEditorProperty(new TextureEditorProperty{ "Specular", this->texture->getId() });
+	this->addEditorProperty(new TextureEditorProperty{ "Specular", &this->texture->getId() });
 }
 
-uint32_t SpecularMaterialComponent::getTextureID(uint32_t index) const
+ETextureMap::Type SpecularMaterialComponent::getTextureType()
 {
-	return this->texture->getId();
+	return ETextureMap::SPECULAR;
 }
 
 } // namespace

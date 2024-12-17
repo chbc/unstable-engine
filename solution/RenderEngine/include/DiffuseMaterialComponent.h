@@ -1,15 +1,13 @@
-#ifndef _DIFFUSE_MATERIAL_COMPONENT_H_
-#define _DIFFUSE_MATERIAL_COMPONENT_H_
+#pragma once
 
-#include "AMaterialComponent.h"
-#include <string>
+#include "ABaseTextureMaterialComponent.h"
 
 namespace sre
 {
 
 class Texture;
 
-class SRE_API DiffuseMaterialComponent : public AMaterialComponent
+class SRE_API DiffuseMaterialComponent : public ABaseTextureMaterialComponent
 {
 DECLARE_MATERIAL_COMPONENT()
 
@@ -17,10 +15,10 @@ private:
     class Texture* texture;
 	
 public:
-	DiffuseMaterialComponent(Material *material, const std::string &fileName);
+	DiffuseMaterialComponent(Material *material);
 
-	uint32_t getTextureID(uint32_t index = 0) const;
+protected:
+	virtual ETextureMap::Type getTextureType();
 };
 
 } // namespace
-#endif

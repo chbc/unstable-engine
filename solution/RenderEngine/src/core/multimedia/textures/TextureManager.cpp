@@ -24,36 +24,36 @@ void TextureManager::preRelease()
 
 Texture *TextureManager::loadGUITexture(const std::string &fileName)
 {
-    return this->loadTexture(fileName, EMaterialMap::GUI);
+    return this->loadTexture(fileName, ETextureMap::GUI);
 }
 
 Texture *TextureManager::loadDiffuseTexture(const std::string &fileName)
 {
-    return this->loadTexture(fileName, EMaterialMap::DIFFUSE);
+    return this->loadTexture(fileName, ETextureMap::DIFFUSE);
 }
 
 Texture *TextureManager::loadNormalTexture(const std::string &fileName)
 {
-    return this->loadTexture(fileName, EMaterialMap::NORMAL);
+    return this->loadTexture(fileName, ETextureMap::NORMAL);
 }
 
 Texture *TextureManager::loadSpecularTexture(const std::string &fileName)
 {
-    return this->loadTexture(fileName, EMaterialMap::SPECULAR);
+    return this->loadTexture(fileName, ETextureMap::SPECULAR);
 }
 
 Texture *TextureManager::loadAOTexture(const std::string &fileName)
 {
-    return this->loadTexture(fileName, EMaterialMap::AMBIENT_OCCLUSION);
+    return this->loadTexture(fileName, ETextureMap::AMBIENT_OCCLUSION);
 }
 
 Texture *TextureManager::createShadowTexture(uint32_t width, uint32_t height)
 {
     std::string name{ "_shadow_map_" + std::to_string(this->shadowIndex) };
 
-    uint32_t id = this->graphicsWrapper->createTexture(width, height, EMaterialMap::SHADOW + this->shadowIndex);
+    uint32_t id = this->graphicsWrapper->createTexture(width, height, ETextureMap::SHADOW + this->shadowIndex);
 
-    Texture *result = new Texture{ id, width, height, EMaterialMap::SHADOW, name, this->shadowIndex };
+    Texture *result = new Texture{ id, width, height, ETextureMap::SHADOW, name, this->shadowIndex };
     this->textures.emplace_back(result);
 
     this->shadowIndex++;
@@ -63,9 +63,9 @@ Texture *TextureManager::createShadowTexture(uint32_t width, uint32_t height)
 Texture *TextureManager::createCubemapTexture(uint32_t width, uint32_t height)
 {
     std::string name{ "_cube_map_" + std::to_string(this->shadowIndex) };
-    uint32_t id = this->graphicsWrapper->generateCubemap(width, height, EMaterialMap::SHADOW + this->shadowIndex);
+    uint32_t id = this->graphicsWrapper->generateCubemap(width, height, ETextureMap::SHADOW + this->shadowIndex);
 
-    Texture *result = new Texture{ id, width, height, EMaterialMap::SHADOW, name, this->shadowIndex };
+    Texture *result = new Texture{ id, width, height, ETextureMap::SHADOW, name, this->shadowIndex };
     this->textures.emplace_back(result);
 
     this->shadowIndex++;
@@ -77,7 +77,7 @@ Texture* TextureManager::createEmptyTexture(uint32_t width, uint32_t height)
 	std::string name{ "_empty_" + std::to_string(this->emptyIndex) };
 	uint32_t id = this->graphicsWrapper->createTexture(width, height);
 
-	Texture* result = new Texture{ id, width, height, EMaterialMap::GUI, name };
+	Texture* result = new Texture{ id, width, height, ETextureMap::GUI, name };
 	this->textures.emplace_back(result);
 
 	this->emptyIndex++;
@@ -89,14 +89,14 @@ Texture* TextureManager::createEmptyFloatingPointTexture(uint32_t width, uint32_
 	std::string name{ "_empty_" + std::to_string(this->emptyIndex) };
 	uint32_t id = this->graphicsWrapper->createFloatingPointTexture(width, height);
 
-	Texture* result = new Texture{ id, width, height, EMaterialMap::GUI, name };
+	Texture* result = new Texture{ id, width, height, ETextureMap::GUI, name };
 	this->textures.emplace_back(result);
 
 	this->emptyIndex++;
 	return result;
 }
 
-Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::Type mapType)
+Texture *TextureManager::loadTexture(const std::string &fileName, ETextureMap::Type mapType)
 {
     Texture *result = this->loadExistingTexture(fileName, mapType);
 
@@ -109,7 +109,7 @@ Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::
         void *data = multimediaManager->loadTexture(fileName, &width, &height, &bpp);
 
         // OpenGL //
-        bool genMipmap = (mapType != EMaterialMap::GUI);
+        bool genMipmap = (mapType != ETextureMap::GUI);
         uint32_t id = this->graphicsWrapper->setupTexture(width, height, bpp, data, mapType, genMipmap);
         free(data);
 
@@ -120,7 +120,7 @@ Texture *TextureManager::loadTexture(const std::string &fileName, EMaterialMap::
     return result;
 }
 
-Texture * TextureManager::loadExistingTexture(const std::string &fileName, EMaterialMap::Type mapType)
+Texture * TextureManager::loadExistingTexture(const std::string &fileName, ETextureMap::Type mapType)
 {
     Texture *result = nullptr;
     for (const UPTR<Texture> &item : this->textures)

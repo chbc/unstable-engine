@@ -23,7 +23,7 @@ void DiffuseRendererComponent::onSceneLoaded(Shader *shader)
 
 void DiffuseRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
-    this->shaderManager->setInt(shader, ShaderVariables::DIFFUSE_TEXTURE, EMaterialMap::DIFFUSE);
+    this->shaderManager->setInt(shader, ShaderVariables::DIFFUSE_TEXTURE, ETextureMap::DIFFUSE);
 
     Material* material = mesh->getMaterial();
     glm::vec2 uvOffset = material->getUVOffset();

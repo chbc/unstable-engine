@@ -2,6 +2,7 @@
 #include <sstream>
 #include "MessagesManager.h"
 #include "EntityDestroyedMessage.h"
+#include "SingletonsManager.h"
 
 namespace sre
 {

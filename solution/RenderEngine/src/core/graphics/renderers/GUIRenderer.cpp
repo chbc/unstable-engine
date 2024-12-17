@@ -59,7 +59,7 @@ void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 void GUIRenderer::render()
 {
     this->shaderManager->enableShader(this->shader);
-    this->shaderManager->setInt(this->shader, ShaderVariables::GUI_TEXTURE, EMaterialMap::GUI);
+    this->shaderManager->setInt(this->shader, ShaderVariables::GUI_TEXTURE, ETextureMap::GUI);
 
     this->graphicsWrapper->disableDepthTest();
 

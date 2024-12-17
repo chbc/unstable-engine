@@ -1,22 +1,20 @@
 #include "AmbientOcclusionMaterialComponent.h"
-#include "SingletonsManager.h"
-#include "TextureManager.h"
+#include "Texture.h"
 #include "TextureEditorProperty.h"
 
 namespace sre
 {
-IMPLEMENT_MATERIAL_COMPONENT(AmbientOcclusionMaterialComponent)
+IMPLEMENT_MATERIAL_COMPONENT(AmbientOcclusionMaterialComponent, AO_MATERIAL)
 
-AmbientOcclusionMaterialComponent::AmbientOcclusionMaterialComponent(Material *material, const std::string &fileName)
-	: AMaterialComponent(material)
+AmbientOcclusionMaterialComponent::AmbientOcclusionMaterialComponent(Material *material)
+	: ABaseTextureMaterialComponent(material)
 {
-	this->texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, EMaterialMap::AMBIENT_OCCLUSION);
-	this->addEditorProperty(new TextureEditorProperty{ "Ambient Occlusion", this->texture->getId() });
+	this->addEditorProperty(new TextureEditorProperty{ "Ambient Occlusion", &this->texture->getId() });
 }
 
-uint32_t AmbientOcclusionMaterialComponent::getTextureID(uint32_t index) const
+ETextureMap::Type AmbientOcclusionMaterialComponent::getTextureType()
 {
-	return this->texture->getId();
+	return ETextureMap::AMBIENT_OCCLUSION;
 }
 
 } // namespace

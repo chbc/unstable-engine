@@ -1,5 +1,6 @@
 #include "MaterialEditorProperty.h"
 #include "Material.h"
+#include "AMaterialComponent.h"
 
 #include <imgui/imgui.h>
 #include <rapidyaml/rapidyaml.hpp>

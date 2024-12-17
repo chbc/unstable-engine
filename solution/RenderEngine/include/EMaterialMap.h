@@ -6,7 +6,7 @@
 namespace sre
 {
 
-namespace EMaterialMap
+namespace ETextureMap
 {
 
 enum Type : std::size_t

@@ -20,7 +20,7 @@ void SpecularRendererComponent::onSceneLoaded(Shader *shader)
 
 void SpecularRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
-    this->shaderManager->setInt(shader, ShaderVariables::SPECULAR_TEXTURE, EMaterialMap::SPECULAR);
+    this->shaderManager->setInt(shader, ShaderVariables::SPECULAR_TEXTURE, ETextureMap::SPECULAR);
     this->textureId = mesh->getMaterial()->getComponent<SpecularMaterialComponent>()->getTextureID();
 }
 

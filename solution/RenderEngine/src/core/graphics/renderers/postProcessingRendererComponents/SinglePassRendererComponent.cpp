@@ -48,7 +48,7 @@ void SinglePassRendererComponent::onPostRender(uint32_t targetFBO)
 	this->graphicsWrapper->bindFrameBuffer(targetFBO);
 	this->graphicsWrapper->clearColorBuffer();
 	this->shaderManager->enableShader(this->shader);
-	this->shaderManager->setInt(this->shader, ShaderVariables::SCREEN_TEXTURE, EMaterialMap::GUI);
+	this->shaderManager->setInt(this->shader, ShaderVariables::SCREEN_TEXTURE, ETextureMap::GUI);
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();

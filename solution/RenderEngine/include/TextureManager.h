@@ -35,15 +35,14 @@ private:
     Texture* createCubemapTexture(uint32_t width, uint32_t height);
 	Texture* createEmptyTexture(uint32_t width, uint32_t height);
 	Texture* createEmptyFloatingPointTexture(uint32_t width, uint32_t height);
-    Texture* loadTexture(const std::string &fileName, EMaterialMap::Type mapType);
+    Texture* loadTexture(const std::string &fileName, ETextureMap::Type mapType);
 
-    Texture* loadExistingTexture(const std::string &fileName, EMaterialMap::Type mapType);
+    Texture* loadExistingTexture(const std::string &fileName, ETextureMap::Type mapType);
     void deleteTexture(uint32_t id);
 
 friend class RenderManager;
 friend class SingletonsManager;
 friend class ShadowRenderer;
-friend class GUIImageComponent;
 friend class PostProcessingRenderer;
 friend class BloomRendererComponent;
 friend class SinglePassRendererComponent;
@@ -52,11 +51,7 @@ friend class DOFRendererComponent;
 friend class OutlineRendererPPComponent;
 friend class GUIImageComponent;
 friend class GUITextComponent;
-friend class DiffuseMaterialComponent;
-friend class NormalMaterialComponent;
-friend class SpecularMaterialComponent;
-friend class AmbientOcclusionMaterialComponent;
-friend class SpriteMaterialComponent;
+friend class ABaseTextureMaterialComponent;
 friend class AtlasManager;
 friend class GUITextComponent;
 friend class EditorSceneViewport;

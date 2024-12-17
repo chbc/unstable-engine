@@ -4,11 +4,8 @@
 #include "core_defines.h"
 #include "memory_aliases.h"
 #include <string>
-#include <unordered_map>
-#include <functional>
 
 #include "AEditorProperty.h"
-#include "SingletonsManager.h"
 #include "EntityComponentTypes.h"
 
 namespace sre

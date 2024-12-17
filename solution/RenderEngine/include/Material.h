@@ -1,33 +1,33 @@
 #pragma once
 
 #include "memory_aliases.h"
-#include "EComponentId.h"
 #include "core_defines.h"
 #include <unordered_map>
+#include <glm/glm.hpp>
+#include <string>
+#include "EComponentId.h"
 #include <bitset>
-#include <glm/gtc/type_ptr.hpp>
 
 namespace sre
 {
 
 class AMaterialComponent;
 
-namespace material
-{
-    template <typename T> SRE_API std::size_t getComponentId();
-}
-
 class Material
 {
 private:
     std::string fileName{ "DefaultMaterial.mat" };
-    bool castShadow;
     std::unordered_map<size_t, SPTR<AMaterialComponent>> componentsMap;
     std::bitset<EComponentId::SIZE> componentsBitset;
     glm::vec2 uvOffset;
     glm::vec2 uvTiling;
+    bool castShadow;
+
+private:
+    Material();
 
 public:
+    AMaterialComponent* addComponent(const char* className);
     template <typename T, typename... TArgs> T* addComponent(TArgs&&... mArgs);
     template <typename T> void removeComponent();
     template <typename T> T* getComponent();
@@ -40,15 +40,6 @@ public:
     SRE_API void setUVTiling(glm::vec2 tiling);
     SRE_API glm::vec2 getUVOffset();
     SRE_API glm::vec2 getUVTiling();
-
-private:
-    Material();
-
-	template <typename T>
-    std::size_t getComponentId()
-	{
-		return sre::material::getComponentId<T>();
-	}
 
 friend class MeshComponent;
 friend class MeshRenderer;

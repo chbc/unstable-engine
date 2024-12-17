@@ -64,7 +64,7 @@ void GUIImageComponent::setPivot(const glm::vec2& pivot)
 
 void GUIImageComponent::load(const std::string& fileName)
 {
-    Texture* texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, EMaterialMap::GUI);
+    Texture* texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, ETextureMap::GUI);
     glm::vec2 textureSize(texture->getWidth(), texture->getHeight());
     glm::vec2 normalizedSize = SingletonsManager::getInstance()->get<MultimediaManager>()->getNormalizedSize(textureSize);
 
@@ -76,7 +76,7 @@ void GUIImageComponent::load(const std::string& fileName)
 
 void GUIImageComponent::load(const std::string& fileName, const glm::vec2& normalizedSize)
 {
-    Texture* texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, EMaterialMap::GUI);
+    Texture* texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, ETextureMap::GUI);
     glm::vec2 textureSize(texture->getWidth(), texture->getHeight());
 
     GUIMeshData* plane = PrimitiveMeshFactory().createPlaneTopDown(normalizedSize);

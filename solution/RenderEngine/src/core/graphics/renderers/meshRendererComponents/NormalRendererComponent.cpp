@@ -20,7 +20,7 @@ void NormalRendererComponent::onSceneLoaded(Shader *shader)
 
 void NormalRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
 {
-    this->shaderManager->setInt(shader, ShaderVariables::NORMAL_TEXTURE, EMaterialMap::NORMAL);
+    this->shaderManager->setInt(shader, ShaderVariables::NORMAL_TEXTURE, ETextureMap::NORMAL);
     this->textureId = mesh->getMaterial()->getComponent<NormalMaterialComponent>()->getTextureID();
 }
 

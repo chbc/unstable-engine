@@ -1,22 +1,20 @@
 #include "SpriteMaterialComponent.h"
-#include "SingletonsManager.h"
-#include "TextureManager.h"
+#include "Texture.h"
 #include "TextureEditorProperty.h"
 
 namespace sre
 {
-IMPLEMENT_MATERIAL_COMPONENT(SpriteMaterialComponent)
+IMPLEMENT_MATERIAL_COMPONENT(SpriteMaterialComponent, SPRITE_MATERIAL)
 
-SpriteMaterialComponent::SpriteMaterialComponent(Material* material, const std::string& fileName)
-	: AMaterialComponent(material)
+SpriteMaterialComponent::SpriteMaterialComponent(Material* material)
+	: ABaseTextureMaterialComponent(material)
 {
-	this->texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, EMaterialMap::GUI);
-	this->addEditorProperty(new TextureEditorProperty{ "Sprite", this->texture->getId() });
+	this->addEditorProperty(new TextureEditorProperty{ "Sprite", &this->texture->getId() });
 }
 
-uint32_t SpriteMaterialComponent::getTextureID() const
+ETextureMap::Type SpriteMaterialComponent::getTextureType()
 {
-	return this->texture->getId();
+	return ETextureMap::GUI;
 }
 
 } // namespace

@@ -54,7 +54,7 @@ void HDRRendererComponent::onPostRender(uint32_t targetFBO)
 	this->graphicsWrapper->bindFrameBuffer(targetFBO);
 	this->graphicsWrapper->clearColorBuffer();
 	this->shaderManager->enableShader(this->shader);
-	this->shaderManager->setInt(this->shader, ShaderVariables::SCREEN_TEXTURE, EMaterialMap::GUI);
+	this->shaderManager->setInt(this->shader, ShaderVariables::SCREEN_TEXTURE, ETextureMap::GUI);
 	this->shaderManager->setFloat(this->shader, "exposure", this->effect->getValue("exposure"));
 	this->shaderManager->setFloat(this->shader, "enabled", this->effect->getValue("enabled"));
 

@@ -240,8 +240,10 @@
     <ClCompile Include="src\entities\components\cameras\FlyingCameraComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\OrbitCameraComponent.cpp" />
     <ClCompile Include="src\entities\components\EntityComponentTypes.cpp" />
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\ABaseTextureMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp" />
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\MaterialComponentTypes.cpp" />
     <ClCompile Include="src\executionStrategies\AExecutionStrategy.cpp" />
     <ClCompile Include="src\executionStrategies\ApplicationStrategy.cpp" />
     <ClCompile Include="src\executionStrategies\EditorStrategy.cpp" />
@@ -381,6 +383,7 @@
     <ClInclude Include="engine\core\wrappers\multimedia\SDLAPI.h" />
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
+    <ClInclude Include="include\ABaseTextureMaterialComponent.h" />
     <ClInclude Include="include\AEntityComponent.h" />
     <ClInclude Include="include\ApplicationStrategy.h" />
     <ClInclude Include="include\AssetsManager.h" />
@@ -393,6 +396,7 @@
     <ClInclude Include="include\EntityDestroyedMessage.h" />
     <ClInclude Include="include\EntityParser.h" />
     <ClInclude Include="include\AExecutionStrategy.h" />
+    <ClInclude Include="include\MaterialComponentTypes.h" />
     <ClInclude Include="include\MaterialLoader.h" />
     <ClInclude Include="include\Mesh.h" />
     <ClInclude Include="include\MeshEditorProperty.h" />

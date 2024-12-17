@@ -5,7 +5,7 @@
 namespace sre
 {
 
-TextureEditorProperty::TextureEditorProperty(const char* title, uint32_t arg_value)
+TextureEditorProperty::TextureEditorProperty(const char* title, uint32_t* arg_value)
 	: AEditorProperty(title)
 {
 	this->value = reinterpret_cast<void*>(arg_value);

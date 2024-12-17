@@ -1,25 +1,19 @@
-#ifndef _SPECULAR_MATERIAL_COMPONENT_H_
-#define _SPECULAR_MATERIAL_COMPONENT_H_
+#pragma once
 
-#include "AMaterialComponent.h"
-#include <string>
+#include "ABaseTextureMaterialComponent.h"
 
 namespace sre
 {
 
-class SRE_API SpecularMaterialComponent : public AMaterialComponent
+class SRE_API SpecularMaterialComponent : public ABaseTextureMaterialComponent
 {
 DECLARE_MATERIAL_COMPONENT()
-
-private:
-	class Texture* texture;
 	
 public:
-	SpecularMaterialComponent(Material *material, const std::string &fileName);
+	SpecularMaterialComponent(Material *material);
 
-	uint32_t getTextureID(uint32_t index = 0) const;
+protected:
+	virtual ETextureMap::Type getTextureType();
 };
 
 } // namespace
-
-#endif

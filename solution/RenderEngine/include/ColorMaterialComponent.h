@@ -1,9 +1,7 @@
-#ifndef _COLOR_MATERIAL_COMPONENT_H_
-#define _COLOR_MATERIAL_COMPONENT_H_
+#pragma once
 
 #include "AMaterialComponent.h"
 #include <glm/vec4.hpp>
-
 
 namespace sre
 {
@@ -26,4 +24,3 @@ public:
 };
 
 } // namespace
-#endif

@@ -3,7 +3,7 @@
 
 namespace sre
 {
-IMPLEMENT_MATERIAL_COMPONENT(LitMaterialComponent)
+IMPLEMENT_MATERIAL_COMPONENT(LitMaterialComponent, LIT_MATERIAL)
 
 LitMaterialComponent::LitMaterialComponent(Material* material) : AMaterialComponent(material), shininess(50)
 {

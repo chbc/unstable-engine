@@ -1,22 +1,20 @@
 #include "NormalMaterialComponent.h"
-#include "SingletonsManager.h"
-#include "TextureManager.h"
+#include "Texture.h"
 #include "TextureEditorProperty.h"
 
 namespace sre
 {
-IMPLEMENT_MATERIAL_COMPONENT(NormalMaterialComponent)
+IMPLEMENT_MATERIAL_COMPONENT(NormalMaterialComponent, NORMAL_MATERIAL)
 
-NormalMaterialComponent::NormalMaterialComponent(Material *material, const std::string &fileName)
-	: AMaterialComponent(material)
+NormalMaterialComponent::NormalMaterialComponent(Material *material)
+	: ABaseTextureMaterialComponent(material)
 {
-	this->texture = SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(fileName, EMaterialMap::NORMAL);
-	this->addEditorProperty(new TextureEditorProperty{ "Normal", this->texture->getId() });
+	this->addEditorProperty(new TextureEditorProperty{ "Normal", &this->texture->getId() });
 }
 
-uint32_t NormalMaterialComponent::getTextureID() const
+ETextureMap::Type NormalMaterialComponent::getTextureType()
 {
-	return this->texture->getId();
+	return ETextureMap::NORMAL;
 }
 
 } // namespace

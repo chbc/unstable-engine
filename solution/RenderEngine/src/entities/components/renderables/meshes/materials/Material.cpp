@@ -1,11 +1,6 @@
 #include "Material.h"
 #include "ColorMaterialComponent.h"
 #include "LitMaterialComponent.h"
-#include "DiffuseMaterialComponent.h"
-#include "NormalMaterialComponent.h"
-#include "SpecularMaterialComponent.h"
-#include "AmbientOcclusionMaterialComponent.h"
-#include "SpriteMaterialComponent.h"
 
 namespace sre
 {
@@ -13,6 +8,19 @@ namespace sre
 Material::Material() : castShadow(false), uvOffset(glm::vec2(0.0f)), uvTiling(glm::vec2(1.0f))
 {
     this->addComponent<ColorMaterialComponent>();
+}
+
+AMaterialComponent* Material::addComponent(const char* className)
+{
+    AMaterialComponent* newComponent{ nullptr };
+
+    newComponent = AMaterialComponent::Create(className, this);
+    uint16_t id = newComponent->getId();
+    assert(this->componentsMap.count(id) == 0);
+
+    this->componentsMap.emplace(id, newComponent);
+
+    return newComponent;
 }
 
 void Material::setCastShadow(bool value)
@@ -53,18 +61,5 @@ glm::vec2 Material::getUVTiling()
 {
     return uvTiling;
 }
-
-namespace material
-{
-    template <typename T> SRE_API std::size_t getComponentId();
-
-    template <> std::size_t SRE_API getComponentId<ColorMaterialComponent>() { return EComponentId::COLOR_MATERIAL; }
-    template <> std::size_t SRE_API getComponentId<LitMaterialComponent>() { return EComponentId::LIT_MATERIAL; }
-    template <> std::size_t SRE_API getComponentId<DiffuseMaterialComponent>() { return EComponentId::DIFFUSE_MATERIAL; }
-    template <> std::size_t SRE_API getComponentId<NormalMaterialComponent>() { return EComponentId::NORMAL_MATERIAL; }
-    template <> std::size_t SRE_API getComponentId<SpecularMaterialComponent>() { return EComponentId::SPECULAR_MATERIAL; }
-    template <> std::size_t SRE_API getComponentId<AmbientOcclusionMaterialComponent>() { return EComponentId::AO_MATERIAL; }
-    template <> std::size_t SRE_API getComponentId<SpriteMaterialComponent>() { return EComponentId::SPRITE_MATERIAL; }
-} // namespace
 
 } // namespace

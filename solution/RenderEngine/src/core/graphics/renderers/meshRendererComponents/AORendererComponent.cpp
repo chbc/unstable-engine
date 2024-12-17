@@ -21,7 +21,7 @@ void AORendererComponent::onSceneLoaded(Shader* shader)
 
 void AORendererComponent::setupShaderValues(MeshComponent* mesh, Shader* shader)
 {
-    this->shaderManager->setInt(shader, ShaderVariables::AO_TEXTURE, EMaterialMap::AMBIENT_OCCLUSION);
+    this->shaderManager->setInt(shader, ShaderVariables::AO_TEXTURE, ETextureMap::AMBIENT_OCCLUSION);
     this->textureId = mesh->getMaterial()->getComponent<AmbientOcclusionMaterialComponent>()->getTextureID();
 }
 

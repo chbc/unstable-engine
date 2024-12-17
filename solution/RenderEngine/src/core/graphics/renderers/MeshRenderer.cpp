@@ -26,7 +26,7 @@ MeshRenderer::MeshRenderer(Material *material, ShaderManager *shaderManager, AGr
     LightManager * lightManager = SingletonsManager::getInstance()->get<LightManager>();
 
     // ### COLOCAR NUM FACTORY
-    for (std::size_t i = EComponentId::COLOR_MATERIAL; i <= EComponentId::SECOND_TARGET_COLOR_MATERIAL; i++)
+    for (std::size_t i = EComponentId::COLOR_MATERIAL; i < EComponentId::SIZE; i++)
     {
         if (material->componentsBitset[i])
         {

@@ -1,25 +1,19 @@
-#ifndef _AMBIENT_OCCLUSION_MATERIAL_COMPONENT_H_
-#define _AMBIENT_OCCLUSION_MATERIAL_COMPONENT_H_
+#pragma once
 
-#include "AMaterialComponent.h"
-#include <string>
+#include "ABaseTextureMaterialComponent.h"
 
 namespace sre
 {
 
-class SRE_API AmbientOcclusionMaterialComponent : public AMaterialComponent
+class SRE_API AmbientOcclusionMaterialComponent : public ABaseTextureMaterialComponent
 {
 DECLARE_MATERIAL_COMPONENT()
-
-private:
-	class Texture* texture;
 	
 public:
-	AmbientOcclusionMaterialComponent(Material *material, const std::string &fileName);
+	AmbientOcclusionMaterialComponent(Material *material);
 
-	uint32_t getTextureID(uint32_t index = 0) const;
+protected:
+	virtual ETextureMap::Type getTextureType();
 };
 
 } // namespace
-
-#endif

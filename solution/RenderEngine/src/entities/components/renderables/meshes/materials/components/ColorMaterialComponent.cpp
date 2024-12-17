@@ -7,7 +7,7 @@
 namespace sre
 {
 
-IMPLEMENT_MATERIAL_COMPONENT(ColorMaterialComponent)
+IMPLEMENT_MATERIAL_COMPONENT(ColorMaterialComponent, COLOR_MATERIAL)
 
 ColorMaterialComponent::ColorMaterialComponent(Material *material) : AMaterialComponent(material)
 {

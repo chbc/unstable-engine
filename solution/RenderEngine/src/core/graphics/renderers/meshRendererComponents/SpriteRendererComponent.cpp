@@ -13,7 +13,7 @@ SpriteRendererComponent::SpriteRendererComponent(ShaderManager* shaderManager, A
 
 void SpriteRendererComponent::setupShaderValues(MeshComponent* mesh, Shader* shader)
 {
-	this->shaderManager->setInt(shader, ShaderVariables::DIFFUSE_TEXTURE, EMaterialMap::DIFFUSE);
+	this->shaderManager->setInt(shader, ShaderVariables::DIFFUSE_TEXTURE, ETextureMap::DIFFUSE);
 	this->textureId = mesh->getMaterial()->getComponent<SpriteMaterialComponent>()->getTextureID();
 }
 	
