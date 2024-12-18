@@ -53,6 +53,7 @@ protected:
 
 friend class MaterialEditorProperty;
 friend class Material;
+friend class MaterialLoader;
 };
 
 }

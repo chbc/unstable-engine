@@ -15,7 +15,7 @@ MeshComponent::MeshComponent(Entity *entity)
     : AEntityComponent(entity), opaque(true), material(new Material{}), mesh(nullptr)
 {
     this->addEditorProperty(new MeshEditorProperty{ "Mesh", &this->mesh });
-    this->addEditorProperty(new MaterialEditorProperty{ "Material", this->material.get() });
+    this->addEditorProperty(new MaterialEditorProperty{ "Material", this->material });
 }
 
 Material *MeshComponent::getMaterial()

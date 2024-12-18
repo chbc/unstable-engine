@@ -36,7 +36,7 @@ private:
     static uint16_t Index;
 
 public:
-    AEntityComponent(Entity* arg_entity) : entity(arg_entity), enabled(true) { }
+    AEntityComponent(Entity* arg_entity);
     ~AEntityComponent();
 
     template <typename Type>

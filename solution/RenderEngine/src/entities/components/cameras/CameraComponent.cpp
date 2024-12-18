@@ -6,7 +6,6 @@
 #include "Vec3EditorProperty.h"
 #include "BoolEditorProperty.h"
 #include "FloatEditorProperty.h"
-#include "SingletonsManager.h"
 #include "RenderManager.h"
 
 #include <glm/gtc/matrix_transform.hpp>

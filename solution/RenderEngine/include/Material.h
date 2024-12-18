@@ -2,6 +2,7 @@
 
 #include "memory_aliases.h"
 #include "core_defines.h"
+#include "AEditorProperty.h"
 #include <unordered_map>
 #include <glm/glm.hpp>
 #include <string>
@@ -16,9 +17,10 @@ class AMaterialComponent;
 class Material
 {
 private:
-    std::string fileName{ "DefaultMaterial.mat" };
+    std::string fileName{ "DefaultMaterial" };
     std::unordered_map<size_t, SPTR<AMaterialComponent>> componentsMap;
     std::bitset<EComponentId::SIZE> componentsBitset;
+    std::vector<SPTR<AEditorProperty>> editorProperties;
     glm::vec2 uvOffset;
     glm::vec2 uvTiling;
     bool castShadow;

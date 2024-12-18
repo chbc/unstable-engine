@@ -23,6 +23,7 @@ class Entity
 {
 private:
 	std::unordered_map<uint16_t, UPTR<AEntityComponent>> componentsMap;
+    std::vector<SPTR<AEditorProperty>> editorProperties;
     Entity *parent;
     std::unordered_map<std::string, UPTR<Entity>> children;
     std::vector<Entity*> childrenList;

@@ -4,6 +4,7 @@
 #include "RenderManager.h"
 #include "SingletonsManager.h"
 #include "AGraphicsWrapper.h"
+#include "Material.h"
 
 namespace sre
 {

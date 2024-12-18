@@ -234,6 +234,7 @@
     <ClCompile Include="src\editors\properties\MaterialEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\MeshEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\Vec2EditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\Vec3EditorProperty.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
     <ClCompile Include="src\entitiesManagers\scene\AScene.cpp" />
@@ -525,6 +526,7 @@
     <ClInclude Include="thirdParties\imgui\imstb_rectpack.h" />
     <ClInclude Include="thirdParties\imgui\imstb_textedit.h" />
     <ClInclude Include="thirdParties\imgui\imstb_truetype.h" />
+    <ClInclude Include="Vec2EditorProperty.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Entity.tpp" />

@@ -1,12 +1,17 @@
 #include "AEntityComponent.h"
-
 #include "Entity.h"
 #include "TransformComponent.h"
+#include "BoolEditorProperty.h"
 
 namespace sre
 {
 
 uint16_t AEntityComponent::Index = 0;
+
+AEntityComponent::AEntityComponent(Entity* arg_entity) : entity(arg_entity), enabled(true)
+{
+	this->addEditorProperty(new BoolEditorProperty{ "Enabled", &this->enabled });
+}
 
 AEntityComponent::~AEntityComponent()
 {

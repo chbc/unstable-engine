@@ -3,6 +3,7 @@
 #include "MessagesManager.h"
 #include "EntityDestroyedMessage.h"
 #include "SingletonsManager.h"
+#include "BoolEditorProperty.h"
 
 namespace sre
 {
@@ -13,6 +14,8 @@ Entity::Entity()
 	this->parent = nullptr;
 	this->alive = true;
 	this->enabled = true;
+
+	this->editorProperties.emplace_back(new BoolEditorProperty{ "Enabled", &this->enabled });
 }
 
 Entity::~Entity()

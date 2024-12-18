@@ -7,8 +7,6 @@
 #include "PrimitiveMeshFactory.h"
 #include "EngineValues.h"
 
-#include <iostream>
-
 namespace sre
 {
 
@@ -30,7 +28,6 @@ void ComponentParser::deserialize(c4::yml::ConstNodeRef& componentNode, Entity* 
 	keyStream << componentNode.key();
 	std::string type = keyStream.str();
 
-	std::cout << type << std::endl;
 	AEntityComponent* component = nullptr;
 	if (type == "TransformComponent")
 	{
@@ -45,8 +42,6 @@ void ComponentParser::deserialize(c4::yml::ConstNodeRef& componentNode, Entity* 
 	{
 		c4::yml::ConstNodeRef& propertyNode = componentNode[property->title.c_str()];
 		property->deserialize(propertyNode);
-
-		std::cout << propertyNode << std::endl;
 	}
 }
 

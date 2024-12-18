@@ -1,21 +1,19 @@
 #pragma once
 
 #include "AEditorProperty.h"
-#include "memory_aliases.h"
+#include <glm/vec2.hpp>
 
 namespace sre
 {
 
-class Material;
-
-class MaterialEditorProperty : public AEditorProperty
+class Vec2EditorProperty : public AEditorProperty
 {
 private:
-	std::string fileName;
-	UPTR<Material>& material;
+	glm::vec2* values;
+	float defaultValue;
 
 public:
-	MaterialEditorProperty(const char* title, UPTR<Material>& arg_material);
+	Vec2EditorProperty(const char* arg_title, glm::vec2* arg_values, float arg_defaultValue = 0.0f);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

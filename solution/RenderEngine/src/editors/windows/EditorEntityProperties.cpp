@@ -30,16 +30,21 @@ void EditorEntityProperties::onEditorGUI()
 
 	if (this->entity != nullptr)
 	{
+		for (const auto& property : this->entity->editorProperties)
+		{
+			property->draw();
+		}
+
 		for (const auto& component : this->entity->componentsMap)
 		{
 			const char* componentName = component.second->getClassName();
+
 			if (ImGui::CollapsingHeader(componentName, ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				for (const auto& property : component.second->editorProperties)
 				{
 					property->draw();
 				}
-				// ImGui::Separator();
 			}
 		}
 	}

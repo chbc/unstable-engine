@@ -1,12 +1,17 @@
 #include "Material.h"
 #include "ColorMaterialComponent.h"
 #include "LitMaterialComponent.h"
+#include "BoolEditorProperty.h"
+#include "Vec2EditorProperty.h"
 
 namespace sre
 {
 
 Material::Material() : castShadow(false), uvOffset(glm::vec2(0.0f)), uvTiling(glm::vec2(1.0f))
 {
+    this->editorProperties.emplace_back(new BoolEditorProperty{ "Cast Shadow", &this->castShadow });
+    this->editorProperties.emplace_back(new Vec2EditorProperty{ "UV Offset", &this->uvOffset });
+    this->editorProperties.emplace_back(new Vec2EditorProperty{ "UV Tiling", &this->uvTiling });
     this->addComponent<ColorMaterialComponent>();
 }
 

@@ -11,7 +11,7 @@
 namespace sre
 {
 
-MaterialEditorProperty::MaterialEditorProperty(const char* title, Material* arg_material)
+MaterialEditorProperty::MaterialEditorProperty(const char* title, UPTR<Material>& arg_material)
 	: AEditorProperty(title), material(arg_material)
 { }
 
@@ -34,13 +34,18 @@ void MaterialEditorProperty::draw()
 		ImGui::Text("[%s]", this->title.c_str());
 		if (ImGui::Button("Save"))
 		{
-			MaterialLoader().save(this->material, this->fileName.c_str());
+			MaterialLoader().save(this->material.get(), this->fileName.c_str());
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::EndPopup();
 	}
 
 	ImGui::PopID();
+
+	for (const auto& property : this->material->editorProperties)
+	{
+		property->draw();
+	}
 
 	for (const auto& component : this->material->componentsMap)
 	{
@@ -66,10 +71,9 @@ void MaterialEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
 	propertyNode >> this->fileName;
 
-	/*
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-	this->material = assetsManager->loadMaterial(fileName.c_str());
-	*/
+	Material* newMaterial = assetsManager->loadMaterial(fileName.c_str());
+	this->material.reset(newMaterial);
 }
 
 } // namespace

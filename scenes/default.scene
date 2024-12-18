@@ -2,36 +2,36 @@ plane:
   Enabled: 1
   Components:
     TransformComponent:
-      enabled: 1
+      Enabled: 1
       Position: [0,0,0]
       Rotation: [81.9,0,0]
       Scale: [2.8,2.6,1]
     MeshComponent:
-      enabled: 1
+      Enabled: 1
       Mesh: Plane.mesh
-      Material: DefultMaterial.mat
+      Material: DefaultMaterial.mat
 entity_0:
   Enabled: 1
   Components:
     TransformComponent:
-      enabled: 1
+      Enabled: 1
       Position: [6,0,'-2.5']
       Rotation: [0,0,0]
       Scale: [1,1,1]
     MeshComponent:
-      enabled: 1
+      Enabled: 1
       Mesh: Cube.mesh
-      Material: DefultMaterial.mat
+      Material: DefaultMaterial.mat
 _main_camera:
   Enabled: 1
   Components:
     TransformComponent:
-      enabled: 1
+      Enabled: 1
       Position: [0,5,5]
       Rotation: [0,0,0]
       Scale: [1,1,1]
     CameraComponent:
-      enabled: 1
+      Enabled: 1
       Perspective: 1
       Main Camera: 1
       Look At Target: [0,0,0]
@@ -41,11 +41,11 @@ cube:
   Enabled: 1
   Components:
     TransformComponent:
-      enabled: 1
+      Enabled: 1
       Position: ['-9.6',0,0]
       Rotation: [0,0,0]
       Scale: [1,1,1]
     MeshComponent:
-      enabled: 1
+      Enabled: 1
       Mesh: Cube.mesh
-      Material: DefultMaterial.mat
+      Material: DefaultMaterial.mat
