@@ -2,8 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-#define WRITE 0
-
+#define WRITE 1
 
 using namespace sre;
 
@@ -15,14 +14,24 @@ int main()
     PrimitiveMeshFactory meshFactory;
 #if WRITE
     // WRITE
+    /*
     MeshData* cubeMesh = meshFactory.createCube(1.0f);
     MeshData* planeMesh = meshFactory.createPlane(1.0f, 1.0f);
+    */
+    MeshData* sphereMesh = meshFactory.createSphere(1.0f);
 
+    /*
     saveMesh(cubeMesh, "Cube.mesh");
     saveMesh(planeMesh, "Plane.mesh");
+    */
+    saveMesh(sphereMesh, "Sphere.mesh");
 
+    /*
     delete cubeMesh;
     delete planeMesh;
+    */
+
+    delete sphereMesh;
     //
 #else
     // READ
@@ -44,7 +53,9 @@ void saveMesh(MeshData* mesh, const char* fileName)
     size_t vertexSize = mesh->vertexData.size();
     size_t indicesSize = mesh->indices.size();
 
-    std::ofstream saveStream(fileName, std::ios::out | std::ios::binary);
+    std::string filePath = std::string{ "../../media/" } + fileName;
+
+    std::ofstream saveStream(filePath, std::ios::out | std::ios::binary);
     if (saveStream)
     {
         saveStream.write(reinterpret_cast<const char*>(&vertexSize), sizeof(size_t));

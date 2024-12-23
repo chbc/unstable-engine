@@ -19,7 +19,7 @@ public:
 	MeshData* createPlane(float size, float tileMultiplier);
 	MeshData* createPlane(const glm::vec2& size, float tileMultiplier);
 	MeshData* createCube(float size);
-	MeshData* createSphere(float size);
+	MeshData* createSphere(float radius = 1.0f, uint16_t rings = 16, uint16_t sectors = 32);
 	void createPlaneIndices(std::vector<uint16_t> &result, int planesCount = 1);
 
 private:
@@ -33,6 +33,8 @@ private:
 			vertexData[i].v = planeTexCoords[(2 * i) + 1];
 		}
 	}
+
+	void pushSphereIndices(std::vector<uint16_t>& indices, int sectors, int r, int s);
 };
 
 } // namespace

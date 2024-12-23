@@ -20,7 +20,7 @@ entity_0:
       Scale: [1,1,1]
     MeshComponent:
       Enabled: 1
-      Mesh: Cube.mesh
+      Mesh: Sphere.mesh
       Material: DefaultMaterial.mat
 _main_camera:
   Enabled: 1

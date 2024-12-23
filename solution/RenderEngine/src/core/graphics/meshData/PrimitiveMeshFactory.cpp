@@ -2,6 +2,9 @@
 #include "MathUtils.h"
 #include "Rect.h"
 
+#define M_PI	3.14159265358979323846
+#define M_PI_2	1.57079632679489661923
+
 namespace sre
 {
 
@@ -281,9 +284,50 @@ MeshData* PrimitiveMeshFactory::createCube(float size)
 	return new MeshData{ vertexData, indices };
 }
 
-MeshData* PrimitiveMeshFactory::createSphere(float size)
+MeshData* PrimitiveMeshFactory::createSphere(float radius, uint16_t rings, uint16_t sectors)
 {
-	return nullptr;
+	std::vector<VertexData> vertexData;
+	std::vector<uint16_t> indices;
+	
+	vertexData.resize(rings * sectors);
+	vertexData.resize(rings * sectors);
+	vertexData.resize(rings * sectors);
+
+
+	float const R = 1. / (float)(rings - 1);
+	float const S = 1. / (float)(sectors - 1);
+
+	std::vector<VertexData>::iterator item = vertexData.begin();
+
+	for (int r = 0; r < rings; ++r)
+	{
+		for (int s = 0; s < sectors; ++s)
+		{
+			float const y = sin(-M_PI_2 + M_PI * r * R);
+			float const x = cos(2 * M_PI * s * S) * sin(M_PI * r * R);
+			float const z = sin(2 * M_PI * s * S) * sin(M_PI * r * R);
+
+			(*item).u = s * S;
+			(*item).v = r * R;
+
+			(*item).position.x = x * radius;
+			(*item).position.y = y * radius;
+			(*item).position.z = z * radius;
+
+			(*item).normal.x = -x;
+			(*item).normal.y = -y;
+			(*item).normal.z = -z;
+
+			item++;
+
+			if (r < rings - 1)
+			{
+				this->pushSphereIndices(indices, sectors, r, s);
+			}
+		}
+	}
+
+	return new MeshData{ vertexData, indices };
 }
 
 void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint16_t> &result, int planesCount)
@@ -299,6 +343,21 @@ void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint16_t> &result, int
 		for (int i = 0; i < 6; i++)
 			result.push_back(baseIndices[i] + (4 * planeIndex));
 	}
+}
+
+void PrimitiveMeshFactory::pushSphereIndices(std::vector<uint16_t>& indices, int sectors, int r, int s)
+{
+	int curRow = r * sectors;
+	int nextRow = (r + 1) * sectors;
+	int nextS = (s + 1) % sectors;
+
+	indices.push_back(curRow + s);
+	indices.push_back(nextRow + s);
+	indices.push_back(nextRow + nextS);
+
+	indices.push_back(curRow + s);
+	indices.push_back(nextRow + nextS);
+	indices.push_back(curRow + nextS);
 }
 
 } // namespace
