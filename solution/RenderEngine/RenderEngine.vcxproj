@@ -236,6 +236,7 @@
     <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\Vec2EditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\Vec3EditorProperty.cpp" />
+    <ClCompile Include="src\editors\windows\EditorFileBrowser.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
     <ClCompile Include="src\entitiesManagers\scene\AScene.cpp" />
     <ClCompile Include="src\entities\components\cameras\FlyingCameraComponent.cpp" />
@@ -390,6 +391,7 @@
     <ClInclude Include="include\AssetsManager.h" />
     <ClInclude Include="include\BoolEditorProperty.h" />
     <ClInclude Include="include\ComponentParser.h" />
+    <ClInclude Include="include\EditorFileBrowser.h" />
     <ClInclude Include="include\EditorStrategy.h" />
     <ClInclude Include="include\EditorsController.h" />
     <ClInclude Include="include\EExecutionMode.h" />

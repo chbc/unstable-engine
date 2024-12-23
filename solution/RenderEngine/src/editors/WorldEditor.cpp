@@ -5,6 +5,7 @@
 #include "EditorSceneTree.h"
 #include "EditorEntityProperties.h"
 #include "EditorSceneViewport.h"
+#include "EditorFileBrowser.h"
 
 #include "SingletonsManager.h"
 #include "RenderManager.h"
@@ -22,6 +23,7 @@ WorldEditor::WorldEditor(ScenesManager* arg_scenesManager)
 	this->windows[0] = UPTR<IEditorWindow>(new EditorSceneTree{ scenesManager });
 	this->windows[1] = UPTR<IEditorWindow>(new EditorEntityProperties);
     this->windows[2] = UPTR<IEditorWindow>(new EditorSceneViewport{ scenesManager });
+    this->windows[3] = UPTR<IEditorWindow>(new EditorFileBrowser);
 }
 
 void WorldEditor::init()

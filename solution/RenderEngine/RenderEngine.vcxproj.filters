@@ -369,6 +369,9 @@
     <ClCompile Include="src\editors\properties\Vec2EditorProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\editors\windows\EditorFileBrowser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1002,6 +1005,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vec2EditorProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EditorFileBrowser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
