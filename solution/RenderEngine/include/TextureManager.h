@@ -55,7 +55,7 @@ friend class ABaseTextureMaterialComponent;
 friend class AtlasManager;
 friend class GUITextComponent;
 friend class EditorSceneViewport;
-friend class EditorFileBrowser;
+friend class EditorsController;
 };
 
 } // namespace

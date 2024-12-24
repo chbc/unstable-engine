@@ -3,27 +3,40 @@
 #include "EditorFileBrowser.h"
 #include "SingletonsManager.h"
 #include "TextureManager.h"
+#include "Paths.h"
+#include "EditorsController.h"
 
 #include "imgui/imgui.h"
 
 namespace sre
 {
 
+EditorFileBrowser::EditorFileBrowser(EditorsController* arg_controller) 
+{
+	this->controller = arg_controller;
+}
+
 void EditorFileBrowser::onInit()
 {
-	if (this->textureManager == nullptr)
-	{
-		this->textureManager = SingletonsManager::getInstance()->get<TextureManager>();
-		Texture* texture = this->textureManager->loadGUITexture("crate.png");
-		this->textureId = reinterpret_cast<void*>(texture->getId());
-	}
+	this->controller->refreshFileItems(Paths().ENGINE_MEDIA_FOLDER, this->fileItems);
 }
 
 void EditorFileBrowser::onEditorGUI()
 {
 	ImGui::Begin("File Browser");
-	const ImVec2 size{ 32, 32 };
-	ImGui::Image(this->textureId, size);
+	const ImVec2 size{ 64, 64 };
+
+	ImGui::BeginTable("files", 10);
+
+	ImGui::TableNextRow();
+	for (const auto& item : this->fileItems)
+	{
+		ImGui::TableNextColumn();
+		ImGui::ImageButton(item->textureId, size);
+		ImGui::Text(item->fileName.c_str());
+	}
+	ImGui::EndTable();
+
 	ImGui::End();
 }
 

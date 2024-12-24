@@ -97,7 +97,7 @@
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
       <PreprocessorDefinitions>DEBUG;SRE_DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glew32s.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -124,7 +124,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>SRE_TEST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;opengl32.lib;glu32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -152,7 +152,7 @@
       <AdditionalIncludeDirectories>../../include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SRE_DLL_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -179,7 +179,7 @@
       <DebugInformationFormat>None</DebugInformationFormat>
       <AdditionalIncludeDirectories>../../include;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SRE_TEST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -238,6 +238,7 @@
     <ClCompile Include="src\editors\properties\Vec3EditorProperty.cpp" />
     <ClCompile Include="src\editors\windows\EditorFileBrowser.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
+    <ClCompile Include="src\editors\windows\FileItems\FileItem.cpp" />
     <ClCompile Include="src\entitiesManagers\scene\AScene.cpp" />
     <ClCompile Include="src\entities\components\cameras\FlyingCameraComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\OrbitCameraComponent.cpp" />
@@ -308,6 +309,7 @@
     <ClCompile Include="src\utils\FileUtils.cpp" />
     <ClCompile Include="src\utils\math\MathUtils.cpp" />
     <ClCompile Include="src\utils\math\Rect.cpp" />
+    <ClCompile Include="src\utils\Paths.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_demo.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_draw.cpp" />
@@ -389,6 +391,8 @@
     <ClInclude Include="include\AEntityComponent.h" />
     <ClInclude Include="include\ApplicationStrategy.h" />
     <ClInclude Include="include\AssetsManager.h" />
+    <ClInclude Include="include\FileItem.h" />
+    <ClInclude Include="include\Paths.h" />
     <ClInclude Include="include\BoolEditorProperty.h" />
     <ClInclude Include="include\ComponentParser.h" />
     <ClInclude Include="include\EditorFileBrowser.h" />

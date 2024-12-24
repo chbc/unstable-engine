@@ -195,7 +195,10 @@ void ShaderManager::disableShader()
 
 void ShaderManager::releaseShader(Shader* shader)
 {
-    this->graphicsWrapper->releaseShader(shader->program, shader->components);
+    if (shader != nullptr)
+    {
+        this->graphicsWrapper->releaseShader(shader->program, shader->components);
+    }
 }
 
 } // namespace

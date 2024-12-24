@@ -1,0 +1,51 @@
+entity_0:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [6,0,'-2.5']
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      Enabled: 1
+      Mesh: Sphere.mesh
+      Material: DefaultMaterial.mat
+plane:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,0,0]
+      Rotation: [81.9,0,0]
+      Scale: [2.8,2.6,1]
+    MeshComponent:
+      Enabled: 1
+      Mesh: Plane.mesh
+      Material: DefaultMaterial.mat
+_main_camera:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,5,5]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    CameraComponent:
+      Enabled: 1
+      Perspective: 1
+      Main Camera: 1
+      Look At Target: [0,0,0]
+      Up: [0,1,0]
+      FOV: 90
+cube:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: ['-9.6',0,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      Enabled: 1
+      Mesh: Cube.mesh
+      Material: DefaultMaterial.mat

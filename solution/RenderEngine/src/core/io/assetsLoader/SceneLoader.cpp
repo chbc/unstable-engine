@@ -2,15 +2,10 @@
 #include "FileUtils.h"
 #include "AScene.h"
 #include "EntityParser.h"
+#include "Paths.h"
 
 namespace sre
 {
-
-#ifdef __ANDROID__
-	const std::string BASE_FOLDER = "scenes/es/";
-#else
-	const std::string BASE_FOLDER = "../../scenes/";
-#endif
 
 void SceneLoader::save(AScene* scene, const char* sceneName)
 {
@@ -24,7 +19,8 @@ void SceneLoader::save(AScene* scene, const char* sceneName)
 		EntityParser::serialize(entityNode, entityItem.second.get());
 	}
 
-	std::string filePath = BASE_FOLDER + sceneName + std::string{ ".scene" };
+	std::string filePath;
+	Paths().buildSceneFilePath(EContentType::ENGINE, sceneName, filePath);
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
 	FileUtils::saveFile(filePath, content);
 }
@@ -32,7 +28,8 @@ void SceneLoader::save(AScene* scene, const char* sceneName)
 void SceneLoader::load(AScene* scene, const char* sceneName)
 {
 	std::string fileContent;
-	std::string filePath = BASE_FOLDER + sceneName + std::string{ ".scene" };
+	std::string filePath;
+	Paths().buildSceneFilePath(EContentType::ENGINE, sceneName, filePath);
 	FileUtils::loadFile(filePath, fileContent);
 
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));

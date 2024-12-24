@@ -85,8 +85,7 @@ void SDLAPI::delay(unsigned int timeMS)
 void *SDLAPI::loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp)
 {
 	void *result = nullptr;
-	std::string resultFileName = ASSETS_FOLDER + fileName;
-	SDL_Surface *surface = IMG_Load(resultFileName.c_str());
+	SDL_Surface *surface = IMG_Load(fileName.c_str());
 
 	if (surface == nullptr)
 		throw "[SDLAPI] Can't load texture file: " + fileName;

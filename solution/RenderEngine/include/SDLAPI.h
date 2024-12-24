@@ -19,8 +19,6 @@ private:
 	SDL_Window *window;
 	UPTR<ImGuiAPI> imGuiAPI;
 
-	const std::string ASSETS_FOLDER = "../../media/";
-
 public:
 	SDLAPI() : window(nullptr), imGuiAPI(nullptr) { }
 

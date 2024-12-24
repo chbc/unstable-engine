@@ -19,15 +19,16 @@ WorldEditor::WorldEditor(ScenesManager* arg_scenesManager)
 	: scenesManager(arg_scenesManager), showDemo(false), wasShowingDemo(false)
 {
     this->controller = UPTR<EditorsController>(new EditorsController{ this->scenesManager });
-	this->menuBar = UPTR<IEditorWindow>(new EditorMenuBar{ &this->showDemo, this->controller.get()});
+	this->menuBar = UPTR<IEditorWindow>(new EditorMenuBar{ &this->showDemo, this->controller.get() });
 	this->windows[0] = UPTR<IEditorWindow>(new EditorSceneTree{ scenesManager });
 	this->windows[1] = UPTR<IEditorWindow>(new EditorEntityProperties);
     this->windows[2] = UPTR<IEditorWindow>(new EditorSceneViewport{ scenesManager });
-    this->windows[3] = UPTR<IEditorWindow>(new EditorFileBrowser);
+    this->windows[3] = UPTR<IEditorWindow>(new EditorFileBrowser{ this->controller.get() });
 }
 
 void WorldEditor::init()
 {
+    this->controller->init();
     this->menuBar->onInit();
 	for (const auto& item : this->windows)
 		item->onInit();

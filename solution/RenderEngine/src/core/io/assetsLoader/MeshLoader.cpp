@@ -1,20 +1,17 @@
 #include "MeshLoader.h"
+#include "Paths.h"
 
 #include <fstream>
 
 namespace sre
 {
-#ifdef __ANDROID__
-	const std::string BASE_FOLDER = "media/es/";
-#else
-	const std::string BASE_FOLDER = "../../media/";
-#endif
 
 Mesh* MeshLoader::load(const char* file)
 {
 	std::vector<VertexData> vertexData;
 	std::vector<uint16_t> indices;
-	std::string filePath = BASE_FOLDER + file;
+	std::string filePath;
+	Paths().buildMediaFilePath(EContentType::ENGINE, file, filePath);
 	std::ifstream readStream(filePath, std::ios::out | std::ios::binary);
 	if (readStream)
 	{
