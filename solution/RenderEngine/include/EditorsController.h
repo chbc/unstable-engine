@@ -1,7 +1,9 @@
 #pragma once
 
-#include "FileItem.h"
 #include "memory_aliases.h"
+#include "FileIcon.h"
+
+#include <string>
 
 namespace sre
 {
@@ -24,7 +26,7 @@ public:
 	void saveScene();
 	void createCube();
 	void createPlane();
-	void refreshFileItems(const char* directoryPath, std::vector<UPTR<FileItem>>& result);
+	void refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result);
 
 private:
 	void createEntity(const char* name, const char* file);

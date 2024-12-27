@@ -7,6 +7,7 @@
 #include "EditorsController.h"
 
 #include "imgui/imgui.h"
+#include <filesystem>
 
 namespace sre
 {
@@ -18,21 +19,33 @@ EditorFileBrowser::EditorFileBrowser(EditorsController* arg_controller)
 
 void EditorFileBrowser::onInit()
 {
-	this->controller->refreshFileItems(Paths().ENGINE_MEDIA_FOLDER, this->fileItems);
+	this->controller->refreshFileIcons(Paths().CONTENT_BASE_FOLDER, this->fileIcons);
 }
 
 void EditorFileBrowser::onEditorGUI()
 {
 	ImGui::Begin("File Browser");
-	const ImVec2 size{ 64, 64 };
+	if (ImGui::Button("Content", ImVec2{ 64, 16 }))
+	{
+		this->controller->refreshFileIcons(Paths().CONTENT_BASE_FOLDER, this->fileIcons);
+	}
 
 	ImGui::BeginTable("files", 10);
+	const ImVec2 size{ 64, 64 };
 
 	ImGui::TableNextRow();
-	for (const auto& item : this->fileItems)
+	for (int i = 0; i < this->fileIcons.size(); ++i)
 	{
+		FileIcon* item = this->fileIcons[i].get();
 		ImGui::TableNextColumn();
-		ImGui::ImageButton(item->textureId, size);
+		if (ImGui::ImageButton(item->textureId, size))
+		{
+			if (std::filesystem::is_directory(item->filePath))
+			{
+				this->controller->refreshFileIcons(item->filePath, this->fileIcons);
+				break;
+			}
+		}
 		ImGui::Text(item->fileName.c_str());
 	}
 	ImGui::EndTable();

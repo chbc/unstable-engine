@@ -26,6 +26,7 @@ private:
 	const char* ENGINE_MEDIA_FOLDER = "engine/es/media/";
 	const char* ENGINE_ICONS_FOLDER = "engine/es/icons/";
 #else
+	const char* CONTENT_BASE_FOLDER = "../../content/";
 	const char* CONTENT_SCENES_FOLDER = "../../content/scenes/";
 	const char* CONTENT_MEDIA_FOLDER = "../../content/media/";
 

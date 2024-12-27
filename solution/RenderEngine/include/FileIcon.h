@@ -5,12 +5,13 @@
 namespace sre
 {
 
-struct FileItem
+struct FileIcon
 {
+	std::string filePath;
 	std::string fileName;
 	void* textureId = nullptr;
 
-	FileItem(const char* arg_fileName, void* arg_textureId);
+	FileIcon(std::string arg_filePath, void* arg_textureId);
 };
 
 } // namespace

@@ -5,11 +5,7 @@
 #include "MessagesManager.h"
 #include "EditorMessages.h"
 #include "TextureManager.h"
-#include "Paths.h"
-
-#include <filesystem>
-
-namespace fs = std::filesystem;
+#include "FileUtils.h"
 
 namespace sre
 {
@@ -46,42 +42,22 @@ void EditorsController::createPlane()
 	this->createEntity("plane", "plane.mesh");
 }
 
-void EditorsController::refreshFileItems(const char* directoryPath, std::vector<UPTR<FileItem>>& result)
+void EditorsController::refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result)
 {
 	result.clear();
-	Paths paths;
-	for (const auto& item : fs::directory_iterator(directoryPath))
-	{
-		std::string iconName;
-		const auto& extension = item.path().extension();
-		if (item.is_directory())
-		{
-			iconName = "folder_icon";
-		}
-		else if (extension == ".scene")
-		{
-			iconName = "scene_icon";
-		}
-		else if (extension == ".mesh")
-		{
-			iconName = "mesh_icon";
-		}
-		else if (extension == ".mat")
-		{
-			iconName = "material_icon";
-		}
-		else
-		{
-			iconName = "unknown_file_icon";
-		}
+	std::vector<std::string> iconPaths;
+	std::vector<std::string> filePaths;
+	FileUtils::getFilePaths(directoryPath, iconPaths, filePaths);
 
-		std::string filePath;
-		paths.buildIconFilePath(iconName.c_str(), filePath);
-		Texture* texture = this->textureManager->loadGUITexture(filePath);
+	for (int i = 0; i < filePaths.size(); ++i)
+	{
+		std::string& icon = iconPaths[i];
+		std::string& path = filePaths[i];
+		Texture* texture = this->textureManager->loadGUITexture(icon);
 		void* textureId = reinterpret_cast<void*>(texture->getId());
 
-		FileItem* fileItem = new FileItem{ item.path().filename().string().c_str(), textureId};
-		result.emplace_back(fileItem);
+		FileIcon* fileIcon = new FileIcon{path, textureId};
+		result.emplace_back(fileIcon);
 	}
 }
 

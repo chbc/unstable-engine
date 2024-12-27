@@ -1,5 +1,8 @@
 #include "FileUtils.h"
+#include "Paths.h"
+
 #include <fstream>
+#include <filesystem>
 
 #ifdef __ANDROID__
 	#include <SDL.h>
@@ -91,6 +94,57 @@ void saveFile(const std::string& fileName, const std::string& content)
 	}
 
 	out << content;
+}
+
+void getFilePaths(std::string directoryPath, std::vector<std::string>& iconPaths, std::vector<std::string>& filePaths)
+{
+	Paths paths;
+	for (const auto& item : std::filesystem::directory_iterator(directoryPath))
+	{
+		std::string iconName;
+		const auto& extension = item.path().extension();
+		bool hasIcon = true;
+		std::string iconPath;
+		if (item.is_directory())
+		{
+			iconName = "folder_icon";
+		}
+		else if (extension == ".scene")
+		{
+			iconName = "scene_icon";
+		}
+		else if (extension == ".mesh")
+		{
+			iconName = "mesh_icon";
+		}
+		else if (extension == ".mat")
+		{
+			iconName = "material_icon";
+		}
+		else if ((extension == ".png") || (extension == "jpg") || (extension == "jpeg"))
+		{
+			iconPath = item.path().string();
+			hasIcon = false;
+		}
+		else
+		{
+			iconName = "unknown_file_icon";
+		}
+
+		if (hasIcon)
+		{
+			paths.buildIconFilePath(iconName.c_str(), iconPath);
+		}
+
+		iconPaths.emplace_back(iconPath);
+		filePaths.emplace_back(item.path().string());
+	}
+}
+
+std::string getFileName(const std::string& filePath)
+{
+	std::filesystem::path systemPath{ filePath };
+	return systemPath.stem().string();
 }
 #endif
 

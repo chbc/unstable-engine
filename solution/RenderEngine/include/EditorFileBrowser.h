@@ -2,7 +2,7 @@
 #pragma once
 
 #include "IEditorWindow.h"
-#include "FileItem.h"
+#include "FileIcon.h"
 #include "memory_aliases.h"
 
 #include <vector>
@@ -16,7 +16,7 @@ class EditorFileBrowser : public IEditorWindow
 {
 
 private:
-	std::vector<UPTR<FileItem>> fileItems;
+	std::vector<UPTR<FileIcon>> fileIcons;
 	EditorsController* controller;
 
 public:

@@ -20,7 +20,7 @@ void SceneLoader::save(AScene* scene, const char* sceneName)
 	}
 
 	std::string filePath;
-	Paths().buildSceneFilePath(EContentType::ENGINE, sceneName, filePath);
+	Paths().buildSceneFilePath(EContentType::CONTENT, sceneName, filePath);
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
 	FileUtils::saveFile(filePath, content);
 }

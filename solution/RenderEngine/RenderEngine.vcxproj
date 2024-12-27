@@ -238,7 +238,7 @@
     <ClCompile Include="src\editors\properties\Vec3EditorProperty.cpp" />
     <ClCompile Include="src\editors\windows\EditorFileBrowser.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
-    <ClCompile Include="src\editors\windows\FileItems\FileItem.cpp" />
+    <ClCompile Include="src\editors\windows\FileIcons\FileIcon.cpp" />
     <ClCompile Include="src\entitiesManagers\scene\AScene.cpp" />
     <ClCompile Include="src\entities\components\cameras\FlyingCameraComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\OrbitCameraComponent.cpp" />
@@ -391,7 +391,7 @@
     <ClInclude Include="include\AEntityComponent.h" />
     <ClInclude Include="include\ApplicationStrategy.h" />
     <ClInclude Include="include\AssetsManager.h" />
-    <ClInclude Include="include\FileItem.h" />
+    <ClInclude Include="include\FileIcon.h" />
     <ClInclude Include="include\Paths.h" />
     <ClInclude Include="include\BoolEditorProperty.h" />
     <ClInclude Include="include\ComponentParser.h" />
