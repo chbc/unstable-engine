@@ -14,6 +14,7 @@ namespace FileUtils
     void saveFile(const std::string& fileName, const std::string& content);
     void getFilePaths(std::string directoryPath, std::vector<std::string>& iconPaths, std::vector<std::string>& filePaths);
     std::string getFileName(const std::string& filePath);
+    bool fileExists(const std::string& filePath);
 }
 
 } // namespace

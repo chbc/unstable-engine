@@ -1,4 +1,5 @@
 #include "Paths.h"
+#include "FileUtils.h"
 
 namespace sre
 {
@@ -12,6 +13,10 @@ void Paths::buildSceneFilePath(EContentType::Type contentType, const char* fileN
 	else
 	{
 		this->buildFilePath(CONTENT_SCENES_FOLDER, fileName, ".scene", result);
+		if (!FileUtils::fileExists(result))
+		{
+			this->buildFilePath(ENGINE_SCENES_FOLDER, fileName, ".scene", result);
+		}
 	}
 }
 

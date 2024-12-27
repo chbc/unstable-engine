@@ -4,6 +4,8 @@
 #include <fstream>
 #include <filesystem>
 
+namespace FS = std::filesystem;
+
 #ifdef __ANDROID__
 	#include <SDL.h>
 #endif
@@ -143,8 +145,13 @@ void getFilePaths(std::string directoryPath, std::vector<std::string>& iconPaths
 
 std::string getFileName(const std::string& filePath)
 {
-	std::filesystem::path systemPath{ filePath };
+	FS::path systemPath{ filePath };
 	return systemPath.stem().string();
+}
+bool fileExists(const std::string& filePath)
+{
+	FS::path systemPath{ filePath };
+	return FS::exists(systemPath);
 }
 #endif
 

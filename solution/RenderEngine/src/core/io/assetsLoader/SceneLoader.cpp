@@ -29,7 +29,7 @@ void SceneLoader::load(AScene* scene, const char* sceneName)
 {
 	std::string fileContent;
 	std::string filePath;
-	Paths().buildSceneFilePath(EContentType::ENGINE, sceneName, filePath);
+	Paths().buildSceneFilePath(EContentType::CONTENT, sceneName, filePath);
 	FileUtils::loadFile(filePath, fileContent);
 
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
