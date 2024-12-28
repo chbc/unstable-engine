@@ -53,7 +53,7 @@ void saveMesh(MeshData* mesh, const char* fileName)
     size_t vertexSize = mesh->vertexData.size();
     size_t indicesSize = mesh->indices.size();
 
-    std::string filePath = std::string{ "../../media/" } + fileName;
+    std::string filePath = std::string{ "../../engine/media/" } + fileName;
 
     std::ofstream saveStream(filePath, std::ios::out | std::ios::binary);
     if (saveStream)

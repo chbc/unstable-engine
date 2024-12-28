@@ -1,15 +1,16 @@
-entity_0:
+point_light:
   Enabled: 1
   Components:
     TransformComponent:
       Enabled: 1
-      Position: [6,0,'-2.5']
+      Position: [0,5,0]
       Rotation: [0,0,0]
       Scale: [1,1,1]
-    MeshComponent:
+    PointLightComponent:
       Enabled: 1
-      Mesh: Sphere.mesh
-      Material: DiffuseMaterial.mat
+      Color: [0.6,0.6,0.6]
+      Intensity: 1.25
+      Range: 10
 plane:
   Enabled: 1
   Components:
@@ -21,7 +22,19 @@ plane:
     MeshComponent:
       Enabled: 1
       Mesh: Plane.mesh
-      Material: DefaultMaterial.mat
+      Material: FloorMaterial.mat
+entity_0:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [6,0,-2.5]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      Enabled: 1
+      Mesh: Sphere.mesh
+      Material: FloorMaterial.mat
 _main_camera:
   Enabled: 1
   Components:
@@ -42,7 +55,7 @@ cube:
   Components:
     TransformComponent:
       Enabled: 1
-      Position: ['-9.6',0,0]
+      Position: [-5,0,0]
       Rotation: [0,0,0]
       Scale: [1,1,1]
     MeshComponent:

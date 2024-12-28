@@ -293,7 +293,6 @@ MeshData* PrimitiveMeshFactory::createSphere(float radius, uint16_t rings, uint1
 	vertexData.resize(rings * sectors);
 	vertexData.resize(rings * sectors);
 
-
 	float const R = 1. / (float)(rings - 1);
 	float const S = 1. / (float)(sectors - 1);
 
@@ -314,9 +313,9 @@ MeshData* PrimitiveMeshFactory::createSphere(float radius, uint16_t rings, uint1
 			(*item).position.y = y * radius;
 			(*item).position.z = z * radius;
 
-			(*item).normal.x = -x;
-			(*item).normal.y = -y;
-			(*item).normal.z = -z;
+			(*item).normal.x = x;
+			(*item).normal.y = y;
+			(*item).normal.z = z;
 
 			item++;
 
