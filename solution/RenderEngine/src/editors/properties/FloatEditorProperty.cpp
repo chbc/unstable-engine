@@ -24,7 +24,7 @@ void FloatEditorProperty::draw()
 	ImGui::NextColumn();
 	ImGui::SetColumnWidth(0, 100.0f);
 
-	if (ImGui::DragFloat("##id", this->value, 0.1f, 0.0f, 0.0f, "%.2f"))
+	if (ImGui::DragFloat("##id", this->value, 0.1f, 0.0f, 0.0f, "%.2f") && (this->onValueChanged != nullptr))
 	{
 		this->onValueChanged();
 	}
