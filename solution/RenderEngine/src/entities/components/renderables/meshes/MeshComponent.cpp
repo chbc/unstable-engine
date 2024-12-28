@@ -12,20 +12,15 @@ namespace sre
 IMPLEMENT_COMPONENT(MeshComponent)
 
 MeshComponent::MeshComponent(Entity *entity)
-    : AEntityComponent(entity), opaque(true), material(new Material{}), mesh(nullptr)
+    : AEntityComponent(entity), opaque(true), material(nullptr), mesh(nullptr)
 {
     this->addEditorProperty(new MeshEditorProperty{ "Mesh", &this->mesh });
-    this->addEditorProperty(new MaterialEditorProperty{ "Material", this->material });
+    this->addEditorProperty(new MaterialEditorProperty{ "Material", &this->material});
 }
 
 Material *MeshComponent::getMaterial()
 {
-    return this->material.get();
-}
-
-void MeshComponent::setMaterial(UPTR<Material> &material)
-{
-    this->material = std::move(material);
+    return this->material;
 }
 
 void MeshComponent::setIsOpaque(bool value)

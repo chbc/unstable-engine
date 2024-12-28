@@ -442,7 +442,7 @@
     <ClInclude Include="include\EditorMessages.h" />
     <ClInclude Include="include\EditorSceneTree.h" />
     <ClInclude Include="include\EditorSceneViewport.h" />
-    <ClInclude Include="include\EMaterialMap.h" />
+    <ClInclude Include="include\ETextureMap.h" />
     <ClInclude Include="include\EngineValues.h" />
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\FileUtils.h" />

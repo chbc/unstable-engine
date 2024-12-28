@@ -656,7 +656,7 @@
     <ClInclude Include="include\EComponentId.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\EMaterialMap.h">
+    <ClInclude Include="include\ETextureMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Entity.h">

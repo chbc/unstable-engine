@@ -9,7 +9,7 @@ entity_0:
     MeshComponent:
       Enabled: 1
       Mesh: Sphere.mesh
-      Material: DefaultMaterial.mat
+      Material: DiffuseMaterial.mat
 plane:
   Enabled: 1
   Components:

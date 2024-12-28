@@ -1,7 +1,8 @@
 #include "SpriteRendererComponent.h"
 #include "MeshComponent.h"
+#include "Material.h"
 #include "ShaderManager.h"
-#include "EMaterialMap.h"
+#include "ETextureMap.h"
 #include "SpriteMaterialComponent.h"
 
 namespace sre

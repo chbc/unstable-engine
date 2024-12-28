@@ -11,9 +11,6 @@ DECLARE_MATERIAL_COMPONENT()
 	
 public:
 	AmbientOcclusionMaterialComponent(Material *material);
-
-protected:
-	virtual ETextureMap::Type getTextureType();
 };
 
 } // namespace

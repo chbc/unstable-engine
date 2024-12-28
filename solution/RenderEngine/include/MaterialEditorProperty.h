@@ -11,11 +11,10 @@ class Material;
 class MaterialEditorProperty : public AEditorProperty
 {
 private:
-	std::string fileName;
-	UPTR<Material>& material;
+	Material** material;
 
 public:
-	MaterialEditorProperty(const char* title, UPTR<Material>& arg_material);
+	MaterialEditorProperty(const char* title, Material** arg_material);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

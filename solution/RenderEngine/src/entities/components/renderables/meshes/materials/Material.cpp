@@ -7,7 +7,7 @@
 namespace sre
 {
 
-Material::Material() : castShadow(false), uvOffset(glm::vec2(0.0f)), uvTiling(glm::vec2(1.0f))
+Material::Material(std::string arg_fileName) : fileName(arg_fileName), castShadow(false), uvOffset(glm::vec2(0.0f)), uvTiling(glm::vec2(1.0f))
 {
     this->editorProperties.emplace_back(new BoolEditorProperty{ "Cast Shadow", &this->castShadow });
     this->editorProperties.emplace_back(new Vec2EditorProperty{ "UV Offset", &this->uvOffset });
@@ -24,6 +24,7 @@ AMaterialComponent* Material::addComponent(const char* className)
     assert(this->componentsMap.count(id) == 0);
 
     this->componentsMap.emplace(id, newComponent);
+    this->componentsBitset[id] = true;
 
     return newComponent;
 }

@@ -1,9 +1,10 @@
 #include "AORendererComponent.h"
 
 #include "MeshComponent.h"
+#include "Material.h"
 #include "ShaderManager.h"
 #include "AGraphicsWrapper.h"
-#include "EMaterialMap.h"
+#include "ETextureMap.h"
 #include "AmbientOcclusionMaterialComponent.h"
 
 namespace sre

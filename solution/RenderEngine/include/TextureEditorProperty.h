@@ -1,18 +1,23 @@
 #pragma once
 
 #include "AEditorProperty.h"
+#include "ETextureMap.h"
 
 namespace sre
 {
+
+class Texture;
 
 class TextureEditorProperty : public AEditorProperty
 {
 
 private:
-	void* value;
+	ETextureMap::Type textureMapType;
+	Texture** texture;
+	void* id;
 
 public:
-	TextureEditorProperty(const char* title, uint32_t* arg_value);
+	TextureEditorProperty(const char* title, Texture** arg_texture, ETextureMap::Type arg_textureMapType);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

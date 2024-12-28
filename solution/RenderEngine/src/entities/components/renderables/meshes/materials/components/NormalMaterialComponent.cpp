@@ -9,12 +9,7 @@ IMPLEMENT_MATERIAL_COMPONENT(NormalMaterialComponent, NORMAL_MATERIAL)
 NormalMaterialComponent::NormalMaterialComponent(Material *material)
 	: ABaseTextureMaterialComponent(material)
 {
-	this->addEditorProperty(new TextureEditorProperty{ "Normal", &this->texture->getId() });
-}
-
-ETextureMap::Type NormalMaterialComponent::getTextureType()
-{
-	return ETextureMap::NORMAL;
+	this->addEditorProperty(new TextureEditorProperty{ "Normal", &this->texture, ETextureMap::NORMAL });
 }
 
 } // namespace

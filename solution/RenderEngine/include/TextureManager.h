@@ -56,6 +56,7 @@ friend class AtlasManager;
 friend class GUITextComponent;
 friend class EditorSceneViewport;
 friend class EditorsController;
+friend class TextureEditorProperty;
 };
 
 } // namespace

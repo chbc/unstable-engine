@@ -4,3 +4,8 @@ UV Tiling: [1,1]
 Components:
   ColorMaterialComponent:
     Color: [0,1,0,1]
+  DiffuseMaterialComponent:
+    Diffuse:
+      TextureMapType: 1
+      File: floor_diffuse.png
+  

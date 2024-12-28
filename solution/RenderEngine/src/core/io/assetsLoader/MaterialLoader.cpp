@@ -45,7 +45,7 @@ Material* sre::MaterialLoader::load(const char* fileName)
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
 	c4::yml::ConstNodeRef root = tree.crootref();
 
-	Material* result = new Material;
+	Material* result = new Material{ fileName };
 	for (auto& property : result->editorProperties)
 	{
 		c4::yml::ConstNodeRef& propertyNode = root[property->title.c_str()];

@@ -9,12 +9,7 @@ IMPLEMENT_MATERIAL_COMPONENT(AmbientOcclusionMaterialComponent, AO_MATERIAL)
 AmbientOcclusionMaterialComponent::AmbientOcclusionMaterialComponent(Material *material)
 	: ABaseTextureMaterialComponent(material)
 {
-	this->addEditorProperty(new TextureEditorProperty{ "Ambient Occlusion", &this->texture->getId() });
-}
-
-ETextureMap::Type AmbientOcclusionMaterialComponent::getTextureType()
-{
-	return ETextureMap::AMBIENT_OCCLUSION;
+	this->addEditorProperty(new TextureEditorProperty{ "Ambient Occlusion", &this->texture, ETextureMap::AMBIENT_OCCLUSION });
 }
 
 } // namespace

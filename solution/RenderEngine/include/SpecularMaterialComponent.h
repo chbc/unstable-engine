@@ -11,9 +11,6 @@ DECLARE_MATERIAL_COMPONENT()
 	
 public:
 	SpecularMaterialComponent(Material *material);
-
-protected:
-	virtual ETextureMap::Type getTextureType();
 };
 
 } // namespace

@@ -9,12 +9,7 @@ IMPLEMENT_MATERIAL_COMPONENT(SpecularMaterialComponent, SPECULAR_MATERIAL)
 SpecularMaterialComponent::SpecularMaterialComponent(Material *material)
 	: ABaseTextureMaterialComponent(material)
 {
-	this->addEditorProperty(new TextureEditorProperty{ "Specular", &this->texture->getId() });
-}
-
-ETextureMap::Type SpecularMaterialComponent::getTextureType()
-{
-	return ETextureMap::SPECULAR;
+	this->addEditorProperty(new TextureEditorProperty{ "Specular", &this->texture, ETextureMap::SPECULAR });
 }
 
 } // namespace

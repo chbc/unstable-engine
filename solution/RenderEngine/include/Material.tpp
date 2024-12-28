@@ -3,14 +3,14 @@
 namespace sre
 {
 
-template <typename T, typename... TArgs>
-T* Material::addComponent(TArgs&&... mArgs)
+template <typename T>
+T* Material::addComponent()
 {
     T* newComponent{ nullptr };
 
     assert(!this->hasComponent<T>());
 
-    newComponent = new T{ this, std::forward<TArgs>(mArgs)... };
+    newComponent = new T{ this };
     size_t id = T::ID;
     this->componentsMap[id] = UPTR<T>{ newComponent };
     this->componentsBitset[id] = true;

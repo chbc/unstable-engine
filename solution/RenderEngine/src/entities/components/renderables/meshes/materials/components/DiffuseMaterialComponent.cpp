@@ -9,12 +9,7 @@ IMPLEMENT_MATERIAL_COMPONENT(DiffuseMaterialComponent, DIFFUSE_MATERIAL)
 DiffuseMaterialComponent::DiffuseMaterialComponent(Material *material)
     : ABaseTextureMaterialComponent(material)
 {
-    this->addEditorProperty(new TextureEditorProperty{ "Diffuse", &this->texture->getId() });
-}
-
-ETextureMap::Type DiffuseMaterialComponent::getTextureType()
-{
-    return ETextureMap::DIFFUSE;
+    this->addEditorProperty(new TextureEditorProperty{ "Diffuse", &this->texture, ETextureMap::DIFFUSE });
 }
 
 } // namespace

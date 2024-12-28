@@ -2,7 +2,7 @@
 #define _TEXTURE_H_
 
 #include <stdint.h>
-#include "EMaterialMap.h"
+#include "ETextureMap.h"
 #include <string>
 
 namespace sre

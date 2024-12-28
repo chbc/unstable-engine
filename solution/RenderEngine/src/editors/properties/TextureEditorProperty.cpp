@@ -1,15 +1,17 @@
 #include "TextureEditorProperty.h"
+#include "SingletonsManager.h"
+#include "TextureManager.h"
+#include "Paths.h"
 
+#include <rapidyaml/rapidyaml.hpp>
 #include "imgui/imgui.h"
 
 namespace sre
 {
 
-TextureEditorProperty::TextureEditorProperty(const char* title, uint32_t* arg_value)
-	: AEditorProperty(title)
-{
-	this->value = reinterpret_cast<void*>(arg_value);
-}
+TextureEditorProperty::TextureEditorProperty(const char* title, Texture** arg_texture, ETextureMap::Type arg_textureMapType)
+	: AEditorProperty(title), texture(arg_texture), textureMapType(arg_textureMapType), id(nullptr)
+{ }
 
 void TextureEditorProperty::draw()
 {
@@ -21,7 +23,7 @@ void TextureEditorProperty::draw()
 	ImGui::NextColumn();
 	ImGui::SetColumnWidth(0, 100.0f);
 
-	ImGui::Image(this->value, ImVec2{ 64.0f, 64.0f}, ImVec2{ 0.0f, 1.0f }, ImVec2{ 1.0f, 0.0f });
+	ImGui::Image(this->id, ImVec2{ 64.0f, 64.0f}, ImVec2{ 0.0f, 1.0f }, ImVec2{ 1.0f, 0.0f });
 
 	ImGui::Columns(1);
 
@@ -34,6 +36,18 @@ void TextureEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 
 void TextureEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
+	std::string fileName;
+	int mapType = 0;
+	propertyNode["TextureMapType"] >> mapType;
+	propertyNode["File"] >> fileName;
+
+	this->textureMapType = static_cast<ETextureMap::Type>(mapType);
+
+	TextureManager* textureManager = SingletonsManager::getInstance()->get<TextureManager>();
+	std::string filePath;
+	Paths().buildMediaFilePath(EContentType::ENGINE, fileName.c_str(), filePath);
+	*this->texture = textureManager->loadTexture(filePath, this->textureMapType);
+	this->id = reinterpret_cast<void*>((*this->texture)->getId());
 }
 
 } // namespace

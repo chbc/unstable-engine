@@ -26,14 +26,15 @@ private:
     bool castShadow;
 
 private:
-    Material();
+    Material(std::string arg_fileName);
 
 public:
-    AMaterialComponent* addComponent(const char* className);
-    template <typename T, typename... TArgs> T* addComponent(TArgs&&... mArgs);
+    template <typename T> T* addComponent();
     template <typename T> void removeComponent();
     template <typename T> T* getComponent();
     template <typename T> bool hasComponent();
+
+    AMaterialComponent* addComponent(const char* className);
 
 	SRE_API void setCastShadow(bool value);
 	SRE_API void setReceivesLight(bool value);

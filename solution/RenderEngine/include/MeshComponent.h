@@ -4,14 +4,12 @@
 #include "AEntityComponent.h"
 #include "memory_aliases.h"
 #include "Mesh.h"
-#include "Material.h"
 
 namespace sre
 {
 
-/*!
-	Class that holds information for rendering.
-*/
+class Material;
+
 class SRE_API MeshComponent : public AEntityComponent
 {
 DECLARE_COMPONENT()
@@ -21,12 +19,11 @@ protected:
 
 private:
     bool opaque;
-    UPTR<Material> material;
+    Material* material;
 
 public:
     MeshComponent(Entity *entity);
     Material *getMaterial();
-    void setMaterial(UPTR<Material> &material);
 
     template <typename T, typename... TArgs>
     T *addMaterialComponent(TArgs&&... mArgs)

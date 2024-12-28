@@ -3,7 +3,7 @@
 #include "LightManager.h"
 #include "SingletonsManager.h"
 #include "AGraphicsWrapper.h"
-#include "EMaterialMap.h"
+#include "ETextureMap.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace sre
