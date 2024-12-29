@@ -14,3 +14,11 @@ Components:
     Normal:
       TextureMapType: 2
       File: floor_normal.png
+  SpecularMaterialComponent:
+    Specular:
+      TextureMapType: 3
+      File: floor_specular.png
+  AmbientOcclusionMaterialComponent:
+    Ambient Occlusion:
+      TextureMapType: 4
+      File: floor_ao.png
