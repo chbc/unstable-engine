@@ -23,7 +23,7 @@ plane:
       Enabled: 1
       Mesh: Plane.mesh
       Material: FloorMaterial.mat
-entity_0:
+sphere:
   Enabled: 1
   Components:
     TransformComponent:

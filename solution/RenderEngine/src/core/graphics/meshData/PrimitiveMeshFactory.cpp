@@ -93,35 +93,6 @@ GUIMeshData* PrimitiveMeshFactory::createPlaneBottomUp(const glm::vec2& size)
 	return createPlane2D(size, planeTexCoords);
 }
 
-GUIMeshData* PrimitiveMeshFactory::createPlane2D(const glm::vec2 &size, const float* texCoords)
-{
-	float planeVertices[] = 
-	{ 
-		-size.x, size.y,
-		-size.x,-size.y,
-		 size.x,-size.y,
-		 size.x, size.y
-	};
-
-	std::vector<GUIVertexData> vertexData;
-	// Positions
-	for (int i = 0; i < 8; i += 2)
-	{
-		GUIVertexData newData;
-		newData.position = glm::vec2(planeVertices[i], planeVertices[i + 1]);
-
-		vertexData.emplace_back(newData);
-	}
-
-	getPlaneUVs(vertexData, texCoords);
-
-	// Indices
-	std::vector<uint16_t> indices;
-	createPlaneIndices(indices);
-
-	return new GUIMeshData{vertexData, indices};
-}
-
 MeshData* PrimitiveMeshFactory::createPlane(float size, float tileMultiplier)
 {
 	return this->createPlane(glm::vec2(size, size), tileMultiplier);
@@ -172,28 +143,23 @@ MeshData* PrimitiveMeshFactory::createPlane(const glm::vec2& size, float tileMul
 	std::vector<uint16_t> indices;
 	createPlaneIndices(indices);
 
-	// Tangents and bitangents
-	glm::vec3 tangent, bitangent;
-	const int FACES_COUNT = 2;
-	for (int i = 0; i < FACES_COUNT; i++)
-	{
-		MathUtils::calculateTangentAndBitangent
-		(
-			vertexData[indices[3*i]].position, vertexData[indices[3*i + 1]].position, vertexData[indices[3*i + 2]].position,
-			glm::vec2(vertexData[indices[3*i]].u, vertexData[indices[3*i]].v), 
-			glm::vec2(vertexData[indices[3*i + 1]].u, vertexData[indices[3*i + 1]].v),
-			glm::vec2(vertexData[indices[3*i + 2]].u, vertexData[indices[3*i + 2]].v),
-			tangent, bitangent
-		);
-
-		for (int j = 0; j < 2; j++)
-		{
-			vertexData[indices[3 * i + j]].tangent = tangent;
-			vertexData[indices[3 * i + j]].bitangent = bitangent;
-		}
-	}
-
+	this->calculateTangentsAndBitangents(vertexData, indices, 2);
 	return new MeshData{vertexData, indices};
+}
+
+void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint16_t>& result, int planesCount)
+{
+	unsigned char baseIndices[] =
+	{
+		0, 1, 2,
+		2, 3, 0,
+	};
+
+	for (int planeIndex = 0; planeIndex < planesCount; planeIndex++)
+	{
+		for (int i = 0; i < 6; i++)
+			result.push_back(baseIndices[i] + (4 * planeIndex));
+	}
 }
 
 MeshData* PrimitiveMeshFactory::createCube(float size)
@@ -260,10 +226,96 @@ MeshData* PrimitiveMeshFactory::createCube(float size)
 	for (int i = 0; i < 36; i++)
 		indices.push_back(cubeIndices[i]);
 
+	this->calculateTangentsAndBitangents(vertexData, indices, 12);
+
+	return new MeshData{ vertexData, indices };
+}
+
+MeshData* PrimitiveMeshFactory::createSphere(float radius, uint16_t stackCount, uint16_t sectorCount)
+{
+	std::vector<VertexData> vertexData;
+	std::vector<uint16_t> indices;
+	
+	vertexData.resize((stackCount + 1) * (sectorCount + 1));
+
+	std::vector<VertexData>::iterator item = vertexData.begin();
+
+	float x, y, z, xy;
+	float lengthInv = 1.0f / radius;
+	float sectorStep = 2 * M_PI / static_cast<float>(sectorCount);
+	float stackStep = M_PI / static_cast<float>(stackCount);
+	float sectorAngle, stackAngle;
+
+	for (int i = 0; i <= stackCount; ++i)
+	{
+		stackAngle = (M_PI / 2) - (i * stackStep);        // starting from pi/2 to -pi/2
+		xy = radius * cosf(stackAngle);             // r * cos(u)
+		z = radius * sinf(stackAngle);              // r * sin(u)
+		for (int j = 0; j <= sectorCount; ++j)
+		{
+			sectorAngle = j * sectorStep;
+
+			x = xy * cosf(sectorAngle);             // r * cos(u) * cos(v)
+			y = xy * sinf(sectorAngle);             // r * cos(u) * sin(v)
+
+			(*item).position.x = x;
+			(*item).position.y = y;
+			(*item).position.z = z;
+
+			(*item).normal.x = x * lengthInv;
+			(*item).normal.y = y * lengthInv;
+			(*item).normal.z = z * lengthInv;
+
+			(*item).u = static_cast<float>(j) / sectorCount;
+			(*item).v = static_cast<float>(i)/ stackCount;
+
+			item++;
+		}
+	}
+
+	this->createSphereIndices(indices, stackCount, sectorCount);
+
+	int midStacks = stackCount - 2;
+	int faces = (sectorCount * 2) + (midStacks * sectorCount * 2);
+	this->calculateTangentsAndBitangents(vertexData, indices, faces);
+
+	return new MeshData{ vertexData, indices };
+}
+
+GUIMeshData* PrimitiveMeshFactory::createPlane2D(const glm::vec2& size, const float* texCoords)
+{
+	float planeVertices[] =
+	{
+		-size.x, size.y,
+		-size.x,-size.y,
+		 size.x,-size.y,
+		 size.x, size.y
+	};
+
+	std::vector<GUIVertexData> vertexData;
+	// Positions
+	for (int i = 0; i < 8; i += 2)
+	{
+		GUIVertexData newData;
+		newData.position = glm::vec2(planeVertices[i], planeVertices[i + 1]);
+
+		vertexData.emplace_back(newData);
+	}
+
+	getPlaneUVs(vertexData, texCoords);
+
+	// Indices
+	std::vector<uint16_t> indices;
+	createPlaneIndices(indices);
+
+	return new GUIMeshData{ vertexData, indices };
+}
+
+void PrimitiveMeshFactory::calculateTangentsAndBitangents(std::vector<VertexData>& vertexData, std::vector<uint16_t> indices, int facesCount)
+{
 	// Tangents and bitangents
 	glm::vec3 tangent, bitangent;
-	const int FACES_COUNT = 12;
-	for (int i = 0; i < FACES_COUNT; i++)
+	for (int i = 0; i < facesCount; i++)
 	{
 		MathUtils::calculateTangentAndBitangent
 		(
@@ -280,83 +332,36 @@ MeshData* PrimitiveMeshFactory::createCube(float size)
 			vertexData[indices[3 * i + j]].bitangent = bitangent;
 		}
 	}
-
-	return new MeshData{ vertexData, indices };
 }
 
-MeshData* PrimitiveMeshFactory::createSphere(float radius, uint16_t rings, uint16_t sectors)
+void PrimitiveMeshFactory::createSphereIndices(std::vector<uint16_t>& indices, uint16_t stackCount, uint16_t sectorCount)
 {
-	std::vector<VertexData> vertexData;
-	std::vector<uint16_t> indices;
-	
-	vertexData.resize(rings * sectors);
-	vertexData.resize(rings * sectors);
-	vertexData.resize(rings * sectors);
-
-	float const R = 1. / (float)(rings - 1);
-	float const S = 1. / (float)(sectors - 1);
-
-	std::vector<VertexData>::iterator item = vertexData.begin();
-
-	for (int r = 0; r < rings; ++r)
+	int k1, k2;
+	for (int i = 0; i < stackCount; ++i)
 	{
-		for (int s = 0; s < sectors; ++s)
+		k1 = i * (sectorCount + 1);     // beginning of current stack
+		k2 = k1 + sectorCount + 1;      // beginning of next stack
+
+		for (int j = 0; j < sectorCount; ++j, ++k1, ++k2)
 		{
-			float const y = sin(-M_PI_2 + M_PI * r * R);
-			float const x = cos(2 * M_PI * s * S) * sin(M_PI * r * R);
-			float const z = sin(2 * M_PI * s * S) * sin(M_PI * r * R);
-
-			(*item).u = s * S;
-			(*item).v = r * R;
-
-			(*item).position.x = x * radius;
-			(*item).position.y = y * radius;
-			(*item).position.z = z * radius;
-
-			(*item).normal.x = x;
-			(*item).normal.y = y;
-			(*item).normal.z = z;
-
-			item++;
-
-			if (r < rings - 1)
+			// 2 triangles per sector excluding first and last stacks
+			// k1 => k2 => k1+1
+			if (i != 0)
 			{
-				this->pushSphereIndices(indices, sectors, r, s);
+				indices.push_back(k1);
+				indices.push_back(k2);
+				indices.push_back(k1 + 1);
+			}
+
+			// k1+1 => k2 => k2+1
+			if (i != (stackCount - 1))
+			{
+				indices.push_back(k1 + 1);
+				indices.push_back(k2);
+				indices.push_back(k2 + 1);
 			}
 		}
 	}
-
-	return new MeshData{ vertexData, indices };
-}
-
-void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint16_t> &result, int planesCount)
-{
-	unsigned char baseIndices[] = 
-	{ 
-		0, 1, 2,
-		2, 3, 0,
-	};
-
-	for (int planeIndex = 0; planeIndex < planesCount; planeIndex++)
-	{
-		for (int i = 0; i < 6; i++)
-			result.push_back(baseIndices[i] + (4 * planeIndex));
-	}
-}
-
-void PrimitiveMeshFactory::pushSphereIndices(std::vector<uint16_t>& indices, int sectors, int r, int s)
-{
-	int curRow = r * sectors;
-	int nextRow = (r + 1) * sectors;
-	int nextS = (s + 1) % sectors;
-
-	indices.push_back(curRow + s);
-	indices.push_back(nextRow + s);
-	indices.push_back(nextRow + nextS);
-
-	indices.push_back(curRow + s);
-	indices.push_back(nextRow + nextS);
-	indices.push_back(curRow + nextS);
 }
 
 } // namespace

@@ -10,4 +10,7 @@ Components:
     Diffuse:
       TextureMapType: 1
       File: floor_diffuse.png
-  
+  NormalMaterialComponent:
+    Normal:
+      TextureMapType: 2
+      File: floor_normal.png
