@@ -65,6 +65,8 @@ void EditorSceneTree::drawScene(AScene* scene)
 		{
 			for (const auto& item : scene->entities)
 				this->drawEntityTree(item.second.get(), 0);
+			for (const auto& item : scene->entityAssets)
+				this->drawEntityTree(item.second, 0);
 		}
 	}
 }

@@ -1,0 +1,12 @@
+Cast Shadow: 0
+UV Offset: [0,0]
+UV Tiling: [1,1]
+Components:
+  ColorMaterialComponent:
+    Color: [1,1,1,1]
+  LitMaterialComponent:
+    Shininess: 1
+  DiffuseMaterialComponent:
+    Diffuse:
+      TextureMapType: 1
+      File: viper_diffuse.png

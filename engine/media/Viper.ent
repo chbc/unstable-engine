@@ -2,10 +2,10 @@
   Components:
     TransformComponent:
       Enabled: 1
-      Position: [0,0,-2.5]
+      Position: [0,0,2.5]
       Rotation: [0,0,0]
       Scale: [0.01,0.01,0.01]
     MeshComponent:
       Enabled: 1
-      Mesh: Cube.mesh
-      Material: DefaultMaterial.mat
+      Mesh: Viper.mesh
+      Material: ViperMaterial.mat

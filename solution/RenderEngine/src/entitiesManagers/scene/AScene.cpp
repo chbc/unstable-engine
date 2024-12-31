@@ -14,6 +14,8 @@ Entity* AScene::getEntity(const std::string& name)
     Entity* result = nullptr;
     if (this->entities.count(name) > 0)
         result = this->entities[name].get();
+    else if (this->entityAssets.count(name) > 0)
+        result = this->entityAssets[name];
 
     return result;
 }
@@ -47,6 +49,7 @@ void AScene::addEntityAsset(Entity* entityAsset)
 void AScene::removeDestroyedEntities()
 {
     CollectionsUtils::removeIfEntityIsDestroyed(this->entities);
+    CollectionsUtils::removeIfEntityIsDestroyed(this->entityAssets);
 }
 
 void AScene::initEntities()
@@ -55,11 +58,21 @@ void AScene::initEntities()
     {
         item.second->onInit();
     }
+
+    for (const auto& item : this->entityAssets)
+    {
+        item.second->onInit();
+    }
 }
 
 void AScene::update(float elapsedTime)
 {
     for (const auto& item : this->entities)
+    {
+        item.second->onUpdate(elapsedTime);
+    }
+
+    for (const auto& item : this->entityAssets)
     {
         item.second->onUpdate(elapsedTime);
     }
@@ -74,17 +87,24 @@ void AScene::onSceneLoaded()
         renderManager->addEntity(item.second.get());
     }
 
+    for (const auto& item : this->entityAssets)
+    {
+        renderManager->addEntity(item.second);
+    }
+
     this->sceneLoaded = true;
 }
 
 void AScene::clean()
 {
     this->entities.clear();
+    this->entityAssets.clear();
 }
 
 void AScene::release()
 {
     this->entities.clear();
+    this->entityAssets.clear();
 }
 
 } // namespace
