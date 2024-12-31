@@ -57,8 +57,8 @@ cube:
       Enabled: 1
       Position: [-5,0,0]
       Rotation: [0,0,0]
-      Scale: [1,1,1]
+      Scale: [0.01,0.01,0.01]
     MeshComponent:
       Enabled: 1
-      Mesh: Cube.mesh
+      Mesh: Viper.mesh
       Material: DefaultMaterial.mat
