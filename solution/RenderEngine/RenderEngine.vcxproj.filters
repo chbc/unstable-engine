@@ -375,6 +375,9 @@
     <ClCompile Include="src\editors\windows\FileIcons\FileIcon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1017,6 +1020,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\FileIcon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EntityLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

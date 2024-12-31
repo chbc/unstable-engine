@@ -1,0 +1,40 @@
+#include "EntityLoader.h"
+#include "FileUtils.h"
+#include "Entity.h"
+#include "AScene.h"
+#include "EntityParser.h"
+#include "Paths.h"
+
+namespace sre
+{
+
+void EntityLoader::save(Entity* entity, const char* fileName)
+{
+	c4::yml::Tree tree;
+	c4::yml::NodeRef root = tree.rootref();
+
+	EntityParser::serialize(root, entity);
+
+	std::string filePath;
+	Paths().buildMediaFilePath(EContentType::ENGINE, fileName, filePath);
+	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
+	FileUtils::saveFile(filePath, content);
+}
+
+Entity* EntityLoader::load(const char* fileName, std::string name)
+{
+	std::string fileContent;
+	std::string filePath;
+	Paths().buildMediaFilePath(EContentType::ENGINE, fileName, filePath);
+	FileUtils::loadFile(filePath, fileContent);
+
+	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
+
+	Entity* result = new Entity{ name };
+	c4::yml::ConstNodeRef root = tree.crootref();
+	EntityParser::deserialize(root, result);
+
+	return result;
+}
+
+} // namespace sre

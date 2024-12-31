@@ -20,10 +20,10 @@ Entity* AScene::getEntity(const std::string& name)
 
 Entity* AScene::createEntity(const std::string& name, Entity* parent)
 {
-    Entity* result = new Entity;
+    Entity* result = nullptr;
 
     if (parent != nullptr)
-        parent->addChild(result, name);
+        result = parent->createChild(name);
     else
     {
         std::string resultName = name;
@@ -32,11 +32,16 @@ Entity* AScene::createEntity(const std::string& name, Entity* parent)
         else if (this->entities.count(name) > 0)
             resultName = Entity::generateEntityId(EntityIndex, name);
 
-        result->name = resultName;
+        result = new Entity{ resultName };
         this->entities[resultName] = UPTR<Entity>{ result };
     }
 
     return result;
+}
+
+void AScene::addEntityAsset(Entity* entityAsset)
+{
+    this->entityAssets.emplace(entityAsset->getName(), entityAsset);
 }
 
 void AScene::removeDestroyedEntities()

@@ -41,7 +41,7 @@ namespace sre
 
         void setupBufferSubData(GUIMeshData* meshData) override;
 
-        void drawElement(uint32_t indicesId, uint32_t indicesSize) override;
+        void drawElement(uint32_t indicesId, size_t indicesSize) override;
 
         void disableVertexAttribute(int location) override;
         virtual void enableDepthTest() override;

@@ -364,6 +364,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MaterialLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MeshLoader.cpp" />
     <ClCompile Include="src\core\io\AssetsManager.cpp" />
@@ -558,6 +559,7 @@
     <ClInclude Include="include\AEntityComponent.h" />
     <ClInclude Include="include\ApplicationStrategy.h" />
     <ClInclude Include="include\AssetsManager.h" />
+    <ClInclude Include="include\EntityLoader.h" />
     <ClInclude Include="include\FileIcon.h" />
     <ClInclude Include="include\Paths.h" />
     <ClInclude Include="include\BoolEditorProperty.h" />

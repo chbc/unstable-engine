@@ -49,7 +49,7 @@ void EditorSceneViewport::onInit()
 
 		this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 
-		this->cameraEntity = UPTR<Entity>(new Entity{});
+		this->cameraEntity = UPTR<Entity>(new Entity{"_editor_camera"});
 		float aspectRatio = static_cast<float>(EngineValues::SCREEN_WIDTH) / static_cast<float>(EngineValues::SCREEN_HEIGHT);
 		this->flyingCamera = cameraEntity->addComponent<FlyingCameraComponent>();
 		this->flyingCamera->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);

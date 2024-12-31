@@ -1,5 +1,8 @@
 #include "EntityParser.h"
 #include "AScene.h"
+#include "SingletonsManager.h"
+#include "AssetsManager.h"
+
 #include <sstream>
 
 namespace sre
@@ -31,7 +34,7 @@ void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity)
 	}
 }
 
-void EntityParser::deserialize(AScene* scene, c4::yml::ConstNodeRef& entityNode, Entity* entity)
+void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, Entity* entity)
 {
 	bool enabled;
 	entityNode["Enabled"] >> enabled;
@@ -41,20 +44,44 @@ void EntityParser::deserialize(AScene* scene, c4::yml::ConstNodeRef& entityNode,
 	{
 		if (propertyNode.key() == "Components")
 		{
-			for (c4::yml::ConstNodeRef componentNode : propertyNode.children())
-			{
-				ComponentParser::deserialize(componentNode, entity);
-			}
+			deserializeComponents(propertyNode, entity);
 		}
 		else if (propertyNode.key() == "Entities")
 		{
-			for (c4::yml::ConstNodeRef childEntityNode : propertyNode.children())
-			{
-				std::ostringstream keyStream;
-				keyStream << childEntityNode.key();
-				Entity* childEntity = scene->createEntity(keyStream.str(), entity);
-				deserialize(scene, childEntityNode, childEntity);
-			}
+			deserializeChildren(propertyNode, entity);
+		}
+	}
+}
+
+void EntityParser::deserializeComponents(c4::yml::ConstNodeRef& propertyNode, Entity* entity)
+{
+	for (c4::yml::ConstNodeRef componentNode : propertyNode.children())
+	{
+		ComponentParser::deserialize(componentNode, entity);
+	}
+}
+
+void EntityParser::deserializeChildren(c4::yml::ConstNodeRef& propertyNode, Entity* entity)
+{
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+	for (c4::yml::ConstNodeRef childEntityNode : propertyNode.children())
+	{
+		std::ostringstream keyStream;
+		keyStream << childEntityNode.key();
+		std::string childName = keyStream.str();
+		if (childEntityNode.has_child("FileName"))
+		{
+			std::string fileName;
+			childEntityNode["FileName"] >> fileName;
+			Entity* childEntity = assetsManager->loadEntity(fileName.c_str(), childName);
+			entity->addChild(childEntity);
+		}
+		else
+		{
+			std::ostringstream keyStream;
+			keyStream << childEntityNode.key();
+			Entity* childEntity = entity->createChild(childName);
+			deserialize(childEntityNode, childEntity);
 		}
 	}
 }

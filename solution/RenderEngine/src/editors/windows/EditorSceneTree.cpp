@@ -72,7 +72,7 @@ void EditorSceneTree::drawScene(AScene* scene)
 void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 {
 	const char* name = entity->getName();
-	const uint32_t childrenCount = entity->getChildrenCount();
+	const size_t childrenCount = entity->getChildrenCount();
 	const ImGuiTreeNodeFlags BASE_FLAGS = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick; // XXX | ImGuiTreeNodeFlags_Selected;
 
 	if (childrenCount == 0)

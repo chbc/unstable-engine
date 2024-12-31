@@ -3,6 +3,8 @@
 #include "AScene.h"
 #include "EntityParser.h"
 #include "Paths.h"
+#include "SingletonsManager.h"
+#include "AssetsManager.h"
 
 namespace sre
 {
@@ -34,13 +36,26 @@ void SceneLoader::load(AScene* scene, const char* sceneName)
 
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
 
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	c4::yml::ConstNodeRef root = tree.crootref();
 	for (c4::yml::ConstNodeRef entityNode : root.children())
 	{
-		std::ostringstream keyStream;
-		keyStream << entityNode.key();
-		Entity* entity = scene->createEntity(keyStream.str());
-		EntityParser::deserialize(scene, entityNode, entity);
+		std::ostringstream nameStream;
+		nameStream << entityNode.key();
+		std::string name = nameStream.str();
+
+		if (entityNode.has_child("FileName"))
+		{
+			std::string fileName;
+			entityNode["FileName"] >> fileName;
+			Entity* entity = assetsManager->loadEntity(fileName.c_str(), name);
+			scene->addEntityAsset(entity);
+		}
+		else
+		{
+			Entity* entity = scene->createEntity(name);
+			EntityParser::deserialize(entityNode, entity);
+		}
 	}
 }
 

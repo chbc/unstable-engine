@@ -28,7 +28,7 @@ sphere:
   Components:
     TransformComponent:
       Enabled: 1
-      Position: [6,0,-2.5]
+      Position: [5,0,0]
       Rotation: [0,0,0]
       Scale: [1,1,1]
     MeshComponent:
@@ -57,8 +57,10 @@ cube:
       Enabled: 1
       Position: [-5,0,0]
       Rotation: [0,0,0]
-      Scale: [0.01,0.01,0.01]
+      Scale: [1,1,1]
     MeshComponent:
       Enabled: 1
-      Mesh: Viper.mesh
+      Mesh: Cube.mesh
       Material: DefaultMaterial.mat
+viper:
+  FileName: Viper.ent

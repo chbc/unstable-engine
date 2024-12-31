@@ -8,13 +8,9 @@
 namespace sre
 {
 
-Entity::Entity()
+Entity::Entity(std::string arg_name) : name(arg_name)
 {
 	this->transform = this->addComponent<TransformComponent>();
-	this->parent = nullptr;
-	this->alive = true;
-	this->enabled = true;
-
 	this->editorProperties.emplace_back(new BoolEditorProperty{ "Enabled", &this->enabled });
 }
 
@@ -38,17 +34,22 @@ AEntityComponent* Entity::addComponent(const char* className)
 	return newComponent;
 }
 
-void Entity::addChild(Entity* child, const std::string& childName)
+Entity* Entity::createChild(const std::string& childName)
 {
 	std::string resultName = childName;
-
 	if (childName.empty())
 		resultName = generateEntityId(this->childIndex);
 	else if (this->children.count(childName) > 0)
 		resultName = generateEntityId(this->childIndex, childName);
 
-	child->name = resultName;
-	this->children[resultName] = UPTR<Entity>(child);
+	Entity* result = new Entity{ resultName };
+	this->addChild(result);
+	return result;
+}
+
+void Entity::addChild(Entity* child)
+{
+	this->children[child->getName()] = UPTR<Entity>(child);
 	child->parent = this;
 	this->childrenList.push_back(child);
 

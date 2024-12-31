@@ -1,6 +1,7 @@
 #include "AssetsManager.h"
 #include "MeshLoader.h"
 #include "MaterialLoader.h"
+#include "EntityLoader.h"
 #include "RenderManager.h"
 #include "SingletonsManager.h"
 #include "AGraphicsWrapper.h"
@@ -71,9 +72,32 @@ void AssetsManager::releaseMaterial(Material* material)
 		if (materialPair.first < 1)
 		{
 			// XXX REMOVER TEXTURA DO TEXTURE MANAGER
-			this->meshesMap.erase(key);
+			this->materialsMap.erase(key);
 		}
 	}
+}
+
+Entity* AssetsManager::loadEntity(const char* file, std::string name)
+{
+	Entity* result = nullptr;
+	size_t key = generateKey(file);
+	if (this->entitiesMap.count(key) > 0)
+	{
+		EntityPairType& entityPair = this->entitiesMap[key];
+		entityPair.first++;
+		result = entityPair.second.get();
+	}
+	else
+	{
+		result = EntityLoader().load(file, name);
+		this->entitiesMap.emplace(key, std::make_pair<size_t, SPTR<Entity>>(1, SPTR<Entity>{result}));
+	}
+	return result;
+}
+
+void AssetsManager::releaseEntity(Entity* entity)
+{
+	// XXX
 }
 
 size_t AssetsManager::generateKey(const char* input)

@@ -174,7 +174,7 @@ void OpenGLESAPI::setupBufferSubData(GUIMeshData* meshData)
 	GL_CHECK(glBufferSubData(GL_ARRAY_BUFFER, 0, size, &meshData->vertexData[0]));
 }
 
-void OpenGLESAPI::drawElement(uint32_t indicesId, uint32_t indicesSize)
+void OpenGLESAPI::drawElement(uint32_t indicesId, size_t indicesSize)
 {
 	GL_CHECK(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesId));
 	GL_CHECK(glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_SHORT, nullptr));

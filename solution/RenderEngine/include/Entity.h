@@ -24,19 +24,20 @@ class Entity
 private:
 	std::unordered_map<uint16_t, UPTR<AEntityComponent>> componentsMap;
     std::vector<SPTR<AEditorProperty>> editorProperties;
-    Entity *parent;
+    Entity* parent{ nullptr };
     std::unordered_map<std::string, UPTR<Entity>> children;
     std::vector<Entity*> childrenList;
 
 	TransformComponent* transform;
 
-    bool alive;
-    bool enabled;
+    bool alive{ true };
+    bool enabled{ true };
     uint32_t childIndex{};
     std::string name;
+    std::string fileName;
 
 protected:
-    SRE_API Entity();
+    Entity(std::string arg_name);
 
 public:
     SRE_API ~Entity();
@@ -48,8 +49,9 @@ public:
 
     AEntityComponent* addComponent(const char* className);
 
-	SRE_API void addChild(Entity *child, const std::string& childName = "");
-	SRE_API inline uint32_t getChildrenCount() { return this->children.size(); }
+    Entity* createChild(const std::string& childName = "");
+	SRE_API void addChild(Entity *child);
+	SRE_API inline size_t getChildrenCount() { return this->children.size(); }
 	SRE_API Entity *getChild(uint32_t index);
 	SRE_API inline Entity *getParent() { return this->parent; }
 
@@ -71,7 +73,7 @@ private:
     template <typename T> uint16_t getComponentId();
 
     friend class AScene;
-    friend class ModelLoader;
+    friend class EntityLoader;
     friend class EntityParser;
 
     friend class TestServicesProvider;

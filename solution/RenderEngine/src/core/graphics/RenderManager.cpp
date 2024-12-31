@@ -61,8 +61,8 @@ void RenderManager::addEntity(Entity *entity)
         }
     }
     
-    uint32_t size = entity->getChildrenCount();
-    for (uint32_t i = 0; i < size; i++)
+    size_t size = entity->getChildrenCount();
+    for (size_t i = 0; i < size; i++)
         this->addEntity(entity->getChild(i));
 }
 

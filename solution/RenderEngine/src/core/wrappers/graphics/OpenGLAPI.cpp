@@ -225,7 +225,7 @@ void OpenGLAPI::setupBufferSubData(GUIMeshData* meshData)
 	glBufferSubData(GL_ARRAY_BUFFER, 0, size, &meshData->vertexData[0]);
 }
 
-void OpenGLAPI::drawElement(uint32_t indicesId, uint32_t indicesSize)
+void OpenGLAPI::drawElement(uint32_t indicesId, size_t indicesSize)
 {
 	glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_SHORT, nullptr);
 	glBindVertexArray(0);
