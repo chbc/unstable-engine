@@ -1,0 +1,8 @@
+﻿  PrimitiveMeshFactory.cpp
+E:\Projetos\UnstableEngine\unstable-engine\solution\RenderEngine\src\core\graphics\meshData\PrimitiveMeshFactory.cpp(158,43): warning C4018: '<': signed/unsigned mismatch
+  Generating code
+  11 of 355 functions ( 3.1%) were compiled, the rest were copied from previous compilation.
+    7 functions were new in current compilation
+    25 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  BasicShapesGenerator.vcxproj -> E:\Projetos\UnstableEngine\unstable-engine\solution\x64\Release\BasicShapesGenerator.exe

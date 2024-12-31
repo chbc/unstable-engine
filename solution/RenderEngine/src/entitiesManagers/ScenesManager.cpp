@@ -66,11 +66,6 @@ Entity* ScenesManager::createOrthoCamera(Entity* parent, bool isMainCamera)
     return this->runtimeScene->createOrthoCamera(parent, isMainCamera);
 }
 
-Entity* ScenesManager::createModelEntity(const std::string& fileName, const std::string& name, Entity* parent)
-{
-    return this->runtimeScene->createModelEntity(fileName, name, parent);
-}
-
 DirectionalLightComponent* ScenesManager::createDirectionalLight(const std::string& name, Entity* parent)
 {
     return this->runtimeScene->createDirectionalLight(name, parent);

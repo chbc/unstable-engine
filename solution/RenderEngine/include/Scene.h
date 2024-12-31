@@ -23,7 +23,6 @@ private:
 
     // renderables //
     Entity* createMeshEntity(const char* name, const char* fileName);
-    Entity* createModelEntity(const std::string &fileName, const std::string& name = "", Entity* parent = nullptr);
 
     // light //
     DirectionalLightComponent* createDirectionalLight(const std::string& name = "", Entity* parent = nullptr);

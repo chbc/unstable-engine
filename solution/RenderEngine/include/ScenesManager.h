@@ -24,9 +24,6 @@ public:
     SRE_API Entity* createPerspectiveCamera(float fov = 70.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr, bool isMainCamera = true);
     SRE_API Entity* createOrthoCamera(Entity* parent = nullptr, bool isMainCamera = true);
 
-    // renderables //
-    SRE_API Entity* createModelEntity(const std::string& fileName, const std::string& name = "", Entity* parent = nullptr);
-
     // light //
     SRE_API DirectionalLightComponent* createDirectionalLight(const std::string& name = "", Entity* parent = nullptr);
     SRE_API PointLightComponent* createPointLight(const std::string& name = "", Entity* parent = nullptr);

@@ -3,7 +3,6 @@
 #include "CameraComponent.h"
 #include "SingletonsManager.h"
 #include "RenderManager.h"
-#include "ModelLoader.h"
 #include "EngineValues.h"
 #include "MeshComponent.h"
 
@@ -40,15 +39,6 @@ Entity* Scene::createMeshEntity(const char* name, const char* fileName)
     meshComponent->load(fileName);
 
     return entity;
-}
-
-Entity *Scene::createModelEntity(const std::string &fileName, const std::string& name, Entity* parent)
-{
-    ModelLoader modelLoader;
-    Entity *rootEntity = this->createEntity(name, parent);
-    modelLoader.load(rootEntity, fileName);
-
-    return rootEntity;
 }
 
 // light //

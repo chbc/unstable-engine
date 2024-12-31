@@ -4,6 +4,7 @@
 #include "AEntityComponent.h"
 #include "memory_aliases.h"
 #include "Mesh.h"
+#include "Material.h"
 
 namespace sre
 {

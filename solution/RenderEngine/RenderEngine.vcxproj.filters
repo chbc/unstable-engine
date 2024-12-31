@@ -51,9 +51,6 @@
     <ClCompile Include="src\core\graphics\ShaderManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\io\ModelLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\multimedia\textures\atlases\Atlas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

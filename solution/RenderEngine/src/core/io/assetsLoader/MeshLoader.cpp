@@ -9,7 +9,7 @@ namespace sre
 Mesh* MeshLoader::load(const char* file)
 {
 	std::vector<VertexData> vertexData;
-	std::vector<uint16_t> indices;
+	std::vector<uint32_t> indices;
 	std::string filePath;
 	Paths().buildMediaFilePath(EContentType::ENGINE, file, filePath);
 	std::ifstream readStream(filePath, std::ios::out | std::ios::binary);
@@ -27,8 +27,8 @@ Mesh* MeshLoader::load(const char* file)
 		readStream.read((char*)&size, sizeof(size_t));
 		for (size_t i = 0; i < size; i++)
 		{
-			uint16_t item;
-			readStream.read((char*)&item, sizeof(uint16_t));
+			uint32_t item;
+			readStream.read((char*)&item, sizeof(uint32_t));
 			indices.push_back(item);
 		}
 	}

@@ -2,8 +2,6 @@
 #include <iostream>
 #include <fstream>
 
-#define WRITE 1
-
 using namespace sre;
 
 void print(MeshData* mesh);
@@ -12,38 +10,17 @@ void saveMesh(MeshData* mesh, const char* fileName);
 int main()
 {
     PrimitiveMeshFactory meshFactory;
-#if WRITE
-    // WRITE
-    /*
     MeshData* cubeMesh = meshFactory.createCube(1.0f);
     MeshData* planeMesh = meshFactory.createPlane(1.0f, 1.0f);
-    */
     MeshData* sphereMesh = meshFactory.createSphere(1.0f);
 
-    /*
     saveMesh(cubeMesh, "Cube.mesh");
     saveMesh(planeMesh, "Plane.mesh");
-    */
     saveMesh(sphereMesh, "Sphere.mesh");
 
-    /*
     delete cubeMesh;
     delete planeMesh;
-    */
-
     delete sphereMesh;
-    //
-#else
-    // READ
-
-    MeshData* readMesh = meshFactory.load("Cube.Mesh");
-    print(readMesh);
-
-    delete readMesh;
-
-    system("pause");
-#endif
-    //
 
     return 0;
 }

@@ -68,7 +68,7 @@ void OpenGLAPI::createEBO(MeshData* meshData)
 	int size = meshData->indices.size();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint16_t), &meshData->indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &meshData->indices[0], GL_STATIC_DRAW);
 }
 
 void OpenGLAPI::createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic)
@@ -111,7 +111,7 @@ void OpenGLAPI::createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDy
 	// EBO
 	glGenBuffers(1, &meshData->ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint16_t), data, usage);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), data, usage);
 }
 
 void OpenGLAPI::bindVAO(uint32_t vao, uint32_t vbo)

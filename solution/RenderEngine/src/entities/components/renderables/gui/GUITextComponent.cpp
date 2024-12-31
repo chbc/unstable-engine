@@ -44,7 +44,7 @@ void GUITextComponent::setText(const std::string &text)
     {
         PrimitiveMeshFactory meshFactory;
         std::vector<GUIVertexData> vertices;
-        std::vector<uint16_t> indices;
+        std::vector<uint32_t> indices;
 
         glm::vec2 offset(0.0f, 0.0f);
         int itemsCount = 0;
