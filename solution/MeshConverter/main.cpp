@@ -9,8 +9,6 @@ using namespace sre;
 void print(MeshData* mesh);
 void saveMesh(MeshData* mesh, const char* fileName);
 
-static std::string modelpath = "../../engine/media/viper/Viper.fbx";
-
 int main()
 {
     std::vector<UPTR<MeshData>> meshes;
@@ -52,7 +50,7 @@ void saveMesh(MeshData* mesh, const char* fileName)
         saveStream.write(reinterpret_cast<const char*>(&indicesSize), sizeof(size_t));
         for (const uint32_t& item : mesh->indices)
         {
-            saveStream.write(reinterpret_cast<const char*>(&item), sizeof(uint32_t));
+            saveStream.write(reinterpret_cast<const char*>(&item), sizeof(uint16_t));
         }
     }
     saveStream.close();

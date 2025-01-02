@@ -19,7 +19,7 @@ void ModelLoader::load(const char* fileName, std::vector<UPTR<MeshData>>& result
 	fin.close();
 
     Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(fileName, aiProcessPreset_TargetRealtime_Quality);
+	const aiScene* scene = importer.ReadFile(fileName, aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs);
 
     if
     (
@@ -74,11 +74,13 @@ MeshData* ModelLoader::processMesh(const aiScene* scene, aiMesh* inputMesh)
 	}
 
 	std::vector<uint32_t> indices;
-	for(uint32_t i = 0; i < inputMesh->mNumFaces; i++)
+	for (uint32_t i = 0; i < inputMesh->mNumFaces; i++)
 	{
-		aiFace face = inputMesh->mFaces[i];
-		for(uint32_t j = 0; j < face.mNumIndices; j++)
+		const aiFace& face = inputMesh->mFaces[i];
+		for (uint32_t j = 0; j < face.mNumIndices; j++)
+		{
 			indices.push_back(face.mIndices[j]);
+		}
 	}
 
 	return new MeshData{ vertexData, indices };

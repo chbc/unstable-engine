@@ -16,19 +16,21 @@ Mesh* MeshLoader::load(const char* file)
 	if (readStream)
 	{
 		size_t size;
-		readStream.read((char*)&size, sizeof(size_t));
+		readStream.read(reinterpret_cast<char*>(&size), sizeof(size_t));
+		vertexData.reserve(size);
 		for (size_t i = 0; i < size; i++)
 		{
 			VertexData item;
-			readStream.read((char*)&item, sizeof(VertexData));
+			readStream.read(reinterpret_cast<char*>(&item), sizeof(VertexData));
 			vertexData.push_back(item);
 		}
 
-		readStream.read((char*)&size, sizeof(size_t));
+		readStream.read(reinterpret_cast<char*>(&size), sizeof(size_t));
+		indices.reserve(size);
 		for (size_t i = 0; i < size; i++)
 		{
 			uint32_t item;
-			readStream.read((char*)&item, sizeof(uint32_t));
+			readStream.read(reinterpret_cast<char*>(&item), sizeof(uint32_t));
 			indices.push_back(item);
 		}
 	}

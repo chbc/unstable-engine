@@ -23,7 +23,7 @@ void TextureEditorProperty::draw()
 	ImGui::NextColumn();
 	ImGui::SetColumnWidth(0, 100.0f);
 
-	ImGui::Image(this->id, ImVec2{ 64.0f, 64.0f}, ImVec2{ 0.0f, 1.0f }, ImVec2{ 1.0f, 0.0f });
+	ImGui::Image(this->id, ImVec2{ 64.0f, 64.0f});
 
 	ImGui::Columns(1);
 
