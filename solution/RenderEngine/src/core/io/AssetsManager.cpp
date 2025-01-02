@@ -97,7 +97,16 @@ Entity* AssetsManager::loadEntity(const char* file, std::string name)
 
 void AssetsManager::releaseEntity(Entity* entity)
 {
-	// XXX
+	size_t key = this->generateKey(entity->fileName.c_str());
+	if (this->entitiesMap.count(key) > 0)
+	{
+		EntityPairType& entityPair = this->entitiesMap[key];
+		entityPair.first--;
+		if (entityPair.first < 1)
+		{
+			this->entitiesMap.erase(key);
+		}
+	}
 }
 
 size_t AssetsManager::generateKey(const char* input)

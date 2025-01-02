@@ -75,6 +75,7 @@ private:
     friend class AScene;
     friend class EntityLoader;
     friend class EntityParser;
+    friend class AssetsManager;
 
     friend class TestServicesProvider;
     friend class EditorEntityProperties;

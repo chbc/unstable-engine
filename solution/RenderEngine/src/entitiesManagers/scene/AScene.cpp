@@ -2,6 +2,7 @@
 #include "CollectionsUtils.h"
 #include "SingletonsManager.h"
 #include "RenderManager.h"
+#include "AssetsManager.h"
 
 namespace sre
 {
@@ -49,6 +50,21 @@ void AScene::addEntityAsset(Entity* entityAsset)
 void AScene::removeDestroyedEntities()
 {
     CollectionsUtils::removeIfEntityIsDestroyed(this->entities);
+
+    auto it = this->entityAssets.begin();
+    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+
+    for (it; it != this->entityAssets.end();)
+    {
+        if (!(*it).second->isAlive())
+        {
+            assetsManager->releaseEntity((*it).second);
+            it = this->entityAssets.erase(it);
+        }
+        else
+            ++it;
+    }
+
     CollectionsUtils::removeIfEntityIsDestroyed(this->entityAssets);
 }
 

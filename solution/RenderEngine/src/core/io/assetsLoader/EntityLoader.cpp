@@ -31,6 +31,7 @@ Entity* EntityLoader::load(const char* fileName, std::string name)
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
 
 	Entity* result = new Entity{ name };
+	result->fileName = fileName;
 	c4::yml::ConstNodeRef root = tree.crootref();
 	EntityParser::deserialize(root, result);
 
