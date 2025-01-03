@@ -5,14 +5,19 @@
 #include "memory_aliases.h"
 #include <unordered_map>
 #include <string>
+#include <array>
 
 namespace sre
 {
+
+constexpr size_t SINGLETONS_COUNT = 10;
 
 class SingletonsManager
 {
 private:
     std::unordered_map<std::string, UPTR<ASingleton>> singletons;
+    std::array<ASingleton*, SINGLETONS_COUNT> singletonsArray;
+    size_t arrayIndex = 0;
     static UPTR<SingletonsManager> instance;
 
 public:
@@ -32,24 +37,6 @@ public:
         return result;
     }
 
-    /*
-    template <typename T> T* resolve()
-    {
-        T* result = nullptr;
-        std::string type = typeid(T).name();
-
-        if (this->singletons.count(type) > 0)
-            result = static_cast<T *>(this->singletons[type].get());
-        else
-        {
-            result = new T;
-            this->singletons[type] = UPTR<ASingleton>{ result };
-        }
-
-        return result;
-    }
-    */
-
 private:
     void init();
 
@@ -59,6 +46,8 @@ private:
 
         T* result = new T;
         this->singletons[type] = UPTR<ASingleton>{ result };
+        this->singletonsArray[arrayIndex] = result;
+        arrayIndex++;
 
         return result;
     }
@@ -71,6 +60,8 @@ private:
 
         result = new ConcretType;
         this->singletons[type] = UPTR<ASingleton>{ result };
+        this->singletonsArray[arrayIndex] = result;
+        arrayIndex++;
 
         return result;
     }

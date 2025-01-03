@@ -21,7 +21,7 @@ AEntityComponent::~AEntityComponent()
 AEntityComponent* AEntityComponent::Create(const char* className, Entity* entity)
 {
 	EntityComponentTypes* types = EntityComponentTypes::getInstance();
-	int key = std::hash<std::string>{}(className);
+	size_t key = std::hash<std::string>{}(className);
 
 	assert(types->typesMap.count(key) > 0);
 

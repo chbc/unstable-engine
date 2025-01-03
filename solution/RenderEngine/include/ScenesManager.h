@@ -45,7 +45,7 @@ private:
     Entity* createMeshEntity(const char* name, const char* filaName);
     void removeDestroyedEntities();
     void cleanUp();
-    void release() override;
+    void preRelease() override;
 
 friend class RenderEngine;
 friend class AExecutionStrategy;

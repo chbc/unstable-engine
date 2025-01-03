@@ -13,7 +13,7 @@ using CreateObjectFunc = std::function<AEntityComponent* (Entity*)>;
 class EntityComponentTypes
 {
 private:
-    std::unordered_map<int, CreateObjectFunc> typesMap;
+    std::unordered_map<size_t, CreateObjectFunc> typesMap;
     static EntityComponentTypes* instance;
 
 public:

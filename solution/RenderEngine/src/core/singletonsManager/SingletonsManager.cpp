@@ -18,18 +18,19 @@ UPTR<SingletonsManager> SingletonsManager::instance;
 
 SingletonsManager::SingletonsManager()
 {
-    this->add<RenderManager>();
     this->add<MultimediaManager>();
-    this->add<AssetsManager>();
-
 #ifdef __ANDROID__
     this->add<AGraphicsWrapper, OpenGLESAPI>();
 #else
     this->add<AGraphicsWrapper, OpenGLAPI>();
 #endif
-
     this->add<ShaderManager>();
     this->add<LightManager>();
+
+    this->add<RenderManager>();
+    this->add<AssetsManager>();
+
+
     this->add<TextureCreator>();
     this->add<MessagesManager>();
     this->add<AtlasManager>();
@@ -46,17 +47,26 @@ SingletonsManager* SingletonsManager::getInstance()
 
 void SingletonsManager::init()
 {
-    for (std::pair<const std::string, UPTR<ASingleton>>& item : this->singletons)
-        item.second->init();
+    for (size_t i = 0; i < SINGLETONS_COUNT; ++i)
+    {
+        ASingleton* item = this->singletonsArray[i];
+        item->init();
+    }
 }
 
 void SingletonsManager::release()
 {
-    for (std::pair<const std::string, UPTR<ASingleton>>& item : this->singletons)
-        item.second->preRelease();
-	
-    for (std::pair<const std::string, UPTR<ASingleton>> &item : this->singletons)
-        item.second->release();
+    for (int i = SINGLETONS_COUNT - 1; i >= 0; --i)
+    {
+        ASingleton* item = this->singletonsArray[i];
+        item->preRelease();
+    }
+
+    for (int i = SINGLETONS_COUNT - 1; i >= 0; --i)
+    {
+        ASingleton* item = this->singletonsArray[i];
+        item->release();
+    }
 
     this->singletons.clear();
 }

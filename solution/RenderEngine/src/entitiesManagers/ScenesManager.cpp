@@ -158,7 +158,7 @@ void ScenesManager::cleanUp()
     this->scenes.clear();
 }
 
-void ScenesManager::release()
+void ScenesManager::preRelease()
 {
     this->runtimeScene->release();
 

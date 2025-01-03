@@ -6,7 +6,7 @@
 #include "ShaderManager.h"
 #include "AGraphicsWrapper.h"
 #include "Entity.h"
-
+#include "StringUtils.h"
 #include "CollectionsUtils.h"
 
 namespace sre
@@ -72,11 +72,11 @@ void ShadowRenderer::setupPointLightShader()
     this->shaderManager->setupUniformLocation(this->pointLightDepthShader, ShaderVariables::FAR_PLANE);
     this->shaderManager->setupUniformLocation(this->pointLightDepthShader, ShaderVariables::LIGHT_POSITION);
 
-    char variable[32];
+    std::string variable;
     for (unsigned int i = 0; i < 6; ++i)
     {
-        std::sprintf(variable, POINT_SHADOW_MATRICES_FORMAT, i);
-        this->shaderManager->setupUniformLocation(this->pointLightDepthShader, variable);
+        variable = StringUtils::format(POINT_SHADOW_MATRICES_FORMAT, i);
+        this->shaderManager->setupUniformLocation(this->pointLightDepthShader, variable.c_str());
     }
 }
 
