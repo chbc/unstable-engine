@@ -1,3 +1,18 @@
+_main_camera:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,5,5]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    CameraComponent:
+      Enabled: 1
+      Perspective: 1
+      Main Camera: 1
+      Look At Target: [0,0,0]
+      Up: [0,1,0]
+      FOV: 90
 point_light:
   Enabled: 1
   Components:
@@ -17,50 +32,9 @@ plane:
     TransformComponent:
       Enabled: 1
       Position: [0,0,0]
-      Rotation: [81.9,0,0]
-      Scale: [2.8,2.6,1]
+      Rotation: [0,0,0]
+      Scale: [10,1,10]
     MeshComponent:
       Enabled: 1
       Mesh: Plane.mesh
-      Material: FloorMaterial.mat
-sphere:
-  Enabled: 1
-  Components:
-    TransformComponent:
-      Enabled: 1
-      Position: [5,0,0]
-      Rotation: [0,0,0]
-      Scale: [1,1,1]
-    MeshComponent:
-      Enabled: 1
-      Mesh: Sphere.mesh
-      Material: FloorMaterial.mat
-_main_camera:
-  Enabled: 1
-  Components:
-    TransformComponent:
-      Enabled: 1
-      Position: [0,5,5]
-      Rotation: [0,0,0]
-      Scale: [1,1,1]
-    CameraComponent:
-      Enabled: 1
-      Perspective: 1
-      Main Camera: 1
-      Look At Target: [0,0,0]
-      Up: [0,1,0]
-      FOV: 90
-cube:
-  Enabled: 1
-  Components:
-    TransformComponent:
-      Enabled: 1
-      Position: [-5,0,0]
-      Rotation: [0,0,0]
-      Scale: [1,1,1]
-    MeshComponent:
-      Enabled: 1
-      Mesh: Cube.mesh
       Material: DefaultMaterial.mat
-viper:
-  FileName: Viper.ent

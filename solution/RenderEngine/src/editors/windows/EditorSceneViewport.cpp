@@ -57,7 +57,7 @@ void EditorSceneViewport::onInit()
 		this->orbitCamera = cameraEntity->addComponent<OrbitCameraComponent>();
 		this->orbitCamera->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
 		
-		this->cameraEntity->getTransform()->setPosition({ 0.0f, 2.5f, 10.0f });
+		this->cameraEntity->getTransform()->setPosition({ 0.0f, 5.0f, 10.0f });
 
 		this->cameraEntity->onInit();
 		this->orbitCamera->setEnabled(false);
