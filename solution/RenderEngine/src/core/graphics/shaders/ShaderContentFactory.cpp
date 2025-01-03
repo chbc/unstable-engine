@@ -296,7 +296,7 @@ void ShaderContentFactory::loadLightsContentHeader(std::string &outVertexContent
     FileUtils::loadFile(ShaderFiles::LIGHTS_H_V, vertexContent);
     FileUtils::loadFile(ShaderFiles::LIGHTS_H_F, fragmentContent);
 
-    int lightsCount = this->lightData.directionalLightsCount;
+    size_t lightsCount = this->lightData.directionalLightsCount;
 
     if (lightsCount > 0)
     {

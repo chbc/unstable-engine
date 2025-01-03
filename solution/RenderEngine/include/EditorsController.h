@@ -11,17 +11,14 @@ namespace sre
 class ScenesManager;
 class Scene;
 class Entity;
-class TextureManager;
 
 class EditorsController
 {
 private:
 	ScenesManager* scenesManager = nullptr;
-	TextureManager* textureManager = nullptr;
 
 public:
 	EditorsController(ScenesManager* arg_scenesManager);
-	void init();
 	void loadScene();
 	void saveScene();
 	void createCube();

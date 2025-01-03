@@ -40,7 +40,7 @@ protected:
     Entity(std::string arg_name);
 
 public:
-    SRE_API ~Entity();
+    virtual ~Entity();
 
     template <typename T> T* addComponent();
     template <typename T> void removeComponent();
@@ -52,7 +52,7 @@ public:
     Entity* createChild(const std::string& childName = "");
 	SRE_API void addChild(Entity *child);
 	SRE_API inline size_t getChildrenCount() { return this->children.size(); }
-	SRE_API Entity *getChild(uint32_t index);
+	SRE_API Entity *getChild(size_t index);
 	SRE_API inline Entity *getParent() { return this->parent; }
 
 	SRE_API TransformComponent *getTransform();

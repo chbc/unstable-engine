@@ -1,8 +1,7 @@
 #include "ShadowRenderer.h"
-
 #include "MeshComponent.h"
 #include "SingletonsManager.h"
-#include "TextureManager.h"
+#include "TextureCreator.h"
 #include "LightManager.h"
 #include "ShaderManager.h"
 #include "AGraphicsWrapper.h"
@@ -18,18 +17,17 @@ void ShadowRenderer::init()
     SingletonsManager *singletonsManager = SingletonsManager::getInstance();
     this->graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
     this->shaderManager = singletonsManager->get<ShaderManager>();
-
     this->lightManager = singletonsManager->get<LightManager>();
-    TextureManager *textureManager = singletonsManager->get<TextureManager>();
+    textureCreator = singletonsManager->get<TextureCreator>();
 
     if (this->lightManager->directionalLights.size() > 0)
-        this->setupDirectionalLightShader(textureManager);
+        this->setupDirectionalLightShader();
 
     if (this->lightManager->pointLights.size() > 0)
-        this->setupPointLightShader(textureManager);
+        this->setupPointLightShader();
 }
 
-void ShadowRenderer::setupDirectionalLightShader(TextureManager *textureManager)
+void ShadowRenderer::setupDirectionalLightShader()
 {
     this->directionalLightDepthShader = this->shaderManager->loadDirectionalLightDepthShader();
 
@@ -40,7 +38,7 @@ void ShadowRenderer::setupDirectionalLightShader(TextureManager *textureManager)
 
     for (DirectionalLightComponent *item : this->lightManager->directionalLights)
     {
-        Texture *texture = textureManager->createShadowTexture(1024, 1024);
+        Texture *texture = textureCreator->createShadowTexture(1024, 1024);
 
         uint32_t fbo = this->graphicsWrapper->generateDepthFrameBuffer(texture->getId());
         item->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
@@ -58,13 +56,13 @@ void ShadowRenderer::setupDirectionalLightShader(TextureManager *textureManager)
     }
 }
 
-void ShadowRenderer::setupPointLightShader(TextureManager *textureManager)
+void ShadowRenderer::setupPointLightShader()
 {
     this->pointLightDepthShader = this->shaderManager->loadPointLightDepthShader();
 
     for (PointLightComponent *item : this->lightManager->pointLights)
     {
-        Texture *texture = textureManager->createCubemapTexture(1024, 1024);
+        Texture *texture = textureCreator->createCubemapTexture(1024, 1024);
 
         uint32_t fbo = this->graphicsWrapper->generateDepthFrameBuffer(texture->getId(), true);
         item->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });

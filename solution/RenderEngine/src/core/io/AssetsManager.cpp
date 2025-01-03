@@ -2,128 +2,85 @@
 #include "MeshLoader.h"
 #include "MaterialLoader.h"
 #include "EntityLoader.h"
-#include "RenderManager.h"
+#include "TextureLoader.h"
 #include "SingletonsManager.h"
-#include "AGraphicsWrapper.h"
 #include "Material.h"
 
 namespace sre
 {
 
-Mesh* AssetsManager::loadMesh(const char* file)
-{
-	Mesh* result = nullptr;
-	size_t key = generateKey(file);
-	if (this->meshesMap.count(key) > 0)
-	{
-		MeshPairType& meshPair = this->meshesMap[key];
-		meshPair.first++;
-		result = meshPair.second.get();
-	}
-	else
-	{
-		result = MeshLoader().load(file);
-		this->meshesMap.emplace(key, std::make_pair<size_t, SPTR<Mesh>>(1, SPTR<Mesh>{result}));
-	}
-	return result;
-}
-
-void AssetsManager::releaseMesh(Mesh* mesh)
-{
-	size_t key = this->generateKey(mesh->fileName.c_str());
-	if (this->meshesMap.count(key) > 0)
-	{
-		MeshPairType& meshPair = this->meshesMap[key];
-		meshPair.first--;
-		if (meshPair.first < 1)
-		{
-			AGraphicsWrapper* graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
-			graphicsWrapper->deleteBuffers(mesh->meshData.get());
-			this->meshesMap.erase(key);
-		}
-	}
-}
-
-Material* AssetsManager::loadMaterial(const char* file)
-{
-	Material* result = nullptr;
-	size_t key = generateKey(file);
-	if (this->materialsMap.count(key) > 0)
-	{
-		MaterialPairType& materialPair = this->materialsMap[key];
-		materialPair.first++;
-		result = materialPair.second.get();
-	}
-	else
-	{
-		result = MaterialLoader().load(file);
-		this->materialsMap.emplace(key, std::make_pair<size_t, SPTR<Material>>(1, SPTR<Material>{result}));
-	}
-	return result;
-}
-
-void AssetsManager::releaseMaterial(Material* material)
-{
-	size_t key = this->generateKey(material->fileName.c_str());
-	if (this->materialsMap.count(key) > 0)
-	{
-		MaterialPairType& materialPair = this->materialsMap[key];
-		materialPair.first--;
-		if (materialPair.first < 1)
-		{
-			// XXX REMOVER TEXTURA DO TEXTURE MANAGER
-			this->materialsMap.erase(key);
-		}
-	}
-}
-
 Entity* AssetsManager::loadEntity(const char* file, std::string name)
 {
-	Entity* result = nullptr;
-	size_t key = generateKey(file);
-	if (this->entitiesMap.count(key) > 0)
-	{
-		EntityPairType& entityPair = this->entitiesMap[key];
-		entityPair.first++;
-		result = entityPair.second.get();
-	}
-	else
-	{
-		result = EntityLoader().load(file, name);
-		this->entitiesMap.emplace(key, std::make_pair<size_t, SPTR<Entity>>(1, SPTR<Entity>{result}));
-	}
+	Entity* result = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, file, name);
 	return result;
 }
 
 void AssetsManager::releaseEntity(Entity* entity)
 {
-	size_t key = this->generateKey(entity->fileName.c_str());
-	if (this->entitiesMap.count(key) > 0)
+	this->releaseAsset(this->entitiesMap, entity);
+}
+
+Mesh* AssetsManager::loadMesh(const char* file)
+{
+	Mesh* result = this->loadAsset<MeshesMapType, MeshLoader, Mesh>(this->meshesMap, file);
+	return result;
+}
+
+void AssetsManager::releaseMesh(Mesh* mesh)
+{
+	std::function<void(Mesh*)> releaseCallback = [&](Mesh* item) { MeshLoader().release(item); };
+	this->releaseAsset(this->meshesMap, mesh, releaseCallback);
+}
+
+Material* AssetsManager::loadMaterial(const char* file)
+{
+	Material* result = this->loadAsset<MaterialsMapType, MaterialLoader, Material>(this->materialsMap, file);
+	return result;
+}
+
+void AssetsManager::releaseMaterial(Material* material)
+{
+	this->releaseAsset(this->materialsMap, material);
+}
+
+Texture* AssetsManager::loadTexture(const char* file, ETextureMap::Type mapType)
+{
+	Texture* result = this->loadAsset<TexturesMapType, TextureLoader, Texture>(this->texturesMap, file, mapType);
+	return result;
+}
+
+void AssetsManager::releaseTexture(Texture* texture)
+{
+	std::function<void(Texture*)> releaseCallback = [&](Texture* item) { TextureLoader().release(item); };
+	this->releaseAsset(this->texturesMap, texture, releaseCallback);
+}
+
+void AssetsManager::preRelease()
+{
+	// Entities
+	this->entitiesMap.clear();
+
+	// Meshes
+	for (auto& it = this->meshesMap.begin(); it != this->meshesMap.end();)
 	{
-		EntityPairType& entityPair = this->entitiesMap[key];
-		entityPair.first--;
-		if (entityPair.first < 1)
-		{
-			this->entitiesMap.erase(key);
-		}
+		MeshLoader().release((*it).second.second.get());
+		it = this->meshesMap.erase(it);
+	}
+
+	// Materials
+	this->materialsMap.clear();
+
+	// Textures
+	for (auto& it = this->texturesMap.begin(); it != this->texturesMap.end();)
+	{
+		TextureLoader().release((*it).second.second.get());
+		it = this->texturesMap.erase(it);
 	}
 }
 
 size_t AssetsManager::generateKey(const char* input)
 {
 	return this->hash(std::string(input));
-}
-
-void AssetsManager::preRelease()
-{
-	AGraphicsWrapper* graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
-
-	for (auto& item : this->meshesMap)
-	{
-		Mesh* mesh = item.second.second.get();
-		graphicsWrapper->deleteBuffers(mesh->meshData.get());
-	}
-	this->meshesMap.clear();
 }
 
 } // namespace

@@ -15,6 +15,7 @@ protected:
 
 public:
 	ABaseTextureMaterialComponent(Material* material);
+	virtual ~ABaseTextureMaterialComponent();
 	uint32_t getTextureID() const;
 };
 

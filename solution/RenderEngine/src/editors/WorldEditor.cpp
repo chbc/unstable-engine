@@ -28,7 +28,6 @@ WorldEditor::WorldEditor(ScenesManager* arg_scenesManager)
 
 void WorldEditor::init()
 {
-    this->controller->init();
     this->menuBar->onInit();
 	for (const auto& item : this->windows)
 		item->onInit();

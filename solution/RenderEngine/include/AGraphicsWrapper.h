@@ -98,9 +98,10 @@ protected:
 
 friend class RenderManager;
 friend class ShaderManager;
-friend class TextureManager;
 friend class SingletonsManager;
-friend class AssetsManager;
+friend class TextureLoader;
+friend class TextureCreator;
+friend class MeshLoader;
 
 friend class MeshRenderer;
 friend class GUIRenderer;

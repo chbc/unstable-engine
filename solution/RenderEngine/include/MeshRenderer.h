@@ -21,7 +21,7 @@ class ShaderManager;
 class MeshRenderer
 {
 private:
-    std::unordered_map<int, UPTR<ColorRendererComponent>> componentsMap;
+    std::unordered_map<size_t, UPTR<ColorRendererComponent>> componentsMap;
     std::unordered_map<std::string, UPTR<class BaseRendererShaderSetup>> shaderSetupItems;
     std::bitset<EComponentId::SIZE> componentsBitset;
 
@@ -44,7 +44,7 @@ private:
     template <typename T> void removeComponent();
     template <typename T> T* getComponent();
     template <typename T> bool hasComponent();
-    template <typename T> int getComponentId();
+    template <typename T> size_t getComponentId();
 
     void init(bool useBrightnessSegmentation, bool includeDepth);
     void loadShaderSetupItems();

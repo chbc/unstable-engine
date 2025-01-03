@@ -63,9 +63,6 @@
     <ClCompile Include="src\core\multimedia\textures\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\multimedia\textures\TextureManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\multimedia\MultimediaManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -376,6 +373,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\io\assetsLoader\TextureLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\multimedia\textures\TextureCreator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\meshData\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -821,7 +827,7 @@
     <ClInclude Include="include\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\TextureManager.h">
+    <ClInclude Include="include\TextureLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Timer.h">
@@ -1023,6 +1029,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\EntityLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextureCreator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

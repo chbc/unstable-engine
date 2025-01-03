@@ -6,7 +6,7 @@
 #include "OpenGLAPI.h"
 #include "LightManager.h"
 #include "ShaderManager.h"
-#include "TextureManager.h"
+#include "TextureCreator.h"
 #include "MessagesManager.h"
 #include "AtlasManager.h"
 #include "ScenesManager.h"
@@ -30,7 +30,7 @@ SingletonsManager::SingletonsManager()
 
     this->add<ShaderManager>();
     this->add<LightManager>();
-    this->add<TextureManager>();
+    this->add<TextureCreator>();
     this->add<MessagesManager>();
     this->add<AtlasManager>();
     this->add<ScenesManager>();

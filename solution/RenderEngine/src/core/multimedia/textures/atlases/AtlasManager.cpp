@@ -1,6 +1,6 @@
 #include "AtlasManager.h"
 #include "SingletonsManager.h"
-#include "TextureManager.h"
+#include "AssetsManager.h"
 
 namespace sre
 {
@@ -64,7 +64,9 @@ FontAtlas* AtlasManager::loadFont(const std::string &baseFileName)
 
 Texture* AtlasManager::loadTexture(const std::string& baseFileName)
 {
-	return SingletonsManager::getInstance()->get<TextureManager>()->loadTexture(baseFileName + ".png", ETextureMap::GUI);
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+	std::string fileName = baseFileName + ".png";
+	return assetsManager->loadTexture(fileName.c_str(), ETextureMap::GUI);
 }
 
 } // namespace

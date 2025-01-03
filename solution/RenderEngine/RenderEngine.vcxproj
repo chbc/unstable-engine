@@ -364,9 +364,11 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\graphics\meshData\Mesh.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MaterialLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MeshLoader.cpp" />
+    <ClCompile Include="src\core\io\assetsLoader\TextureLoader.cpp" />
     <ClCompile Include="src\core\io\AssetsManager.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\LitRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\litStates\LitRendererLightsState.cpp" />
@@ -391,6 +393,7 @@
     <ClCompile Include="src\core\multimedia\EngineValues.cpp" />
     <ClCompile Include="src\core\multimedia\Input.cpp" />
     <ClCompile Include="src\core\multimedia\textures\atlases\FontAtlas.cpp" />
+    <ClCompile Include="src\core\multimedia\textures\TextureCreator.cpp" />
     <ClCompile Include="src\core\singletonsManager\SingletonsManager.cpp" />
     <ClCompile Include="src\core\wrappers\graphics\OpenGLESAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPI.cpp" />
@@ -467,7 +470,6 @@
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\SpecularRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\ShaderManager.cpp" />
     <ClCompile Include="src\core\graphics\shaders\ShaderContentFactory.cpp" />
-    <ClCompile Include="src\core\multimedia\textures\TextureManager.cpp" />
     <ClCompile Include="src\core\multimedia\MultimediaManager.cpp" />
     <ClCompile Include="src\core\timer\Timer.cpp" />
     <ClCompile Include="src\core\wrappers\graphics\OpenGLAPI.cpp" />
@@ -685,8 +687,9 @@
     <ClInclude Include="include\StringUtils.h" />
     <ClInclude Include="include\TestServicesProvider.h" />
     <ClInclude Include="include\Texture.h" />
+    <ClInclude Include="include\TextureCreator.h" />
     <ClInclude Include="include\TextureEditorProperty.h" />
-    <ClInclude Include="include\TextureManager.h" />
+    <ClInclude Include="include\TextureLoader.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\TransformComponent.h" />
     <ClInclude Include="include\AEditorProperty.h" />

@@ -12,7 +12,7 @@ T* MeshRenderer::addComponent(TArgs&&... mArgs)
     assert(!hasComponent<T>());
 
     newComponent = new T{ std::forward<TArgs>(mArgs)... };
-    int id = getComponentId<T>();
+    size_t id = getComponentId<T>();
     componentsMap[id] = UPTR<T>{ newComponent };
 
     return newComponent;
@@ -23,7 +23,7 @@ void MeshRenderer::removeComponent()
 {
     if (this->hasComponent<T>())
     {
-        int id = getComponentId<T>();
+        size_t id = getComponentId<T>();
         componentsMap.erase(id);
     }
 }
@@ -35,7 +35,7 @@ T* MeshRenderer::getComponent()
 
     if (this->hasComponent<T>())
     {
-        int id = this->getComponentId<T>();
+        size_t id = this->getComponentId<T>();
         component = static_cast<T*>(componentsMap[id].get());
     }
 
@@ -45,12 +45,12 @@ T* MeshRenderer::getComponent()
 template<typename T>
 bool MeshRenderer::hasComponent()
 {
-    int id = this->getComponentId<T>();
+    size_t id = this->getComponentId<T>();
     return (this->componentsMap.count(id) > 0);
 }
 
 template<typename T>
-int MeshRenderer::getComponentId()
+size_t MeshRenderer::getComponentId()
 {
     std::type_index type = typeid(T);
     return type.hash_code();

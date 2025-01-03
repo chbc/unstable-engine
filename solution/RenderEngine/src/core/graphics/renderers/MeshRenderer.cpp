@@ -193,14 +193,11 @@ void MeshRenderer::removeDestroyedEntities()
 {
     std::list<MeshComponent *>::iterator it;
 
-    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-
     for (it = this->meshes.begin(); it != this->meshes.end(); )
     {
         MeshComponent* item = *it;
         if (!item->getEntity()->isAlive())
         {
-            assetsManager->releaseMesh(item->mesh);
             it = this->meshes.erase(it);
         }
         else

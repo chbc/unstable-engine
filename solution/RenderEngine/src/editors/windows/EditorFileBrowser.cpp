@@ -2,7 +2,6 @@
 
 #include "EditorFileBrowser.h"
 #include "SingletonsManager.h"
-#include "TextureManager.h"
 #include "Paths.h"
 #include "EditorsController.h"
 

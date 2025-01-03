@@ -13,7 +13,7 @@ using CreateMaterialObjectFunc = std::function<AMaterialComponent* (Material*)>;
 class MaterialComponentTypes
 {
 private:
-    std::unordered_map<int, CreateMaterialObjectFunc> typesMap;
+    std::unordered_map<size_t, CreateMaterialObjectFunc> typesMap;
     static MaterialComponentTypes* instance;
 
 public:
@@ -35,7 +35,7 @@ public:
     template<typename Type>
     void addType(const char* className)
     {
-        int key = std::hash<std::string>{}(className);
+        size_t key = std::hash<std::string>{}(className);
         typesMap[key] = [](Material* material) { return new Type(material); };
     }
 

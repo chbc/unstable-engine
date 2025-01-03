@@ -1,7 +1,7 @@
 #include "HDRRendererComponent.h"
 
 #include "SingletonsManager.h"
-#include "TextureManager.h"
+#include "TextureCreator.h"
 #include "ShaderManager.h"
 #include "AGraphicsWrapper.h"
 #include "MultimediaManager.h"
@@ -36,8 +36,8 @@ HDRRendererComponent::HDRRendererComponent(PostProcessingComponent* component)
 	this->graphicsWrapper->createGUIVAO(quad, 0, false);
 	this->graphicsWrapper->createGUIEBO(quad, 0, false);
 
-	TextureManager* textureManager = singletonsManager->get<TextureManager>();
-	Texture* texture = textureManager->createEmptyFloatingPointTexture(width, height);
+	TextureCreator* textureCreator = singletonsManager->get<TextureCreator>();
+	Texture* texture = textureCreator->createEmptyFloatingPointTexture(width, height);
 	this->textureId = texture->getId();
 
 	this->firstPassFBO = this->graphicsWrapper->generateColorFrameBuffer(

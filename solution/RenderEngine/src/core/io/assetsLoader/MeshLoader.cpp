@@ -1,5 +1,7 @@
 #include "MeshLoader.h"
 #include "Paths.h"
+#include "SingletonsManager.h"
+#include "AGraphicsWrapper.h"
 
 #include <fstream>
 
@@ -40,6 +42,12 @@ Mesh* MeshLoader::load(const char* file)
 	MeshData* meshData = new MeshData{ vertexData, indices };
 	Mesh* result = new Mesh{ meshData, file };
 	return result;
+}
+
+void MeshLoader::release(Mesh* mesh)
+{
+	AGraphicsWrapper* graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
+	graphicsWrapper->deleteBuffers(mesh->meshData.get());
 }
 
 } // namespace

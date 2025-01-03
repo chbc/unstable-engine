@@ -22,6 +22,7 @@ public:
 
 protected:
     AScene(std::string name);
+    virtual ~AScene();
     Entity* createEntity(const std::string& name = "", Entity* parent = nullptr);
     void addEntityAsset(Entity* entityAsset);
     void removeDestroyedEntities();
@@ -30,7 +31,6 @@ private:
     void initEntities();
     void update(float elapsedTime);
     void onSceneLoaded();
-    void clean();
     void release();
 
 friend class ScenesManager;

@@ -25,6 +25,8 @@ public:
 	AEditorProperty(const char* arg_title)
 		: title(arg_title) { }
 
+	virtual ~AEditorProperty() { }
+
 	virtual void draw() = 0;
 	virtual void serialize(c4::yml::NodeRef& propertyNode) = 0;
 	virtual void deserialize(c4::yml::ConstNodeRef& propertyNode) = 0;

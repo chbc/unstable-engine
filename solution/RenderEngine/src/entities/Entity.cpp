@@ -56,7 +56,7 @@ void Entity::addChild(Entity* child)
 	this->transform->propagateTransform();
 }
 
-Entity* Entity::getChild(uint32_t index)
+Entity* Entity::getChild(size_t index)
 {
 	if (index >= this->children.size())
 		throw "[Entity] - getChild - Index out of range!";

@@ -15,7 +15,7 @@ void AMaterialComponent::addEditorProperty(AEditorProperty* editorProperty)
 AMaterialComponent* AMaterialComponent::Create(const char* className, Material* material)
 {
 	MaterialComponentTypes* types = MaterialComponentTypes::getInstance();
-	int key = std::hash<std::string>{}(className);
+	size_t key = std::hash<std::string>{}(className);
 
 	assert(types->typesMap.count(key) > 0);
 

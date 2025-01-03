@@ -10,6 +10,12 @@ uint32_t AScene::EntityIndex = 0;
 
 AScene::AScene(std::string arg_name) : name(arg_name), sceneLoaded(false) { }
 
+AScene::~AScene()
+{
+    this->entities.clear();
+    this->entityAssets.clear();
+}
+
 Entity* AScene::getEntity(const std::string& name)
 {
     Entity* result = nullptr;
@@ -51,7 +57,7 @@ void AScene::removeDestroyedEntities()
 {
     CollectionsUtils::removeIfEntityIsDestroyed(this->entities);
 
-    auto it = this->entityAssets.begin();
+    auto& it = this->entityAssets.begin();
     AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 
     for (it; it != this->entityAssets.end();)
@@ -64,8 +70,6 @@ void AScene::removeDestroyedEntities()
         else
             ++it;
     }
-
-    CollectionsUtils::removeIfEntityIsDestroyed(this->entityAssets);
 }
 
 void AScene::initEntities()
@@ -111,16 +115,17 @@ void AScene::onSceneLoaded()
     this->sceneLoaded = true;
 }
 
-void AScene::clean()
-{
-    this->entities.clear();
-    this->entityAssets.clear();
-}
-
 void AScene::release()
 {
     this->entities.clear();
-    this->entityAssets.clear();
+
+    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+    auto& it = this->entityAssets.begin();
+    for (it; it != this->entityAssets.end();)
+    {
+        assetsManager->releaseEntity((*it).second);
+        it = this->entityAssets.erase(it);
+    }
 }
 
 } // namespace

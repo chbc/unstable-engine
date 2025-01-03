@@ -52,7 +52,7 @@ private:
 friend class AExecutionStrategy;
 friend class EditorStrategy;
 friend class ApplicationStrategy;
-friend class TextureManager;
+friend class TextureLoader;
 friend class SingletonsManager;
 friend class GUIButtonComponent;
 };

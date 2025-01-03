@@ -37,7 +37,7 @@ private:
 
 public:
     AEntityComponent(Entity* arg_entity);
-    ~AEntityComponent();
+    virtual ~AEntityComponent();
 
     template <typename Type>
     static uint16_t generateId(const char* className)

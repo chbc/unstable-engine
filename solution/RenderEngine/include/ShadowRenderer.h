@@ -1,5 +1,4 @@
-#ifndef _SHADOW_RENDERER_H_
-#define _SHADOW_RENDERER_H_
+#pragma once
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
@@ -10,9 +9,10 @@ namespace sre
 class ShadowRenderer
 {
 private:
-    class ShaderManager *shaderManager;
-    class AGraphicsWrapper *graphicsWrapper;
-    class LightManager *lightManager;
+    class ShaderManager* shaderManager;
+    class AGraphicsWrapper* graphicsWrapper;
+    class LightManager* lightManager;
+    class TextureCreator* textureCreator;
 
     class Shader *pointLightDepthShader;
     class Shader *directionalLightDepthShader;
@@ -24,8 +24,8 @@ private:
 
 private:
     void init();
-    void setupPointLightShader(class TextureManager *textureManager);
-    void setupDirectionalLightShader(class TextureManager *textureManager);
+    void setupPointLightShader();
+    void setupDirectionalLightShader();
     void addItem(MeshComponent *item);
     void render();
     void renderPointLightShadows();
@@ -37,5 +37,3 @@ friend class RenderManager;
 };
 
 } // namespace
-
-#endif

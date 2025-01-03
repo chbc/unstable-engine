@@ -4,8 +4,9 @@
 #include "SingletonsManager.h"
 #include "MessagesManager.h"
 #include "EditorMessages.h"
-#include "TextureManager.h"
 #include "FileUtils.h"
+#include "AssetsManager.h"
+#include "Texture.h"
 
 namespace sre
 {
@@ -13,14 +14,6 @@ namespace sre
 EditorsController::EditorsController(ScenesManager* arg_scenesManager)
 	: scenesManager(arg_scenesManager)
 { }
-
-void EditorsController::init()
-{
-	if (this->textureManager == nullptr)
-	{
-		this->textureManager = SingletonsManager::getInstance()->get<TextureManager>();
-	}
-}
 
 void EditorsController::loadScene()
 {
@@ -49,11 +42,13 @@ void EditorsController::refreshFileIcons(std::string directoryPath, std::vector<
 	std::vector<std::string> filePaths;
 	FileUtils::getFilePaths(directoryPath, iconPaths, filePaths);
 
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+
 	for (int i = 0; i < filePaths.size(); ++i)
 	{
 		std::string& icon = iconPaths[i];
 		std::string& path = filePaths[i];
-		Texture* texture = this->textureManager->loadGUITexture(icon);
+		Texture* texture = assetsManager->loadTexture(icon.c_str(), ETextureMap::GUI);
 		void* textureId = reinterpret_cast<void*>(texture->getId());
 
 		FileIcon* fileIcon = new FileIcon{path, textureId};

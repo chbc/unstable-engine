@@ -11,8 +11,8 @@ struct ShaderLightData
     bool receivesLight;
     bool hasAnyShadowCaster;
 
-    uint32_t directionalLightsCount;
-    uint32_t pointLightsCount;
+    size_t directionalLightsCount;
+    size_t pointLightsCount;
 
     ShaderLightData() 
         :   receivesLight(false), hasAnyShadowCaster(false),

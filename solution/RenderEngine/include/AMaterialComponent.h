@@ -34,6 +34,7 @@ protected:
 
 public:
     AMaterialComponent(Material* arg_material);
+    virtual ~AMaterialComponent() { }
     virtual const char* getClassName() = 0;
 
 protected:

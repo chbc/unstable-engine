@@ -18,6 +18,13 @@ MeshComponent::MeshComponent(Entity *entity)
     this->addEditorProperty(new MaterialEditorProperty{ "Material", &this->material});
 }
 
+MeshComponent::~MeshComponent()
+{
+    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+    assetsManager->releaseMesh(this->mesh);
+    assetsManager->releaseMaterial(this->material);
+}
+
 Material *MeshComponent::getMaterial()
 {
     return this->material;

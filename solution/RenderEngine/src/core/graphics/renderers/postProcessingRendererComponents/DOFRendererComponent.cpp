@@ -1,6 +1,6 @@
 #include "DOFRendererComponent.h"
 #include "SingletonsManager.h"
-#include "TextureManager.h"
+#include "TextureCreator.h"
 #include "ShaderManager.h"
 #include "AGraphicsWrapper.h"
 #include "MultimediaManager.h"
@@ -37,11 +37,11 @@ DOFRendererComponent::DOFRendererComponent(PostProcessingComponent* component)
 	this->graphicsWrapper->createGUIVAO(quad, 0, false);
 	this->graphicsWrapper->createGUIEBO(quad, 0, false);
 
-	TextureManager* textureManager = singletonsManager->get<TextureManager>();
-	Texture* texture = textureManager->createEmptyTexture(width, height);
+	TextureCreator* textureCreator = singletonsManager->get<TextureCreator>();
+	Texture* texture = textureCreator->createEmptyTexture(width, height);
 	this->initialPassTextureId = texture->getId();
 	
-	texture = textureManager->createEmptyTexture(width, height);
+	texture = textureCreator->createEmptyTexture(width, height);
 	this->depthTextureId = texture->getId();
 
 	std::vector<uint32_t> textureIds = { this->initialPassTextureId, this->depthTextureId };

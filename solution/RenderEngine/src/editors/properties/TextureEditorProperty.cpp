@@ -1,7 +1,8 @@
 #include "TextureEditorProperty.h"
 #include "SingletonsManager.h"
-#include "TextureManager.h"
+#include "AssetsManager.h"
 #include "Paths.h"
+#include "Texture.h"
 
 #include <rapidyaml/rapidyaml.hpp>
 #include "imgui/imgui.h"
@@ -43,10 +44,10 @@ void TextureEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 
 	this->textureMapType = static_cast<ETextureMap::Type>(mapType);
 
-	TextureManager* textureManager = SingletonsManager::getInstance()->get<TextureManager>();
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	std::string filePath;
 	Paths().buildMediaFilePath(EContentType::ENGINE, fileName.c_str(), filePath);
-	*this->texture = textureManager->loadTexture(filePath, this->textureMapType);
+	*this->texture = assetsManager->loadTexture(filePath.c_str(), this->textureMapType);
 	this->id = reinterpret_cast<void*>((*this->texture)->getId());
 }
 

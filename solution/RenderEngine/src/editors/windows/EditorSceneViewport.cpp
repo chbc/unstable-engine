@@ -1,6 +1,6 @@
 #include "EditorSceneViewport.h"
 #include "SingletonsManager.h"
-#include "TextureManager.h"
+#include "TextureCreator.h"
 #include "AGraphicsWrapper.h"
 #include "MultimediaManager.h"
 #include "EngineValues.h"
@@ -37,8 +37,8 @@ void EditorSceneViewport::onInit()
 		uint32_t width = static_cast<uint32_t>(EngineValues::SCREEN_WIDTH);
 		uint32_t height = static_cast<uint32_t>(EngineValues::SCREEN_HEIGHT);
 
-		TextureManager* textureManager = singletonsManager->get<TextureManager>();
-		Texture* texture = textureManager->createEmptyTexture(width, height);
+		TextureCreator* textureCreator = singletonsManager->get<TextureCreator>();
+		Texture* texture = textureCreator->createEmptyTexture(width, height);
 		uint32_t id = texture->getId();
 
 		AGraphicsWrapper* graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();

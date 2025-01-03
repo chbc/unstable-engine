@@ -35,7 +35,7 @@ public:
     template<typename Type>
     void addType(const char* className)
     {
-        int key = std::hash<std::string>{}(className);
+        size_t key = std::hash<std::string>{}(className);
         typesMap[key] = [](Entity* entity) { return new Type(entity); };
     }
 

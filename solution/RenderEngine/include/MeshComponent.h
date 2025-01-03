@@ -24,6 +24,8 @@ private:
 
 public:
     MeshComponent(Entity *entity);
+    ~MeshComponent();
+
     Material *getMaterial();
 
     template <typename T, typename... TArgs>

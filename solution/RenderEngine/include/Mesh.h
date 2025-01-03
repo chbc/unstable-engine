@@ -13,10 +13,7 @@ struct Mesh
 	std::string fileName;
 
 public:
-	Mesh(AMeshData* arg_meshData, const char* arg_fileName) : fileName(arg_fileName)
-	{
-		meshData.reset(arg_meshData);
-	}
+	Mesh(AMeshData* arg_meshData, const char* arg_fileName);
 
 friend class MeshLoader;
 };

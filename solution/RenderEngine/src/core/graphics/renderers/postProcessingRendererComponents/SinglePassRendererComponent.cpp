@@ -1,7 +1,7 @@
 #include "SinglePassRendererComponent.h"
 
 #include "SingletonsManager.h"
-#include "TextureManager.h"
+#include "TextureCreator.h"
 #include "ShaderManager.h"
 #include "AGraphicsWrapper.h"
 #include "MultimediaManager.h"
@@ -34,8 +34,8 @@ SinglePassRendererComponent::SinglePassRendererComponent(PostProcessingComponent
 	this->graphicsWrapper->createGUIVAO(quad, 0, false);
 	this->graphicsWrapper->createGUIEBO(quad, 0, false);
 
-	TextureManager* textureManager = singletonsManager->get<TextureManager>();
-	Texture* texture = textureManager->createEmptyTexture(width, height);
+	TextureCreator* textureCreator = singletonsManager->get<TextureCreator>();
+	Texture* texture = textureCreator->createEmptyTexture(width, height);
 	this->textureId = texture->getId();
 
 	this->firstPassFBO = this->graphicsWrapper->generateColorFrameBuffer(

@@ -1,5 +1,4 @@
-#ifndef _TEXTURE_H_
-#define _TEXTURE_H_
+#pragma once
 
 #include <stdint.h>
 #include "ETextureMap.h"
@@ -27,8 +26,8 @@ public:
 	ETextureMap::Type getMapType();
     uint32_t getUnit();
 	const std::string &getFileName();
+
+friend class AssetsManager;
 };
 
 } // namespace
-
-#endif
