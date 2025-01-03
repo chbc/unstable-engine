@@ -104,18 +104,18 @@ MeshData* PrimitiveMeshFactory::createPlane(const glm::vec2& size, float tileMul
 
 	float planeVertices[] = 
 	{ 
-		half.x,	half.y, 0,
-		-half.x,half.y, 0,
-		-half.x,-half.y, 0,
-		half.x,	-half.y, 0 
+		half.x, 0.0f, -half.y,
+		-half.x, 0.0f, -half.y,
+		-half.x, 0.0f, half.y,
+		half.x,	0.0f, half.y
 	};
 
 	float planeNormals[] = 
 	{ 
-		0, 0, 1,
-		0, 0, 1,
-		0, 0, 1,
-		0, 0, 1 
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f 
 	};
 
 	std::vector<VertexData> vertexData;
@@ -132,9 +132,9 @@ MeshData* PrimitiveMeshFactory::createPlane(const glm::vec2& size, float tileMul
 	// UVs
 	float planeTexCoords[] = 
 	{ 
-		tileMultiplier, 0,
-		0, 0,
-		0, tileMultiplier,
+		tileMultiplier, 0.0f,
+		0.0f, 0.0f,
+		0.0f, tileMultiplier,
 		tileMultiplier, tileMultiplier
 	};
 	getPlaneUVs(vertexData, planeTexCoords);
