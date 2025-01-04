@@ -11,8 +11,7 @@ namespace sre
 class ScenesManager : public ASingleton
 {
 protected:
-    UPTR<Scene> runtimeScene;
-    VECTOR_UPTR<Scene> scenes;
+    UPTR<Scene> scene;
     UPTR<GUIScene> guiScene;
 
 public:

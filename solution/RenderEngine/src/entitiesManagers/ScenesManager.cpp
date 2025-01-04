@@ -8,47 +8,29 @@ namespace sre
 
 void ScenesManager::init()
 {
-    this->runtimeScene = UPTR<Scene>(new Scene{ "Runtime" });
     this->guiScene = UPTR<GUIScene>(new GUIScene{});
 }
 
 Scene* ScenesManager::createScene(const std::string& name)
 {
-    Scene* result = new Scene{ name };
-    this->scenes.emplace_back(result);
-
-    return result;
+    this->scene.reset(new Scene{ name });
+    return this->scene.get();
 }
 
-SRE_API std::string ScenesManager::getMainSceneName()
+std::string ScenesManager::getMainSceneName()
 {
-    std::string result;
-
-    if (!this->scenes.empty())
-    {
-        AScene* scene = this->scenes.front().get();
-        result = scene->name;
-    }
+    std::string result = (this->scene != nullptr) ? this->scene->name : "";
     return result;
 }
 
 Entity* ScenesManager::createEntity(const std::string& name, Entity* parent)
 {
-    return this->runtimeScene->createEntity(name, parent);
+    return this->scene->createEntity(name, parent);
 }
 
 Entity* ScenesManager::getEntity(const std::string& name)
 {
-    Entity* result = this->runtimeScene->getEntity(name);
-    if (result == nullptr)
-    {
-        for (const auto& item : this->scenes)
-        {
-            result = item->getEntity(name);
-            if (result != nullptr)
-                break;
-        }
-    }
+    Entity* result = this->scene->getEntity(name);
 
     if (result == nullptr)
         result = this->guiScene->getEntity(name);
@@ -58,22 +40,22 @@ Entity* ScenesManager::getEntity(const std::string& name)
 
 Entity* ScenesManager::createPerspectiveCamera(float fov, float near, float far, Entity* parent, bool isMainCamera)
 {
-    return this->runtimeScene->createPerspectiveCamera(fov, near, far, parent, isMainCamera);
+    return this->scene->createPerspectiveCamera(fov, near, far, parent, isMainCamera);
 }
 
 Entity* ScenesManager::createOrthoCamera(Entity* parent, bool isMainCamera)
 {
-    return this->runtimeScene->createOrthoCamera(parent, isMainCamera);
+    return this->scene->createOrthoCamera(parent, isMainCamera);
 }
 
 DirectionalLightComponent* ScenesManager::createDirectionalLight(const std::string& name, Entity* parent)
 {
-    return this->runtimeScene->createDirectionalLight(name, parent);
+    return this->scene->createDirectionalLight(name, parent);
 }
 
 PointLightComponent* ScenesManager::createPointLight(const std::string& name, Entity* parent)
 {
-    return this->runtimeScene->createPointLight(name, parent);
+    return this->scene->createPointLight(name, parent);
 }
 
 Entity* ScenesManager::createGUIImageEntity(const std::string& fileName)
@@ -101,71 +83,49 @@ void ScenesManager::loadScene(const char* sceneName)
     Scene* scene = this->createScene(sceneName);
     SceneLoader::load(scene, sceneName);
 
-    for (const auto& item : this->scenes)
-        item->onSceneLoaded();
-
+    this->scene->onSceneLoaded();
     this->guiScene->onSceneLoaded();
 }
 
 void ScenesManager::saveScenes()
 {
-    for (const auto& item : this->scenes)
-    {
-        SceneLoader::save(item.get(), item->name.c_str());
-    }
-
+    SceneLoader::save(this->scene.get(), this->scene->name.c_str());
     SceneLoader::save(this->guiScene.get(), this->guiScene->name.c_str());
 }
 
 void ScenesManager::initEntities()
 {
-    for (const auto& item : this->scenes)
-        item->initEntities();
-
+    this->scene->initEntities();
     this->guiScene->initEntities();
 }
 
 void ScenesManager::update(float elapsedTime)
 {
-    this->runtimeScene->update(elapsedTime);
-
-    for (const auto& item : this->scenes)
-        item->update(elapsedTime);
-
+    this->scene->update(elapsedTime);
     this->guiScene->update(elapsedTime);
 }
 
 Entity* ScenesManager::createMeshEntity(const char* name, const char* fileName)
 {
-    Scene* scene = this->scenes.front().get();
-    return scene->createMeshEntity(name, fileName);
+    return this->scene->createMeshEntity(name, fileName);
 }
 
 void ScenesManager::removeDestroyedEntities()
 {
-    this->runtimeScene->removeDestroyedEntities();
-
-    for (const auto& item : this->scenes)
-        item->removeDestroyedEntities();
-
+    this->scene->removeDestroyedEntities();
     this->guiScene->removeDestroyedEntities();
 }
 
 void ScenesManager::cleanUp()
 {
-    this->runtimeScene.reset(new Scene{"Runtime"});
-    this->guiScene.reset(new GUIScene{});
-    this->scenes.clear();
+    this->scene.reset();
+    this->guiScene.reset(new GUIScene);
 }
 
 void ScenesManager::preRelease()
 {
-    this->runtimeScene->release();
-
-    for (const auto& item : this->scenes)
-        item->release();
-
-    this->guiScene->release();
+    this->scene.reset();
+    this->guiScene.reset();
 
     EntityComponentTypes::release();
 }

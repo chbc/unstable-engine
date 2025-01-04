@@ -6,6 +6,7 @@
 #include "ScenesManager.h"
 #include "MessagesManager.h"
 #include "EntityDestroyedMessage.h"
+#include "Log.h"
 
 namespace sre
 {
@@ -73,17 +74,23 @@ void AExecutionStrategy::delay(RenderEngine* controller)
 void AExecutionStrategy::loadScene(const char* sceneName)
 {
     std::string currentSceneName = this->scenesManager->getMainSceneName();
-    std::string newSceneName{ sceneName };
-    if (newSceneName.empty())
+    std::string resultSceneName{ sceneName };
+    if (resultSceneName.empty())
     {
-        sceneName = currentSceneName.c_str();
+        resultSceneName = currentSceneName;
+    }
+
+    if (resultSceneName.empty())
+    {
+        Log::LogWarning("Scene name is empty!");
+        return;
     }
 
     this->multimediaManager->cleanUp();
     this->renderManager->cleanUp();
     this->scenesManager->cleanUp();
 
-    this->scenesManager->loadScene(sceneName);
+    this->scenesManager->loadScene(resultSceneName.c_str());
 
     this->renderManager->initPostProcessing();
     //

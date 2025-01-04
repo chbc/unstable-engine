@@ -13,7 +13,17 @@ AScene::AScene(std::string arg_name) : name(arg_name), sceneLoaded(false) { }
 AScene::~AScene()
 {
     this->entities.clear();
-    this->entityAssets.clear();
+
+    if (!this->entityAssets.empty())
+    {
+        AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+        auto& it = this->entityAssets.begin();
+        for (it; it != this->entityAssets.end();)
+        {
+            assetsManager->releaseEntity((*it).second);
+            it = this->entityAssets.erase(it);
+        }
+    }
 }
 
 Entity* AScene::getEntity(const std::string& name)
@@ -113,19 +123,6 @@ void AScene::onSceneLoaded()
     }
 
     this->sceneLoaded = true;
-}
-
-void AScene::release()
-{
-    this->entities.clear();
-
-    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-    auto& it = this->entityAssets.begin();
-    for (it; it != this->entityAssets.end();)
-    {
-        assetsManager->releaseEntity((*it).second);
-        it = this->entityAssets.erase(it);
-    }
 }
 
 } // namespace

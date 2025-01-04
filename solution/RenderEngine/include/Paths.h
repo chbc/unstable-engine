@@ -5,15 +5,6 @@
 namespace sre
 {
 
-namespace EContentType
-{
-	enum Type
-	{
-		ENGINE,
-		CONTENT
-	};
-};
-
 class Paths
 {
 private:
@@ -38,8 +29,8 @@ private:
 #endif
 
 public:
-	void buildSceneFilePath(EContentType::Type contentType, const char* fileName, std::string& result);
-	void buildMediaFilePath(EContentType::Type contentType, const char* fileName, std::string& result);
+	void buildSceneFilePath(const char* fileName, std::string& result);
+	void buildMediaFilePath(const char* fileName, std::string& result);
 	void buildIconFilePath(const char* fileName, std::string& result);
 	void buildFilePath(const char* basePath, const char* fileName, const char* extension, std::string& result);
 

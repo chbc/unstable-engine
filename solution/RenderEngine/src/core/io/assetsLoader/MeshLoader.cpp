@@ -13,7 +13,7 @@ Mesh* MeshLoader::load(const char* file)
 	std::vector<VertexData> vertexData;
 	std::vector<uint32_t> indices;
 	std::string filePath;
-	Paths().buildMediaFilePath(EContentType::ENGINE, file, filePath);
+	Paths().buildMediaFilePath(file, filePath);
 	std::ifstream readStream(filePath, std::ios::out | std::ios::binary);
 	if (readStream)
 	{

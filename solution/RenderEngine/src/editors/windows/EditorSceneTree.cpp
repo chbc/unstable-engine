@@ -30,11 +30,7 @@ void EditorSceneTree::onEditorGUI()
 {
 	ImGui::Begin("Hierarchy");
 
-	this->drawScene(this->scenesManager->runtimeScene.get());
-
-	for (const auto& item : this->scenesManager->scenes)
-		drawScene(item.get());
-
+	this->drawScene(this->scenesManager->scene.get());
 	this->drawScene(this->scenesManager->guiScene.get());
 	
 	if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())

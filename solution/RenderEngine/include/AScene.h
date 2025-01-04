@@ -31,7 +31,6 @@ private:
     void initEntities();
     void update(float elapsedTime);
     void onSceneLoaded();
-    void release();
 
 friend class ScenesManager;
 friend class EditorSceneTree;

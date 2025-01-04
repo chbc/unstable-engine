@@ -46,7 +46,7 @@ void TextureEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	std::string filePath;
-	Paths().buildMediaFilePath(EContentType::ENGINE, fileName.c_str(), filePath);
+	Paths().buildMediaFilePath(fileName.c_str(), filePath);
 	*this->texture = assetsManager->loadTexture(filePath.c_str(), this->textureMapType);
 	this->id = reinterpret_cast<void*>((*this->texture)->getId());
 }

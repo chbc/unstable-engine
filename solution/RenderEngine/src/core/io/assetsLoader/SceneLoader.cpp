@@ -22,7 +22,7 @@ void SceneLoader::save(AScene* scene, const char* sceneName)
 	}
 
 	std::string filePath;
-	Paths().buildSceneFilePath(EContentType::CONTENT, sceneName, filePath);
+	Paths().buildSceneFilePath(sceneName, filePath);
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
 	FileUtils::saveFile(filePath, content);
 }
@@ -31,7 +31,7 @@ void SceneLoader::load(AScene* scene, const char* sceneName)
 {
 	std::string fileContent;
 	std::string filePath;
-	Paths().buildSceneFilePath(EContentType::CONTENT, sceneName, filePath);
+	Paths().buildSceneFilePath(sceneName, filePath);
 	FileUtils::loadFile(filePath, fileContent);
 
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
