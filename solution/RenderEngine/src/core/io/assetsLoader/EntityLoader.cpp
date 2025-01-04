@@ -16,7 +16,7 @@ void EntityLoader::save(Entity* entity, const char* fileName)
 	EntityParser::serialize(root, entity);
 
 	std::string filePath;
-	Paths().buildMediaFilePath(fileName, filePath);
+	Paths().buildMediaFilePath(fileName, filePath, false);
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
 	FileUtils::saveFile(filePath, content);
 }

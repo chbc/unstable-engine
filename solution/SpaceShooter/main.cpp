@@ -1,12 +1,12 @@
+#include "application/SpaceShooter.h"
 #include <iostream>
-#include <application/SampleApplication.h>
 
 int main(int argc, char *argv[])
 {
 	int result = 0;
 	try
 	{
-		SampleApplication().run();
+		SpaceShooter().run();
 	}
 	catch (const char *message)
 	{

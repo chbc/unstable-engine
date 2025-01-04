@@ -15,10 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="application\SampleApplication.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="application\events\EventReceiver.cpp">
+    <ClCompile Include="application\SpaceShooter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -26,10 +23,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="application\SampleApplication.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="application\events\EventReceiver.h">
+    <ClInclude Include="application\SpaceShooter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

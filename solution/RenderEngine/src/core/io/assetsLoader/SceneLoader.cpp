@@ -22,7 +22,7 @@ void SceneLoader::save(AScene* scene, const char* sceneName)
 	}
 
 	std::string filePath;
-	Paths().buildSceneFilePath(sceneName, filePath);
+	Paths().buildSceneFilePath(sceneName, filePath, false);
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
 	FileUtils::saveFile(filePath, content);
 }

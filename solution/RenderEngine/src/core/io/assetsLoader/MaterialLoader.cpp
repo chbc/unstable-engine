@@ -31,7 +31,7 @@ void MaterialLoader::save(Material* material, const char* name)
 	}
 
 	std::string filePath;
-	Paths().buildMediaFilePath(name, filePath);
+	Paths().buildMediaFilePath(name, filePath, false);
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
 	FileUtils::saveFile(filePath, content);
 }

@@ -4,19 +4,19 @@
 namespace sre
 {
 
-void Paths::buildSceneFilePath(const char* fileName, std::string& result)
+void Paths::buildSceneFilePath(const char* fileName, std::string& result, bool checkFileExists)
 {
 	this->buildFilePath(CONTENT_SCENES_FOLDER, fileName, ".scene", result);
-	if (!FileUtils::fileExists(result))
+	if (checkFileExists && !FileUtils::fileExists(result))
 	{
 		this->buildFilePath(ENGINE_SCENES_FOLDER, fileName, ".scene", result);
 	}
 }
 
-void Paths::buildMediaFilePath(const char* fileName, std::string& result)
+void Paths::buildMediaFilePath(const char* fileName, std::string& result, bool checkFileExists)
 {
 	this->buildFilePath(CONTENT_MEDIA_FOLDER, fileName, "", result);
-	if (!FileUtils::fileExists(result))
+	if (checkFileExists && !FileUtils::fileExists(result))
 	{
 		this->buildFilePath(ENGINE_MEDIA_FOLDER, fileName, "", result);
 	}

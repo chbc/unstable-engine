@@ -29,8 +29,8 @@ private:
 #endif
 
 public:
-	void buildSceneFilePath(const char* fileName, std::string& result);
-	void buildMediaFilePath(const char* fileName, std::string& result);
+	void buildSceneFilePath(const char* fileName, std::string& result, bool checkFileExists = true);
+	void buildMediaFilePath(const char* fileName, std::string& result, bool checkFileExists = true);
 	void buildIconFilePath(const char* fileName, std::string& result);
 	void buildFilePath(const char* basePath, const char* fileName, const char* extension, std::string& result);
 
