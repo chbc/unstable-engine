@@ -78,6 +78,10 @@
     <OutDir>../../tools/</OutDir>
     <IntDir>../obj/$(ProjectName)/</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>../obj/$(ProjectName)/</IntDir>
+    <OutDir>../../tools/</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>

@@ -23,6 +23,7 @@ public:
 	void saveScene();
 	void createCube();
 	void createPlane();
+	void createSphere();
 	void refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result);
 
 private:

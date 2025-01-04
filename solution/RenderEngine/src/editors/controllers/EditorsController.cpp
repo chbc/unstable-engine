@@ -27,12 +27,17 @@ void EditorsController::saveScene()
 
 void EditorsController::createCube()
 {
-	this->createEntity("cube", "cube.mesh");
+	this->createEntity("cube", "Cube.mesh");
 }
 
 void EditorsController::createPlane()
 {
-	this->createEntity("plane", "plane.mesh");
+	this->createEntity("plane", "Plane.mesh");
+}
+
+void EditorsController::createSphere()
+{
+	this->createEntity("sphere", "Sphere.mesh");
 }
 
 void EditorsController::refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result)

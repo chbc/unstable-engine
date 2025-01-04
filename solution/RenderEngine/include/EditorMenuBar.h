@@ -21,6 +21,10 @@ public:
 	void onEditorGUI() override;
 
 private:
+	void drawFileGroup();
+	void drawEditGroup();
+	void drawEntitiesGroup();
+	void drawHelpGroup();
 	void exitEditor();
 };
 

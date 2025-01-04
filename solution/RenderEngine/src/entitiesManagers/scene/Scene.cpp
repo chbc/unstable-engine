@@ -37,6 +37,7 @@ Entity* Scene::createMeshEntity(const char* name, const char* fileName)
     Entity* entity = this->createEntity(name);
     MeshComponent* meshComponent = entity->addComponent<MeshComponent>();
     meshComponent->load(fileName);
+    this->renderManager->addEntity(entity);
 
     return entity;
 }

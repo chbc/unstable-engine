@@ -117,13 +117,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>../../bin/vc/</OutDir>
-    <IntDir>../../obj/SRE_d/</IntDir>
+    <IntDir>../obj/SRE_d/</IntDir>
     <TargetName>SRE_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>SRE_d</TargetName>
     <OutDir>../../bin/vc/</OutDir>
-    <IntDir>../../obj/SRE_d/</IntDir>
+    <IntDir>../obj/SRE_d/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test_Debug|Win32'">
     <OutDir>../../lib/vc/</OutDir>
