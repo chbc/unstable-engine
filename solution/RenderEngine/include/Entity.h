@@ -16,9 +16,6 @@
 namespace sre
 {
 
-/*!
-    Class that represents a node of the scene.
-*/
 class Entity
 {
 private:

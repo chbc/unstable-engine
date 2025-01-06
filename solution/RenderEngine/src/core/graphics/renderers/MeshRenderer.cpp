@@ -134,13 +134,13 @@ void MeshRenderer::addMesh(MeshComponent *mesh)
     }
 }
 
-void MeshRenderer::render(const glm::vec3 &cameraPosition)
+void MeshRenderer::render()
 {
     // Shader setup
     this->shaderManager->enableShader(this->shader);
 
     for (const auto &item : this->shaderSetupItems)
-        item.second->setupShaderValues(this->shader, cameraPosition);
+        item.second->setupShaderValues(this->shader);
 
     for (MeshComponent *mesh : this->meshes)
     {

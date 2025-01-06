@@ -52,7 +52,7 @@ private:
     
     void addMesh(MeshComponent *mesh);
 
-    void render(const glm::vec3 &cameraPosition);
+    void render();
 
     bool contains(MeshComponent *mesh);
     bool fitsWithMesh(MeshComponent *mesh);

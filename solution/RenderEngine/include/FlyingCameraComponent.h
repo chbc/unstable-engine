@@ -11,7 +11,6 @@ DECLARE_COMPONENT()
 
 private:
 	glm::vec3 moveDirection;
-	glm::vec3 rotateDirection;
 	glm::ivec2 lastMousePosition;
 
 public:

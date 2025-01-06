@@ -18,11 +18,8 @@ DECLARE_COMPONENT()
 
 protected:
 	TransformComponent *transform;
-	glm::vec3 lookAtTarget;
-	glm::vec3 up;
-
-	glm::mat4 view;
 	glm::mat4 projection;
+	glm::mat4 view;
 
 private:
 	bool isPerspective;
@@ -34,25 +31,18 @@ private:
 
 public:
 	CameraComponent(Entity *entity);
-	void setLookAt(const glm::vec3& target);
-	void setPosition(const glm::vec3& position);
-	glm::vec3 getPosition() const;
-
-	glm::vec3 getLookAt() const;
 
 	void setPerspectiveProjection(float arg_fov, float aspectRatio, float near, float far);
 	void setOrthoProjection();
 	void setOrthoProjection(float width, float height);
 	void setMainCamera();
+	void updateView();
 
-	glm::mat4 getViewMatrix();
-	glm::mat4 getProjectionMatrix();
+	inline const glm::mat4& getProjectionMatrix() const;
+	inline const glm::mat4& getViewMatrix() const;
 
 protected:
 	void onValueChanged() override;
-
-private:
-	void updateView();
 
 friend class RenderManager;
 friend class EditorSceneViewport;

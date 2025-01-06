@@ -7,7 +7,7 @@
 namespace sre
 {
 
-IMPLEMENT_COMPONENT(FlyingCameraComponent)
+IMPLEMENT_CHILD_COMPONENT(FlyingCameraComponent, CameraComponent)
 
 FlyingCameraComponent::FlyingCameraComponent(Entity* entity) : CameraComponent(entity){}
 
@@ -25,9 +25,10 @@ void FlyingCameraComponent::onUpdate(float elapsedTime)
 
 void FlyingCameraComponent::processKeys()
 {
-	glm::vec3 position = this->getPosition();
-	glm::vec3 forward = glm::normalize(this->lookAtTarget - position);
-	glm::vec3 right = glm::cross(forward, glm::vec3{ 0.0f, 1.0f, 0.0f });
+	TransformComponent* transform = this->getTransform();
+	const glm::vec3& position = transform->getPosition();
+	const glm::vec3& forward = transform->getForward();
+	const glm::vec3& right = transform->getRight();
 	
 	this->moveDirection.x = 0.0f;
 	this->moveDirection.y = 0.0f;
@@ -49,20 +50,18 @@ void FlyingCameraComponent::processMouseMotion(float elapsedTime)
 	const glm::ivec2& mouseDelta = mousePosition - this->lastMousePosition;
 	if ((mouseDelta.x != 0) || (mouseDelta.y != 0))
 	{
-		float deltaX = static_cast<float>(mouseDelta.x);
-		float deltaY = static_cast<float>(-mouseDelta.y);
-
 		const float SPEED = 2.0f;
-		glm::vec3 position = this->getPosition();
+		float deltaX = static_cast<float>(mouseDelta.x);
+		float deltaY = static_cast<float>(mouseDelta.y);
 
-		this->rotateDirection = glm::normalize(this->lookAtTarget - position);
-		glm::vec3 right = glm::cross(this->rotateDirection, glm::vec3{ 0.0f, 1.0f, 0.0f });
-		glm::vec3 axis = glm::normalize((right * deltaY) + (glm::vec3{ 0.0f, 1.0f, 0.0f } *(-deltaX)));
+		TransformComponent* transform = this->getTransform();
+
+		const glm::vec3& right = transform->getRight();
+
+		glm::vec3 axis = glm::normalize((right * deltaY) + (glm::vec3{ 0.0f, 1.0f, 0.0f } *(deltaX)));
 		float angle = glm::vec2{ deltaX, deltaY }.length() * SPEED * elapsedTime;
 
-		this->rotateDirection = glm::rotate(this->rotateDirection, angle, axis);
-		float targetDistance = glm::distance(position, this->lookAtTarget);
-		this->lookAtTarget = position + (this->rotateDirection * targetDistance);
+		transform->rotate(axis, angle);
 	}
 }
 
@@ -71,13 +70,13 @@ void FlyingCameraComponent::updateMovement(float elapsedTime)
 	if ((this->moveDirection.x != 0.0f) || (this->moveDirection.y != 0.0f) || (this->moveDirection.z != 0.0f))
 	{
 		const float SPEED = 10.0f;
-		glm::vec3 position = this->getPosition();
+		TransformComponent* transform = this->getTransform();
+		glm::vec3 position = transform->getPosition();
 
 		glm::vec3 step = glm::normalize(this->moveDirection) * (SPEED * elapsedTime);
-		this->lookAtTarget += step;
 		position += step;
 
-		this->setPosition(position);
+		transform->setPosition(position);
 	}
 }
 

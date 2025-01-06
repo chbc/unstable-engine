@@ -68,17 +68,46 @@ void TransformComponent::setRotation(glm::vec3 arg_eulerAngles)
 	this->updateMatrix();
 }
 
-glm::vec3 TransformComponent::getPosition() const
+void TransformComponent::rotate(const glm::vec3& axis, float angle)
+{
+	glm::mat4 rotationMatrix{ 1.0f };
+
+	rotationMatrix = glm::rotate(rotationMatrix, angle, axis);
+	rotationMatrix = glm::transpose(rotationMatrix);
+
+	this->worldMatrix = this->worldMatrix * rotationMatrix;
+
+	glm::quat quaternion;
+	glm::vec3 skew;
+	glm::vec4 perspective;
+	glm::vec3 decomposedScale;
+	glm::vec3 decomposedPosition;
+	glm::decompose(this->worldMatrix, decomposedScale, quaternion, decomposedScale, skew, perspective);
+
+	this->eulerAngles.x = glm::degrees(glm::pitch(quaternion));
+	this->eulerAngles.y = glm::degrees(glm::yaw(quaternion));
+	this->eulerAngles.z = glm::degrees(glm::roll(quaternion));
+
+	this->updateMatrix();
+}
+
+void TransformComponent::rotate(glm::vec3 arg_eulerAngles)
+{
+	this->eulerAngles += arg_eulerAngles;
+	this->updateMatrix();
+}
+
+const glm::vec3& TransformComponent::getPosition() const
 {
 	return this->position;
 }
 
-glm::vec3 TransformComponent::getRotation()
+const glm::vec3& TransformComponent::getRotation() const
 {
 	return this->eulerAngles;
 }
 
-glm::vec3 TransformComponent::getScale()
+const glm::vec3& TransformComponent::getScale() const
 {
 	return this->scale;
 }
@@ -102,6 +131,11 @@ void TransformComponent::getScale(float* result)
 	result[0] = this->scale.x;
 	result[1] = this->scale.y;
 	result[2] = this->scale.z;
+}
+
+const glm::vec3 TransformComponent::getInternalMatrixPosition() const
+{
+	return glm::vec3(worldMatrix[3]);
 }
 
 /*
@@ -179,14 +213,21 @@ void TransformComponent::getLocalScale(float* result)
 }
 */
 
-glm::vec3 TransformComponent::getForwardVector()
+const glm::vec3 TransformComponent::getForward() const
 {
-	return glm::vec3{ 0.0f };
+	glm::vec3 result{ -worldMatrix[2][0], worldMatrix[2][1], worldMatrix[2][2] };
+	return normalize(result);
 }
 
-glm::vec3 TransformComponent::getRightVector()
+const glm::vec3 TransformComponent::getRight() const
 {
-	return glm::vec3{ 0.0f };
+	glm::vec3 result{ worldMatrix[0][0], worldMatrix[1][0], worldMatrix[2][0]};
+	return normalize(result);
+}
+
+inline const glm::mat4& TransformComponent::getMatrix() const
+{
+	return this->worldMatrix;
 }
 
 void TransformComponent::onValueChanged()
@@ -204,6 +245,7 @@ void TransformComponent::updateMatrix()
 	transformMatrix = glm::rotate(transformMatrix, glm::radians(this->eulerAngles.z), glm::vec3{ 0.0f, 0.0f, -1.0f });
 	this->worldMatrix = glm::scale(transformMatrix, this->scale);
 
+	this->worldMatrix[3].z = -this->worldMatrix[3].z;
 	this->localMatrix = this->worldMatrix; // XXX
 
 	this->propagateTransform();
@@ -212,7 +254,7 @@ void TransformComponent::updateMatrix()
 void TransformComponent::propagateTransform()
 {
 	Entity *entity = this->getEntity();
-	uint32_t size = entity->getChildrenCount();
+	size_t size = entity->getChildrenCount();
 	for (uint32_t i = 0; i < size; i++)
 	{
 		Entity *child = entity->getChild(i);

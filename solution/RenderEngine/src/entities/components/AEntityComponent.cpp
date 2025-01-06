@@ -26,6 +26,7 @@ AEntityComponent* AEntityComponent::Create(const char* className, Entity* entity
 	assert(types->typesMap.count(key) > 0);
 
 	AEntityComponent* result = types->typesMap[key](entity);
+	result->checkAndRefreshId();
 	return result;
 }
 

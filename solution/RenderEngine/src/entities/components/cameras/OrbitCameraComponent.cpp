@@ -7,7 +7,7 @@
 namespace sre
 {
 
-IMPLEMENT_COMPONENT(OrbitCameraComponent)
+IMPLEMENT_CHILD_COMPONENT(OrbitCameraComponent, CameraComponent)
 
 OrbitCameraComponent::OrbitCameraComponent(Entity* entity) : CameraComponent(entity){ }
 
@@ -22,6 +22,7 @@ void OrbitCameraComponent::onUpdate(float elapsedTime)
 
 void OrbitCameraComponent::processMouseMotion(float elapsedTime)
 {
+	/* XXX
 	const glm::ivec2& mouseDelta = Input::getMouseDeltaPosition();
 	if ((mouseDelta.x != 0) || (mouseDelta.y != 0))
 	{
@@ -43,6 +44,7 @@ void OrbitCameraComponent::processMouseMotion(float elapsedTime)
 
 		this->setPosition(position);
 	}
+	*/
 }
 
 } // namespace

@@ -1,5 +1,4 @@
-#ifndef _H_AENTITY_COMPONENT_H_
-#define _H_AENTITY_COMPONENT_H_
+#pragma once
 
 #include "core_defines.h"
 #include "memory_aliases.h"
@@ -16,13 +15,28 @@ class TransformComponent;
 
 #define DECLARE_COMPONENT() \
     public: \
-        static const uint16_t ID; \
+        static uint16_t ID; \
+        static const uint16_t* BASE_ID; \
         static const char* CLASS_NAME; \
         const char* getClassName() override { return CLASS_NAME; } \
-        uint16_t getId() override { return ID; }
+        uint16_t getId() override { return ID; } \
+        void checkAndRefreshId() override { SetupChildId(); } \
+        static void SetupChildId()  \
+        {                           \
+            if (BASE_ID != nullptr) \
+            {                       \
+                ID = *BASE_ID;      \
+            }                       \
+        }
 
 #define IMPLEMENT_COMPONENT(ComponentClass) \
-    const uint16_t ComponentClass::ID = AEntityComponent::generateId<ComponentClass>(#ComponentClass); \
+    const uint16_t* ComponentClass::BASE_ID = nullptr; \
+    uint16_t ComponentClass::ID = AEntityComponent::generateId<ComponentClass>(#ComponentClass); \
+    const char* ComponentClass::CLASS_NAME = #ComponentClass;
+
+#define IMPLEMENT_CHILD_COMPONENT(ComponentClass, BaseComponentClass) \
+    const uint16_t* ComponentClass::BASE_ID = nullptr; \
+    uint16_t ComponentClass::ID = AEntityComponent::generateId<ComponentClass, BaseComponentClass>(#ComponentClass); \
     const char* ComponentClass::CLASS_NAME = #ComponentClass;
 
 class SRE_API AEntityComponent
@@ -48,6 +62,16 @@ public:
         return Index++;
     }
 
+    template <typename Type, typename BaseType>
+    static uint16_t generateId(const char* className)
+    {
+        EntityComponentTypes* types = EntityComponentTypes::getInstance();
+        types->addType<Type>(className);
+        Type::BASE_ID = &BaseType::ID;
+
+        return 0;
+    }
+
     static AEntityComponent* Create(const char* className, Entity* entity);
 
     inline Entity* getEntity() { return this->entity; }
@@ -60,6 +84,8 @@ public:
 
 protected:
     virtual uint16_t getId() = 0;
+    virtual void checkAndRefreshId() = 0;
+
     virtual void onInit() {}
     virtual void onUpdate(float elapsedTime) {}
     virtual void onValueChanged() {}
@@ -71,5 +97,3 @@ friend class ComponentParser;
 };
 
 } // namespace
-
-#endif

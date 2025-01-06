@@ -31,12 +31,15 @@ public:
 	void setScale(const glm::vec3& arg_scale);
 	void setRotation(const glm::vec3& axis, float angle);
 	void setRotation(glm::vec3 arg_eulerAngles);
-	glm::vec3 getPosition() const;
-	glm::vec3 getRotation();
-	glm::vec3 getScale();
+	void rotate(const glm::vec3& axis, float angle);
+	void rotate(glm::vec3 arg_eulerAngles);
+	const glm::vec3& getPosition() const;
+	const glm::vec3& getRotation() const;
+	const glm::vec3& getScale() const;
 	void getPosition(float* result);
 	void getRotation(float* result);
 	void getScale(float* result);
+	inline const glm::vec3 getInternalMatrixPosition() const;
 
 	/*
 	void setLocalPosition(const glm::vec3& arg_position);
@@ -49,10 +52,9 @@ public:
 	void getLocalRotation(float* result);
 	void getLocalScale(float* result);
 	*/
-	glm::vec3 getForwardVector();
-	glm::vec3 getRightVector();
-
-	inline const glm::mat4 &getMatrix() { return this->worldMatrix; }
+	inline const glm::vec3 getForward() const;
+	inline const glm::vec3 getRight() const;
+	inline const glm::mat4& getMatrix() const;
 
 protected:
 	void onValueChanged() override;

@@ -154,7 +154,7 @@ void RenderManager::initPostProcessing()
     */
 }
 
-void RenderManager::setApplicationCamera(CameraComponent *camera)
+void RenderManager::setApplicationCamera(CameraComponent* camera)
 {
     this->applicationCamera = camera;
 }
@@ -193,12 +193,11 @@ void RenderManager::render()
     if (this->currentCamera != nullptr)
     {
         this->currentCamera->updateView();
-        glm::vec3 cameraPosition = this->currentCamera->getTransform()->getPosition();
         for (const UPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
-            item->render(cameraPosition);
+            item->render();
 
         for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
-            item->render(cameraPosition);
+            item->render();
     }
 
 	// Post processing rendering

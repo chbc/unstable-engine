@@ -16,9 +16,9 @@ class EditorSceneViewport : public IEditorWindow
 private:
 	ScenesManager* scenesManager;
 	class RenderManager* renderManager;
-	SPTR<class Entity> cameraEntity;
-	class FlyingCameraComponent* flyingCamera;
-	class OrbitCameraComponent* orbitCamera;
+	SPTR<class Entity> flyingCamera;
+	SPTR<class Entity> orbitCamera;
+	Entity* currentCamera;
 
 	static uint32_t Fbo;
 	void* textureId;

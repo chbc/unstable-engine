@@ -20,16 +20,6 @@ PointLightComponent::PointLightComponent(Entity *entity)
 	lightManager->addPointLight(this);
 }
 
-void PointLightComponent::setPosition(const glm::vec3 &position)
-{
-	this->getTransform()->setPosition(position);
-}
-
-glm::vec3 PointLightComponent::getPosition()
-{
-	return this->getTransform()->getPosition();
-}
-
 void PointLightComponent::setRange(float range)
 {
 	this->range = range;

@@ -20,7 +20,7 @@ protected:
     ShadowRendererShaderSetup(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
     void onSceneLoaded(Shader *shader) override;
-    void setupShaderValues(Shader *shader, const glm::vec3& cameraPosition) override;
+    void setupShaderValues(Shader *shader) override;
 
 friend class MeshRenderer;
 };

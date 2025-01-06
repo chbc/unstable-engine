@@ -43,7 +43,8 @@ void ShadowRenderer::setupDirectionalLightShader()
         uint32_t fbo = this->graphicsWrapper->generateDepthFrameBuffer(texture->getId());
         item->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
 
-        glm::vec3 position = glm::vec3(0.0f) - (item->getDirection() *  10.0f);
+        TransformComponent* transform = item->getTransform();
+        glm::vec3 position = glm::vec3(0.0f) - (transform->getForward() *  10.0f);
 
         glm::mat4 lightView = glm::lookAt
         (
@@ -113,7 +114,7 @@ void ShadowRenderer::renderDirectionalLightShadows()
         for (MeshComponent *item : this->items)
         {
             TransformComponent *transform = item->getTransform();
-            glm::mat4 modelMatrix = transform->getMatrix();
+            const glm::mat4& modelMatrix = transform->getMatrix();
             this->shaderManager->setMat4(this->directionalLightDepthShader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
             this->graphicsWrapper->bindVAO(item->mesh->meshData->vao, item->mesh->meshData->vbo);
@@ -135,7 +136,8 @@ void ShadowRenderer::renderPointLightShadows()
         this->graphicsWrapper->bindFrameBuffer(light->shadowData->fbo);
         this->graphicsWrapper->clearDepthBuffer();
 
-        glm::vec3 lightPosition = light->getPosition();
+        TransformComponent* transform;
+        const glm::vec3& lightPosition = transform->getPosition();
         this->updateShadowMatrices(lightPosition, light->getRange());
 
         for (unsigned int i = 0; i < 6; ++i)

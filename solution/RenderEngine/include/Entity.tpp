@@ -6,6 +6,7 @@ T* Entity::addComponent()
 {
     T* newComponent{ nullptr };
 
+    T::SetupChildId();
     assert(!this->hasComponent<T>());
 
     newComponent = new T{ this };
@@ -30,11 +31,10 @@ T* Entity::getComponent()
 {
     T* component{ nullptr };
 
-    if (this->hasComponent<T>())
-    {
-        uint16_t id = this->getComponentId<T>();
-        component = static_cast<T*>(componentsMap[id].get());
-    }
+    assert(this->hasComponent<T>());
+
+    uint16_t id = this->getComponentId<T>();
+    component = static_cast<T*>(componentsMap[id].get());
 
     return component;
 }

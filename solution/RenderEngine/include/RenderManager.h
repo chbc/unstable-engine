@@ -13,11 +13,11 @@
 namespace sre
 {
 
+class Entity;
 class MeshComponent;
 class GUIImageComponent;
 class CameraComponent;
 
-class Entity;
 struct GUIMeshData;
 
 /*!
@@ -33,7 +33,7 @@ private:
 
 	VECTOR_UPTR<MeshRenderer> opaqueMeshRenderers;
     VECTOR_UPTR<MeshRenderer> translucentMeshRenderers;
-    UPTR<class ShadowRenderer> shadowRenderer;
+    UPTR<ShadowRenderer> shadowRenderer;
     UPTR<GUIRenderer> guiRenderer;
 	UPTR<PostProcessingRenderer> postProcessingRenderer;
 
@@ -85,6 +85,7 @@ friend class Material;
 friend class GUITextComponent;
 friend class SingletonsManager;
 friend class BaseRendererShaderSetup;
+friend class LightRendererShaderSetup;
 friend class EditorSceneViewport;
 friend class WorldEditor;
 };

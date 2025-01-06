@@ -12,13 +12,10 @@ class SRE_API DirectionalLightComponent : public ALightComponent
 DECLARE_COMPONENT()
 
 private:
-	glm::vec3 direction;
     glm::mat4 lightSpaceMatrix;
 
 public:
 	DirectionalLightComponent(Entity *entity);
-	void setDirection(const glm::vec3 &direction);
-	glm::vec3 getDirection();
 
 friend class Entity;
 friend class ShadowRenderer;

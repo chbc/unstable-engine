@@ -24,7 +24,7 @@ public:
 
 private:
     virtual void onSceneLoaded(Shader *shader);
-    virtual void setupShaderValues(Shader *shader, const glm::vec3& cameraPosition);
+    virtual void setupShaderValues(Shader *shader);
 
 friend class MeshRenderer;
 };

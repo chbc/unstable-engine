@@ -1,8 +1,7 @@
-#ifndef _POINT_LIGHT_COMPONENT_H_
-#define _POINT_LIGHT_COMPONENT_H_
+#pragma once
 
 #include "ALightComponent.h"
-#include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
 
 namespace sre
 {
@@ -17,9 +16,6 @@ private:
 
 public:
     PointLightComponent(Entity *entity);
-	void setPosition(const glm::vec3 &position);
-	glm::vec3 getPosition();
-
 	void setRange(float range);
 	float getRange();
 
@@ -30,5 +26,3 @@ friend class Entity;
 };
 
 } // namespace
-
-#endif

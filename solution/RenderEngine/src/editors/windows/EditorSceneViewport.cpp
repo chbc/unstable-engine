@@ -22,9 +22,8 @@ namespace sre
 uint32_t EditorSceneViewport::Fbo = 0;
 
 EditorSceneViewport::EditorSceneViewport(ScenesManager* arg_scenesManager) 
-	: scenesManager(arg_scenesManager), renderManager(nullptr), 
-	cameraEntity(nullptr), textureId(nullptr), canUpdate(false),
-	flyingCamera(nullptr), orbitCamera(nullptr)
+	: scenesManager(arg_scenesManager), renderManager(nullptr), textureId(nullptr),
+	canUpdate(false), flyingCamera(nullptr), orbitCamera(nullptr), currentCamera(nullptr)
 { }
 
 void EditorSceneViewport::onInit()
@@ -49,20 +48,23 @@ void EditorSceneViewport::onInit()
 
 		this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 
-		this->cameraEntity = UPTR<Entity>(new Entity{"_editor_camera"});
+		this->flyingCamera = UPTR<Entity>(new Entity{"_editor_flying_camera"});
 		float aspectRatio = static_cast<float>(EngineValues::SCREEN_WIDTH) / static_cast<float>(EngineValues::SCREEN_HEIGHT);
-		this->flyingCamera = cameraEntity->addComponent<FlyingCameraComponent>();
-		this->flyingCamera->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
+		CameraComponent* flyingComponent = this->flyingCamera->addComponent<FlyingCameraComponent>();
+		flyingComponent->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
 
-		this->orbitCamera = cameraEntity->addComponent<OrbitCameraComponent>();
-		this->orbitCamera->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
+		this->orbitCamera = SPTR<Entity>(new Entity{ "_editor_orbit_camera" });
+		CameraComponent* orbitComponent = this->orbitCamera->addComponent<OrbitCameraComponent>();
+		orbitComponent->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
 		
-		this->cameraEntity->getTransform()->setPosition({ 0.0f, 5.0f, 10.0f });
+		this->flyingCamera->getTransform()->setPosition({ 0.0f, 5.0f, -10.0f });
 
-		this->cameraEntity->onInit();
+		this->flyingCamera->onInit();
+		this->orbitCamera->onInit();
+		this->currentCamera = this->flyingCamera.get();
+
 		this->orbitCamera->setEnabled(false);
-
-		this->renderManager->setEditorCamera(this->flyingCamera);
+		this->renderManager->setEditorCamera(flyingComponent);
 	}
 
 	this->renderManager->setTargetFBO(Fbo);
@@ -75,7 +77,7 @@ void EditorSceneViewport::onUpdate(float elapsedTime)
 	{
 		this->updateViewingState();
 		this->processMouseWheel();
-		this->cameraEntity->onUpdate(elapsedTime);
+		this->currentCamera->onUpdate(elapsedTime);
 	}
 }
 
@@ -105,6 +107,7 @@ void EditorSceneViewport::onRelease()
 
 void EditorSceneViewport::updateViewingState()
 {
+	/*
 	if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftAlt)))
 	{
 		if (!this->orbitCamera->isEnabled())
@@ -124,10 +127,12 @@ void EditorSceneViewport::updateViewingState()
 		this->flyingCamera->setEnabled(true);
 		this->renderManager->setEditorCamera(this->flyingCamera);
 	}
+	*/
 }
 
 void EditorSceneViewport::processMouseWheel()
 {
+	/*
 	int mouseWheel = Input::getMouseWheel();
 
 	if (mouseWheel != 0)
@@ -144,6 +149,7 @@ void EditorSceneViewport::processMouseWheel()
 
 		this->cameraEntity->getTransform()->setPosition(position);
 	}
+	*/
 }
 
 } // namespace

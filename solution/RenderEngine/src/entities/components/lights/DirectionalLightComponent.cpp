@@ -14,14 +14,4 @@ DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightCom
 	lightManager->addDirectionalLight(this);
 }
 
-void DirectionalLightComponent::setDirection(const glm::vec3 &direction)
-{
-	this->direction = direction;
-}
-
-glm::vec3 DirectionalLightComponent::getDirection()
-{
-    return this->direction;
-}
-
 } // namespace

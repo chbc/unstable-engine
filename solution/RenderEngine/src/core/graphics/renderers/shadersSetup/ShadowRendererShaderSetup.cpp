@@ -34,7 +34,7 @@ void ShadowRendererShaderSetup::onSceneLoaded(Shader *shader)
     }
 }
 
-void ShadowRendererShaderSetup::setupShaderValues(Shader *shader, const glm::vec3 &cameraPosition)
+void ShadowRendererShaderSetup::setupShaderValues(Shader *shader)
 {
     char variable[32];
 
