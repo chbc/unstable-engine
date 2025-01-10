@@ -11,7 +11,6 @@ DECLARE_COMPONENT()
 
 private:
 	glm::vec3 moveDirection;
-	glm::ivec2 lastMousePosition;
 
 public:
 	FlyingCameraComponent(Entity* entity);

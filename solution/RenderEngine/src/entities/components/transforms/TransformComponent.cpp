@@ -3,13 +3,16 @@
 #include "Vec3EditorProperty.h"
 
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/euler_angles.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 namespace sre
 {
 
 IMPLEMENT_COMPONENT(TransformComponent)
+
+glm::vec3 TransformComponent::ZERO{ 0.0f, 0.0f, 0.0f };
+glm::vec3 TransformComponent::UP{ 0.0f, 1.0f, 0.0f };
 
 /*
 	Matrix Format
@@ -18,8 +21,7 @@ IMPLEMENT_COMPONENT(TransformComponent)
 	02	12	22	32
 	t1	t2	t3	33
 */
-TransformComponent::TransformComponent(Entity *entity) : AEntityComponent(entity),
-	worldMatrix{1.0f}, localMatrix{1.0f}, position{0.0f}, eulerAngles{0.0f}, scale{1.0f}
+TransformComponent::TransformComponent(Entity *entity) : AEntityComponent(entity)
 {
 	this->addEditorProperty(new Vec3EditorProperty{ "Position", &this->position });
 	this->addEditorProperty(new Vec3EditorProperty{ "Rotation", &this->eulerAngles });
@@ -42,52 +44,14 @@ void TransformComponent::setScale(const glm::vec3& arg_scale)
 
 void TransformComponent::setRotation(const glm::vec3& axis, float angle)
 {
-	glm::mat4 rotationMatrix{ 1.0f };
-
-	rotationMatrix = glm::rotate(rotationMatrix, angle, axis);
-	rotationMatrix = glm::transpose(rotationMatrix);
-
-	glm::quat quaternion;
-	glm::vec3 skew;
-	glm::vec4 perspective;
-	glm::vec3 decomposedScale;
-	glm::vec3 decomposedPosition;
-	glm::decompose(rotationMatrix, decomposedScale, quaternion, decomposedScale, skew, perspective);
-
-	this->eulerAngles.x = glm::degrees(glm::pitch(quaternion));
-	this->eulerAngles.y = glm::degrees(glm::yaw(quaternion));
-	this->eulerAngles.z = glm::degrees(glm::roll(quaternion));
-
-	this->updateMatrix();
-}
-
-void TransformComponent::setRotation(glm::vec3 arg_eulerAngles)
-{
-	this->eulerAngles = arg_eulerAngles;
-
+	glm::quat identity;
+	this->rotation = glm::rotate(identity, glm::radians(angle), axis);
 	this->updateMatrix();
 }
 
 void TransformComponent::rotate(const glm::vec3& axis, float angle)
 {
-	glm::mat4 rotationMatrix{ 1.0f };
-
-	rotationMatrix = glm::rotate(rotationMatrix, angle, axis);
-	rotationMatrix = glm::transpose(rotationMatrix);
-
-	this->worldMatrix = this->worldMatrix * rotationMatrix;
-
-	glm::quat quaternion;
-	glm::vec3 skew;
-	glm::vec4 perspective;
-	glm::vec3 decomposedScale;
-	glm::vec3 decomposedPosition;
-	glm::decompose(this->worldMatrix, decomposedScale, quaternion, decomposedScale, skew, perspective);
-
-	this->eulerAngles.x = glm::degrees(glm::pitch(quaternion));
-	this->eulerAngles.y = glm::degrees(glm::yaw(quaternion));
-	this->eulerAngles.z = glm::degrees(glm::roll(quaternion));
-
+	this->rotation = glm::rotate(this->rotation, glm::radians(angle), axis);
 	this->updateMatrix();
 }
 
@@ -102,9 +66,9 @@ const glm::vec3& TransformComponent::getPosition() const
 	return this->position;
 }
 
-const glm::vec3& TransformComponent::getRotation() const
+const glm::quat& TransformComponent::getRotation() const
 {
-	return this->eulerAngles;
+	return this->rotation;
 }
 
 const glm::vec3& TransformComponent::getScale() const
@@ -135,7 +99,24 @@ void TransformComponent::getScale(float* result)
 
 const glm::vec3 TransformComponent::getInternalMatrixPosition() const
 {
-	return glm::vec3(worldMatrix[3]);
+	return glm::vec3(this->worldMatrix[3]);
+}
+
+glm::vec3 TransformComponent::getForward() const
+{
+	glm::vec3 result{ this->worldMatrix[2].x, this->worldMatrix[2].y, -this->worldMatrix[2].z };
+	return glm::normalize(result);
+}
+
+glm::vec3 TransformComponent::getRight() const
+{
+	glm::vec3 result{ this->worldMatrix[0].x, this->worldMatrix[0].y, -this->worldMatrix[0].z };
+	return glm::normalize(result);
+}
+
+inline const glm::mat4& TransformComponent::getMatrix() const
+{
+	return this->worldMatrix;
 }
 
 /*
@@ -213,37 +194,18 @@ void TransformComponent::getLocalScale(float* result)
 }
 */
 
-const glm::vec3 TransformComponent::getForward() const
-{
-	glm::vec3 result{ -worldMatrix[2][0], worldMatrix[2][1], worldMatrix[2][2] };
-	return normalize(result);
-}
-
-const glm::vec3 TransformComponent::getRight() const
-{
-	glm::vec3 result{ worldMatrix[0][0], worldMatrix[1][0], worldMatrix[2][0]};
-	return normalize(result);
-}
-
-inline const glm::mat4& TransformComponent::getMatrix() const
-{
-	return this->worldMatrix;
-}
-
 void TransformComponent::onValueChanged()
 {
+	this->rotation = glm::quat{ glm::radians(this->eulerAngles) };
 	this->updateMatrix();
 }
 
 void TransformComponent::updateMatrix()
 {
-	glm::mat4 transformMatrix{ 1.0f };
-
-	transformMatrix = glm::translate(transformMatrix, this->position);
-	transformMatrix = glm::rotate(transformMatrix, glm::radians(this->eulerAngles.x), glm::vec3{ -1.0f, 0.0f, 0.0f });
-	transformMatrix = glm::rotate(transformMatrix, glm::radians(this->eulerAngles.y), glm::vec3{ 0.0f, -1.0f, 0.0f });
-	transformMatrix = glm::rotate(transformMatrix, glm::radians(this->eulerAngles.z), glm::vec3{ 0.0f, 0.0f, -1.0f });
-	this->worldMatrix = glm::scale(transformMatrix, this->scale);
+	glm::mat4 translationMatrix = glm::translate(glm::mat4{ 1.0 }, this->position);
+	glm::mat4 rotationMatrix = glm::toMat4(this->rotation);
+	glm::mat4 scaleMatrix = glm::scale(glm::mat4{ 1.0f }, this->scale);
+	this->worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
 
 	this->worldMatrix[3].z = -this->worldMatrix[3].z;
 	this->localMatrix = this->worldMatrix; // XXX

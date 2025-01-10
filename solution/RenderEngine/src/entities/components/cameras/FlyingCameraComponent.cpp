@@ -19,49 +19,42 @@ void FlyingCameraComponent::onUpdate(float elapsedTime)
 		processMouseMotion(elapsedTime);
 		updateMovement(elapsedTime);
 	}
-
-	this->lastMousePosition = Input::getMousePosition();
 }
 
 void FlyingCameraComponent::processKeys()
 {
 	TransformComponent* transform = this->getTransform();
-	const glm::vec3& position = transform->getPosition();
-	const glm::vec3& forward = transform->getForward();
-	const glm::vec3& right = transform->getRight();
 	
 	this->moveDirection.x = 0.0f;
 	this->moveDirection.y = 0.0f;
 	this->moveDirection.z = 0.0f;
 
 	if (Input::isKeyDown(KEY_a))
-		this->moveDirection -= right;
+		this->moveDirection -= transform->getRight();
 	if (Input::isKeyDown(KEY_d))
-		this->moveDirection += right;
+		this->moveDirection += transform->getRight();
 	if (Input::isKeyDown(KEY_w))
-		this->moveDirection += forward;
+		this->moveDirection -= transform->getForward();
 	if (Input::isKeyDown(KEY_s))
-		this->moveDirection -= forward;
+		this->moveDirection += transform->getForward();
 }
 
 void FlyingCameraComponent::processMouseMotion(float elapsedTime)
 {
-	const glm::ivec2& mousePosition = Input::getMousePosition();
-	const glm::ivec2& mouseDelta = mousePosition - this->lastMousePosition;
+	static float pitch = 0.0f;
+	static float yaw = 0.0f;
+
+	const glm::ivec2& mouseDelta = Input::getMouseDeltaPosition();
 	if ((mouseDelta.x != 0) || (mouseDelta.y != 0))
 	{
-		const float SPEED = 2.0f;
-		float deltaX = static_cast<float>(mouseDelta.x);
-		float deltaY = static_cast<float>(mouseDelta.y);
+		const float SPEED = 90.0f;
+		float deltaX = static_cast<float>(-mouseDelta.x);
+		float deltaY = static_cast<float>(-mouseDelta.y);
 
-		TransformComponent* transform = this->getTransform();
-
-		const glm::vec3& right = transform->getRight();
-
-		glm::vec3 axis = glm::normalize((right * deltaY) + (glm::vec3{ 0.0f, 1.0f, 0.0f } *(deltaX)));
-		float angle = glm::vec2{ deltaX, deltaY }.length() * SPEED * elapsedTime;
-
-		transform->rotate(axis, angle);
+		float yaw = deltaX * SPEED * elapsedTime;
+		float pitch = deltaY * SPEED * elapsedTime;
+		this->getTransform()->rotate(TransformComponent::UP, yaw);
+		this->getTransform()->rotate(glm::vec3{1.0f, 0.0f, 0.0f}, pitch);
 	}
 }
 
