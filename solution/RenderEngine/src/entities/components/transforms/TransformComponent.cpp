@@ -12,7 +12,17 @@ namespace sre
 IMPLEMENT_COMPONENT(TransformComponent)
 
 glm::vec3 TransformComponent::ZERO{ 0.0f, 0.0f, 0.0f };
+glm::vec3 TransformComponent::RIGHT{ 1.0f, 0.0f, 0.0f };
 glm::vec3 TransformComponent::UP{ 0.0f, 1.0f, 0.0f };
+glm::vec3 TransformComponent::FRONT{ 0.0f, 0.0f, 1.0f };
+
+glm::mat4 TransformComponent::ROTATION_FIX
+{
+	1.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, -1.0f, 0.0f,
+	0.0f, 0.0f, 0.0f, 1.0f
+};
 
 /*
 	Matrix Format
@@ -44,7 +54,7 @@ void TransformComponent::setScale(const glm::vec3& arg_scale)
 
 void TransformComponent::setRotation(const glm::vec3& axis, float angle)
 {
-	glm::quat identity;
+	glm::mat4 identity;
 	this->rotation = glm::rotate(identity, glm::radians(angle), axis);
 	this->updateMatrix();
 }
@@ -61,17 +71,17 @@ void TransformComponent::rotate(glm::vec3 arg_eulerAngles)
 	this->updateMatrix();
 }
 
-const glm::vec3& TransformComponent::getPosition() const
+glm::vec3 TransformComponent::getPosition() const
 {
 	return this->position;
 }
 
-const glm::quat& TransformComponent::getRotation() const
+glm::quat TransformComponent::getRotation() const
 {
-	return this->rotation;
+	return glm::quat{ this->rotation };
 }
 
-const glm::vec3& TransformComponent::getScale() const
+glm::vec3 TransformComponent::getScale() const
 {
 	return this->scale;
 }
@@ -104,13 +114,19 @@ const glm::vec3 TransformComponent::getInternalMatrixPosition() const
 
 glm::vec3 TransformComponent::getForward() const
 {
-	glm::vec3 result{ this->worldMatrix[2].x, this->worldMatrix[2].y, -this->worldMatrix[2].z };
+	glm::vec3 result{ this->worldMatrix[2].x, this->worldMatrix[2].y, this->worldMatrix[2].z };
 	return glm::normalize(result);
 }
 
 glm::vec3 TransformComponent::getRight() const
 {
-	glm::vec3 result{ this->worldMatrix[0].x, this->worldMatrix[0].y, -this->worldMatrix[0].z };
+	glm::vec3 result{ this->worldMatrix[0].x, this->worldMatrix[0].y, this->worldMatrix[0].z };
+	return glm::normalize(result);
+}
+
+inline glm::vec3 TransformComponent::getUp() const
+{
+	glm::vec3 result{ glm::vec3{this->worldMatrix[1]} };
 	return glm::normalize(result);
 }
 
@@ -196,18 +212,20 @@ void TransformComponent::getLocalScale(float* result)
 
 void TransformComponent::onValueChanged()
 {
-	this->rotation = glm::quat{ glm::radians(this->eulerAngles) };
+	glm::quat quaternionRotation = glm::quat{ glm::radians(this->eulerAngles) };
+	this->rotation = glm::toMat4(quaternionRotation);
 	this->updateMatrix();
 }
 
 void TransformComponent::updateMatrix()
 {
 	glm::mat4 translationMatrix = glm::translate(glm::mat4{ 1.0 }, this->position);
-	glm::mat4 rotationMatrix = glm::toMat4(this->rotation);
 	glm::mat4 scaleMatrix = glm::scale(glm::mat4{ 1.0f }, this->scale);
+	glm::mat4 rotationMatrix = glm::transpose(this->rotation * ROTATION_FIX);
+	rotationMatrix = glm::transpose(rotationMatrix);
+
 	this->worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
 
-	this->worldMatrix[3].z = -this->worldMatrix[3].z;
 	this->localMatrix = this->worldMatrix; // XXX
 
 	this->propagateTransform();

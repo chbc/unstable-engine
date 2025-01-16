@@ -11,6 +11,8 @@ DECLARE_COMPONENT()
 
 private:
 	glm::vec3 moveDirection;
+	float yaw{ 0.0f };
+	float pitch{ 0.0f };
 
 public:
 	FlyingCameraComponent(Entity* entity);

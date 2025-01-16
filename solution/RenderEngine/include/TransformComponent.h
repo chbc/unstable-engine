@@ -10,9 +10,6 @@ namespace sre
 
 class Entity;
 
-/*!
-	Class used to apply transform operations to the entities.
-*/
 class SRE_API TransformComponent : public AEntityComponent
 {
 DECLARE_COMPONENT()
@@ -20,12 +17,15 @@ DECLARE_COMPONENT()
 public:
 	static glm::vec3 ZERO;
 	static glm::vec3 UP;
+	static glm::vec3 FRONT;
+	static glm::vec3 RIGHT;
 
 private:
+	static glm::mat4 ROTATION_FIX;
 	glm::mat4 worldMatrix{ 1.0f };
 	glm::mat4 localMatrix{ 1.0f };
 
-	glm::quat rotation;
+	glm::mat4 rotation;
 	glm::vec3 position{ 0.0f };
 	glm::vec3 eulerAngles{ 0.0f };
 	glm::vec3 scale{ 1.0f };
@@ -37,15 +37,16 @@ public:
 	void setRotation(const glm::vec3& axis, float angle);
 	void rotate(const glm::vec3& axis, float angle);
 	void rotate(glm::vec3 arg_eulerAngles);
-	const glm::vec3& getPosition() const;
-	const glm::quat& getRotation() const;
-	const glm::vec3& getScale() const;
+	glm::vec3 getPosition() const;
+	glm::quat getRotation() const;
+	glm::vec3 getScale() const;
 	void getPosition(float* result);
 	void getRotation(float* result);
 	void getScale(float* result);
 	inline const glm::vec3 getInternalMatrixPosition() const;
 	inline glm::vec3 getForward() const;
 	inline glm::vec3 getRight() const;
+	inline glm::vec3 getUp() const;
 	inline const glm::mat4& getMatrix() const;
 
 	/*

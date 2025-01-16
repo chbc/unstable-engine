@@ -47,14 +47,15 @@ void FlyingCameraComponent::processMouseMotion(float elapsedTime)
 	const glm::ivec2& mouseDelta = Input::getMouseDeltaPosition();
 	if ((mouseDelta.x != 0) || (mouseDelta.y != 0))
 	{
-		const float SPEED = 90.0f;
-		float deltaX = static_cast<float>(-mouseDelta.x);
-		float deltaY = static_cast<float>(-mouseDelta.y);
+		const float SPEED = 15.0f;
+		float deltaX = static_cast<float>(mouseDelta.x);
+		float deltaY = static_cast<float>(mouseDelta.y);
 
-		float yaw = deltaX * SPEED * elapsedTime;
-		float pitch = deltaY * SPEED * elapsedTime;
-		this->getTransform()->rotate(TransformComponent::UP, yaw);
-		this->getTransform()->rotate(glm::vec3{1.0f, 0.0f, 0.0f}, pitch);
+		this->yaw += deltaX * SPEED * elapsedTime;
+		this->pitch += deltaY * SPEED * elapsedTime;
+
+		this->getTransform()->setRotation(TransformComponent::UP, this->yaw);
+		this->getTransform()->rotate(TransformComponent::RIGHT, this->pitch);
 	}
 }
 
