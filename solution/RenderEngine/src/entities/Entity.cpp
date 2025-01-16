@@ -34,7 +34,7 @@ AEntityComponent* Entity::addComponent(const char* className)
 	return newComponent;
 }
 
-Entity* Entity::createChild(const std::string& childName)
+Entity* Entity::createChild(const std::string& childName, const char* className)
 {
 	std::string resultName = childName;
 	if (childName.empty())
@@ -42,7 +42,7 @@ Entity* Entity::createChild(const std::string& childName)
 	else if (this->children.count(childName) > 0)
 		resultName = generateEntityId(this->childIndex, childName);
 
-	Entity* result = new Entity{ resultName };
+	Entity* result = Create(resultName, className);
 	this->addChild(result);
 	return result;
 }
@@ -109,19 +109,40 @@ void Entity::onInit()
 		item->onInit();
 }
 
-void Entity::onUpdate(float deltaTime)
+void Entity::onUpdate(float elapsedTime)
 {
 	if (this->enabled)
 	{
 		for (auto const& item : this->componentsMap)
 		{
 			if (item.second->isEnabled())
-				item.second->onUpdate(deltaTime);
+				item.second->onUpdate(elapsedTime);
 		}
 
 		for (Entity* item : this->childrenList)
-			item->onUpdate(deltaTime);
+			item->onUpdate(elapsedTime);
 	}
+}
+
+Entity* Entity::Create(std::string arg_name, const char* className)
+{
+	Entity* result{ nullptr };
+
+	if (className != nullptr)
+	{
+		EntityTypes* types = EntityTypes::getInstance();
+		size_t key = std::hash<std::string>{}(className);
+
+		assert(types->typesMap.count(key) > 0);
+
+		result = types->typesMap[key](arg_name);
+	}
+	else
+	{
+		result = new Entity{ arg_name };
+	}
+
+	return result;
 }
 
 std::string Entity::generateEntityId(uint32_t& index, const std::string& duplicateName)

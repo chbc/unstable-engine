@@ -8,6 +8,7 @@
 #include "AEntityComponent.h"
 #include "TransformComponent.h"
 #include "memory_aliases.h"
+#include "EntityTypes.h"
 
 #include <unordered_map>
 #include <vector>
@@ -15,6 +16,13 @@
 
 namespace sre
 {
+
+#define DECLARE_ENTITY() \
+    public: \
+        static bool _xxx_;
+
+#define IMPLEMENT_ENTITY(EntityClass) \
+    bool EntityClass::_xxx_ = Entity::AddType<EntityClass>(#EntityClass);
 
 class Entity
 {
@@ -33,11 +41,9 @@ private:
     std::string name;
     std::string fileName;
 
-protected:
-    Entity(std::string arg_name);
-
 public:
-    virtual ~Entity();
+    SRE_API Entity(std::string arg_name);
+    SRE_API virtual ~Entity();
 
     template <typename T> T* addComponent();
     template <typename T> void removeComponent();
@@ -46,7 +52,7 @@ public:
 
     AEntityComponent* addComponent(const char* className);
 
-    Entity* createChild(const std::string& childName = "");
+    Entity* createChild(const std::string& childName = "", const char* className = nullptr);
 	SRE_API void addChild(Entity *child);
 	SRE_API inline size_t getChildrenCount() { return this->children.size(); }
 	SRE_API Entity *getChild(size_t index);
@@ -61,11 +67,20 @@ public:
     SRE_API void setEnabled(bool value);
     SRE_API bool isEnabled() const;
 
+    template <typename Type>
+    static bool AddType(const char* className)
+    {
+        EntityTypes* types = EntityTypes::getInstance();
+        types->addType<Type>(className);
+        return true;
+    }
+
 protected:
-	virtual void onInit();
-	virtual void onUpdate(float deltaTime);
+	SRE_API virtual void onInit();
+	SRE_API virtual void onUpdate(float elapsedTime);
 
 private:
+    static Entity* Create(std::string arg_name, const char* className);
     static std::string generateEntityId(uint32_t& index, const std::string& duplicateName = "");
     template <typename T> uint16_t getComponentId();
 

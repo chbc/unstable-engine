@@ -51,6 +51,13 @@ void SceneLoader::load(AScene* scene, const char* sceneName)
 			Entity* entity = assetsManager->loadEntity(fileName.c_str(), name);
 			scene->addEntityAsset(entity);
 		}
+		else if (entityNode.has_child("Class"))
+		{
+			std::string className;
+			entityNode["Class"] >> className;
+			Entity* entity = scene->createEntity(name, nullptr, className.c_str());
+			EntityParser::deserialize(entityNode, entity);
+		}
 		else
 		{
 			Entity* entity = scene->createEntity(name);

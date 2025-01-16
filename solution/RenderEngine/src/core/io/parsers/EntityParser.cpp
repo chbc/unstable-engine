@@ -76,6 +76,13 @@ void EntityParser::deserializeChildren(c4::yml::ConstNodeRef& propertyNode, Enti
 			Entity* childEntity = assetsManager->loadEntity(fileName.c_str(), childName);
 			entity->addChild(childEntity);
 		}
+		else if (childEntityNode.has_child("Class"))
+		{
+			std::string className;
+			childEntityNode["Class"] >> className;
+			Entity* childEntity = entity->createChild(childName, className.c_str());
+			deserialize(childEntityNode, childEntity);
+		}
 		else
 		{
 			std::ostringstream keyStream;

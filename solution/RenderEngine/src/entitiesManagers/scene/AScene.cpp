@@ -37,7 +37,7 @@ Entity* AScene::getEntity(const std::string& name)
     return result;
 }
 
-Entity* AScene::createEntity(const std::string& name, Entity* parent)
+Entity* AScene::createEntity(const std::string& name, Entity* parent, const char* className)
 {
     Entity* result = nullptr;
 
@@ -51,7 +51,7 @@ Entity* AScene::createEntity(const std::string& name, Entity* parent)
         else if (this->entities.count(name) > 0)
             resultName = Entity::generateEntityId(EntityIndex, name);
 
-        result = new Entity{ resultName };
+        result = Entity::Create(resultName, className);
         this->entities[resultName] = UPTR<Entity>{ result };
     }
 

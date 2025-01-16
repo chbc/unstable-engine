@@ -419,6 +419,7 @@
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\MaterialComponentTypes.cpp" />
+    <ClCompile Include="src\entities\EntityTypes.cpp" />
     <ClCompile Include="src\executionStrategies\AExecutionStrategy.cpp" />
     <ClCompile Include="src\executionStrategies\ApplicationStrategy.cpp" />
     <ClCompile Include="src\executionStrategies\EditorStrategy.cpp" />
@@ -562,6 +563,7 @@
     <ClInclude Include="include\ApplicationStrategy.h" />
     <ClInclude Include="include\AssetsManager.h" />
     <ClInclude Include="include\EntityLoader.h" />
+    <ClInclude Include="include\EntityTypes.h" />
     <ClInclude Include="include\FileIcon.h" />
     <ClInclude Include="include\Paths.h" />
     <ClInclude Include="include\BoolEditorProperty.h" />
