@@ -26,6 +26,8 @@ namespace sre
 
 class Entity
 {
+DECLARE_ENTITY()
+
 private:
 	std::unordered_map<uint16_t, UPTR<AEntityComponent>> componentsMap;
     std::vector<SPTR<AEditorProperty>> editorProperties;

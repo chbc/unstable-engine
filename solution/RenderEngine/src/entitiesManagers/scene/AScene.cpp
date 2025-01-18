@@ -42,7 +42,7 @@ Entity* AScene::createEntity(const std::string& name, Entity* parent, const char
     Entity* result = nullptr;
 
     if (parent != nullptr)
-        result = parent->createChild(name);
+        result = parent->createChild(name, className);
     else
     {
         std::string resultName = name;

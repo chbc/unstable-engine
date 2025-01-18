@@ -8,6 +8,8 @@
 namespace sre
 {
 
+IMPLEMENT_ENTITY(Entity)
+
 Entity::Entity(std::string arg_name) : name(arg_name)
 {
 	this->transform = this->addComponent<TransformComponent>();

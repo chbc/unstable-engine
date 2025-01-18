@@ -21,7 +21,7 @@ void EntityLoader::save(Entity* entity, const char* fileName)
 	FileUtils::saveFile(filePath, content);
 }
 
-Entity* EntityLoader::load(const char* fileName, std::string name)
+Entity* EntityLoader::load(const char* fileName, std::string name, const char* className)
 {
 	std::string fileContent;
 	std::string filePath;
@@ -30,7 +30,7 @@ Entity* EntityLoader::load(const char* fileName, std::string name)
 
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
 
-	Entity* result = new Entity{ name };
+	Entity* result = Entity::Create(name, className);
 	result->fileName = fileName;
 	c4::yml::ConstNodeRef root = tree.crootref();
 	EntityParser::deserialize(root, result);

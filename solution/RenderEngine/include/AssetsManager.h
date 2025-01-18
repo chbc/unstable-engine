@@ -36,7 +36,7 @@ private:
 	TexturesMapType texturesMap;
 
 public:
-	Entity* loadEntity(const char* file, std::string name);
+	Entity* loadEntity(const char* file, std::string name, const char* className);
 	void releaseEntity(Entity* entity);
 	Mesh* loadMesh(const char* file);
 	void releaseMesh(Mesh* mesh);
