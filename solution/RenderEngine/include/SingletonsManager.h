@@ -1,8 +1,8 @@
-#ifndef _SINGLETONS_MANAGER_H_
-#define _SINGLETONS_MANAGER_H_
-
+#pragma once
 #include "ASingleton.h"
 #include "memory_aliases.h"
+#include "core_defines.h"
+
 #include <unordered_map>
 #include <string>
 #include <array>
@@ -22,7 +22,13 @@ private:
 
 public:
     SingletonsManager();
-    static SingletonsManager* getInstance();
+    SRE_API static SingletonsManager* getInstance()
+    {
+        if (instance.get() == nullptr)
+            instance = sre::make_unique<SingletonsManager>();
+
+        return instance.get();
+    }
 
     template <typename T> T* get()
     {
@@ -72,5 +78,3 @@ friend class RenderEngine;
 };
 
 } // namespace
-
-#endif

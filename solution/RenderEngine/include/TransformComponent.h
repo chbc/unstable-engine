@@ -32,8 +32,9 @@ private:
 
 public:
 	TransformComponent(Entity *entity);
-	void setPosition(const glm::vec3& arg_position);
-	void setScale(const glm::vec3& arg_scale);
+	void setPosition(glm::vec3 arg_position);
+	void translate(const glm::vec3& translation);
+	void setScale(glm::vec3 arg_scale);
 	void setRotation(const glm::vec3& axis, float angle);
 	void rotate(const glm::vec3& axis, float angle);
 	void rotate(glm::vec3 arg_eulerAngles);

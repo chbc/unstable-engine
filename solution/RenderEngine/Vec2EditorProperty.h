@@ -13,7 +13,7 @@ private:
 	float defaultValue;
 
 public:
-	Vec2EditorProperty(const char* arg_title, glm::vec2* arg_values, float arg_defaultValue = 0.0f);
+	SRE_API Vec2EditorProperty(const char* arg_title, glm::vec2* arg_values, float arg_defaultValue = 0.0f);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

@@ -127,6 +127,7 @@ void ScenesManager::preRelease()
     this->scene.reset();
     this->guiScene.reset();
 
+    EntityTypes::release();
     EntityComponentTypes::release();
 }
 

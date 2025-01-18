@@ -3,27 +3,39 @@
 
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 
 using namespace sre;
+namespace FS = std::filesystem;
 
 void print(MeshData* mesh);
 void saveMesh(MeshData* mesh, const char* fileName);
 
-int main()
+int main(int argc, const char* args[])
 {
+    if (argc != 2)
+    {
+        std::cout << "Usage: MeshConverter.exe [source_file]" << std::endl;
+        system("pause");
+        return 1;
+    }
+
     std::vector<UPTR<MeshData>> meshes;
-    ModelLoader().load("../../engine/media/viper/Viper.fbx", meshes);
+    ModelLoader().load(args[1], meshes);
+
+    FS::path systemPath{ args[1] };
+    std::string destFileName = systemPath.replace_extension(".mesh").string();
 
     for (size_t i = 0; i < meshes.size(); ++i)
     {
         MeshData* item = meshes[i].get();
         if (i == 0)
         {
-            saveMesh(item, "Viper.mesh");
+            saveMesh(item, destFileName.c_str());
         }
         else
         {
-            std::string fileName = "Viper.mesh" + i;
+            std::string fileName = destFileName.c_str() + i;
             saveMesh(item, fileName.c_str());
         }
     }
@@ -36,7 +48,7 @@ void saveMesh(MeshData* mesh, const char* fileName)
     size_t vertexSize = mesh->vertexData.size();
     size_t indicesSize = mesh->indices.size();
 
-    std::string filePath = std::string{ "../../engine/media/" } + fileName;
+    std::string filePath{ fileName };
 
     std::ofstream saveStream(filePath, std::ios::out | std::ios::binary);
     if (saveStream)
@@ -54,24 +66,4 @@ void saveMesh(MeshData* mesh, const char* fileName)
         }
     }
     saveStream.close();
-}
-
-void print(MeshData* mesh)
-{
-    std::cout << "vertices" << std::endl;
-
-    for (const VertexData& item : mesh->vertexData)
-    {
-        std::cout << "position: " << item.position.x << "\t" << item.position.y << "\t" << item.position.z << std::endl;
-        std::cout << "normal: " << item.normal.x << "\t" << item.normal.y << "\t" << item.normal.z << "\t" << std::endl;
-        std::cout << "UV: " << item.u << "\t" << item.v << std::endl;
-        std::cout << std::endl;
-    }
-
-    std::cout << "indices" << std::endl;
-
-    for (uint32_t item : mesh->indices)
-    {
-        std::cout << item << " ";
-    }
 }

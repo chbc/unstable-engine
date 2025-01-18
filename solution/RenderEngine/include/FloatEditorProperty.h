@@ -12,7 +12,7 @@ private:
 	float* value;
 
 public:
-	FloatEditorProperty(const char* title, float* arg_value);
+	SRE_API FloatEditorProperty(const char* title, float* arg_value);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

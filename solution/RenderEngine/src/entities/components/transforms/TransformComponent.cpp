@@ -38,17 +38,21 @@ TransformComponent::TransformComponent(Entity *entity) : AEntityComponent(entity
 	this->addEditorProperty(new Vec3EditorProperty{ "Scale", &this->scale, 1.0f });
 }
 
-void TransformComponent::setPosition(const glm::vec3& arg_position)
+void TransformComponent::setPosition(glm::vec3 arg_position)
 {
 	this->position = arg_position;
-
 	this->updateMatrix();
 }
 
-void TransformComponent::setScale(const glm::vec3& arg_scale)
+void TransformComponent::translate(const glm::vec3& translation)
+{
+	this->position += translation;
+	this->updateMatrix();
+}
+
+void TransformComponent::setScale(glm::vec3 arg_scale)
 {
 	this->scale = arg_scale;
-
 	this->updateMatrix();
 }
 

@@ -37,14 +37,6 @@ SingletonsManager::SingletonsManager()
     this->add<ScenesManager>();
 }
 
-SingletonsManager* SingletonsManager::getInstance()
-{
-    if (instance.get() == nullptr)
-        instance = sre::make_unique<SingletonsManager>();
-
-    return instance.get();
-}
-
 void SingletonsManager::init()
 {
     for (size_t i = 0; i < SINGLETONS_COUNT; ++i)

@@ -78,6 +78,8 @@ public:
 protected:
 	SRE_API virtual void onInit();
 	SRE_API virtual void onUpdate(float elapsedTime);
+    SRE_API virtual void onValueChanged() {}
+    SRE_API void addEditorProperty(AEditorProperty* editorProperty);
 
 private:
     static Entity* Create(std::string arg_name, const char* className);

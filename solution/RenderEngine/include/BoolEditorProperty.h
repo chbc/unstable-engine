@@ -12,7 +12,7 @@ private:
 	bool* value;
 
 public:
-	BoolEditorProperty(const char* title, bool* arg_value);
+	SRE_API BoolEditorProperty(const char* title, bool* arg_value);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

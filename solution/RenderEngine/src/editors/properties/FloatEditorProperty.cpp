@@ -6,7 +6,6 @@
 #include "imgui/imgui.h"
 #include <rapidyaml/rapidyaml.hpp>
 
-
 namespace sre
 {
 

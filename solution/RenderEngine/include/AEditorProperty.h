@@ -3,6 +3,8 @@
 #include <sstream>
 #include <functional>
 
+#include "core_defines.h"
+
 namespace c4
 {
 	namespace yml

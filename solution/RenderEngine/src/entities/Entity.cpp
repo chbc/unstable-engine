@@ -124,6 +124,12 @@ void Entity::onUpdate(float elapsedTime)
 	}
 }
 
+void Entity::addEditorProperty(AEditorProperty* editorProperty)
+{
+	editorProperty->onValueChanged = std::bind(&Entity::onValueChanged, this);
+	this->editorProperties.emplace_back(editorProperty);
+}
+
 Entity* Entity::Create(std::string arg_name, const char* className)
 {
 	Entity* result{ nullptr };

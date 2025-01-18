@@ -13,7 +13,7 @@ private:
 	float defaultValue;
 
 public:
-	Vec3EditorProperty(const char* arg_title, glm::vec3* arg_values, float arg_defaultValue = 0.0f);
+	SRE_API Vec3EditorProperty(const char* arg_title, glm::vec3* arg_values, float arg_defaultValue = 0.0f);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

@@ -17,20 +17,9 @@ private:
     static EntityComponentTypes* instance;
 
 public:
-    static EntityComponentTypes* getInstance()
-    {
-        if (instance == nullptr)
-        {
-            instance = new EntityComponentTypes;
-        }
+    static EntityComponentTypes* getInstance();
 
-        return instance;
-    }
-
-    static void release()
-    {
-        delete instance;
-    }
+    static void release();
 
     template<typename Type>
     void addType(const char* className)
