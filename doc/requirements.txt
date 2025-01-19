@@ -1,4 +1,5 @@
 CODE
+- fix entities default constructor
 - review member fields name
 - update methods to be constants
 - asserts

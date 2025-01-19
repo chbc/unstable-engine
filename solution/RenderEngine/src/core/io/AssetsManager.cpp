@@ -9,9 +9,9 @@
 namespace sre
 {
 
-Entity* AssetsManager::loadEntity(const char* file, std::string name, const char* className)
+Entity* AssetsManager::loadEntity(const char* file, std::string name)
 {
-	Entity* result = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, file, name, className);
+	Entity* result = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, file, name);
 	return result;
 }
 

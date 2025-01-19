@@ -3,6 +3,7 @@
 #include "SingletonsManager.h"
 #include "RenderManager.h"
 #include "AssetsManager.h"
+#include "FileUtils.h"
 
 namespace sre
 {
@@ -37,7 +38,7 @@ Entity* AScene::getEntity(const std::string& name)
     return result;
 }
 
-Entity* AScene::createEntity(const std::string& name, Entity* parent, const char* className)
+Entity* AScene::createEntity(std::string name, Entity* parent, const char* className)
 {
     Entity* result = nullptr;
 
@@ -45,21 +46,32 @@ Entity* AScene::createEntity(const std::string& name, Entity* parent, const char
         result = parent->createChild(name, className);
     else
     {
-        std::string resultName = name;
-        if (name.empty())
-            resultName = Entity::generateEntityId(EntityIndex);
-        else if (this->entities.count(name) > 0)
-            resultName = Entity::generateEntityId(EntityIndex, name);
-
-        result = Entity::Create(resultName, className);
-        this->entities[resultName] = UPTR<Entity>{ result };
+        this->resolveName(name);
+        result = Entity::Create(name, className);
+        this->entities[name] = UPTR<Entity>{ result };
     }
 
     return result;
 }
 
+Entity* AScene::spawnEntity(const char* entityFile, const glm::vec3& position)
+{
+    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+    std::string name = FileUtils::getFileName(entityFile);
+    Entity* entity = assetsManager->loadEntity(entityFile, name);
+    this->addEntityAsset(entity);
+
+    RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+    renderManager->addEntity(entity);
+
+    entity->getTransform()->setPosition(position);
+
+    return entity;
+}
+
 void AScene::addEntityAsset(Entity* entityAsset)
 {
+    resolveName(entityAsset->name);
     this->entityAssets.emplace(entityAsset->getName(), entityAsset);
 }
 
@@ -123,6 +135,18 @@ void AScene::onSceneLoaded()
     }
 
     this->sceneLoaded = true;
+}
+
+void AScene::resolveName(std::string& name)
+{
+    if (name.empty())
+    {
+        name = Entity::generateEntityId(EntityIndex);
+    }
+    else if ((this->entities.count(name) > 0) || (this->entityAssets.count(name) > 0))
+    {
+        name = Entity::generateEntityId(EntityIndex, name);
+    }
 }
 
 } // namespace

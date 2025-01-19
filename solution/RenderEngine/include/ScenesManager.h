@@ -17,8 +17,9 @@ protected:
 public:
     SRE_API Scene* createScene(const std::string& name);
     SRE_API std::string getMainSceneName();
-	SRE_API Entity* createEntity(const std::string& name = "", Entity* parent = nullptr);
+	SRE_API Entity* createEntity(std::string name = "", Entity* parent = nullptr);
     SRE_API Entity* getEntity(const std::string& name);
+    SRE_API Entity* spawnEntity(const char* entityFile, const glm::vec3& position = TransformComponent::ZERO);
 
     SRE_API Entity* createPerspectiveCamera(float fov = 70.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr, bool isMainCamera = true);
     SRE_API Entity* createOrthoCamera(Entity* parent = nullptr, bool isMainCamera = true);

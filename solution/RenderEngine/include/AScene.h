@@ -23,7 +23,8 @@ public:
 protected:
     AScene(std::string name);
     virtual ~AScene();
-    Entity* createEntity(const std::string& name = "", Entity* parent = nullptr, const char* className = "Entity");
+    Entity* createEntity(std::string name = "", Entity* parent = nullptr, const char* className = "Entity");
+    Entity* spawnEntity(const char* entityFile, const glm::vec3& position);
     void addEntityAsset(Entity* entityAsset);
     void removeDestroyedEntities();
 
@@ -31,6 +32,7 @@ private:
     void initEntities();
     void update(float elapsedTime);
     void onSceneLoaded();
+    void resolveName(std::string& name);
 
 friend class ScenesManager;
 friend class EditorSceneTree;

@@ -23,7 +23,7 @@ std::string ScenesManager::getMainSceneName()
     return result;
 }
 
-Entity* ScenesManager::createEntity(const std::string& name, Entity* parent)
+Entity* ScenesManager::createEntity(std::string name, Entity* parent)
 {
     return this->scene->createEntity(name, parent);
 }
@@ -36,6 +36,11 @@ Entity* ScenesManager::getEntity(const std::string& name)
         result = this->guiScene->getEntity(name);
 
     return result;
+}
+
+Entity* ScenesManager::spawnEntity(const char* entityFile, const glm::vec3& position)
+{
+    return this->scene->spawnEntity(entityFile, position);
 }
 
 Entity* ScenesManager::createPerspectiveCamera(float fov, float near, float far, Entity* parent, bool isMainCamera)
