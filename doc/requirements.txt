@@ -3,19 +3,14 @@ CODE
 - update methods to be constants
 - asserts
 - defines (DEBUG, RELEASE, TEST, DISTRIBUTION)
-- change " *" -> "* " and " &" -> "& "
-- change #ifndef -> #pragma
 - memory leak check
 
 THIRD PARTIES
 - change stl to STLPort
-- remove SDL
 
 FIXES
-- Z forward
 - SRE_API warnings
 - children local transforms
 
 FEATURES
-- assimp to model format converter
-- extensible world editor
+- file save dialogs

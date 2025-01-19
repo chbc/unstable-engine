@@ -15,10 +15,54 @@ void SceneLoader::save(AScene* scene, const char* sceneName)
 	c4::yml::NodeRef root = tree.rootref();
 
 	root |= ryml::MAP;
-	for (const auto& entityItem : scene->entities)
+	for (const auto& entityItem : scene->entityAssets)
 	{
 		c4::yml::NodeRef entityNode = root[entityItem.first.c_str()];
+		entityNode |= ryml::MAP;
+		Entity* entity = entityItem.second;
+
+		std::string className{ entity->getClassName() };
+		if (className != "Entity")
+		{
+			entityNode["Class"] << className;
+		}
+
+		std::string fileName{ entity->fileName };
+		if (!fileName.empty())
+		{
+			entityNode["FileName"] << fileName;
+		}
+		else
+		{
+			EntityParser::serialize(entityNode, entity);
+		}
+	}
+
+	for (const auto& entityItem : scene->entities)
+	{
+		/*
+		c4::yml::NodeRef entityNode = root[entityItem.first.c_str()];
 		EntityParser::serialize(entityNode, entityItem.second.get());
+		*/
+		c4::yml::NodeRef entityNode = root[entityItem.first.c_str()];
+		entityNode |= ryml::MAP;
+		Entity* entity = entityItem.second.get();
+
+		std::string className{ entity->getClassName() };
+		if (className != "Entity")
+		{
+			entityNode["Class"] << className;
+		}
+
+		std::string fileName{ entity->fileName };
+		if (!fileName.empty())
+		{
+			entityNode["FileName"] << fileName;
+		}
+		else
+		{
+			EntityParser::serialize(entityNode, entity);
+		}
 	}
 
 	std::string filePath;

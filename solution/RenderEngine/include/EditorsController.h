@@ -25,6 +25,7 @@ public:
 	void createPlane();
 	void createSphere();
 	void refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result);
+	void saveEntity(Entity* entity);
 
 private:
 	void createEntity(const char* name, const char* file);

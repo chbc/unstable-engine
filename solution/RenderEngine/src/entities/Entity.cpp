@@ -8,7 +8,7 @@
 namespace sre
 {
 
-IMPLEMENT_ENTITY(Entity)
+bool Entity::_xxx_ = Entity::AddType<Entity>("Entity");
 
 Entity::Entity(std::string arg_name) : name(arg_name)
 {
@@ -98,6 +98,11 @@ bool Entity::isEnabled() const
 			this->parent->isEnabled()
 		)
 	);
+}
+
+const char* Entity::getClassName() const
+{
+	return "Entity";
 }
 
 void Entity::onInit()

@@ -13,7 +13,6 @@ namespace sre
 void ComponentParser::serialize(c4::yml::NodeRef& componentNode, AEntityComponent* component)
 {
 	componentNode |= ryml::MAP;
-	componentNode["Enabled"] << component->isEnabled();
 
 	for (const SPTR<AEditorProperty>& property : component->editorProperties)
 	{

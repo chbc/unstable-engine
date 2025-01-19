@@ -12,7 +12,13 @@ void EntityLoader::save(Entity* entity, const char* fileName)
 {
 	c4::yml::Tree tree;
 	c4::yml::NodeRef root = tree.rootref();
+	root |= ryml::MAP;
 
+	std::string className{ entity->getClassName() };
+	if (className != "Entity")
+	{
+		root["Class"] << className;
+	}
 	EntityParser::serialize(root, entity);
 
 	std::string filePath;

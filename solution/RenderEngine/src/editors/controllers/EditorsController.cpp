@@ -7,6 +7,7 @@
 #include "FileUtils.h"
 #include "AssetsManager.h"
 #include "Texture.h"
+#include "EntityLoader.h"
 
 namespace sre
 {
@@ -59,6 +60,18 @@ void EditorsController::refreshFileIcons(std::string directoryPath, std::vector<
 		FileIcon* fileIcon = new FileIcon{path, textureId};
 		result.emplace_back(fileIcon);
 	}
+}
+
+void EditorsController::saveEntity(Entity* entity)
+{
+	std::string fileName{ entity->fileName };
+	if (fileName.empty())
+	{
+		fileName = entity->getName();
+		entity->fileName = fileName;
+	}
+
+	EntityLoader().save(entity, fileName.c_str());
 }
 
 void EditorsController::createEntity(const char* name, const char* file)

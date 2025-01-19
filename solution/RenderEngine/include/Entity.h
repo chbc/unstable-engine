@@ -19,14 +19,16 @@ namespace sre
 
 #define DECLARE_ENTITY() \
     public: \
+        static const char* CLASS_NAME; \
+        const char* getClassName() const override { return CLASS_NAME; } \
         static bool _xxx_;
 
 #define IMPLEMENT_ENTITY(EntityClass) \
-    bool EntityClass::_xxx_ = Entity::AddType<EntityClass>(#EntityClass);
+    bool EntityClass::_xxx_ = Entity::AddType<EntityClass>(#EntityClass); \
+    const char* EntityClass::CLASS_NAME = #EntityClass;
 
 class Entity
 {
-DECLARE_ENTITY()
 
 private:
 	std::unordered_map<uint16_t, UPTR<AEntityComponent>> componentsMap;
@@ -39,6 +41,9 @@ private:
     uint32_t childIndex{};
     std::string name;
     std::string fileName;
+
+
+    static bool _xxx_;
 
 protected:
 	TransformComponent* transform;
@@ -77,6 +82,8 @@ public:
         return true;
     }
 
+    virtual const char* getClassName() const;
+
 protected:
 	SRE_API virtual void onInit();
 	SRE_API virtual void onUpdate(float elapsedTime);
@@ -89,6 +96,7 @@ private:
     template <typename T> uint16_t getComponentId();
 
     friend class AScene;
+    friend class SceneLoader;
     friend class EntityLoader;
     friend class EntityParser;
     friend class AssetsManager;
@@ -96,6 +104,7 @@ private:
     friend class TestServicesProvider;
     friend class EditorEntityProperties;
     friend class EditorSceneViewport;
+    friend class EditorsController;
 };
 
 } // namespace

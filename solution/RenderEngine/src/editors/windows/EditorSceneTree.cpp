@@ -6,14 +6,15 @@
 #include "MessagesManager.h"
 #include "EditorMessages.h"
 #include "EngineValues.h"
+#include "EditorsController.h"
 
 #include "imgui/imgui.h"
 
 namespace sre
 {
 
-EditorSceneTree::EditorSceneTree(ScenesManager* arg_scenesManager) 
-	: scenesManager(arg_scenesManager), selectedEntity(nullptr)
+EditorSceneTree::EditorSceneTree(ScenesManager* arg_scenesManager, EditorsController* arg_controller)
+	: scenesManager(arg_scenesManager), selectedEntity(nullptr), controller(arg_controller)
 {
 	Action* action = new Action{ [&](void* message) { this->onEntitySelected(message); } };
 	this->selectionAction = SPTR<Action>(action);
@@ -85,6 +86,7 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 			ImGui::Text("[%s]", name);
 			if (ImGui::Button("Save Entity"))
 			{
+				this->controller->saveEntity(this->selectedEntity);
 				ImGui::CloseCurrentPopup();
 			}
 			if (ImGui::Button("Delete"))

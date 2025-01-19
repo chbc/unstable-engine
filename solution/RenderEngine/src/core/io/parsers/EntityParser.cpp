@@ -11,8 +11,22 @@ void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity)
 {
 	entityNode |= ryml::MAP;
 
-	entityNode["Enabled"] << entity->isEnabled(); // XXX
-	
+	serializeProperties(entityNode, entity);
+	serializeComponents(entityNode, entity);
+	serializeChildren(entityNode, entity);
+}
+
+void EntityParser::serializeProperties(c4::yml::NodeRef& entityNode, Entity* entity)
+{
+	for (const SPTR<AEditorProperty>& property : entity->editorProperties)
+	{
+		c4::yml::NodeRef& propertyNode = entityNode[property->title.c_str()];
+		property->serialize(propertyNode);
+	}
+}
+
+void EntityParser::serializeComponents(c4::yml::NodeRef& entityNode, Entity* entity)
+{
 	c4::yml::NodeRef ComponentsNode = entityNode["Components"];
 	ComponentsNode |= ryml::MAP;
 	for (const auto& componentItem : entity->componentsMap)
@@ -21,7 +35,10 @@ void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity)
 		c4::yml::NodeRef itemtNode = ComponentsNode[component->getClassName()];
 		ComponentParser::serialize(itemtNode, component);
 	}
+}
 
+void EntityParser::serializeChildren(c4::yml::NodeRef& entityNode, Entity* entity)
+{
 	if (entity->getChildrenCount() > 0)
 	{
 		c4::yml::NodeRef childNode = entityNode["Entities"];
