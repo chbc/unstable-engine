@@ -34,14 +34,14 @@ private:
     Entity* parent{ nullptr };
     std::unordered_map<std::string, UPTR<Entity>> children;
     std::vector<Entity*> childrenList;
-
-	TransformComponent* transform;
-
     bool alive{ true };
     bool enabled{ true };
     uint32_t childIndex{};
     std::string name;
     std::string fileName;
+
+protected:
+	TransformComponent* transform;
 
 public:
     SRE_API Entity(std::string arg_name);

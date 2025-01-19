@@ -51,6 +51,12 @@ void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, Entity* entity
 			deserializeChildren(propertyNode, entity);
 		}
 	}
+
+	for (const SPTR<AEditorProperty>& property : entity->editorProperties)
+	{
+		c4::yml::ConstNodeRef& propertyNode = entityNode[property->title.c_str()];
+		property->deserialize(propertyNode);
+	}
 }
 
 void EntityParser::deserializeComponents(c4::yml::ConstNodeRef& propertyNode, Entity* entity)

@@ -34,6 +34,7 @@ public:
 	virtual void deserialize(c4::yml::ConstNodeRef& propertyNode) = 0;
 
 friend class Entity;
+friend class EntityParser;
 friend class ComponentParser;
 friend class MaterialLoader;
 friend class AEntityComponent;
