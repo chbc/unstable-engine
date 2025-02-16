@@ -44,6 +44,11 @@ public:
     SRE_API glm::vec2 getUVOffset();
     SRE_API glm::vec2 getUVTiling();
 
+protected:
+    virtual void onValueDeserialized() {}
+    virtual void onValueChanged() {}
+    void addEditorProperty(AEditorProperty* editorProperty);
+
 friend class MeshComponent;
 friend class MeshRenderer;
 friend class RenderManager;

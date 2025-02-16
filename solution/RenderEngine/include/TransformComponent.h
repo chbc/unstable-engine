@@ -63,6 +63,7 @@ public:
 	*/
 
 protected:
+	void onValueDeserialized() override;
 	void onValueChanged() override;
 
 private:

@@ -42,6 +42,7 @@ public:
 	inline const glm::mat4& getViewMatrix() const;
 
 protected:
+	void onValueDeserialized() override;
 	void onValueChanged() override;
 
 friend class RenderManager;

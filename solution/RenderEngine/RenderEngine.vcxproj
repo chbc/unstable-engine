@@ -400,6 +400,7 @@
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPIState.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp" />
     <ClCompile Include="src\editors\controllers\EditorsController.cpp" />
+    <ClCompile Include="src\editors\properties\AEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\BoolEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\ColorEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\FloatEditorProperty.cpp" />

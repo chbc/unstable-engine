@@ -8,12 +8,12 @@
 namespace sre
 {
 
-bool Entity::_xxx_ = Entity::AddType<Entity>("Entity");
+const char* Entity::BASE_CLASS_NAME = Entity::AddType<Entity>("Entity");
 
 Entity::Entity(std::string arg_name) : name(arg_name)
 {
 	this->transform = this->addComponent<TransformComponent>();
-	this->editorProperties.emplace_back(new BoolEditorProperty{ "Enabled", &this->enabled });
+	this->addEditorProperty(new BoolEditorProperty{ "Enabled", &this->enabled });
 }
 
 Entity::~Entity()
@@ -34,19 +34,6 @@ AEntityComponent* Entity::addComponent(const char* className)
 	this->componentsMap.emplace(id, newComponent);
 
 	return newComponent;
-}
-
-Entity* Entity::createChild(const std::string& childName, const char* className)
-{
-	std::string resultName = childName;
-	if (childName.empty())
-		resultName = generateEntityId(this->childIndex);
-	else if (this->children.count(childName) > 0)
-		resultName = generateEntityId(this->childIndex, childName);
-
-	Entity* result = Create(resultName, className);
-	this->addChild(result);
-	return result;
 }
 
 void Entity::addChild(Entity* child)
@@ -102,7 +89,7 @@ bool Entity::isEnabled() const
 
 const char* Entity::getClassName() const
 {
-	return "Entity";
+	return BASE_CLASS_NAME;
 }
 
 void Entity::onInit()
@@ -133,15 +120,59 @@ void Entity::onUpdate(float elapsedTime)
 
 void Entity::addEditorProperty(AEditorProperty* editorProperty)
 {
-	editorProperty->onValueChanged = std::bind(&Entity::onValueChanged, this);
+	editorProperty->onValueDeserializedCallback = std::bind(&Entity::onValueDeserialized, this);
+	editorProperty->onValueChangedCallback = std::bind(&Entity::onValueChanged, this);
 	this->editorProperties.emplace_back(editorProperty);
 }
 
-Entity* Entity::Create(std::string arg_name, const char* className)
+Entity* Entity::clone()
+{
+	Entity* result = Create(this->name, this->getClassName());
+	for (int i = 0; i < this->editorProperties.size(); ++i)
+	{
+		SPTR<AEditorProperty>& destination = result->editorProperties[i];
+		this->editorProperties[i]->copy(destination.get());
+	}
+
+	for (const auto& item : this->componentsMap)
+	{
+		AEntityComponent* resultComponent = nullptr;
+		std::string className = item.second->getClassName();
+		if (className == "TransformComponent")
+		{
+			resultComponent = result->getComponent<TransformComponent>();
+		}
+		else
+		{
+			resultComponent = result->addComponent(item.second->getClassName());
+		}
+
+		item.second->clone(resultComponent);
+	}
+
+	return result;
+}
+
+AEditorProperty* Entity::findProperty(const std::string& title)
+{
+	AEditorProperty* result{ nullptr };
+	for (const auto& item : this->editorProperties)
+	{
+		if (item->title == title)
+		{
+			result = item.get();
+			break;
+		}
+	}
+
+	return result;
+}
+
+Entity* Entity::Create(std::string arg_name, const std::string& className)
 {
 	Entity* result{ nullptr };
 
-	if (className != nullptr)
+	if (!className.empty())
 	{
 		EntityTypes* types = EntityTypes::getInstance();
 		size_t key = std::hash<std::string>{}(className);
@@ -154,17 +185,6 @@ Entity* Entity::Create(std::string arg_name, const char* className)
 	{
 		result = new Entity{ arg_name };
 	}
-
-	return result;
-}
-
-std::string Entity::generateEntityId(uint32_t& index, const std::string& duplicateName)
-{
-	std::stringstream stream;
-	std::string baseName = duplicateName.empty() ? "entity" : duplicateName;
-	stream << baseName << "_" << index;
-	std::string result = stream.str();
-	index++;
 
 	return result;
 }

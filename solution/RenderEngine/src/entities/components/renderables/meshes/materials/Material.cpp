@@ -9,9 +9,9 @@ namespace sre
 
 Material::Material(std::string arg_fileName) : fileName(arg_fileName), castShadow(false), uvOffset(glm::vec2(0.0f)), uvTiling(glm::vec2(1.0f))
 {
-    this->editorProperties.emplace_back(new BoolEditorProperty{ "Cast Shadow", &this->castShadow });
-    this->editorProperties.emplace_back(new Vec2EditorProperty{ "UV Offset", &this->uvOffset });
-    this->editorProperties.emplace_back(new Vec2EditorProperty{ "UV Tiling", &this->uvTiling });
+    this->addEditorProperty(new BoolEditorProperty{ "Cast Shadow", &this->castShadow });
+    this->addEditorProperty(new Vec2EditorProperty{ "UV Offset", &this->uvOffset });
+    this->addEditorProperty(new Vec2EditorProperty{ "UV Tiling", &this->uvTiling });
     this->addComponent<ColorMaterialComponent>();
 }
 
@@ -66,6 +66,13 @@ glm::vec2 Material::getUVOffset()
 glm::vec2 Material::getUVTiling()
 {
     return uvTiling;
+}
+
+void Material::addEditorProperty(AEditorProperty* editorProperty)
+{
+    editorProperty->onValueDeserializedCallback = std::bind(&Material::onValueDeserialized, this);
+    editorProperty->onValueChangedCallback = std::bind(&Material::onValueChanged, this);
+    this->editorProperties.emplace_back(editorProperty);
 }
 
 } // namespace

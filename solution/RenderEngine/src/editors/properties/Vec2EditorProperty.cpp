@@ -9,8 +9,8 @@
 namespace sre
 {
 
-Vec2EditorProperty::Vec2EditorProperty(const char* arg_title, glm::vec2* arg_values, float arg_defaultValue)
-	: AEditorProperty(arg_title), values(arg_values), defaultValue(arg_defaultValue)
+Vec2EditorProperty::Vec2EditorProperty(const char* arg_title, glm::vec2* arg_value, float arg_defaultValue)
+	: AEditorProperty(arg_title), value(arg_value), defaultValue(arg_defaultValue)
 { }
 
 void Vec2EditorProperty::draw()
@@ -35,13 +35,13 @@ void Vec2EditorProperty::draw()
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
 	if (ImGui::Button("X", buttonSize))
 	{
-		this->values->x = this->defaultValue;
+		this->value->x = this->defaultValue;
 		valueChanged = true;
 	}
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##X", &this->values->x, 0.1f, 0.0f, 0.0f, "%.2f"))
+	if (ImGui::DragFloat("##X", &this->value->x, 0.1f, 0.0f, 0.0f, "%.2f"))
 	{
 		valueChanged = true;
 	}
@@ -53,13 +53,13 @@ void Vec2EditorProperty::draw()
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
 	if (ImGui::Button("Y", buttonSize))
 	{
-		this->values->y = this->defaultValue;
+		this->value->y = this->defaultValue;
 		valueChanged = true;
 	}
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##Y", &this->values->y, 0.1f, 0.0f, 0.0f, "%.2f"))
+	if (ImGui::DragFloat("##Y", &this->value->y, 0.1f, 0.0f, 0.0f, "%.2f"))
 	{
 		valueChanged = true;
 	}
@@ -69,7 +69,7 @@ void Vec2EditorProperty::draw()
 
 	ImGui::PopID();
 
-	if (valueChanged && (this->onValueChanged != nullptr))
+	if (valueChanged)
 	{
 		this->onValueChanged();
 	}
@@ -78,19 +78,23 @@ void Vec2EditorProperty::draw()
 void Vec2EditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
 	propertyNode |= c4::yml::SEQ | c4::yml::CONTAINER_STYLE;
-	propertyNode.append_child() << this->values->x;
-	propertyNode.append_child() << this->values->y;
+	propertyNode.append_child() << this->value->x;
+	propertyNode.append_child() << this->value->y;
 }
 
 void Vec2EditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
-	propertyNode[0] >> this->values->x;
-	propertyNode[1] >> this->values->y;
+	propertyNode[0] >> this->value->x;
+	propertyNode[1] >> this->value->y;
 
-	if (this->onValueChanged != nullptr)
-	{
-		this->onValueChanged();
-	}
+	this->onValueDeserializedCallback();
+}
+
+void Vec2EditorProperty::copy(AEditorProperty* destination)
+{
+	Vec2EditorProperty* derivedProperty = static_cast<Vec2EditorProperty*>(destination);
+	*derivedProperty->value = *this->value;
+	derivedProperty->defaultValue = this->defaultValue;
 }
 
 } // namespace

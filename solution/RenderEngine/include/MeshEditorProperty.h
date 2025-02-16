@@ -10,12 +10,13 @@ struct Mesh;
 
 class MeshEditorProperty : public AEditorProperty
 {
+DECLARE_PROPERTY()
+
 private:
-	std::string fileName;
-	Mesh** mesh;
+	Mesh** value;
 
 public:
-	MeshEditorProperty(const char* title, Mesh** arg_mesh);
+	MeshEditorProperty(const char* title, Mesh** arg_value);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

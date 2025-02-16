@@ -51,4 +51,12 @@ void TextureEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 	this->id = reinterpret_cast<void*>((*this->texture)->getId());
 }
 
+void TextureEditorProperty::copy(AEditorProperty* destination)
+{
+	TextureEditorProperty* derivedProperty = static_cast<TextureEditorProperty*>(destination);
+	derivedProperty->textureMapType = this->textureMapType;
+	*derivedProperty->texture = *this->texture;
+	derivedProperty->id = this->id;
+}
+
 } // namespace

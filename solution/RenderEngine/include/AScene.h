@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Entity.h"
-#include <unordered_map>
 
 namespace sre
 {
@@ -10,7 +9,6 @@ class AScene
 {
 protected:
     std::unordered_map<std::string, UPTR<Entity>> entities;
-    std::unordered_map<std::string, Entity*> entityAssets;
     static uint32_t EntityIndex;
 
 private:
@@ -23,9 +21,8 @@ public:
 protected:
     AScene(std::string name);
     virtual ~AScene();
-    Entity* createEntity(std::string name = "", Entity* parent = nullptr, const char* className = "Entity");
-    Entity* spawnEntity(const char* entityFile, const glm::vec3& position);
-    void addEntityAsset(Entity* entityAsset);
+    Entity* createEntity(std::string name = "", Entity* parent = nullptr, const std::string& className = "Entity", const std::string& fileName = "");
+    Entity* spawnEntity(const char* fileName, const glm::vec3& position);
     void removeDestroyedEntities();
 
 private:
@@ -33,6 +30,7 @@ private:
     void update(float elapsedTime);
     void onSceneLoaded();
     void resolveName(std::string& name);
+    std::string generateEntityId(const std::string& duplicateName = "");
 
 friend class ScenesManager;
 friend class EditorSceneTree;

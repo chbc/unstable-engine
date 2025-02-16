@@ -6,16 +6,16 @@
 
 namespace sre
 {
-ColorEditorProperty::ColorEditorProperty(const char* arg_title, glm::vec3& arg_values)
+ColorEditorProperty::ColorEditorProperty(const char* arg_title, glm::vec3& arg_value)
 	: AEditorProperty(arg_title), hasAlpha(false)
 {
-	this->values = glm::value_ptr(arg_values);
+	this->value = glm::value_ptr(arg_value);
 }
 
-ColorEditorProperty::ColorEditorProperty(const char* arg_title, glm::vec4& arg_values)
+ColorEditorProperty::ColorEditorProperty(const char* arg_title, glm::vec4& arg_value)
 	: AEditorProperty(arg_title), hasAlpha(true)
 {
-	this->values = glm::value_ptr(arg_values);
+	this->value = glm::value_ptr(arg_value);
 }
 
 void ColorEditorProperty::draw()
@@ -27,10 +27,20 @@ void ColorEditorProperty::draw()
 	ImGui::Text(this->title.c_str());
 	ImGui::NextColumn();
 
+	bool valueChanged = false;
 	if (hasAlpha)
-		ImGui::ColorEdit4("##id", this->values, ImGuiColorEditFlags_NoInputs);
+	{
+		valueChanged = ImGui::ColorEdit4("##id", this->value, ImGuiColorEditFlags_NoInputs);
+	}
 	else
-		ImGui::ColorEdit3("##id", this->values, ImGuiColorEditFlags_NoInputs);
+	{
+		valueChanged = ImGui::ColorEdit3("##id", this->value, ImGuiColorEditFlags_NoInputs);
+	}
+
+	if (valueChanged)
+	{
+		this->onValueChanged();
+	}
 
 	ImGui::Columns(1);
 
@@ -40,13 +50,13 @@ void ColorEditorProperty::draw()
 void ColorEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
 	propertyNode |= c4::yml::SEQ | c4::yml::CONTAINER_STYLE;
-	propertyNode.append_child() << this->values[0];
-	propertyNode.append_child() << this->values[1];
-	propertyNode.append_child() << this->values[2];
+	propertyNode.append_child() << this->value[0];
+	propertyNode.append_child() << this->value[1];
+	propertyNode.append_child() << this->value[2];
 
 	if (this->hasAlpha)
 	{
-		propertyNode.append_child() << this->values[3];
+		propertyNode.append_child() << this->value[3];
 	}
 }
 
@@ -54,7 +64,21 @@ void ColorEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
 	for (size_t i = 0; i < propertyNode.num_children(); ++i)
 	{
-		propertyNode[i] >> this->values[i];
+		propertyNode[i] >> this->value[i];
+	}
+}
+
+void ColorEditorProperty::copy(AEditorProperty* destination)
+{
+	ColorEditorProperty* derivedProperty = static_cast<ColorEditorProperty*>(destination);
+	derivedProperty->value[0] = this->value[0];
+	derivedProperty->value[1] = this->value[1];
+	derivedProperty->value[2] = this->value[2];
+
+	derivedProperty->hasAlpha = this->hasAlpha;
+	if (this->hasAlpha)
+	{
+		derivedProperty->value[3] = this->value[3];
 	}
 }
 

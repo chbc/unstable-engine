@@ -47,8 +47,18 @@ bool AEntityComponent::isEnabled() const
 
 void AEntityComponent::addEditorProperty(AEditorProperty* editorProperty)
 {
-	editorProperty->onValueChanged = std::bind(&AEntityComponent::onValueChanged, this);
+	editorProperty->onValueDeserializedCallback = std::bind(&AEntityComponent::onValueDeserialized, this);
+	editorProperty->onValueChangedCallback = std::bind(&AEntityComponent::onValueChanged, this);
 	this->editorProperties.emplace_back(editorProperty);
+}
+
+void AEntityComponent::clone(AEntityComponent* result)
+{
+	for (int i = 0; i < this->editorProperties.size(); ++i)
+	{
+		SPTR<AEditorProperty> destination = result->editorProperties[i];
+		this->editorProperties[i]->copy(destination.get());
+	}
 }
 
 } // namespace

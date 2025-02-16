@@ -7,6 +7,7 @@ namespace sre
 
 class BoolEditorProperty : public AEditorProperty
 {
+DECLARE_PROPERTY()
 
 private:
 	bool* value;

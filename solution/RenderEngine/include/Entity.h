@@ -20,17 +20,17 @@ namespace sre
 #define DECLARE_ENTITY() \
     public: \
         static const char* CLASS_NAME; \
-        const char* getClassName() const override { return CLASS_NAME; } \
-        static bool _xxx_;
+        const char* getClassName() const override { return CLASS_NAME; }
 
 #define IMPLEMENT_ENTITY(EntityClass) \
-    bool EntityClass::_xxx_ = Entity::AddType<EntityClass>(#EntityClass); \
-    const char* EntityClass::CLASS_NAME = #EntityClass;
+    const char* EntityClass::CLASS_NAME = Entity::AddType<EntityClass>(#EntityClass);
 
 class Entity
 {
 
 private:
+    static const char* BASE_CLASS_NAME;
+
 	std::unordered_map<uint16_t, UPTR<AEntityComponent>> componentsMap;
     std::vector<SPTR<AEditorProperty>> editorProperties;
     Entity* parent{ nullptr };
@@ -38,12 +38,8 @@ private:
     std::vector<Entity*> childrenList;
     bool alive{ true };
     bool enabled{ true };
-    uint32_t childIndex{};
     std::string name;
     std::string fileName;
-
-
-    static bool _xxx_;
 
 protected:
 	TransformComponent* transform;
@@ -59,7 +55,6 @@ public:
 
     AEntityComponent* addComponent(const char* className);
 
-    Entity* createChild(const std::string& childName = "", const char* className = nullptr);
 	SRE_API void addChild(Entity *child);
 	SRE_API inline size_t getChildrenCount() { return this->children.size(); }
 	SRE_API Entity *getChild(size_t index);
@@ -75,11 +70,11 @@ public:
     SRE_API bool isEnabled() const;
 
     template <typename Type>
-    static bool AddType(const char* className)
+    static const char* AddType(const char* className)
     {
         EntityTypes* types = EntityTypes::getInstance();
         types->addType<Type>(className);
-        return true;
+        return className;
     }
 
     virtual const char* getClassName() const;
@@ -87,12 +82,14 @@ public:
 protected:
 	SRE_API virtual void onInit();
 	SRE_API virtual void onUpdate(float elapsedTime);
+    SRE_API virtual void onValueDeserialized() {}
     SRE_API virtual void onValueChanged() {}
     SRE_API void addEditorProperty(AEditorProperty* editorProperty);
 
 private:
-    static Entity* Create(std::string arg_name, const char* className);
-    static std::string generateEntityId(uint32_t& index, const std::string& duplicateName = "");
+    Entity* clone();
+    AEditorProperty* findProperty(const std::string& title);
+    static Entity* Create(std::string arg_name, const std::string& className);
     template <typename T> uint16_t getComponentId();
 
     friend class AScene;

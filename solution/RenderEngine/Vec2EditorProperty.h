@@ -8,12 +8,14 @@ namespace sre
 
 class Vec2EditorProperty : public AEditorProperty
 {
+DECLARE_PROPERTY()
+
 private:
-	glm::vec2* values;
+	glm::vec2* value;
 	float defaultValue;
 
 public:
-	SRE_API Vec2EditorProperty(const char* arg_title, glm::vec2* arg_values, float arg_defaultValue = 0.0f);
+	SRE_API Vec2EditorProperty(const char* arg_title, glm::vec2* arg_value, float arg_defaultValue = 0.0f);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

@@ -11,7 +11,10 @@ namespace sre
 
 Entity* AssetsManager::loadEntity(const char* file, std::string name)
 {
-	Entity* result = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, file, name);
+	Entity* prototype = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, file, name);
+	Entity* result = prototype->clone();
+	result->name = name;
+
 	return result;
 }
 
@@ -28,8 +31,10 @@ Mesh* AssetsManager::loadMesh(const char* file)
 
 void AssetsManager::releaseMesh(Mesh* mesh)
 {
+	/* XXX
 	std::function<void(Mesh*)> releaseCallback = [&](Mesh* item) { MeshLoader().release(item); };
 	this->releaseAsset(this->meshesMap, mesh, releaseCallback);
+	*/
 }
 
 Material* AssetsManager::loadMaterial(const char* file)

@@ -9,6 +9,8 @@
 namespace sre
 {
 
+IMPLEMENT_PROPERTY(BoolEditorProperty)
+
 BoolEditorProperty::BoolEditorProperty(const char* title, bool* arg_value)
 	: AEditorProperty(title), value(arg_value)
 { }
@@ -41,11 +43,7 @@ void BoolEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 void BoolEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
 	propertyNode >> *value;
-
-	if (this->onValueChanged != nullptr)
-	{
-		this->onValueChanged();
-	}
+	this->onValueDeserializedCallback();
 }
 
 } // namespace

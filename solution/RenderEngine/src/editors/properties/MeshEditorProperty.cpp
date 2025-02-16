@@ -10,8 +10,10 @@
 namespace sre
 {
 
-MeshEditorProperty::MeshEditorProperty(const char* title, Mesh** arg_mesh)
-	: AEditorProperty(title), mesh(arg_mesh)
+IMPLEMENT_PROPERTY(MeshEditorProperty)
+
+MeshEditorProperty::MeshEditorProperty(const char* title, Mesh** arg_value)
+	: AEditorProperty(title), value(arg_value)
 { }
 
 void MeshEditorProperty::draw()
@@ -24,7 +26,7 @@ void MeshEditorProperty::draw()
 
 	ImGui::NextColumn();
 	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Text(this->fileName.c_str());
+	ImGui::Text((*this->value)->fileName.c_str());
 
 	ImGui::Columns(1);
 
@@ -33,15 +35,16 @@ void MeshEditorProperty::draw()
 
 void MeshEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
-	propertyNode << (*this->mesh)->fileName;
+	propertyNode << (*this->value)->fileName;
 }
 
 void MeshEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
-	propertyNode >> this->fileName;
+	std::string fileName;
+	propertyNode >> fileName;
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-	*this->mesh = assetsManager->loadMesh(fileName.c_str());
+	*this->value = assetsManager->loadMesh(fileName.c_str());
 }
 
 } // namespace

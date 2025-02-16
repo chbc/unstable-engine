@@ -88,8 +88,12 @@ protected:
 
     virtual void onInit() {}
     virtual void onUpdate(float elapsedTime) {}
+    virtual void onValueDeserialized() {}
     virtual void onValueChanged() {}
     void addEditorProperty(AEditorProperty* editorProperty);
+
+private:
+    void clone(AEntityComponent* result);
 
 friend class Entity;
 friend class EditorEntityProperties;

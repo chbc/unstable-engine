@@ -10,11 +10,13 @@ class Material;
 
 class MaterialEditorProperty : public AEditorProperty
 {
+DECLARE_PROPERTY()
+
 private:
-	Material** material;
+	Material** value;
 
 public:
-	MaterialEditorProperty(const char* title, Material** arg_material);
+	MaterialEditorProperty(const char* title, Material** arg_value);
 
 	void draw() override;
 	void serialize(c4::yml::NodeRef& propertyNode) override;

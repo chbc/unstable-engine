@@ -9,8 +9,6 @@ namespace sre
 {
 void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity)
 {
-	entityNode |= ryml::MAP;
-
 	serializeProperties(entityNode, entity);
 	serializeComponents(entityNode, entity);
 	serializeChildren(entityNode, entity);
@@ -18,9 +16,11 @@ void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity)
 
 void EntityParser::serializeProperties(c4::yml::NodeRef& entityNode, Entity* entity)
 {
+	entityNode |= ryml::MAP;
 	for (const SPTR<AEditorProperty>& property : entity->editorProperties)
 	{
 		c4::yml::NodeRef& propertyNode = entityNode[property->title.c_str()];
+		property->setSaved();
 		property->serialize(propertyNode);
 	}
 }
@@ -53,26 +53,26 @@ void EntityParser::serializeChildren(c4::yml::NodeRef& entityNode, Entity* entit
 
 void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, Entity* entity)
 {
-	bool enabled;
-	entityNode["Enabled"] >> enabled;
-	entity->setEnabled(enabled);
 
 	for (c4::yml::ConstNodeRef propertyNode : entityNode.children())
 	{
-		if (propertyNode.key() == "Components")
+		std::ostringstream keyStream;
+		keyStream << propertyNode.key();
+		std::string key = keyStream.str();
+		if (key == "Components")
 		{
 			deserializeComponents(propertyNode, entity);
 		}
-		else if (propertyNode.key() == "Entities")
+		else if (key == "Entities")
 		{
 			deserializeChildren(propertyNode, entity);
 		}
-	}
 
-	for (const SPTR<AEditorProperty>& property : entity->editorProperties)
-	{
-		c4::yml::ConstNodeRef& propertyNode = entityNode[property->title.c_str()];
-		property->deserialize(propertyNode);
+		AEditorProperty* editorProperty = entity->findProperty(key);
+		if (editorProperty != nullptr)
+		{
+			editorProperty->deserialize(propertyNode);
+		}
 	}
 }
 
@@ -87,33 +87,36 @@ void EntityParser::deserializeComponents(c4::yml::ConstNodeRef& propertyNode, En
 void EntityParser::deserializeChildren(c4::yml::ConstNodeRef& propertyNode, Entity* entity)
 {
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-	for (c4::yml::ConstNodeRef childEntityNode : propertyNode.children())
+	for (c4::yml::ConstNodeRef entityNode : propertyNode.children())
 	{
-		std::ostringstream keyStream;
-		keyStream << childEntityNode.key();
-		std::string childName = keyStream.str();
+		std::ostringstream nameStream;
+		nameStream << entityNode.key();
+		std::string name = nameStream.str();
+		std::string fileName;
+		std::string className{ "Entity" };
 
-		if (childEntityNode.has_child("FileName"))
+		if (entityNode.has_child("Class"))
 		{
-			std::string fileName;
-			childEntityNode["FileName"] >> fileName;
-			Entity* childEntity = assetsManager->loadEntity(fileName.c_str(), childName);
-			entity->addChild(childEntity);
+			entityNode["Class"] >> className;
 		}
-		else if (childEntityNode.has_child("Class"))
+		if (entityNode.has_child("FileName"))
 		{
-			std::string className;
-			childEntityNode["Class"] >> className;
-			Entity* childEntity = entity->createChild(childName, className.c_str());
-			deserialize(childEntityNode, childEntity);
+			entityNode["FileName"] >> fileName;
+		}
+
+		Entity* childEntity = nullptr;
+		if (!fileName.empty())
+		{
+			childEntity = assetsManager->loadEntity(fileName.c_str(), name);
 		}
 		else
 		{
-			std::ostringstream keyStream;
-			keyStream << childEntityNode.key();
-			Entity* childEntity = entity->createChild(childName);
-			deserialize(childEntityNode, childEntity);
+			childEntity = Entity::Create(name, className.c_str());
 		}
+
+		entity->addChild(childEntity);
+
+		deserialize(entityNode, childEntity);
 	}
 }
 

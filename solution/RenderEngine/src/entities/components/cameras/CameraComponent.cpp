@@ -72,7 +72,7 @@ const glm::mat4& CameraComponent::getViewMatrix() const
     return this->view;
 }
 
-void CameraComponent::onValueChanged()
+void CameraComponent::onValueDeserialized()
 {
     if (this->isPerspective)
     {
@@ -88,6 +88,12 @@ void CameraComponent::onValueChanged()
     {
         this->setMainCamera();
     }
+}
+
+void CameraComponent::onValueChanged()
+{
+    AEntityComponent::onValueChanged();
+    this->onValueDeserialized();
 }
 
 } // namespace

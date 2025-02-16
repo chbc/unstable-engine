@@ -1,52 +1,68 @@
-_main_camera:
-  Enabled: 1
+playerShip:
+  Class: PlayerShip
+  FileName: airCombat/entities/PlayerShip.ent
+  Input Speed: 11
   Components:
     TransformComponent:
       Enabled: 1
-      Position: [0,5,-5]
-      Rotation: [0,0,0]
-      Scale: [1,1,1]
-    CameraComponent:
+      Position: [-8,5,0]
+      Rotation: [0,180,0]
+      Scale: [0.01,0.01,0.01]
+playerShip2:
+  Class: PlayerShip
+  FileName: airCombat/entities/PlayerShip.ent
+  Components:
+    TransformComponent:
       Enabled: 1
-      Perspective: 1
-      Main Camera: 1
-      Look At Target: [0,0,0]
-      Up: [0,1,0]
-      FOV: 90
-point_light:
+      Position: [8,5,0]
+      Rotation: [0,180,0]
+      Scale: [0.01,0.01,0.01]
+pathway:
+  Class: Pathway
   Enabled: 1
+  Speed: 10
+  Player Limits: [14,5,0]
   Components:
     TransformComponent:
       Enabled: 1
       Position: [0,5,0]
       Rotation: [0,0,0]
-      Scale: [1,1,1]
-    PointLightComponent:
+      Scale: [0.1,0.1,0.1]
+camera:
+  Class: GameCamera
+  Enabled: 1
+  Distance: 5
+  Components:
+    TransformComponent:
       Enabled: 1
-      Color: [0.6,0.6,0.6]
-      Intensity: 1.25
-      Range: 10
-plane:
+      Position: [0,2.5,-10.3]
+      Rotation: [15,0,0]
+      Scale: [1,1,1]
+    CameraComponent:
+      Enabled: 1
+      Perspective: 1
+      Main Camera: 1
+      FOV: 90
+ground:
   Enabled: 1
   Components:
     TransformComponent:
       Enabled: 1
-      Position: [0,0,0]
+      Position: [0,0,230]
       Rotation: [0,0,0]
-      Scale: [10,1,10]
+      Scale: [40,1,500]
     MeshComponent:
       Enabled: 1
       Mesh: Plane.mesh
       Material: DefaultMaterial.mat
-cube:
+light:
   Enabled: 1
   Components:
     TransformComponent:
       Enabled: 1
-      Position: [4,0.5,3]
-      Rotation: [0,0,0]
+      Position: [0,5,0]
+      Rotation: [-120,0,0]
       Scale: [1,1,1]
-    MeshComponent:
+    DirectionalLightComponent:
       Enabled: 1
-      Mesh: Cube.mesh
-      Material: DefaultMaterial.mat
+      Color: [0.6,0.6,0.6]

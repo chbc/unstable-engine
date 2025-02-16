@@ -38,7 +38,6 @@ public:
     virtual const char* getClassName() = 0;
 
 protected:
-    void addEditorProperty(AEditorProperty* editorProperty);
     virtual EComponentId::Type getId() = 0;
 
     template <typename Type>
@@ -49,6 +48,10 @@ protected:
 
         return ComponentType;
     }
+
+    virtual void onValueDeserialized() {}
+    virtual void onValueChanged() {}
+    void addEditorProperty(AEditorProperty* editorProperty);
 
     static AMaterialComponent* Create(const char* className, Material* material);
 

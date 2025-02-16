@@ -7,6 +7,7 @@ namespace sre
 
 class FloatEditorProperty : public AEditorProperty
 {
+DECLARE_PROPERTY()
 
 private:
 	float* value;

@@ -11,6 +11,8 @@ class Texture;
 class TextureEditorProperty : public AEditorProperty
 {
 
+DECLARE_PROPERTY()
+
 private:
 	ETextureMap::Type textureMapType;
 	Texture** texture;
