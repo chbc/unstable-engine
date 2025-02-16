@@ -11,8 +11,6 @@
 namespace sre
 {
 
-IMPLEMENT_PROPERTY(MaterialEditorProperty)
-
 MaterialEditorProperty::MaterialEditorProperty(const char* title, Material** arg_value)
 	: AEditorProperty(title), value(arg_value)
 { }
@@ -76,6 +74,14 @@ void MaterialEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	*this->value = assetsManager->loadMaterial(fileName.c_str());
+}
+
+void MaterialEditorProperty::copy(AEditorProperty* destination)
+{
+	MaterialEditorProperty* derivedProperty = static_cast<MaterialEditorProperty*>(destination);
+
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+	*derivedProperty->value = assetsManager->loadMaterial((*this->value)->fileName.c_str());
 }
 
 } // namespace

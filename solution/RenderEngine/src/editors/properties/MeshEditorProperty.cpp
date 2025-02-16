@@ -10,8 +10,6 @@
 namespace sre
 {
 
-IMPLEMENT_PROPERTY(MeshEditorProperty)
-
 MeshEditorProperty::MeshEditorProperty(const char* title, Mesh** arg_value)
 	: AEditorProperty(title), value(arg_value)
 { }
@@ -45,6 +43,14 @@ void MeshEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	*this->value = assetsManager->loadMesh(fileName.c_str());
+}
+
+void MeshEditorProperty::copy(AEditorProperty* destination)
+{
+	MeshEditorProperty* derivedProperty = static_cast<MeshEditorProperty*>(destination);
+
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+	*derivedProperty->value = assetsManager->loadMesh((*this->value)->fileName.c_str());
 }
 
 } // namespace

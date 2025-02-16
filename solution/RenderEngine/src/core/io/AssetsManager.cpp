@@ -31,10 +31,8 @@ Mesh* AssetsManager::loadMesh(const char* file)
 
 void AssetsManager::releaseMesh(Mesh* mesh)
 {
-	/* XXX
 	std::function<void(Mesh*)> releaseCallback = [&](Mesh* item) { MeshLoader().release(item); };
 	this->releaseAsset(this->meshesMap, mesh, releaseCallback);
-	*/
 }
 
 Material* AssetsManager::loadMaterial(const char* file)
