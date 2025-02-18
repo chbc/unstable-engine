@@ -42,9 +42,10 @@ class TransformComponent;
 class SRE_API AEntityComponent
 {
 private:
-    Entity* entity;
-    bool enabled;
+    Entity* entity{ nullptr };
+    bool enabled{ true };
     std::vector<SPTR<AEditorProperty>> editorProperties;
+    bool saved{ true };
 
 private:
     static uint16_t Index;
@@ -79,8 +80,9 @@ public:
     TransformComponent* getTransform();
     virtual const char* getClassName() = 0;
 
-    void setEnabled(bool value);
     bool isEnabled() const;
+    void setEnabled(bool value);
+    bool isSaved() const;
 
 protected:
     virtual uint16_t getId() = 0;
@@ -88,8 +90,9 @@ protected:
 
     virtual void onInit() {}
     virtual void onUpdate(float elapsedTime) {}
-    virtual void onValueDeserialized() {}
-    virtual void onValueChanged() {}
+    virtual void onPropertySerialized();
+    virtual void onPropertyDeserialized() {}
+    virtual void onPropertyChanged();
     void addEditorProperty(AEditorProperty* editorProperty);
 
 private:

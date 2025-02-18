@@ -72,7 +72,7 @@ const glm::mat4& CameraComponent::getViewMatrix() const
     return this->view;
 }
 
-void CameraComponent::onValueDeserialized()
+void CameraComponent::onPropertyDeserialized()
 {
     if (this->isPerspective)
     {
@@ -90,10 +90,10 @@ void CameraComponent::onValueDeserialized()
     }
 }
 
-void CameraComponent::onValueChanged()
+void CameraComponent::onPropertyChanged()
 {
-    AEntityComponent::onValueChanged();
-    this->onValueDeserialized();
+    AEntityComponent::onPropertyChanged();
+    this->onPropertyDeserialized();
 }
 
 } // namespace

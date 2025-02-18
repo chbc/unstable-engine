@@ -18,15 +18,8 @@ ColorEditorProperty::ColorEditorProperty(const char* arg_title, glm::vec4& arg_v
 	this->value = glm::value_ptr(arg_value);
 }
 
-void ColorEditorProperty::draw()
+void ColorEditorProperty::onDraw()
 {
-	ImGui::PushID(this->title.c_str());
-
-	ImGui::Columns(2);
-	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Text(this->title.c_str());
-	ImGui::NextColumn();
-
 	bool valueChanged = false;
 	if (hasAlpha)
 	{
@@ -39,15 +32,11 @@ void ColorEditorProperty::draw()
 
 	if (valueChanged)
 	{
-		this->onValueChanged();
+		this->onPropertyChanged();
 	}
-
-	ImGui::Columns(1);
-
-	ImGui::PopID();
 }
 
-void ColorEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
+void ColorEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
 {
 	propertyNode |= c4::yml::SEQ | c4::yml::CONTAINER_STYLE;
 	propertyNode.append_child() << this->value[0];
@@ -60,7 +49,7 @@ void ColorEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 	}
 }
 
-void ColorEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+void ColorEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
 {
 	for (size_t i = 0; i < propertyNode.num_children(); ++i)
 	{

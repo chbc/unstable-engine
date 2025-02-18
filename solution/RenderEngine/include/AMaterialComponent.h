@@ -49,8 +49,8 @@ protected:
         return ComponentType;
     }
 
-    virtual void onValueDeserialized() {}
-    virtual void onValueChanged() {}
+    virtual void onPropertyDeserialized() {}
+    virtual void onPropertyChanged() {}
     void addEditorProperty(AEditorProperty* editorProperty);
 
     static AMaterialComponent* Create(const char* className, Material* material);

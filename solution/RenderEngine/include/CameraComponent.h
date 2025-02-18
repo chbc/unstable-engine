@@ -42,8 +42,8 @@ public:
 	inline const glm::mat4& getViewMatrix() const;
 
 protected:
-	void onValueDeserialized() override;
-	void onValueChanged() override;
+	void onPropertyDeserialized() override;
+	void onPropertyChanged() override;
 
 friend class RenderManager;
 friend class EditorSceneViewport;

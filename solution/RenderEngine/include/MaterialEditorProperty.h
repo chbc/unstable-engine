@@ -17,10 +17,10 @@ private:
 
 public:
 	MaterialEditorProperty(const char* title, Material** arg_value);
-
 	void draw() override;
-	void serialize(c4::yml::NodeRef& propertyNode) override;
-	void deserialize(c4::yml::ConstNodeRef& propertyNode) override;
+
+private:
+	void drawSubProperties();
 };
 
 } // namespace

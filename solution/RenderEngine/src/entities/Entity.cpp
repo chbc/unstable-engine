@@ -120,14 +120,72 @@ void Entity::onUpdate(float elapsedTime)
 
 void Entity::addEditorProperty(AEditorProperty* editorProperty)
 {
-	editorProperty->onValueDeserializedCallback = std::bind(&Entity::onValueDeserialized, this);
-	editorProperty->onValueChangedCallback = std::bind(&Entity::onValueChanged, this);
+	editorProperty->onValueSerializedCallback = std::bind(&Entity::onPropertySerialized, this);
+	editorProperty->onValueDeserializedCallback = std::bind(&Entity::onPropertyDeserialized, this);
+	editorProperty->onValueChangedCallback = std::bind(&Entity::onPropertyChanged, this);
 	this->editorProperties.emplace_back(editorProperty);
+}
+
+void Entity::onPropertyChanged()
+{
+	this->propertiesSaved = false;
+	if (this->parent != nullptr)
+	{
+		this->parent->onChildChanged();
+	}
+}
+
+void Entity::onComponentChanged()
+{
+	this->componentsSaved = false;
+
+	if (this->parent != nullptr)
+	{
+		this->parent->onChildChanged();
+	}
+}
+
+void Entity::onChildChanged()
+{
+	this->childrenSaved = false;
+
+	if (this->parent != nullptr)
+	{
+		this->parent->onChildChanged();
+	}
+}
+
+void Entity::setPropertiesSaved()
+{
+	this->propertiesSaved = true;
+}
+
+void Entity::setComponentsSaved()
+{
+	this->componentsSaved = true;
+}
+
+void Entity::setChildrenSaved()
+{
+	this->childrenSaved = true;
+}
+
+bool Entity::isPropertiesSaved() const
+{
+	return this->propertiesSaved;
+}
+
+bool Entity::isComponentsSaved() const
+{
+	return this->componentsSaved;
 }
 
 Entity* Entity::clone()
 {
 	Entity* result = Create(this->name, this->getClassName());
+	result->name = this->name;
+	result->fileName = this->fileName;
+
 	for (int i = 0; i < this->editorProperties.size(); ++i)
 	{
 		SPTR<AEditorProperty>& destination = result->editorProperties[i];

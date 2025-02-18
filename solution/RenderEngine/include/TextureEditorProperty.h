@@ -20,10 +20,6 @@ private:
 
 public:
 	TextureEditorProperty(const char* title, Texture** arg_texture, ETextureMap::Type arg_textureMapType);
-
-	void draw() override;
-	void serialize(c4::yml::NodeRef& propertyNode) override;
-	void deserialize(c4::yml::ConstNodeRef& propertyNode) override;
 };
 
 } // namespace

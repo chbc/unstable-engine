@@ -14,28 +14,17 @@ TextureEditorProperty::TextureEditorProperty(const char* title, Texture** arg_te
 	: AEditorProperty(title), texture(arg_texture), textureMapType(arg_textureMapType), id(nullptr)
 { }
 
-void TextureEditorProperty::draw()
+void TextureEditorProperty::onDraw()
 {
-	ImGui::PushID(this->title.c_str());
-
-	ImGui::Columns(2);
 	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Text(this->title.c_str());
-	ImGui::NextColumn();
-	ImGui::SetColumnWidth(0, 100.0f);
-
 	ImGui::Image(this->id, ImVec2{ 64.0f, 64.0f});
-
-	ImGui::Columns(1);
-
-	ImGui::PopID();
 }
 
-void TextureEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
+void TextureEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
 {
 }
 
-void TextureEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+void TextureEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
 {
 	std::string fileName;
 	int mapType = 0;

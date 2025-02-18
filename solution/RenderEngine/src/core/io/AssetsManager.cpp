@@ -13,7 +13,6 @@ Entity* AssetsManager::loadEntity(const char* file, std::string name)
 {
 	Entity* prototype = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, file, name);
 	Entity* result = prototype->clone();
-	result->name = name;
 
 	return result;
 }

@@ -16,10 +16,6 @@ private:
 
 public:
 	SRE_API Vec3EditorProperty(const char* arg_title, glm::vec3* arg_value, float arg_defaultValue = 0.0f);
-
-	void draw() override;
-	void serialize(c4::yml::NodeRef& propertyNode) override;
-	void deserialize(c4::yml::ConstNodeRef& propertyNode) override;
 };
 
 } // namespace

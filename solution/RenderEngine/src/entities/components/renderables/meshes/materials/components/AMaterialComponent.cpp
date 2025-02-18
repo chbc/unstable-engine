@@ -9,8 +9,8 @@ AMaterialComponent::AMaterialComponent(Material* arg_material) : material(arg_ma
 
 void AMaterialComponent::addEditorProperty(AEditorProperty* editorProperty)
 {
-	editorProperty->onValueDeserializedCallback = std::bind(&AMaterialComponent::onValueDeserialized, this);
-	editorProperty->onValueChangedCallback = std::bind(&AMaterialComponent::onValueChanged, this);
+	editorProperty->onValueDeserializedCallback = std::bind(&AMaterialComponent::onPropertyDeserialized, this);
+	editorProperty->onValueChangedCallback = std::bind(&AMaterialComponent::onPropertyChanged, this);
 	this->editorProperties.emplace_back(editorProperty);
 }
 

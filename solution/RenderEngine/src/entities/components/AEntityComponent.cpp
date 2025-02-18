@@ -35,20 +35,37 @@ TransformComponent *AEntityComponent::getTransform()
 	return this->entity->getTransform();
 }
 
-void AEntityComponent::setEnabled(bool value)
-{
-	this->enabled = value;
-}
-
 bool AEntityComponent::isEnabled() const
 {
 	return this->enabled;
 }
 
+void AEntityComponent::setEnabled(bool value)
+{
+	this->enabled = value;
+}
+
+bool AEntityComponent::isSaved() const
+{
+	return saved;
+}
+
+void AEntityComponent::onPropertySerialized()
+{
+	this->saved = true;
+}
+
+void AEntityComponent::onPropertyChanged()
+{
+	this->saved = false;
+	this->entity->onComponentChanged();
+}
+
 void AEntityComponent::addEditorProperty(AEditorProperty* editorProperty)
 {
-	editorProperty->onValueDeserializedCallback = std::bind(&AEntityComponent::onValueDeserialized, this);
-	editorProperty->onValueChangedCallback = std::bind(&AEntityComponent::onValueChanged, this);
+	editorProperty->onValueSerializedCallback = std::bind(&AEntityComponent::onPropertySerialized, this);
+	editorProperty->onValueDeserializedCallback = std::bind(&AEntityComponent::onPropertyDeserialized, this);
+	editorProperty->onValueChangedCallback = std::bind(&AEntityComponent::onPropertyChanged, this);
 	this->editorProperties.emplace_back(editorProperty);
 }
 

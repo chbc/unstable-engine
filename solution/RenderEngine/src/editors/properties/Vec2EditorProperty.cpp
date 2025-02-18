@@ -13,16 +13,9 @@ Vec2EditorProperty::Vec2EditorProperty(const char* arg_title, glm::vec2* arg_val
 	: AEditorProperty(arg_title), value(arg_value), defaultValue(arg_defaultValue)
 { }
 
-void Vec2EditorProperty::draw()
+void Vec2EditorProperty::onDraw()
 {
 	bool valueChanged = false;
-
-	ImGui::PushID(this->title.c_str());
-
-	ImGui::Columns(2);
-	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Text(this->title.c_str());
-	ImGui::NextColumn();
 
 	ImGui::PushMultiItemsWidths(2, ImGui::CalcItemWidth());
 	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0.0f, 0.0f });
@@ -65,29 +58,24 @@ void Vec2EditorProperty::draw()
 	}
 	ImGui::PopItemWidth();
 	ImGui::PopStyleVar();
-	ImGui::Columns(1);
-
-	ImGui::PopID();
 
 	if (valueChanged)
 	{
-		this->onValueChanged();
+		this->onPropertyChanged();
 	}
 }
 
-void Vec2EditorProperty::serialize(c4::yml::NodeRef& propertyNode)
+void Vec2EditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
 {
 	propertyNode |= c4::yml::SEQ | c4::yml::CONTAINER_STYLE;
 	propertyNode.append_child() << this->value->x;
 	propertyNode.append_child() << this->value->y;
 }
 
-void Vec2EditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+void Vec2EditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
 {
 	propertyNode[0] >> this->value->x;
 	propertyNode[1] >> this->value->y;
-
-	this->onValueDeserializedCallback();
 }
 
 void Vec2EditorProperty::copy(AEditorProperty* destination)

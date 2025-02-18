@@ -70,8 +70,8 @@ glm::vec2 Material::getUVTiling()
 
 void Material::addEditorProperty(AEditorProperty* editorProperty)
 {
-    editorProperty->onValueDeserializedCallback = std::bind(&Material::onValueDeserialized, this);
-    editorProperty->onValueChangedCallback = std::bind(&Material::onValueChanged, this);
+    editorProperty->onValueDeserializedCallback = std::bind(&Material::onPropertyDeserialized, this);
+    editorProperty->onValueChangedCallback = std::bind(&Material::onPropertyChanged, this);
     this->editorProperties.emplace_back(editorProperty);
 }
 

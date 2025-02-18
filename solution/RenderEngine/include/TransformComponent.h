@@ -63,8 +63,8 @@ public:
 	*/
 
 protected:
-	void onValueDeserialized() override;
-	void onValueChanged() override;
+	void onPropertyDeserialized() override;
+	void onPropertyChanged() override;
 
 private:
 	void updateMatrix();

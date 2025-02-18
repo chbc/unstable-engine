@@ -14,29 +14,18 @@ MeshEditorProperty::MeshEditorProperty(const char* title, Mesh** arg_value)
 	: AEditorProperty(title), value(arg_value)
 { }
 
-void MeshEditorProperty::draw()
+void MeshEditorProperty::onDraw()
 {
-	ImGui::PushID(this->title.c_str());
-
-	ImGui::Columns(2);
-	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Text(this->title.c_str());
-
-	ImGui::NextColumn();
 	ImGui::SetColumnWidth(0, 100.0f);
 	ImGui::Text((*this->value)->fileName.c_str());
-
-	ImGui::Columns(1);
-
-	ImGui::PopID();
 }
 
-void MeshEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
+void MeshEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
 {
 	propertyNode << (*this->value)->fileName;
 }
 
-void MeshEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+void MeshEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
 {
 	std::string fileName;
 	propertyNode >> fileName;

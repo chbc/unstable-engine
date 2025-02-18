@@ -7,37 +7,56 @@
 
 namespace sre
 {
-void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity)
+void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity, bool modifiedOnly)
 {
-	serializeProperties(entityNode, entity);
-	serializeComponents(entityNode, entity);
-	serializeChildren(entityNode, entity);
+	serializeProperties(entityNode, entity, modifiedOnly);
+	serializeComponents(entityNode, entity, modifiedOnly);
+	serializeChildren(entityNode, entity, modifiedOnly);
 }
 
-void EntityParser::serializeProperties(c4::yml::NodeRef& entityNode, Entity* entity)
+void EntityParser::serializeProperties(c4::yml::NodeRef& entityNode, Entity* entity, bool modifiedOnly)
 {
+	if (modifiedOnly && entity->isPropertiesSaved())
+	{
+		return;
+	}
+
 	entityNode |= ryml::MAP;
 	for (const SPTR<AEditorProperty>& property : entity->editorProperties)
 	{
-		c4::yml::NodeRef& propertyNode = entityNode[property->title.c_str()];
-		property->setSaved();
-		property->serialize(propertyNode);
+		if (!modifiedOnly || !property->isSaved())
+		{
+			c4::yml::NodeRef& propertyNode = entityNode[property->title.c_str()];
+			property->serialize(propertyNode);
+		}
 	}
+
+	entity->setPropertiesSaved();
 }
 
-void EntityParser::serializeComponents(c4::yml::NodeRef& entityNode, Entity* entity)
+void EntityParser::serializeComponents(c4::yml::NodeRef& entityNode, Entity* entity, bool modifiedOnly)
 {
+	if (modifiedOnly && entity->isComponentsSaved())
+	{
+		return;
+	}
+
 	c4::yml::NodeRef ComponentsNode = entityNode["Components"];
 	ComponentsNode |= ryml::MAP;
 	for (const auto& componentItem : entity->componentsMap)
 	{
 		AEntityComponent* component = componentItem.second.get();
-		c4::yml::NodeRef itemtNode = ComponentsNode[component->getClassName()];
-		ComponentParser::serialize(itemtNode, component);
+		if (!modifiedOnly || !component->isSaved())
+		{
+			c4::yml::NodeRef itemtNode = ComponentsNode[component->getClassName()];
+			ComponentParser::serialize(itemtNode, component);
+		}
 	}
+
+	entity->setComponentsSaved();
 }
 
-void EntityParser::serializeChildren(c4::yml::NodeRef& entityNode, Entity* entity)
+void EntityParser::serializeChildren(c4::yml::NodeRef& entityNode, Entity* entity, bool modifiedOnly)
 {
 	if (entity->getChildrenCount() > 0)
 	{
@@ -49,6 +68,8 @@ void EntityParser::serializeChildren(c4::yml::NodeRef& entityNode, Entity* entit
 			serialize(itemNode, item);
 		}
 	}
+
+	entity->setChildrenSaved();
 }
 
 void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, Entity* entity)

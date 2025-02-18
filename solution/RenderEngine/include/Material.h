@@ -45,8 +45,8 @@ public:
     SRE_API glm::vec2 getUVTiling();
 
 protected:
-    virtual void onValueDeserialized() {}
-    virtual void onValueChanged() {}
+    virtual void onPropertyDeserialized() {}
+    virtual void onPropertyChanged() {}
     void addEditorProperty(AEditorProperty* editorProperty);
 
 friend class MeshComponent;

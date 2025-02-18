@@ -17,7 +17,6 @@ void ComponentParser::serialize(c4::yml::NodeRef& componentNode, AEntityComponen
 	for (const SPTR<AEditorProperty>& property : component->editorProperties)
 	{
 		c4::yml::NodeRef& propertyNode = componentNode[property->title.c_str()];
-		property->setSaved();
 		property->serialize(propertyNode);
 	}
 }

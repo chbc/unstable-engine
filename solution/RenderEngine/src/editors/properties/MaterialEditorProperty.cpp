@@ -17,13 +17,12 @@ MaterialEditorProperty::MaterialEditorProperty(const char* title, Material** arg
 
 void MaterialEditorProperty::draw()
 {
-	ImGui::PushID(this->title.c_str());
+	AEditorProperty::draw();
+	drawSubProperties();
+}
 
-	ImGui::Columns(2);
-	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Text(this->title.c_str());
-
-	ImGui::NextColumn();
+void MaterialEditorProperty::onDraw()
+{
 	ImGui::SetColumnWidth(0, 100.0f);
 	ImGui::Text((*this->value)->fileName.c_str());
 
@@ -39,9 +38,10 @@ void MaterialEditorProperty::draw()
 		}
 		ImGui::EndPopup();
 	}
+}
 
-	ImGui::PopID();
-
+void MaterialEditorProperty::drawSubProperties()
+{
 	for (const auto& property : (*this->value)->editorProperties)
 	{
 		property->draw();
@@ -56,18 +56,18 @@ void MaterialEditorProperty::draw()
 			{
 				property->draw();
 			}
-			// XXX ImGui::Separator();
 			ImGui::TreePop();
 		}
 	}
 }
 
-void MaterialEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
+
+void MaterialEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
 {
 	propertyNode << (*this->value)->fileName;
 }
 
-void MaterialEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+void MaterialEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
 {
 	std::string fileName;
 	propertyNode >> fileName;

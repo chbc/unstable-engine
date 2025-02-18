@@ -15,35 +15,24 @@ FloatEditorProperty::FloatEditorProperty(const char* title, float* arg_values)
 	: AEditorProperty(title), value(arg_values)
 { }
 
-void FloatEditorProperty::draw()
+void FloatEditorProperty::onDraw()
 {
-	ImGui::PushID(this->title.c_str());
-
-	ImGui::Columns(2);
-	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Text(this->title.c_str());
-	ImGui::NextColumn();
 	ImGui::SetColumnWidth(0, 100.0f);
 
 	if (ImGui::DragFloat("##id", this->value, 0.1f, 0.0f, 0.0f, "%.2f"))
 	{
-		this->onValueChanged();
+		this->onPropertyChanged();
 	}
-
-	ImGui::Columns(1);
-
-	ImGui::PopID();
 }
 
-void FloatEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
+void FloatEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
 {
 	propertyNode << *value;
 }
 
-void FloatEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+void FloatEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
 {
 	propertyNode >> *value;
-	this->onValueDeserializedCallback();
 }
 
 } // namespace

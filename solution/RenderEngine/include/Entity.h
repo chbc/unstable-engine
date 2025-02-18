@@ -40,6 +40,9 @@ private:
     bool enabled{ true };
     std::string name;
     std::string fileName;
+    bool propertiesSaved{ true };
+    bool componentsSaved{ true };
+    bool childrenSaved{ true };
 
 protected:
 	TransformComponent* transform;
@@ -82,11 +85,19 @@ public:
 protected:
 	SRE_API virtual void onInit();
 	SRE_API virtual void onUpdate(float elapsedTime);
-    SRE_API virtual void onValueDeserialized() {}
-    SRE_API virtual void onValueChanged() {}
     SRE_API void addEditorProperty(AEditorProperty* editorProperty);
 
 private:
+    void onPropertySerialized() {}
+    void onPropertyDeserialized() {}
+    void onPropertyChanged();
+    void onComponentChanged();
+    void onChildChanged();
+    void setPropertiesSaved();
+    void setComponentsSaved();
+    void setChildrenSaved();
+    bool isPropertiesSaved() const;
+    bool isComponentsSaved() const;
     Entity* clone();
     AEditorProperty* findProperty(const std::string& title);
     static Entity* Create(std::string arg_name, const std::string& className);
@@ -97,6 +108,7 @@ private:
     friend class EntityLoader;
     friend class EntityParser;
     friend class AssetsManager;
+    friend class AEntityComponent;
 
     friend class TestServicesProvider;
     friend class EditorEntityProperties;
