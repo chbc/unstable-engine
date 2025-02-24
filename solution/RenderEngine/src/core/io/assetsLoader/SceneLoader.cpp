@@ -36,14 +36,12 @@ void SceneLoader::serializeEntity(AScene* scene, c4::yml::NodeRef& entityNode, E
 	}
 
 	std::string fileName{ entity->fileName };
-	bool modifiedOnly = false;
 	if (!fileName.empty())
 	{
 		entityNode["FileName"] << fileName;
-		modifiedOnly = true;
 	}
 		
-	EntityParser::serialize(entityNode, entity, modifiedOnly);
+	EntityParser::serialize(entityNode, entity);
 }
 
 void SceneLoader::load(AScene* scene, const char* sceneName)

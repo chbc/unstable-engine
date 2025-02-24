@@ -74,6 +74,7 @@ const glm::mat4& CameraComponent::getViewMatrix() const
 
 void CameraComponent::onPropertyDeserialized()
 {
+    AEntityComponent::onPropertyDeserialized();
     if (this->isPerspective)
     {
         float aspectRatio = EngineValues::SCREEN_WIDTH / static_cast<float>(EngineValues::SCREEN_HEIGHT);

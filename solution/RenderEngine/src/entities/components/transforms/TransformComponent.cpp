@@ -216,6 +216,8 @@ void TransformComponent::getLocalScale(float* result)
 
 void TransformComponent::onPropertyDeserialized()
 {
+	AEntityComponent::onPropertyDeserialized();
+
 	glm::quat quaternionRotation = glm::quat{ glm::radians(this->eulerAngles) };
 	this->rotation = glm::toMat4(quaternionRotation);
 	this->updateMatrix();

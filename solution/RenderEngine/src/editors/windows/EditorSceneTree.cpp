@@ -70,7 +70,7 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 {
 	const char* name = entity->getName();
 	const size_t childrenCount = entity->getChildrenCount();
-	const ImGuiTreeNodeFlags BASE_FLAGS = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick; // XXX | ImGuiTreeNodeFlags_Selected;
+	const ImGuiTreeNodeFlags BASE_FLAGS = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 
 	if (childrenCount == 0)
 	{
@@ -81,11 +81,24 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 
 		if (ImGui::BeginPopupContextItem())
 		{
+			this->notifySelection(entity);
+
 			ImGui::Text("[%s]", name);
-			if (ImGui::Button("Save Entity"))
+			if (!this->selectedEntity->isAsset())
 			{
-				this->controller->saveEntity(this->selectedEntity);
-				ImGui::CloseCurrentPopup();
+				if (ImGui::Button("Save new Entity Asset"))
+				{
+					this->controller->saveEntity(this->selectedEntity);
+					ImGui::CloseCurrentPopup();
+				}
+			}
+			else if (!this->selectedEntity->isStored())
+			{
+				if (ImGui::Button("Save Entity Asset"))
+				{
+					this->controller->saveEntity(this->selectedEntity);
+					ImGui::CloseCurrentPopup();
+				}
 			}
 			if (ImGui::Button("Delete"))
 			{
@@ -100,7 +113,14 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 	{
 		ImGuiTreeNodeFlags flags = BASE_FLAGS;
 		if (entity == this->selectedEntity)
+		{
 			flags |= ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_Selected;
+		}
+
+		if (!entity->isSaved())
+		{
+			flags |= ImGuiTreeNodeFlags_Framed;
+		}
 
 		bool open = ImGui::TreeNodeEx(reinterpret_cast<void*>(entity), flags, name);
 

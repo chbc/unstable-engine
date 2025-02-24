@@ -92,6 +92,16 @@ const char* Entity::getClassName() const
 	return BASE_CLASS_NAME;
 }
 
+bool Entity::isStored() const
+{
+	return (this->propertiesStored && this->componentsStored && this->childrenStored);
+}
+
+bool Entity::isSaved() const
+{
+	return (this->propertiesSaved && this->componentsSaved && this->childrenSaved);
+}
+
 void Entity::onInit()
 {
     this->alive = true;
@@ -126,18 +136,31 @@ void Entity::addEditorProperty(AEditorProperty* editorProperty)
 	this->editorProperties.emplace_back(editorProperty);
 }
 
+void Entity::onPropertyDeserialized()
+{
+	this->propertiesStored = false;
+}
+
 void Entity::onPropertyChanged()
 {
 	this->propertiesSaved = false;
+	this->propertiesStored = false;
+
 	if (this->parent != nullptr)
 	{
 		this->parent->onChildChanged();
 	}
 }
 
+void Entity::onComponentDeserialized()
+{
+	this->componentsStored = false;
+}
+
 void Entity::onComponentChanged()
 {
 	this->componentsSaved = false;
+	this->componentsStored = false;
 
 	if (this->parent != nullptr)
 	{
@@ -148,6 +171,7 @@ void Entity::onComponentChanged()
 void Entity::onChildChanged()
 {
 	this->childrenSaved = false;
+	this->childrenStored = false;
 
 	if (this->parent != nullptr)
 	{
@@ -170,6 +194,28 @@ void Entity::setChildrenSaved()
 	this->childrenSaved = true;
 }
 
+void Entity::setStored(bool value)
+{
+	this->propertiesStored = value;
+	this->componentsStored = value;
+	this->childrenStored = value;
+
+	for (auto& item : this->editorProperties)
+	{
+		item->setStored(value);
+	}
+
+	for (auto& item : this->componentsMap)
+	{
+		item.second->setStored(value);
+	}
+
+	for (auto& item : this->childrenList)
+	{
+		item->setStored(value);
+	}
+}
+
 bool Entity::isPropertiesSaved() const
 {
 	return this->propertiesSaved;
@@ -178,6 +224,31 @@ bool Entity::isPropertiesSaved() const
 bool Entity::isComponentsSaved() const
 {
 	return this->componentsSaved;
+}
+
+bool Entity::isChildrenSaved() const
+{
+	return this->childrenSaved;
+}
+
+bool Entity::isPropertiesStored() const
+{
+	return this->propertiesStored;
+}
+
+bool Entity::isComponentsStored() const
+{
+	return this->componentsStored;
+}
+
+bool Entity::isChildrenStored() const
+{
+	return this->childrenStored;
+}
+
+bool Entity::isAsset() const
+{
+	return !this->fileName.empty();
 }
 
 Entity* Entity::clone()

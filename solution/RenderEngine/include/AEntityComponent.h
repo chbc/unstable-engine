@@ -46,6 +46,7 @@ private:
     bool enabled{ true };
     std::vector<SPTR<AEditorProperty>> editorProperties;
     bool saved{ true };
+    bool stored{ true };
 
 private:
     static uint16_t Index;
@@ -83,6 +84,7 @@ public:
     bool isEnabled() const;
     void setEnabled(bool value);
     bool isSaved() const;
+    bool isStored() const;
 
 protected:
     virtual uint16_t getId() = 0;
@@ -91,12 +93,13 @@ protected:
     virtual void onInit() {}
     virtual void onUpdate(float elapsedTime) {}
     virtual void onPropertySerialized();
-    virtual void onPropertyDeserialized() {}
+    virtual void onPropertyDeserialized();
     virtual void onPropertyChanged();
     void addEditorProperty(AEditorProperty* editorProperty);
 
 private:
     void clone(AEntityComponent* result);
+    void setStored(bool value);
 
 friend class Entity;
 friend class EditorEntityProperties;

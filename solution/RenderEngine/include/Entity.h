@@ -43,6 +43,9 @@ private:
     bool propertiesSaved{ true };
     bool componentsSaved{ true };
     bool childrenSaved{ true };
+    bool propertiesStored{ true };
+    bool componentsStored{ true };
+    bool childrenStored{ true };
 
 protected:
 	TransformComponent* transform;
@@ -89,15 +92,24 @@ protected:
 
 private:
     void onPropertySerialized() {}
-    void onPropertyDeserialized() {}
+    void onPropertyDeserialized();
     void onPropertyChanged();
+    void onComponentDeserialized();
     void onComponentChanged();
     void onChildChanged();
     void setPropertiesSaved();
     void setComponentsSaved();
     void setChildrenSaved();
+    void setStored(bool value);
     bool isPropertiesSaved() const;
     bool isComponentsSaved() const;
+    bool isChildrenSaved() const;
+    bool isPropertiesStored() const;
+    bool isComponentsStored() const;
+    bool isChildrenStored() const;
+    bool isAsset() const;
+    bool isStored() const;
+    bool isSaved() const;
     Entity* clone();
     AEditorProperty* findProperty(const std::string& title);
     static Entity* Create(std::string arg_name, const std::string& className);
@@ -114,6 +126,7 @@ private:
     friend class EditorEntityProperties;
     friend class EditorSceneViewport;
     friend class EditorsController;
+    friend class EditorSceneTree;
 };
 
 } // namespace

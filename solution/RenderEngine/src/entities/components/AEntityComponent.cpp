@@ -50,14 +50,29 @@ bool AEntityComponent::isSaved() const
 	return saved;
 }
 
+bool AEntityComponent::isStored() const
+{
+	return this->stored;
+}
+
 void AEntityComponent::onPropertySerialized()
 {
-	this->saved = true;
+	if (!this->saved)
+	{
+		this->saved = true;
+	}
+}
+
+void AEntityComponent::onPropertyDeserialized()
+{
+	this->stored = false;
+	this->entity->onComponentDeserialized();
 }
 
 void AEntityComponent::onPropertyChanged()
 {
 	this->saved = false;
+	this->stored = false;
 	this->entity->onComponentChanged();
 }
 
@@ -75,6 +90,16 @@ void AEntityComponent::clone(AEntityComponent* result)
 	{
 		SPTR<AEditorProperty> destination = result->editorProperties[i];
 		this->editorProperties[i]->copy(destination.get());
+	}
+}
+
+void AEntityComponent::setStored(bool value)
+{
+	this->stored = value;
+
+	for (auto& item : this->editorProperties)
+	{
+		item->setStored(value);
 	}
 }
 

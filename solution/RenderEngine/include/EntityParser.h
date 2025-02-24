@@ -11,10 +11,10 @@ class AScene;
 class EntityParser
 {
 private:
-	static void serialize(c4::yml::NodeRef& entityNode, Entity* entity, bool modifiedOnly = false);
-	static void serializeProperties(c4::yml::NodeRef& entityNode, Entity* entity, bool modifiedOnly);
-	static void serializeComponents(c4::yml::NodeRef& entityNode, Entity* entity, bool modifiedOnly);
-	static void serializeChildren(c4::yml::NodeRef& entityNode, Entity* entity, bool modifiedOnly);
+	static void serialize(c4::yml::NodeRef& entityNode, Entity* entity);
+	static void serializeProperties(c4::yml::NodeRef& entityNode, Entity* entity);
+	static void serializeComponents(c4::yml::NodeRef& entityNode, Entity* entity);
+	static void serializeChildren(c4::yml::NodeRef& entityNode, Entity* entity);
 
 	static void deserialize(c4::yml::ConstNodeRef& entityNode, Entity* entity);
 

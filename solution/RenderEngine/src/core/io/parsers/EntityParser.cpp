@@ -7,16 +7,17 @@
 
 namespace sre
 {
-void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity, bool modifiedOnly)
+
+void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity)
 {
-	serializeProperties(entityNode, entity, modifiedOnly);
-	serializeComponents(entityNode, entity, modifiedOnly);
-	serializeChildren(entityNode, entity, modifiedOnly);
+	serializeProperties(entityNode, entity);
+	serializeComponents(entityNode, entity);
+	serializeChildren(entityNode, entity);
 }
 
-void EntityParser::serializeProperties(c4::yml::NodeRef& entityNode, Entity* entity, bool modifiedOnly)
+void EntityParser::serializeProperties(c4::yml::NodeRef& entityNode, Entity* entity)
 {
-	if (modifiedOnly && entity->isPropertiesSaved())
+	if (entity->isAsset() && entity->isPropertiesStored())
 	{
 		return;
 	}
@@ -24,7 +25,7 @@ void EntityParser::serializeProperties(c4::yml::NodeRef& entityNode, Entity* ent
 	entityNode |= ryml::MAP;
 	for (const SPTR<AEditorProperty>& property : entity->editorProperties)
 	{
-		if (!modifiedOnly || !property->isSaved())
+		if (!entity->isAsset() || !property->isStored())
 		{
 			c4::yml::NodeRef& propertyNode = entityNode[property->title.c_str()];
 			property->serialize(propertyNode);
@@ -34,9 +35,9 @@ void EntityParser::serializeProperties(c4::yml::NodeRef& entityNode, Entity* ent
 	entity->setPropertiesSaved();
 }
 
-void EntityParser::serializeComponents(c4::yml::NodeRef& entityNode, Entity* entity, bool modifiedOnly)
+void EntityParser::serializeComponents(c4::yml::NodeRef& entityNode, Entity* entity)
 {
-	if (modifiedOnly && entity->isComponentsSaved())
+	if (entity->isAsset() && entity->isComponentsStored())
 	{
 		return;
 	}
@@ -46,7 +47,7 @@ void EntityParser::serializeComponents(c4::yml::NodeRef& entityNode, Entity* ent
 	for (const auto& componentItem : entity->componentsMap)
 	{
 		AEntityComponent* component = componentItem.second.get();
-		if (!modifiedOnly || !component->isSaved())
+		if (!entity->isAsset() || !component->isStored())
 		{
 			c4::yml::NodeRef itemtNode = ComponentsNode[component->getClassName()];
 			ComponentParser::serialize(itemtNode, component);
@@ -56,8 +57,13 @@ void EntityParser::serializeComponents(c4::yml::NodeRef& entityNode, Entity* ent
 	entity->setComponentsSaved();
 }
 
-void EntityParser::serializeChildren(c4::yml::NodeRef& entityNode, Entity* entity, bool modifiedOnly)
+void EntityParser::serializeChildren(c4::yml::NodeRef& entityNode, Entity* entity)
 {
+	if (entity->isAsset() && entity->isChildrenStored())
+	{
+		return;
+	}
+
 	if (entity->getChildrenCount() > 0)
 	{
 		c4::yml::NodeRef childNode = entityNode["Entities"];
@@ -74,7 +80,6 @@ void EntityParser::serializeChildren(c4::yml::NodeRef& entityNode, Entity* entit
 
 void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, Entity* entity)
 {
-
 	for (c4::yml::ConstNodeRef propertyNode : entityNode.children())
 	{
 		std::ostringstream keyStream;

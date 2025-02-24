@@ -43,6 +43,7 @@ private:
 	std::function<void(void)> onValueDeserializedCallback;
 	std::function<void(void)> onValueChangedCallback;
 	bool saved{ true };
+	bool stored{ true };
 
 public:
 	AEditorProperty(const char* arg_title)
@@ -54,6 +55,8 @@ public:
 	virtual void serialize(c4::yml::NodeRef& propertyNode);
 	virtual void deserialize(c4::yml::ConstNodeRef& propertyNode);
 	bool isSaved();
+	bool isStored() const;
+	void setStored(bool value);
 
 protected:
 	virtual void onDraw() = 0;

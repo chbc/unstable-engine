@@ -6,6 +6,16 @@ bool sre::AEditorProperty::isSaved()
     return this->saved;
 }
 
+bool sre::AEditorProperty::isStored() const
+{
+    return this->stored;
+}
+
+void sre::AEditorProperty::setStored(bool value)
+{
+    this->stored = value;
+}
+
 void sre::AEditorProperty::draw()
 {
 	ImGui::PushID(this->title.c_str());
@@ -33,12 +43,17 @@ void sre::AEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
 {
     this->onSerialize(propertyNode);
 
-    this->saved = true;
+    if (!this->saved)
+    {
+        this->saved = true;
+    }
+
     this->onValueSerializedCallback();
 }
 
 void sre::AEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 {
+    this->stored = false;
     this->onDeserialize(propertyNode);
     this->onValueDeserializedCallback();
 }
@@ -46,5 +61,6 @@ void sre::AEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
 void sre::AEditorProperty::onPropertyChanged()
 {
     this->saved = false;
+    this->stored = false;
     this->onValueChangedCallback();
 }

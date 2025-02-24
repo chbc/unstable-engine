@@ -10,6 +10,13 @@ namespace sre
 
 void EntityLoader::save(Entity* entity, const char* fileName)
 {
+	if (entity->isStored())
+	{
+		return;
+	}
+
+	entity->setStored(false);
+
 	c4::yml::Tree tree;
 	c4::yml::NodeRef root = tree.rootref();
 	root |= ryml::MAP;
@@ -25,6 +32,8 @@ void EntityLoader::save(Entity* entity, const char* fileName)
 	Paths().buildMediaFilePath(fileName, filePath, false);
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
 	FileUtils::saveFile(filePath, content);
+
+	entity->setStored(true);
 }
 
 Entity* EntityLoader::load(const char* fileName, std::string name)
@@ -45,6 +54,7 @@ Entity* EntityLoader::load(const char* fileName, std::string name)
 	Entity* result = Entity::Create(name, className.c_str());
 	result->fileName = fileName;
 	EntityParser::deserialize(root, result);
+	result->setStored(true);
 
 	return result;
 }

@@ -34,7 +34,7 @@ void Vec2EditorProperty::onDraw()
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##X", &this->value->x, 0.1f, 0.0f, 0.0f, "%.2f"))
+	if (ImGui::DragFloat("##X", &this->value->x, 0.1f, 0.0f, 0.0f, "%.3f"))
 	{
 		valueChanged = true;
 	}
@@ -52,7 +52,7 @@ void Vec2EditorProperty::onDraw()
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##Y", &this->value->y, 0.1f, 0.0f, 0.0f, "%.2f"))
+	if (ImGui::DragFloat("##Y", &this->value->y, 0.1f, 0.0f, 0.0f, "%.3f"))
 	{
 		valueChanged = true;
 	}
