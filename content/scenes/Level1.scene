@@ -1,10 +1,19 @@
-playerShip:
+playerShip1:
   Class: PlayerShip
   FileName: airCombat/entities/PlayerShip.ent
   Components:
     TransformComponent:
       Enabled: 1
-      Position: [0,5,0]
+      Position: [-10,5,0]
+      Rotation: [0,180,0]
+      Scale: [0.01,0.01,0.01]
+playerShip2:
+  Class: PlayerShip
+  FileName: airCombat/entities/PlayerShip.ent
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [10,5,0]
       Rotation: [0,180,0]
       Scale: [0.01,0.01,0.01]
 pathway:
@@ -18,18 +27,6 @@ pathway:
       Position: [0,5,0]
       Rotation: [0,0,0]
       Scale: [0.1,0.1,0.1]
-ground:
-  Enabled: 1
-  Components:
-    TransformComponent:
-      Enabled: 1
-      Position: [0,0,230]
-      Rotation: [0,0,0]
-      Scale: [40,1,500]
-    MeshComponent:
-      Enabled: 1
-      Mesh: Plane.mesh
-      Material: DefaultMaterial.mat
 camera:
   Class: GameCamera
   Enabled: 1
@@ -45,6 +42,18 @@ camera:
       Perspective: 1
       Main Camera: 1
       FOV: 90
+ground:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,0,230]
+      Rotation: [0,0,0]
+      Scale: [40,1,500]
+    MeshComponent:
+      Enabled: 1
+      Mesh: Plane.mesh
+      Material: DefaultMaterial.mat
 light:
   Enabled: 1
   Components:
