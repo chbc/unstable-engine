@@ -13,7 +13,7 @@ void DefaultGameValues::load()
 #ifdef __ANDROID__
 	const std::string FILE_NAME = "config/default_game.ini";
 #else
-	const std::string FILE_NAME = "../../config/default_game.ini";
+	const std::string FILE_NAME = "../config/default_game.ini";
 #endif
 
 	std::vector<std::string> lines;

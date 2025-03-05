@@ -7,25 +7,24 @@ namespace sre
 
 class Paths
 {
-private:
+public:
 #ifdef __ANDROID__
-	const char* CONTENT_SCENES_FOLDER = "content/es/scenes/";
-	const char* CONTENT_MEDIA_FOLDER = "content/es/media/";
+	const char* CONTENT_SCENES_FOLDER = "content/game/es/scenes/";
+	const char* CONTENT_MEDIA_FOLDER = "content/game/es/media/";
 
-	const char* ENGINE_BASE_FOLDER = "engine/es/";
-	const char* ENGINE_SCENES_FOLDER = "engine/es/scenes/";
-	const char* ENGINE_MEDIA_FOLDER = "engine/es/media/";
-	const char* ENGINE_ICONS_FOLDER = "engine/es/icons/";
+	const char* ENGINE_BASE_FOLDER = "content/engine/es/";
+	const char* ENGINE_SCENES_FOLDER = "content/engine/es/scenes/";
+	const char* ENGINE_MEDIA_FOLDER = "content/engine/es/media/";
+	const char* ENGINE_ICONS_FOLDER = "content/engine/es/icons/";
 #else
-	const char* CONTENT_BASE_FOLDER = "../../content/";
-	const char* CONTENT_SCENES_FOLDER = "../../content/scenes/";
-	const char* CONTENT_MEDIA_FOLDER = "../../content/media/";
+	const char* CONTENT_BASE_FOLDER = "../content/game/";
+	const char* CONTENT_SCENES_FOLDER = "../content/game/scenes/";
+	const char* CONTENT_MEDIA_FOLDER = "../content/game/media/";
 
-	const char* ENGINE_BASE_FOLDER = "../../engine/";
-	const char* ENGINE_SCENES_FOLDER = "../../engine/scenes/";
-	const char* ENGINE_MEDIA_FOLDER = "../../engine/media/";
-	const char* ENGINE_ICONS_FOLDER = "../../engine/icons/";
-
+	const char* ENGINE_BASE_FOLDER = "../content/engine/";
+	const char* ENGINE_SCENES_FOLDER = "../content/engine/scenes/";
+	const char* ENGINE_MEDIA_FOLDER = "../content/engine/media/";
+	const char* ENGINE_ICONS_FOLDER = "../content/engine/icons/";
 #endif
 
 public:
@@ -33,8 +32,6 @@ public:
 	void buildMediaFilePath(const char* fileName, std::string& result, bool checkFileExists = true);
 	void buildIconFilePath(const char* fileName, std::string& result);
 	void buildFilePath(const char* basePath, const char* fileName, const char* extension, std::string& result);
-
-friend class EditorFileBrowser;
 };
 
 } // namespace sre
