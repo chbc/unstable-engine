@@ -435,7 +435,6 @@
     <ClCompile Include="src\editors\WorldEditor.cpp" />
     <ClCompile Include="src\entitiesManagers\ScenesManager.cpp" />
     <ClCompile Include="src\entities\components\AEntityComponent.cpp" />
-    <ClCompile Include="src\entities\components\buttons\SceneButtonComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\PostProcessingComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\PostProcessingEffect.cpp" />
     <ClCompile Include="src\entities\components\buttons\GUIButtonComponent.cpp" />
@@ -672,7 +671,6 @@
     <ClInclude Include="include\RenderEngine.h" />
     <ClInclude Include="include\RenderManager.h" />
     <ClInclude Include="include\AScene.h" />
-    <ClInclude Include="include\SceneButtonComponent.h" />
     <ClInclude Include="include\SceneLoader.h" />
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\SDLAPI.h" />

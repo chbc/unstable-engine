@@ -231,9 +231,6 @@
     <ClCompile Include="src\entities\components\buttons\GUIButtonComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entities\components\buttons\SceneButtonComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\utils\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -873,9 +870,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GUIButtonComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SceneButtonComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\CollectionsUtils.h">
