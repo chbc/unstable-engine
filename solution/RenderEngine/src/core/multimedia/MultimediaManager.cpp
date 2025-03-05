@@ -87,14 +87,24 @@ void *MultimediaManager::loadTexture(const std::string &fileName, uint32_t *outW
 	return this->multimediaWrapper->loadTexture(fileName, outWidth, outHeight, outBpp);
 }
 
-void MultimediaManager::logMessage(const std::string& message)
+void MultimediaManager::logMessage(const std::string& message) const
 {
 	this->multimediaWrapper->log("MESSAGE", message);
 }
 
-void MultimediaManager::logWarning(const std::string& message)
+void MultimediaManager::logWarning(const std::string& message) const
 {
 	this->multimediaWrapper->log("WARNING", message);
+}
+
+void MultimediaManager::showMessageBox(const std::string& title, const std::string& message)
+{
+	SDLAPI::showMessageBox(title, message);
+}
+
+void MultimediaManager::showErrorMessageBox(const std::string& title, const std::string& message)
+{
+	SDLAPI::showErrorMessageBox(title, message);
 }
 
 void MultimediaManager::addGUIButton(GUIButtonComponent* guiButton)

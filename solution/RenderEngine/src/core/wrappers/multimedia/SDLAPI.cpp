@@ -183,4 +183,14 @@ std::string SDLAPI::getError()
 	return "SDL Error: " + std::string(SDL_GetError());
 }
 
+void SDLAPI::showMessageBox(const std::string& title, const std::string& message)
+{
+	SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags::SDL_MESSAGEBOX_INFORMATION, title.c_str(), message.c_str(), nullptr);
+}
+
+void SDLAPI::showErrorMessageBox(const std::string& title, const std::string& message)
+{
+	SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags::SDL_MESSAGEBOX_ERROR, title.c_str(), message.c_str(), nullptr);
+}
+
 } // namespace

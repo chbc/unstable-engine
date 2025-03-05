@@ -49,7 +49,7 @@ void OpenGLAPI::init()
 void OpenGLAPI::createVAO(MeshData* meshData)
 {
 	// data
-	int dataSize = meshData->vertexData.size();
+	size_t dataSize = meshData->vertexData.size();
 
 	// VAO
 	glGenVertexArrays(1, &meshData->vao);
@@ -65,7 +65,7 @@ void OpenGLAPI::createEBO(MeshData* meshData)
 {
 	// EBO
 	glGenBuffers(1, &meshData->ebo);
-	int size = meshData->indices.size();
+	size_t size = meshData->indices.size();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &meshData->indices[0], GL_STATIC_DRAW);
@@ -74,7 +74,7 @@ void OpenGLAPI::createEBO(MeshData* meshData)
 void OpenGLAPI::createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic)
 {
 	void* data = nullptr;
-	int size = maxItems * 4;
+	size_t size = maxItems * 4;
 	GLenum usage = GL_DYNAMIC_DRAW;
 
 	// data
@@ -98,7 +98,7 @@ void OpenGLAPI::createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool isDy
 void OpenGLAPI::createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic)
 {
 	void* data = nullptr;
-	int size = maxItems * 6;
+	size_t size = maxItems * 6;
 	GLenum usage = GL_DYNAMIC_DRAW;
 
 	if (!isDynamic)

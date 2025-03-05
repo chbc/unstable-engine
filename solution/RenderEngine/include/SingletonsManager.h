@@ -24,8 +24,10 @@ public:
     SingletonsManager();
     SRE_API static SingletonsManager* getInstance()
     {
-        if (instance.get() == nullptr)
-            instance = sre::make_unique<SingletonsManager>();
+        if (instance == nullptr)
+        {
+            throw "[SingletonsManager] - Instance not loaded!";
+        }
 
         return instance.get();
     }
@@ -43,7 +45,10 @@ public:
         return result;
     }
 
+    static bool isInitialized();
+
 private:
+    static SingletonsManager* loadInstance();
     void init();
 
     template <typename T> T* add()

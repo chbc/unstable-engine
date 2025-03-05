@@ -47,7 +47,7 @@ void loadFile(const std::string& fileName, std::string& dest)
 	}
 	else
 	{
-		SDL_Log("XXX FileUtils ERROR | %s", SDL_GetError());
+		SDL_Log("[FileUtils] ERROR | %s", SDL_GetError());
 	}
 }
 #else
@@ -75,7 +75,7 @@ void loadFile(const std::string& fileName, std::vector<std::string>& lines)
 
 	if (!in.is_open())
 	{
-		throw "[OpenGLAPI] - Error: " + fileName + " can't be found!";
+		throw "[FileUtils] - Error: " + fileName + " can't be found!";
 	}
 
 	char temp[300];

@@ -36,9 +36,11 @@ protected:
     virtual void onUpdate(float elapsedTime) {}
     virtual void onGUI() {}
     virtual void onEditorGUI() {}
-    virtual void onQuit() {};
+    virtual void onQuit() {}
+    virtual void onError(const std::string& message);
 
 private:
+    void loadSystems();
     void dispatchEndFrameActions();
     void changeStrategy(const EExecutionMode::Type mode);
     void release();

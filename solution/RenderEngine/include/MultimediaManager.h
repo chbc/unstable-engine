@@ -1,5 +1,4 @@
-#ifndef _MULTIMEDIA_MANAGER_H_
-#define _MULTIMEDIA_MANAGER_H_
+#pragma once
 
 #include "ASingleton.h"
 #include "Timer.h"
@@ -32,8 +31,10 @@ public:
 	float getNormalizedWidth(float pixelWidth);
 	glm::vec2 getNormalizedSize(const glm::vec2 &pixelSize);
 
-	void logMessage(const std::string& message);
-	void logWarning(const std::string& message);
+	void logMessage(const std::string& message) const;
+	void logWarning(const std::string& message) const;
+	static void showMessageBox(const std::string& title, const std::string& message);
+	static void showErrorMessageBox(const std::string& title, const std::string& message);
 
 private:
 	void swapBuffers();
@@ -58,5 +59,3 @@ friend class GUIButtonComponent;
 };
 
 } // namespace
-
-#endif

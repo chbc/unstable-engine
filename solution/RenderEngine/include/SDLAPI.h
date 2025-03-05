@@ -1,5 +1,4 @@
-#ifndef _SDLAPI_H_
-#define _SDLAPI_H_
+#pragma once
 
 #include "AMultimediaWrapper.h"
 #include <string>
@@ -38,7 +37,10 @@ private:
 	void processInput(const std::vector<GUIButtonComponent*>& guiButtons, SDL_Event& currentEvent);
 	bool checkButtonPress(const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
 	std::string getError();
+	static void showMessageBox(const std::string& title, const std::string& message);
+	static void showErrorMessageBox(const std::string& title, const std::string& message);
+
+friend class MultimediaManager;
 };
 
 } // namespace sre
-#endif
