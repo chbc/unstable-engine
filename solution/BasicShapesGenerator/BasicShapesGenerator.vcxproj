@@ -82,6 +82,10 @@
     <IntDir>../obj/$(ProjectName)/</IntDir>
     <OutDir>../../tools/</OutDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>../../tools/</OutDir>
+    <IntDir>../obj/$(ProjectName)/</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -118,6 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../RenderEngine/include;../RenderEngine/thirdParties;../../dependencies;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,7 +147,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\RenderEngine\src\core\graphics\meshData\PrimitiveMeshFactory.cpp" />
     <ClCompile Include="..\RenderEngine\src\utils\math\MathUtils.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

@@ -18,9 +18,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\RenderEngine\src\core\graphics\meshData\PrimitiveMeshFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\RenderEngine\src\utils\math\MathUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

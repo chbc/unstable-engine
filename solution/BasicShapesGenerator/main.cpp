@@ -1,11 +1,14 @@
 #include "PrimitiveMeshFactory.h"
+
 #include <iostream>
 #include <fstream>
 
 using namespace sre;
 
 void print(MeshData* mesh);
-void saveMesh(MeshData* mesh, const char* fileName);
+
+template <typename TMesh, typename TVertex>
+void saveMesh(TMesh* mesh, const char* fileName);
 
 int main()
 {
@@ -13,32 +16,36 @@ int main()
     MeshData* cubeMesh = meshFactory.createCube(1.0f);
     MeshData* planeMesh = meshFactory.createPlane(1.0f, 1.0f);
     MeshData* sphereMesh = meshFactory.createSphere(1.0f);
+    GUIMeshData* guiMesh = meshFactory.createPlaneTopDown(glm::vec2{ 1.0f, 1.0f });
 
-    saveMesh(cubeMesh, "Cube.mesh");
-    saveMesh(planeMesh, "Plane.mesh");
-    saveMesh(sphereMesh, "Sphere.mesh");
+    saveMesh<MeshData, VertexData>(cubeMesh, "Cube.mesh");
+    saveMesh<MeshData, VertexData>(planeMesh, "Plane.mesh");
+    saveMesh<MeshData, VertexData>(sphereMesh, "Sphere.mesh");
+    saveMesh<GUIMeshData, GUIVertexData>(guiMesh, "GUIPlane.mesh");
 
     delete cubeMesh;
     delete planeMesh;
     delete sphereMesh;
+    delete guiMesh;
 
     return 0;
 }
 
-void saveMesh(MeshData* mesh, const char* fileName)
+template <typename TMesh, typename TVertex>
+void saveMesh(TMesh* mesh, const char* fileName)
 {
     size_t vertexSize = mesh->vertexData.size();
     size_t indicesSize = mesh->indices.size();
 
-    std::string filePath = std::string{ "../../engine/media/" } + fileName;
+    std::string filePath = std::string{ "../content/engine/media/" } + fileName;
 
     std::ofstream saveStream(filePath, std::ios::out | std::ios::binary);
     if (saveStream)
     {
         saveStream.write(reinterpret_cast<const char*>(&vertexSize), sizeof(size_t));
-        for (const VertexData& item : mesh->vertexData)
+        for (const TVertex& item : mesh->vertexData)
         {
-            saveStream.write(reinterpret_cast<const char*>(&item), sizeof(VertexData));
+            saveStream.write(reinterpret_cast<const char*>(&item), sizeof(TVertex));
         }
 
         saveStream.write(reinterpret_cast<const char*>(&indicesSize), sizeof(size_t));
