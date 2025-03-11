@@ -1,5 +1,4 @@
-#ifndef _ATLAS_H_
-#define _ATLAS_H_
+#pragma once
 
 #include "Rect.h"
 #include "memory_aliases.h"
@@ -32,7 +31,7 @@ struct AtlasItem
 class Atlas
 {
 private:
-	Texture *texture;
+	Texture* texture;
 
 	// <id, item>
 	std::unordered_map<std::string, UPTR<AtlasItem>> items;
@@ -51,7 +50,7 @@ private:
 	void processLine(const std::string &input);
 	void getProperties(const std::string &input, std::unordered_map<std::string, std::string> &result);
 
-	uint32_t getTextureId();
+	Texture* getTexture();
 
 friend class AtlasManager;
 friend class GUITextComponent;
@@ -59,5 +58,3 @@ friend class GUIImageComponent;
 };
 
 } // namespace
-
-#endif

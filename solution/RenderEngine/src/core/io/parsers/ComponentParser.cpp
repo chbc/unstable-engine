@@ -2,9 +2,7 @@
 #include <rapidyaml/rapidyaml.hpp>
 
 #include "ComponentParser.h"
-
 #include "TransformComponent.h"
-#include "PrimitiveMeshFactory.h"
 #include "EngineValues.h"
 
 namespace sre

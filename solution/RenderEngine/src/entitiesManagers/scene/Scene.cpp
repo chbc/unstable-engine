@@ -9,10 +9,7 @@
 namespace sre
 {
 
-Scene::Scene(std::string name) : AScene(name)
-{
-    this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
-}
+Scene::Scene(std::string name) : AScene(name) { }
 
 Entity* Scene::createPerspectiveCamera(float fov, float near, float far, Entity* parent, bool isMainCamera)
 {

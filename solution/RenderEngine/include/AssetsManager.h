@@ -12,6 +12,7 @@ namespace sre
 {
 
 struct Mesh;
+struct GUIMeshData;
 class Material;
 class Texture;
 
@@ -39,6 +40,7 @@ public:
 	Entity* loadEntity(const char* file, std::string name);
 	void releaseEntity(Entity* entity);
 	Mesh* loadMesh(const char* file);
+	GUIMeshData* loadGUIMeshData();
 	void releaseMesh(Mesh* mesh);
 	Material* loadMaterial(const char* file);
 	void releaseMaterial(Material* material);

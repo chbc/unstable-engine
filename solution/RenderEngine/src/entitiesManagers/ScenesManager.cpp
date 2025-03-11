@@ -38,11 +38,6 @@ Entity* ScenesManager::getEntity(const std::string& name)
     return result;
 }
 
-Entity* ScenesManager::spawnEntity(const char* entityFile, const glm::vec3& position)
-{
-    return this->scene->spawnEntity(entityFile, position);
-}
-
 Entity* ScenesManager::createPerspectiveCamera(float fov, float near, float far, Entity* parent, bool isMainCamera)
 {
     return this->scene->createPerspectiveCamera(fov, near, far, parent, isMainCamera);
@@ -63,24 +58,24 @@ PointLightComponent* ScenesManager::createPointLight(const std::string& name, En
     return this->scene->createPointLight(name, parent);
 }
 
-Entity* ScenesManager::createGUIImageEntity(const std::string& fileName)
+Entity* ScenesManager::createGUIImageEntity(const std::string& fileName, const std::string& name)
 {
-    return this->guiScene->createGUIImageEntity(fileName);
+    return this->guiScene->createGUIImageEntity(fileName, name);
 }
 
-Entity* ScenesManager::createGUIImageEntity(const std::string& fileName, const glm::vec2& normalizedSize)
+Entity* ScenesManager::createGUIImageEntity(const std::string& fileName, const glm::vec2& normalizedSize, const std::string& name)
 {
-    return this->guiScene->createGUIImageEntity(fileName, normalizedSize);
+    return this->guiScene->createGUIImageEntity(fileName, normalizedSize, name);
 }
 
-Entity* ScenesManager::createGUIImageEntityFromAtlas(const std::string& fileName, const std::string& imageId)
+Entity* ScenesManager::createGUIImageEntityFromAtlas(const std::string& fileName, const std::string& imageId, const std::string& name)
 {
-    return this->guiScene->createGUIImageEntityFromAtlas(fileName, imageId);
+    return this->guiScene->createGUIImageEntityFromAtlas(fileName, imageId, name);
 }
 
-Entity* ScenesManager::createGUITextEntity(const std::string fontFile, uint32_t maxItems)
+Entity* ScenesManager::createGUITextEntity(const std::string fontFile, const std::string& name, uint32_t maxItems)
 {
-    return this->guiScene->createGUITextEntity(fontFile, maxItems);
+    return this->guiScene->createGUITextEntity(fontFile, name, maxItems);
 }
 
 void ScenesManager::loadScene(const char* sceneName)

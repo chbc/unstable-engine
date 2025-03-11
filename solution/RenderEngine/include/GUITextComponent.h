@@ -1,14 +1,12 @@
-#ifndef _GUI_TEXT_COMPONENT_H_
-#define _GUI_TEXT_COMPONENT_H_
+#pragma once
 
 #include "GUIImageComponent.h"
-#include "PrimitiveMeshFactory.h"
 #include "memory_aliases.h"
+
 #include <string>
 
 namespace sre
 {
-
 
 class FontAtlas;
 
@@ -33,5 +31,3 @@ friend class Entity;
 };
 
 } // namespace
-
-#endif

@@ -698,6 +698,7 @@
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\TransformComponent.h" />
     <ClInclude Include="include\AEditorProperty.h" />
+    <ClInclude Include="include\Vec2EditorProperty.h" />
     <ClInclude Include="include\WorldEditor.h" />
     <ClInclude Include="include\Vec3EditorProperty.h" />
     <ClInclude Include="thirdParties\imgui\imconfig.h" />

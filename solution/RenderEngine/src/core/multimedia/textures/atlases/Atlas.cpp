@@ -112,9 +112,9 @@ void Atlas::getProperties(const std::string &input, std::unordered_map<std::stri
 	}
 }
 
-uint32_t Atlas::getTextureId()
+Texture* Atlas::getTexture()
 {
-	return this->texture->getId();
+	return this->texture;
 }
 
 } // namespace

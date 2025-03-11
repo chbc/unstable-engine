@@ -1,13 +1,8 @@
-#ifndef _RENDER_MANAGER_H_
-#define _RENDER_MANAGER_H_
+#pragma once
 
 #include "ASingleton.h"
 #include "memory_aliases.h"
 #include <string>
-#include "PostProcessingRenderer.h"
-#include "GUIRenderer.h"
-#include "ShadowRenderer.h"
-#include "MeshRenderer.h"
 #include "EExecutionMode.h"
 
 namespace sre
@@ -17,6 +12,11 @@ class Entity;
 class MeshComponent;
 class GUIImageComponent;
 class CameraComponent;
+
+class MeshRenderer;
+class ShadowRenderer;
+class GUIRenderer;
+class PostProcessingRenderer;
 
 struct GUIMeshData;
 
@@ -31,11 +31,11 @@ private:
     class AGraphicsWrapper    *graphicsWrapper;
     class LightManager        *lightManager;
 
-	VECTOR_UPTR<MeshRenderer> opaqueMeshRenderers;
-    VECTOR_UPTR<MeshRenderer> translucentMeshRenderers;
-    UPTR<ShadowRenderer> shadowRenderer;
-    UPTR<GUIRenderer> guiRenderer;
-	UPTR<PostProcessingRenderer> postProcessingRenderer;
+	VECTOR_SPTR<MeshRenderer> opaqueMeshRenderers;
+    VECTOR_SPTR<MeshRenderer> translucentMeshRenderers;
+    SPTR<ShadowRenderer> shadowRenderer;
+    SPTR<GUIRenderer> guiRenderer;
+	SPTR<PostProcessingRenderer> postProcessingRenderer;
 
     CameraComponent* applicationCamera{ nullptr };
     CameraComponent* editorCamera{ nullptr };
@@ -49,7 +49,7 @@ protected:
 private:
     void addEntity(Entity* entity);
     void addMesh(MeshComponent* mesh);
-    void addMesh(VECTOR_UPTR<MeshRenderer>& renderers, MeshComponent* mesh);
+    void addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent* mesh);
     void addGUIComponent(GUIImageComponent* guiComponent);
     void addDynamicGUIComponent(GUIImageComponent* guiComponent);
     void initGUIRenderer();
@@ -75,6 +75,7 @@ private:
 
 friend class AScene;
 friend class Scene;
+friend class GUIScene;
 friend class AtlasManager;
 friend class CameraComponent;
 friend class MeshComponent;
@@ -91,4 +92,3 @@ friend class WorldEditor;
 };
 
 } // namespace
-#endif

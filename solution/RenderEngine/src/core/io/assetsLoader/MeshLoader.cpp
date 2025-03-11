@@ -8,12 +8,24 @@
 namespace sre
 {
 
-Mesh* MeshLoader::load(const char* file)
+Mesh* MeshLoader::load(const char* fileName)
 {
-	std::vector<VertexData> vertexData;
+	return internalLoad<MeshData, VertexData>(fileName);
+}
+
+void MeshLoader::release(Mesh* mesh)
+{
+	AGraphicsWrapper* graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
+	graphicsWrapper->deleteBuffers(mesh->meshData.get());
+}
+
+template <typename TMesh, typename TVertex>
+Mesh* MeshLoader::internalLoad(const char* fileName)
+{
+	std::vector<TVertex> vertexData;
 	std::vector<uint32_t> indices;
 	std::string filePath;
-	Paths().buildMediaFilePath(file, filePath);
+	Paths().buildMediaFilePath(fileName, filePath);
 	std::ifstream readStream(filePath, std::ios::out | std::ios::binary);
 	if (readStream)
 	{
@@ -22,8 +34,8 @@ Mesh* MeshLoader::load(const char* file)
 		vertexData.reserve(size);
 		for (size_t i = 0; i < size; i++)
 		{
-			VertexData item;
-			readStream.read(reinterpret_cast<char*>(&item), sizeof(VertexData));
+			TVertex item;
+			readStream.read(reinterpret_cast<char*>(&item), sizeof(TVertex));
 			vertexData.push_back(item);
 		}
 
@@ -39,15 +51,14 @@ Mesh* MeshLoader::load(const char* file)
 
 	readStream.close();
 
-	MeshData* meshData = new MeshData{ vertexData, indices };
-	Mesh* result = new Mesh{ meshData, file };
+	TMesh* meshData = new TMesh{ vertexData, indices };
+	Mesh* result = new Mesh{ meshData, filePath.c_str()};
 	return result;
 }
 
-void MeshLoader::release(Mesh* mesh)
+Mesh* GIUMeshLoader::load(const char* fileName)
 {
-	AGraphicsWrapper* graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
-	graphicsWrapper->deleteBuffers(mesh->meshData.get());
+	return internalLoad<GUIMeshData, GUIVertexData>(fileName);
 }
 
 } // namespace

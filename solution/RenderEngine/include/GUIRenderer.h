@@ -37,7 +37,6 @@ private:
     void setup(GUIImageComponent *guiComponent);
 
     void removeDestroyedEntities();
-    void clean();
 
     bool isEmpty();
 

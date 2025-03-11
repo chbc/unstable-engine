@@ -1,6 +1,4 @@
-#ifndef _PRIMITIVE_MESH_FACTORY_H_
-#define _PRIMITIVE_MESH_FACTORY_H_
-
+#pragma once
 #include "MeshData.h"
 
 namespace sre
@@ -39,5 +37,3 @@ private:
 };
 
 } // namespace
-
-#endif

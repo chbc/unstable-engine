@@ -91,6 +91,16 @@ void EditorMenuBar::drawEntitiesGroup()
 			ImGui::EndMenu();
 		}
 
+		if (ImGui::BeginMenu("GUI"))
+		{
+			if (ImGui::MenuItem("Image"))
+			{
+				this->controller->createGUIImage();
+			}
+
+			ImGui::EndMenu();
+		}
+
 		if (ImGui::BeginMenu("Lights"))
 		{
 			if (ImGui::MenuItem("Directional Light"))

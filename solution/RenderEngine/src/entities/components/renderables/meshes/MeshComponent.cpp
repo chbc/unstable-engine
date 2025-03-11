@@ -34,15 +34,6 @@ void MeshComponent::setIsOpaque(bool value)
     this->opaque = value;
 }
 
-bool MeshComponent::isAbleToBeRendered()
-{
-    return
-    (
-        (this->mesh->meshData.get() != nullptr) &&
-        !this->mesh->meshData->indices.empty()
-    );
-}
-
 bool MeshComponent::isOpaque()
 {
     return this->opaque;

@@ -29,6 +29,12 @@ Mesh* AssetsManager::loadMesh(const char* file)
 	return result;
 }
 
+GUIMeshData* AssetsManager::loadGUIMeshData()
+{
+	Mesh* result = this->loadAsset<MeshesMapType, GIUMeshLoader, Mesh>(this->meshesMap, "GUIPlane.mesh");
+	return static_cast<GUIMeshData*>(result->meshData.get());
+}
+
 void AssetsManager::releaseMesh(Mesh* mesh)
 {
 	std::function<void(Mesh*)> releaseCallback = [&](Mesh* item) { MeshLoader().release(item); };

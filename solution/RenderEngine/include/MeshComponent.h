@@ -1,5 +1,4 @@
-#ifndef _MESH_H_
-#define _MESH_H_
+#pragma once
 
 #include "AEntityComponent.h"
 #include "memory_aliases.h"
@@ -38,7 +37,6 @@ public:
     void setIsOpaque(bool value);
 
 protected:
-    bool isAbleToBeRendered();
     bool isOpaque();
     void load(const char* file);
 
@@ -53,5 +51,3 @@ friend class Scene;
 };
 
 } // namespace
-
-#endif

@@ -5,6 +5,8 @@
 #include "AtlasManager.h"
 #include "TransformComponent.h"
 #include "PrimitiveMeshFactory.h"
+#include "Vec2EditorProperty.h"
+#include "TextureEditorProperty.h"
 
 namespace sre
 {
@@ -12,11 +14,21 @@ namespace sre
 IMPLEMENT_COMPONENT(GUIImageComponent)
 
 GUIImageComponent::GUIImageComponent(Entity *entity)
-    :   MeshComponent(entity),
-        extent(glm::vec2(0.0f, 0.0f)), pivot(glm::vec2(0.0f, 0.0f)),
+	: AEntityComponent(entity), uiPosition(glm::vec2(0.0f, 0.0f)), extent(glm::vec2(0.0f, 0.0f)), pivot(glm::vec2(0.0f, 0.0f)),
         maxItems(0), isDynamic(false)
 {
+	this->addEditorProperty(new TextureEditorProperty{ "Texture", &this->texture, ETextureMap::GUI });
+	this->addEditorProperty(new Vec2EditorProperty{ "UI Position", &this->uiPosition });
+	this->addEditorProperty(new Vec2EditorProperty{ "Extent", &this->extent });
+	this->addEditorProperty(new Vec2EditorProperty{ "Pivot", &this->pivot });
+
     this->setUIPosition(glm::vec2(0.0f, 0.0f));
+}
+
+GUIImageComponent::~GUIImageComponent()
+{
+    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+    assetsManager->releaseTexture(this->texture);
 }
 
 void GUIImageComponent::setMaxItems(uint32_t arg_maxItems)
@@ -26,19 +38,8 @@ void GUIImageComponent::setMaxItems(uint32_t arg_maxItems)
 
 void GUIImageComponent::setUIPosition(const glm::vec2 &position)
 {
-    glm::vec3 realPosition = glm::vec3
-    (
-        ((position.x * 2) - 1), 
-        -(position.y * 2) + 1, 
-        0.0f
-    );
-
-    realPosition.x -= this->pivot.x;
-    realPosition.y += this->pivot.y;
-
-    this->getTransform()->setPosition(realPosition);
-
     this->uiPosition = position;
+    this->updateTransform();
 }
 
 glm::vec2 GUIImageComponent::getUIPosition()
@@ -48,7 +49,7 @@ glm::vec2 GUIImageComponent::getUIPosition()
 
 uint32_t GUIImageComponent::getTextureId()
 {
-    return this->textureId;
+    return this->texture->getId();
 }
 
 glm::vec2 GUIImageComponent::getExtent()
@@ -62,39 +63,73 @@ void GUIImageComponent::setPivot(const glm::vec2& pivot)
     this->pivot = pivot;
 }
 
+bool GUIImageComponent::isAbleToBeRendered()
+{
+    return
+    (
+        (this->meshData != nullptr) &&
+        !this->meshData->indices.empty()
+    );
+}
+
+void GUIImageComponent::onPropertyChanged()
+{
+	this->updateTransform();
+}
+
 void GUIImageComponent::load(const std::string& fileName)
 {
-    Texture* texture = SingletonsManager::getInstance()->get<AssetsManager>()->loadTexture(fileName.c_str(), ETextureMap::GUI);
-    glm::vec2 textureSize(texture->getWidth(), texture->getHeight());
-    glm::vec2 normalizedSize = SingletonsManager::getInstance()->get<MultimediaManager>()->getNormalizedSize(textureSize);
+    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+    AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
 
-    GUIMeshData* plane = PrimitiveMeshFactory().createPlaneTopDown(normalizedSize);
-    this->mesh->meshData = UPTR<GUIMeshData>{ plane };
-    this->textureId = texture->getId();
+    Texture* texture = assetsManager->loadTexture(fileName.c_str(), ETextureMap::GUI);
+    glm::vec2 textureSize(texture->getWidth(), texture->getHeight());
+    glm::vec2 normalizedSize = singletonsManager->get<MultimediaManager>()->getNormalizedSize(textureSize);
+
+    this->meshData = assetsManager->loadGUIMeshData();
+    this->texture = texture;
     this->extent = normalizedSize;
 }
 
 void GUIImageComponent::load(const std::string& fileName, const glm::vec2& normalizedSize)
 {
-    Texture* texture = SingletonsManager::getInstance()->get<AssetsManager>()->loadTexture(fileName.c_str(), ETextureMap::GUI);
+    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+    AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
+
+    Texture* texture = assetsManager->loadTexture(fileName.c_str(), ETextureMap::GUI);
     glm::vec2 textureSize(texture->getWidth(), texture->getHeight());
 
-    GUIMeshData* plane = PrimitiveMeshFactory().createPlaneTopDown(normalizedSize);
-    this->mesh->meshData = UPTR<GUIMeshData>{ plane };
-    this->textureId = texture->getId();
+    this->meshData = assetsManager->loadGUIMeshData();
+    this->texture = texture;
     this->extent = normalizedSize;
 }
 
 void GUIImageComponent::loadFromAtlas(const std::string& fileName, const std::string& imageId)
 {
+    /*
+    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+
     Atlas* atlas = SingletonsManager::getInstance()->get<AtlasManager>()->getAtlas(fileName);
-
+    this->texture = atlas->getTexture();
     const AtlasItem* atlasItem = atlas->getItem(imageId);
-
-    GUIMeshData* plane = PrimitiveMeshFactory().createPlaneTopDown(atlasItem->normalizedSize, atlasItem->uv);
-    this->mesh->meshData = UPTR<GUIMeshData>{ plane };
-    this->textureId = atlas->getTextureId();
+    this->meshData = PrimitiveMeshFactory().createPlaneTopDown(atlasItem->normalizedSize, atlasItem->uv);
     this->extent = atlasItem->normalizedSize;
+    */
+}
+
+// XXX PAREI AQUI
+void GUIImageComponent::updateTransform()
+{
+    glm::vec3 realPosition = glm::vec3
+    (
+        ((this->uiPosition.x * 2) - (1 + (this->extent.x * this->pivot.x))),
+        -(this->uiPosition.y * 2) + 1,
+        0.0f
+    );
+
+	TransformComponent* transform = this->getTransform();
+    transform->setPosition(realPosition);
+	transform->setScale(glm::vec3(this->extent, 1.0f));
 }
 
 } // namespace

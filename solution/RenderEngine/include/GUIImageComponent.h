@@ -1,28 +1,29 @@
-#ifndef _GUI_IMAGE_COMPONENT_H_
-#define _GUI_IMAGE_COMPONENT_H_
+#pragma once
 
-#include "MeshComponent.h"
-#include <string>
+#include "AEntityComponent.h"
+#include "MeshData.h"
 
 namespace sre
 {
 
-class SRE_API GUIImageComponent : public MeshComponent
+class SRE_API GUIImageComponent : public AEntityComponent
 {
 DECLARE_COMPONENT()
+
+protected:
+    GUIMeshData* meshData{ nullptr };
+    uint32_t maxItems{ 0 }; // ###
 
 private:
     glm::vec2 uiPosition;
     glm::vec2 extent;
     glm::vec2 pivot;
-    uint32_t textureId;
-    bool isDynamic; // ###
-
-protected:
-    uint32_t maxItems; // ###
+    class Texture* texture{ nullptr };
+    bool isDynamic{ false }; // ###
 
 public:
     GUIImageComponent(Entity *entity);
+    virtual ~GUIImageComponent();
     void setMaxItems(uint32_t arg_maxItems);
 	void setUIPosition(const glm::vec2 &position);
     glm::vec2 getUIPosition();
@@ -31,10 +32,15 @@ public:
     void setPivot(const glm::vec2& pivot);
     inline bool getIsDynamic() { return this->isDynamic; }
 
+protected:
+    bool isAbleToBeRendered();
+	virtual void onPropertyChanged() override;
+
 private:
     void load(const std::string& fileName);
     void load(const std::string &fileName, const glm::vec2& normalizedSize);
     void loadFromAtlas(const std::string &fileName, const std::string &imageId);
+    void updateTransform();
 
 friend class Entity;
 friend class OpenGLAPI;
@@ -45,5 +51,3 @@ friend class RenderManager;
 };
 
 } // namespace
-
-#endif

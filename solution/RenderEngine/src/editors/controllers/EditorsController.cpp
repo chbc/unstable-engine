@@ -28,17 +28,23 @@ void EditorsController::saveScene()
 
 void EditorsController::createCube()
 {
-	this->createEntity("cube", "Cube.mesh");
+	this->createMeshEntity("cube", "Cube.mesh");
 }
 
 void EditorsController::createPlane()
 {
-	this->createEntity("plane", "Plane.mesh");
+	this->createMeshEntity("plane", "Plane.mesh");
 }
 
 void EditorsController::createSphere()
 {
-	this->createEntity("sphere", "Sphere.mesh");
+	this->createMeshEntity("sphere", "Sphere.mesh");
+}
+
+void EditorsController::createGUIImage()
+{
+	Entity* newEntity = this->scenesManager->createGUIImageEntity("whiteTexture.png");
+	this->notifyNewEntity(newEntity);
 }
 
 void EditorsController::refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result)
@@ -74,7 +80,7 @@ void EditorsController::saveEntity(Entity* entity)
 	EntityLoader().save(entity, fileName.c_str());
 }
 
-void EditorsController::createEntity(const char* name, const char* file)
+void EditorsController::createMeshEntity(const char* name, const char* file)
 {
 	Entity* newEntity = this->scenesManager->createMeshEntity(name, file);
 	this->notifyNewEntity(newEntity);

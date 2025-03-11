@@ -4,16 +4,12 @@
 #include "CameraComponent.h"
 #include "DirectionalLightComponent.h"
 #include "PointLightComponent.h"
-#include "PrimitiveMeshFactory.h"
 
 namespace sre
 {
 
 class Scene : public AScene
 {
-private:
-    class RenderManager* renderManager;
-
 private:
     Scene(std::string name);
 

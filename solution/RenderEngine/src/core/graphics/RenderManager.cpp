@@ -1,5 +1,4 @@
 #include "RenderManager.h"
-
 #include "Entity.h"
 #include "MeshComponent.h"
 #include "GUITextComponent.h"
@@ -11,7 +10,10 @@
 #include "PostProcessingComponent.h"
 #include "EngineValues.h"
 #include "AGraphicsWrapper.h"
-
+#include "MeshRenderer.h"
+#include "PostProcessingRenderer.h"
+#include "GUIRenderer.h"
+#include "ShadowRenderer.h"
 #include "CollectionsUtils.h"
 
 namespace sre
@@ -80,10 +82,10 @@ void RenderManager::addMesh(MeshComponent *mesh)
     }
 }
 
-void RenderManager::addMesh(VECTOR_UPTR<MeshRenderer>& renderers, MeshComponent* mesh)
+void RenderManager::addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent* mesh)
 {
     MeshRenderer* renderer = nullptr;
-    for (const UPTR<MeshRenderer>& item : renderers)
+    for (const SPTR<MeshRenderer>& item : renderers)
     {
         if (item->fitsWithMesh(mesh))
         {
@@ -120,18 +122,18 @@ void RenderManager::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 
 void RenderManager::initGUIRenderer()
 {
-    if (this->guiRenderer.get() == nullptr)
+    if (!this->guiRenderer)
     {
-        this->guiRenderer = UPTR<GUIRenderer>{ new GUIRenderer{this->shaderManager, this->graphicsWrapper} };
+        this->guiRenderer = SPTR<GUIRenderer>{ new GUIRenderer{this->shaderManager, this->graphicsWrapper} };
         this->guiRenderer->loadShader();
     }
 }
 
 void RenderManager::initShadowRenderer()
 {
-    if (this->shadowRenderer.get() == nullptr)
+    if (!this->shadowRenderer)
     {
-        this->shadowRenderer = UPTR<ShadowRenderer>{ new ShadowRenderer };
+        this->shadowRenderer = SPTR<ShadowRenderer>{ new ShadowRenderer };
         this->shadowRenderer->init();
     }
 }
@@ -145,7 +147,7 @@ void RenderManager::initPostProcessing()
     if (cameraEntity->hasComponent<PostProcessingComponent>())
     {
         PostProcessingComponent* postProcessingComponent = cameraEntity->getComponent<PostProcessingComponent>();
-        this->postProcessingRenderer = UPTR<PostProcessingRenderer>{ new PostProcessingRenderer };
+        this->postProcessingRenderer = SPTR<PostProcessingRenderer>{ new PostProcessingRenderer };
         this->postProcessingRenderer->onSceneLoaded(postProcessingComponent);
 
         useBrightnessSegmentation = this->postProcessingRenderer->isUsingBrightnessSegmentation();
@@ -193,10 +195,10 @@ void RenderManager::render()
     if (this->currentCamera != nullptr)
     {
         this->currentCamera->updateView();
-        for (const UPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
+        for (const SPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
             item->render();
 
-        for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
+        for (const SPTR<MeshRenderer>& item : this->translucentMeshRenderers)
             item->render();
     }
 
@@ -226,10 +228,10 @@ void RenderManager::setupBufferSubData(GUIMeshData* meshData)
 
 void RenderManager::removeDestroyedEntities()
 {
-    for (const UPTR<MeshRenderer> &item : this->opaqueMeshRenderers)
+    for (const SPTR<MeshRenderer> &item : this->opaqueMeshRenderers)
         item->removeDestroyedEntities();
 
-    for (const UPTR<MeshRenderer>& item : this->translucentMeshRenderers)
+    for (const SPTR<MeshRenderer>& item : this->translucentMeshRenderers)
         item->removeDestroyedEntities();
 
     CollectionsUtils::removeIfRendererIsEmpty(this->opaqueMeshRenderers);
@@ -252,7 +254,6 @@ void RenderManager::cleanUp()
 
     if (this->guiRenderer.get() != nullptr)
     {
-        this->guiRenderer->clean();
         this->guiRenderer.reset();
     }
 

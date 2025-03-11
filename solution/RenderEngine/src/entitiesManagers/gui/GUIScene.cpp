@@ -1,4 +1,5 @@
 #include "GUIScene.h"
+#include "RenderManager.h"
 
 namespace sre
 {
@@ -19,9 +20,10 @@ GUIScene::GUIScene() : AScene("guiScene")
 
 Entity *GUIScene::createGUIImageEntity(const std::string &fileName, const std::string& name)
 {
-    Entity *result = this->createEntity();
+    Entity *result = this->createEntity(name);
     GUIImageComponent *component = result->addComponent<GUIImageComponent>();
     component->load(fileName);
+    this->renderManager->addEntity(result);
     return result;
 }
 
@@ -41,7 +43,7 @@ Entity *GUIScene::createGUIImageEntityFromAtlas(const std::string &fileName, con
     return result;
 }
 
-Entity *GUIScene::createGUITextEntity(const std::string fontFile, uint32_t maxItems, const std::string& name)
+Entity *GUIScene::createGUITextEntity(const std::string fontFile, const std::string& name, uint32_t maxItems)
 {
     Entity *result = this->createEntity();
     GUITextComponent *component = result->addComponent<GUITextComponent>();

@@ -10,6 +10,7 @@ class AScene
 protected:
     std::unordered_map<std::string, UPTR<Entity>> entities;
     static uint32_t EntityIndex;
+    class RenderManager* renderManager;
 
 private:
     std::string name;
@@ -22,7 +23,6 @@ protected:
     AScene(std::string name);
     virtual ~AScene();
     Entity* createEntity(std::string name = "", Entity* parent = nullptr, const std::string& className = "Entity", const std::string& fileName = "");
-    Entity* spawnEntity(const char* fileName, const glm::vec3& position);
     void removeDestroyedEntities();
 
 private:

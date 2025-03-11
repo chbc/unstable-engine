@@ -24,11 +24,12 @@ public:
 	void createCube();
 	void createPlane();
 	void createSphere();
+	void createGUIImage();
 	void refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result);
 	void saveEntity(Entity* entity);
 
 private:
-	void createEntity(const char* name, const char* file);
+	void createMeshEntity(const char* name, const char* file);
 	void notifyNewEntity(Entity* entity);
 };
 

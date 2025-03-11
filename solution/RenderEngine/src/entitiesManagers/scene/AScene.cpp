@@ -3,13 +3,15 @@
 #include "SingletonsManager.h"
 #include "RenderManager.h"
 #include "AssetsManager.h"
-#include "FileUtils.h"
 
 namespace sre
 {
 uint32_t AScene::EntityIndex = 0;
 
-AScene::AScene(std::string arg_name) : name(arg_name), sceneLoaded(false) { }
+AScene::AScene(std::string arg_name) : name(arg_name), sceneLoaded(false)
+{
+    this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+}
 
 AScene::~AScene()
 {
@@ -54,18 +56,6 @@ Entity* AScene::createEntity(std::string name, Entity* parent, const std::string
     return result;
 }
 
-Entity* AScene::spawnEntity(const char* fileName, const glm::vec3& position)
-{
-    Entity* entity = this->createEntity("", nullptr, "", fileName);
-
-    RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
-    renderManager->addEntity(entity);
-
-    entity->getTransform()->setPosition(position);
-
-    return entity;
-}
-
 void AScene::removeDestroyedEntities()
 {
     CollectionsUtils::removeIfEntityIsDestroyed(this->entities);
@@ -89,8 +79,6 @@ void AScene::update(float elapsedTime)
 
 void AScene::onSceneLoaded()
 {
-    RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
-
     for (const auto& item : this->entities)
     {
         renderManager->addEntity(item.second.get());
