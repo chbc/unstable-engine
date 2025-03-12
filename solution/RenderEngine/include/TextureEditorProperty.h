@@ -20,6 +20,7 @@ private:
 
 public:
 	TextureEditorProperty(const char* title, Texture** arg_texture, ETextureMap::Type arg_textureMapType);
+	void setTextureId(void* arg_id);
 };
 
 } // namespace

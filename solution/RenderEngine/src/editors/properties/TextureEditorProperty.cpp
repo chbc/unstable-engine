@@ -13,6 +13,11 @@ TextureEditorProperty::TextureEditorProperty(const char* title, Texture** arg_te
 	: AEditorProperty(title), texture(arg_texture), textureMapType(arg_textureMapType), id(nullptr)
 { }
 
+void TextureEditorProperty::setTextureId(void* arg_id)
+{
+	this->id = arg_id;
+}
+
 void TextureEditorProperty::onDraw()
 {
 	ImGui::SetColumnWidth(0, 100.0f);
