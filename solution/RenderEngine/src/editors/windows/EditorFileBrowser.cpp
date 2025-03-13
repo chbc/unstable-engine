@@ -18,7 +18,7 @@ EditorFileBrowser::EditorFileBrowser(EditorsController* arg_controller)
 
 void EditorFileBrowser::onInit()
 {
-	this->controller->refreshFileIcons(Paths().CONTENT_BASE_FOLDER, this->fileIcons);
+	this->controller->refreshFileIcons(Paths().GAME_BASE_FOLDER, this->fileIcons);
 }
 
 void EditorFileBrowser::onEditorGUI()
@@ -26,7 +26,7 @@ void EditorFileBrowser::onEditorGUI()
 	ImGui::Begin("File Browser");
 	if (ImGui::Button("Content", ImVec2{ 64, 16 }))
 	{
-		this->controller->refreshFileIcons(Paths().CONTENT_BASE_FOLDER, this->fileIcons);
+		this->controller->refreshFileIcons(Paths().GAME_BASE_FOLDER, this->fileIcons);
 	}
 
 	ImGui::BeginTable("files", 10);

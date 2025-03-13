@@ -9,17 +9,14 @@ class Paths
 {
 public:
 #ifdef __ANDROID__
-	const char* CONTENT_SCENES_FOLDER = "content/game/es/scenes/";
-	const char* CONTENT_MEDIA_FOLDER = "content/game/es/media/";
+	const char* GAME_BASE_FOLDER = "content/game/es/";
 
 	const char* ENGINE_BASE_FOLDER = "content/engine/es/";
 	const char* ENGINE_SCENES_FOLDER = "content/engine/es/scenes/";
 	const char* ENGINE_MEDIA_FOLDER = "content/engine/es/media/";
 	const char* ENGINE_ICONS_FOLDER = "content/engine/es/icons/";
 #else
-	const char* CONTENT_BASE_FOLDER = "../content/game/";
-	const char* CONTENT_SCENES_FOLDER = "../content/game/scenes/";
-	const char* CONTENT_MEDIA_FOLDER = "../content/game/media/";
+	const char* GAME_BASE_FOLDER = "../content/game/";
 
 	const char* ENGINE_BASE_FOLDER = "../content/engine/";
 	const char* ENGINE_SCENES_FOLDER = "../content/engine/scenes/";
