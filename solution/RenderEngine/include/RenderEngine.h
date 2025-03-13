@@ -29,7 +29,7 @@ public:
     static RenderEngine* getInstance();
     void run();
     void quit();
-    void loadScene(std::string sceneName = "");
+    void loadScenes(std::string sceneName = "", std::string guiSceneName = "");
 
 protected:
     virtual void onInit() =0;

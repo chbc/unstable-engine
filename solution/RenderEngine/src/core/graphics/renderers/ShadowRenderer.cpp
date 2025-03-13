@@ -136,8 +136,7 @@ void ShadowRenderer::renderPointLightShadows()
         this->graphicsWrapper->bindFrameBuffer(light->shadowData->fbo);
         this->graphicsWrapper->clearDepthBuffer();
 
-        TransformComponent* transform;
-        const glm::vec3& lightPosition = transform->getPosition();
+        const glm::vec3& lightPosition = light->getTransform()->getPosition();
         this->updateShadowMatrices(lightPosition, light->getRange());
 
         for (unsigned int i = 0; i < 6; ++i)

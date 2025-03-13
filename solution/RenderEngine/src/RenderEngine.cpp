@@ -41,7 +41,8 @@ void RenderEngine::run()
         this->currentStrategy = this->editorStrategy.get();
 
         std::string startUpSceneName = DefaultGameValues::get<std::string>("STARTUP_SCENE");
-        this->currentStrategy->loadScene(startUpSceneName.c_str());
+        std::string startUpGuiSceneName = DefaultGameValues::get<std::string>("STARTUP_GUI_SCENE");
+        this->currentStrategy->loadScenes(startUpSceneName.c_str(), startUpGuiSceneName.c_str());
         this->currentStrategy->init(this);
 
         uint32_t elapsedTime = 0;
@@ -71,11 +72,11 @@ void RenderEngine::quit()
     this->running = false;
 }
 
-void RenderEngine::loadScene(std::string sceneName)
+void RenderEngine::loadScenes(std::string sceneName, std::string guiSceneName)
 {
     std::function<void(void)> action = [=]
     {
-        this->currentStrategy->loadScene(sceneName.c_str());
+        this->currentStrategy->loadScenes(sceneName.c_str(), guiSceneName.c_str());
         this->currentStrategy->init(this);
     };
     endFrameActions.emplace(action);
@@ -112,7 +113,7 @@ void RenderEngine::changeStrategy(const EExecutionMode::Type mode)
     };
     endFrameActions.emplace(action);
 
-    this->loadScene();
+    this->loadScenes();
 }
 
 void RenderEngine::release()

@@ -1,0 +1,13 @@
+entity_0:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,0,0]
+      Rotation: [0,0,0]
+      Scale: [0.125,0.16666667,1]
+    GUIImageComponent:
+      Enabled: 1
+      Texture:
+        TextureMapType: 0
+        File: whiteTexture.png

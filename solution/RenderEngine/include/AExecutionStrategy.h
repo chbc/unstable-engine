@@ -38,7 +38,7 @@ protected:
 	virtual void release() { }
 
 private:
-	void loadScene(const char* sceneName = "");
+	void loadScenes(const char* sceneName, const char* guiSceneName = "");
 	void onEntityDestroyed(void* data);
 
 friend class RenderEngine;

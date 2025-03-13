@@ -26,6 +26,9 @@ void TextureEditorProperty::onDraw()
 
 void TextureEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
 {
+	propertyNode |= ryml::MAP;
+	propertyNode["TextureMapType"] << static_cast<int>(this->textureMapType);
+	propertyNode["File"] << (*this->texture)->getFileName();
 }
 
 void TextureEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)

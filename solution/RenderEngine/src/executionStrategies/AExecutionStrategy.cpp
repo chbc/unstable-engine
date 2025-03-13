@@ -71,29 +71,16 @@ void AExecutionStrategy::delay(RenderEngine* controller)
     this->multimediaManager->delay();
 }
 
-void AExecutionStrategy::loadScene(const char* sceneName)
+void AExecutionStrategy::loadScenes(const char* sceneName, const char* guiSceneName)
 {
-    std::string currentSceneName = this->scenesManager->getMainSceneName();
-    std::string resultSceneName{ sceneName };
-    if (resultSceneName.empty())
-    {
-        resultSceneName = currentSceneName;
-    }
-
-    if (resultSceneName.empty())
-    {
-        Log::LogWarning("Scene name is empty!");
-        return;
-    }
-
     this->multimediaManager->cleanUp();
     this->renderManager->cleanUp();
     this->scenesManager->cleanUp();
 
-    this->scenesManager->loadScene(resultSceneName.c_str());
+    this->scenesManager->loadScene(sceneName);
+	this->scenesManager->loadGuiScene(guiSceneName);
 
     this->renderManager->initPostProcessing();
-    //
 }
 
 void AExecutionStrategy::onEntityDestroyed(void* data)

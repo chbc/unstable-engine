@@ -13,6 +13,7 @@ DECLARE_COMPONENT()
 protected:
     GUIMeshData* meshData{ nullptr };
     uint32_t maxItems{ 0 }; // ###
+	class TextureEditorProperty* textureEditorProperty{ nullptr };
 
 private:
     class Texture* texture{ nullptr };
@@ -27,7 +28,7 @@ public:
 
 protected:
     bool isAbleToBeRendered();
-	class TextureEditorProperty* textureEditorProperty{ nullptr };
+    virtual void onPropertyDeserialized() override;
 
 private:
     void load(const std::string& fileName);

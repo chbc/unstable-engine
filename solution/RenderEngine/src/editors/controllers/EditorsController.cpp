@@ -18,7 +18,7 @@ EditorsController::EditorsController(ScenesManager* arg_scenesManager)
 
 void EditorsController::loadScene()
 {
-	RenderEngine::getInstance()->loadScene("default");
+	RenderEngine::getInstance()->loadScenes("Default", "DefaultGui");
 }
 
 void EditorsController::saveScene()
@@ -60,7 +60,7 @@ void EditorsController::refreshFileIcons(std::string directoryPath, std::vector<
 	{
 		std::string& icon = iconPaths[i];
 		std::string& path = filePaths[i];
-		Texture* texture = assetsManager->loadTexture(icon.c_str(), ETextureMap::GUI);
+		Texture* texture = assetsManager->loadIcon(icon.c_str());
 		void* textureId = reinterpret_cast<void*>(texture->getId());
 
 		FileIcon* fileIcon = new FileIcon{path, textureId};

@@ -46,6 +46,14 @@ bool GUIImageComponent::isAbleToBeRendered()
     );
 }
 
+void GUIImageComponent::onPropertyDeserialized()
+{
+	AEntityComponent::onPropertyDeserialized();
+
+    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+	this->meshData = assetsManager->loadGUIMeshData();
+}
+
 void GUIImageComponent::load(const std::string& fileName)
 {
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
@@ -65,9 +73,7 @@ void GUIImageComponent::load(const std::string& fileName, const glm::vec2& norma
 {
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
     AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
-
     Texture* texture = assetsManager->loadTexture(fileName.c_str(), ETextureMap::GUI);
-    glm::vec2 textureSize(texture->getWidth(), texture->getHeight());
 
     this->meshData = assetsManager->loadGUIMeshData();
     this->texture = texture;

@@ -49,6 +49,7 @@ protected:
         return ComponentType;
     }
 
+	virtual void onPropertySerialized() {}
     virtual void onPropertyDeserialized() {}
     virtual void onPropertyChanged() {}
     void addEditorProperty(AEditorProperty* editorProperty);

@@ -6,17 +6,6 @@
 namespace sre
 {
 
-void ScenesManager::init()
-{
-    this->guiScene = UPTR<GUIScene>(new GUIScene{});
-}
-
-Scene* ScenesManager::createScene(const std::string& name)
-{
-    this->scene.reset(new Scene{ name });
-    return this->scene.get();
-}
-
 std::string ScenesManager::getMainSceneName()
 {
     std::string result = (this->scene != nullptr) ? this->scene->name : "";
@@ -80,10 +69,21 @@ Entity* ScenesManager::createGUITextEntity(const std::string fontFile, const std
 
 void ScenesManager::loadScene(const char* sceneName)
 {
-    Scene* scene = this->createScene(sceneName);
-    SceneLoader::load(scene, sceneName);
-
+    this->scene.reset(new Scene{ sceneName });
+    SceneLoader::load(this->scene.get(), sceneName);
     this->scene->onSceneLoaded();
+}
+
+void ScenesManager::loadGuiScene(const char* sceneName)
+{
+	std::string resultSceneName{ sceneName };
+    if (resultSceneName.empty())
+    {
+        resultSceneName = this->guiScene->name;
+    }
+
+    this->guiScene.reset(new GUIScene{ resultSceneName });
+    SceneLoader::load(this->guiScene.get(), resultSceneName.c_str());
     this->guiScene->onSceneLoaded();
 }
 
@@ -119,7 +119,7 @@ void ScenesManager::removeDestroyedEntities()
 void ScenesManager::cleanUp()
 {
     this->scene.reset();
-    this->guiScene.reset(new GUIScene);
+    this->guiScene.reset();
 }
 
 void ScenesManager::preRelease()

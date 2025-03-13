@@ -52,7 +52,7 @@ Mesh* MeshLoader::internalLoad(const char* fileName)
 	readStream.close();
 
 	TMesh* meshData = new TMesh{ vertexData, indices };
-	Mesh* result = new Mesh{ meshData, filePath.c_str()};
+	Mesh* result = new Mesh{ meshData, fileName };
 	return result;
 }
 

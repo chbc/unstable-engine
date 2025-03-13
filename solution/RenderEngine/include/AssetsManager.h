@@ -37,14 +37,15 @@ private:
 	TexturesMapType texturesMap;
 
 public:
-	Entity* loadEntity(const char* file, std::string name);
+	Entity* loadEntity(const char* fileName, std::string name);
 	void releaseEntity(Entity* entity);
-	Mesh* loadMesh(const char* file);
+	Mesh* loadMesh(const char* fileName);
 	GUIMeshData* loadGUIMeshData();
 	void releaseMesh(Mesh* mesh);
-	Material* loadMaterial(const char* file);
+	Material* loadMaterial(const char* fileName);
 	void releaseMaterial(Material* material);
-	Texture* loadTexture(const char* file, ETextureMap::Type mapType);
+	Texture* loadTexture(const char* fileName, ETextureMap::Type mapType);
+	Texture* loadIcon(const char* fileName);
 	void releaseTexture(Texture* texture);
 
 protected:
@@ -52,11 +53,11 @@ protected:
 
 private:
 	template <typename TCollection, typename TLoader, typename TItem, typename... TArgs>
-	TItem* loadAsset(TCollection& collection, const char* file, TArgs&&... parameters)
+	TItem* loadAsset(TCollection& collection, const char* fileName, TArgs&&... parameters)
 	{
 		TItem* result = nullptr;
 
-		size_t key = generateKey(file);
+		size_t key = generateKey(fileName);
 		if (collection.count(key) > 0)
 		{
 			auto& itemPair = collection[key];
@@ -65,7 +66,7 @@ private:
 		}
 		else
 		{
-			result = TLoader().load(file, std::forward<TArgs>(parameters)...);
+			result = TLoader().load(fileName, std::forward<TArgs>(parameters)...);
 			collection.emplace(key, std::make_pair<size_t, SPTR<TItem>>(1, SPTR<TItem>{result}));
 		}
 

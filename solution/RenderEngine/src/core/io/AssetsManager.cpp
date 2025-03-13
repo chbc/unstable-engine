@@ -9,9 +9,9 @@
 namespace sre
 {
 
-Entity* AssetsManager::loadEntity(const char* file, std::string name)
+Entity* AssetsManager::loadEntity(const char* fileName, std::string name)
 {
-	Entity* prototype = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, file, name);
+	Entity* prototype = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, fileName, name);
 	Entity* result = prototype->clone();
 	result->name = name;
 
@@ -23,9 +23,9 @@ void AssetsManager::releaseEntity(Entity* entity)
 	this->releaseAsset(this->entitiesMap, entity);
 }
 
-Mesh* AssetsManager::loadMesh(const char* file)
+Mesh* AssetsManager::loadMesh(const char* fileName)
 {
-	Mesh* result = this->loadAsset<MeshesMapType, MeshLoader, Mesh>(this->meshesMap, file);
+	Mesh* result = this->loadAsset<MeshesMapType, MeshLoader, Mesh>(this->meshesMap, fileName);
 	return result;
 }
 
@@ -41,9 +41,9 @@ void AssetsManager::releaseMesh(Mesh* mesh)
 	this->releaseAsset(this->meshesMap, mesh, releaseCallback);
 }
 
-Material* AssetsManager::loadMaterial(const char* file)
+Material* AssetsManager::loadMaterial(const char* fileName)
 {
-	Material* result = this->loadAsset<MaterialsMapType, MaterialLoader, Material>(this->materialsMap, file);
+	Material* result = this->loadAsset<MaterialsMapType, MaterialLoader, Material>(this->materialsMap, fileName);
 	return result;
 }
 
@@ -52,9 +52,15 @@ void AssetsManager::releaseMaterial(Material* material)
 	this->releaseAsset(this->materialsMap, material);
 }
 
-Texture* AssetsManager::loadTexture(const char* file, ETextureMap::Type mapType)
+Texture* AssetsManager::loadTexture(const char* fileName, ETextureMap::Type mapType)
 {
-	Texture* result = this->loadAsset<TexturesMapType, TextureLoader, Texture>(this->texturesMap, file, mapType);
+	Texture* result = this->loadAsset<TexturesMapType, TextureLoader, Texture>(this->texturesMap, fileName, mapType);
+	return result;
+}
+
+Texture* AssetsManager::loadIcon(const char* fileName)
+{
+	Texture* result = this->loadAsset<TexturesMapType, IconLoader, Texture>(this->texturesMap, fileName, ETextureMap::GUI);
 	return result;
 }
 

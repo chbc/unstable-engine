@@ -45,6 +45,7 @@ public:
     SRE_API glm::vec2 getUVTiling();
 
 protected:
+	virtual void onPropertySerialized() {}
     virtual void onPropertyDeserialized() {}
     virtual void onPropertyChanged() {}
     void addEditorProperty(AEditorProperty* editorProperty);
