@@ -11,13 +11,15 @@ namespace sre
 
 RenderEngine* RenderEngine::instance = nullptr;
 
-RenderEngine::RenderEngine(const std::string& applicationName, int screenWidth, int screenHeight)
+RenderEngine::RenderEngine()
     : running(true)
 {
+	if (instance != nullptr)
+	{
+		throw "[RenderEngine] instance already exists!";
+	}
+
     instance = this;
-    EngineValues::APPLICATION_NAME = applicationName;
-    EngineValues::SCREEN_WIDTH = screenWidth;
-    EngineValues::SCREEN_HEIGHT = screenHeight;
 }
 
 RenderEngine* RenderEngine::getInstance()
@@ -90,6 +92,11 @@ void RenderEngine::onError(const std::string& message)
 void RenderEngine::loadSystems()
 {
     DefaultGameValues::load();
+
+    EngineValues::APPLICATION_NAME = DefaultGameValues::get<std::string>("APPLICATION_NAME");
+    EngineValues::SCREEN_WIDTH = DefaultGameValues::get<int>("SCREEN_WIDTH");
+    EngineValues::SCREEN_HEIGHT = DefaultGameValues::get<int>("SCREEN_HEIGHT");
+
     SingletonsManager* singletonsManager = SingletonsManager::loadInstance();
     singletonsManager->init();
 }

@@ -77,8 +77,7 @@ void CameraComponent::onPropertyDeserialized()
     AEntityComponent::onPropertyDeserialized();
     if (this->isPerspective)
     {
-        float aspectRatio = EngineValues::SCREEN_WIDTH / static_cast<float>(EngineValues::SCREEN_HEIGHT);
-        this->setPerspectiveProjection(this->fov, aspectRatio, 0.1f, 1000.0f);
+        this->setPerspectiveProjection(this->fov, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
     }
     else
     {

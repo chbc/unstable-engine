@@ -15,7 +15,7 @@ Entity* Scene::createPerspectiveCamera(float fov, float near, float far, Entity*
 {
     Entity* mainCamera = this->createEntity("_main_camera", parent);
     CameraComponent* cameraComponent = mainCamera->addComponent<CameraComponent>();
-    cameraComponent->setPerspectiveProjection(fov, EngineValues::SCREEN_WIDTH / EngineValues::SCREEN_HEIGHT, near, far);
+    cameraComponent->setPerspectiveProjection(fov, EngineValues::ASPECT_RATIO, near, far);
 
     return mainCamera;
 }

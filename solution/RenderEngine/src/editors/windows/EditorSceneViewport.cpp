@@ -49,13 +49,12 @@ void EditorSceneViewport::onInit()
 		this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 
 		this->flyingCamera = UPTR<Entity>(new Entity{"_editor_flying_camera"});
-		float aspectRatio = static_cast<float>(EngineValues::SCREEN_WIDTH) / static_cast<float>(EngineValues::SCREEN_HEIGHT);
 		CameraComponent* flyingComponent = this->flyingCamera->addComponent<FlyingCameraComponent>();
-		flyingComponent->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
+		flyingComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
 
 		this->orbitCamera = SPTR<Entity>(new Entity{ "_editor_orbit_camera" });
 		CameraComponent* orbitComponent = this->orbitCamera->addComponent<OrbitCameraComponent>();
-		orbitComponent->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
+		orbitComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
 		
 		this->flyingCamera->getTransform()->setPosition({ 0.0f, 5.0f, -10.0f });
 

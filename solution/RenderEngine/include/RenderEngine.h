@@ -14,16 +14,16 @@ namespace sre
 class SRE_API RenderEngine
 {
 private:
-    bool running;
+    bool running{ true };
     UPTR<AExecutionStrategy> applicationStrategy;
     UPTR<AExecutionStrategy> editorStrategy;
-    AExecutionStrategy* currentStrategy;
+    AExecutionStrategy* currentStrategy{ nullptr };
     std::queue<std::function<void(void)>> endFrameActions;
 
     static RenderEngine* instance;
 
 public:
-    RenderEngine(const std::string& applicationName = "Unstable Engine", int screenWidth = 1500, int screenHeight = 768);
+    RenderEngine();
 
 public:
     static RenderEngine* getInstance();
