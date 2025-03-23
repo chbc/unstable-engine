@@ -37,15 +37,14 @@ private:
 	TexturesMapType texturesMap;
 
 public:
-	Entity* loadEntity(const char* fileName, std::string name);
+	Entity* loadEntity(const char* filePath, std::string name);
 	void releaseEntity(Entity* entity);
-	Mesh* loadMesh(const char* fileName);
+	Mesh* loadMesh(const char* filePath);
 	GUIMeshData* loadGUIMeshData();
 	void releaseMesh(Mesh* mesh);
-	Material* loadMaterial(const char* fileName);
+	Material* loadMaterial(const char* filePath);
 	void releaseMaterial(Material* material);
-	Texture* loadTexture(const char* fileName, ETextureMap::Type mapType);
-	Texture* loadIcon(const char* fileName);
+	Texture* loadTexture(const char* filePath, ETextureMap::Type mapType);
 	void releaseTexture(Texture* texture);
 
 protected:
@@ -53,11 +52,11 @@ protected:
 
 private:
 	template <typename TCollection, typename TLoader, typename TItem, typename... TArgs>
-	TItem* loadAsset(TCollection& collection, const char* fileName, TArgs&&... parameters)
+	TItem* loadAsset(TCollection& collection, const char* filePath, TArgs&&... parameters)
 	{
 		TItem* result = nullptr;
 
-		size_t key = generateKey(fileName);
+		size_t key = generateKey(filePath);
 		if (collection.count(key) > 0)
 		{
 			auto& itemPair = collection[key];
@@ -66,7 +65,7 @@ private:
 		}
 		else
 		{
-			result = TLoader().load(fileName, std::forward<TArgs>(parameters)...);
+			result = TLoader().load(filePath, std::forward<TArgs>(parameters)...);
 			collection.emplace(key, std::make_pair<size_t, SPTR<TItem>>(1, SPTR<TItem>{result}));
 		}
 
@@ -76,12 +75,12 @@ private:
 	template <typename TCollection, typename TItem>
 	void releaseAsset(TCollection& collection, TItem* item, std::function<void(TItem*)> releaseCallback = nullptr)
 	{
-		if (collection.empty() || item->fileName.empty())
+		if (collection.empty() || item->filePath.empty())
 		{
 			return;
 		}
 
-		size_t key = this->generateKey(item->fileName.c_str());
+		size_t key = this->generateKey(item->filePath.c_str());
 		if (collection.count(key) > 0)
 		{
 			auto& meshPair = collection[key];

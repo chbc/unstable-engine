@@ -4,6 +4,7 @@
 #include "SingletonsManager.h"
 #include "MessagesManager.h"
 #include "EditorMessages.h"
+#include "MultimediaManager.h"
 #include "FileUtils.h"
 #include "AssetsManager.h"
 #include "Texture.h"
@@ -16,14 +17,28 @@ EditorsController::EditorsController(ScenesManager* arg_scenesManager)
 	: scenesManager(arg_scenesManager)
 { }
 
-void EditorsController::loadScene()
+void EditorsController::openScene()
 {
-	RenderEngine::getInstance()->loadScenes("Default", "DefaultGui");
+	std::string resultFileName;
+	MultimediaManager::openFileDialog("Open Scene", "Scene Files (*.scene)\0*.scene\0", resultFileName);
+
+	if (!resultFileName.empty())
+	{
+		RenderEngine::getInstance()->loadScenes(resultFileName, "DefaultGui");
+	}
+}
+
+void EditorsController::openGui()
+{
 }
 
 void EditorsController::saveScene()
 {
 	this->scenesManager->saveScenes();
+}
+
+void EditorsController::saveGui()
+{
 }
 
 void EditorsController::createCube()
@@ -52,7 +67,7 @@ void EditorsController::refreshFileIcons(std::string directoryPath, std::vector<
 	result.clear();
 	std::vector<std::string> iconPaths;
 	std::vector<std::string> filePaths;
-	FileUtils::getFilePaths(directoryPath, iconPaths, filePaths);
+	FileUtils::getFileAndIconPaths(directoryPath, iconPaths, filePaths);
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 
@@ -60,7 +75,7 @@ void EditorsController::refreshFileIcons(std::string directoryPath, std::vector<
 	{
 		std::string& icon = iconPaths[i];
 		std::string& path = filePaths[i];
-		Texture* texture = assetsManager->loadIcon(icon.c_str());
+		Texture* texture = assetsManager->loadTexture(icon.c_str(), ETextureMap::GUI);
 		void* textureId = reinterpret_cast<void*>(texture->getId());
 
 		FileIcon* fileIcon = new FileIcon{path, textureId};
@@ -70,14 +85,14 @@ void EditorsController::refreshFileIcons(std::string directoryPath, std::vector<
 
 void EditorsController::saveEntity(Entity* entity)
 {
-	std::string fileName{ entity->fileName };
-	if (fileName.empty())
+	std::string filePath{ entity->filePath };
+	if (filePath.empty())
 	{
-		fileName = entity->getName();
-		entity->fileName = fileName;
+		filePath = entity->getName();
+		entity->filePath = filePath;
 	}
 
-	EntityLoader().save(entity, fileName.c_str());
+	EntityLoader().save(entity, filePath.c_str());
 }
 
 void EditorsController::createMeshEntity(const char* name, const char* file)

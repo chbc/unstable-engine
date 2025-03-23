@@ -484,7 +484,6 @@
     <ClCompile Include="src\utils\FileUtils.cpp" />
     <ClCompile Include="src\utils\math\MathUtils.cpp" />
     <ClCompile Include="src\utils\math\Rect.cpp" />
-    <ClCompile Include="src\utils\Paths.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_demo.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_draw.cpp" />
@@ -569,7 +568,6 @@
     <ClInclude Include="include\EntityLoader.h" />
     <ClInclude Include="include\EntityTypes.h" />
     <ClInclude Include="include\FileIcon.h" />
-    <ClInclude Include="include\Paths.h" />
     <ClInclude Include="include\BoolEditorProperty.h" />
     <ClInclude Include="include\ComponentParser.h" />
     <ClInclude Include="include\EditorFileBrowser.h" />

@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "GUIScene.h"
 #include "SceneLoader.h"
+#include "FileUtils.h"
 
 namespace sre
 {
@@ -67,23 +68,19 @@ Entity* ScenesManager::createGUITextEntity(const std::string fontFile, const std
     return this->guiScene->createGUITextEntity(fontFile, name, maxItems);
 }
 
-void ScenesManager::loadScene(const char* sceneName)
+void ScenesManager::loadScene(const char* scenePath)
 {
+	std::string sceneName = FileUtils::getFileName(scenePath);
     this->scene.reset(new Scene{ sceneName });
-    SceneLoader::load(this->scene.get(), sceneName);
+    SceneLoader::load(this->scene.get(), scenePath);
     this->scene->onSceneLoaded();
 }
 
-void ScenesManager::loadGuiScene(const char* sceneName)
+void ScenesManager::loadGuiScene(const char* scenePath)
 {
-	std::string resultSceneName{ sceneName };
-    if (resultSceneName.empty())
-    {
-        resultSceneName = this->guiScene->name;
-    }
-
-    this->guiScene.reset(new GUIScene{ resultSceneName });
-    SceneLoader::load(this->guiScene.get(), resultSceneName.c_str());
+    std::string sceneName = FileUtils::getFileName(scenePath);
+    this->guiScene.reset(new GUIScene{ sceneName });
+    SceneLoader::load(this->guiScene.get(), scenePath);
     this->guiScene->onSceneLoaded();
 }
 

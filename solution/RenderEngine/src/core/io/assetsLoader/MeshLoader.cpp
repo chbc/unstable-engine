@@ -1,5 +1,4 @@
 #include "MeshLoader.h"
-#include "Paths.h"
 #include "SingletonsManager.h"
 #include "AGraphicsWrapper.h"
 
@@ -8,9 +7,9 @@
 namespace sre
 {
 
-Mesh* MeshLoader::load(const char* fileName)
+Mesh* MeshLoader::load(const char* filePath)
 {
-	return internalLoad<MeshData, VertexData>(fileName);
+	return internalLoad<MeshData, VertexData>(filePath);
 }
 
 void MeshLoader::release(Mesh* mesh)
@@ -20,12 +19,10 @@ void MeshLoader::release(Mesh* mesh)
 }
 
 template <typename TMesh, typename TVertex>
-Mesh* MeshLoader::internalLoad(const char* fileName)
+Mesh* MeshLoader::internalLoad(const char* filePath)
 {
 	std::vector<TVertex> vertexData;
 	std::vector<uint32_t> indices;
-	std::string filePath;
-	Paths().buildMediaFilePath(fileName, filePath);
 	std::ifstream readStream(filePath, std::ios::out | std::ios::binary);
 	if (readStream)
 	{
@@ -52,13 +49,13 @@ Mesh* MeshLoader::internalLoad(const char* fileName)
 	readStream.close();
 
 	TMesh* meshData = new TMesh{ vertexData, indices };
-	Mesh* result = new Mesh{ meshData, fileName };
+	Mesh* result = new Mesh{ meshData, filePath };
 	return result;
 }
 
-Mesh* GIUMeshLoader::load(const char* fileName)
+Mesh* GIUMeshLoader::load(const char* filePath)
 {
-	return internalLoad<GUIMeshData, GUIVertexData>(fileName);
+	return internalLoad<GUIMeshData, GUIVertexData>(filePath);
 }
 
 } // namespace

@@ -248,14 +248,14 @@ bool Entity::isChildrenStored() const
 
 bool Entity::isAsset() const
 {
-	return !this->fileName.empty();
+	return !this->filePath.empty();
 }
 
 Entity* Entity::clone()
 {
 	Entity* result = Create(this->name, this->getClassName());
 	result->name = this->name;
-	result->fileName = this->fileName;
+	result->filePath = this->filePath;
 
 	for (int i = 0; i < this->editorProperties.size(); ++i)
 	{

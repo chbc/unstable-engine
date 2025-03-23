@@ -37,6 +37,7 @@ private:
 	void processInput(const std::vector<GUIButtonComponent*>& guiButtons, SDL_Event& currentEvent);
 	bool checkButtonPress(const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
 	std::string getError();
+	static void openFileDialog(const std::string& title, const char* filter, std::string& outFileName);
 	static void showMessageBox(const std::string& title, const std::string& message);
 	static void showErrorMessageBox(const std::string& title, const std::string& message);
 

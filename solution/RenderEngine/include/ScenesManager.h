@@ -33,8 +33,8 @@ public:
     SRE_API Entity* createGUITextEntity(const std::string fontFile, const std::string& name = "", uint32_t maxItems = 100u);
 
 private:
-    void loadScene(const char* sceneName);
-    void loadGuiScene(const char* sceneName);
+    void loadScene(const char* scenePath);
+    void loadGuiScene(const char* scenePath);
     void saveScenes();
     void initEntities();
     void update(float elapsedTime);

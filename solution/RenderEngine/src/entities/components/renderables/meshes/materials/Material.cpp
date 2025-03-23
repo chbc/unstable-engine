@@ -7,7 +7,7 @@
 namespace sre
 {
 
-Material::Material(std::string arg_fileName) : fileName(arg_fileName), castShadow(false), uvOffset(glm::vec2(0.0f)), uvTiling(glm::vec2(1.0f))
+Material::Material(std::string arg_filePath) : filePath(arg_filePath), castShadow(false), uvOffset(glm::vec2(0.0f)), uvTiling(glm::vec2(1.0f))
 {
     this->addEditorProperty(new BoolEditorProperty{ "Cast Shadow", &this->castShadow });
     this->addEditorProperty(new Vec2EditorProperty{ "UV Offset", &this->uvOffset });

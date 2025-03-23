@@ -35,6 +35,7 @@ public:
 	void logWarning(const std::string& message) const;
 	static void showMessageBox(const std::string& title, const std::string& message);
 	static void showErrorMessageBox(const std::string& title, const std::string& message);
+	static void openFileDialog(const std::string& title, const char* filter, std::string& outFileName);
 
 private:
 	void swapBuffers();

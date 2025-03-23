@@ -3,13 +3,13 @@
 #include "Material.h"
 #include "AMaterialComponent.h"
 #include "ColorMaterialComponent.h"
-#include "Paths.h"
+
 #include <rapidyaml/rapidyaml.hpp>
 
 namespace sre
 {
 
-void MaterialLoader::save(Material* material, const char* name)
+void MaterialLoader::save(Material* material, const char* filePath)
 {
 	c4::yml::Tree tree;
 	c4::yml::NodeRef root = tree.rootref();
@@ -30,22 +30,18 @@ void MaterialLoader::save(Material* material, const char* name)
 		serializeComponent(itemtNode, component);
 	}
 
-	std::string filePath;
-	Paths().buildMediaFilePath(name, filePath, false);
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
 	FileUtils::saveFile(filePath, content);
 }
 
-Material* sre::MaterialLoader::load(const char* fileName)
+Material* sre::MaterialLoader::load(const char* filePath)
 {
 	std::string fileContent;
-	std::string filePath;
-	Paths().buildMediaFilePath(fileName, filePath);
 	FileUtils::loadFile(filePath, fileContent);
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
 	c4::yml::ConstNodeRef root = tree.crootref();
 
-	Material* result = new Material{ fileName };
+	Material* result = new Material{ filePath };
 	for (auto& property : result->editorProperties)
 	{
 		c4::yml::ConstNodeRef& propertyNode = root[property->title.c_str()];

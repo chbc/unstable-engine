@@ -10,13 +10,13 @@ void AtlasManager::release()
     this->atlases.clear();
 }
 
-Atlas* AtlasManager::getAtlas(const std::string &fileName)
+Atlas* AtlasManager::getAtlas(const std::string &filePath)
 {
-	Atlas *result = this->atlases[fileName].get();
+	Atlas *result = this->atlases[filePath].get();
 
 	if (result == nullptr)
 	{
-		result = loadAtlas(fileName);
+		result = loadAtlas(filePath);
 	}
 
 	return result;
@@ -36,13 +36,13 @@ Atlas* AtlasManager::loadAtlas(const std::string &baseFileName)
 	return result;
 }
 
-FontAtlas* AtlasManager::getFont(const std::string &fileName)
+FontAtlas* AtlasManager::getFont(const std::string &filePath)
 {
-	FontAtlas *result = static_cast<FontAtlas *>(this->atlases[fileName].get());
+	FontAtlas *result = static_cast<FontAtlas *>(this->atlases[filePath].get());
 
 	if (result == nullptr)
 	{
-		result = this->loadFont(fileName);
+		result = this->loadFont(filePath);
 	}
 
 	return result;
@@ -65,8 +65,8 @@ FontAtlas* AtlasManager::loadFont(const std::string &baseFileName)
 Texture* AtlasManager::loadTexture(const std::string& baseFileName)
 {
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-	std::string fileName = baseFileName + ".png";
-	return assetsManager->loadTexture(fileName.c_str(), ETextureMap::GUI);
+	std::string filePath = baseFileName + ".png";
+	return assetsManager->loadTexture(filePath.c_str(), ETextureMap::GUI);
 }
 
 } // namespace

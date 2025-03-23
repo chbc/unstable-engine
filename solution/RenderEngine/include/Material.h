@@ -17,7 +17,7 @@ class AMaterialComponent;
 class Material
 {
 private:
-    std::string fileName{ "DefaultMaterial" };
+    std::string filePath{ "DefaultMaterial" };
     std::unordered_map<size_t, SPTR<AMaterialComponent>> componentsMap;
     std::bitset<EComponentId::SIZE> componentsBitset;
     std::vector<SPTR<AEditorProperty>> editorProperties;

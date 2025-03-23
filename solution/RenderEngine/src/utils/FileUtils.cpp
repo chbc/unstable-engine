@@ -1,5 +1,4 @@
 #include "FileUtils.h"
-#include "Paths.h"
 
 #include <fstream>
 #include <filesystem>
@@ -17,9 +16,9 @@ namespace FileUtils
 {
 
 #ifdef __ANDROID__
-void loadFile(const std::string& fileName, std::string& dest)
+void loadFile(const std::string& filePath, std::string& dest)
 {
-	SDL_RWops* file = SDL_RWFromFile(fileName.c_str(), "rb");
+	SDL_RWops* file = SDL_RWFromFile(filePath.c_str(), "rb");
 	if (file != nullptr)
 	{
 		Sint64 size = SDL_RWsize(file);
@@ -51,13 +50,13 @@ void loadFile(const std::string& fileName, std::string& dest)
 	}
 }
 #else
-void loadFile(const std::string& fileName, std::string& dest)
+void loadFile(const std::string& filePath, std::string& dest)
 {
-	std::ifstream in{ fileName };
+	std::ifstream in{ filePath };
 
 	if (!in.is_open())
 	{
-		throw "[FileUtils] - Error: " + fileName + " can't be found!";
+		throw "[FileUtils] - Error: " + filePath + " can't be found!";
 	}
 
 	char temp[300];
@@ -69,13 +68,13 @@ void loadFile(const std::string& fileName, std::string& dest)
 	}
 }
 
-void loadFile(const std::string& fileName, std::vector<std::string>& lines)
+void loadFile(const std::string& filePath, std::vector<std::string>& lines)
 {
-	std::ifstream in(fileName.c_str());
+	std::ifstream in(filePath.c_str());
 
 	if (!in.is_open())
 	{
-		throw "[FileUtils] - Error: " + fileName + " can't be found!";
+		throw "[FileUtils] - Error: " + filePath + " can't be found!";
 	}
 
 	char temp[300];
@@ -86,21 +85,22 @@ void loadFile(const std::string& fileName, std::vector<std::string>& lines)
 	}
 }
 
-void saveFile(const std::string& fileName, const std::string& content)
+void saveFile(const std::string& filePath, const std::string& content)
 {
-	std::ofstream out{ fileName };
+	std::ofstream out{ filePath };
 
 	if (!out.is_open())
 	{
-		throw "[FileUtils] - Error: " + fileName + " can't be found!";
+		throw "[FileUtils] - Error: " + filePath + " can't be found!";
 	}
 
 	out << content;
 }
 
-void getFilePaths(std::string directoryPath, std::vector<std::string>& iconPaths, std::vector<std::string>& filePaths)
+void getFileAndIconPaths(std::string directoryPath, std::vector<std::string>& iconPaths, std::vector<std::string>& filePaths)
 {
-	Paths paths;
+	const char* ICONS_FOLDER = "../content/engine/icons/";
+
 	for (const auto& item : std::filesystem::directory_iterator(directoryPath))
 	{
 		std::string iconName;
@@ -135,7 +135,7 @@ void getFilePaths(std::string directoryPath, std::vector<std::string>& iconPaths
 
 		if (hasIcon)
 		{
-			paths.buildIconFilePath(iconName.c_str(), iconPath);
+			iconPath = ICONS_FOLDER + iconName + ".png";
 		}
 
 		iconPaths.emplace_back(iconPath);
@@ -148,6 +148,7 @@ std::string getFileName(const std::string& filePath)
 	FS::path systemPath{ filePath };
 	return systemPath.stem().string();
 }
+
 bool fileExists(const std::string& filePath)
 {
 	FS::path systemPath{ filePath };

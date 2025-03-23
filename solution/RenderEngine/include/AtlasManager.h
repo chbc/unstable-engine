@@ -20,9 +20,9 @@ protected:
     void release() override;
 
 private:
-	Atlas* getAtlas(const std::string &fileName);
+	Atlas* getAtlas(const std::string &filePath);
 	Atlas* loadAtlas(const std::string &baseFileName);
-	FontAtlas* getFont(const std::string &fileName);
+	FontAtlas* getFont(const std::string &filePath);
 	FontAtlas* loadFont(const std::string &baseFileName);
 	Texture* loadTexture(const std::string& baseFileName);
 

@@ -18,28 +18,28 @@ GUIScene::GUIScene(std::string name) : AScene(name)
 */
 }
 
-Entity *GUIScene::createGUIImageEntity(const std::string &fileName, const std::string& name)
+Entity *GUIScene::createGUIImageEntity(const std::string &filePath, const std::string& name)
 {
     Entity *result = this->createEntity(name);
     GUIImageComponent *component = result->addComponent<GUIImageComponent>();
-    component->load(fileName);
+    component->load(filePath);
     this->renderManager->addEntity(result);
     return result;
 }
 
-Entity* GUIScene::createGUIImageEntity(const std::string& fileName, const glm::vec2& normalizedSize, const std::string& name)
+Entity* GUIScene::createGUIImageEntity(const std::string& filePath, const glm::vec2& normalizedSize, const std::string& name)
 {
     Entity* result = this->createEntity();
     GUIImageComponent* component = result->addComponent<GUIImageComponent>();
-    component->load(fileName, normalizedSize);
+    component->load(filePath, normalizedSize);
     return result;
 }
 
-Entity *GUIScene::createGUIImageEntityFromAtlas(const std::string &fileName, const std::string &imageId, const std::string& name)
+Entity *GUIScene::createGUIImageEntityFromAtlas(const std::string &filePath, const std::string &imageId, const std::string& name)
 {
     Entity *result = this->createEntity();
     GUIImageComponent *component = result->addComponent<GUIImageComponent>();
-    component->loadFromAtlas(fileName, imageId);
+    component->loadFromAtlas(filePath, imageId);
     return result;
 }
 

@@ -10,10 +10,10 @@ namespace sre
 struct Mesh
 {
 	UPTR<AMeshData> meshData;
-	std::string fileName;
+	std::string filePath;
 
 public:
-	Mesh(AMeshData* arg_meshData, const char* arg_fileName);
+	Mesh(AMeshData* arg_meshData, const char* arg_filePath);
 
 friend class MeshLoader;
 };

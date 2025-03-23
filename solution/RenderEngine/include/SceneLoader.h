@@ -19,9 +19,9 @@ struct ModifiedEntityData;
 class SceneLoader
 {
 private:
-	static void save(AScene* scene, const char* sceneName);
+	static void save(AScene* scene, const char* scenePath);
 	static void serializeEntity(AScene* scene, c4::yml::NodeRef& entityNode, Entity* entity);
-	static void load(AScene* scene, const char* sceneName);
+	static void load(AScene* scene, const char* scenePath);
 
 friend class EditorsController;
 friend class ScenesManager;

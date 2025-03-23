@@ -31,9 +31,9 @@ protected:
     virtual void onPropertyDeserialized() override;
 
 private:
-    void load(const std::string& fileName);
-    void load(const std::string &fileName, const glm::vec2& normalizedSize);
-    void loadFromAtlas(const std::string &fileName, const std::string &imageId);
+    void load(const std::string& filePath);
+    void load(const std::string &filePath, const glm::vec2& normalizedSize);
+    void loadFromAtlas(const std::string &filePath, const std::string &imageId);
 
 friend class Entity;
 friend class OpenGLAPI;

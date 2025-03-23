@@ -2,12 +2,11 @@
 #include "FileUtils.h"
 #include "AScene.h"
 #include "EntityParser.h"
-#include "Paths.h"
 
 namespace sre
 {
 
-void SceneLoader::save(AScene* scene, const char* sceneName)
+void SceneLoader::save(AScene* scene, const char* scenePath)
 {
 	c4::yml::Tree tree;
 	c4::yml::NodeRef root = tree.rootref();
@@ -19,10 +18,8 @@ void SceneLoader::save(AScene* scene, const char* sceneName)
 		serializeEntity(scene, entityNode, entityItem.second.get());
 	}
 
-	std::string filePath;
-	Paths().buildSceneFilePath(sceneName, filePath, false);
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
-	FileUtils::saveFile(filePath, content);
+	FileUtils::saveFile(scenePath, content);
 }
 
 void SceneLoader::serializeEntity(AScene* scene, c4::yml::NodeRef& entityNode, Entity* entity)
@@ -35,21 +32,19 @@ void SceneLoader::serializeEntity(AScene* scene, c4::yml::NodeRef& entityNode, E
 		entityNode["Class"] << className;
 	}
 
-	std::string fileName{ entity->fileName };
-	if (!fileName.empty())
+	std::string filePath{ entity->filePath };
+	if (!filePath.empty())
 	{
-		entityNode["FileName"] << fileName;
+		entityNode["FilePath"] << filePath;
 	}
 		
 	EntityParser::serialize(entityNode, entity);
 }
 
-void SceneLoader::load(AScene* scene, const char* sceneName)
+void SceneLoader::load(AScene* scene, const char* scenePath)
 {
 	std::string fileContent;
-	std::string filePath;
-	Paths().buildSceneFilePath(sceneName, filePath);
-	FileUtils::loadFile(filePath, fileContent);
+	FileUtils::loadFile(scenePath, fileContent);
 
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
 	c4::yml::ConstNodeRef root = tree.crootref();
@@ -58,19 +53,19 @@ void SceneLoader::load(AScene* scene, const char* sceneName)
 		std::ostringstream nameStream;
 		nameStream << entityNode.key();
 		std::string name = nameStream.str();
-		std::string fileName;
+		std::string filePath;
 		std::string className{ "Entity" };
 
 		if (entityNode.has_child("Class"))
 		{
 			entityNode["Class"] >> className;
 		}
-		if (entityNode.has_child("FileName"))
+		if (entityNode.has_child("FilePath"))
 		{
-			entityNode["FileName"] >> fileName;
+			entityNode["FilePath"] >> filePath;
 		}
 
-		Entity* entity = scene->createEntity(name, nullptr, className.c_str(), fileName.c_str());
+		Entity* entity = scene->createEntity(name, nullptr, className.c_str(), filePath.c_str());
 		EntityParser::deserialize(entityNode, entity);
 	}
 }

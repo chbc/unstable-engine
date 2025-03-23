@@ -40,15 +40,38 @@ void EditorMenuBar::drawFileGroup()
 {
 	if (ImGui::BeginMenu("File"))
 	{
-		ImGui::MenuItem("New scene");
-		if (ImGui::MenuItem("Open scene"))
+		if (ImGui::BeginMenu("Scene"))
 		{
-			this->controller->loadScene();
+			ImGui::MenuItem("New scene");
+
+			if (ImGui::MenuItem("Open scene"))
+			{
+				this->controller->openScene();
+			}
+
+			if (ImGui::MenuItem("Save scene"))
+			{
+				this->controller->saveScene();
+			}
+
+			ImGui::EndMenu();
 		}
 
-		if (ImGui::MenuItem("Save scene"))
+		if (ImGui::BeginMenu("GUI"))
 		{
-			this->controller->saveScene();
+			ImGui::MenuItem("New GUI");
+
+			if (ImGui::MenuItem("Open GUI"))
+			{
+				this->controller->openGui();
+			}
+
+			if (ImGui::MenuItem("Save GUI"))
+			{
+				this->controller->saveGui();
+			}
+
+			ImGui::EndMenu();
 		}
 
 		if (ImGui::MenuItem("Exit"))

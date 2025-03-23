@@ -34,5 +34,5 @@ plane:
       Scale: [10,1,10]
     MeshComponent:
       Enabled: 1
-      Mesh: Plane.mesh
-      Material: DefaultMaterial.mat
+      Mesh: ../content/engine/media/Plane.mesh
+      Material: ../content/game/DefaultMaterial.mat

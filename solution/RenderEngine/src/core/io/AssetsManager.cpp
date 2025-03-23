@@ -9,9 +9,9 @@
 namespace sre
 {
 
-Entity* AssetsManager::loadEntity(const char* fileName, std::string name)
+Entity* AssetsManager::loadEntity(const char* filePath, std::string name)
 {
-	Entity* prototype = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, fileName, name);
+	Entity* prototype = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, filePath, name);
 	Entity* result = prototype->clone();
 	result->name = name;
 
@@ -23,15 +23,16 @@ void AssetsManager::releaseEntity(Entity* entity)
 	this->releaseAsset(this->entitiesMap, entity);
 }
 
-Mesh* AssetsManager::loadMesh(const char* fileName)
+Mesh* AssetsManager::loadMesh(const char* filePath)
 {
-	Mesh* result = this->loadAsset<MeshesMapType, MeshLoader, Mesh>(this->meshesMap, fileName);
+	Mesh* result = this->loadAsset<MeshesMapType, MeshLoader, Mesh>(this->meshesMap, filePath);
 	return result;
 }
 
 GUIMeshData* AssetsManager::loadGUIMeshData()
 {
-	Mesh* result = this->loadAsset<MeshesMapType, GIUMeshLoader, Mesh>(this->meshesMap, "GUIPlane.mesh");
+	const char* GUI_PLANE_PATH = "../content/engine/media/GUIPlane.mesh";
+	Mesh* result = this->loadAsset<MeshesMapType, GIUMeshLoader, Mesh>(this->meshesMap, GUI_PLANE_PATH);
 	return static_cast<GUIMeshData*>(result->meshData.get());
 }
 
@@ -41,9 +42,9 @@ void AssetsManager::releaseMesh(Mesh* mesh)
 	this->releaseAsset(this->meshesMap, mesh, releaseCallback);
 }
 
-Material* AssetsManager::loadMaterial(const char* fileName)
+Material* AssetsManager::loadMaterial(const char* filePath)
 {
-	Material* result = this->loadAsset<MaterialsMapType, MaterialLoader, Material>(this->materialsMap, fileName);
+	Material* result = this->loadAsset<MaterialsMapType, MaterialLoader, Material>(this->materialsMap, filePath);
 	return result;
 }
 
@@ -52,15 +53,9 @@ void AssetsManager::releaseMaterial(Material* material)
 	this->releaseAsset(this->materialsMap, material);
 }
 
-Texture* AssetsManager::loadTexture(const char* fileName, ETextureMap::Type mapType)
+Texture* AssetsManager::loadTexture(const char* filePath, ETextureMap::Type mapType)
 {
-	Texture* result = this->loadAsset<TexturesMapType, TextureLoader, Texture>(this->texturesMap, fileName, mapType);
-	return result;
-}
-
-Texture* AssetsManager::loadIcon(const char* fileName)
-{
-	Texture* result = this->loadAsset<TexturesMapType, IconLoader, Texture>(this->texturesMap, fileName, ETextureMap::GUI);
+	Texture* result = this->loadAsset<TexturesMapType, TextureLoader, Texture>(this->texturesMap, filePath, mapType);
 	return result;
 }
 

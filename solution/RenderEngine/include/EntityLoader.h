@@ -10,8 +10,8 @@ class Entity;
 class EntityLoader
 {
 public:
-	void save(Entity* entity, const char* fileName);
-	Entity* load(const char* fileName, std::string name);
+	void save(Entity* entity, const char* filePath);
+	Entity* load(const char* filePath, std::string name);
 };
 
 } // namespace

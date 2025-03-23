@@ -29,15 +29,15 @@ Entity* AScene::getEntity(const std::string& name)
     return result;
 }
 
-Entity* AScene::createEntity(std::string name, Entity* parent, const std::string& className, const std::string& fileName)
+Entity* AScene::createEntity(std::string name, Entity* parent, const std::string& className, const std::string& filePath)
 {
     Entity* result = nullptr;
     this->resolveName(name);
 
-    if (!fileName.empty())
+    if (!filePath.empty())
     {
         AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-        result = assetsManager->loadEntity(fileName.c_str(), name);
+        result = assetsManager->loadEntity(filePath.c_str(), name);
     }
     else
     {

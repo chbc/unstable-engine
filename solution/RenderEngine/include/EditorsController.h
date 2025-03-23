@@ -19,8 +19,10 @@ private:
 
 public:
 	EditorsController(ScenesManager* arg_scenesManager);
-	void loadScene();
+	void openScene();
+	void openGui();
 	void saveScene();
+	void saveGui();
 	void createCube();
 	void createPlane();
 	void createSphere();

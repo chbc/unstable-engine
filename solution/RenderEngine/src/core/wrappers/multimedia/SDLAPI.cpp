@@ -9,6 +9,8 @@
 #include "Entity.h"
 #include "Input.h"
 
+#include <windows.h>
+
 namespace sre
 {
 
@@ -181,6 +183,29 @@ bool SDLAPI::checkButtonPress(const std::vector<GUIButtonComponent*>& guiButtons
 std::string SDLAPI::getError()
 {
 	return "SDL Error: " + std::string(SDL_GetError());
+}
+
+void SDLAPI::openFileDialog(const std::string& title, const char* filter, std::string& outFileName)
+{
+	OPENFILENAME ofn;
+	TCHAR szFile[260] = { 0 };
+
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = NULL;
+	ofn.lpstrFile = szFile;
+	ofn.nMaxFile = sizeof(szFile);
+	ofn.lpstrFilter = filter;
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = NULL;
+	ofn.nMaxFileTitle = 0;
+	ofn.lpstrInitialDir = NULL;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	if (GetOpenFileName(&ofn) == TRUE)
+	{
+		outFileName = ofn.lpstrFile;
+	}
 }
 
 void SDLAPI::showMessageBox(const std::string& title, const std::string& message)

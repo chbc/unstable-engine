@@ -22,7 +22,7 @@ public:
 protected:
     AScene(std::string name);
     virtual ~AScene();
-    Entity* createEntity(std::string name = "", Entity* parent = nullptr, const std::string& className = "Entity", const std::string& fileName = "");
+    Entity* createEntity(std::string name = "", Entity* parent = nullptr, const std::string& className = "Entity", const std::string& filePath = "");
     void removeDestroyedEntities();
 
 private:

@@ -39,7 +39,7 @@ private:
     bool alive{ true };
     bool enabled{ true };
     std::string name;
-    std::string fileName;
+    std::string filePath;
     bool propertiesSaved{ true };
     bool componentsSaved{ true };
     bool childrenSaved{ true };

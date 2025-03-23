@@ -24,7 +24,7 @@ void MaterialEditorProperty::draw()
 void MaterialEditorProperty::onDraw()
 {
 	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Text((*this->value)->fileName.c_str());
+	ImGui::Text((*this->value)->filePath.c_str());
 
 	ImGui::Columns(1);
 
@@ -33,7 +33,7 @@ void MaterialEditorProperty::onDraw()
 		ImGui::Text("[%s]", this->title.c_str());
 		if (ImGui::Button("Save"))
 		{
-			MaterialLoader().save((*this->value), (*this->value)->fileName.c_str());
+			MaterialLoader().save((*this->value), (*this->value)->filePath.c_str());
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::EndPopup();
@@ -64,7 +64,7 @@ void MaterialEditorProperty::drawSubProperties()
 
 void MaterialEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
 {
-	propertyNode << (*this->value)->fileName;
+	propertyNode << (*this->value)->filePath;
 }
 
 void MaterialEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
@@ -81,7 +81,7 @@ void MaterialEditorProperty::copy(AEditorProperty* destination)
 	MaterialEditorProperty* derivedProperty = static_cast<MaterialEditorProperty*>(destination);
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-	*derivedProperty->value = assetsManager->loadMaterial((*this->value)->fileName.c_str());
+	*derivedProperty->value = assetsManager->loadMaterial((*this->value)->filePath.c_str());
 }
 
 } // namespace

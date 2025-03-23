@@ -107,6 +107,11 @@ void MultimediaManager::showErrorMessageBox(const std::string& title, const std:
 	SDLAPI::showErrorMessageBox(title, message);
 }
 
+void MultimediaManager::openFileDialog(const std::string& title, const char* filter, std::string& outFileName)
+{
+	SDLAPI::openFileDialog(title, filter, outFileName);
+}
+
 void MultimediaManager::addGUIButton(GUIButtonComponent* guiButton)
 {
 	this->guiButtons.push_back(guiButton);

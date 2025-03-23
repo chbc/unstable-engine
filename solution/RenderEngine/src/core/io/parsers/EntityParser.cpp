@@ -118,22 +118,22 @@ void EntityParser::deserializeChildren(c4::yml::ConstNodeRef& propertyNode, Enti
 		std::ostringstream nameStream;
 		nameStream << entityNode.key();
 		std::string name = nameStream.str();
-		std::string fileName;
+		std::string filePath;
 		std::string className{ "Entity" };
 
 		if (entityNode.has_child("Class"))
 		{
 			entityNode["Class"] >> className;
 		}
-		if (entityNode.has_child("FileName"))
+		if (entityNode.has_child("FilePath"))
 		{
-			entityNode["FileName"] >> fileName;
+			entityNode["FilePath"] >> filePath;
 		}
 
 		Entity* childEntity = nullptr;
-		if (!fileName.empty())
+		if (!filePath.empty())
 		{
-			childEntity = assetsManager->loadEntity(fileName.c_str(), name);
+			childEntity = assetsManager->loadEntity(filePath.c_str(), name);
 		}
 		else
 		{

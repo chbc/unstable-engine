@@ -54,12 +54,12 @@ void GUIImageComponent::onPropertyDeserialized()
 	this->meshData = assetsManager->loadGUIMeshData();
 }
 
-void GUIImageComponent::load(const std::string& fileName)
+void GUIImageComponent::load(const std::string& filePath)
 {
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
     AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
 
-    Texture* texture = assetsManager->loadTexture(fileName.c_str(), ETextureMap::GUI);
+    Texture* texture = assetsManager->loadTexture(filePath.c_str(), ETextureMap::GUI);
     glm::vec2 textureSize(texture->getWidth(), texture->getHeight());
     glm::vec2 normalizedSize = singletonsManager->get<MultimediaManager>()->getNormalizedSize(textureSize);
 
@@ -69,11 +69,11 @@ void GUIImageComponent::load(const std::string& fileName)
 	this->getTransform()->setScale(glm::vec3(normalizedSize, 1.0f));
 }
 
-void GUIImageComponent::load(const std::string& fileName, const glm::vec2& normalizedSize)
+void GUIImageComponent::load(const std::string& filePath, const glm::vec2& normalizedSize)
 {
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
     AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
-    Texture* texture = assetsManager->loadTexture(fileName.c_str(), ETextureMap::GUI);
+    Texture* texture = assetsManager->loadTexture(filePath.c_str(), ETextureMap::GUI);
 
     this->meshData = assetsManager->loadGUIMeshData();
     this->texture = texture;
@@ -81,12 +81,12 @@ void GUIImageComponent::load(const std::string& fileName, const glm::vec2& norma
     this->getTransform()->setScale(glm::vec3(normalizedSize, 1.0f));
 }
 
-void GUIImageComponent::loadFromAtlas(const std::string& fileName, const std::string& imageId)
+void GUIImageComponent::loadFromAtlas(const std::string& filePath, const std::string& imageId)
 {
     /*
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
 
-    Atlas* atlas = SingletonsManager::getInstance()->get<AtlasManager>()->getAtlas(fileName);
+    Atlas* atlas = SingletonsManager::getInstance()->get<AtlasManager>()->getAtlas(filePath);
     this->texture = atlas->getTexture();
     const AtlasItem* atlasItem = atlas->getItem(imageId);
     this->meshData = PrimitiveMeshFactory().createPlaneTopDown(atlasItem->normalizedSize, atlasItem->uv);

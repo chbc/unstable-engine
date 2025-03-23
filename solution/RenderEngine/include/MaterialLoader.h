@@ -11,8 +11,8 @@ class AMaterialComponent;
 class MaterialLoader
 {
 public:
-	void save(Material* material, const char* name);
-	Material* load(const char* fileName);
+	void save(Material* material, const char* filePath);
+	Material* load(const char* filePath);
 
 private:
 	void serializeComponent(c4::yml::NodeRef& componentNode, AMaterialComponent* component);
