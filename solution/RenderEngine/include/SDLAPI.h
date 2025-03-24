@@ -29,7 +29,7 @@ protected:
 	void processInput(const std::vector<GUIButtonComponent*>& guiButtons) override;
 	unsigned int getTicks() override;
 	void delay(unsigned int) override;
-	void *loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) override;
+	void *loadTexture(const std::string &filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) override;
 	void log(const std::string& type, const std::string& message) override;
 	void release() override;
 

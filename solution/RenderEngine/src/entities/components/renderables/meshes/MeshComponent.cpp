@@ -4,6 +4,7 @@
 #include "MeshEditorProperty.h"
 #include "SingletonsManager.h"
 #include "AssetsManager.h"
+#include "FileUtils.h"
 
 namespace sre
 {
@@ -44,7 +45,9 @@ void MeshComponent::load(const char* file)
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
     AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
     this->mesh = assetsManager->loadMesh(file);
-    this->material = assetsManager->loadMaterial("DefaultMaterial.mat");
+
+	std::string materialPath = FileUtils::getAbsoluteContentPath("engine/media/DefaultMaterial.mat");
+    this->material = assetsManager->loadMaterial(materialPath.c_str());
 }
 
 } // namespace

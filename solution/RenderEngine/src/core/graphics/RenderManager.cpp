@@ -262,6 +262,14 @@ void RenderManager::cleanUp()
     this->currentCamera = nullptr;
 }
 
+void RenderManager::cleanUpGui()
+{
+	if (this->guiRenderer.get() != nullptr)
+	{
+		this->guiRenderer.reset();
+	}
+}
+
 void RenderManager::setTargetFBO(uint32_t fbo)
 {
     this->targetFBO = fbo;

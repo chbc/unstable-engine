@@ -5,6 +5,10 @@
 
 namespace FS = std::filesystem;
 
+std::string contentPath;
+std::string configPath;
+std::string iconsPath;
+
 #ifdef __ANDROID__
 	#include <SDL.h>
 #endif
@@ -50,9 +54,22 @@ void loadFile(const std::string& filePath, std::string& dest)
 	}
 }
 #else
-void loadFile(const std::string& filePath, std::string& dest)
+void initializeStoragePaths()
 {
-	std::ifstream in{ filePath };
+	FS::path bin = FS::current_path();
+	FS::path content = bin / ".." / "content/";
+	FS::path config = bin / ".." / "config/";
+	FS::path icons = bin / ".." / "content/engine/icons/";
+
+	contentPath = FS::absolute(content).string();
+	configPath = FS::absolute(config).string();
+	iconsPath = FS::absolute(icons).string();
+}
+
+void loadContentFile(const std::string& filePath, std::string& dest)
+{
+	std::string absolutePath = getAbsoluteContentPath(filePath);
+	std::ifstream in{ absolutePath };
 
 	if (!in.is_open())
 	{
@@ -68,9 +85,10 @@ void loadFile(const std::string& filePath, std::string& dest)
 	}
 }
 
-void loadFile(const std::string& filePath, std::vector<std::string>& lines)
+void loadConfigFile(const std::string& filePath, std::vector<std::string>& lines)
 {
-	std::ifstream in(filePath.c_str());
+	std::string absolutePath = getAbsoluteConfigPath(filePath);
+	std::ifstream in(absolutePath);
 
 	if (!in.is_open())
 	{
@@ -85,9 +103,10 @@ void loadFile(const std::string& filePath, std::vector<std::string>& lines)
 	}
 }
 
-void saveFile(const std::string& filePath, const std::string& content)
+void saveContentFile(const std::string& filePath, const std::string& content)
 {
-	std::ofstream out{ filePath };
+	std::string absolutePath = getAbsoluteContentPath(filePath);
+	std::ofstream out{ absolutePath };
 
 	if (!out.is_open())
 	{
@@ -99,9 +118,7 @@ void saveFile(const std::string& filePath, const std::string& content)
 
 void getFileAndIconPaths(std::string directoryPath, std::vector<std::string>& iconPaths, std::vector<std::string>& filePaths)
 {
-	const char* ICONS_FOLDER = "../content/engine/icons/";
-
-	for (const auto& item : std::filesystem::directory_iterator(directoryPath))
+	for (const auto& item : FS::directory_iterator(directoryPath))
 	{
 		std::string iconName;
 		const auto& extension = item.path().extension();
@@ -135,7 +152,7 @@ void getFileAndIconPaths(std::string directoryPath, std::vector<std::string>& ic
 
 		if (hasIcon)
 		{
-			iconPath = ICONS_FOLDER + iconName + ".png";
+			iconPath = iconsPath + iconName + ".png";
 		}
 
 		iconPaths.emplace_back(iconPath);
@@ -154,6 +171,32 @@ bool fileExists(const std::string& filePath)
 	FS::path systemPath{ filePath };
 	return FS::exists(systemPath);
 }
+
+std::string getAbsoluteContentPath(const std::string& filePath)
+{
+	if (FS::path{ filePath }.is_absolute())
+	{
+		return filePath;
+	}
+
+	return (contentPath + filePath);
+}
+
+std::string getAbsoluteConfigPath(const std::string& filePath)
+{
+	if (FS::path{ filePath }.is_absolute())
+	{
+		return filePath;
+	}
+
+	return (configPath + filePath);
+}
+
+bool isDirectory(const std::string& filePath)
+{
+	return FS::is_directory(filePath);
+}
+
 #endif
 
 } // namespace

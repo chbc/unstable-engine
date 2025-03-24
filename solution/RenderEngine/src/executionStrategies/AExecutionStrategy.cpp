@@ -71,16 +71,21 @@ void AExecutionStrategy::delay(RenderEngine* controller)
     this->multimediaManager->delay();
 }
 
-void AExecutionStrategy::loadScenes(const char* scenePath, const char* guiScenePath)
+void AExecutionStrategy::loadScene(const char* scenePath)
 {
-    this->multimediaManager->cleanUp();
     this->renderManager->cleanUp();
     this->scenesManager->cleanUp();
 
     this->scenesManager->loadScene(scenePath);
-	this->scenesManager->loadGuiScene(guiScenePath);
 
     this->renderManager->initPostProcessing();
+}
+
+void AExecutionStrategy::loadGuiScene(const char* guiScenePath)
+{
+    this->multimediaManager->cleanUp();
+    this->renderManager->cleanUpGui();
+	this->scenesManager->loadGuiScene(guiScenePath);
 }
 
 void AExecutionStrategy::onEntityDestroyed(void* data)

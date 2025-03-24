@@ -36,5 +36,5 @@ plane:
       Scale: [10,1,10]
     MeshComponent:
       Enabled: 1
-      Mesh: ../content/engine/media/Plane.mesh
-      Material: ../content/engine/media/DefaultMaterial.mat
+      Mesh: engine/media/Plane.mesh
+      Material: engine/media/DefaultMaterial.mat

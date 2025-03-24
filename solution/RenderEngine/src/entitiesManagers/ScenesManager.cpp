@@ -48,19 +48,19 @@ PointLightComponent* ScenesManager::createPointLight(const std::string& name, En
     return this->scene->createPointLight(name, parent);
 }
 
-Entity* ScenesManager::createGUIImageEntity(const std::string& fileName, const std::string& name)
+Entity* ScenesManager::createGUIImageEntity(const std::string& filePath, const std::string& name)
 {
-    return this->guiScene->createGUIImageEntity(fileName, name);
+    return this->guiScene->createGUIImageEntity(filePath, name);
 }
 
-Entity* ScenesManager::createGUIImageEntity(const std::string& fileName, const glm::vec2& normalizedSize, const std::string& name)
+Entity* ScenesManager::createGUIImageEntity(const std::string& filePath, const glm::vec2& normalizedSize, const std::string& name)
 {
-    return this->guiScene->createGUIImageEntity(fileName, normalizedSize, name);
+    return this->guiScene->createGUIImageEntity(filePath, normalizedSize, name);
 }
 
-Entity* ScenesManager::createGUIImageEntityFromAtlas(const std::string& fileName, const std::string& imageId, const std::string& name)
+Entity* ScenesManager::createGUIImageEntityFromAtlas(const std::string& filePath, const std::string& imageId, const std::string& name)
 {
-    return this->guiScene->createGUIImageEntityFromAtlas(fileName, imageId, name);
+    return this->guiScene->createGUIImageEntityFromAtlas(filePath, imageId, name);
 }
 
 Entity* ScenesManager::createGUITextEntity(const std::string fontFile, const std::string& name, uint32_t maxItems)
@@ -102,9 +102,9 @@ void ScenesManager::update(float elapsedTime)
     this->guiScene->update(elapsedTime);
 }
 
-Entity* ScenesManager::createMeshEntity(const char* name, const char* fileName)
+Entity* ScenesManager::createMeshEntity(const char* name, const char* filePath)
 {
-    return this->scene->createMeshEntity(name, fileName);
+    return this->scene->createMeshEntity(name, filePath);
 }
 
 void ScenesManager::removeDestroyedEntities()

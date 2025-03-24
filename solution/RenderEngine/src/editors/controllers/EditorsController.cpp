@@ -15,7 +15,12 @@ namespace sre
 
 EditorsController::EditorsController(ScenesManager* arg_scenesManager)
 	: scenesManager(arg_scenesManager)
-{ }
+{
+	this->cubeMeshPath = FileUtils::getAbsoluteContentPath("engine/media/Cube.mesh");
+	this->planeMeshPath = FileUtils::getAbsoluteContentPath("engine/media/Plane.mesh");
+	this->sphereMeshPath = FileUtils::getAbsoluteContentPath("engine/media/Sphere.mesh");
+	this->guiImagePath = FileUtils::getAbsoluteContentPath("engine/media/whiteTexture.png");
+}
 
 void EditorsController::openScene()
 {
@@ -24,12 +29,19 @@ void EditorsController::openScene()
 
 	if (!resultFileName.empty())
 	{
-		RenderEngine::getInstance()->loadScenes(resultFileName, "DefaultGui");
+		RenderEngine::getInstance()->loadScene(resultFileName);
 	}
 }
 
 void EditorsController::openGui()
 {
+	std::string resultFileName;
+	MultimediaManager::openFileDialog("Open Gui", "Gui Files (*.gui)\0*.gui\0", resultFileName);
+
+	if (!resultFileName.empty())
+	{
+		RenderEngine::getInstance()->loadGuiScene(resultFileName);
+	}
 }
 
 void EditorsController::saveScene()
@@ -43,22 +55,22 @@ void EditorsController::saveGui()
 
 void EditorsController::createCube()
 {
-	this->createMeshEntity("cube", "Cube.mesh");
+	this->createMeshEntity("cube", this->cubeMeshPath.c_str());
 }
 
 void EditorsController::createPlane()
 {
-	this->createMeshEntity("plane", "Plane.mesh");
+	this->createMeshEntity("plane", this->planeMeshPath.c_str());
 }
 
 void EditorsController::createSphere()
 {
-	this->createMeshEntity("sphere", "Sphere.mesh");
+	this->createMeshEntity("sphere", this->sphereMeshPath.c_str());
 }
 
 void EditorsController::createGUIImage()
 {
-	Entity* newEntity = this->scenesManager->createGUIImageEntity("whiteTexture.png");
+	Entity* newEntity = this->scenesManager->createGUIImageEntity(this->guiImagePath);
 	this->notifyNewEntity(newEntity);
 }
 

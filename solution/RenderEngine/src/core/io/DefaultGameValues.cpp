@@ -10,14 +10,12 @@ Blackboard DefaultGameValues::blackboard;
 
 void DefaultGameValues::load()
 {
-#ifdef __ANDROID__
-	const std::string FILE_NAME = "config/default_game.ini";
-#else
-	const std::string FILE_NAME = "../config/default_game.ini";
-#endif
+	FileUtils::initializeStoragePaths();
+
+	const std::string FILE_PATH = "default_game.ini";
 
 	std::vector<std::string> lines;
-	FileUtils::loadFile(FILE_NAME, lines);
+	FileUtils::loadConfigFile(FILE_PATH, lines);
 
 	for (const std::string& item : lines)
 	{

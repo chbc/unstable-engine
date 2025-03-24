@@ -3,11 +3,9 @@
 #include "EditorFileBrowser.h"
 #include "SingletonsManager.h"
 #include "EditorsController.h"
+#include "FileUtils.h"
 
 #include "imgui/imgui.h"
-#include <filesystem>
-
-const char* CONTENT_FOLDER = "../content/game/";
 
 namespace sre
 {
@@ -19,7 +17,8 @@ EditorFileBrowser::EditorFileBrowser(EditorsController* arg_controller)
 
 void EditorFileBrowser::onInit()
 {
-	this->controller->refreshFileIcons(CONTENT_FOLDER, this->fileIcons);
+	this->gameContentFolder = FileUtils::getAbsoluteContentPath("game");
+	this->controller->refreshFileIcons(this->gameContentFolder, this->fileIcons);
 }
 
 void EditorFileBrowser::onEditorGUI()
@@ -27,7 +26,7 @@ void EditorFileBrowser::onEditorGUI()
 	ImGui::Begin("File Browser");
 	if (ImGui::Button("Content", ImVec2{ 64, 16 }))
 	{
-		this->controller->refreshFileIcons(CONTENT_FOLDER, this->fileIcons);
+		this->controller->refreshFileIcons(this->gameContentFolder, this->fileIcons);
 	}
 
 	ImGui::BeginTable("files", 10);
@@ -40,7 +39,7 @@ void EditorFileBrowser::onEditorGUI()
 		ImGui::TableNextColumn();
 		if (ImGui::ImageButton(item->textureId, size))
 		{
-			if (std::filesystem::is_directory(item->filePath))
+			if (FileUtils::isDirectory(item->filePath))
 			{
 				this->controller->refreshFileIcons(item->filePath, this->fileIcons);
 				break;

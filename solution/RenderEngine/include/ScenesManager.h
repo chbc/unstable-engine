@@ -27,9 +27,9 @@ public:
     SRE_API PointLightComponent* createPointLight(const std::string& name = "", Entity* parent = nullptr);
 
     // GUI //
-    SRE_API Entity* createGUIImageEntity(const std::string& fileName, const std::string& name = "");
-    SRE_API Entity* createGUIImageEntity(const std::string& fileName, const glm::vec2& normalizedSize, const std::string& name = "");
-    SRE_API Entity* createGUIImageEntityFromAtlas(const std::string& fileName, const std::string& imageId, const std::string& name = "");
+    SRE_API Entity* createGUIImageEntity(const std::string& filePath, const std::string& name = "");
+    SRE_API Entity* createGUIImageEntity(const std::string& filePath, const glm::vec2& normalizedSize, const std::string& name = "");
+    SRE_API Entity* createGUIImageEntityFromAtlas(const std::string& filePath, const std::string& imageId, const std::string& name = "");
     SRE_API Entity* createGUITextEntity(const std::string fontFile, const std::string& name = "", uint32_t maxItems = 100u);
 
 private:
@@ -38,7 +38,7 @@ private:
     void saveScenes();
     void initEntities();
     void update(float elapsedTime);
-    Entity* createMeshEntity(const char* name, const char* filaName);
+    Entity* createMeshEntity(const char* name, const char* filePath);
     void removeDestroyedEntities();
     void cleanUp();
     void preRelease() override;

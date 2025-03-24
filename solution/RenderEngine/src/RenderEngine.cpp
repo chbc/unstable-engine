@@ -44,7 +44,8 @@ void RenderEngine::run()
 
         std::string startUpScenePath = DefaultGameValues::get<std::string>("STARTUP_SCENE");
         std::string startUpGuiScenePath = DefaultGameValues::get<std::string>("STARTUP_GUI_SCENE");
-        this->currentStrategy->loadScenes(startUpScenePath.c_str(), startUpGuiScenePath.c_str());
+        this->currentStrategy->loadScene(startUpScenePath.c_str());
+		this->currentStrategy->loadGuiScene(startUpGuiScenePath.c_str());
         this->currentStrategy->init(this);
 
         uint32_t elapsedTime = 0;
@@ -74,14 +75,23 @@ void RenderEngine::quit()
     this->running = false;
 }
 
-void RenderEngine::loadScenes(std::string scenePath, std::string guiScenePath)
+void RenderEngine::loadScene(std::string scenePath)
 {
     std::function<void(void)> action = [=]
     {
-        this->currentStrategy->loadScenes(scenePath.c_str(), guiScenePath.c_str());
+        this->currentStrategy->loadScene(scenePath.c_str());
         this->currentStrategy->init(this);
     };
     endFrameActions.emplace(action);
+}
+
+void RenderEngine::loadGuiScene(std::string guiScenePath)
+{
+	std::function<void(void)> action = [=]
+	{
+		this->currentStrategy->loadGuiScene(guiScenePath.c_str());
+	};
+	endFrameActions.emplace(action);
 }
 
 void RenderEngine::onError(const std::string& message)
@@ -120,7 +130,7 @@ void RenderEngine::changeStrategy(const EExecutionMode::Type mode)
     };
     endFrameActions.emplace(action);
 
-    this->loadScenes();
+    // XXX this->loadScenes();
 }
 
 void RenderEngine::release()

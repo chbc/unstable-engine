@@ -19,7 +19,7 @@ void SceneLoader::save(AScene* scene, const char* scenePath)
 	}
 
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
-	FileUtils::saveFile(scenePath, content);
+	FileUtils::saveContentFile(scenePath, content);
 }
 
 void SceneLoader::serializeEntity(AScene* scene, c4::yml::NodeRef& entityNode, Entity* entity)
@@ -44,7 +44,7 @@ void SceneLoader::serializeEntity(AScene* scene, c4::yml::NodeRef& entityNode, E
 void SceneLoader::load(AScene* scene, const char* scenePath)
 {
 	std::string fileContent;
-	FileUtils::loadFile(scenePath, fileContent);
+	FileUtils::loadContentFile(scenePath, fileContent);
 
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
 	c4::yml::ConstNodeRef root = tree.crootref();

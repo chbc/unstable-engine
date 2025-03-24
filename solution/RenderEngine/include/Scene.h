@@ -18,7 +18,7 @@ private:
     Entity* createOrthoCamera(Entity* parent = nullptr, bool isMainCamera = true);
 
     // renderables //
-    Entity* createMeshEntity(const char* name, const char* fileName);
+    Entity* createMeshEntity(const char* name, const char* filePath);
 
     // light //
     DirectionalLightComponent* createDirectionalLight(const std::string& name = "", Entity* parent = nullptr);

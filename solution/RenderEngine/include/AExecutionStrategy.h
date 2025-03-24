@@ -38,7 +38,8 @@ protected:
 	virtual void release() { }
 
 private:
-	void loadScenes(const char* scenePath, const char* guiScenePath);
+	void loadScene(const char* scenePath);
+	void loadGuiScene(const char* guiScenePath);
 	void onEntityDestroyed(void* data);
 
 friend class RenderEngine;

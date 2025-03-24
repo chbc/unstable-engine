@@ -69,6 +69,7 @@ private:
     void setupBufferSubData(GUIMeshData* meshData);
     void removeDestroyedEntities();
     void cleanUp();
+    void cleanUpGui();
 
     void setTargetFBO(uint32_t fbo);
     void unbindFrameBuffer();

@@ -16,6 +16,10 @@ class EditorsController
 {
 private:
 	ScenesManager* scenesManager = nullptr;
+	std::string cubeMeshPath;
+	std::string planeMeshPath;
+	std::string sphereMeshPath;
+	std::string guiImagePath;
 
 public:
 	EditorsController(ScenesManager* arg_scenesManager);

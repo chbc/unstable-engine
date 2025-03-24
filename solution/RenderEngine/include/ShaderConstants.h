@@ -11,9 +11,9 @@ namespace ShaderFiles
 {
 
 #ifdef __ANDROID__
-    const std::string BASE_FOLDER = "content/engine/es/shaders/";
+    const std::string BASE_FOLDER = "engine/es/shaders/";
 #else
-    const std::string BASE_FOLDER = "../content/engine/shaders/";
+    const std::string BASE_FOLDER = "engine/shaders/";
 #endif
 
     const std::string MAIN_H_V      = BASE_FOLDER + "main_h.vert";

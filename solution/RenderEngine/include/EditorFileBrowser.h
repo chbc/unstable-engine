@@ -18,6 +18,7 @@ class EditorFileBrowser : public IEditorWindow
 private:
 	std::vector<UPTR<FileIcon>> fileIcons;
 	EditorsController* controller;
+	std::string gameContentFolder;
 
 public:
 	EditorFileBrowser(EditorsController* arg_controller);

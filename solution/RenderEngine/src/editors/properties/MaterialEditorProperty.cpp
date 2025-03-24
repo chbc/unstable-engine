@@ -69,11 +69,11 @@ void MaterialEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
 
 void MaterialEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
 {
-	std::string fileName;
-	propertyNode >> fileName;
+	std::string filePath;
+	propertyNode >> filePath;
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-	*this->value = assetsManager->loadMaterial(fileName.c_str());
+	*this->value = assetsManager->loadMaterial(filePath.c_str());
 }
 
 void MaterialEditorProperty::copy(AEditorProperty* destination)

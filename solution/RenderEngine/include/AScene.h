@@ -14,7 +14,6 @@ protected:
 
 private:
     std::string name;
-    bool sceneLoaded;
 
 public:
     Entity* getEntity(const std::string& arg_name);

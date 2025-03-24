@@ -1,13 +1,15 @@
 #include "SDLAPI.h"
+#include "EngineValues.h"
+#include "GUIButtonComponent.h"
+#include "Entity.h"
+#include "Input.h"
+#include "FileUtils.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
 
-#include "EngineValues.h"
-#include "GUIButtonComponent.h"
-#include "Entity.h"
-#include "Input.h"
+
 
 #include <windows.h>
 
@@ -84,13 +86,14 @@ void SDLAPI::delay(unsigned int timeMS)
 	SDL_Delay(timeMS);
 }
 
-void *SDLAPI::loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp)
+void* SDLAPI::loadTexture(const std::string& filePath, uint32_t* outWidth, uint32_t* outHeight, uint8_t* outBpp)
 {
-	void *result = nullptr;
-	SDL_Surface *surface = IMG_Load(fileName.c_str());
+	void* result = nullptr;
+	std::string absolutePath = FileUtils::getAbsoluteContentPath(filePath);
+	SDL_Surface* surface = IMG_Load(absolutePath.c_str());
 
 	if (surface == nullptr)
-		throw "[SDLAPI] Can't load texture file: " + fileName;
+		throw "[SDLAPI] Can't load texture file: " + filePath;
 
 	*outWidth = surface->w;
 	*outHeight = surface->h;

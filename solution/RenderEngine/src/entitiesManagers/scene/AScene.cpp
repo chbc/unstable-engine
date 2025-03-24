@@ -8,7 +8,7 @@ namespace sre
 {
 uint32_t AScene::EntityIndex = 0;
 
-AScene::AScene(std::string arg_name) : name(arg_name), sceneLoaded(false)
+AScene::AScene(std::string arg_name) : name(arg_name)
 {
     this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 }
@@ -83,8 +83,6 @@ void AScene::onSceneLoaded()
     {
         renderManager->addEntity(item.second.get());
     }
-
-    this->sceneLoaded = true;
 }
 
 void AScene::resolveName(std::string& name)

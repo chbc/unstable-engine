@@ -1,6 +1,7 @@
 #include "MeshLoader.h"
 #include "SingletonsManager.h"
 #include "AGraphicsWrapper.h"
+#include "FileUtils.h"
 
 #include <fstream>
 
@@ -23,7 +24,8 @@ Mesh* MeshLoader::internalLoad(const char* filePath)
 {
 	std::vector<TVertex> vertexData;
 	std::vector<uint32_t> indices;
-	std::ifstream readStream(filePath, std::ios::out | std::ios::binary);
+	std::string absolutePath = FileUtils::getAbsoluteContentPath(filePath);
+	std::ifstream readStream(absolutePath, std::ios::out | std::ios::binary);
 	if (readStream)
 	{
 		size_t size;
@@ -44,6 +46,10 @@ Mesh* MeshLoader::internalLoad(const char* filePath)
 			readStream.read(reinterpret_cast<char*>(&item), sizeof(uint32_t));
 			indices.push_back(item);
 		}
+	}
+	else
+	{
+		throw "[MeshLoader] - Error: " + std::string(filePath) + " can't be found!";
 	}
 
 	readStream.close();

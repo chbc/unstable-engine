@@ -82,9 +82,9 @@ uint32_t MultimediaManager::getLastFrameTime()
     return this->timer->getLastFrameTime();
 }
 
-void *MultimediaManager::loadTexture(const std::string &fileName, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp)
+void *MultimediaManager::loadTexture(const std::string& filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp)
 {
-	return this->multimediaWrapper->loadTexture(fileName, outWidth, outHeight, outBpp);
+	return this->multimediaWrapper->loadTexture(filePath, outWidth, outHeight, outBpp);
 }
 
 void MultimediaManager::logMessage(const std::string& message) const

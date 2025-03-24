@@ -56,7 +56,7 @@ void EditorSceneTree::onCleanUp()
 
 void EditorSceneTree::drawScene(AScene* scene)
 {
-	if (!scene->entities.empty())
+	if (scene && !scene->entities.empty())
 	{
 		if (ImGui::CollapsingHeader(scene->name.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 		{
