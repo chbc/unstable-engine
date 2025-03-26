@@ -6,7 +6,7 @@ namespace sre
 
 // GUITextComponent* GUIScene::frameMSIndicator = nullptr;
 
-GUIScene::GUIScene(std::string name) : AScene(name)
+GUIScene::GUIScene(std::string arg_name, std::string arg_filePath) : AScene(arg_name, arg_filePath)
 {
 /*
 #ifdef DEBUG

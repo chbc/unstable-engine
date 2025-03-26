@@ -8,7 +8,7 @@ namespace sre
 {
 uint32_t AScene::EntityIndex = 0;
 
-AScene::AScene(std::string arg_name) : name(arg_name)
+AScene::AScene(std::string arg_name, std::string arg_filePath) : name(arg_name), filePath(arg_filePath)
 {
     this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 }
@@ -18,30 +18,30 @@ AScene::~AScene()
     this->entities.clear();
 }
 
-Entity* AScene::getEntity(const std::string& name)
+Entity* AScene::getEntity(const std::string& entityName)
 {
     Entity* result = nullptr;
-    if (this->entities.count(name) > 0)
+    if (this->entities.count(entityName) > 0)
     {
-        result = this->entities[name].get();
+        result = this->entities[entityName].get();
     }
 
     return result;
 }
 
-Entity* AScene::createEntity(std::string name, Entity* parent, const std::string& className, const std::string& filePath)
+Entity* AScene::createEntity(std::string entityName, Entity* parent, const std::string& className, const std::string& filePath)
 {
     Entity* result = nullptr;
-    this->resolveName(name);
+    this->resolveName(entityName);
 
     if (!filePath.empty())
     {
         AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-        result = assetsManager->loadEntity(filePath.c_str(), name);
+        result = assetsManager->loadEntity(filePath.c_str(), entityName);
     }
     else
     {
-        result = Entity::Create(name, className);
+        result = Entity::Create(entityName, className);
     }
 
     if (parent != nullptr)
@@ -50,7 +50,7 @@ Entity* AScene::createEntity(std::string name, Entity* parent, const std::string
     }
     else
     {
-        this->entities[name] = UPTR<Entity>{ result };
+        this->entities[entityName] = UPTR<Entity>{ result };
     }
 
     return result;
@@ -85,15 +85,15 @@ void AScene::onSceneLoaded()
     }
 }
 
-void AScene::resolveName(std::string& name)
+void AScene::resolveName(std::string& entityName)
 {
-    if (name.empty())
+    if (entityName.empty())
     {
-        name = this->generateEntityId();
+        entityName = this->generateEntityId();
     }
-    else if (this->entities.count(name) > 0)
+    else if (this->entities.count(entityName) > 0)
     {
-        name = this->generateEntityId(name);
+        entityName = this->generateEntityId(entityName);
     }
 }
 

@@ -38,6 +38,8 @@ private:
 	bool checkButtonPress(const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
 	std::string getError();
 	static void openFileDialog(const std::string& title, const char* filter, std::string& outFileName);
+	static void saveFileDialog(const std::string& title, const char* filter, std::string& outFileName);
+	static void internalFileDialog(const std::string& title, const char* filter, bool save, std::string& outFileName);
 	static void showMessageBox(const std::string& title, const std::string& message);
 	static void showErrorMessageBox(const std::string& title, const std::string& message);
 

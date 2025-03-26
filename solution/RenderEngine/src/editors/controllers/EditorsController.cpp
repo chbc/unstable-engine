@@ -24,29 +24,41 @@ EditorsController::EditorsController(ScenesManager* arg_scenesManager)
 
 void EditorsController::openScene()
 {
-	std::string resultFileName;
-	MultimediaManager::openFileDialog("Open Scene", "Scene Files (*.scene)\0*.scene\0", resultFileName);
+	std::string resultFilePath;
+	MultimediaManager::openFileDialog("Open Scene", "Scene Files (*.scene)\0*.scene\0", resultFilePath);
 
-	if (!resultFileName.empty())
+	if (!resultFilePath.empty())
 	{
-		RenderEngine::getInstance()->loadScene(resultFileName);
+		RenderEngine::getInstance()->loadScene(resultFilePath);
 	}
 }
 
 void EditorsController::openGui()
 {
-	std::string resultFileName;
-	MultimediaManager::openFileDialog("Open Gui", "Gui Files (*.gui)\0*.gui\0", resultFileName);
+	std::string resultFilePath;
+	MultimediaManager::openFileDialog("Open Gui", "Gui Files (*.gui)\0*.gui\0", resultFilePath);
 
-	if (!resultFileName.empty())
+	if (!resultFilePath.empty())
 	{
-		RenderEngine::getInstance()->loadGuiScene(resultFileName);
+		RenderEngine::getInstance()->loadGuiScene(resultFilePath);
 	}
 }
 
 void EditorsController::saveScene()
 {
-	this->scenesManager->saveScenes();
+	std::string resultFilePath;
+	if (!FileUtils::isPathFromGameContent(this->scenesManager->scene->filePath))
+	{
+		MultimediaManager::saveFileDialog("Save Scene", "Scene Files (*.scene)\0*.scene\0", resultFilePath);
+	}
+
+	if (!resultFilePath.empty())
+	{
+		// XXX
+		// MUDAR O NOME DA CENA
+		this->scenesManager->scene->filePath = resultFilePath;
+		this->scenesManager->saveScene();
+	}
 }
 
 void EditorsController::saveGui()

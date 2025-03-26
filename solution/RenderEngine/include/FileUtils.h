@@ -18,6 +18,7 @@ namespace FileUtils
 	std::string getAbsoluteContentPath(const std::string& filePath);
     std::string getAbsoluteConfigPath(const std::string& filePath);
 	bool isDirectory(const std::string& filePath);
+    bool isPathFromGameContent(const std::string& filePath);
 }
 
 } // namespace

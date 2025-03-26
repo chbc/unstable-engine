@@ -11,18 +11,18 @@ namespace sre
 class Scene : public AScene
 {
 private:
-    Scene(std::string name);
+    Scene(std::string arg_name, std::string arg_filePath);
 
 private:
     Entity* createPerspectiveCamera(float fov = 70.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr, bool isMainCamera = true);
     Entity* createOrthoCamera(Entity* parent = nullptr, bool isMainCamera = true);
 
     // renderables //
-    Entity* createMeshEntity(const char* name, const char* filePath);
+    Entity* createMeshEntity(const char* entityName, const char* filePath);
 
     // light //
-    DirectionalLightComponent* createDirectionalLight(const std::string& name = "", Entity* parent = nullptr);
-    PointLightComponent* createPointLight(const std::string& name = "", Entity* parent = nullptr);
+    DirectionalLightComponent* createDirectionalLight(const std::string& entityName = "", Entity* parent = nullptr);
+    PointLightComponent* createPointLight(const std::string& entityName = "", Entity* parent = nullptr);
 
 friend class ScenesManager;
 friend class SceneLoader;

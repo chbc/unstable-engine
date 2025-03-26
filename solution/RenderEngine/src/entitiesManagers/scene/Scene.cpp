@@ -9,7 +9,7 @@
 namespace sre
 {
 
-Scene::Scene(std::string name) : AScene(name) { }
+Scene::Scene(std::string arg_name, std::string arg_filePath) : AScene(arg_name, arg_filePath) { }
 
 Entity* Scene::createPerspectiveCamera(float fov, float near, float far, Entity* parent, bool isMainCamera)
 {
@@ -29,9 +29,9 @@ Entity* Scene::createOrthoCamera(Entity* parent, bool isMainCamera)
     return mainCamera;
 }
 
-Entity* Scene::createMeshEntity(const char* name, const char* filePath)
+Entity* Scene::createMeshEntity(const char* entityName, const char* filePath)
 {
-    Entity* entity = this->createEntity(name);
+    Entity* entity = this->createEntity(entityName);
     MeshComponent* meshComponent = entity->addComponent<MeshComponent>();
     meshComponent->load(filePath);
     this->renderManager->addEntity(entity);
@@ -40,17 +40,17 @@ Entity* Scene::createMeshEntity(const char* name, const char* filePath)
 }
 
 // light //
-DirectionalLightComponent *Scene::createDirectionalLight(const std::string& name, Entity* parent)
+DirectionalLightComponent *Scene::createDirectionalLight(const std::string& entityName, Entity* parent)
 {
-    std::string resultName = name.empty() ? "directional_light" : name;
+    std::string resultName = entityName.empty() ? "directional_light" : entityName;
     Entity *newEntity = this->createEntity(resultName, parent);
 
     return newEntity->addComponent<DirectionalLightComponent>();
 }
 
-PointLightComponent *Scene::createPointLight(const std::string& name, Entity* parent)
+PointLightComponent *Scene::createPointLight(const std::string& entityName, Entity* parent)
 {
-    std::string resultName = name.empty() ? "point_light" : name;
+    std::string resultName = entityName.empty() ? "point_light" : entityName;
     Entity *newEntity = this->createEntity(resultName, parent);
 
     return newEntity->addComponent<PointLightComponent>();

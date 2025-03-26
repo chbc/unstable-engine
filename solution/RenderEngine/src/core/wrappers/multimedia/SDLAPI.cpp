@@ -190,6 +190,16 @@ std::string SDLAPI::getError()
 
 void SDLAPI::openFileDialog(const std::string& title, const char* filter, std::string& outFileName)
 {
+	internalFileDialog(title, filter, false, outFileName);
+}
+
+void SDLAPI::saveFileDialog(const std::string& title, const char* filter, std::string& outFileName)
+{
+	internalFileDialog(title, filter, true, outFileName);
+}
+
+void SDLAPI::internalFileDialog(const std::string& title, const char* filter, bool save, std::string& outFileName)
+{
 	OPENFILENAME ofn;
 	TCHAR szFile[260] = { 0 };
 
@@ -205,7 +215,15 @@ void SDLAPI::openFileDialog(const std::string& title, const char* filter, std::s
 	ofn.lpstrInitialDir = NULL;
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
-	if (GetOpenFileName(&ofn) == TRUE)
+	if (save)
+	{
+		ofn.lpstrFile[0] = '\0';
+		if (GetSaveFileName(&ofn))
+		{
+			outFileName = ofn.lpstrFile;
+		}
+	}
+	else if (GetOpenFileName(&ofn))
 	{
 		outFileName = ofn.lpstrFile;
 	}

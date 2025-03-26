@@ -10,25 +10,28 @@ class AScene
 protected:
     std::unordered_map<std::string, UPTR<Entity>> entities;
     static uint32_t EntityIndex;
-    class RenderManager* renderManager;
+    class RenderManager* renderManager{ nullptr };
 
 private:
     std::string name;
-
-public:
-    Entity* getEntity(const std::string& arg_name);
+    std::string filePath;
 
 protected:
-    AScene(std::string name);
+    AScene(std::string arg_name, std::string arg_filePath);
     virtual ~AScene();
-    Entity* createEntity(std::string name = "", Entity* parent = nullptr, const std::string& className = "Entity", const std::string& filePath = "");
+
+public:
+    Entity* getEntity(const std::string& entityName);
+
+protected:
+    Entity* createEntity(std::string entityName = "", Entity* parent = nullptr, const std::string& className = "Entity", const std::string& filePath = "");
     void removeDestroyedEntities();
 
 private:
     void initEntities();
     void update(float elapsedTime);
     void onSceneLoaded();
-    void resolveName(std::string& name);
+    void resolveName(std::string& entityName);
     std::string generateEntityId(const std::string& duplicateName = "");
 
 friend class ScenesManager;

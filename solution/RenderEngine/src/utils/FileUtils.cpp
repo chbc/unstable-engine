@@ -6,6 +6,7 @@
 namespace FS = std::filesystem;
 
 std::string contentPath;
+std::string gameContentPath;
 std::string configPath;
 std::string iconsPath;
 
@@ -58,10 +59,12 @@ void initializeStoragePaths()
 {
 	FS::path bin = FS::current_path();
 	FS::path content = bin / ".." / "content/";
+	FS::path gameContent = bin / ".." / "content/game/";
 	FS::path config = bin / ".." / "config/";
 	FS::path icons = bin / ".." / "content/engine/icons/";
 
 	contentPath = FS::absolute(content).string();
+	gameContentPath = FS::absolute(gameContent).string();
 	configPath = FS::absolute(config).string();
 	iconsPath = FS::absolute(icons).string();
 }
@@ -195,6 +198,23 @@ std::string getAbsoluteConfigPath(const std::string& filePath)
 bool isDirectory(const std::string& filePath)
 {
 	return FS::is_directory(filePath);
+}
+
+bool isPathFromGameContent(const std::string& filePath)
+{
+	bool result = false;
+	
+	std::string pathToEvaluate = "game";
+
+	if (FS::path{ filePath }.is_absolute())
+	{
+		pathToEvaluate = gameContentPath;
+	}
+	
+	int stringPosition = filePath.find(pathToEvaluate);
+	result = (stringPosition == 0) || (stringPosition == 1);
+
+	return result;
 }
 
 #endif

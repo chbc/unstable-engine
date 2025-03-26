@@ -112,6 +112,11 @@ void MultimediaManager::openFileDialog(const std::string& title, const char* fil
 	SDLAPI::openFileDialog(title, filter, outFileName);
 }
 
+void MultimediaManager::saveFileDialog(const std::string& title, const char* filter, std::string& outFileName)
+{
+	SDLAPI::saveFileDialog(title, filter, outFileName);
+}
+
 void MultimediaManager::addGUIButton(GUIButtonComponent* guiButton)
 {
 	this->guiButtons.push_back(guiButton);

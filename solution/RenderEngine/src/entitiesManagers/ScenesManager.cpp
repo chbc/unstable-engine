@@ -71,7 +71,7 @@ Entity* ScenesManager::createGUITextEntity(const std::string fontFile, const std
 void ScenesManager::loadScene(const char* scenePath)
 {
 	std::string sceneName = FileUtils::getFileName(scenePath);
-    this->scene.reset(new Scene{ sceneName });
+    this->scene.reset(new Scene{ sceneName, scenePath });
     SceneLoader::load(this->scene.get(), scenePath);
     this->scene->onSceneLoaded();
 }
@@ -79,15 +79,20 @@ void ScenesManager::loadScene(const char* scenePath)
 void ScenesManager::loadGuiScene(const char* scenePath)
 {
     std::string sceneName = FileUtils::getFileName(scenePath);
-    this->guiScene.reset(new GUIScene{ sceneName });
+    this->guiScene.reset(new GUIScene{ sceneName, scenePath });
     SceneLoader::load(this->guiScene.get(), scenePath);
     this->guiScene->onSceneLoaded();
 }
 
-void ScenesManager::saveScenes()
+void ScenesManager::saveScene()
 {
-    SceneLoader::save(this->scene.get(), this->scene->name.c_str());
-    SceneLoader::save(this->guiScene.get(), this->guiScene->name.c_str());
+    // XXX PASSAR APENAS O PRIMEIRO PARAMETRO
+    SceneLoader::save(this->scene.get(), this->scene->filePath.c_str());
+}
+
+void ScenesManager::saveGuiScene()
+{
+    SceneLoader::save(this->guiScene.get(), this->guiScene->filePath.c_str());
 }
 
 void ScenesManager::initEntities()

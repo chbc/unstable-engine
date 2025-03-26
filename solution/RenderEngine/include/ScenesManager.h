@@ -35,7 +35,8 @@ public:
 private:
     void loadScene(const char* scenePath);
     void loadGuiScene(const char* scenePath);
-    void saveScenes();
+    void saveScene();
+    void saveGuiScene();
     void initEntities();
     void update(float elapsedTime);
     Entity* createMeshEntity(const char* name, const char* filePath);

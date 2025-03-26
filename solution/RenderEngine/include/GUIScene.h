@@ -11,7 +11,7 @@ namespace sre
 class GUIScene : public AScene
 {
 private:
-    GUIScene(std::string name);
+    GUIScene(std::string name, std::string arg_filePath);
 
 private:
 	Entity* createGUIImageEntity(const std::string& filePath, const std::string& name);
