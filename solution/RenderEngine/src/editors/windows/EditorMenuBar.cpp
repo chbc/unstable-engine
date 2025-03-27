@@ -49,7 +49,7 @@ void EditorMenuBar::drawFileGroup()
 				this->controller->openScene();
 			}
 
-			if (ImGui::MenuItem("Save scene"))
+			if (ImGui::MenuItem("Save scene", "CTRL+S"))
 			{
 				this->controller->saveScene();
 			}
