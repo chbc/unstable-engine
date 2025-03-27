@@ -21,6 +21,7 @@ Entity::~Entity()
 	this->componentsMap.clear();
 	this->childrenList.clear();
 	this->children.clear();
+	this->parent = nullptr;
 }
 
 AEntityComponent* Entity::addComponent(const char* className)

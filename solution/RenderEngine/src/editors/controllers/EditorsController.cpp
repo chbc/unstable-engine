@@ -47,22 +47,23 @@ void EditorsController::openGui()
 void EditorsController::saveScene()
 {
 	std::string resultFilePath;
-	if (!FileUtils::isPathFromGameContent(this->scenesManager->scene->filePath))
+	if (this->scenesManager->isSceneNew())
 	{
 		MultimediaManager::saveFileDialog("Save Scene", "Scene Files (*.scene)\0*.scene\0", resultFilePath);
 	}
 
-	if (!resultFilePath.empty())
-	{
-		// XXX
-		// MUDAR O NOME DA CENA
-		this->scenesManager->scene->filePath = resultFilePath;
-		this->scenesManager->saveScene();
-	}
+	this->scenesManager->saveScene(resultFilePath);
 }
 
 void EditorsController::saveGui()
 {
+	std::string resultFilePath;
+	if (this->scenesManager->isGuiSceneNew())
+	{
+		MultimediaManager::saveFileDialog("Save GUI", "Gui Files (*.gui)\0*.gui\0", resultFilePath);
+	}
+
+	this->scenesManager->saveGuiScene(resultFilePath);
 }
 
 void EditorsController::createCube()

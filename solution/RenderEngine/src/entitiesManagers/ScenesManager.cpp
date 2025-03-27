@@ -68,33 +68,6 @@ Entity* ScenesManager::createGUITextEntity(const std::string fontFile, const std
     return this->guiScene->createGUITextEntity(fontFile, name, maxItems);
 }
 
-void ScenesManager::loadScene(const char* scenePath)
-{
-	std::string sceneName = FileUtils::getFileName(scenePath);
-    this->scene.reset(new Scene{ sceneName, scenePath });
-    SceneLoader::load(this->scene.get(), scenePath);
-    this->scene->onSceneLoaded();
-}
-
-void ScenesManager::loadGuiScene(const char* scenePath)
-{
-    std::string sceneName = FileUtils::getFileName(scenePath);
-    this->guiScene.reset(new GUIScene{ sceneName, scenePath });
-    SceneLoader::load(this->guiScene.get(), scenePath);
-    this->guiScene->onSceneLoaded();
-}
-
-void ScenesManager::saveScene()
-{
-    // XXX PASSAR APENAS O PRIMEIRO PARAMETRO
-    SceneLoader::save(this->scene.get(), this->scene->filePath.c_str());
-}
-
-void ScenesManager::saveGuiScene()
-{
-    SceneLoader::save(this->guiScene.get(), this->guiScene->filePath.c_str());
-}
-
 void ScenesManager::initEntities()
 {
     this->scene->initEntities();
@@ -107,6 +80,60 @@ void ScenesManager::update(float elapsedTime)
     this->guiScene->update(elapsedTime);
 }
 
+void ScenesManager::loadScene(const char* scenePath)
+{
+	std::string sceneName = FileUtils::getFileName(scenePath);
+    this->scene.reset(new Scene{ sceneName, scenePath });
+    SceneLoader::load(this->scene.get());
+    this->scene->onSceneLoaded();
+}
+
+void ScenesManager::loadGuiScene(const char* scenePath)
+{
+    std::string sceneName = FileUtils::getFileName(scenePath);
+    this->guiScene.reset(new GUIScene{ sceneName, scenePath });
+    SceneLoader::load(this->guiScene.get());
+    this->guiScene->onSceneLoaded();
+}
+
+void ScenesManager::saveScene(std::string scenePath)
+{
+    if (!scenePath.empty())
+    {
+        this->scene->filePath = scenePath;
+        this->scene->name = FileUtils::getFileName(scenePath);
+    }
+    SceneLoader::save(this->scene.get());
+}
+
+void ScenesManager::saveGuiScene(std::string scenePath)
+{
+    if (!scenePath.empty())
+    {
+        this->guiScene->filePath = scenePath;
+        this->guiScene->name = FileUtils::getFileName(scenePath);
+    }
+    SceneLoader::save(this->guiScene.get());
+}
+
+bool ScenesManager::isSceneNew()
+{
+    return this->isBaseSceneNew(this->scene.get());
+}
+
+bool ScenesManager::isGuiSceneNew()
+{
+    return this->isBaseSceneNew(this->guiScene.get());
+}
+
+bool ScenesManager::isBaseSceneNew(AScene* baseScene)
+{
+    bool exists = FileUtils::fileExists(baseScene->filePath);
+    bool result = !exists || !FileUtils::isPathFromGameContent(baseScene->filePath);
+
+    return result;
+}
+
 Entity* ScenesManager::createMeshEntity(const char* name, const char* filePath)
 {
     return this->scene->createMeshEntity(name, filePath);
@@ -114,8 +141,15 @@ Entity* ScenesManager::createMeshEntity(const char* name, const char* filePath)
 
 void ScenesManager::removeDestroyedEntities()
 {
-    this->scene->removeDestroyedEntities();
-    this->guiScene->removeDestroyedEntities();
+    if (this->scene)
+    {
+        this->scene->removeDestroyedEntities();
+    }
+
+    if (guiScene)
+    {
+        this->guiScene->removeDestroyedEntities();
+    }
 }
 
 void ScenesManager::cleanUp()

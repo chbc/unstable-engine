@@ -6,7 +6,7 @@
 namespace sre
 {
 
-void SceneLoader::save(AScene* scene, const char* scenePath)
+void SceneLoader::save(AScene* scene)
 {
 	c4::yml::Tree tree;
 	c4::yml::NodeRef root = tree.rootref();
@@ -19,7 +19,7 @@ void SceneLoader::save(AScene* scene, const char* scenePath)
 	}
 
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
-	FileUtils::saveContentFile(scenePath, content);
+	FileUtils::saveContentFile(scene->filePath, content);
 }
 
 void SceneLoader::serializeEntity(AScene* scene, c4::yml::NodeRef& entityNode, Entity* entity)
@@ -41,10 +41,10 @@ void SceneLoader::serializeEntity(AScene* scene, c4::yml::NodeRef& entityNode, E
 	EntityParser::serialize(entityNode, entity);
 }
 
-void SceneLoader::load(AScene* scene, const char* scenePath)
+void SceneLoader::load(AScene* scene)
 {
 	std::string fileContent;
-	FileUtils::loadContentFile(scenePath, fileContent);
+	FileUtils::loadContentFile(scene->filePath, fileContent);
 
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
 	c4::yml::ConstNodeRef root = tree.crootref();

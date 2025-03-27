@@ -33,12 +33,15 @@ public:
     SRE_API Entity* createGUITextEntity(const std::string fontFile, const std::string& name = "", uint32_t maxItems = 100u);
 
 private:
-    void loadScene(const char* scenePath);
-    void loadGuiScene(const char* scenePath);
-    void saveScene();
-    void saveGuiScene();
     void initEntities();
     void update(float elapsedTime);
+    void loadScene(const char* scenePath);
+    void loadGuiScene(const char* scenePath);
+    void saveScene(std::string scenePath);
+    void saveGuiScene(std::string scenePath);
+    bool isSceneNew();
+    bool isGuiSceneNew();
+    bool isBaseSceneNew(AScene* baseScene);
     Entity* createMeshEntity(const char* name, const char* filePath);
     void removeDestroyedEntities();
     void cleanUp();
