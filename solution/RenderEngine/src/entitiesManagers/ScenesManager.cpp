@@ -116,20 +116,20 @@ void ScenesManager::saveGuiScene(std::string scenePath)
     SceneLoader::save(this->guiScene.get());
 }
 
-bool ScenesManager::isSceneNew()
+bool ScenesManager::isSceneStored()
 {
-    return this->isBaseSceneNew(this->scene.get());
+    return this->isBaseSceneStored(this->scene.get());
 }
 
-bool ScenesManager::isGuiSceneNew()
+bool ScenesManager::isGuiSceneStored()
 {
-    return this->isBaseSceneNew(this->guiScene.get());
+    return this->isBaseSceneStored(this->guiScene.get());
 }
 
-bool ScenesManager::isBaseSceneNew(AScene* baseScene)
+bool ScenesManager::isBaseSceneStored(AScene* baseScene)
 {
     bool exists = FileUtils::fileExists(baseScene->filePath);
-    bool result = !exists || !FileUtils::isPathFromGameContent(baseScene->filePath);
+    bool result = exists && FileUtils::isPathFromGameContent(baseScene->filePath);
 
     return result;
 }

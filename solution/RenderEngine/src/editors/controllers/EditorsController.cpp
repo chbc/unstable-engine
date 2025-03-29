@@ -47,7 +47,7 @@ void EditorsController::openGui()
 void EditorsController::saveScene()
 {
 	std::string resultFilePath;
-	if (this->scenesManager->isSceneNew())
+	if (!this->scenesManager->isSceneStored())
 	{
 		MultimediaManager::saveFileDialog("Save Scene", "Scene Files (*.scene)\0*.scene\0", resultFilePath);
 	}
@@ -58,7 +58,7 @@ void EditorsController::saveScene()
 void EditorsController::saveGui()
 {
 	std::string resultFilePath;
-	if (this->scenesManager->isGuiSceneNew())
+	if (!this->scenesManager->isGuiSceneStored())
 	{
 		MultimediaManager::saveFileDialog("Save GUI", "Gui Files (*.gui)\0*.gui\0", resultFilePath);
 	}

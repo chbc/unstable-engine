@@ -5,10 +5,10 @@
 
 namespace FS = std::filesystem;
 
-std::string contentPath;
-std::string gameContentPath;
-std::string configPath;
-std::string iconsPath;
+FS::path contentPath;
+FS::path gameContentPath;
+FS::path configPath;
+FS::path iconsPath;
 
 #ifdef __ANDROID__
 	#include <SDL.h>
@@ -58,15 +58,10 @@ void loadFile(const std::string& filePath, std::string& dest)
 void initializeStoragePaths()
 {
 	FS::path bin = FS::current_path();
-	FS::path content = bin / ".." / "content/";
-	FS::path gameContent = bin / ".." / "content/game/";
-	FS::path config = bin / ".." / "config/";
-	FS::path icons = bin / ".." / "content/engine/icons/";
-
-	contentPath = FS::absolute(content).string();
-	gameContentPath = FS::absolute(gameContent).string();
-	configPath = FS::absolute(config).string();
-	iconsPath = FS::absolute(icons).string();
+	contentPath = FS::absolute(bin / ".." / "content/");
+	gameContentPath = FS::absolute(bin / ".." / "content/game/");
+	configPath = FS::absolute(bin / ".." / "config/");
+	iconsPath = FS::absolute(bin / ".." / "content/engine/icons/");
 }
 
 void loadContentFile(const std::string& filePath, std::string& dest)
@@ -126,7 +121,7 @@ void getFileAndIconPaths(std::string directoryPath, std::vector<std::string>& ic
 		std::string iconName;
 		const auto& extension = item.path().extension();
 		bool hasIcon = true;
-		std::string iconPath;
+		FS::path iconPath;
 		if (item.is_directory())
 		{
 			iconName = "folder_icon";
@@ -145,7 +140,7 @@ void getFileAndIconPaths(std::string directoryPath, std::vector<std::string>& ic
 		}
 		else if ((extension == ".png") || (extension == "jpg") || (extension == "jpeg"))
 		{
-			iconPath = item.path().string();
+			iconPath = item.path();
 			hasIcon = false;
 		}
 		else
@@ -155,10 +150,10 @@ void getFileAndIconPaths(std::string directoryPath, std::vector<std::string>& ic
 
 		if (hasIcon)
 		{
-			iconPath = iconsPath + iconName + ".png";
+			iconPath = iconsPath / iconName.append(".png");
 		}
 
-		iconPaths.emplace_back(iconPath);
+		iconPaths.emplace_back(iconPath.string());
 		filePaths.emplace_back(item.path().string());
 	}
 }
@@ -182,7 +177,7 @@ std::string getAbsoluteContentPath(const std::string& filePath)
 		return filePath;
 	}
 
-	return (contentPath + filePath);
+	return (contentPath / filePath).string();
 }
 
 std::string getAbsoluteConfigPath(const std::string& filePath)
@@ -192,7 +187,7 @@ std::string getAbsoluteConfigPath(const std::string& filePath)
 		return filePath;
 	}
 
-	return (configPath + filePath);
+	return (configPath / filePath).string();
 }
 
 bool isDirectory(const std::string& filePath)
@@ -208,7 +203,7 @@ bool isPathFromGameContent(const std::string& filePath)
 
 	if (FS::path{ filePath }.is_absolute())
 	{
-		pathToEvaluate = gameContentPath;
+		pathToEvaluate = gameContentPath.string();
 	}
 	
 	int stringPosition = filePath.find(pathToEvaluate);

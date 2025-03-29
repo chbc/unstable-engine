@@ -39,9 +39,9 @@ private:
     void loadGuiScene(const char* scenePath);
     void saveScene(std::string scenePath);
     void saveGuiScene(std::string scenePath);
-    bool isSceneNew();
-    bool isGuiSceneNew();
-    bool isBaseSceneNew(AScene* baseScene);
+    bool isSceneStored();
+    bool isGuiSceneStored();
+    bool isBaseSceneStored(AScene* baseScene);
     Entity* createMeshEntity(const char* name, const char* filePath);
     void removeDestroyedEntities();
     void cleanUp();
