@@ -47,7 +47,7 @@ Entity* EntityLoader::load(const char* filePath, std::string name)
 	}
 
 	Entity* result = Entity::Create(name, className.c_str());
-	result->filePath = filePath;
+	result->filePath = FileUtils::getContentRelativePath(filePath);
 	EntityParser::deserialize(root, result);
 	result->setStored(true);
 
