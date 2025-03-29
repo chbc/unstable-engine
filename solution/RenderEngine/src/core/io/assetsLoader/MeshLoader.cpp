@@ -24,7 +24,7 @@ Mesh* MeshLoader::internalLoad(const char* filePath)
 {
 	std::vector<TVertex> vertexData;
 	std::vector<uint32_t> indices;
-	std::string absolutePath = FileUtils::getAbsoluteContentPath(filePath);
+	std::string absolutePath = FileUtils::getContentAbsolutePath(filePath);
 	std::ifstream readStream(absolutePath, std::ios::out | std::ios::binary);
 	if (readStream)
 	{

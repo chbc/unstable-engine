@@ -89,7 +89,7 @@ void SDLAPI::delay(unsigned int timeMS)
 void* SDLAPI::loadTexture(const std::string& filePath, uint32_t* outWidth, uint32_t* outHeight, uint8_t* outBpp)
 {
 	void* result = nullptr;
-	std::string absolutePath = FileUtils::getAbsoluteContentPath(filePath);
+	std::string absolutePath = FileUtils::getContentAbsolutePath(filePath);
 	SDL_Surface* surface = IMG_Load(absolutePath.c_str());
 
 	if (surface == nullptr)

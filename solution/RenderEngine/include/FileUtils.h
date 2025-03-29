@@ -15,8 +15,9 @@ namespace FileUtils
     void getFileAndIconPaths(std::string directoryPath, std::vector<std::string>& iconPaths, std::vector<std::string>& filePaths);
     std::string getFileName(const std::string& filePath);
     bool fileExists(const std::string& filePath);
-	std::string getAbsoluteContentPath(const std::string& filePath);
-    std::string getAbsoluteConfigPath(const std::string& filePath);
+	std::string getContentAbsolutePath(const std::string& filePath);
+    std::string getConfigAbsolutePath(const std::string& filePath);
+    std::string getContentRelativePath(const std::string& filePath);
 	bool isDirectory(const std::string& filePath);
     bool isPathFromGameContent(const std::string& filePath);
 }

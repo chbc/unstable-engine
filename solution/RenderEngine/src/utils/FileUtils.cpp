@@ -66,7 +66,7 @@ void initializeStoragePaths()
 
 void loadContentFile(const std::string& filePath, std::string& dest)
 {
-	std::string absolutePath = getAbsoluteContentPath(filePath);
+	std::string absolutePath = getContentAbsolutePath(filePath);
 	std::ifstream in{ absolutePath };
 
 	if (!in.is_open())
@@ -85,7 +85,7 @@ void loadContentFile(const std::string& filePath, std::string& dest)
 
 void loadConfigFile(const std::string& filePath, std::vector<std::string>& lines)
 {
-	std::string absolutePath = getAbsoluteConfigPath(filePath);
+	std::string absolutePath = getConfigAbsolutePath(filePath);
 	std::ifstream in(absolutePath);
 
 	if (!in.is_open())
@@ -103,7 +103,7 @@ void loadConfigFile(const std::string& filePath, std::vector<std::string>& lines
 
 void saveContentFile(const std::string& filePath, const std::string& content)
 {
-	std::string absolutePath = getAbsoluteContentPath(filePath);
+	std::string absolutePath = getContentAbsolutePath(filePath);
 	std::ofstream out{ absolutePath };
 
 	if (!out.is_open())
@@ -170,7 +170,7 @@ bool fileExists(const std::string& filePath)
 	return FS::exists(systemPath);
 }
 
-std::string getAbsoluteContentPath(const std::string& filePath)
+std::string getContentAbsolutePath(const std::string& filePath)
 {
 	if (FS::path{ filePath }.is_absolute())
 	{
@@ -180,7 +180,7 @@ std::string getAbsoluteContentPath(const std::string& filePath)
 	return (contentPath / filePath).string();
 }
 
-std::string getAbsoluteConfigPath(const std::string& filePath)
+std::string getConfigAbsolutePath(const std::string& filePath)
 {
 	if (FS::path{ filePath }.is_absolute())
 	{
@@ -188,6 +188,11 @@ std::string getAbsoluteConfigPath(const std::string& filePath)
 	}
 
 	return (configPath / filePath).string();
+}
+
+std::string getContentRelativePath(const std::string& filePath)
+{
+	return FS::proximate(FS::path{ filePath }, contentPath).string();
 }
 
 bool isDirectory(const std::string& filePath)

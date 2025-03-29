@@ -37,8 +37,8 @@ private:
     void update(float elapsedTime);
     void loadScene(const char* scenePath);
     void loadGuiScene(const char* scenePath);
-    void saveScene(std::string scenePath);
-    void saveGuiScene(std::string scenePath);
+    void saveScene(std::string scenePath = "");
+    void saveGuiScene(std::string scenePath = "");
     bool isSceneStored();
     bool isGuiSceneStored();
     bool isBaseSceneStored(AScene* baseScene);

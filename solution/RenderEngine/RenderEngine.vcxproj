@@ -708,7 +708,6 @@
     <ClInclude Include="thirdParties\imgui\imstb_rectpack.h" />
     <ClInclude Include="thirdParties\imgui\imstb_textedit.h" />
     <ClInclude Include="thirdParties\imgui\imstb_truetype.h" />
-    <ClInclude Include="Vec2EditorProperty.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Entity.tpp" />

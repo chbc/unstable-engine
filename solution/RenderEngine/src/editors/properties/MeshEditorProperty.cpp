@@ -17,12 +17,12 @@ MeshEditorProperty::MeshEditorProperty(const char* title, Mesh** arg_value)
 void MeshEditorProperty::onDraw()
 {
 	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Text((*this->value)->filePath.c_str());
+	ImGui::Text((*this->value)->getFilePath().c_str());
 }
 
 void MeshEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
 {
-	propertyNode << (*this->value)->filePath;
+	propertyNode << (*this->value)->getFilePath();
 }
 
 void MeshEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
@@ -39,7 +39,7 @@ void MeshEditorProperty::copy(AEditorProperty* destination)
 	MeshEditorProperty* derivedProperty = static_cast<MeshEditorProperty*>(destination);
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-	*derivedProperty->value = assetsManager->loadMesh((*this->value)->filePath.c_str());
+	*derivedProperty->value = assetsManager->loadMesh((*this->value)->getFilePath().c_str());
 }
 
 } // namespace

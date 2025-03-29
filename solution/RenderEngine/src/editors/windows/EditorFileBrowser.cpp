@@ -17,7 +17,7 @@ EditorFileBrowser::EditorFileBrowser(EditorsController* arg_controller)
 
 void EditorFileBrowser::onInit()
 {
-	this->gameContentFolder = FileUtils::getAbsoluteContentPath("game");
+	this->gameContentFolder = FileUtils::getContentAbsolutePath("game");
 	this->controller->refreshFileIcons(this->gameContentFolder, this->fileIcons);
 }
 

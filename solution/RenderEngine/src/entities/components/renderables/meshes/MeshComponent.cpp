@@ -46,7 +46,7 @@ void MeshComponent::load(const char* file)
     AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
     this->mesh = assetsManager->loadMesh(file);
 
-	std::string materialPath = FileUtils::getAbsoluteContentPath("engine/media/DefaultMaterial.mat");
+	std::string materialPath = FileUtils::getContentAbsolutePath("engine/media/DefaultMaterial.mat");
     this->material = assetsManager->loadMaterial(materialPath.c_str());
 }
 

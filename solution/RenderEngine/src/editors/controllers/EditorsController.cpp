@@ -16,10 +16,10 @@ namespace sre
 EditorsController::EditorsController(ScenesManager* arg_scenesManager)
 	: scenesManager(arg_scenesManager)
 {
-	this->cubeMeshPath = FileUtils::getAbsoluteContentPath("engine/media/Cube.mesh");
-	this->planeMeshPath = FileUtils::getAbsoluteContentPath("engine/media/Plane.mesh");
-	this->sphereMeshPath = FileUtils::getAbsoluteContentPath("engine/media/Sphere.mesh");
-	this->guiImagePath = FileUtils::getAbsoluteContentPath("engine/media/whiteTexture.png");
+	this->cubeMeshPath = FileUtils::getContentAbsolutePath("engine/media/Cube.mesh");
+	this->planeMeshPath = FileUtils::getContentAbsolutePath("engine/media/Plane.mesh");
+	this->sphereMeshPath = FileUtils::getContentAbsolutePath("engine/media/Sphere.mesh");
+	this->guiImagePath = FileUtils::getContentAbsolutePath("engine/media/whiteTexture.png");
 }
 
 void EditorsController::openScene()
@@ -46,24 +46,37 @@ void EditorsController::openGui()
 
 void EditorsController::saveScene()
 {
-	std::string resultFilePath;
-	if (!this->scenesManager->isSceneStored())
+	if (this->scenesManager->isSceneStored())
 	{
-		MultimediaManager::saveFileDialog("Save Scene", "Scene Files (*.scene)\0*.scene\0", resultFilePath);
+		this->scenesManager->saveScene();
 	}
-
-	this->scenesManager->saveScene(resultFilePath);
+	else
+	{
+		std::string resultFilePath;
+		MultimediaManager::saveFileDialog("Save Scene", "Scene Files (*.scene)\0*.scene\0", resultFilePath);
+		if (!resultFilePath.empty())
+		{
+			this->scenesManager->saveScene(resultFilePath);
+		}
+	}
 }
 
 void EditorsController::saveGui()
 {
-	std::string resultFilePath;
-	if (!this->scenesManager->isGuiSceneStored())
+	if (this->scenesManager->isGuiSceneStored())
 	{
-		MultimediaManager::saveFileDialog("Save GUI", "Gui Files (*.gui)\0*.gui\0", resultFilePath);
+		this->scenesManager->saveGuiScene();
+		
 	}
-
-	this->scenesManager->saveGuiScene(resultFilePath);
+	else
+	{
+		std::string resultFilePath;
+		MultimediaManager::saveFileDialog("Save GUI", "Gui Files (*.gui)\0*.gui\0", resultFilePath);
+		if (!resultFilePath.empty())
+		{
+			this->scenesManager->saveGuiScene(resultFilePath);
+		}
+	}
 }
 
 void EditorsController::createCube()

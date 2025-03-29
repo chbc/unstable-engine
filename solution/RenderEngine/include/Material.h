@@ -26,7 +26,7 @@ private:
     bool castShadow;
 
 private:
-    Material(std::string arg_fileName);
+    Material(std::string arg_filePath);
 
 public:
     template <typename T> T* addComponent();

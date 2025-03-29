@@ -1013,9 +1013,6 @@
     <ClInclude Include="include\ABaseTextureMaterialComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vec2EditorProperty.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\EditorFileBrowser.h">
       <Filter>Header Files</Filter>
     </ClInclude>

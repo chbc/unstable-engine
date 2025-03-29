@@ -61,7 +61,6 @@ void MaterialEditorProperty::drawSubProperties()
 	}
 }
 
-
 void MaterialEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
 {
 	propertyNode << (*this->value)->filePath;
