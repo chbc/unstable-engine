@@ -31,32 +31,37 @@ void ModelLoader::load(const char* fileName, std::vector<UPTR<MeshData>>& result
 		throw "[ModelLoader] - Load Error: " + std::string(importer.GetErrorString());
 	}
 
-    processNode(scene, scene->mRootNode, result);
+	aiMatrix4x4 transform;
+    processNode(scene, transform, scene->mRootNode, result);
 }
 
-void ModelLoader::processNode(const aiScene* scene, aiNode *node, std::vector<UPTR<MeshData>>& result)
+void ModelLoader::processNode(const aiScene* scene, aiMatrix4x4& transform, aiNode *node, std::vector<UPTR<MeshData>>& result)
 {
     for(uint32_t i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        MeshData* newMesh = processMesh(scene, mesh);
+        MeshData* newMesh = processMesh(transform, mesh);
 		result.emplace_back(newMesh);
     }
 
     for(uint32_t i = 0; i < node->mNumChildren; i++)
     {
-        processNode(scene, node->mChildren[i], result);
+		aiNode* childNode = node->mChildren[i];
+		transform = transform * childNode->mTransformation;
+        processNode(scene, transform, childNode, result);
     }
 }
 
-MeshData* ModelLoader::processMesh(const aiScene* scene, aiMesh* inputMesh)
+MeshData* ModelLoader::processMesh(aiMatrix4x4& transform, aiMesh* inputMesh)
 {
 	std::vector<VertexData> vertexData;
 	for(uint32_t i = 0; i < inputMesh->mNumVertices; i++)
 	{
 		VertexData newData;
-		newData.position = glm::vec3(inputMesh->mVertices[i].x, inputMesh->mVertices[i].y, inputMesh->mVertices[i].z);
-		newData.normal = glm::vec3(inputMesh->mNormals[i].x, inputMesh->mNormals[i].y, inputMesh->mNormals[i].z);
+		aiVector3D transformedPos = transform * inputMesh->mVertices[i];
+		aiVector3D transformedNormal = transform * inputMesh->mNormals[i];
+		newData.position = glm::vec3(transformedPos.x, transformedPos.y, transformedPos.z);
+		newData.normal = glm::vec3(transformedNormal.x, transformedNormal.y, transformedNormal.z);
 
 		if (inputMesh->mTextureCoords[0])
 		{
