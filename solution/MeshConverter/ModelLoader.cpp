@@ -9,7 +9,7 @@
 namespace sre
 {
 
-void ModelLoader::load(const char* fileName, std::vector<UPTR<MeshData>>& result)
+void ModelLoader::load(const char* fileName, std::vector<MeshData>& result)
 {
 	std::ifstream fin(fileName);
 	if (fin.fail())
@@ -35,12 +35,12 @@ void ModelLoader::load(const char* fileName, std::vector<UPTR<MeshData>>& result
     processNode(scene, transform, scene->mRootNode, result);
 }
 
-void ModelLoader::processNode(const aiScene* scene, aiMatrix4x4& transform, aiNode *node, std::vector<UPTR<MeshData>>& result)
+void ModelLoader::processNode(const aiScene* scene, aiMatrix4x4& transform, aiNode *node, std::vector<MeshData>& result)
 {
     for(uint32_t i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        MeshData* newMesh = processMesh(transform, mesh);
+        MeshData newMesh = processMesh(transform, mesh);
 		result.emplace_back(newMesh);
     }
 
@@ -52,7 +52,7 @@ void ModelLoader::processNode(const aiScene* scene, aiMatrix4x4& transform, aiNo
     }
 }
 
-MeshData* ModelLoader::processMesh(aiMatrix4x4& transform, aiMesh* inputMesh)
+MeshData ModelLoader::processMesh(aiMatrix4x4& transform, aiMesh* inputMesh)
 {
 	std::vector<VertexData> vertexData;
 	for(uint32_t i = 0; i < inputMesh->mNumVertices; i++)
@@ -88,7 +88,7 @@ MeshData* ModelLoader::processMesh(aiMatrix4x4& transform, aiMesh* inputMesh)
 		}
 	}
 
-	return new MeshData{ vertexData, indices };
+	return MeshData{ vertexData, indices };
 }
 
 } // namespace

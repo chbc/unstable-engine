@@ -8,8 +8,7 @@
 using namespace sre;
 namespace FS = std::filesystem;
 
-void print(MeshData* mesh);
-void saveMesh(MeshData* mesh, const char* fileName);
+void saveMesh(const MeshData& mesh, const char* fileName);
 
 int main(int argc, const char* args[])
 {
@@ -20,7 +19,7 @@ int main(int argc, const char* args[])
         return 1;
     }
 
-    std::vector<UPTR<MeshData>> meshes;
+    std::vector<MeshData> meshes;
     ModelLoader().load(args[1], meshes);
 
     FS::path systemPath{ args[1] };
@@ -28,7 +27,7 @@ int main(int argc, const char* args[])
 
     for (size_t i = 0; i < meshes.size(); ++i)
     {
-        MeshData* item = meshes[i].get();
+        MeshData& item = meshes[i];
         if (i == 0)
         {
             saveMesh(item, destFileName.c_str());
@@ -43,10 +42,10 @@ int main(int argc, const char* args[])
     return 0;
 }
 
-void saveMesh(MeshData* mesh, const char* fileName)
+void saveMesh(const MeshData& mesh, const char* fileName)
 {
-    size_t vertexSize = mesh->vertexData.size();
-    size_t indicesSize = mesh->indices.size();
+    size_t vertexSize = mesh.vertexData.size();
+    size_t indicesSize = mesh.indices.size();
 
     std::string filePath{ fileName };
 
@@ -54,13 +53,13 @@ void saveMesh(MeshData* mesh, const char* fileName)
     if (saveStream)
     {
         saveStream.write(reinterpret_cast<const char*>(&vertexSize), sizeof(size_t));
-        for (const VertexData& item : mesh->vertexData)
+        for (const VertexData& item : mesh.vertexData)
         {
             saveStream.write(reinterpret_cast<const char*>(&item), sizeof(VertexData));
         }
 
         saveStream.write(reinterpret_cast<const char*>(&indicesSize), sizeof(size_t));
-        for (const uint32_t& item : mesh->indices)
+        for (const uint32_t& item : mesh.indices)
         {
             saveStream.write(reinterpret_cast<const char*>(&item), sizeof(uint16_t));
         }
