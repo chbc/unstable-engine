@@ -19,8 +19,8 @@ public:
     void load(const char* fileName, std::vector<MeshData>& result);
 
 private:
-    void processNode(const aiScene *scene, aiMatrix4x4& transform, aiNode* node, std::vector<MeshData>& result);
-    MeshData processMesh(aiMatrix4x4& transform, aiMesh *inputMesh);
+    void processNode(const aiScene *scene, const aiMatrix4x4& nodeTransform, aiNode* node, std::vector<MeshData>& result);
+    MeshData processMesh(const aiMatrix4x4& nodeTransform, aiMesh *inputMesh);
 
 friend class Scene;
 };

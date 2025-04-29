@@ -31,35 +31,35 @@ void ModelLoader::load(const char* fileName, std::vector<MeshData>& result)
 		throw "[ModelLoader] - Load Error: " + std::string(importer.GetErrorString());
 	}
 
-	aiMatrix4x4 transform;
+	aiMatrix4x4 transform = scene->mRootNode->mTransformation;
     processNode(scene, transform, scene->mRootNode, result);
 }
 
-void ModelLoader::processNode(const aiScene* scene, aiMatrix4x4& transform, aiNode *node, std::vector<MeshData>& result)
+void ModelLoader::processNode(const aiScene* scene, const aiMatrix4x4& nodeTransform, aiNode *node, std::vector<MeshData>& result)
 {
     for(uint32_t i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        MeshData newMesh = processMesh(transform, mesh);
+        MeshData newMesh = processMesh(nodeTransform, mesh);
 		result.emplace_back(newMesh);
     }
 
     for(uint32_t i = 0; i < node->mNumChildren; i++)
     {
 		aiNode* childNode = node->mChildren[i];
-		transform = transform * childNode->mTransformation;
-        processNode(scene, transform, childNode, result);
+		aiMatrix4x4 childTransform = nodeTransform * childNode->mTransformation;
+        processNode(scene, childTransform, childNode, result);
     }
 }
 
-MeshData ModelLoader::processMesh(aiMatrix4x4& transform, aiMesh* inputMesh)
+MeshData ModelLoader::processMesh(const aiMatrix4x4& nodeTransform, aiMesh* inputMesh)
 {
 	std::vector<VertexData> vertexData;
 	for(uint32_t i = 0; i < inputMesh->mNumVertices; i++)
 	{
 		VertexData newData;
-		aiVector3D transformedPos = transform * inputMesh->mVertices[i];
-		aiVector3D transformedNormal = transform * inputMesh->mNormals[i];
+		aiVector3D transformedPos = nodeTransform * inputMesh->mVertices[i];
+		aiVector3D transformedNormal = nodeTransform * inputMesh->mNormals[i];
 		newData.position = glm::vec3(transformedPos.x, transformedPos.y, transformedPos.z);
 		newData.normal = glm::vec3(transformedNormal.x, transformedNormal.y, transformedNormal.z);
 
@@ -71,8 +71,10 @@ MeshData ModelLoader::processMesh(aiMatrix4x4& transform, aiMesh* inputMesh)
 
 		if ((inputMesh->mTangents != nullptr) && (inputMesh->mBitangents != nullptr))
 		{
-			newData.tangent = glm::vec3(inputMesh->mTangents[i].x, inputMesh->mTangents[i].y, inputMesh->mTangents[i].z);
-			newData.bitangent = glm::vec3(inputMesh->mBitangents[i].x, inputMesh->mBitangents[i].y, inputMesh->mBitangents[i].z);
+			aiVector3D transformedTangent = nodeTransform * inputMesh->mTangents[i];
+			aiVector3D transformedBitangent = nodeTransform * inputMesh->mBitangents[i];
+			newData.tangent = glm::vec3(transformedTangent.x, transformedTangent.y, transformedTangent.z);
+			newData.bitangent = glm::vec3(transformedBitangent.x, transformedBitangent.y, transformedBitangent.z);
 		}
 
 		vertexData.emplace_back(newData);
