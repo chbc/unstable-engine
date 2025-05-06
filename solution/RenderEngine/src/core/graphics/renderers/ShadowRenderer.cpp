@@ -117,10 +117,11 @@ void ShadowRenderer::renderDirectionalLightShadows()
             const glm::mat4& modelMatrix = transform->getMatrix();
             this->shaderManager->setMat4(this->directionalLightDepthShader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
-            this->graphicsWrapper->bindVAO(item->mesh->meshData->vao, item->mesh->meshData->vbo);
+            MeshData* mesh = item->mesh;
+            this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
 
             this->graphicsWrapper->enableVertexPositions();
-            this->graphicsWrapper->drawElement(item->mesh->meshData->ebo, item->mesh->meshData->indices.size());
+            this->graphicsWrapper->drawElement(mesh->ebo, mesh->indices.size());
             this->graphicsWrapper->disableVertexPositions();
         }
     }
@@ -154,10 +155,11 @@ void ShadowRenderer::renderPointLightShadows()
             glm::mat4 modelMatrix = transform->getMatrix();
             this->shaderManager->setMat4(this->pointLightDepthShader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
-            this->graphicsWrapper->bindVAO(item->mesh->meshData->vao, item->mesh->meshData->vbo);
+            MeshData* mesh = item->mesh;
+            this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
 
             this->graphicsWrapper->enableVertexPositions();
-            this->graphicsWrapper->drawElement(item->mesh->meshData->ebo, item->mesh->meshData->indices.size());
+            this->graphicsWrapper->drawElement(mesh->ebo, mesh->indices.size());
             this->graphicsWrapper->disableVertexPositions();
         }
     }

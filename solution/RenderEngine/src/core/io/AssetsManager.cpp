@@ -23,23 +23,30 @@ void AssetsManager::releaseEntity(Entity* entity)
 	this->releaseAsset(this->entitiesMap, entity);
 }
 
-Mesh* AssetsManager::loadMesh(const char* filePath)
+MeshData* AssetsManager::loadMesh(const char* filePath, const char* meshName)
 {
-	Mesh* result = this->loadAsset<MeshesMapType, MeshLoader, Mesh>(this->meshesMap, filePath);
+	Model* model = this->loadAsset<ModelsMapType, MeshLoader, Model>(this->modelsMap, filePath);
+	MeshData* result = model->getMesh(meshName);
 	return result;
 }
 
-GUIMeshData* AssetsManager::loadGUIMeshData()
+MeshData2D* AssetsManager::loadMesh2D()
 {
 	const char* GUI_PLANE_PATH = "../content/engine/media/GUIPlane.mesh";
-	Mesh* result = this->loadAsset<MeshesMapType, GIUMeshLoader, Mesh>(this->meshesMap, GUI_PLANE_PATH);
-	return static_cast<GUIMeshData*>(result->meshData.get());
+	Model2D* result = this->loadAsset<Models2DMapType, GUIMeshLoader, Model2D>(this->models2DMap, GUI_PLANE_PATH);
+	return result->getMesh("Plane");
 }
 
-void AssetsManager::releaseMesh(Mesh* mesh)
+void AssetsManager::releaseModel(const char* filePath)
 {
-	std::function<void(Mesh*)> releaseCallback = [&](Mesh* item) { MeshLoader().release(item); };
-	this->releaseAsset(this->meshesMap, mesh, releaseCallback);
+	std::function<void(Model*)> releaseCallback = [&](Model* item) { MeshLoader().release(item); };
+	this->releaseAsset(this->modelsMap, filePath, releaseCallback);
+}
+
+void AssetsManager::releaseModel2D(Model2D* model)
+{
+	std::function<void(Model2D*)> releaseCallback = [&](Model2D* item) { GUIMeshLoader().release(item); };
+	this->releaseAsset(this->models2DMap, model, releaseCallback);
 }
 
 Material* AssetsManager::loadMaterial(const char* filePath)
@@ -70,11 +77,18 @@ void AssetsManager::preRelease()
 	// Entities
 	this->entitiesMap.clear();
 
-	// Meshes
-	for (auto& it = this->meshesMap.begin(); it != this->meshesMap.end();)
+	// Models
+	for (auto& it = this->modelsMap.begin(); it != this->modelsMap.end();)
 	{
 		MeshLoader().release((*it).second.second.get());
-		it = this->meshesMap.erase(it);
+		it = this->modelsMap.erase(it);
+	}
+
+	// Models2D
+	for (auto& it = this->models2DMap.begin(); it != this->models2DMap.end();)
+	{
+		GUIMeshLoader().release((*it).second.second.get());
+		it = this->models2DMap.erase(it);
 	}
 
 	// Materials

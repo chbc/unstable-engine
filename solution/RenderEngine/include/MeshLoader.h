@@ -1,25 +1,36 @@
 #pragma once
 
-#include "Mesh.h"
+#include "Model.h"
 
 namespace sre
 {
 
-class MeshLoader
+class ABaseMeshLoader
 {
-public:
-	virtual Mesh* load(const char* filePath);
-	void release(Mesh* mesh);
-
 protected:
+	template <typename TModel, typename TMesh, typename TVertex>
+	TModel* internalLoad(const char* filePath);
+
+	template <typename TModel, typename TMesh>
+	void internalRelease(TModel* model);
+
+private:
 	template <typename TMesh, typename TVertex>
-	Mesh* internalLoad(const char* filePath);
+	TMesh* loadMesh(std::ifstream& readStream);
 };
 
-class GIUMeshLoader : public MeshLoader
+class MeshLoader : public ABaseMeshLoader
 {
 public:
-	Mesh* load(const char* filePath) override;
+	Model* load(const char* filePath);
+	void release(Model* model);
+};
+
+class GUIMeshLoader : public ABaseMeshLoader
+{
+public:
+	Model2D* load(const char* filePath);
+	void release(Model2D* model);
 };
 
 } // namespace

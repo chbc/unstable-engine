@@ -20,8 +20,8 @@ namespace sre
         void init() override;
         void createVAO(MeshData* meshData) override;
         void createEBO(MeshData* meshData) override;
-        void createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic) override;
-        void createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic) override;
+        void createGUIVAO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) override;
+        void createGUIEBO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) override;
 
         void bindVAO(uint32_t vao, uint32_t vbo) override;
         void setVertexAttributePointer(int attributeLocation, size_t itemSize, size_t dataSize, void* dataOffset) override;
@@ -39,7 +39,7 @@ namespace sre
         void activateSpecularTexture(uint32_t textureId) override;
         void activateAOTexture(uint32_t textureId) override;
 
-        void setupBufferSubData(GUIMeshData* meshData) override;
+        void setupBufferSubData(MeshData2D* meshData) override;
 
         void drawElement(uint32_t indicesId, size_t indicesSize) override;
 

@@ -134,9 +134,9 @@ bool ScenesManager::isBaseSceneStored(AScene* baseScene)
     return result;
 }
 
-Entity* ScenesManager::createMeshEntity(const char* name, const char* filePath)
+Entity* ScenesManager::createMeshEntity(const char* name, const char* filePath, const char* meshName)
 {
-    return this->scene->createMeshEntity(name, filePath);
+    return this->scene->createMeshEntity(name, filePath, meshName);
 }
 
 void ScenesManager::removeDestroyedEntities()

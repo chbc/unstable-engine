@@ -31,8 +31,8 @@ DOFRendererComponent::DOFRendererComponent(PostProcessingComponent* component)
 	glm::vec2 pixelSize(width, height);
 	glm::vec2 screenBasedSize = SingletonsManager::getInstance()->get<MultimediaManager>()->getNormalizedSize(pixelSize);
 
-	GUIMeshData* quad = PrimitiveMeshFactory().createPlaneBottomUp(screenBasedSize);
-	this->meshData = UPTR<GUIMeshData>{ quad };
+	MeshData2D* quad = PrimitiveMeshFactory().createPlaneBottomUp(screenBasedSize);
+	this->meshData = UPTR<MeshData2D>{ quad };
 
 	this->graphicsWrapper->createGUIVAO(quad, 0, false);
 	this->graphicsWrapper->createGUIEBO(quad, 0, false);

@@ -375,7 +375,7 @@
     <ClCompile Include="src\core\multimedia\textures\TextureCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\meshData\Mesh.cpp">
+    <ClCompile Include="src\core\graphics\meshData\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\EntityTypes.cpp">
@@ -983,7 +983,7 @@
     <ClInclude Include="include\MeshLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mesh.h">
+    <ClInclude Include="include\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\EditorsController.h">

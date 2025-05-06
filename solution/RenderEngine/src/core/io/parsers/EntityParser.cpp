@@ -85,19 +85,21 @@ void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, Entity* entity
 		std::ostringstream keyStream;
 		keyStream << propertyNode.key();
 		std::string key = keyStream.str();
-		if (key == "Components")
-		{
-			deserializeComponents(propertyNode, entity);
-		}
-		else if (key == "Entities")
-		{
-			deserializeChildren(propertyNode, entity);
-		}
-
 		AEditorProperty* editorProperty = entity->findProperty(key);
 		if (editorProperty != nullptr)
 		{
 			editorProperty->deserialize(propertyNode);
+		}
+		else
+		{
+			if (key == "Components")
+			{
+				deserializeComponents(propertyNode, entity);
+			}
+			else if (key == "Entities")
+			{
+				deserializeChildren(propertyNode, entity);
+			}
 		}
 	}
 }

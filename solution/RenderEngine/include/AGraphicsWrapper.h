@@ -8,10 +8,10 @@
 namespace sre
 {
 
-struct GUIVertexData;
+struct VertexData2D;
 struct AMeshData;
 struct MeshData;
-struct GUIMeshData;
+struct MeshData2D;
 
 class AGraphicsWrapper : ASingleton
 {
@@ -20,8 +20,8 @@ protected:
 
     virtual void createVAO(MeshData* meshData) =0;
     virtual void createEBO(MeshData* meshData) =0;
-    virtual void createGUIVAO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic) =0;
-    virtual void createGUIEBO(GUIMeshData* meshData, uint32_t maxItems, bool isDynamic) =0;
+    virtual void createGUIVAO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) =0;
+    virtual void createGUIEBO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) =0;
 
     virtual void bindVAO(uint32_t vao, uint32_t vbo) =0;
     virtual void setVertexAttributePointer(int attributeLocation, size_t itemSize, size_t dataSize, void* dataOffset) = 0;
@@ -40,7 +40,7 @@ protected:
     virtual void activateSpecularTexture(uint32_t textureId) =0;
     virtual void activateAOTexture(uint32_t textureId) =0;
 
-    virtual void setupBufferSubData(GUIMeshData* meshData) =0;
+    virtual void setupBufferSubData(MeshData2D* meshData) =0;
 
     virtual void drawElement(uint32_t indicesId, size_t indicesSize) = 0;
 
@@ -101,7 +101,7 @@ friend class ShaderManager;
 friend class SingletonsManager;
 friend class TextureLoader;
 friend class TextureCreator;
-friend class MeshLoader;
+friend class ABaseMeshLoader;
 
 friend class MeshRenderer;
 friend class GUIRenderer;

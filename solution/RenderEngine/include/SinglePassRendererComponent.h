@@ -14,7 +14,7 @@ private:
 	class AGraphicsWrapper* graphicsWrapper;
 
 	class Shader* shader;
-	UPTR<struct GUIMeshData> meshData;
+	UPTR<struct MeshData2D> meshData;
 	uint32_t textureId;
 
 private:

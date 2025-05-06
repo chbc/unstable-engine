@@ -31,31 +31,31 @@ void ModelLoader::load(const char* fileName, std::vector<MeshData>& result)
 		throw "[ModelLoader] - Load Error: " + std::string(importer.GetErrorString());
 	}
 
-	aiMatrix4x4 transform = scene->mRootNode->mTransformation;
-    processNode(scene, transform, scene->mRootNode, result);
+	aiMatrix4x4 transform;
+    processNode(scene, scene->mRootNode, transform, result);
 }
 
-void ModelLoader::processNode(const aiScene* scene, const aiMatrix4x4& nodeTransform, aiNode *node, std::vector<MeshData>& result)
+void ModelLoader::processNode(const aiScene* scene, aiNode *node, aiMatrix4x4& nodeTransform, std::vector<MeshData>& result)
 {
-    for(uint32_t i = 0; i < node->mNumMeshes; i++)
+	nodeTransform = nodeTransform * node->mTransformation;
+
+    for (uint32_t i = 0; i < node->mNumMeshes; i++)
     {
-        aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        MeshData newMesh = processMesh(nodeTransform, mesh);
+        aiMesh* inputMesh = scene->mMeshes[node->mMeshes[i]];
+		MeshData newMesh = processMesh(inputMesh, nodeTransform);
 		result.emplace_back(newMesh);
     }
 
-    for(uint32_t i = 0; i < node->mNumChildren; i++)
+    for (uint32_t i = 0; i < node->mNumChildren; i++)
     {
-		aiNode* childNode = node->mChildren[i];
-		aiMatrix4x4 childTransform = nodeTransform * childNode->mTransformation;
-        processNode(scene, childTransform, childNode, result);
+        processNode(scene, node->mChildren[i], nodeTransform, result);
     }
 }
 
-MeshData ModelLoader::processMesh(const aiMatrix4x4& nodeTransform, aiMesh* inputMesh)
+MeshData ModelLoader::processMesh(aiMesh* inputMesh, aiMatrix4x4& nodeTransform)
 {
 	std::vector<VertexData> vertexData;
-	for(uint32_t i = 0; i < inputMesh->mNumVertices; i++)
+	for (uint32_t i = 0; i < inputMesh->mNumVertices; i++)
 	{
 		VertexData newData;
 		aiVector3D transformedPos = nodeTransform * inputMesh->mVertices[i];
@@ -90,7 +90,18 @@ MeshData ModelLoader::processMesh(const aiMatrix4x4& nodeTransform, aiMesh* inpu
 		}
 	}
 
-	return MeshData{ vertexData, indices };
+	MeshData result{ inputMesh->mName.C_Str(), vertexData, indices };
+	return result;
+}
+
+glm::mat4 ModelLoader::AssimpToGLM(const aiMatrix4x4& ai_mat)
+{
+	glm::mat4 glm_mat;
+	glm_mat[0][0] = ai_mat.a1; glm_mat[1][0] = ai_mat.b1; glm_mat[2][0] = ai_mat.c1; glm_mat[3][0] = ai_mat.d1;
+	glm_mat[0][1] = ai_mat.a2; glm_mat[1][1] = ai_mat.b2; glm_mat[2][1] = ai_mat.c2; glm_mat[3][1] = ai_mat.d2;
+	glm_mat[0][2] = ai_mat.a3; glm_mat[1][2] = ai_mat.b3; glm_mat[2][2] = ai_mat.c3; glm_mat[3][2] = ai_mat.d3;
+	glm_mat[0][3] = ai_mat.a4; glm_mat[1][3] = ai_mat.b4; glm_mat[2][3] = ai_mat.c4; glm_mat[3][3] = ai_mat.d4;
+	return glm_mat;
 }
 
 } // namespace

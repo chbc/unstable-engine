@@ -258,12 +258,14 @@ Entity* Entity::clone()
 	result->name = this->name;
 	result->filePath = this->filePath;
 
+	// properties
 	for (int i = 0; i < this->editorProperties.size(); ++i)
 	{
 		SPTR<AEditorProperty>& destination = result->editorProperties[i];
 		this->editorProperties[i]->copy(destination.get());
 	}
 
+	// components
 	for (const auto& item : this->componentsMap)
 	{
 		AEntityComponent* resultComponent = nullptr;
@@ -278,6 +280,13 @@ Entity* Entity::clone()
 		}
 
 		item.second->clone(resultComponent);
+	}
+
+	// children
+	for (Entity* item : this->childrenList)
+	{
+		Entity* childEntity = item->clone();
+		result->addChild(childEntity);
 	}
 
 	return result;

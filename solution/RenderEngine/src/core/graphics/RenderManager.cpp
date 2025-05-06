@@ -220,7 +220,7 @@ void RenderManager::DEBUG_drawTriangle()
 */
 }
 
-void RenderManager::setupBufferSubData(GUIMeshData* meshData)
+void RenderManager::setupBufferSubData(MeshData2D* meshData)
 {
     this->graphicsWrapper->bindVAO(meshData->vao, meshData->vbo);
     this->graphicsWrapper->setupBufferSubData(meshData);

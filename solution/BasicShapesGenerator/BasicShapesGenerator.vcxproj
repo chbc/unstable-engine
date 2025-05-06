@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\RenderEngine\src\core\graphics\meshData\PrimitiveMeshFactory.cpp" />
     <ClCompile Include="..\RenderEngine\src\utils\math\MathUtils.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

@@ -44,7 +44,7 @@ void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 {
     this->dynamicGuiComponents.push_back(guiComponent);
 	
-	GUIMeshData* meshData = static_cast<GUIMeshData*>(guiComponent->meshData);
+	MeshData2D* meshData = static_cast<MeshData2D*>(guiComponent->meshData);
 	this->graphicsWrapper->createGUIVAO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
 	this->graphicsWrapper->createGUIEBO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
 }
@@ -90,8 +90,8 @@ void GUIRenderer::setup(GUIImageComponent *guiComponent)
     this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
     this->graphicsWrapper->bindVAO(guiComponent->meshData->vao, guiComponent->meshData->vbo);
-    this->shaderManager->setVertexAttributePointer(this->shader, ShaderVariables::IN_POSITION, 2, sizeof(GUIVertexData), GUIVertexData::getPositionOffset());
-    this->shaderManager->setVertexAttributePointer(this->shader, ShaderVariables::IN_TEXTURE_COORDS, 2, sizeof(GUIVertexData), ABaseVertexData::getUVOffset());
+    this->shaderManager->setVertexAttributePointer(this->shader, ShaderVariables::IN_POSITION, 2, sizeof(VertexData2D), VertexData2D::getPositionOffset());
+    this->shaderManager->setVertexAttributePointer(this->shader, ShaderVariables::IN_TEXTURE_COORDS, 2, sizeof(VertexData2D), ABaseVertexData::getUVOffset());
     this->graphicsWrapper->activateGUITexture(guiComponent->getTextureId());
 }
 

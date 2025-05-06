@@ -29,11 +29,11 @@ Entity* Scene::createOrthoCamera(Entity* parent, bool isMainCamera)
     return mainCamera;
 }
 
-Entity* Scene::createMeshEntity(const char* entityName, const char* filePath)
+Entity* Scene::createMeshEntity(const char* entityName, const char* filePath, const char* meshName)
 {
     Entity* entity = this->createEntity(entityName);
     MeshComponent* meshComponent = entity->addComponent<MeshComponent>();
-    meshComponent->load(filePath);
+    meshComponent->load(filePath, meshName);
     this->renderManager->addEntity(entity);
 
     return entity;

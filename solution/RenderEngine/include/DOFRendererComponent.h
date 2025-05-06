@@ -12,7 +12,7 @@ class DOFRendererComponent : public APostProcessingRendererComponent
 private:
 	class ShaderManager* shaderManager;
 	class AGraphicsWrapper* graphicsWrapper;
-	UPTR<struct GUIMeshData> meshData;
+	UPTR<struct MeshData2D> meshData;
 
 	class Shader* depthShader;
 	class Shader* shader;

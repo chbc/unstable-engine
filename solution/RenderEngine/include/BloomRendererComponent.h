@@ -1,5 +1,4 @@
-#ifndef _BLOOM_RENDERER_COMPONENT_H_
-#define _BLOOM_RENDERER_COMPONENT_H_
+#pragma once
 
 #include "APostProcessingRendererComponent.h"
 #include "memory_aliases.h"
@@ -12,7 +11,7 @@ class BloomRendererComponent : public APostProcessingRendererComponent
 private:
 	class ShaderManager* shaderManager;
 	class AGraphicsWrapper* graphicsWrapper;
-	UPTR<struct GUIMeshData> meshData;
+	UPTR<struct MeshData2D> meshData;
 
 	class Shader* blurShader;
 	class Shader* combineShader;
@@ -35,5 +34,3 @@ friend class PostProcessingRenderer;
 };
 
 }  // namespace
-
-#endif

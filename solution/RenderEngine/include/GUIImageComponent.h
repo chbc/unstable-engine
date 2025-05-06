@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AEntityComponent.h"
-#include "MeshData.h"
+#include "Model.h"
 
 namespace sre
 {
@@ -11,7 +11,7 @@ class SRE_API GUIImageComponent : public AEntityComponent
 DECLARE_COMPONENT()
 
 protected:
-    GUIMeshData* meshData{ nullptr };
+    MeshData2D* meshData{ nullptr };
     uint32_t maxItems{ 0 }; // ###
 	class TextureEditorProperty* textureEditorProperty{ nullptr };
 

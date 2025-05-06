@@ -18,7 +18,7 @@ class ShadowRenderer;
 class GUIRenderer;
 class PostProcessingRenderer;
 
-struct GUIMeshData;
+struct MeshData2D;
 
 /*!
 	Singleton Class to handle renders
@@ -66,7 +66,7 @@ private:
 
     static void DEBUG_drawTriangle();
 
-    void setupBufferSubData(GUIMeshData* meshData);
+    void setupBufferSubData(MeshData2D* meshData);
     void removeDestroyedEntities();
     void cleanUp();
     void cleanUpGui();

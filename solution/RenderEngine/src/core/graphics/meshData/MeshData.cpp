@@ -9,8 +9,8 @@ void *ABaseVertexData::getUVOffset()
 	return (void *)0;
 }
 
-// GUIVertexData
-void *GUIVertexData::getPositionOffset()
+// VertexData2D
+void *VertexData2D::getPositionOffset()
 {
 	return (void *)(sizeof(float) * 2);
 }

@@ -2,7 +2,7 @@
 
 #include "AEntityComponent.h"
 #include "memory_aliases.h"
-#include "Mesh.h"
+#include "Model.h"
 #include "Material.h"
 
 namespace sre
@@ -15,7 +15,9 @@ class SRE_API MeshComponent : public AEntityComponent
 DECLARE_COMPONENT()
 
 protected:
-    Mesh* mesh;
+    MeshData* mesh;
+    std::string modelPath;
+    std::string meshName;
 
 private:
     bool opaque;
@@ -38,7 +40,7 @@ public:
 
 protected:
     bool isOpaque();
-    void load(const char* file);
+    void load(const char* file, const char* meshName);
 
 friend class RenderManager;
 friend class Entity;

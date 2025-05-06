@@ -81,17 +81,17 @@ void EditorsController::saveGui()
 
 void EditorsController::createCube()
 {
-	this->createMeshEntity("cube", this->cubeMeshPath.c_str());
+	this->createMeshEntity("cube", this->cubeMeshPath.c_str(), "Cube");
 }
 
 void EditorsController::createPlane()
 {
-	this->createMeshEntity("plane", this->planeMeshPath.c_str());
+	this->createMeshEntity("plane", this->planeMeshPath.c_str(), "Plane");
 }
 
 void EditorsController::createSphere()
 {
-	this->createMeshEntity("sphere", this->sphereMeshPath.c_str());
+	this->createMeshEntity("sphere", this->sphereMeshPath.c_str(), "Sphere");
 }
 
 void EditorsController::createGUIImage()
@@ -133,9 +133,9 @@ void EditorsController::saveEntity(Entity* entity)
 	EntityLoader().save(entity, filePath.c_str());
 }
 
-void EditorsController::createMeshEntity(const char* name, const char* file)
+void EditorsController::createMeshEntity(const char* name, const char* file, const char* meshName)
 {
-	Entity* newEntity = this->scenesManager->createMeshEntity(name, file);
+	Entity* newEntity = this->scenesManager->createMeshEntity(name, file, meshName);
 	this->notifyNewEntity(newEntity);
 }
 

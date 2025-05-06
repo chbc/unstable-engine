@@ -8,7 +8,7 @@
 namespace sre
 {
 
-void PrimitiveMeshFactory::createVerticesPlane2D(const glm::vec2 &size, const Rect &uv, const glm::vec2 &offset, std::vector<GUIVertexData> &result)
+void PrimitiveMeshFactory::createVerticesPlane2D(const glm::vec2 &size, const Rect &uv, const glm::vec2 &offset, std::vector<VertexData2D>& result)
 {
 	float planeVertices[] = 
 	{ 
@@ -19,8 +19,8 @@ void PrimitiveMeshFactory::createVerticesPlane2D(const glm::vec2 &size, const Re
 	};
 
 	// Positions
-	std::vector<GUIVertexData> verticesData;
-	GUIVertexData newData; 
+	std::vector<VertexData2D> verticesData;
+	VertexData2D newData; 
 	for (int i = 0; i < 8; i += 2)
 	{
 		newData.position = glm::vec2(planeVertices[i], planeVertices[i + 1]);
@@ -42,13 +42,13 @@ void PrimitiveMeshFactory::createVerticesPlane2D(const glm::vec2 &size, const Re
 	};
 	getPlaneUVs(verticesData, planeTexCoords);
 	
-	for (GUIVertexData item : verticesData)
+	for (VertexData2D item : verticesData)
 	{
 		result.emplace_back(item);
 	}
 }
 
-GUIMeshData* PrimitiveMeshFactory::createPlaneTopDown(const glm::vec2& size)
+MeshData2D* PrimitiveMeshFactory::createPlaneTopDown(const glm::vec2& size)
 {
 	float planeTexCoords[] =
 	{
@@ -61,7 +61,7 @@ GUIMeshData* PrimitiveMeshFactory::createPlaneTopDown(const glm::vec2& size)
 	return createPlane2D(size, planeTexCoords);
 }
 
-GUIMeshData* PrimitiveMeshFactory::createPlaneTopDown(const glm::vec2& size, const Rect& uv)
+MeshData2D* PrimitiveMeshFactory::createPlaneTopDown(const glm::vec2& size, const Rect& uv)
 {
 	// UVs
 	float x1 = uv.topLeft.x;
@@ -80,7 +80,7 @@ GUIMeshData* PrimitiveMeshFactory::createPlaneTopDown(const glm::vec2& size, con
 	return this->createPlane2D(size, planeTexCoords);
 }
 
-GUIMeshData* PrimitiveMeshFactory::createPlaneBottomUp(const glm::vec2& size)
+MeshData2D* PrimitiveMeshFactory::createPlaneBottomUp(const glm::vec2& size)
 {
 	float planeTexCoords[] =
 	{
@@ -144,10 +144,10 @@ MeshData* PrimitiveMeshFactory::createPlane(const glm::vec2& size, float tileMul
 	createPlaneIndices(indices);
 
 	this->calculateTangentsAndBitangents(vertexData, indices, 2);
-	return new MeshData{vertexData, indices};
+	return new MeshData{"Plane", vertexData, indices};
 }
 
-void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint32_t>& result, int planesCount)
+void PrimitiveMeshFactory::createPlaneIndices(std::vector<uint32_t>& result, uint32_t planesCount)
 {
 	uint32_t baseIndices[] =
 	{
@@ -228,7 +228,7 @@ MeshData* PrimitiveMeshFactory::createCube(float size)
 
 	this->calculateTangentsAndBitangents(vertexData, indices, 12);
 
-	return new MeshData{ vertexData, indices };
+	return new MeshData{"Cube", vertexData, indices};
 }
 
 MeshData* PrimitiveMeshFactory::createSphere(float radius, uint16_t stackCount, uint16_t sectorCount)
@@ -279,10 +279,10 @@ MeshData* PrimitiveMeshFactory::createSphere(float radius, uint16_t stackCount, 
 	int faces = (sectorCount * 2) + (midStacks * sectorCount * 2);
 	this->calculateTangentsAndBitangents(vertexData, indices, faces);
 
-	return new MeshData{ vertexData, indices };
+	return new MeshData{"Sphere", vertexData, indices};
 }
 
-GUIMeshData* PrimitiveMeshFactory::createPlane2D(const glm::vec2& size, const float* texCoords)
+MeshData2D* PrimitiveMeshFactory::createPlane2D(const glm::vec2& size, const float* texCoords)
 {
 	float planeVertices[] =
 	{
@@ -292,11 +292,11 @@ GUIMeshData* PrimitiveMeshFactory::createPlane2D(const glm::vec2& size, const fl
 		 size.x, size.y
 	};
 
-	std::vector<GUIVertexData> vertexData;
+	std::vector<VertexData2D> vertexData;
 	// Positions
 	for (int i = 0; i < 8; i += 2)
 	{
-		GUIVertexData newData;
+		VertexData2D newData;
 		newData.position = glm::vec2(planeVertices[i], planeVertices[i + 1]);
 
 		vertexData.emplace_back(newData);
@@ -308,7 +308,7 @@ GUIMeshData* PrimitiveMeshFactory::createPlane2D(const glm::vec2& size, const fl
 	std::vector<uint32_t> indices;
 	createPlaneIndices(indices);
 
-	return new GUIMeshData{ vertexData, indices };
+	return new MeshData2D{"Plane2D", vertexData, indices};
 }
 
 void PrimitiveMeshFactory::calculateTangentsAndBitangents(std::vector<VertexData>& vertexData, std::vector<uint32_t> indices, int facesCount)

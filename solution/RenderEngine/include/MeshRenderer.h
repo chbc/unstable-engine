@@ -50,7 +50,7 @@ private:
     void loadShaderSetupItems();
     void loadShader(bool useBrightnessSegmentation, bool includeDepth);
     
-    void addMesh(MeshComponent *mesh);
+    void addMesh(MeshComponent *meshComponent);
 
     void render();
 

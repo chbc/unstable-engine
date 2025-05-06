@@ -121,16 +121,14 @@ void MeshRenderer::loadShader(bool useBrightnessSegmentation, bool includeDepth)
 	);
 }
 
-void MeshRenderer::addMesh(MeshComponent *mesh)
+void MeshRenderer::addMesh(MeshComponent * meshComponent)
 {
-    this->meshes.push_back(mesh);
+    this->meshes.push_back(meshComponent);
 
-	MeshData* meshData = static_cast<MeshData*>(mesh->mesh->meshData.get());
-
-    if (meshData->ebo == 0)
+    if (meshComponent->mesh->ebo == 0)
     {
-        this->graphicsWrapper->createVAO(meshData);
-        this->graphicsWrapper->createEBO(meshData);
+        this->graphicsWrapper->createVAO(meshComponent->mesh);
+        this->graphicsWrapper->createEBO(meshComponent->mesh);
     }
 }
 
@@ -151,14 +149,15 @@ void MeshRenderer::render()
             glm::mat4 modelMatrix = transform->getMatrix();
             this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
-            this->graphicsWrapper->bindVAO(mesh->mesh->meshData->vao, mesh->mesh->meshData->vbo);
+            MeshData* meshData = mesh->mesh;
+            this->graphicsWrapper->bindVAO(meshData->vao, meshData->vbo);
             for (const auto& item : this->componentsMap)
             {
                 item.second->setupShaderValues(mesh, this->shader);
                 item.second->preDraw(this->shader);
             }
 
-            this->graphicsWrapper->drawElement(mesh->mesh->meshData->ebo, mesh->mesh->meshData->indices.size());
+            this->graphicsWrapper->drawElement(meshData->ebo, meshData->indices.size());
         }
     }
 

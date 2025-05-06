@@ -14,14 +14,14 @@ IMPLEMENT_COMPONENT(MeshComponent)
 MeshComponent::MeshComponent(Entity *entity)
     : AEntityComponent(entity), opaque(true), material(nullptr), mesh(nullptr)
 {
-    this->addEditorProperty(new MeshEditorProperty{ "Mesh", &this->mesh });
+    this->addEditorProperty(new MeshEditorProperty{ "Mesh", &this->mesh, &this->modelPath });
     this->addEditorProperty(new MaterialEditorProperty{ "Material", &this->material});
 }
 
 MeshComponent::~MeshComponent()
 {
     AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-    assetsManager->releaseMesh(this->mesh);
+    assetsManager->releaseModel(this->modelPath.c_str());
     assetsManager->releaseMaterial(this->material);
 }
 
@@ -40,11 +40,11 @@ bool MeshComponent::isOpaque()
     return this->opaque;
 }
 
-void MeshComponent::load(const char* file)
+void MeshComponent::load(const char* file, const char* meshName)
 {
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
     AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
-    this->mesh = assetsManager->loadMesh(file);
+    this->mesh = assetsManager->loadMesh(file, meshName);
 
 	std::string materialPath = FileUtils::getContentAbsolutePath("engine/media/DefaultMaterial.mat");
     this->material = assetsManager->loadMaterial(materialPath.c_str());

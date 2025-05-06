@@ -12,7 +12,7 @@ class OutlineRendererPPComponent : public APostProcessingRendererComponent
 private:
 	class ShaderManager* shaderManager;
 	class AGraphicsWrapper* graphicsWrapper;
-	UPTR<struct GUIMeshData> meshData;
+	UPTR<struct MeshData2D> meshData;
 
 	class Shader* outlineShader;
 	class Shader* combineShader;

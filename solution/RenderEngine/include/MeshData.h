@@ -1,9 +1,13 @@
 #pragma once
 
+#include "memory_aliases.h"
+
 #include <vector>
+#include <string>
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
 
 namespace sre
 {
@@ -15,7 +19,7 @@ struct ABaseVertexData
 	static void *getUVOffset();
 };
 
-struct GUIVertexData : public ABaseVertexData
+struct VertexData2D : public ABaseVertexData
 {
 	glm::vec2 position;
 	
@@ -37,13 +41,14 @@ struct VertexData : public ABaseVertexData
 
 struct AMeshData
 {
+	std::string name;
+	std::vector<uint32_t> indices;
 	uint32_t vao;
 	uint32_t vbo;
 	uint32_t ebo;
-	std::vector<uint32_t> indices;
 
-	AMeshData(const std::vector<uint32_t> &arg_indices)
-		: indices(arg_indices), vao(0), vbo(0), ebo(0)
+	AMeshData(std::string arg_name, const std::vector<uint32_t> &arg_indices)
+		: name(arg_name), indices(arg_indices), vao(0), vbo(0), ebo(0)
 	{
 	}
 
@@ -57,8 +62,8 @@ struct MeshData : public AMeshData
 {
 	std::vector<VertexData> vertexData;
 
-	MeshData(const std::vector<VertexData>& arg_vertexData, const std::vector<uint32_t>& arg_indices)
-		: vertexData(arg_vertexData), AMeshData(arg_indices)
+	MeshData(std::string arg_name, const std::vector<VertexData>& arg_vertexData, const std::vector<uint32_t>& arg_indices)
+		: vertexData(arg_vertexData), AMeshData(arg_name, arg_indices)
 	{
 	}
 
@@ -68,16 +73,16 @@ struct MeshData : public AMeshData
 	}
 };
 
-struct GUIMeshData : public AMeshData
+struct MeshData2D : public AMeshData
 {
-	std::vector<GUIVertexData> vertexData;
+	std::vector<VertexData2D> vertexData;
 
-	GUIMeshData(const std::vector<GUIVertexData>& arg_vertexData, const std::vector<uint32_t>& arg_indices)
-		: vertexData(arg_vertexData), AMeshData(arg_indices)
+	MeshData2D(std::string arg_name, const std::vector<VertexData2D>& arg_vertexData, const std::vector<uint32_t>& arg_indices)
+		: vertexData(arg_vertexData), AMeshData(arg_name, arg_indices)
 	{
 	}
 
-	~GUIMeshData() override
+	~MeshData2D() override
 	{
 		vertexData.clear();
 	}

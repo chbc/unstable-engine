@@ -51,7 +51,7 @@ void GUIImageComponent::onPropertyDeserialized()
 	AEntityComponent::onPropertyDeserialized();
 
     AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-	this->meshData = assetsManager->loadGUIMeshData();
+    this->meshData = assetsManager->loadMesh2D();
 }
 
 void GUIImageComponent::load(const std::string& filePath)
@@ -63,7 +63,7 @@ void GUIImageComponent::load(const std::string& filePath)
     glm::vec2 textureSize(texture->getWidth(), texture->getHeight());
     glm::vec2 normalizedSize = singletonsManager->get<MultimediaManager>()->getNormalizedSize(textureSize);
 
-    this->meshData = assetsManager->loadGUIMeshData();
+    this->meshData = assetsManager->loadMesh2D();
     this->texture = texture;
 	this->textureEditorProperty->setTextureId(reinterpret_cast<void*>(texture->getId()));
 	this->getTransform()->setScale(glm::vec3(normalizedSize, 1.0f));
@@ -75,7 +75,7 @@ void GUIImageComponent::load(const std::string& filePath, const glm::vec2& norma
     AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
     Texture* texture = assetsManager->loadTexture(filePath.c_str(), ETextureMap::GUI);
 
-    this->meshData = assetsManager->loadGUIMeshData();
+    this->meshData = assetsManager->loadMesh2D();
     this->texture = texture;
     this->textureEditorProperty->setTextureId(reinterpret_cast<void*>(texture->getId()));
     this->getTransform()->setScale(glm::vec3(normalizedSize, 1.0f));
