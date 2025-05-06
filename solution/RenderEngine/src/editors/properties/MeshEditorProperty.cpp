@@ -7,6 +7,8 @@
 #include "imgui/imgui.h"
 #include <rapidyaml/rapidyaml.hpp>
 
+#include <sstream>
+
 namespace sre
 {
 
@@ -17,8 +19,10 @@ MeshEditorProperty::MeshEditorProperty(const char* title, MeshData** arg_value, 
 void MeshEditorProperty::onDraw()
 {
 	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Text(this->modelPath->c_str());
-	ImGui::Text((*this->value)->name.c_str());
+
+	std::stringstream ss;
+	ss << *this->modelPath << " (" << (*this->value)->name << ")";
+	ImGui::Text(ss.str().c_str());
 }
 
 void MeshEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
@@ -47,6 +51,7 @@ void MeshEditorProperty::copy(AEditorProperty* destination)
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	*derivedProperty->value = assetsManager->loadMesh(this->modelPath->c_str(), (*this->value)->name.c_str());
+	derivedProperty->modelPath = this->modelPath;
 }
 
 } // namespace
