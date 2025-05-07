@@ -55,12 +55,6 @@ TMesh* ABaseMeshLoader::loadMesh(std::ifstream& readStream)
 	std::vector<uint32_t> indices;
 	std::string name;
 
-	/*
-	// begin mesh mark
-	char mark;
-	readStream.read(&mark, sizeof(size_t));
-	*/
-
 	// name size
 	size_t nameSize = 0;
 	readStream.read(reinterpret_cast<char*>(&nameSize), sizeof(size_t));

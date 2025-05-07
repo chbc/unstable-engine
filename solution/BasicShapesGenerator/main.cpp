@@ -45,12 +45,6 @@ void saveMesh(TMesh* mesh, const std::string& name, const char* fileName)
         size_t meshesSize = 1;
         saveStream.write(reinterpret_cast<const char*>(&meshesSize), sizeof(size_t));
 
-        /*
-        // begin mesh mark
-        const char mark = 'M';
-        saveStream.write(&mark, 1);
-        */
-
         // name size
         saveStream.write(reinterpret_cast<const char*>(&nameSize), sizeof(size_t));
 

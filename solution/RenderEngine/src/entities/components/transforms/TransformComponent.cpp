@@ -16,14 +16,6 @@ glm::vec3 TransformComponent::RIGHT{ 1.0f, 0.0f, 0.0f };
 glm::vec3 TransformComponent::UP{ 0.0f, 1.0f, 0.0f };
 glm::vec3 TransformComponent::FRONT{ 0.0f, 0.0f, 1.0f };
 
-glm::mat4 TransformComponent::ROTATION_FIX
-{
-	1.0f, 0.0f, 0.0f, 0.0f,
-	0.0f, 1.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, -1.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 1.0f
-};
-
 /*
 	Matrix Format
 	00	10	20	30
@@ -233,8 +225,7 @@ void TransformComponent::updateMatrix()
 {
 	glm::mat4 translationMatrix = glm::translate(glm::mat4{ 1.0 }, this->position);
 	glm::mat4 scaleMatrix = glm::scale(glm::mat4{ 1.0f }, this->scale);
-	glm::mat4 rotationMatrix = glm::transpose(this->rotation * ROTATION_FIX);
-	rotationMatrix = glm::transpose(rotationMatrix);
+	glm::mat4 rotationMatrix = this->rotation;
 
 	this->worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
 

@@ -34,9 +34,9 @@ void FlyingCameraComponent::processKeys()
 	if (Input::isKeyDown(KEY_d))
 		this->moveDirection += transform->getRight();
 	if (Input::isKeyDown(KEY_w))
-		this->moveDirection -= transform->getForward();
-	if (Input::isKeyDown(KEY_s))
 		this->moveDirection += transform->getForward();
+	if (Input::isKeyDown(KEY_s))
+		this->moveDirection -= transform->getForward();
 }
 
 void FlyingCameraComponent::processMouseMotion(float elapsedTime)
