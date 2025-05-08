@@ -19,12 +19,11 @@ public:
     void load(const char* fileName, std::vector<MeshData>& result);
 
 private:
-    void processNode(const aiScene *scene, aiNode* node, aiMatrix4x4& nodeTransform, std::vector<MeshData>& result);
+    void processNode(const aiScene *scene, aiNode* node, aiMatrix4x4& parentTransform, std::vector<MeshData>& result);
     MeshData processMesh(aiMesh *inputMesh, aiMatrix4x4& nodeTransform);
     glm::mat4 AssimpToGLM(const aiMatrix4x4& ai_mat);
 
 friend class Scene;
 };
-
 
 } // namespace

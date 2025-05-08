@@ -1,5 +1,4 @@
-#ifndef _TRANSFORM_H_
-#define _TRANSFORM_H_
+#pragma once
 
 #include "AEntityComponent.h"
 #include <glm/gtc/type_ptr.hpp>
@@ -21,9 +20,8 @@ public:
 	static glm::vec3 RIGHT;
 
 private:
-	static glm::mat4 ROTATION_FIX;
+	glm::mat4 parentMatrix{ 1.0f };
 	glm::mat4 worldMatrix{ 1.0f };
-	glm::mat4 localMatrix{ 1.0f };
 
 	glm::mat4 rotation;
 	glm::vec3 position{ 0.0f };
@@ -50,18 +48,6 @@ public:
 	inline glm::vec3 getUp() const;
 	inline const glm::mat4& getMatrix() const;
 
-	/*
-	void setLocalPosition(const glm::vec3& arg_position);
-	void setLocalScale(const glm::vec3& arg_scale);
-	void setLocalRotation(const glm::vec3& axis, float angle);
-	glm::vec3 getLocalPosition() const;
-	glm::quat getLocalRotation();
-	glm::vec3 getLocalScale();
-	void getLocalPosition(float* result);
-	void getLocalRotation(float* result);
-	void getLocalScale(float* result);
-	*/
-
 protected:
 	void onPropertyDeserialized() override;
 	void onPropertyChanged() override;
@@ -75,5 +61,3 @@ friend class TransformEditorProperty;
 };
 
 } // namespace
-
-#endif

@@ -31,23 +31,23 @@ void ModelLoader::load(const char* fileName, std::vector<MeshData>& result)
 		throw "[ModelLoader] - Load Error: " + std::string(importer.GetErrorString());
 	}
 
-	aiMatrix4x4 transform;
-    processNode(scene, scene->mRootNode, transform, result);
+	aiMatrix4x4 identityTransform;
+    processNode(scene, scene->mRootNode, identityTransform, result);
 }
 
-void ModelLoader::processNode(const aiScene* scene, aiNode *node, aiMatrix4x4& nodeTransform, std::vector<MeshData>& result)
+void ModelLoader::processNode(const aiScene* scene, aiNode *node, aiMatrix4x4& parentTransform, std::vector<MeshData>& result)
 {
-	nodeTransform = nodeTransform * node->mTransformation;
-
     for (uint32_t i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh* inputMesh = scene->mMeshes[node->mMeshes[i]];
-		MeshData newMesh = processMesh(inputMesh, nodeTransform);
+		aiMatrix4x4 meshTransform = parentTransform * node->mTransformation;
+		MeshData newMesh = processMesh(inputMesh, meshTransform);
 		result.emplace_back(newMesh);
     }
 
     for (uint32_t i = 0; i < node->mNumChildren; i++)
     {
+		aiMatrix4x4 nodeTransform = parentTransform * node->mTransformation;
         processNode(scene, node->mChildren[i], nodeTransform, result);
     }
 }

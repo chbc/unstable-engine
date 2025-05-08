@@ -131,81 +131,6 @@ inline const glm::mat4& TransformComponent::getMatrix() const
 	return this->worldMatrix;
 }
 
-/*
-void TransformComponent::setLocalPosition(const glm::vec3& arg_position)
-{
-	this->localMatrix[3][0] = position.x;
-	this->localMatrix[3][1] = position.y;
-	this->localMatrix[3][2] = position.z;
-
-	this->worldMatrix *= this->localMatrix;
-
-	this->propagateTransform();
-}
-
-void TransformComponent::setLocalScale(const glm::vec3& arg_scale)
-{
-	this->localMatrix[0] = this->localMatrix[0] * scale[0];
-	this->localMatrix[1] = this->localMatrix[1] * scale[1];
-	this->localMatrix[2] = this->localMatrix[2] * scale[2];
-
-	this->worldMatrix *= this->localMatrix;
-
-	this->setDirty();
-	this->propagateTransform();
-}
-
-void TransformComponent::setLocalRotation(const glm::vec3 &axis, float angle)
-{
-	glm::mat4 rotationMatrix;
-	rotationMatrix = glm::rotate(rotationMatrix, glm::radians(angle), axis);
-	this->localMatrix *= glm::transpose(rotationMatrix);
-	this->worldMatrix *= this->localMatrix;
-
-	this->setDirty();
-	this->propagateTransform();
-}
-
-glm::vec3 TransformComponent::getLocalPosition() const
-{
-	return glm::vec3(this->localMatrix[3][0], this->localMatrix[3][1], this->localMatrix[3][2]);
-}
-
-glm::quat TransformComponent::getLocalRotation()
-{
-	return glm::quat_cast(this->localMatrix);
-}
-
-glm::vec3 TransformComponent::getLocalScale()
-{
-	return glm::vec3(this->localMatrix[0][0], this->localMatrix[1][1], this->localMatrix[2][2]); // XXX
-}
-
-void TransformComponent::getLocalPosition(float* result)
-{
-	result[0] = this->localMatrix[3][0];
-	result[1] = this->localMatrix[3][1];
-	result[2] = this->localMatrix[3][2];
-}
-
-void TransformComponent::getLocalRotation(float* result)
-{
-	glm::quat quaternion = glm::quat_cast(this->localMatrix);
-	glm::vec3 angles = glm::eulerAngles(quaternion);
-
-	result[0] = angles.x;
-	result[1] = angles.y;
-	result[2] = angles.z;
-}
-
-void TransformComponent::getLocalScale(float* result)
-{
-	result[0] = this->localMatrix[0][0];
-	result[1] = this->localMatrix[1][1];
-	result[2] = this->localMatrix[2][2];
-}
-*/
-
 void TransformComponent::onPropertyDeserialized()
 {
 	AEntityComponent::onPropertyDeserialized();
@@ -227,9 +152,8 @@ void TransformComponent::updateMatrix()
 	glm::mat4 scaleMatrix = glm::scale(glm::mat4{ 1.0f }, this->scale);
 	glm::mat4 rotationMatrix = this->rotation;
 
-	this->worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
-
-	this->localMatrix = this->worldMatrix; // XXX
+	glm::mat4 localMatrix = translationMatrix * rotationMatrix * scaleMatrix;
+	this->worldMatrix = this->parentMatrix * localMatrix;
 
 	this->propagateTransform();
 }
@@ -242,8 +166,8 @@ void TransformComponent::propagateTransform()
 	{
 		Entity *child = entity->getChild(i);
 		TransformComponent *childTransform = child->getComponent<TransformComponent>();
-		childTransform->worldMatrix = this->worldMatrix * childTransform->localMatrix;
-		childTransform->propagateTransform();
+		childTransform->parentMatrix = this->worldMatrix;
+		childTransform->updateMatrix();
 	}
 }
 
