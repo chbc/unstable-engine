@@ -16,14 +16,6 @@ namespace sre
 
 IMPLEMENT_COMPONENT(CameraComponent)
 
-glm::mat4 ROTATION_FIX
-{
-    1.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 1.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, -1.0f, 0.0f,
-    0.0f, 0.0f, 0.0f, 1.0f
-};
-
 CameraComponent::CameraComponent(Entity *entity) : AEntityComponent(entity),
     projection(1.0f), isPerspective(true), fov(90.0f), orthoWidth(1.0f),
     orthoHeight(1.0f), isMainCamera(false), isApplicationCamera(true)
@@ -67,7 +59,7 @@ void CameraComponent::setMainCamera()
 
 void CameraComponent::updateView()
 {
-    this->view = glm::inverse(this->transform->getMatrix() * ROTATION_FIX);
+    this->view = glm::inverse(this->transform->getMatrix());
 }
 
 const glm::mat4& CameraComponent::getProjectionMatrix() const

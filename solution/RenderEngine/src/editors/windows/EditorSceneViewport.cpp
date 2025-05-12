@@ -54,7 +54,7 @@ void EditorSceneViewport::onInit()
 		this->orbitComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
 		this->orbitComponent->setEnabled(false);
 		
-		this->camera->getTransform()->setPosition({ 0.0f, 5.0f, -10.0f });
+		this->camera->getTransform()->setPosition({ 0.0f, 2.0f, 5.0f });
 
 		this->camera->onInit();
 

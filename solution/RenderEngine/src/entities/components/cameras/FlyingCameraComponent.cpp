@@ -47,9 +47,9 @@ void FlyingCameraComponent::processKeys()
 	if (Input::isKeyDown(KEY_d))
 		this->moveDirection += transform->getRight();
 	if (Input::isKeyDown(KEY_w))
-		this->moveDirection += transform->getForward();
-	if (Input::isKeyDown(KEY_s))
 		this->moveDirection -= transform->getForward();
+	if (Input::isKeyDown(KEY_s))
+		this->moveDirection += transform->getForward();
 }
 
 void FlyingCameraComponent::processMouseMotion(float elapsedTime)
@@ -64,8 +64,8 @@ void FlyingCameraComponent::processMouseMotion(float elapsedTime)
 		float deltaX = static_cast<float>(mouseDelta.x);
 		float deltaY = static_cast<float>(mouseDelta.y);
 
-		this->yaw += deltaX * SPEED * elapsedTime;
-		this->pitch += deltaY * SPEED * elapsedTime;
+		this->yaw -= deltaX * SPEED * elapsedTime;
+		this->pitch -= deltaY * SPEED * elapsedTime;
 
 		this->getTransform()->setRotation(TransformComponent::UP, this->yaw);
 		this->getTransform()->rotate(TransformComponent::RIGHT, this->pitch);

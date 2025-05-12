@@ -1,0 +1,110 @@
+_main_camera:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,5,5]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    CameraComponent:
+      Enabled: 1
+      Perspective: 1
+      Main Camera: 1
+      FOV: 90
+point_light:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,5,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    PointLightComponent:
+      Enabled: 1
+      Color: [0.6,0.6,0.6]
+      Intensity: 1.25
+      Range: 10
+plane:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,0,0]
+      Rotation: [0,0,0]
+      Scale: [10,1,10]
+    MeshComponent:
+      Enabled: 1
+      Mesh:
+        FilePath: engine\media\Plane.mesh
+        MeshName: Plane
+      Material: engine\media\DefaultMaterial.mat
+cube:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,0.5,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      Enabled: 1
+      Mesh:
+        FilePath: engine\media\Cube.mesh
+        MeshName: Cube
+      Material: engine\media\DefaultMaterial.mat
+sphere:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [-1.5,0.5,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      Enabled: 1
+      Mesh:
+        FilePath: engine\media\Sphere.mesh
+        MeshName: Sphere
+      Material: engine\media\DefaultMaterial.mat
+cone:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [1.5,0.5,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      Enabled: 1
+      Mesh:
+        FilePath: engine\media\Cone.mesh
+        MeshName: Cone
+      Material: engine\media\DefaultMaterial.mat
+cylinder:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [-3,0.5,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      Enabled: 1
+      Mesh:
+        FilePath: engine\media\Cylinder.mesh
+        MeshName: Cylinder
+      Material: engine\media\DefaultMaterial.mat
+torus:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [3,0.5,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      Enabled: 1
+      Mesh:
+        FilePath: engine\media\Torus.mesh
+        MeshName: Torus
+      Material: engine\media\DefaultMaterial.mat

@@ -19,7 +19,7 @@ void ModelLoader::load(const char* fileName, std::vector<MeshData>& result)
 	fin.close();
 
     Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(fileName, aiProcessPreset_TargetRealtime_Quality | aiProcess_MakeLeftHanded | aiProcess_FlipUVs);
+	const aiScene* scene = importer.ReadFile(fileName, aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs);
 
     if
     (
