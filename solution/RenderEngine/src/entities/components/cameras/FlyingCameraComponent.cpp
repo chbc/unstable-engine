@@ -67,6 +67,8 @@ void FlyingCameraComponent::processMouseMotion(float elapsedTime)
 		this->yaw -= deltaX * SPEED * elapsedTime;
 		this->pitch -= deltaY * SPEED * elapsedTime;
 
+		this->pitch = glm::clamp(this->pitch, -89.0f, 89.0f);
+
 		this->getTransform()->setRotation(TransformComponent::UP, this->yaw);
 		this->getTransform()->rotate(TransformComponent::RIGHT, this->pitch);
 	}

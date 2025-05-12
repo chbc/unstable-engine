@@ -55,28 +55,18 @@ void TransformComponent::setRotation(const glm::vec3& axis, float angle)
 	this->updateMatrix();
 }
 
+void TransformComponent::setRotation(glm::quat arg_rotation)
+{
+	this->rotation = glm::toMat4(arg_rotation);
+	this->updateMatrix();
+}
+
 void TransformComponent::setLookAtRotation(const glm::vec3& targetPosition)
 {
-	glm::mat4 lookAtMatrix = glm::lookAtLH(this->getPosition(), targetPosition, UP);
-
-	glm::vec3 direction = targetPosition - this->getPosition();
-	direction.x = -direction.x;
-
-	glm::vec3 const Z{ glm::normalize(direction) };
-	glm::vec3 X{ glm::normalize(glm::cross(UP, Z)) };
-	glm::vec3 Y{ glm::cross(Z, X) };
-
-	this->rotation[0][0] = X.x;
-	this->rotation[1][0] = X.y;
-	this->rotation[2][0] = X.z;
-
-	this->rotation[0][1] = Y.x;
-	this->rotation[1][1] = Y.y;
-	this->rotation[2][1] = Y.z;
-
-	this->rotation[0][2] = Z.x;
-	this->rotation[1][2] = Z.y;
-	this->rotation[2][2] = Z.z;
+	this->rotation = glm::inverse(glm::lookAt(this->getPosition(), targetPosition, UP));
+	this->rotation[3][0] = 0.0f;
+	this->rotation[3][1] = 0.0f;
+	this->rotation[3][2] = 0.0f;
 
 	this->updateMatrix();
 }

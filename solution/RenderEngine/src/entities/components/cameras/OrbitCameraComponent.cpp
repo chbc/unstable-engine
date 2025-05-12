@@ -14,8 +14,7 @@ OrbitCameraComponent::OrbitCameraComponent(Entity* entity) : CameraComponent(ent
 
 void OrbitCameraComponent::onEnable()
 {
-	glm::vec3 cameraPosition = this->getTransform()->getPosition();
-	this->target.y = cameraPosition.y;
+
 }
 
 void OrbitCameraComponent::onUpdate(float elapsedTime)
@@ -26,10 +25,10 @@ void OrbitCameraComponent::onUpdate(float elapsedTime)
 void OrbitCameraComponent::processMouseMotion(float elapsedTime)
 {
 	const glm::ivec2& mouseDelta = Input::getMouseDeltaPosition();
-	if ((mouseDelta.x != 0) /* || (mouseDelta.y != 0) */)
+	if ((mouseDelta.x != 0) || (mouseDelta.y != 0))
 	{
 		float deltaX = static_cast<float>(mouseDelta.x);
-		float deltaY = 0.0f; // static_cast<float>(mouseDelta.y);
+		float deltaY = static_cast<float>(mouseDelta.y);
 
 		TransformComponent* transform = this->getTransform();
 

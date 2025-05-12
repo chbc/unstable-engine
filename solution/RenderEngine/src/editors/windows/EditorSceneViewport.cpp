@@ -145,12 +145,6 @@ void EditorSceneViewport::processMouseWheel()
 
 		this->cameraEntity->getTransform()->setPosition(position);
 		*/
-
-		ScenesManager* scenesManager = SingletonsManager::getInstance()->get<ScenesManager>();
-		Entity* entity = scenesManager->getEntity("twoMeshes");
-
-		TransformComponent* transform = entity->getTransform();
-		transform->setLookAtRotation(TransformComponent::ZERO);
 	}
 }
 

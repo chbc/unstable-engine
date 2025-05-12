@@ -34,6 +34,7 @@ public:
 	void translate(const glm::vec3& translation);
 	void setScale(glm::vec3 arg_scale);
 	void setRotation(const glm::vec3& axis, float angle);
+	void setRotation(glm::quat arg_rotation);
 	void setLookAtRotation(const glm::vec3& targetPosition);
 	void rotate(const glm::vec3& axis, float angle);
 	void rotate(glm::vec3 arg_eulerAngles);
