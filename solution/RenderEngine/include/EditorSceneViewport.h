@@ -14,15 +14,15 @@ class ScenesManager;
 class EditorSceneViewport : public IEditorWindow
 {
 private:
-	ScenesManager* scenesManager;
-	class RenderManager* renderManager;
-	SPTR<class Entity> flyingCamera;
-	SPTR<class Entity> orbitCamera;
-	Entity* currentCamera;
+	ScenesManager* scenesManager{ nullptr };
+	class RenderManager* renderManager{ nullptr };
+	SPTR<class Entity> camera{ nullptr };
+	class FlyingCameraComponent* flyingComponent;
+	class OrbitCameraComponent* orbitComponent;
 
 	static uint32_t Fbo;
-	void* textureId;
-	bool canUpdate;
+	void* textureId{ nullptr };
+	bool canUpdate{ false };
 
 public:
 	EditorSceneViewport(ScenesManager* arg_scenesManager);

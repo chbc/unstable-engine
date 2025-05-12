@@ -34,19 +34,21 @@ public:
 	void translate(const glm::vec3& translation);
 	void setScale(glm::vec3 arg_scale);
 	void setRotation(const glm::vec3& axis, float angle);
+	void setLookAtRotation(const glm::vec3& targetPosition);
 	void rotate(const glm::vec3& axis, float angle);
 	void rotate(glm::vec3 arg_eulerAngles);
 	glm::vec3 getPosition() const;
 	glm::quat getRotation() const;
 	glm::vec3 getScale() const;
-	void getPosition(float* result);
-	void getRotation(float* result);
-	void getScale(float* result);
+	glm::vec3 getLocalPosition() const;
+	glm::quat getLocalRotation() const;
+	glm::vec3 getLocalScale() const;
 	inline const glm::vec3 getInternalMatrixPosition() const;
 	inline glm::vec3 getForward() const;
 	inline glm::vec3 getRight() const;
 	inline glm::vec3 getUp() const;
 	inline const glm::mat4& getMatrix() const;
+	void getValues(TransformComponent* resultTransform) const;
 
 protected:
 	void onPropertyDeserialized() override;

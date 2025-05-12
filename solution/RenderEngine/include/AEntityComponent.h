@@ -67,11 +67,18 @@ public:
     template <typename Type, typename BaseType>
     static uint16_t generateId(const char* className)
     {
+        /*
         EntityComponentTypes* types = EntityComponentTypes::getInstance();
         types->addType<Type>(className);
         Type::BASE_ID = &BaseType::ID;
 
         return 0;
+        */
+
+        EntityComponentTypes* types = EntityComponentTypes::getInstance();
+        types->addType<Type>(className);
+
+        return Index++;
     }
 
     static AEntityComponent* Create(const char* className, Entity* entity);
@@ -91,6 +98,7 @@ protected:
     virtual void checkAndRefreshId() = 0;
 
     virtual void onInit() {}
+    virtual void onEnable() {}
     virtual void onUpdate(float elapsedTime) {}
     virtual void onPropertySerialized();
     virtual void onPropertyDeserialized();

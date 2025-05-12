@@ -42,7 +42,14 @@ bool AEntityComponent::isEnabled() const
 
 void AEntityComponent::setEnabled(bool value)
 {
-	this->enabled = value;
+	if (this->enabled != value)
+	{
+		this->enabled = value;
+		if (this->enabled)
+		{
+			this->onEnable();
+		}
+	}
 }
 
 bool AEntityComponent::isSaved() const

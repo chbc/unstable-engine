@@ -21,9 +21,7 @@ namespace sre
 
 uint32_t EditorSceneViewport::Fbo = 0;
 
-EditorSceneViewport::EditorSceneViewport(ScenesManager* arg_scenesManager) 
-	: scenesManager(arg_scenesManager), renderManager(nullptr), textureId(nullptr),
-	canUpdate(false), flyingCamera(nullptr), orbitCamera(nullptr), currentCamera(nullptr)
+EditorSceneViewport::EditorSceneViewport(ScenesManager* arg_scenesManager)
 { }
 
 void EditorSceneViewport::onInit()
@@ -48,21 +46,18 @@ void EditorSceneViewport::onInit()
 
 		this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 
-		this->flyingCamera = UPTR<Entity>(new Entity{"_editor_flying_camera"});
-		CameraComponent* flyingComponent = this->flyingCamera->addComponent<FlyingCameraComponent>();
-		flyingComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
+		this->camera = SPTR<Entity>(new Entity{"_editor_camera"});
+		this->flyingComponent = this->camera->addComponent<FlyingCameraComponent>();
+		this->flyingComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
 
-		this->orbitCamera = SPTR<Entity>(new Entity{ "_editor_orbit_camera" });
-		CameraComponent* orbitComponent = this->orbitCamera->addComponent<OrbitCameraComponent>();
-		orbitComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
+		this->orbitComponent = this->camera->addComponent<OrbitCameraComponent>();
+		this->orbitComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
+		this->orbitComponent->setEnabled(false);
 		
-		this->flyingCamera->getTransform()->setPosition({ 0.0f, 5.0f, -10.0f });
+		this->camera->getTransform()->setPosition({ 0.0f, 5.0f, -10.0f });
 
-		this->flyingCamera->onInit();
-		this->orbitCamera->onInit();
-		this->currentCamera = this->flyingCamera.get();
+		this->camera->onInit();
 
-		this->orbitCamera->setEnabled(false);
 		this->renderManager->setEditorCamera(flyingComponent);
 	}
 
@@ -76,7 +71,7 @@ void EditorSceneViewport::onUpdate(float elapsedTime)
 	{
 		this->updateViewingState();
 		this->processMouseWheel();
-		this->currentCamera->onUpdate(elapsedTime);
+		this->camera->onUpdate(elapsedTime);
 	}
 }
 
@@ -106,36 +101,38 @@ void EditorSceneViewport::onRelease()
 
 void EditorSceneViewport::updateViewingState()
 {
-	/*
-	if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftAlt)))
+	if (ImGui::IsMouseDown(ImGuiMouseButton_Right))
 	{
-		if (!this->orbitCamera->isEnabled())
+		if (!this->flyingComponent->isEnabled())
 		{
-			glm::vec3 lookAt = this->flyingCamera->getLookAt();
-			this->orbitCamera->setLookAt(lookAt);
-			this->flyingCamera->setEnabled(false);
-			this->orbitCamera->setEnabled(true);
-			this->renderManager->setEditorCamera(this->orbitCamera);
+			this->orbitComponent->setEnabled(false);
+			this->flyingComponent->setEnabled(true);
+			this->renderManager->setEditorCamera(flyingComponent);
 		}
 	}
-	else if (!this->flyingCamera->isEnabled())
+	else if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftAlt)))
 	{
-		glm::vec3 lookAt = this->orbitCamera->getLookAt();
-		this->flyingCamera->setLookAt(lookAt);
-		this->orbitCamera->setEnabled(false);
-		this->flyingCamera->setEnabled(true);
-		this->renderManager->setEditorCamera(this->flyingCamera);
+		if (!this->orbitComponent->isEnabled())
+		{
+			this->flyingComponent->setEnabled(false);
+			this->orbitComponent->setEnabled(true);
+			this->renderManager->setEditorCamera(orbitComponent);
+		}
 	}
-	*/
+	else
+	{
+		this->flyingComponent->setEnabled(false);
+		this->orbitComponent->setEnabled(false);
+	}
 }
 
 void EditorSceneViewport::processMouseWheel()
 {
-	/*
 	int mouseWheel = Input::getMouseWheel();
 
 	if (mouseWheel != 0)
 	{
+		/*
 		const float SPEED = 3.0f;
 		glm::vec3 position = this->cameraEntity->getTransform()->getPosition();
 		glm::vec3 targetPosition = this->flyingCamera->getLookAt();
@@ -147,8 +144,14 @@ void EditorSceneViewport::processMouseWheel()
 		position = position * targetDistance;
 
 		this->cameraEntity->getTransform()->setPosition(position);
+		*/
+
+		ScenesManager* scenesManager = SingletonsManager::getInstance()->get<ScenesManager>();
+		Entity* entity = scenesManager->getEntity("twoMeshes");
+
+		TransformComponent* transform = entity->getTransform();
+		transform->setLookAtRotation(TransformComponent::ZERO);
 	}
-	*/
 }
 
 } // namespace

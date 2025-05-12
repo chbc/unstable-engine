@@ -9,11 +9,14 @@ class OrbitCameraComponent : public CameraComponent
 {
 	DECLARE_COMPONENT()
 
+private:
+	glm::vec3 target;
+
 public:
 	OrbitCameraComponent(Entity* entity);
 
 protected:
-	void onInit() override;
+	void onEnable() override;
 	void onUpdate(float elapsedTime) override;
 
 private:

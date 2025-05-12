@@ -55,6 +55,32 @@ void TransformComponent::setRotation(const glm::vec3& axis, float angle)
 	this->updateMatrix();
 }
 
+void TransformComponent::setLookAtRotation(const glm::vec3& targetPosition)
+{
+	glm::mat4 lookAtMatrix = glm::lookAtLH(this->getPosition(), targetPosition, UP);
+
+	glm::vec3 direction = targetPosition - this->getPosition();
+	direction.x = -direction.x;
+
+	glm::vec3 const Z{ glm::normalize(direction) };
+	glm::vec3 X{ glm::normalize(glm::cross(UP, Z)) };
+	glm::vec3 Y{ glm::cross(Z, X) };
+
+	this->rotation[0][0] = X.x;
+	this->rotation[1][0] = X.y;
+	this->rotation[2][0] = X.z;
+
+	this->rotation[0][1] = Y.x;
+	this->rotation[1][1] = Y.y;
+	this->rotation[2][1] = Y.z;
+
+	this->rotation[0][2] = Z.x;
+	this->rotation[1][2] = Z.y;
+	this->rotation[2][2] = Z.z;
+
+	this->updateMatrix();
+}
+
 void TransformComponent::rotate(const glm::vec3& axis, float angle)
 {
 	this->rotation = glm::rotate(this->rotation, glm::radians(angle), axis);
@@ -69,38 +95,34 @@ void TransformComponent::rotate(glm::vec3 arg_eulerAngles)
 
 glm::vec3 TransformComponent::getPosition() const
 {
-	return this->position;
+	return glm::vec3(this->worldMatrix[3]);
 }
 
 glm::quat TransformComponent::getRotation() const
 {
-	return glm::quat{ this->rotation };
+	glm::mat4 result = this->parentMatrix * this->rotation;
+	return glm::quat{ result };
 }
 
 glm::vec3 TransformComponent::getScale() const
 {
+	glm::vec4 result = this->parentMatrix * glm::vec4{ this->scale, 1.0f };
+	return glm::vec3{ result };
+}
+
+glm::vec3 TransformComponent::getLocalPosition() const
+{
+	return this->position;
+}
+
+glm::quat TransformComponent::getLocalRotation() const
+{
+	return glm::quat{ this->rotation };
+}
+
+glm::vec3 TransformComponent::getLocalScale() const
+{
 	return this->scale;
-}
-
-void TransformComponent::getPosition(float* result)
-{
-	result[0] = this->position.x;
-	result[1] = this->position.y;
-	result[2] = this->position.z;
-}
-
-void TransformComponent::getRotation(float* result)
-{
-	result[0] = eulerAngles.x;
-	result[1] = eulerAngles.y;
-	result[2] = eulerAngles.z;
-}
-
-void TransformComponent::getScale(float* result)
-{
-	result[0] = this->scale.x;
-	result[1] = this->scale.y;
-	result[2] = this->scale.z;
 }
 
 const glm::vec3 TransformComponent::getInternalMatrixPosition() const
@@ -129,6 +151,16 @@ inline glm::vec3 TransformComponent::getUp() const
 inline const glm::mat4& TransformComponent::getMatrix() const
 {
 	return this->worldMatrix;
+}
+
+void TransformComponent::getValues(TransformComponent* resultTransform) const
+{
+	resultTransform->rotation = this->rotation;
+	resultTransform->position = this->position;
+	resultTransform->eulerAngles = this->eulerAngles;
+	resultTransform->scale = this->scale;
+	resultTransform->parentMatrix = this->parentMatrix;
+	resultTransform->updateMatrix();
 }
 
 void TransformComponent::onPropertyDeserialized()
