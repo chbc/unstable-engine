@@ -36,7 +36,7 @@ public:
 	void loadFileFromBrowser(const char* filePath);
 
 private:
-	void createMeshEntity(const char* name, const char* file, const char* meshName);
+	void createMeshEntity(const char* name, const char* file, const char* meshName = "");
 	void notifyNewEntity(Entity* entity);
 };
 

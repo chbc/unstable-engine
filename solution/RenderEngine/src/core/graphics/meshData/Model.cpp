@@ -22,9 +22,16 @@ MeshData* Model::getMesh(const char* meshName)
 {
 	MeshData* result = nullptr;
 
-	if (this->meshes.count(meshName) > 0)
+	if (!this->meshes.empty())
 	{
-		result = this->meshes[meshName].get();
+		if (this->meshes.count(meshName) > 0)
+		{
+			result = this->meshes[meshName].get();
+		}
+		else
+		{
+			result = this->meshes.begin()->second.get();
+		}
 	}
 
 	return result;

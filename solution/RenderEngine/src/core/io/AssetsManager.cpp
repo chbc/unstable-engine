@@ -23,6 +23,12 @@ void AssetsManager::releaseEntity(Entity* entity)
 	this->releaseAsset(this->entitiesMap, entity);
 }
 
+Model* AssetsManager::loadModel(const char* filePath)
+{
+	Model* result = this->loadAsset<ModelsMapType, MeshLoader, Model>(this->modelsMap, filePath);
+	return result;
+}
+
 MeshData* AssetsManager::loadMesh(const char* filePath, const char* meshName)
 {
 	Model* model = this->loadAsset<ModelsMapType, MeshLoader, Model>(this->modelsMap, filePath);

@@ -44,6 +44,7 @@ private:
 public:
 	Entity* loadEntity(const char* filePath, std::string name);
 	void releaseEntity(Entity* entity);
+	Model* loadModel(const char* filePath);
 	MeshData* loadMesh(const char* filePath, const char* meshName);
 	MeshData2D* loadMesh2D();
 	void releaseModel(const char* filePath);

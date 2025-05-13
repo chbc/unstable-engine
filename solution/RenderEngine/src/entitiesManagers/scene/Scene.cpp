@@ -5,6 +5,8 @@
 #include "RenderManager.h"
 #include "EngineValues.h"
 #include "MeshComponent.h"
+#include "AssetsManager.h"
+#include "FileUtils.h"
 
 namespace sre
 {
@@ -31,12 +33,36 @@ Entity* Scene::createOrthoCamera(Entity* parent, bool isMainCamera)
 
 Entity* Scene::createMeshEntity(const char* entityName, const char* filePath, const char* meshName)
 {
-    Entity* entity = this->createEntity(entityName);
-    MeshComponent* meshComponent = entity->addComponent<MeshComponent>();
-    meshComponent->load(filePath, meshName);
+    Entity* entity = nullptr;
+
+    if (std::string{ meshName } != "")
+    {
+		entity = this->createEntity(meshName);
+        MeshComponent* meshComponent = entity->addComponent<MeshComponent>();
+        meshComponent->load(filePath, meshName);
+    }
+    else
+    {
+		entity = this->createEntity(FileUtils::getFileName(filePath));
+		this->createMultiMeshEntity(entity, filePath);
+    }
+
     this->renderManager->addEntity(entity);
 
     return entity;
+}
+
+void Scene::createMultiMeshEntity(Entity* entity, const char* filePath)
+{
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+	Model* model = assetsManager->loadModel(filePath);
+	for (const auto& mesh : model->meshes)
+	{
+		std::string meshName = mesh.first;
+		Entity* childEntity = this->createEntity(meshName, entity);
+		MeshComponent* meshComponent = childEntity->addComponent<MeshComponent>();
+		meshComponent->load(filePath, meshName.c_str());
+	}
 }
 
 // light //
