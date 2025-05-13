@@ -1,6 +1,8 @@
 #include "OrbitCameraComponent.h"
 #include "Input.h"
 #include "TransformComponent.h"
+#include "MultimediaManager.h"
+#include "SingletonsManager.h"
 
 #include "glm/vec2.hpp"
 #include <glm/gtx/rotate_vector.hpp>
@@ -11,11 +13,6 @@ namespace sre
 IMPLEMENT_CHILD_COMPONENT(OrbitCameraComponent, CameraComponent)
 
 OrbitCameraComponent::OrbitCameraComponent(Entity* entity) : CameraComponent(entity){ }
-
-void OrbitCameraComponent::onEnable()
-{
-
-}
 
 void OrbitCameraComponent::onUpdate(float elapsedTime)
 {

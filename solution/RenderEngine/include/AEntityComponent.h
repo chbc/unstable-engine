@@ -99,6 +99,7 @@ protected:
 
     virtual void onInit() {}
     virtual void onEnable() {}
+    virtual void onDisable() {}
     virtual void onUpdate(float elapsedTime) {}
     virtual void onPropertySerialized();
     virtual void onPropertyDeserialized();

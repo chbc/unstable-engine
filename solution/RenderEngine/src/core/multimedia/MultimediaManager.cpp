@@ -117,6 +117,16 @@ void MultimediaManager::saveFileDialog(const std::string& title, const char* fil
 	SDLAPI::saveFileDialog(title, filter, outFileName);
 }
 
+void MultimediaManager::setMousePosition(int x, int y)
+{
+	this->multimediaWrapper->setMousePosition(x, y);
+}
+
+void MultimediaManager::showMouseCursor(bool value)
+{
+	this->multimediaWrapper->showMouseCursor(value);
+}
+
 void MultimediaManager::addGUIButton(GUIButtonComponent* guiButton)
 {
 	this->guiButtons.push_back(guiButton);

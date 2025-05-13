@@ -1,10 +1,11 @@
 #include "FlyingCameraComponent.h"
 #include "TransformComponent.h"
 #include "Input.h"
+#include "MultimediaManager.h"
+#include "SingletonsManager.h"
+
 #include "glm/vec2.hpp"
 #include <glm/gtx/rotate_vector.hpp>
-
-#include <iostream>
 
 namespace sre
 {
@@ -12,17 +13,6 @@ namespace sre
 IMPLEMENT_CHILD_COMPONENT(FlyingCameraComponent, CameraComponent)
 
 FlyingCameraComponent::FlyingCameraComponent(Entity* entity) : CameraComponent(entity){}
-
-void FlyingCameraComponent::onEnable()
-{
-	/*
-	glm::quat rotation = this->transform->getRotation();
-	this->yaw = glm::degrees(glm::yaw(rotation));
-	this->pitch = glm::degrees(glm::pitch(rotation));
-
-	std::cout << "yaw: " << this->yaw << std::endl;
-	*/
-}
 
 void FlyingCameraComponent::onUpdate(float elapsedTime)
 {

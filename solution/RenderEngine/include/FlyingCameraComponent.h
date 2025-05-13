@@ -18,7 +18,6 @@ public:
 	FlyingCameraComponent(Entity* entity);
 
 protected:
-	void onEnable() override;
     void onUpdate(float elapsedTime) override;
 
 private:

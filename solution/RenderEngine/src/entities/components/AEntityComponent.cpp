@@ -49,6 +49,10 @@ void AEntityComponent::setEnabled(bool value)
 		{
 			this->onEnable();
 		}
+		else
+		{
+			this->onDisable();
+		}
 	}
 }
 

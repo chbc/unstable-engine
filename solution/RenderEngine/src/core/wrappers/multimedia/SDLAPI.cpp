@@ -9,8 +9,6 @@
 #include <SDL_image.h>
 #include <string>
 
-
-
 #include <windows.h>
 
 namespace sre
@@ -111,6 +109,16 @@ void* SDLAPI::loadTexture(const std::string& filePath, uint32_t* outWidth, uint3
 void SDLAPI::log(const std::string& type, const std::string& message)
 {
 	SDL_Log("[%s]: %s", type.c_str(), message.c_str());
+}
+
+void SDLAPI::setMousePosition(int x, int y)
+{
+	SDL_WarpMouseInWindow(this->window, x, y);
+}
+
+void SDLAPI::showMouseCursor(bool value)
+{
+	SDL_ShowCursor(value ? SDL_ENABLE : SDL_DISABLE);
 }
 
 void SDLAPI::release()

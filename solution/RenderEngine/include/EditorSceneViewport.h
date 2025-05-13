@@ -4,7 +4,7 @@
 #include "Texture.h"
 #include "memory_aliases.h"
 
-struct ImGuiIO;
+#include "glm/vec2.hpp"
 
 namespace sre
 {
@@ -19,6 +19,8 @@ private:
 	SPTR<class Entity> camera{ nullptr };
 	class FlyingCameraComponent* flyingComponent;
 	class OrbitCameraComponent* orbitComponent;
+	class MultimediaManager* multimediaManager{ nullptr };
+	glm::ivec2 initialMousePosition;
 
 	static uint32_t Fbo;
 	void* textureId{ nullptr };
@@ -35,6 +37,8 @@ public:
 private:
 	void updateViewingState();
 	void processMouseWheel();
+	void updateInitialMousePosition();
+	void forceInitialMousePosition();
 
 friend class WorldEditor;
 };

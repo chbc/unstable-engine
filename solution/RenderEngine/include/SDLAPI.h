@@ -31,6 +31,8 @@ protected:
 	void delay(unsigned int) override;
 	void *loadTexture(const std::string &filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) override;
 	void log(const std::string& type, const std::string& message) override;
+	void setMousePosition(int x, int y) override;
+	void showMouseCursor(bool value) override;
 	void release() override;
 
 private:

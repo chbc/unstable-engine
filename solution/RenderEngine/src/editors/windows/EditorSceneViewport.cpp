@@ -13,7 +13,7 @@
 #include "Input.h"
 
 #include "imgui/imgui.h"
-#include "glm/vec2.hpp"
+
 #include <glm/gtx/rotate_vector.hpp>
 
 namespace sre
@@ -30,7 +30,7 @@ void EditorSceneViewport::onInit()
 	{
 		SingletonsManager* singletonsManager = SingletonsManager::getInstance();
 
-		MultimediaManager* multimediaManager = singletonsManager->get<MultimediaManager>();
+		this->multimediaManager = singletonsManager->get<MultimediaManager>();
 		uint32_t width = static_cast<uint32_t>(EngineValues::SCREEN_WIDTH);
 		uint32_t height = static_cast<uint32_t>(EngineValues::SCREEN_HEIGHT);
 
@@ -44,7 +44,7 @@ void EditorSceneViewport::onInit()
 		);
 		this->textureId = reinterpret_cast<void*>(id);
 
-		this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+		this->renderManager = singletonsManager->get<RenderManager>();
 
 		this->camera = SPTR<Entity>(new Entity{"_editor_camera"});
 		this->flyingComponent = this->camera->addComponent<FlyingCameraComponent>();
@@ -72,6 +72,11 @@ void EditorSceneViewport::onUpdate(float elapsedTime)
 		this->updateViewingState();
 		this->processMouseWheel();
 		this->camera->onUpdate(elapsedTime);
+
+		if (this->flyingComponent->isEnabled() || this->orbitComponent->isEnabled())
+		{
+			this->forceInitialMousePosition();
+		}
 	}
 }
 
@@ -108,6 +113,8 @@ void EditorSceneViewport::updateViewingState()
 			this->orbitComponent->setEnabled(false);
 			this->flyingComponent->setEnabled(true);
 			this->renderManager->setEditorCamera(flyingComponent);
+			this->multimediaManager->showMouseCursor(false);
+			this->updateInitialMousePosition();
 		}
 	}
 	else if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftAlt)))
@@ -117,12 +124,18 @@ void EditorSceneViewport::updateViewingState()
 			this->flyingComponent->setEnabled(false);
 			this->orbitComponent->setEnabled(true);
 			this->renderManager->setEditorCamera(orbitComponent);
+			this->multimediaManager->showMouseCursor(false);
+			this->updateInitialMousePosition();
 		}
 	}
-	else
+	else if (this->flyingComponent->isEnabled() || this->orbitComponent->isEnabled())
 	{
 		this->flyingComponent->setEnabled(false);
 		this->orbitComponent->setEnabled(false);
+		this->multimediaManager->showMouseCursor(true);
+
+		ImGuiIO& io = ImGui::GetIO();
+		io.ConfigFlags ^= ImGuiConfigFlags_NoMouseCursorChange;
 	}
 }
 
@@ -146,6 +159,19 @@ void EditorSceneViewport::processMouseWheel()
 		this->cameraEntity->getTransform()->setPosition(position);
 		*/
 	}
+}
+
+void EditorSceneViewport::updateInitialMousePosition()
+{
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+
+	this->initialMousePosition = Input::getMousePosition();
+}
+
+void EditorSceneViewport::forceInitialMousePosition()
+{
+	this->multimediaManager->setMousePosition(this->initialMousePosition.x, this->initialMousePosition.y);
 }
 
 } // namespace
