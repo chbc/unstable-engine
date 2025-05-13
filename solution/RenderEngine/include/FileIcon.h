@@ -8,7 +8,8 @@ namespace sre
 struct FileIcon
 {
 	std::string filePath;
-	void* textureId = nullptr;
+	std::string fileName;
+	void* textureId{ nullptr };
 
 	FileIcon(std::string arg_filePath, void* arg_textureId);
 };

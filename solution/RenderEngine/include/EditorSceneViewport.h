@@ -9,25 +9,25 @@
 namespace sre
 {
 
-class ScenesManager;
+class EditorsController;
 
 class EditorSceneViewport : public IEditorWindow
 {
 private:
-	ScenesManager* scenesManager{ nullptr };
 	class RenderManager* renderManager{ nullptr };
 	SPTR<class Entity> camera{ nullptr };
 	class FlyingCameraComponent* flyingComponent;
 	class OrbitCameraComponent* orbitComponent;
 	class MultimediaManager* multimediaManager{ nullptr };
 	glm::ivec2 initialMousePosition;
+	EditorsController* controller;
 
 	static uint32_t Fbo;
 	void* textureId{ nullptr };
 	bool canUpdate{ false };
 
 public:
-	EditorSceneViewport(ScenesManager* arg_scenesManager);
+	EditorSceneViewport(EditorsController* arg_controller);
 
 	void onInit() override;
 	void onUpdate(float elapsedTime) override;

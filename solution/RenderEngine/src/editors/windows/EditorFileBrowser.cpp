@@ -37,15 +37,35 @@ void EditorFileBrowser::onEditorGUI()
 	{
 		FileIcon* item = this->fileIcons[i].get();
 		ImGui::TableNextColumn();
+		
+		ImGui::PushID(item->filePath.c_str());
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.0f, 0.0f, 0.0f, 0.0f });
 		if (ImGui::ImageButton(item->textureId, size))
 		{
-			if (FileUtils::isDirectory(item->filePath))
+			EAssetType assetType = FileUtils::getAssetType(item->filePath);
+			switch (assetType)
 			{
-				this->controller->refreshFileIcons(item->filePath, this->fileIcons);
-				break;
+				case EAssetType::DIRECTORY:
+					this->controller->refreshFileIcons(item->filePath, this->fileIcons);
+					break;
+				case EAssetType::SCENE:
+					this->controller->loadFileFromBrowser(item->filePath.c_str());
+					break;
+				default: break;
 			}
 		}
-		ImGui::Text(item->filePath.c_str());
+
+		if (ImGui::BeginDragDropSource())
+		{
+			ImGui::SetDragDropPayload("FILE", item->filePath.c_str(), item->filePath.size() + 1);
+			ImGui::Image(item->textureId, size);
+			ImGui::EndDragDropSource();
+		}
+
+		ImGui::PopStyleColor();
+		ImGui::PopID();
+
+		ImGui::Text(item->fileName.c_str());
 	}
 	ImGui::EndTable();
 

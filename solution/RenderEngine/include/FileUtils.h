@@ -6,6 +6,17 @@
 namespace sre
 {
 
+enum class EAssetType
+{
+    NONE,
+    DIRECTORY,
+    TEXTURE,
+    MESH,
+    MATERIAL,
+    GUI,
+    SCENE
+};
+
 namespace FileUtils
 {
     void initializeStoragePaths();
@@ -20,6 +31,7 @@ namespace FileUtils
     std::string getContentRelativePath(const std::string& filePath);
 	bool isDirectory(const std::string& filePath);
     bool isPathFromGameContent(const std::string& filePath);
+	EAssetType getAssetType(const std::string& filePath);
 }
 
 } // namespace

@@ -217,6 +217,42 @@ bool isPathFromGameContent(const std::string& filePath)
 	return result;
 }
 
+EAssetType getAssetType(const std::string& filePath)
+{
+	EAssetType result = EAssetType::NONE;
+
+	if (isDirectory(filePath))
+	{
+		result = EAssetType::DIRECTORY;
+	}
+	else
+	{
+		std::string extension = FS::path{ filePath }.extension().string();
+		if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
+		{
+			result = EAssetType::TEXTURE;
+		}
+		else if (extension == ".mesh")
+		{
+			result = EAssetType::MESH;
+		}
+		else if (extension == ".mat")
+		{
+			result = EAssetType::MATERIAL;
+		}
+		else if (extension == ".gui")
+		{
+			result = EAssetType::GUI;
+		}
+		else if (extension == ".scene")
+		{
+			result = EAssetType::SCENE;
+		}
+	}
+
+	return result;
+}
+
 #endif
 
 } // namespace

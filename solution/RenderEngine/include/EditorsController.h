@@ -33,6 +33,7 @@ public:
 	void createGUIImage();
 	void refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result);
 	void saveEntity(Entity* entity);
+	void loadFileFromBrowser(const char* filePath);
 
 private:
 	void createMeshEntity(const char* name, const char* file, const char* meshName);

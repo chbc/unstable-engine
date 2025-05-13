@@ -133,6 +133,25 @@ void EditorsController::saveEntity(Entity* entity)
 	EntityLoader().save(entity, filePath.c_str());
 }
 
+void EditorsController::loadFileFromBrowser(const char* filePath)
+{
+	EAssetType fileType = FileUtils::getAssetType(filePath);
+	switch (fileType)
+	{
+		case EAssetType::SCENE:
+			RenderEngine::getInstance()->loadScene(filePath);
+			break;
+		case EAssetType::MESH:
+		{
+			std::string name = FileUtils::getFileName(filePath);
+			this->createMeshEntity(name.c_str(), filePath, name.c_str());
+			break;
+		}
+
+		default: break;
+	}
+}
+
 void EditorsController::createMeshEntity(const char* name, const char* file, const char* meshName)
 {
 	Entity* newEntity = this->scenesManager->createMeshEntity(name, file, meshName);

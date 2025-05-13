@@ -11,6 +11,7 @@
 #include "FlyingCameraComponent.h"
 #include "OrbitCameraComponent.h"
 #include "Input.h"
+#include "EditorsController.h"
 
 #include "imgui/imgui.h"
 
@@ -21,7 +22,7 @@ namespace sre
 
 uint32_t EditorSceneViewport::Fbo = 0;
 
-EditorSceneViewport::EditorSceneViewport(ScenesManager* arg_scenesManager)
+EditorSceneViewport::EditorSceneViewport(EditorsController* arg_controller) : controller(arg_controller)
 { }
 
 void EditorSceneViewport::onInit()
@@ -91,6 +92,19 @@ void EditorSceneViewport::onEditorGUI()
 	ImGui::Image(this->textureId, size, ImVec2{0.0f, 1.0f}, ImVec2{ 1.0f, 0.0f });
 
 	this->canUpdate = ImGui::IsWindowFocused() || ImGui::IsWindowHovered();
+
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
+		{
+			const char* filePath = static_cast<const char*>(payload->Data);
+			if (filePath != nullptr)
+			{
+				this->controller->loadFileFromBrowser(filePath);
+			}
+		}
+		ImGui::EndDragDropTarget();
+	}
 
 	ImGui::End();
 }
