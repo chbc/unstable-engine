@@ -29,20 +29,28 @@ void EditorFileBrowser::onEditorGUI()
 		this->controller->refreshFileIcons(this->gameContentFolder, this->fileIcons);
 	}
 
-	ImGui::BeginTable("files", 10);
 	const ImVec2 size{ 64, 64 };
 
-	ImGui::TableNextRow();
+	int padding = 16;
+	float panelWidth = ImGui::GetContentRegionAvail().x;
+	int columns = panelWidth / (size.x + padding);
+	if (columns < 1)
+	{
+		columns = 1;
+	}
+
+	ImGui::Columns(columns, 0, false);
+
 	for (int i = 0; i < this->fileIcons.size(); ++i)
 	{
 		FileIcon* item = this->fileIcons[i].get();
-		ImGui::TableNextColumn();
 		
 		ImGui::PushID(item->filePath.c_str());
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.0f, 0.0f, 0.0f, 0.0f });
 
 		bool directoryChanged = false;
-		if (ImGui::ImageButton(item->textureId, size))
+		ImGui::ImageButton(item->textureId, size);
+		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 		{
 			EAssetType assetType = FileUtils::getAssetType(item->filePath);
 			switch (assetType)
@@ -67,7 +75,8 @@ void EditorFileBrowser::onEditorGUI()
 		ImGui::PopStyleColor();
 		ImGui::PopID();
 
-		ImGui::Text(item->fileName.c_str());
+		ImGui::TextWrapped(item->fileName.c_str());
+		ImGui::NextColumn();
 
 		if (directoryChanged)
 		{
@@ -75,7 +84,6 @@ void EditorFileBrowser::onEditorGUI()
 			break;
 		}
 	}
-	ImGui::EndTable();
 
 	ImGui::End();
 }
