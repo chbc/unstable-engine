@@ -14,6 +14,7 @@ DECLARE_PROPERTY()
 
 private:
 	Material** value;
+	bool isFileDragged{ false };
 
 public:
 	MaterialEditorProperty(const char* title, Material** arg_value);
@@ -21,6 +22,7 @@ public:
 
 private:
 	void drawSubProperties();
+	void reloadMaterial(const char* filePath);
 };
 
 } // namespace

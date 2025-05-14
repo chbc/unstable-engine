@@ -40,13 +40,15 @@ void EditorFileBrowser::onEditorGUI()
 		
 		ImGui::PushID(item->filePath.c_str());
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.0f, 0.0f, 0.0f, 0.0f });
+
+		bool directoryChanged = false;
 		if (ImGui::ImageButton(item->textureId, size))
 		{
 			EAssetType assetType = FileUtils::getAssetType(item->filePath);
 			switch (assetType)
 			{
 				case EAssetType::DIRECTORY:
-					this->controller->refreshFileIcons(item->filePath, this->fileIcons);
+					directoryChanged = true;
 					break;
 				case EAssetType::SCENE:
 					this->controller->loadFileFromBrowser(item->filePath.c_str());
@@ -66,6 +68,12 @@ void EditorFileBrowser::onEditorGUI()
 		ImGui::PopID();
 
 		ImGui::Text(item->fileName.c_str());
+
+		if (directoryChanged)
+		{
+			this->controller->refreshFileIcons(item->filePath, this->fileIcons);
+			break;
+		}
 	}
 	ImGui::EndTable();
 

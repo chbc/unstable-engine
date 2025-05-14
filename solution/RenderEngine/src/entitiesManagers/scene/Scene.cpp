@@ -40,7 +40,7 @@ Entity* Scene::createMeshEntity(const char* entityName, const char* filePath, co
 
     if ((resultMeshName == "") && (model->getMeshCount() == 1))
     {
-		resultMeshName = model->meshes.begin()->first;
+		resultMeshName = FileUtils::getFileName(filePath);
     }
 
     if (resultMeshName != "")

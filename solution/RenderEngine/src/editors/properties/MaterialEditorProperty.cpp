@@ -24,7 +24,15 @@ void MaterialEditorProperty::draw()
 void MaterialEditorProperty::onDraw()
 {
 	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Text((*this->value)->filePath.c_str());
+
+	if (this->isFileDragged)
+	{
+		ImGui::TextColored(ImColor{ 0.0f, 1.0f, 0.0f }, (*this->value)->filePath.c_str());
+	}
+	else
+	{
+		ImGui::Text((*this->value)->filePath.c_str());
+	}
 
 	ImGui::Columns(1);
 
@@ -37,6 +45,21 @@ void MaterialEditorProperty::onDraw()
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::EndPopup();
+	}
+
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
+		{
+			this->isFileDragged = true;
+			const char* filePath = static_cast<const char*>(payload->Data);
+			if (filePath != nullptr)
+			{
+				this->reloadMaterial(filePath);
+				this->isFileDragged = false;
+			}
+		}
+		ImGui::EndDragDropTarget();
 	}
 }
 
@@ -81,6 +104,13 @@ void MaterialEditorProperty::copy(AEditorProperty* destination)
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	*derivedProperty->value = assetsManager->loadMaterial((*this->value)->filePath.c_str());
+}
+
+void MaterialEditorProperty::reloadMaterial(const char* filePath)
+{
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+	assetsManager->releaseMaterial(*this->value);
+	*this->value = assetsManager->loadMaterial(filePath);
 }
 
 } // namespace
