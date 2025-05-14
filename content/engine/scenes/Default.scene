@@ -37,4 +37,4 @@ plane:
     MeshComponent:
       Enabled: 1
       Mesh: engine/media/Plane.mesh
-      Material: engine/media/DefaultMaterial.mat
+      Material: engine\media\DefaultMaterial.mat

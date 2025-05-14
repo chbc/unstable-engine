@@ -16,10 +16,10 @@ namespace sre
 EditorsController::EditorsController(ScenesManager* arg_scenesManager)
 	: scenesManager(arg_scenesManager)
 {
-	this->cubeMeshPath = FileUtils::getContentAbsolutePath("engine/media/Cube.mesh");
-	this->planeMeshPath = FileUtils::getContentAbsolutePath("engine/media/Plane.mesh");
-	this->sphereMeshPath = FileUtils::getContentAbsolutePath("engine/media/Sphere.mesh");
-	this->guiImagePath = FileUtils::getContentAbsolutePath("engine/media/whiteTexture.png");
+	this->cubeMeshPath = "engine\\media\\Cube.mesh";
+	this->planeMeshPath = "engine\\media\\Plane.mesh";
+	this->sphereMeshPath = "engine\\media\\Sphere.mesh";
+	this->guiImagePath = "engine\\media\\whiteTexture.png";
 }
 
 void EditorsController::openScene()

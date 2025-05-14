@@ -40,14 +40,15 @@ bool MeshComponent::isOpaque()
     return this->opaque;
 }
 
-void MeshComponent::load(const char* file, const char* meshName)
+void MeshComponent::load(Model* model, const char* meshName)
 {
+    this->mesh = model->getMesh(meshName);
+	this->modelPath = model->getFilePath();
+
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
     AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
-    this->mesh = assetsManager->loadMesh(file, meshName);
 
-	std::string materialPath = FileUtils::getContentAbsolutePath("engine/media/DefaultMaterial.mat");
-    this->material = assetsManager->loadMaterial(materialPath.c_str());
+    this->material = assetsManager->loadMaterial("engine\\media\\DefaultMaterial.mat");
 }
 
 } // namespace

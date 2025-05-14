@@ -37,6 +37,11 @@ MeshData* Model::getMesh(const char* meshName)
 	return result;
 }
 
+int Model::getMeshCount()
+{
+	return this->meshes.size();
+}
+
 Model2D::Model2D(const char* arg_filePath) : ABaseModel(arg_filePath)
 {
 }

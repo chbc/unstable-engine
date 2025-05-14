@@ -40,7 +40,7 @@ public:
 
 protected:
     bool isOpaque();
-    void load(const char* file, const char* meshName);
+    void load(Model* model, const char* meshName);
 
 friend class RenderManager;
 friend class Entity;

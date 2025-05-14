@@ -153,7 +153,9 @@ void getFileAndIconPaths(std::string directoryPath, std::vector<std::string>& ic
 			iconPath = iconsPath / iconName.append(".png");
 		}
 
-		iconPaths.emplace_back(iconPath.string());
+		std::string resultPath = getContentRelativePath(iconPath.string());
+
+		iconPaths.emplace_back(resultPath);
 		filePaths.emplace_back(item.path().string());
 	}
 }

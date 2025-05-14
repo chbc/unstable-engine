@@ -9,4 +9,4 @@ Components:
   DiffuseMaterialComponent:
     Diffuse:
       TextureMapType: 1
-      FilePath: ../content/engine/media/whiteTexture.png
+      FilePath: engine\media\whiteTexture.png

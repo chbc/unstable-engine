@@ -8,6 +8,8 @@
 namespace sre
 {
 
+struct Model;
+
 class Scene : public AScene
 {
 private:
@@ -19,7 +21,7 @@ private:
 
     // renderables //
     Entity* createMeshEntity(const char* entityName, const char* filePath, const char* meshName);
-    void createMultiMeshEntity(Entity* entity, const char* filePath);
+    void createMultiMeshEntity(Entity* entity, Model* model);
 
     // light //
     DirectionalLightComponent* createDirectionalLight(const std::string& entityName = "", Entity* parent = nullptr);
