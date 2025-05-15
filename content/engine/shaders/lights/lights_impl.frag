@@ -7,7 +7,7 @@ vec3 Lights_computeAmbientLight(vec3 materialColor)
 
 void Lights_computeDiffuseAndSpecularLights(vec3 normal, inout vec3 kd, inout vec3 ks)
 {
-    vec3 toCameraDirection = normalize(var_toCameraVector);
+    vec3 toCameraDirection = normalize(cameraPosition - var_worldPosition);
 
     // [DIRECTIONAL_LIGHTS] DirectionalLights_compute(normal, toCameraDirection, kd, ks);
     // [POINT_LIGHTS] PointLights_compute(normal, toCameraDirection, kd, ks);

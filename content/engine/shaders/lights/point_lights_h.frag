@@ -17,4 +17,4 @@ in vec3 var_toPointLightVectors[MAX_POINT_LIGHTS];
 
 // Functions
 void PointLights_compute(vec3 normal, vec3 toCameraDirection, inout vec3 kd, inout vec3 ks);
-float PointLights_getAttenuation(int lightIndex);
+float PointLights_getAttenuation(int lightIndex, vec3 toPointLightVector);

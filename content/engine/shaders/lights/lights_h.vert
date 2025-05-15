@@ -1,10 +1,7 @@
 // LIGHTS_H //
 
-// Camera
-uniform vec3 cameraPosition;
-
 // Varying variables
-out vec3 var_toCameraVector;
+out vec3 var_worldPosition;
 
 // Functions
 void Lights_setup(vec3 vertexPosition);
