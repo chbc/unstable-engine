@@ -41,6 +41,10 @@ public:
 protected:
     bool isOpaque();
     void load(Model* model, const char* meshName);
+    void onPropertyChanged() override;
+
+private:
+    void setMaterial(Material* arg_material);
 
 friend class RenderManager;
 friend class Entity;

@@ -183,9 +183,9 @@ bool MeshRenderer::contains(MeshComponent *mesh)
     return result;
 }
 
-bool MeshRenderer::fitsWithMesh(MeshComponent *mesh)
+bool MeshRenderer::fitsWithMaterial(Material* material)
 {
-    return (this->componentsBitset == mesh->getMaterial()->componentsBitset);
+    return (this->componentsBitset == material->componentsBitset);
 }
 
 void MeshRenderer::removeDestroyedEntities()
@@ -202,6 +202,28 @@ void MeshRenderer::removeDestroyedEntities()
         else
             ++it;
     }
+}
+
+bool MeshRenderer::removeMesh(MeshComponent* mesh)
+{
+    bool result = false;
+    std::list<MeshComponent*>::iterator it;
+
+    for (it = this->meshes.begin(); it != this->meshes.end(); ++it)
+    {
+        if (*it == mesh)
+        {
+            break;
+        }
+    }
+
+	if (it != this->meshes.end())
+	{
+		this->meshes.erase(it);
+		result = true;
+	}
+
+    return result;
 }
 
 } // namespace

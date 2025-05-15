@@ -14,7 +14,6 @@ DECLARE_PROPERTY()
 
 private:
 	Material** value;
-	bool isFileDragged{ false };
 
 public:
 	MaterialEditorProperty(const char* title, Material** arg_value);

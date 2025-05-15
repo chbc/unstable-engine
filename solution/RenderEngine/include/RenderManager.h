@@ -50,6 +50,7 @@ private:
     void addEntity(Entity* entity);
     void addMesh(MeshComponent* mesh);
     void addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent* mesh);
+    void removeMesh(MeshComponent* mesh);
     void addGUIComponent(GUIImageComponent* guiComponent);
     void addDynamicGUIComponent(GUIImageComponent* guiComponent);
     void initGUIRenderer();

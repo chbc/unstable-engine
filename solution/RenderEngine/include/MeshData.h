@@ -71,6 +71,11 @@ struct MeshData : public AMeshData
 	{
 		vertexData.clear();
 	}
+
+	bool operator==(const MeshData& other) const
+	{
+		return (this->vao == other.vao) && (this->vbo == other.vbo) && (this->ebo == other.ebo);
+	}
 };
 
 struct MeshData2D : public AMeshData

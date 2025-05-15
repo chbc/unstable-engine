@@ -1,5 +1,4 @@
-#ifndef _MESSAGES_MANAGER_H_
-#define _MESSAGES_MANAGER_H_
+#pragma once
 
 #include <unordered_map>
 #include <functional>
@@ -35,5 +34,3 @@ friend class SingletonsManager;
 }
 
 #include "MessagesManager.tpp"
-
-#endif

@@ -87,7 +87,7 @@ void RenderManager::addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent*
     MeshRenderer* renderer = nullptr;
     for (const SPTR<MeshRenderer>& item : renderers)
     {
-        if (item->fitsWithMesh(mesh))
+        if (item->fitsWithMaterial(mesh->getMaterial()))
         {
             renderer = item.get();
             break;
@@ -103,6 +103,25 @@ void RenderManager::addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent*
     }
 
     renderer->addMesh(mesh);
+}
+
+void RenderManager::removeMesh(MeshComponent* mesh)
+{
+    std::vector<SPTR<MeshRenderer>>::iterator it;
+	VECTOR_SPTR<MeshRenderer>& renderers = mesh->isOpaque() ? this->opaqueMeshRenderers : this->translucentMeshRenderers;
+
+    for (it = renderers.begin(); it != renderers.end(); ++it)
+    {
+        if ((*it)->removeMesh(mesh))
+        {
+            break;
+        }
+    }
+
+    if ((it != renderers.end() && (*it)->isEmpty()))
+    {
+        renderers.erase(it);
+    }
 }
 
 void RenderManager::addGUIComponent(GUIImageComponent *guiComponent)

@@ -4,6 +4,7 @@
 #include "MeshEditorProperty.h"
 #include "SingletonsManager.h"
 #include "AssetsManager.h"
+#include "RenderManager.h"
 #include "FileUtils.h"
 
 namespace sre
@@ -49,6 +50,24 @@ void MeshComponent::load(Model* model, const char* meshName)
     AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
 
     this->material = assetsManager->loadMaterial("engine\\media\\DefaultMaterial.mat");
+}
+
+void MeshComponent::onPropertyChanged()
+{
+	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+	renderManager->removeMesh(this);
+    renderManager->addMesh(this);
+}
+
+void MeshComponent::setMaterial(Material* arg_material)
+{
+    if (this->material != nullptr)
+    {
+        AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+        assetsManager->releaseMaterial(this->material);
+    }
+
+    this->material = arg_material;
 }
 
 } // namespace

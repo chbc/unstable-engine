@@ -1,14 +1,15 @@
-#ifndef _MESH_RENDERER_H_
-#define _MESH_RENDERER_H_
+#pragma once
 
-#include <glm/vec3.hpp>
-#include <list>
-#include <unordered_map>
-#include <bitset>
 #include "ColorRendererComponent.h"
 #include "ShaderLightData.h"
 #include "EComponentId.h"
 #include "memory_aliases.h"
+
+#include <glm/vec3.hpp>
+#include <list>
+#include <vector>
+#include <unordered_map>
+#include <bitset>
 
 namespace sre
 {
@@ -55,9 +56,10 @@ private:
     void render();
 
     bool contains(MeshComponent *mesh);
-    bool fitsWithMesh(MeshComponent *mesh);
+    bool fitsWithMaterial(Material *material);
 
     void removeDestroyedEntities();
+	bool removeMesh(MeshComponent* mesh);
 
     friend class RenderManager;
 };
@@ -65,5 +67,3 @@ private:
 } // namespace
 
 #include "MeshRenderer.tpp"
-
-#endif
