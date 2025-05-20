@@ -29,13 +29,9 @@ namespace ShaderFiles
     const std::string LIGHTS_H_F    = BASE_FOLDER + "lights/lights_h.frag";
     const std::string LIGHTS_IMPL_F = BASE_FOLDER + "lights/lights_impl.frag";
 
-    const std::string DIRECTIONAL_LIGHTS_H_V    = BASE_FOLDER + "lights/directional_lights_h.vert";
-    const std::string DIRECTIONAL_LIGHTS_IMPL_V = BASE_FOLDER + "lights/directional_lights_impl.vert";
     const std::string DIRECTIONAL_LIGHTS_H_F    = BASE_FOLDER + "lights/directional_lights_h.frag";
     const std::string DIRECTIONAL_LIGHTS_IMPL_F = BASE_FOLDER + "lights/directional_lights_impl.frag";
 
-    const std::string POINT_LIGHTS_H_V      = BASE_FOLDER + "lights/point_lights_h.vert";
-    const std::string POINT_LIGHTS_IMPL_V   = BASE_FOLDER + "lights/point_lights_impl.vert";
     const std::string POINT_LIGHTS_H_F      = BASE_FOLDER + "lights/point_lights_h.frag";
     const std::string POINT_LIGHTS_IMPL_F   = BASE_FOLDER + "lights/point_lights_impl.frag";
 
@@ -53,12 +49,6 @@ namespace ShaderFiles
     const std::string NORMAL_IMPL_V = BASE_FOLDER + "normal/normal_impl.vert";
     const std::string NORMAL_H_F    = BASE_FOLDER + "normal/normal_h.frag";
     const std::string NORMAL_IMPL_F = BASE_FOLDER + "normal/normal_impl.frag";
-
-    const std::string NORMAL_DIRECTIONAL_H_V    = BASE_FOLDER + "normal/normal_directional_h.vert";
-    const std::string NORMAL_DIRECTIONAL_IMPL_V = BASE_FOLDER + "normal/normal_directional_impl.vert";
-
-    const std::string NORMAL_POINT_H_V      = BASE_FOLDER + "normal/normal_point_h.vert";
-    const std::string NORMAL_POINT_IMPL_V   = BASE_FOLDER + "normal/normal_point_impl.vert";
 
     const std::string SPECULAR_H_F      = BASE_FOLDER + "specular/specular_h.frag";
     const std::string SPECULAR_IMPL_F   = BASE_FOLDER + "specular/specular_impl.frag";
@@ -118,6 +108,9 @@ namespace ShaderVariables
         NORMAL_TEXTURE,
         SPECULAR_TEXTURE,
         SHADOW_MAP,
+        ALBEDO_TEXTURE,
+        METALLIC_TEXTURE,
+        ROUGHNESS_TEXTURE,
 
         IN_POSITION,
         IN_TEXTURE_COORDS,
@@ -145,6 +138,9 @@ namespace ShaderVariables
         { AO_TEXTURE,                   "aoTexture"         },
         { NORMAL_TEXTURE,               "normalTexture"     },
         { SPECULAR_TEXTURE,             "specularTexture"   },
+		{ ALBEDO_TEXTURE,               "albedoTexture"     },
+		{ METALLIC_TEXTURE,             "metallicTexture"   },
+		{ ROUGHNESS_TEXTURE,            "roughnessTexture"  },
         { SHADOW_MAP,                   "shadowMap"         },
         { IN_POSITION,                  "in_position"       },
         { IN_TEXTURE_COORDS,            "in_textureCoords"  },

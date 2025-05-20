@@ -6,7 +6,9 @@ void PointLights_compute(vec3 normal, vec3 toCameraDirection, inout vec3 kd, ino
     float specularEnergy = 0;
     for (int i = 0; i < MAX_POINT_LIGHTS; i++)
     {
-		vec3 toPointLightVector = pointLights[i].position - var_worldPosition;
+		vec3 lightVector = var_worldPosition - pointLights[i].position;
+		// [NORMAL] Normal_getLightVector(lightVector);
+		vec3 toPointLightVector = -lightVector;
         Lights_computeEnergies(normal, toCameraDirection, normalize(toPointLightVector), diffuseEnergy, specularEnergy);
 
         if ((diffuseEnergy > 0) && (length(toPointLightVector) < pointLights[i].range))
@@ -37,4 +39,3 @@ float PointLights_getAttenuation(int lightIndex, vec3 toPointLightVector)
 
     return result;
 }
-

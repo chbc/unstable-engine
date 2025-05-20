@@ -189,22 +189,6 @@ void ShaderContentFactory::loadNormalMapContentHeader(std::string &outVertexCont
     FileUtils::loadContentFile(ShaderFiles::NORMAL_H_V, normalVertex);
     FileUtils::loadContentFile(ShaderFiles::NORMAL_H_F, normalFragment);
 
-    if (this->lightData.directionalLightsCount > 0)
-    {
-        std::string directionalNormal;
-        FileUtils::loadContentFile(ShaderFiles::NORMAL_DIRECTIONAL_H_V, directionalNormal);
-
-        normalVertex = normalVertex + directionalNormal;
-    }
-
-    if (this->lightData.pointLightsCount > 0)
-    {
-        std::string pointNormal;
-        FileUtils::loadContentFile(ShaderFiles::NORMAL_POINT_H_V, pointNormal);
-
-        normalVertex = normalVertex + pointNormal;
-    }
-
     outVertexContent = normalVertex + outVertexContent;
     outFragmentContent = normalFragment + outFragmentContent;
 }
@@ -216,26 +200,6 @@ void ShaderContentFactory::loadNormalMapContentImplementation(std::string &outVe
 
     FileUtils::loadContentFile(ShaderFiles::NORMAL_IMPL_V, normalVertex);
     FileUtils::loadContentFile(ShaderFiles::NORMAL_IMPL_F, normalFragment);
-
-    if (this->lightData.directionalLightsCount > 0)
-    {
-        this->uncommentCode(normalVertex, "// [DIRECTIONAL_LIGHTS]");
-
-        std::string directionalNormal;
-        FileUtils::loadContentFile(ShaderFiles::NORMAL_DIRECTIONAL_IMPL_V, directionalNormal);
-
-        normalVertex = normalVertex + directionalNormal;
-    }
-
-    if (this->lightData.pointLightsCount > 0)
-    {
-        this->uncommentCode(normalVertex, "// [POINT_LIGHTS]");
-
-        std::string pointNormal;
-        FileUtils::loadContentFile(ShaderFiles::NORMAL_POINT_IMPL_V, pointNormal);
-
-        normalVertex = normalVertex + pointNormal;
-    }
 
     outVertexContent = normalVertex + outVertexContent;
     outFragmentContent = normalFragment + outFragmentContent;
@@ -300,30 +264,20 @@ void ShaderContentFactory::loadLightsContentHeader(std::string &outVertexContent
 
     if (lightsCount > 0)
     {
-        std::string directionalVertexContent;
         std::string directionalFragmentContent;
-        FileUtils::loadContentFile(ShaderFiles::DIRECTIONAL_LIGHTS_H_V, directionalVertexContent);
         FileUtils::loadContentFile(ShaderFiles::DIRECTIONAL_LIGHTS_H_F, directionalFragmentContent);
 
-        directionalVertexContent = StringUtils::format(directionalVertexContent, lightsCount);
         directionalFragmentContent = StringUtils::format(directionalFragmentContent, lightsCount);
-
-        vertexContent += directionalVertexContent;
         fragmentContent += directionalFragmentContent;
     }
 
     lightsCount = this->lightData.pointLightsCount;
     if (lightsCount > 0)
     {
-        std::string pointVertexContent;
         std::string pointFragmentContent;
-        FileUtils::loadContentFile(ShaderFiles::POINT_LIGHTS_H_V, pointVertexContent);
         FileUtils::loadContentFile(ShaderFiles::POINT_LIGHTS_H_F, pointFragmentContent);
 
-        pointVertexContent = StringUtils::format(pointVertexContent, lightsCount);
         pointFragmentContent = StringUtils::format(pointFragmentContent, lightsCount);
-
-        vertexContent += pointVertexContent;
         fragmentContent += pointFragmentContent;
     }
 
@@ -344,15 +298,11 @@ void ShaderContentFactory::loadLightsContentImplementation(std::string &outVerte
 
     if (this->lightData.directionalLightsCount > 0)
     {
-        std::string directionalVertexContent;
         std::string directionalFragmentContent;
-        FileUtils::loadContentFile(ShaderFiles::DIRECTIONAL_LIGHTS_IMPL_V, directionalVertexContent);
         FileUtils::loadContentFile(ShaderFiles::DIRECTIONAL_LIGHTS_IMPL_F, directionalFragmentContent);
 
-        this->uncommentCode(vertexContent, "// [DIRECTIONAL_LIGHTS]");
         this->uncommentCode(fragmentContent, "// [DIRECTIONAL_LIGHTS]");
 
-        vertexContent += directionalVertexContent;
         fragmentContent += directionalFragmentContent;
     }
 
@@ -360,13 +310,10 @@ void ShaderContentFactory::loadLightsContentImplementation(std::string &outVerte
     {
         std::string pointVertexContent;
         std::string pointFragmentContent;
-        FileUtils::loadContentFile(ShaderFiles::POINT_LIGHTS_IMPL_V, pointVertexContent);
         FileUtils::loadContentFile(ShaderFiles::POINT_LIGHTS_IMPL_F, pointFragmentContent);
 
-        this->uncommentCode(vertexContent, "// [POINT_LIGHTS]");
         this->uncommentCode(fragmentContent, "// [POINT_LIGHTS]");
 
-        vertexContent += pointVertexContent;
         fragmentContent += pointFragmentContent;
     }
 

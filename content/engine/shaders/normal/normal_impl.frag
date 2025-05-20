@@ -7,3 +7,8 @@ vec3 Normal_computeNormal()
 
 	return result;
 }
+
+void Normal_getLightVector(inout vec3 result)
+{
+	result = var_tbnMatrix * result;
+}
