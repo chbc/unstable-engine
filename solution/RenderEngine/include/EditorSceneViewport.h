@@ -36,7 +36,7 @@ public:
 
 private:
 	void updateViewingState();
-	void processMouseWheel();
+	void processMouseWheel(float elapsedTime);
 	void updateInitialMousePosition();
 	void forceInitialMousePosition();
 

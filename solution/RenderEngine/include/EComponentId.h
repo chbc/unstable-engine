@@ -1,5 +1,4 @@
-#ifndef _E_COMPONENT_ID_H_
-#define _E_COMPONENT_ID_H_
+#pragma once
 
 #include <cstddef>
 
@@ -17,6 +16,7 @@ enum Type : std::size_t
     NORMAL_MATERIAL,
     SPECULAR_MATERIAL,
     AO_MATERIAL,
+    PBR_MATERIAL,
 	SPRITE_MATERIAL,
     SECOND_TARGET_COLOR_MATERIAL, // XXX INCOMPLETO
     SIZE
@@ -25,4 +25,3 @@ enum Type : std::size_t
 } // namespace
 
 } // namespace
-#endif

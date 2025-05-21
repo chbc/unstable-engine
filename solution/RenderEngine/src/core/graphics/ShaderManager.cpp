@@ -118,11 +118,6 @@ void ShaderManager::setupAttributeLocation(Shader* shader, ShaderVariables::Type
     shader->addVariableLocation(variableKey, location);
 }
 
-void ShaderManager::setVertexAttributePointer(Shader* shader, ShaderVariables::Type variableKey, size_t itemSize, size_t dataSize, void* dataOffset)
-{
-    this->graphicsWrapper->setVertexAttributePointer(shader->variableLocations[variableKey], itemSize, dataSize, dataOffset);
-}
-
 void ShaderManager::disableVertexAttribute(Shader* shader, ShaderVariables::Type variableKey)
 {
     this->graphicsWrapper->disableVertexAttribute(shader->variableLocations[variableKey]);

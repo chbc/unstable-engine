@@ -39,14 +39,16 @@ void DiffuseRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *sh
 
 void DiffuseRendererComponent::preDraw(Shader* shader)
 {
-    this->shaderManager->setVertexAttributePointer(shader, ShaderVariables::IN_TEXTURE_COORDS, 2, sizeof(VertexData), ABaseVertexData::getUVOffset());
+    this->graphicsWrapper->enableTexCoords();
     this->graphicsWrapper->activateDiffuseTexture(this->textureId);
 }
 
-// ### TALVEZ NÃO SEJA DESNECESSÁRIO CHAMAR MAIS DE UMA VEZ
 void DiffuseRendererComponent::postDraw(Shader* shader)
 {
+    // ### TALVEZ NÃO SEJA DESNECESSÁRIO CHAMAR MAIS DE UMA VEZ
     this->shaderManager->disableVertexAttribute(shader, ShaderVariables::IN_POSITION);
+
+    this->shaderManager->disableVertexAttribute(shader, ShaderVariables::IN_TEXTURE_COORDS);
 }
 
 } // namespace

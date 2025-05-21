@@ -90,8 +90,7 @@ void GUIRenderer::setup(GUIImageComponent *guiComponent)
     this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
     this->graphicsWrapper->bindVAO(guiComponent->meshData->vao, guiComponent->meshData->vbo);
-    this->shaderManager->setVertexAttributePointer(this->shader, ShaderVariables::IN_POSITION, 2, sizeof(VertexData2D), VertexData2D::getPositionOffset());
-    this->shaderManager->setVertexAttributePointer(this->shader, ShaderVariables::IN_TEXTURE_COORDS, 2, sizeof(VertexData2D), ABaseVertexData::getUVOffset());
+    this->graphicsWrapper->enableGUISettings();
     this->graphicsWrapper->activateGUITexture(guiComponent->getTextureId());
 }
 

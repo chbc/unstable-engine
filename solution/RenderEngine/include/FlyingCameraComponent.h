@@ -13,6 +13,7 @@ private:
 	glm::vec3 moveDirection;
 	float yaw{ 0.0f };
 	float pitch{ 0.0f };
+	float moveSpeed{ 10.0f };
 
 public:
 	FlyingCameraComponent(Entity* entity);
@@ -23,6 +24,7 @@ protected:
 private:
 	void processKeys();
 	void processMouseMotion(float elapsedTime);
+	void processMouseWheel(float elapsedTime);
 	void updateMovement(float elapsedTime);
 };
 

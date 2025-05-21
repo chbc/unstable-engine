@@ -1,5 +1,4 @@
-#ifndef _AGRAPHICS_WRAPPER_H_
-#define _AGRAPHICS_WRAPPER_H_
+#pragma once
 
 #include "ASingleton.h"
 #include <vector>
@@ -24,7 +23,6 @@ protected:
     virtual void createGUIEBO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) =0;
 
     virtual void bindVAO(uint32_t vao, uint32_t vbo) =0;
-    virtual void setVertexAttributePointer(int attributeLocation, size_t itemSize, size_t dataSize, void* dataOffset) = 0;
 
     // XXX APAGAR
     virtual void enableGUISettings() =0;
@@ -39,6 +37,8 @@ protected:
     virtual void activateNormalTexture(uint32_t textureId) =0;
     virtual void activateSpecularTexture(uint32_t textureId) =0;
     virtual void activateAOTexture(uint32_t textureId) =0;
+	virtual void activateMetallicTexture(uint32_t textureId) = 0;
+	virtual void activateRoughnessTexture(uint32_t textureId) = 0;
 
     virtual void setupBufferSubData(MeshData2D* meshData) =0;
 
@@ -113,6 +113,7 @@ friend class NormalRendererComponent;
 friend class SpecularRendererComponent;
 friend class AORendererComponent;
 friend class OutlineRendererComponent;
+friend class PBRRendererComponent;
 friend class ShadowRendererShaderSetup;
 
 friend class LitRendererLightsState;
@@ -127,4 +128,3 @@ friend class EditorSceneViewport;
 };
 
 } // namespace
-#endif

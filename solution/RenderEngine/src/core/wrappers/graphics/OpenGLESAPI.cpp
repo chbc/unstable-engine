@@ -96,12 +96,6 @@ void OpenGLESAPI::bindVAO(uint32_t vao, uint32_t vbo)
 	GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, vbo));
 }
 
-void OpenGLESAPI::setVertexAttributePointer(int attributeLocation, size_t itemSize, size_t dataSize, void* dataOffset)
-{
-	GL_CHECK(glEnableVertexAttribArray(attributeLocation));
-	GL_CHECK(glVertexAttribPointer(attributeLocation, itemSize, GL_FLOAT, GL_FALSE, dataSize, dataOffset));
-}
-
 void OpenGLESAPI::enableGUISettings()
 {
 	/* XXX APAGAR

@@ -1,9 +1,8 @@
-#ifndef _DIFFUSE_RENDERER_COMPONENT_H_
-#define _DIFFUSE_RENDERER_COMPONENT_H_
-
-#include <cstdint>
+#pragma once
 
 #include "ColorRendererComponent.h"
+
+#include <cstdint>
 
 namespace sre
 {
@@ -26,5 +25,3 @@ friend class MeshRenderer;
 };
 
 } // namespace
-
-#endif

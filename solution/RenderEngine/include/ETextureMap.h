@@ -1,5 +1,4 @@
-#ifndef _EMATERIAL_MAP_H_
-#define _EMATERIAL_MAP_H_
+#pragma once
 
 #include <cstddef>
 
@@ -16,6 +15,8 @@ enum Type : std::size_t
     NORMAL,
     SPECULAR,
     AMBIENT_OCCLUSION,
+    METALLIC,
+    ROUGHNESS,
     SHADOW,
     CUBE_MAP,
     EMPTY
@@ -24,4 +25,3 @@ enum Type : std::size_t
 } // namespace
 
 } // namespace
-#endif

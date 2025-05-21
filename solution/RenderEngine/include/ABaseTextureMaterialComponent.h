@@ -11,7 +11,7 @@ class Texture;
 class SRE_API ABaseTextureMaterialComponent : public AMaterialComponent
 {
 protected:
-	class Texture* texture;
+	Texture* texture;
 
 public:
 	ABaseTextureMaterialComponent(Material* material);

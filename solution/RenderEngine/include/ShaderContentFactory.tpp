@@ -19,47 +19,54 @@ void ShaderContentFactory::createShaderContent
     std::string vertexContentImpl;
     std::string fragmentContentImpl;
 
-    for (std::size_t i = EComponentId::COLOR_MATERIAL; i <= EComponentId::SECOND_TARGET_COLOR_MATERIAL; i++)
-    {
-        if (componentsBitset[i])
+	if (componentsBitset[EComponentId::PBR_MATERIAL])
+	{
+		this->loadPbrContent(vertexContentImpl, fragmentContentImpl);
+	}
+	else
+	{
+        for (std::size_t i = EComponentId::COLOR_MATERIAL; i <= EComponentId::SECOND_TARGET_COLOR_MATERIAL; i++)
         {
-            switch (i)
+            if (componentsBitset[i])
             {
-                case EComponentId::COLOR_MATERIAL:
-                    this->loadColorContentHeader(vertexContentHeader, fragmentContentHeader);
-                    this->loadColorContentImplementation(vertexContentImpl, fragmentContentImpl);
-                    break;
-                case EComponentId::LIT_MATERIAL:
-                    this->loadLightsContentHeader(vertexContentHeader, fragmentContentHeader);
-                    this->loadLightsContentImplementation(vertexContentImpl, fragmentContentImpl);
+                switch (i)
+                {
+                    case EComponentId::COLOR_MATERIAL:
+                        this->loadColorContentHeader(vertexContentHeader, fragmentContentHeader);
+                        this->loadColorContentImplementation(vertexContentImpl, fragmentContentImpl);
+                        break;
+                    case EComponentId::LIT_MATERIAL:
+                        this->loadLightsContentHeader(vertexContentHeader, fragmentContentHeader);
+                        this->loadLightsContentImplementation(vertexContentImpl, fragmentContentImpl);
 
-                    if (this->lightData.hasAnyShadowCaster)
-                    {
-                        this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
-                        this->loadShadowsContentImplementation(vertexContentImpl, fragmentContentImpl);
-                    }
-                    break;
-                case EComponentId::DIFFUSE_MATERIAL:
-                case EComponentId::SPRITE_MATERIAL:
-                    this->loadDiffuseContentHeader(vertexContentHeader, fragmentContentHeader);
-                    this->loadDiffuseContentImplementation(vertexContentImpl, fragmentContentImpl);
-                    break;
-                case EComponentId::NORMAL_MATERIAL:
-                    this->loadNormalMapContentHeader(vertexContentHeader, fragmentContentHeader);
-                    this->loadNormalMapContentImplementation(vertexContentImpl, fragmentContentImpl);
-                    break;
-                case EComponentId::SPECULAR_MATERIAL:
-                    this->loadSpecularMapContentHeader(vertexContentHeader, fragmentContentHeader);
-                    this->loadSpecularMapContentImplementation(vertexContentImpl, fragmentContentImpl);
-                    break;
-                case EComponentId::AO_MATERIAL:
-                    this->loadAOMapContentHeader(vertexContentHeader, fragmentContentHeader);
-                    this->loadAOMapContentImplementation(vertexContentImpl, fragmentContentImpl);
-                    break;
-                case EComponentId::SECOND_TARGET_COLOR_MATERIAL:
-                    this->loadSecondTargetColorContentImplementation(fragmentContentImpl);
-                    break;
-                default: break;
+                        if (this->lightData.hasAnyShadowCaster)
+                        {
+                            this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
+                            this->loadShadowsContentImplementation(vertexContentImpl, fragmentContentImpl);
+                        }
+                        break;
+                    case EComponentId::DIFFUSE_MATERIAL:
+                    case EComponentId::SPRITE_MATERIAL:
+                        this->loadDiffuseContentHeader(vertexContentHeader, fragmentContentHeader);
+                        this->loadDiffuseContentImplementation(vertexContentImpl, fragmentContentImpl);
+                        break;
+                    case EComponentId::NORMAL_MATERIAL:
+                        this->loadNormalMapContentHeader(vertexContentHeader, fragmentContentHeader);
+                        this->loadNormalMapContentImplementation(vertexContentImpl, fragmentContentImpl);
+                        break;
+                    case EComponentId::SPECULAR_MATERIAL:
+                        this->loadSpecularMapContentHeader(vertexContentHeader, fragmentContentHeader);
+                        this->loadSpecularMapContentImplementation(vertexContentImpl, fragmentContentImpl);
+                        break;
+                    case EComponentId::AO_MATERIAL:
+                        this->loadAOMapContentHeader(vertexContentHeader, fragmentContentHeader);
+                        this->loadAOMapContentImplementation(vertexContentImpl, fragmentContentImpl);
+                        break;
+                    case EComponentId::SECOND_TARGET_COLOR_MATERIAL:
+                        this->loadSecondTargetColorContentImplementation(fragmentContentImpl);
+                        break;
+                    default: break;
+                }
             }
         }
     }

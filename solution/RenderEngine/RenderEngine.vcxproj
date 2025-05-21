@@ -369,6 +369,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\core\graphics\meshData\Model.cpp" />
+    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\PBRRendererComponent.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MaterialLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MeshLoader.cpp" />
@@ -424,6 +425,7 @@
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\MaterialComponentTypes.cpp" />
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\PBRMaterialComponent.cpp" />
     <ClCompile Include="src\entities\EntityTypes.cpp" />
     <ClCompile Include="src\executionStrategies\AExecutionStrategy.cpp" />
     <ClCompile Include="src\executionStrategies\ApplicationStrategy.cpp" />
@@ -583,6 +585,8 @@
     <ClInclude Include="include\Model.h" />
     <ClInclude Include="include\MeshEditorProperty.h" />
     <ClInclude Include="include\MeshLoader.h" />
+    <ClInclude Include="include\PBRMaterialComponent.h" />
+    <ClInclude Include="include\PBRRendererComponent.h" />
     <ClInclude Include="include\ScenesManager.h" />
     <ClInclude Include="include\AGraphicsWrapper.h" />
     <ClInclude Include="include\AImGuiAPIState.h" />

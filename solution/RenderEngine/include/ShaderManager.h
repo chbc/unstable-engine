@@ -61,7 +61,6 @@ private:
     void setupUniformLocation(Shader* shader, const char *variable);
 
     void setupAttributeLocation(Shader* shader, ShaderVariables::Type variableKey);
-    void setVertexAttributePointer(Shader* shader, ShaderVariables::Type variableKey, size_t itemSize, size_t dataSize, void* dataOffset);
     void disableVertexAttribute(Shader* shader, ShaderVariables::Type variableKey);
 
     void setInt(Shader* shader, ShaderVariables::Type variableKey, int value);
@@ -94,6 +93,7 @@ friend class SpecularRendererComponent;
 friend class AORendererComponent;
 friend class OutlineRendererComponent;
 friend class SpriteRendererComponent;
+friend class PBRRendererComponent;
 
 friend class LitRendererLightsState;
 

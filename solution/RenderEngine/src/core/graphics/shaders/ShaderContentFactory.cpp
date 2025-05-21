@@ -243,6 +243,18 @@ void ShaderContentFactory::loadAOMapContentImplementation(std::string &outVertex
     this->uncommentCode(outFragmentContent, "// [AO] ");
 }
 
+void ShaderContentFactory::loadPbrContent(std::string& outVertexContent, std::string& outFragmentContent)
+{
+    size_t lightsCount = this->lightData.pointLightsCount;
+    if (lightsCount > 0)
+    {
+        FileUtils::loadContentFile(ShaderFiles::PBR_V, outVertexContent);
+	    FileUtils::loadContentFile(ShaderFiles::PBR_F, outFragmentContent);
+
+        outFragmentContent = StringUtils::format(outFragmentContent, lightsCount);
+    }
+}
+
 void ShaderContentFactory::loadSecondTargetColorContentImplementation(std::string& outFragmentContent)
 {
     std::string content;

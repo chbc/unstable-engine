@@ -18,9 +18,10 @@ void FlyingCameraComponent::onUpdate(float elapsedTime)
 {
 	if (Input::isMouseButtonDown(MouseButton::MOUSEBUTTON_RIGHT))
 	{
-		processKeys();
-		processMouseMotion(elapsedTime);
-		updateMovement(elapsedTime);
+		this->processKeys();
+		this->processMouseMotion(elapsedTime);
+		this->processMouseWheel(elapsedTime);
+		this->updateMovement(elapsedTime);
 	}
 }
 
@@ -64,15 +65,25 @@ void FlyingCameraComponent::processMouseMotion(float elapsedTime)
 	}
 }
 
+void FlyingCameraComponent::processMouseWheel(float elapsedTime)
+{
+	int mouseWheel = Input::getMouseWheel();
+	if (mouseWheel != 0)
+	{
+		const float WHEEL_RATE = 100.0f;
+		this->moveSpeed += static_cast<float>(mouseWheel) * WHEEL_RATE * elapsedTime;
+		this->moveSpeed = glm::clamp(this->moveSpeed, 0.1f, 100.0f);
+	}
+}
+
 void FlyingCameraComponent::updateMovement(float elapsedTime)
 {
 	if ((this->moveDirection.x != 0.0f) || (this->moveDirection.y != 0.0f) || (this->moveDirection.z != 0.0f))
 	{
-		const float SPEED = 10.0f;
 		TransformComponent* transform = this->getTransform();
 		glm::vec3 position = transform->getPosition();
 
-		glm::vec3 step = glm::normalize(this->moveDirection) * (SPEED * elapsedTime);
+		glm::vec3 step = glm::normalize(this->moveDirection) * (moveSpeed * elapsedTime);
 		position += step;
 
 		transform->setPosition(position);

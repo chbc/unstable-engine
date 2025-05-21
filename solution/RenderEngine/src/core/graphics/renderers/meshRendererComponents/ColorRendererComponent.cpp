@@ -29,7 +29,7 @@ void ColorRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shad
 
 void ColorRendererComponent::preDraw(Shader* shader)
 {
-    this->shaderManager->setVertexAttributePointer(shader, ShaderVariables::IN_POSITION, 3, sizeof(VertexData), VertexData::getPositionOffset());
+    this->graphicsWrapper->enableVertexPositions();
 }
 
 void ColorRendererComponent::postDraw(Shader* shader)

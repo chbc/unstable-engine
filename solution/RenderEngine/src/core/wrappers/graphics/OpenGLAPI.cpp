@@ -120,12 +120,6 @@ void OpenGLAPI::bindVAO(uint32_t vao, uint32_t vbo)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 }
 
-void OpenGLAPI::setVertexAttributePointer(int attributeLocation, size_t itemSize, size_t dataSize, void* dataOffset)
-{
-	glEnableVertexAttribArray(attributeLocation);
-	glVertexAttribPointer(attributeLocation, itemSize, GL_FLOAT, GL_FALSE, dataSize, dataOffset);
-}
-
 void OpenGLAPI::enableGUISettings()
 {
 	glEnableVertexAttribArray(EAttribLocation::TEXCOORDS);
@@ -207,6 +201,18 @@ void OpenGLAPI::activateSpecularTexture(uint32_t textureId)
 void OpenGLAPI::activateAOTexture(uint32_t textureId)
 {
 	glActiveTexture(GL_TEXTURE4);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+}
+
+void OpenGLAPI::activateMetallicTexture(uint32_t textureId)
+{
+	glActiveTexture(GL_TEXTURE5);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+}
+
+void OpenGLAPI::activateRoughnessTexture(uint32_t textureId)
+{
+	glActiveTexture(GL_TEXTURE6);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 

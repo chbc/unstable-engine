@@ -24,7 +24,6 @@ namespace sre
         void createGUIEBO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) override;
 
         void bindVAO(uint32_t vao, uint32_t vbo) override;
-        void setVertexAttributePointer(int attributeLocation, size_t itemSize, size_t dataSize, void* dataOffset) override;
         // XXX APAGAR
         void enableGUISettings() override;
         void enablePostProcessingSettings() override;

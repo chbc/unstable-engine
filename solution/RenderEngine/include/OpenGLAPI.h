@@ -1,7 +1,6 @@
-#ifndef __ANDROID__
+#pragma once
 
-#ifndef _OPENGL_API_H_
-#define _OPENGL_API_H_
+#ifndef __ANDROID__
 
 #include "AGraphicsWrapper.h"
 
@@ -23,7 +22,6 @@ protected:
     void createGUIEBO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) override;
 
     void bindVAO(uint32_t vao, uint32_t vbo) override;
-    void setVertexAttributePointer(int attributeLocation, size_t itemSize, size_t dataSize, void* dataOffset) override;
     void enableGUISettings() override;
 	void enablePostProcessingSettings() override;
     void enableVertexPositions() override;
@@ -36,6 +34,8 @@ protected:
     void activateNormalTexture(uint32_t textureId) override;
     void activateSpecularTexture(uint32_t textureId) override;
     void activateAOTexture(uint32_t textureId) override;
+    void activateMetallicTexture(uint32_t textureId) override;
+    void activateRoughnessTexture(uint32_t textureId) override;
 
     void setupBufferSubData(MeshData2D* meshData) override;
 
@@ -106,5 +106,4 @@ friend class SingletonsManager;
 };
 
 } // namespace
-#endif
 #endif

@@ -71,7 +71,7 @@ void EditorSceneViewport::onUpdate(float elapsedTime)
 	if (this->canUpdate)
 	{
 		this->updateViewingState();
-		this->processMouseWheel();
+		this->processMouseWheel(elapsedTime);
 		this->camera->onUpdate(elapsedTime);
 
 		if (this->flyingComponent->isEnabled() || this->orbitComponent->isEnabled())
@@ -149,29 +149,30 @@ void EditorSceneViewport::updateViewingState()
 		this->multimediaManager->showMouseCursor(true);
 
 		ImGuiIO& io = ImGui::GetIO();
-		io.ConfigFlags ^= ImGuiConfigFlags_NoMouseCursorChange;
+		io.ConfigFlags = io.ConfigFlags & ~ImGuiConfigFlags_NoMouseCursorChange;
 	}
 }
 
-void EditorSceneViewport::processMouseWheel()
+void EditorSceneViewport::processMouseWheel(float elapsedTime)
 {
-	int mouseWheel = Input::getMouseWheel();
-
-	if (mouseWheel != 0)
+	if (!this->flyingComponent->isEnabled())
 	{
-		/*
-		const float SPEED = 3.0f;
-		glm::vec3 position = this->cameraEntity->getTransform()->getPosition();
-		glm::vec3 targetPosition = this->flyingCamera->getLookAt();
-		float targetDistance = glm::distance(position, targetPosition);
-		targetDistance = targetDistance - (mouseWheel * SPEED);
-		targetDistance = (targetDistance < 1.0f) ? 1.0f : targetDistance;
+		int mouseWheel = Input::getMouseWheel();
 
-		position = glm::normalize(position);
-		position = position * targetDistance;
+		if (mouseWheel != 0)
+		{
+			const float WHEEL_RATE = 100.0f;
+			glm::vec3 position = this->camera->getTransform()->getPosition();
+			glm::vec3 targetPosition = TransformComponent::ZERO;
+			float targetDistance = glm::distance(position, targetPosition);
+			targetDistance = targetDistance - (mouseWheel * WHEEL_RATE * elapsedTime);
+			targetDistance = (targetDistance < 1.0f) ? 1.0f : targetDistance;
 
-		this->cameraEntity->getTransform()->setPosition(position);
-		*/
+			position = glm::normalize(position);
+			position = position * targetDistance;
+
+			this->camera->getTransform()->setPosition(position);
+		}
 	}
 }
 

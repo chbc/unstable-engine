@@ -56,6 +56,9 @@ namespace ShaderFiles
     const std::string AMBIENT_OCCLUSION_H_F     = BASE_FOLDER + "ambientOcclusion/ambientOcclusion_h.frag";
     const std::string AMBIENT_OCCLUSION_IMPL_F  = BASE_FOLDER + "ambientOcclusion/ambientOcclusion_impl.frag";
 
+    const std::string PBR_V = BASE_FOLDER + "pbr/pbr.vert";
+    const std::string PBR_F = BASE_FOLDER + "pbr/pbr.frag";
+
     const std::string SECOND_TARGET_COLOR_F = BASE_FOLDER + "secondTarget/color.frag";
 
     const std::string SHADOWS_DIRECTIONAL_H_V       = BASE_FOLDER + "shadows/shadows_directional_h.vert";
