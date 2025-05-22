@@ -314,7 +314,16 @@ uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, v
 	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(GL_TEXTURE_2D, result);
 
-	int colorFormat = (bpp == 3) ? GL_RGB : GL_RGBA;
+	int colorFormat = GL_RGBA;
+
+	if (bpp == 1)
+	{
+		colorFormat = GL_RED;
+	}
+	else if (bpp == 3)
+	{
+		colorFormat = GL_RGB;
+	}
 
 	glTexImage2D
 	(
