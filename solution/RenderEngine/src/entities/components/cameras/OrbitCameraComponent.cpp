@@ -29,7 +29,7 @@ void OrbitCameraComponent::processMouseMotion(float elapsedTime)
 
 		TransformComponent* transform = this->getTransform();
 
-		const float SPEED = 1.0f;
+		const float SPEED = 1.5f;
 		glm::vec3 position = transform->getPosition();
 		glm::vec3 toPlayer = position - this->target;
 		glm::vec3 direction = glm::normalize(toPlayer);

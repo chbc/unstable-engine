@@ -70,7 +70,7 @@ void FlyingCameraComponent::processMouseWheel(float elapsedTime)
 	int mouseWheel = Input::getMouseWheel();
 	if (mouseWheel != 0)
 	{
-		const float WHEEL_RATE = 100.0f;
+		const float WHEEL_RATE = 50.0f;
 		this->moveSpeed += static_cast<float>(mouseWheel) * WHEEL_RATE * elapsedTime;
 		this->moveSpeed = glm::clamp(this->moveSpeed, 0.1f, 100.0f);
 	}
