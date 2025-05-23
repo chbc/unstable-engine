@@ -78,6 +78,18 @@ void AssetsManager::releaseTexture(Texture* texture)
 	this->releaseAsset(this->texturesMap, texture, releaseCallback);
 }
 
+Texture* AssetsManager::loadIcon(const char* filePath)
+{
+	Texture* result = this->loadAsset<IconsMapType, TextureLoader, Texture>(this->iconsMap, filePath, ETextureMap::GUI);
+	return result;
+}
+
+void AssetsManager::releaseIcon(Texture* texture)
+{
+	std::function<void(Texture*)> releaseCallback = [&](Texture* item) { TextureLoader().release(item); };
+	this->releaseAsset(this->iconsMap, texture, releaseCallback);
+}
+
 void AssetsManager::preRelease()
 {
 	// Entities
@@ -105,6 +117,13 @@ void AssetsManager::preRelease()
 	{
 		TextureLoader().release((*it).second.second.get());
 		it = this->texturesMap.erase(it);
+	}
+
+	// Icons
+	for (auto& it = this->iconsMap.begin(); it != this->iconsMap.end();)
+	{
+		TextureLoader().release((*it).second.second.get());
+		it = this->iconsMap.erase(it);
 	}
 }
 

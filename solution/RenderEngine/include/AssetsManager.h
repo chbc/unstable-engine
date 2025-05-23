@@ -19,16 +19,18 @@ class Material;
 class Texture;
 
 using ModelPairType		= std::pair<size_t, SPTR<Model>>;
-using Model2DPairType = std::pair<size_t, SPTR<Model2D>>;
+using Model2DPairType	= std::pair<size_t, SPTR<Model2D>>;
 using MaterialPairType	= std::pair<size_t, SPTR<Material>>;
 using EntityPairType	= std::pair<size_t, SPTR<Entity>>;
 using TexturePairType	= std::pair<size_t, SPTR<Texture>>;
+using IconPairType		= std::pair<size_t, SPTR<Texture>>;
 
 using ModelsMapType		= std::unordered_map<size_t, ModelPairType>;
 using Models2DMapType	= std::unordered_map<size_t, Model2DPairType>;
 using MaterialsMapType	= std::unordered_map<size_t, MaterialPairType>;
 using EntitiesMapType	= std::unordered_map<size_t, EntityPairType>;
 using TexturesMapType	= std::unordered_map<size_t, TexturePairType>;
+using IconsMapType = std::unordered_map<size_t, IconPairType>;
 
 class AssetsManager : public ASingleton
 {
@@ -40,6 +42,7 @@ private:
 	MaterialsMapType materialsMap;
 	EntitiesMapType entitiesMap;
 	TexturesMapType texturesMap;
+	IconsMapType iconsMap;
 
 public:
 	Entity* loadEntity(const char* filePath, std::string name);
@@ -53,6 +56,8 @@ public:
 	void releaseMaterial(Material* material);
 	Texture* loadTexture(const char* filePath, ETextureMap::Type mapType);
 	void releaseTexture(Texture* texture);
+	Texture* loadIcon(const char* filePath);
+	void releaseIcon(Texture* texture);
 
 protected:
 	void preRelease() override;
