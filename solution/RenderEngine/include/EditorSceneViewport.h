@@ -21,7 +21,8 @@ private:
 	class MultimediaManager* multimediaManager{ nullptr };
 	glm::ivec2 initialMousePosition;
 	EditorsController* controller;
-
+	float currentWindowWidth{ 0.0f };
+	float currentWindowHeight{ 0.0f };
 	static uint32_t Fbo;
 	void* textureId{ nullptr };
 	bool canUpdate{ false };
@@ -39,6 +40,7 @@ private:
 	void processMouseWheel(float elapsedTime);
 	void updateInitialMousePosition();
 	void forceInitialMousePosition();
+	void updateCameraPerspective(float newWidth, float newHeight);
 
 friend class WorldEditor;
 };

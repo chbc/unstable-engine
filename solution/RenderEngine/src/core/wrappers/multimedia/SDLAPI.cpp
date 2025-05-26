@@ -157,6 +157,7 @@ void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons, SD
 			Input::setMouseWheel(currentEvent.wheel.y);
 			break;
 
+		/*
 		case SDL_WINDOWEVENT:
 			const SDL_WindowEvent& window = currentEvent.window;
 			if (window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
@@ -166,6 +167,7 @@ void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons, SD
 				EngineValues::updateAspectRatio();
 			}
 			break;
+		*/
 	}
 }
 

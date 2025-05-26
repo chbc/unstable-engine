@@ -26,7 +26,7 @@ public:
 	void removeListener(Action* callback);
 
 	template <typename T>
-	void notify(T* message) const;
+	void notify(T* message = nullptr) const;
 
 friend class SingletonsManager;
 };

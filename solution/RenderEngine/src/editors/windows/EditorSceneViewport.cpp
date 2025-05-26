@@ -106,6 +106,8 @@ void EditorSceneViewport::onEditorGUI()
 		ImGui::EndDragDropTarget();
 	}
 
+	this->updateCameraPerspective(size.x, size.y);
+
 	ImGui::End();
 }
 
@@ -187,6 +189,23 @@ void EditorSceneViewport::updateInitialMousePosition()
 void EditorSceneViewport::forceInitialMousePosition()
 {
 	this->multimediaManager->setMousePosition(this->initialMousePosition.x, this->initialMousePosition.y);
+}
+
+void EditorSceneViewport::updateCameraPerspective(float newWidth, float newHeight)
+{
+	if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) &&
+		(
+			(newWidth != this->currentWindowWidth) ||
+			(newHeight != this->currentWindowHeight)
+		)
+	)
+	{
+		this->currentWindowWidth = newWidth;
+		this->currentWindowHeight = newHeight;
+		float aspectRatio = this->currentWindowWidth / this->currentWindowHeight;
+		this->flyingComponent->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
+		this->orbitComponent->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
+	}
 }
 
 } // namespace
