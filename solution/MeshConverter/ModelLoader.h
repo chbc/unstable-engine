@@ -16,7 +16,7 @@ namespace sre
 class ModelLoader
 {
 public:
-    void load(const char* fileName, std::vector<MeshData>& result);
+    void load(const char* fileName, float scaleFactor, std::vector<MeshData>& result);
 
 private:
     void processNode(const aiScene *scene, aiNode* node, aiMatrix4x4& parentTransform, std::vector<MeshData>& result);

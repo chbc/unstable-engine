@@ -9,7 +9,7 @@
 namespace sre
 {
 
-void ModelLoader::load(const char* fileName, std::vector<MeshData>& result)
+void ModelLoader::load(const char* fileName, float scaleFactor, std::vector<MeshData>& result)
 {
 	std::ifstream fin(fileName);
 	if (fin.fail())
@@ -31,8 +31,8 @@ void ModelLoader::load(const char* fileName, std::vector<MeshData>& result)
 		throw "[ModelLoader] - Load Error: " + std::string(importer.GetErrorString());
 	}
 
-	aiMatrix4x4 identityTransform;
-    processNode(scene, scene->mRootNode, identityTransform, result);
+	aiMatrix4x4 initialTransform = aiMatrix4x4{} * scaleFactor;
+    processNode(scene, scene->mRootNode, initialTransform, result);
 }
 
 void ModelLoader::processNode(const aiScene* scene, aiNode *node, aiMatrix4x4& parentTransform, std::vector<MeshData>& result)
