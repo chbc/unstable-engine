@@ -300,10 +300,10 @@
     <ClCompile Include="src\core\multimedia\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entities\components\cameras\FlyingCameraComponent.cpp">
+    <ClCompile Include="src\entities\components\movements\FlyingMovementComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entities\components\cameras\OrbitCameraComponent.cpp">
+    <ClCompile Include="src\entities\components\movements\OrbitMovementComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\entitiesManagers\scene\AScene.cpp">
@@ -959,10 +959,10 @@
     <ClInclude Include="include\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\FlyingCameraComponent.h">
+    <ClInclude Include="include\FlyingMovementComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\OrbitCameraComponent.h">
+    <ClInclude Include="include\OrbitMovementComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="thirdParties\imgui\imgui_impl_opengl3_loader.h">

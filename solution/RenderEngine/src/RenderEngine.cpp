@@ -60,7 +60,6 @@ void RenderEngine::run()
             this->dispatchEndFrameActions();
             this->currentStrategy->delay(this);
         }
-
     }
     catch (std::string& message)
     {
@@ -128,6 +127,7 @@ void RenderEngine::changeStrategy(const EExecutionMode::Type mode)
     {
         this->currentStrategy->cleanUp();
         this->currentStrategy = (mode == EExecutionMode::APPLICATION) ? this->applicationStrategy.get() : this->editorStrategy.get();
+        this->currentStrategy->init(this);
     };
     endFrameActions.emplace(action);
 

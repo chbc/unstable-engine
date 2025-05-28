@@ -1,31 +1,21 @@
-#include "OrbitCameraComponent.h"
-#include "Input.h"
+#include "OrbitMovementComponent.h"
 #include "TransformComponent.h"
-#include "MultimediaManager.h"
-#include "SingletonsManager.h"
 
-#include "glm/vec2.hpp"
 #include <glm/gtx/rotate_vector.hpp>
 
 namespace sre
 {
 
-IMPLEMENT_CHILD_COMPONENT(OrbitCameraComponent, CameraComponent)
+IMPLEMENT_COMPONENT(OrbitMovementComponent)
 
-OrbitCameraComponent::OrbitCameraComponent(Entity* entity) : CameraComponent(entity){ }
+OrbitMovementComponent::OrbitMovementComponent(Entity* entity) : AEntityComponent(entity){ }
 
-void OrbitCameraComponent::onUpdate(float elapsedTime)
+void OrbitMovementComponent::move(const glm::vec2& deltaMovement, float elapsedTime)
 {
-	processMouseMotion(elapsedTime);
-}
-
-void OrbitCameraComponent::processMouseMotion(float elapsedTime)
-{
-	const glm::ivec2& mouseDelta = Input::getMouseDeltaPosition();
-	if ((mouseDelta.x != 0) || (mouseDelta.y != 0))
+	if ((deltaMovement.x != 0.0f) || (deltaMovement.y != 0.0f))
 	{
-		float deltaX = static_cast<float>(mouseDelta.x);
-		float deltaY = static_cast<float>(mouseDelta.y);
+		float deltaX = deltaMovement.x;
+		float deltaY = deltaMovement.y;
 
 		TransformComponent* transform = this->getTransform();
 

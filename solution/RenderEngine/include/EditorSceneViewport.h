@@ -9,6 +9,13 @@
 namespace sre
 {
 
+enum class EViewingState
+{
+	NONE,
+	FLYING,
+	ORBIT
+};
+
 class EditorsController;
 
 class EditorSceneViewport : public IEditorWindow
@@ -17,8 +24,8 @@ private:
 	class RenderManager* renderManager{ nullptr };
 	SPTR<class Entity> camera{ nullptr };
 	
-	class FlyingCameraComponent* flyingComponent{ nullptr };
-	class OrbitCameraComponent* orbitComponent{ nullptr };
+	class FlyingMovementComponent* flyingComponent{ nullptr };
+	class OrbitMovementComponent* orbitComponent{ nullptr };
 	class MultimediaManager* multimediaManager{ nullptr };
 	glm::ivec2 initialMousePosition;
 	EditorsController* controller{ nullptr };
@@ -27,6 +34,7 @@ private:
 	static uint32_t Fbo;
 	void* textureId{ nullptr };
 	bool canUpdate{ false };
+	EViewingState viewingState{ EViewingState::NONE };
 
 public:
 	EditorSceneViewport(EditorsController* arg_controller);
@@ -39,6 +47,7 @@ public:
 private:
 	void handleFileDrop();
 	void updateViewingState();
+	void processCameraMovement(float elapsedTime);
 	void processMouseWheel(float elapsedTime);
 	void updateInitialMousePosition();
 	void forceInitialMousePosition();

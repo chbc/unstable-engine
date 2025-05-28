@@ -1,5 +1,4 @@
-#ifndef _CAMERA_COMPONENT_H_
-#define _CAMERA_COMPONENT_H_
+#pragma once
 
 #include "AEntityComponent.h"
 #include <glm/matrix.hpp>
@@ -50,5 +49,3 @@ friend class EditorSceneViewport;
 };
 
 } // namespace
-
-#endif

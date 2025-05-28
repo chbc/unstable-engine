@@ -6,8 +6,8 @@
 #include "EngineValues.h"
 #include "RenderManager.h"
 #include "ScenesManager.h"
-#include "FlyingCameraComponent.h"
-#include "OrbitCameraComponent.h"
+#include "FlyingMovementComponent.h"
+#include "OrbitMovementComponent.h"
 #include "Input.h"
 #include "EditorsController.h"
 
@@ -46,18 +46,18 @@ void EditorSceneViewport::onInit()
 		this->renderManager = singletonsManager->get<RenderManager>();
 
 		this->camera = SPTR<Entity>(new Entity{"_editor_camera"});
-		this->flyingComponent = this->camera->addComponent<FlyingCameraComponent>();
-		this->flyingComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
-
-		this->orbitComponent = this->camera->addComponent<OrbitCameraComponent>();
-		this->orbitComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
-		this->orbitComponent->setEnabled(false);
+		CameraComponent* cameraComponent = this->camera->addComponent<CameraComponent>();
+		cameraComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
+		
+		this->flyingComponent = this->camera->addComponent<FlyingMovementComponent>();
+		this->orbitComponent = this->camera->addComponent<OrbitMovementComponent>();
 		
 		this->camera->getTransform()->setPosition({ 0.0f, 2.0f, 5.0f });
 
 		this->camera->onInit();
 
-		this->renderManager->setEditorCamera(flyingComponent);
+		this->renderManager->setEditorCamera(cameraComponent);
+		this->viewingState = EViewingState::NONE;
 	}
 
 	this->renderManager->setTargetFBO(Fbo);
@@ -70,12 +70,14 @@ void EditorSceneViewport::onUpdate(float elapsedTime)
 	{
 		this->updateViewingState();
 		this->processMouseWheel(elapsedTime);
-		this->camera->onUpdate(elapsedTime);
 
-		if (this->flyingComponent->isEnabled() || this->orbitComponent->isEnabled())
+		if (this->viewingState != EViewingState::NONE)
 		{
+			this->processCameraMovement(elapsedTime);
 			this->forceInitialMousePosition();
 		}
+
+		this->camera->onUpdate(elapsedTime);
 	}
 }
 
@@ -126,30 +128,25 @@ void EditorSceneViewport::updateViewingState()
 {
 	if (ImGui::IsMouseDown(ImGuiMouseButton_Right))
 	{
-		if (!this->flyingComponent->isEnabled())
+		if (this->viewingState != EViewingState::FLYING)
 		{
-			this->orbitComponent->setEnabled(false);
-			this->flyingComponent->setEnabled(true);
-			this->renderManager->setEditorCamera(flyingComponent);
+			this->viewingState = EViewingState::FLYING;
 			this->multimediaManager->showMouseCursor(false);
 			this->updateInitialMousePosition();
 		}
 	}
 	else if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftAlt)))
 	{
-		if (!this->orbitComponent->isEnabled())
+		if (this->viewingState != EViewingState::ORBIT)
 		{
-			this->flyingComponent->setEnabled(false);
-			this->orbitComponent->setEnabled(true);
-			this->renderManager->setEditorCamera(orbitComponent);
+			this->viewingState = EViewingState::ORBIT;
 			this->multimediaManager->showMouseCursor(false);
 			this->updateInitialMousePosition();
 		}
 	}
-	else if (this->flyingComponent->isEnabled() || this->orbitComponent->isEnabled())
+	else if (this->viewingState != EViewingState::NONE)
 	{
-		this->flyingComponent->setEnabled(false);
-		this->orbitComponent->setEnabled(false);
+		this->viewingState = EViewingState::NONE;
 		this->multimediaManager->showMouseCursor(true);
 
 		ImGuiIO& io = ImGui::GetIO();
@@ -157,13 +154,43 @@ void EditorSceneViewport::updateViewingState()
 	}
 }
 
+void EditorSceneViewport::processCameraMovement(float elapsedTime)
+{
+	const glm::ivec2& mouseDelta = Input::getMouseDeltaPosition();
+
+	if (this->viewingState == EViewingState::FLYING)
+	{
+		TransformComponent* transform = this->camera->getTransform();
+
+		glm::vec3 moveDirection;
+
+		if (Input::isKeyDown(KEY_a))
+			moveDirection -= transform->getRight();
+		if (Input::isKeyDown(KEY_d))
+			moveDirection += transform->getRight();
+		if (Input::isKeyDown(KEY_w))
+			moveDirection -= transform->getForward();
+		if (Input::isKeyDown(KEY_s))
+			moveDirection += transform->getForward();
+
+		this->flyingComponent->processMovement(moveDirection, mouseDelta, elapsedTime);
+	}
+	else
+	{
+		this->orbitComponent->move(mouseDelta, elapsedTime);
+	}
+}
+
 void EditorSceneViewport::processMouseWheel(float elapsedTime)
 {
-	if (!this->flyingComponent->isEnabled())
+	int mouseWheel = Input::getMouseWheel();
+	if (mouseWheel != 0)
 	{
-		int mouseWheel = Input::getMouseWheel();
-
-		if (mouseWheel != 0)
+		if (this->viewingState == EViewingState::FLYING)
+		{
+			this->flyingComponent->addSpeed(static_cast<float>(mouseWheel), elapsedTime);
+		}
+		else
 		{
 			const float WHEEL_RATE = 100.0f;
 			glm::vec3 position = this->camera->getTransform()->getPosition();
@@ -205,8 +232,7 @@ void EditorSceneViewport::updateCameraPerspective(float newWidth, float newHeigh
 		this->currentWindowWidth = newWidth;
 		this->currentWindowHeight = newHeight;
 		float aspectRatio = this->currentWindowWidth / this->currentWindowHeight;
-		this->flyingComponent->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
-		this->orbitComponent->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
+		this->camera->getComponent<CameraComponent>()->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
 	}
 }
 
