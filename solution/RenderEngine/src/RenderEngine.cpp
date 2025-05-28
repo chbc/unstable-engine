@@ -79,6 +79,7 @@ void RenderEngine::loadScene(std::string scenePath)
 {
     std::function<void(void)> action = [=]
     {
+        this->currentStrategy->cleanUp();
         this->currentStrategy->loadScene(scenePath.c_str());
         this->currentStrategy->init(this);
     };
@@ -139,11 +140,13 @@ void RenderEngine::release()
     {
         if (this->applicationStrategy != nullptr)
         {
+            this->applicationStrategy->cleanUp();
             this->applicationStrategy->release();
         }
 
         if (this->editorStrategy != nullptr)
         {
+            this->editorStrategy->cleanUp();
             this->editorStrategy->release();
         }
 

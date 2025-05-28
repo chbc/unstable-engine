@@ -29,6 +29,7 @@ namespace FileUtils
 	std::string getContentAbsolutePath(const std::string& filePath);
     std::string getConfigAbsolutePath(const std::string& filePath);
     std::string getContentRelativePath(const std::string& filePath);
+	std::string getToolsAbsolutePath(const std::string& fileName);
 	bool isDirectory(const std::string& filePath);
     bool isPathFromGameContent(const std::string& filePath);
 	EAssetType getAssetType(const std::string& filePath);

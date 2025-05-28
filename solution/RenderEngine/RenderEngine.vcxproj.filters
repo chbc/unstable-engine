@@ -390,6 +390,12 @@
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\PBRRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\editors\windows\popups\AEditorPopup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editors\windows\popups\ImportMeshPopup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1041,6 +1047,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PBRRendererComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImportMeshPopup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

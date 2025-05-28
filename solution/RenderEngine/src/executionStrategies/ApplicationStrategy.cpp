@@ -14,6 +14,8 @@ ApplicationStrategy::ApplicationStrategy()
 
 void ApplicationStrategy::init(RenderEngine* controller)
 {
+	AExecutionStrategy::init(controller);
+
 	this->multimediaManager->setExecutionMode(EExecutionMode::APPLICATION);
 	this->renderManager->setExecutionMode(EExecutionMode::APPLICATION);
 	this->renderManager->setTargetFBO(0);

@@ -4,8 +4,11 @@
 #include "SingletonsManager.h"
 #include "EditorsController.h"
 #include "FileUtils.h"
+#include "MessagesManager.h"
+#include "EditorMessages.h"
 
 #include "imgui/imgui.h"
+#include <sstream>
 
 namespace sre
 {
@@ -13,12 +16,17 @@ namespace sre
 EditorFileBrowser::EditorFileBrowser(EditorsController* arg_controller) 
 {
 	this->controller = arg_controller;
+	this->externalFileDropAction = SPTR<Action>(new Action([&](void* message) { handleExternalFileDrop(message); }));
 }
 
 void EditorFileBrowser::onInit()
 {
 	this->gameContentFolder = FileUtils::getContentAbsolutePath("game");
+	this->currentDirectory = this->gameContentFolder;
 	this->controller->refreshFileIcons(this->gameContentFolder, this->fileIcons);
+
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	messagesManager->addListener<FileDropEditorMessage>(this->externalFileDropAction.get());
 }
 
 void EditorFileBrowser::onEditorGUI()
@@ -31,9 +39,9 @@ void EditorFileBrowser::onEditorGUI()
 
 	const ImVec2 size{ 64, 64 };
 
-	int padding = 16;
+	float padding = 16;
 	float panelWidth = ImGui::GetContentRegionAvail().x;
-	int columns = panelWidth / (size.x + padding);
+	int columns = static_cast<int>(panelWidth / (size.x + padding));
 	if (columns < 1)
 	{
 		columns = 1;
@@ -80,12 +88,50 @@ void EditorFileBrowser::onEditorGUI()
 
 		if (directoryChanged)
 		{
+			this->currentDirectory = item->filePath;
 			this->controller->refreshFileIcons(item->filePath, this->fileIcons);
 			break;
 		}
 	}
 
 	ImGui::End();
+}
+
+void EditorFileBrowser::onCleanUp()
+{
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	messagesManager->removeListener<FileDropEditorMessage>(this->externalFileDropAction.get());
+}
+
+void EditorFileBrowser::handleExternalFileDrop(void* message)
+{
+	FileDropEditorMessage* fileDropMessage = static_cast<FileDropEditorMessage*>(message);
+
+	Action_OnClosePopup* onClosePopup = new Action_OnClosePopup
+	{
+		[&](AEditorPopup* popup, bool confirm)
+		{
+			if (confirm)
+			{
+				ImportMeshPopup* importPopup = static_cast<ImportMeshPopup*>(popup);
+				std::string resultFilePath;
+				this->controller->importMesh(importPopup->sourceFilePath.c_str(), importPopup->destinationPath.c_str(), importPopup->scaleFactor, resultFilePath);
+				this->controller->refreshFileIcons(this->currentDirectory, this->fileIcons);
+
+				if (importPopup->loadToScene)
+				{
+					this->controller->loadFileFromBrowser(resultFilePath.c_str());
+				}
+			}
+		}
+	};
+
+	this->onClosePopupAction = SPTR<Action_OnClosePopup>(onClosePopup);
+	
+	ImportMeshPopup* importPopup = new ImportMeshPopup { this->onClosePopupAction.get(), fileDropMessage->filePath, this->currentDirectory};
+	ShowPopupEditorMessage popupMessage{ importPopup };
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	messagesManager->notify(&popupMessage);
 }
 
 } // namespace

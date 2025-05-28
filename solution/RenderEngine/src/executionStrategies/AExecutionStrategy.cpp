@@ -17,7 +17,10 @@ AExecutionStrategy::AExecutionStrategy() : entityDestroyed(false)
     this->renderManager = singletonsManager->get<RenderManager>();
     this->multimediaManager = singletonsManager->get<MultimediaManager>();
     this->scenesManager = singletonsManager->get<ScenesManager>();
+}
 
+void AExecutionStrategy::init(RenderEngine* controller)
+{
     Action* action = new Action{ [&](void* message) { this->onEntityDestroyed(message); } };
     this->entityDestroyedAction = SPTR<Action>(action);
 
@@ -69,6 +72,12 @@ void AExecutionStrategy::delay(RenderEngine* controller)
 #endif
 
     this->multimediaManager->delay();
+}
+
+void AExecutionStrategy::cleanUp()
+{
+    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+    messagesManager->removeListener<EntityDestroyedMessage>(this->entityDestroyedAction.get());
 }
 
 void AExecutionStrategy::loadScene(const char* scenePath)

@@ -6,9 +6,10 @@
 #include "EditorEntityProperties.h"
 #include "EditorSceneViewport.h"
 #include "EditorFileBrowser.h"
-
 #include "SingletonsManager.h"
 #include "RenderManager.h"
+#include "EditorMessages.h"
+#include "MessagesManager.h"
 
 #include "imgui/imgui.h"
 
@@ -24,6 +25,8 @@ WorldEditor::WorldEditor(ScenesManager* arg_scenesManager)
 	this->windows[1] = UPTR<IEditorWindow>(new EditorEntityProperties);
     this->windows[2] = UPTR<IEditorWindow>(new EditorSceneViewport{ this->controller.get()});
     this->windows[3] = UPTR<IEditorWindow>(new EditorFileBrowser{ this->controller.get() });
+    
+    this->showPopupAction = SPTR<Action>(new Action([&](void* message) { this->onShowPopup(message); }));
 }
 
 void WorldEditor::init()
@@ -31,6 +34,11 @@ void WorldEditor::init()
     this->menuBar->onInit();
 	for (const auto& item : this->windows)
 		item->onInit();
+
+    this->currentPopup.reset();
+
+    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+    messagesManager->addListener<ShowPopupEditorMessage>(this->showPopupAction.get());
 
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
@@ -105,25 +113,45 @@ void WorldEditor::onEditorGUI()
         ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
     }
 
+    // ------------- //
     this->menuBar->onEditorGUI();
 
     for (const auto& item : this->windows)
         item->onEditorGUI();
 
+    if (this->currentPopup && this->currentPopup->isOpen())
+    {
+        this->currentPopup->onEditorGUI();
+    }
+    // ------------- //
     ImGui::End();
+}
+
+void WorldEditor::onShowPopup(void* message)
+{
+    ShowPopupEditorMessage* popupMessage = static_cast<ShowPopupEditorMessage*>(message);
+    this->currentPopup.reset(popupMessage->popup);
 }
 
 void WorldEditor::cleanUp()
 {
+    if (this->currentPopup)
+    {
+        this->currentPopup->close(false);
+    }
+
     this->menuBar->onCleanUp();
     for (const auto& item : this->windows)
+    {
         item->onCleanUp();
+    }
+
+    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+    messagesManager->removeListener<ShowPopupEditorMessage>(this->showPopupAction.get());
 }
 
 void WorldEditor::release()
 {
-    this->cleanUp();
-
     this->showDemo = false;
     this->wasShowingDemo = false;
 

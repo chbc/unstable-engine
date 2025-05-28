@@ -14,6 +14,8 @@ EditorStrategy::EditorStrategy()
 
 void EditorStrategy::init(RenderEngine* controller)
 {
+    AExecutionStrategy::init(controller);
+
     this->worldEditor->init();
     this->multimediaManager->setExecutionMode(EExecutionMode::EDITOR);
     this->renderManager->setExecutionMode(EExecutionMode::EDITOR);
@@ -39,11 +41,13 @@ void EditorStrategy::render(RenderEngine* controller)
 
 void EditorStrategy::cleanUp()
 {
+    AExecutionStrategy::cleanUp();
     this->worldEditor->cleanUp();
 }
 
 void EditorStrategy::release()
 {
+    AExecutionStrategy::release();
     this->worldEditor->release();
 }
 

@@ -9,6 +9,7 @@ FS::path contentPath;
 FS::path gameContentPath;
 FS::path configPath;
 FS::path iconsPath;
+FS::path toolsPath;
 
 #ifdef __ANDROID__
 	#include <SDL.h>
@@ -62,6 +63,7 @@ void initializeStoragePaths()
 	gameContentPath = FS::absolute(bin / ".." / "content/game/");
 	configPath = FS::absolute(bin / ".." / "config/");
 	iconsPath = FS::absolute(bin / ".." / "content/engine/icons/");
+	toolsPath = FS::absolute(bin / ".." / "tools/");
 }
 
 void loadContentFile(const std::string& filePath, std::string& dest)
@@ -195,6 +197,11 @@ std::string getConfigAbsolutePath(const std::string& filePath)
 std::string getContentRelativePath(const std::string& filePath)
 {
 	return FS::proximate(FS::path{ filePath }, contentPath).string();
+}
+
+std::string getToolsAbsolutePath(const std::string& fileName)
+{
+	return (toolsPath / fileName).string();
 }
 
 bool isDirectory(const std::string& filePath)

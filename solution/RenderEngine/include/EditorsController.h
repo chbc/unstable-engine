@@ -34,6 +34,8 @@ public:
 	void refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result);
 	void saveEntity(Entity* entity);
 	void loadFileFromBrowser(const char* filePath);
+	void loadExternalFile(const char* filePath, const char* destinationPath);
+	void importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, std::string& resultFilePath);
 
 private:
 	void createMeshEntity(const char* name, const char* file, const char* meshName = "");

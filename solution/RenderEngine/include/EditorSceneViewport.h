@@ -16,11 +16,12 @@ class EditorSceneViewport : public IEditorWindow
 private:
 	class RenderManager* renderManager{ nullptr };
 	SPTR<class Entity> camera{ nullptr };
-	class FlyingCameraComponent* flyingComponent;
-	class OrbitCameraComponent* orbitComponent;
+	
+	class FlyingCameraComponent* flyingComponent{ nullptr };
+	class OrbitCameraComponent* orbitComponent{ nullptr };
 	class MultimediaManager* multimediaManager{ nullptr };
 	glm::ivec2 initialMousePosition;
-	EditorsController* controller;
+	EditorsController* controller{ nullptr };
 	float currentWindowWidth{ 0.0f };
 	float currentWindowHeight{ 0.0f };
 	static uint32_t Fbo;
@@ -36,6 +37,7 @@ public:
 	void onRelease() override;
 
 private:
+	void handleFileDrop();
 	void updateViewingState();
 	void processMouseWheel(float elapsedTime);
 	void updateInitialMousePosition();

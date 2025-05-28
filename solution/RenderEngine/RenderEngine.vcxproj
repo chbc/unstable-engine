@@ -417,6 +417,8 @@
     <ClCompile Include="src\editors\windows\EditorFileBrowser.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
     <ClCompile Include="src\editors\windows\FileIcons\FileIcon.cpp" />
+    <ClCompile Include="src\editors\windows\popups\AEditorPopup.cpp" />
+    <ClCompile Include="src\editors\windows\popups\ImportMeshPopup.cpp" />
     <ClCompile Include="src\entitiesManagers\scene\AScene.cpp" />
     <ClCompile Include="src\entities\components\cameras\FlyingCameraComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\OrbitCameraComponent.cpp" />
@@ -580,6 +582,7 @@
     <ClInclude Include="include\EntityDestroyedMessage.h" />
     <ClInclude Include="include\EntityParser.h" />
     <ClInclude Include="include\AExecutionStrategy.h" />
+    <ClInclude Include="include\ImportMeshPopup.h" />
     <ClInclude Include="include\MaterialComponentTypes.h" />
     <ClInclude Include="include\MaterialLoader.h" />
     <ClInclude Include="include\Model.h" />

@@ -6,8 +6,6 @@
 #include "EngineValues.h"
 #include "RenderManager.h"
 #include "ScenesManager.h"
-#include "MessagesManager.h"
-#include "EditorMessages.h"
 #include "FlyingCameraComponent.h"
 #include "OrbitCameraComponent.h"
 #include "Input.h"
@@ -93,19 +91,7 @@ void EditorSceneViewport::onEditorGUI()
 
 	this->canUpdate = ImGui::IsWindowFocused() || ImGui::IsWindowHovered();
 
-	if (ImGui::BeginDragDropTarget())
-	{
-		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
-		{
-			const char* filePath = static_cast<const char*>(payload->Data);
-			if (filePath != nullptr)
-			{
-				this->controller->loadFileFromBrowser(filePath);
-			}
-		}
-		ImGui::EndDragDropTarget();
-	}
-
+	this->handleFileDrop();
 	this->updateCameraPerspective(size.x, size.y);
 
 	ImGui::End();
@@ -117,6 +103,22 @@ void EditorSceneViewport::onRelease()
 	{
 		AGraphicsWrapper* graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
 		graphicsWrapper->deleteFrameBuffer(Fbo);
+	}
+}
+
+void EditorSceneViewport::handleFileDrop()
+{
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
+		{
+			const char* filePath = static_cast<const char*>(payload->Data);
+			if (filePath != nullptr)
+			{
+				this->controller->loadFileFromBrowser(filePath);
+			}
+		}
+		ImGui::EndDragDropTarget();
 	}
 }
 

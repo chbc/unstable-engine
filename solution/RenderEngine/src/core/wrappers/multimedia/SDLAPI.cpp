@@ -4,6 +4,9 @@
 #include "Entity.h"
 #include "Input.h"
 #include "FileUtils.h"
+#include "SingletonsManager.h"
+#include "MessagesManager.h"
+#include "EditorMessages.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -155,6 +158,12 @@ void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons, SD
 
 		case SDL_MOUSEWHEEL:
 			Input::setMouseWheel(currentEvent.wheel.y);
+			break;
+
+		case SDL_DROPFILE:
+			FileDropEditorMessage message{ currentEvent.drop.file };
+			MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+			messagesManager->notify<FileDropEditorMessage>(&message);
 			break;
 
 		/*

@@ -152,6 +152,26 @@ void EditorsController::loadFileFromBrowser(const char* filePath)
 	}
 }
 
+void EditorsController::loadExternalFile(const char* filePath, const char* destinationPath)
+{
+}
+
+void EditorsController::importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, std::string& resultFilePath)
+{
+	std::stringstream commandoStream;
+	std::string toolPath = FileUtils::getToolsAbsolutePath("MeshConverter.exe");
+	commandoStream << toolPath << " " << sourceFilePath << " " << destinationPath << " " << scaleFactor;
+	std::string command = commandoStream.str();
+
+	system(command.c_str());
+
+	std::string fileName = FileUtils::getFileName(sourceFilePath);
+
+	std::stringstream resultStream;
+	resultStream << destinationPath << "\\" << fileName << ".mesh";
+	resultFilePath = resultStream.str();
+}
+
 void EditorsController::createMeshEntity(const char* name, const char* file, const char* meshName)
 {
 	Entity* newEntity = this->scenesManager->createMeshEntity(name, file, meshName);

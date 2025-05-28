@@ -1,26 +1,32 @@
 #if !defined(RELEASE) && !defined(__ANDROID__)
 
-#ifndef _WORLD_EDITOR_H_
-#define _WORLD_EDITOR_H_
+#pragma once
 
 #include "memory_aliases.h"
 #include "IEditorWindow.h"
 #include "EditorsController.h"
+#include "AEditorPopup.h"
+
+#include <functional>
 
 namespace sre
 {
 	
 class ScenesManager;
+
+using Action = std::function<void(void*)>;
 	
 class WorldEditor
 {
 private:
-	ScenesManager* scenesManager;
+	ScenesManager* scenesManager{ nullptr };
 	UPTR<IEditorWindow> menuBar;
 	UPTR<IEditorWindow> windows[4];
 	UPTR<EditorsController> controller;
-	bool showDemo;
-	bool wasShowingDemo;
+	UPTR<AEditorPopup> currentPopup;
+	SPTR<Action> showPopupAction;
+	bool showDemo{ false };
+	bool wasShowingDemo{ false };
 	
 public:
 	WorldEditor(ScenesManager* arg_scenesManager);
@@ -29,6 +35,7 @@ private:
 	void init();
 	void onUpdate(float elapsedTime);
 	void onEditorGUI();
+	void onShowPopup(void* message);
 	void cleanUp();
 	void release();
 
@@ -37,5 +44,4 @@ friend class EditorStrategy;
 
 } // namespace
 
-#endif
 #endif
