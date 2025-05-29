@@ -31,7 +31,7 @@ Entity* Scene::createOrthoCamera(Entity* parent, bool isMainCamera)
     return mainCamera;
 }
 
-Entity* Scene::createMeshEntity(const char* entityName, const char* filePath, const char* meshName)
+Entity* Scene::createMeshEntity(const char* filePath, const char* meshName)
 {
     Entity* entity = nullptr;
 	std::string resultMeshName{ meshName };

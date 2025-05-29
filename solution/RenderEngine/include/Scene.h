@@ -20,7 +20,7 @@ private:
     Entity* createOrthoCamera(Entity* parent = nullptr, bool isMainCamera = true);
 
     // renderables //
-    Entity* createMeshEntity(const char* entityName, const char* filePath, const char* meshName);
+    Entity* createMeshEntity(const char* filePath, const char* meshName);
     void createMultiMeshEntity(Entity* entity, Model* model);
 
     // light //

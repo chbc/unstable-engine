@@ -7,7 +7,7 @@
 namespace sre
 {
 
-class FlyingMovementComponent : public AEntityComponent
+class SRE_API FlyingMovementComponent : public AEntityComponent
 {
 DECLARE_COMPONENT()
 

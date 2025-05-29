@@ -6,7 +6,7 @@
 namespace sre
 {
 
-class OrbitMovementComponent : public AEntityComponent
+class SRE_API OrbitMovementComponent : public AEntityComponent
 {
 	DECLARE_COMPONENT()
 

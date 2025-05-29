@@ -42,7 +42,7 @@ private:
     bool isSceneStored();
     bool isGuiSceneStored();
     bool isBaseSceneStored(AScene* baseScene);
-    Entity* createMeshEntity(const char* name, const char* filePath, const char* meshName);
+    Entity* createMeshEntity(const char* filePath, const char* meshName);
     void removeDestroyedEntities();
     void cleanUp();
     void preRelease() override;

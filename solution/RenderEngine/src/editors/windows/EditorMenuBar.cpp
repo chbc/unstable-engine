@@ -11,6 +11,18 @@
 namespace sre
 {
 
+#define MENU_ITEM(label, method)	\
+	if (ImGui::MenuItem(label))	\
+	{								\
+		this->controller->method();	\
+	}
+
+#define CREATE_MESH_ITEM(filePath, meshName)	\
+	if (ImGui::MenuItem(meshName))	\
+	{								\
+		this->controller->createMeshEntity(filePath, meshName);	\
+	}
+
 EditorMenuBar::EditorMenuBar(bool* demoEnabled, EditorsController* arg_controller)
 	: isDemoEnabled(demoEnabled), controller(arg_controller)
 {
@@ -44,15 +56,8 @@ void EditorMenuBar::drawFileGroup()
 		{
 			ImGui::MenuItem("New scene");
 
-			if (ImGui::MenuItem("Open scene"))
-			{
-				this->controller->openScene();
-			}
-
-			if (ImGui::MenuItem("Save scene", "CTRL+S"))
-			{
-				this->controller->saveScene();
-			}
+			MENU_ITEM("Open Scene", openScene);
+			MENU_ITEM("Save Scene", saveScene);
 
 			ImGui::EndMenu();
 		}
@@ -61,21 +66,16 @@ void EditorMenuBar::drawFileGroup()
 		{
 			ImGui::MenuItem("New GUI");
 
-			if (ImGui::MenuItem("Open GUI"))
-			{
-				this->controller->openGui();
-			}
-
-			if (ImGui::MenuItem("Save GUI"))
-			{
-				this->controller->saveGui();
-			}
+			MENU_ITEM("Open GUI", openGui);
+			MENU_ITEM("Save GUI", saveGui);
 
 			ImGui::EndMenu();
 		}
 
 		if (ImGui::MenuItem("Exit"))
+		{
 			this->exitEditor();
+		}
 
 		ImGui::EndMenu();
 	}
@@ -96,31 +96,19 @@ void EditorMenuBar::drawEntitiesGroup()
 	{
 		if (ImGui::BeginMenu("Basic Shapes"))
 		{
-			if (ImGui::MenuItem("Cube"))
-			{
-				this->controller->createCube();
-			}
-
-			if (ImGui::MenuItem("Plane"))
-			{
-				this->controller->createPlane();
-			}
-
-			if (ImGui::MenuItem("Sphere"))
-			{
-				this->controller->createSphere();
-			}
+			CREATE_MESH_ITEM(CUBE_MESH_PATH, "Cube");
+			CREATE_MESH_ITEM(SPHERE_MESH_PATH, "Sphere");
+			CREATE_MESH_ITEM(CONE_MESH_PATH, "Cone");
+			CREATE_MESH_ITEM(CYLINDER_MESH_PATH, "Cylinder");
+			CREATE_MESH_ITEM(TORUS_MESH_PATH, "Torus");
+			CREATE_MESH_ITEM(PLANE_MESH_PATH, "Plane");
 
 			ImGui::EndMenu();
 		}
 
 		if (ImGui::BeginMenu("GUI"))
 		{
-			if (ImGui::MenuItem("Image"))
-			{
-				this->controller->createGUIImage();
-			}
-
+			MENU_ITEM("Image", createGUIImage);
 			ImGui::EndMenu();
 		}
 

@@ -15,12 +15,7 @@ namespace sre
 
 EditorsController::EditorsController(ScenesManager* arg_scenesManager)
 	: scenesManager(arg_scenesManager)
-{
-	this->cubeMeshPath = "engine\\media\\Cube.mesh";
-	this->planeMeshPath = "engine\\media\\Plane.mesh";
-	this->sphereMeshPath = "engine\\media\\Sphere.mesh";
-	this->guiImagePath = "engine\\media\\whiteTexture.png";
-}
+{ }
 
 void EditorsController::openScene()
 {
@@ -66,7 +61,6 @@ void EditorsController::saveGui()
 	if (this->scenesManager->isGuiSceneStored())
 	{
 		this->scenesManager->saveGuiScene();
-		
 	}
 	else
 	{
@@ -79,24 +73,9 @@ void EditorsController::saveGui()
 	}
 }
 
-void EditorsController::createCube()
-{
-	this->createMeshEntity("cube", this->cubeMeshPath.c_str(), "Cube");
-}
-
-void EditorsController::createPlane()
-{
-	this->createMeshEntity("plane", this->planeMeshPath.c_str(), "Plane");
-}
-
-void EditorsController::createSphere()
-{
-	this->createMeshEntity("sphere", this->sphereMeshPath.c_str(), "Sphere");
-}
-
 void EditorsController::createGUIImage()
 {
-	Entity* newEntity = this->scenesManager->createGUIImageEntity(this->guiImagePath);
+	Entity* newEntity = this->scenesManager->createGUIImageEntity(GUI_IMAGE_PATH);
 	this->notifyNewEntity(newEntity);
 }
 
@@ -152,10 +131,6 @@ void EditorsController::loadFileFromBrowser(const char* filePath)
 	}
 }
 
-void EditorsController::loadExternalFile(const char* filePath, const char* destinationPath)
-{
-}
-
 void EditorsController::importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, std::string& resultFilePath)
 {
 	std::stringstream commandoStream;
@@ -172,9 +147,9 @@ void EditorsController::importMesh(const char* sourceFilePath, const char* desti
 	resultFilePath = resultStream.str();
 }
 
-void EditorsController::createMeshEntity(const char* name, const char* file, const char* meshName)
+void EditorsController::createMeshEntity(const char* file, const char* meshName)
 {
-	Entity* newEntity = this->scenesManager->createMeshEntity(name, file, meshName);
+	Entity* newEntity = this->scenesManager->createMeshEntity(file, meshName);
 	this->notifyNewEntity(newEntity);
 }
 

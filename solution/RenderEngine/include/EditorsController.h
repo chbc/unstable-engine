@@ -16,10 +16,8 @@ class EditorsController
 {
 private:
 	ScenesManager* scenesManager = nullptr;
-	std::string cubeMeshPath;
-	std::string planeMeshPath;
-	std::string sphereMeshPath;
-	std::string guiImagePath;
+
+	const char* GUI_IMAGE_PATH = "engine\\media\\whiteTexture.png";
 
 public:
 	EditorsController(ScenesManager* arg_scenesManager);
@@ -27,18 +25,14 @@ public:
 	void openGui();
 	void saveScene();
 	void saveGui();
-	void createCube();
-	void createPlane();
-	void createSphere();
 	void createGUIImage();
 	void refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result);
 	void saveEntity(Entity* entity);
 	void loadFileFromBrowser(const char* filePath);
-	void loadExternalFile(const char* filePath, const char* destinationPath);
 	void importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, std::string& resultFilePath);
+	void createMeshEntity(const char* file, const char* meshName = "");
 
 private:
-	void createMeshEntity(const char* name, const char* file, const char* meshName = "");
 	void notifyNewEntity(Entity* entity);
 };
 
