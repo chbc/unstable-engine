@@ -139,6 +139,16 @@ Entity* ScenesManager::createMeshEntity(const char* filePath, const char* meshNa
     return this->scene->createMeshEntity(filePath, meshName);
 }
 
+AScene* ScenesManager::getScene()
+{
+    return this->scene.get();
+}
+
+AScene* ScenesManager::getGuiScene()
+{
+    return this->guiScene.get();
+}
+
 void ScenesManager::removeDestroyedEntities()
 {
     if (this->scene)

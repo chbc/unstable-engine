@@ -14,7 +14,6 @@ namespace sre
 {
 
 EditorSceneTree::EditorSceneTree(ScenesManager* arg_scenesManager, EditorsController* arg_controller)
-	: scenesManager(arg_scenesManager), selectedEntity(nullptr), controller(arg_controller)
 {
 	Action* action = new Action{ [&](void* message) { this->onEntitySelected(message); } };
 	this->selectionAction = SPTR<Action>(action);
@@ -22,17 +21,23 @@ EditorSceneTree::EditorSceneTree(ScenesManager* arg_scenesManager, EditorsContro
 
 void EditorSceneTree::onInit()
 {
-	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+	
+	MessagesManager* messagesManager = singletonsManager->get<MessagesManager>();
 	messagesManager->addListener<EntitySelectionMessage>(this->selectionAction.get());
 	this->selectedEntity = nullptr;
+
+	ScenesManager* scenesManager = singletonsManager->get<ScenesManager>();
+	this->scene = scenesManager->getScene();
+	this->guiScene = scenesManager->getGuiScene();
 }
 
 void EditorSceneTree::onEditorGUI()
 {
 	ImGui::Begin("Hierarchy");
 
-	this->drawScene(this->scenesManager->scene.get());
-	this->drawScene(this->scenesManager->guiScene.get());
+	this->drawScene(this->scene);
+	this->drawScene(this->guiScene);
 	
 	if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
 	{
@@ -115,11 +120,6 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 		if (entity == this->selectedEntity)
 		{
 			flags |= ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_Selected;
-		}
-
-		if (!entity->isSaved())
-		{
-			flags |= ImGuiTreeNodeFlags_Framed;
 		}
 
 		bool open = ImGui::TreeNodeEx(reinterpret_cast<void*>(entity), flags, name);

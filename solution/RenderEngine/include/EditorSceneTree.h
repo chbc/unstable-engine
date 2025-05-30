@@ -10,6 +10,7 @@ namespace sre
 {
 
 class ScenesManager;
+class AScene;
 class Entity;
 using Action = std::function<void(void*)>;
 class EditorsController;
@@ -17,7 +18,8 @@ class EditorsController;
 class EditorSceneTree : public IEditorWindow
 {
 private:
-	ScenesManager* scenesManager{ nullptr };
+	AScene* scene{ nullptr };
+	AScene* guiScene{ nullptr };
 	Entity* selectedEntity{ nullptr };
 	SPTR<Action> selectionAction;
 	EditorsController* controller{ nullptr };
