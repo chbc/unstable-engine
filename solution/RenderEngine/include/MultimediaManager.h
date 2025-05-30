@@ -35,8 +35,8 @@ public:
 	void logWarning(const std::string& message) const;
 	static void showMessageBox(const std::string& title, const std::string& message);
 	static void showErrorMessageBox(const std::string& title, const std::string& message);
-	static void openFileDialog(const std::string& title, const char* filter, std::string& outFileName);
-	static void saveFileDialog(const std::string& title, const char* filter, std::string& outFileName);
+	static bool openFileDialog(const std::string& title, const char* filter, std::string& outFileName);
+	static bool saveFileDialog(const std::string& title, const char* filter, std::string& outFileName);
 	void setMousePosition(int x, int y);
 	void showMouseCursor(bool value);
 
@@ -50,6 +50,7 @@ private:
 	void delay();
 	uint32_t getLastFrameTime();
 	void *loadTexture(const std::string &filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp);
+	void saveTexture(unsigned char* pixels, const char* filePath, uint32_t width, uint32_t height);
 	void addGUIButton(GUIButtonComponent* guiButton);
 	void removeDestroyedEntities();
 	void cleanUp();
@@ -60,6 +61,7 @@ friend class ApplicationStrategy;
 friend class TextureLoader;
 friend class SingletonsManager;
 friend class GUIButtonComponent;
+friend class TextureCreator;
 };
 
 } // namespace

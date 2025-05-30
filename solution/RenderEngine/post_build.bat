@@ -1,3 +1,3 @@
-move ../../bin/SRE_d.lib ../../lib
+move ../../bin/SRE_d.lib ../../lib /Y
 
 pause

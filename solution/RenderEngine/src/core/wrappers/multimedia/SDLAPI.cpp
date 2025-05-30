@@ -109,6 +109,18 @@ void* SDLAPI::loadTexture(const std::string& filePath, uint32_t* outWidth, uint3
 	return result;
 }
 
+void SDLAPI::saveTexture(void* pixels, const char* filePath, uint32_t width, uint32_t height)
+{
+	SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormatFrom(pixels, width, height, 24, width * 3, SDL_PIXELFORMAT_RGB24);
+	
+	if (IMG_SavePNG(surface, filePath) != 0)
+	{
+		throw "[SDLAPI] Couldn't save texture file: " + std::string{ filePath };
+	}
+
+	SDL_FreeSurface(surface);
+}
+
 void SDLAPI::log(const std::string& type, const std::string& message)
 {
 	SDL_Log("[%s]: %s", type.c_str(), message.c_str());
@@ -207,17 +219,17 @@ std::string SDLAPI::getError()
 	return "SDL Error: " + std::string(SDL_GetError());
 }
 
-void SDLAPI::openFileDialog(const std::string& title, const char* filter, std::string& outFileName)
+bool SDLAPI::openFileDialog(const std::string& title, const char* filter, std::string& outFileName)
 {
-	internalFileDialog(title, filter, false, outFileName);
+	return internalFileDialog(title, filter, false, outFileName);
 }
 
-void SDLAPI::saveFileDialog(const std::string& title, const char* filter, std::string& outFileName)
+bool SDLAPI::saveFileDialog(const std::string& title, const char* filter, std::string& outFileName)
 {
-	internalFileDialog(title, filter, true, outFileName);
+	return internalFileDialog(title, filter, true, outFileName);
 }
 
-void SDLAPI::internalFileDialog(const std::string& title, const char* filter, bool save, std::string& outFileName)
+bool SDLAPI::internalFileDialog(const std::string& title, const char* filter, bool save, std::string& outFileName)
 {
 	OPENFILENAME ofn;
 	TCHAR szFile[260] = { 0 };
@@ -234,18 +246,24 @@ void SDLAPI::internalFileDialog(const std::string& title, const char* filter, bo
 	ofn.lpstrInitialDir = NULL;
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
+	bool result = false;
+
 	if (save)
 	{
 		ofn.lpstrFile[0] = '\0';
 		if (GetSaveFileName(&ofn))
 		{
 			outFileName = ofn.lpstrFile;
+			result = true;
 		}
 	}
 	else if (GetOpenFileName(&ofn))
 	{
 		outFileName = ofn.lpstrFile;
+		result = true;
 	}
+
+	return result;
 }
 
 void SDLAPI::showMessageBox(const std::string& title, const std::string& message)

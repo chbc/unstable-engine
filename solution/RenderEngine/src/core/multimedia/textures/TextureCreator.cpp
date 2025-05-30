@@ -1,6 +1,8 @@
 #include "TextureCreator.h"
 #include "SingletonsManager.h"
 #include "AGraphicsWrapper.h"
+#include "EngineValues.h"
+#include "MultimediaManager.h"
 
 #include <exception>
 
@@ -69,6 +71,24 @@ Texture* TextureCreator::createEmptyFloatingPointTexture(uint32_t width, uint32_
 
 	this->emptyIndex++;
 	return result;
+}
+
+void TextureCreator::saveFramebuffer()
+{
+    std::string filePath;
+    MultimediaManager* multimediaManager = SingletonsManager::getInstance()->get<MultimediaManager>();
+
+    if (multimediaManager->saveFileDialog("Save capture", "Image Files (*.png)\0*.png\0", filePath))
+    {
+        int width = EngineValues::SCREEN_WIDTH;
+        int height = EngineValues::SCREEN_HEIGHT;
+        unsigned char* pixels = new unsigned char[width * height * 3];
+
+        this->graphicsWrapper->readFramebuffer(width, height, pixels);
+        multimediaManager->saveTexture(pixels, filePath.c_str(), width, height);
+
+        delete[] pixels;
+    }
 }
 
 } // namespace

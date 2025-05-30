@@ -29,7 +29,8 @@ protected:
 	void processInput(const std::vector<GUIButtonComponent*>& guiButtons) override;
 	unsigned int getTicks() override;
 	void delay(unsigned int) override;
-	void *loadTexture(const std::string &filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) override;
+	void* loadTexture(const std::string &filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) override;
+	void saveTexture(void* pixels, const char* filePath, uint32_t width, uint32_t height);
 	void log(const std::string& type, const std::string& message) override;
 	void setMousePosition(int x, int y) override;
 	void showMouseCursor(bool value) override;
@@ -39,9 +40,9 @@ private:
 	void processInput(const std::vector<GUIButtonComponent*>& guiButtons, SDL_Event& currentEvent);
 	bool checkButtonPress(const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
 	std::string getError();
-	static void openFileDialog(const std::string& title, const char* filter, std::string& outFileName);
-	static void saveFileDialog(const std::string& title, const char* filter, std::string& outFileName);
-	static void internalFileDialog(const std::string& title, const char* filter, bool save, std::string& outFileName);
+	static bool openFileDialog(const std::string& title, const char* filter, std::string& outFileName);
+	static bool saveFileDialog(const std::string& title, const char* filter, std::string& outFileName);
+	static bool internalFileDialog(const std::string& title, const char* filter, bool save, std::string& outFileName);
 	static void showMessageBox(const std::string& title, const std::string& message);
 	static void showErrorMessageBox(const std::string& title, const std::string& message);
 

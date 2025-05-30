@@ -6,6 +6,8 @@
 #include "Entity.h"
 #include "CollectionsUtils.h"
 #include "Input.h"
+#include "SingletonsManager.h"
+#include "AGraphicsWrapper.h"
 
 #ifdef __ANDROID__
 #include "SDLAndroidAPI.h"
@@ -87,6 +89,11 @@ void *MultimediaManager::loadTexture(const std::string& filePath, uint32_t *outW
 	return this->multimediaWrapper->loadTexture(filePath, outWidth, outHeight, outBpp);
 }
 
+void MultimediaManager::saveTexture(unsigned char* pixels, const char* filePath, uint32_t width, uint32_t height)
+{
+	this->multimediaWrapper->saveTexture(pixels, filePath, width, height);
+}
+
 void MultimediaManager::logMessage(const std::string& message) const
 {
 	this->multimediaWrapper->log("MESSAGE", message);
@@ -107,14 +114,14 @@ void MultimediaManager::showErrorMessageBox(const std::string& title, const std:
 	SDLAPI::showErrorMessageBox(title, message);
 }
 
-void MultimediaManager::openFileDialog(const std::string& title, const char* filter, std::string& outFileName)
+bool MultimediaManager::openFileDialog(const std::string& title, const char* filter, std::string& outFileName)
 {
-	SDLAPI::openFileDialog(title, filter, outFileName);
+	return SDLAPI::openFileDialog(title, filter, outFileName);
 }
 
-void MultimediaManager::saveFileDialog(const std::string& title, const char* filter, std::string& outFileName)
+bool MultimediaManager::saveFileDialog(const std::string& title, const char* filter, std::string& outFileName)
 {
-	SDLAPI::saveFileDialog(title, filter, outFileName);
+	return SDLAPI::saveFileDialog(title, filter, outFileName);
 }
 
 void MultimediaManager::setMousePosition(int x, int y)

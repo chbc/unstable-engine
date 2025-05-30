@@ -27,6 +27,7 @@ protected:
 	virtual unsigned int getTicks() =0;
 	virtual void delay(unsigned int timeMS) =0;
 	virtual void* loadTexture(const std::string& filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp) =0;
+	virtual void saveTexture(void* pixels, const char* filePath, uint32_t width, uint32_t height) = 0;
 	virtual void log(const std::string& type, const std::string& message) =0;
 	virtual void setMousePosition(int x, int y) = 0;
 	virtual void showMouseCursor(bool value) = 0;

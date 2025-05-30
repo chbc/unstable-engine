@@ -38,12 +38,7 @@ Entity* Scene::createMeshEntity(const char* filePath, const char* meshName)
     AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
     Model* model = assetsManager->loadModel(filePath);
 
-    if ((resultMeshName == "") && (model->getMeshCount() == 1))
-    {
-		resultMeshName = FileUtils::getFileName(filePath);
-    }
-
-    if (resultMeshName != "")
+    if (model->getMeshCount() == 1)
     {
         entity = this->createEntity(resultMeshName.c_str());
         MeshComponent* meshComponent = entity->addComponent<MeshComponent>();

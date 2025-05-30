@@ -423,6 +423,26 @@ uint32_t OpenGLAPI::generateCubemap(uint32_t width, uint32_t height, uint32_t un
 	return result;
 }
 
+void OpenGLAPI::readFramebuffer(uint32_t width, uint32_t height, unsigned char* pixels)
+{
+	glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+
+	int rowSize = width * 3; // bpp
+	void* tempRow = new unsigned char[rowSize];
+
+	for (int i = 0; i < height / 2; ++i)
+	{
+		unsigned char* row1 = pixels + i * rowSize;
+		unsigned char* row2 = pixels + (height - 1 - i) * rowSize;
+
+		memcpy(tempRow, row1, rowSize);
+		memcpy(row1, row2, rowSize);
+		memcpy(row2, tempRow, rowSize);
+	}
+
+	delete[] tempRow;
+}
+
 void OpenGLAPI::deleteTexture(uint32_t id)
 {
 	glDeleteTextures(1, &id);
