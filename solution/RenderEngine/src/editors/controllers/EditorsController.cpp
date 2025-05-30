@@ -123,7 +123,7 @@ void EditorsController::loadFileFromBrowser(const char* filePath)
 		case EAssetType::MESH:
 		{
 			std::string name = FileUtils::getFileName(filePath);
-			this->createMeshEntity(name.c_str(), filePath);
+			this->createMeshEntity(filePath, name.c_str());
 			break;
 		}
 

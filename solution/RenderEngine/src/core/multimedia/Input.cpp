@@ -1,4 +1,5 @@
 #include "Input.h"
+#include "EngineValues.h"
 
 namespace sre
 {
@@ -37,9 +38,26 @@ bool Input::isCloseButtonDown()
 	return CloseButton;
 }
 
-const glm::ivec2& Input::getMousePosition()
+bool Input::isMouseMoving()
+{
+	return ((MouseDeltaPosition.x != 0) || (MouseDeltaPosition.y != 0));
+}
+
+const glm::ivec2& Input::getMousePixelCoordPosition()
 {
 	return MousePosition;
+}
+
+glm::vec3 Input::getMouseNormalizedPosition()
+{
+	float halfWidth = static_cast<float>(EngineValues::SCREEN_WIDTH) * 0.5f;
+	float halfHeight = static_cast<float>(EngineValues::SCREEN_HEIGHT) * 0.5f;
+
+	glm::vec3 result;
+	result.x = (static_cast<float>(MousePosition.x) / halfWidth) - 1.0f;
+	result.y = -(static_cast<float>(MousePosition.y) / halfHeight) + 1.0f;
+
+	return result;
 }
 
 const glm::ivec2& Input::getMouseDeltaPosition()

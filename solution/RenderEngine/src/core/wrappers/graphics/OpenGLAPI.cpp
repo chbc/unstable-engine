@@ -37,7 +37,7 @@ void OpenGLAPI::init()
 	std::string strGLVersion((char*)(glVersion));
 	multimediaManager->logMessage("OpenGL Version: " + strGLVersion);
 
-	glClearColor(0.6f, 0.85f, 0.9f, 1.0f);
+	glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
 
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);

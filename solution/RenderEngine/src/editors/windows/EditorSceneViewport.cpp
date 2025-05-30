@@ -212,7 +212,7 @@ void EditorSceneViewport::updateInitialMousePosition()
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
 
-	this->initialMousePosition = Input::getMousePosition();
+	this->initialMousePosition = Input::getMousePixelCoordPosition();
 }
 
 void EditorSceneViewport::forceInitialMousePosition()

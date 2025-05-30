@@ -2,9 +2,11 @@
 
 #include "core_defines.h"
 #include "button_names.h"
+
 #include <unordered_map>
 #include <bitset>
 #include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
 
 namespace sre
 {
@@ -27,7 +29,9 @@ public:
 	static bool isKeyDown(Key key);
 	static bool isMouseButtonDown(MouseButton button);
 	static bool isCloseButtonDown();
-	static const glm::ivec2& getMousePosition();
+	static bool isMouseMoving();
+	static const glm::ivec2& getMousePixelCoordPosition();
+	static glm::vec3 getMouseNormalizedPosition();
 	static const glm::ivec2& getMouseDeltaPosition();
 	static int getMouseWheel();
 
