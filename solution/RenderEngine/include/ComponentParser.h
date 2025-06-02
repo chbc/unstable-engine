@@ -1,6 +1,6 @@
 #pragma once
 
-#include <rapidyaml/rapidyaml.hpp>
+#include "rapidyaml.hpp"
 #include "Entity.h"
 
 namespace sre

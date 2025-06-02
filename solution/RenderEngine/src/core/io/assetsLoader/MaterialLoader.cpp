@@ -4,7 +4,7 @@
 #include "AMaterialComponent.h"
 #include "ColorMaterialComponent.h"
 
-#include <rapidyaml/rapidyaml.hpp>
+#include "rapidyaml.hpp"
 
 namespace sre
 {

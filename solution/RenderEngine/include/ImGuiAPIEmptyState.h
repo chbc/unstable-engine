@@ -11,7 +11,7 @@ class ImGuiAPIEmptyState : public AImGuiAPIState
 private:
 	void init(SDL_Window* window, void* glContext) {}
 	void processEvent(SDL_Event* event) {}
-	void onNewFrame(SDL_Window* window) {}
+	void onNewFrame() {}
 	void render() {}
 	void release() {}
 };

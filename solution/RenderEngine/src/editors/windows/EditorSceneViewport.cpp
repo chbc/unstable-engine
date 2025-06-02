@@ -11,7 +11,7 @@
 #include "Input.h"
 #include "EditorsController.h"
 
-#include "imgui/imgui.h"
+#include "imgui.h"
 
 #include <glm/gtx/rotate_vector.hpp>
 
@@ -41,7 +41,7 @@ void EditorSceneViewport::onInit()
 		Fbo = graphicsWrapper->generateColorFrameBuffer(
 			std::vector<uint32_t>{id}, texture->getWidth(), texture->getHeight()
 		);
-		this->textureId = reinterpret_cast<void*>(id);
+		this->textureId = static_cast<uint64_t>(id);
 
 		this->renderManager = singletonsManager->get<RenderManager>();
 
@@ -135,7 +135,7 @@ void EditorSceneViewport::updateViewingState()
 			this->updateInitialMousePosition();
 		}
 	}
-	else if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_LeftAlt)))
+	else if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsKeyDown(ImGuiKey_LeftAlt))
 	{
 		if (this->viewingState != EViewingState::ORBIT)
 		{

@@ -24,9 +24,9 @@ void ImGuiAPI::processEvent(SDL_Event* event)
 	this->state->processEvent(event);
 }
 
-void ImGuiAPI::onNewFrame(SDL_Window* window)
+void ImGuiAPI::onNewFrame()
 {
-	this->state->onNewFrame(window);
+	this->state->onNewFrame();
 }
 
 void ImGuiAPI::render()

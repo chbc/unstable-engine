@@ -32,7 +32,7 @@ private:
 	float currentWindowWidth{ 0.0f };
 	float currentWindowHeight{ 0.0f };
 	static uint32_t Fbo;
-	void* textureId{ nullptr };
+	uint64_t textureId{ 0 };
 	bool canUpdate{ false };
 	EViewingState viewingState{ EViewingState::NONE };
 

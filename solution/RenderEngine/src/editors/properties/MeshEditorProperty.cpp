@@ -4,8 +4,8 @@
 #include "MeshData.h"
 
 // XXX MOVER IMGUI PRA UM WRAPPER
-#include "imgui/imgui.h"
-#include <rapidyaml/rapidyaml.hpp>
+#include "imgui.h"
+#include "rapidyaml.hpp"
 
 #include <sstream>
 

@@ -1,5 +1,4 @@
-#ifndef _IMGUI_API_H_
-#define _IMGUI_API_H_
+#pragma once
 
 #include "AImGuiAPIState.h"
 #include "memory_aliases.h"
@@ -22,7 +21,7 @@ private:
 	
 	void init(SDL_Window* window, void* glContext);
 	void processEvent(SDL_Event* event);
-	void onNewFrame(SDL_Window* window);
+	void onNewFrame();
 	void render();
 	void setExecutionMode(EExecutionMode::Type mode);
 	void release();
@@ -32,5 +31,3 @@ friend class SDLAndroidAPI;
 };
 	
 }
-
-#endif

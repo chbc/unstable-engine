@@ -2,9 +2,9 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include "imgui/imgui.h"
-#include "imgui/imgui_internal.h"
-#include <rapidyaml/rapidyaml.hpp>
+#include "imgui.h"
+#include "imgui_internal.h"
+#include "rapidyaml.hpp"
 
 namespace sre
 {

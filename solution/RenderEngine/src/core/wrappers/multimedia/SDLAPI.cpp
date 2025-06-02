@@ -51,7 +51,7 @@ void SDLAPI::init()
 
 void SDLAPI::onFrameBegin()
 {
-	this->imGuiAPI->onNewFrame(this->window);
+	this->imGuiAPI->onNewFrame();
 }
 
 void SDLAPI::swapBuffers()

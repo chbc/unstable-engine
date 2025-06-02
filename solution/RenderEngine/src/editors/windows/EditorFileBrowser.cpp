@@ -7,7 +7,7 @@
 #include "MessagesManager.h"
 #include "EditorMessages.h"
 
-#include "imgui/imgui.h"
+#include "imgui.h"
 #include <sstream>
 
 namespace sre
@@ -57,7 +57,7 @@ void EditorFileBrowser::onEditorGUI()
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.0f, 0.0f, 0.0f, 0.0f });
 
 		bool directoryChanged = false;
-		ImGui::ImageButton(item->textureId, size);
+		ImGui::ImageButton(item->fileName.c_str(), item->textureId, size);
 		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 		{
 			EAssetType assetType = FileUtils::getAssetType(item->filePath);

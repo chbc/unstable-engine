@@ -8,7 +8,7 @@
 #include "EngineValues.h"
 #include "EditorsController.h"
 
-#include "imgui/imgui.h"
+#include "imgui.h"
 
 namespace sre
 {

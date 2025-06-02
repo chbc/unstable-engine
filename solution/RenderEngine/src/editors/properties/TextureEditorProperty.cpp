@@ -3,25 +3,25 @@
 #include "AssetsManager.h"
 #include "Texture.h"
 
-#include <rapidyaml/rapidyaml.hpp>
-#include "imgui/imgui.h"
+#include "rapidyaml.hpp"
+#include "imgui.h"
 
 namespace sre
 {
 
 TextureEditorProperty::TextureEditorProperty(const char* title, Texture** arg_texture, ETextureMap::Type arg_textureMapType)
-	: AEditorProperty(title), texture(arg_texture), textureMapType(arg_textureMapType), id(nullptr)
+	: AEditorProperty(title), texture(arg_texture), textureMapType(arg_textureMapType)
 { }
 
 void TextureEditorProperty::setTextureId(void* arg_id)
 {
-	this->id = arg_id;
+	this->id = reinterpret_cast<uint64_t>(arg_id);
 }
 
 void TextureEditorProperty::onDraw()
 {
 	ImGui::SetColumnWidth(0, 100.0f);
-	ImGui::Image(this->id, ImVec2{ 64.0f, 64.0f});
+	ImGui::Image(this->id, ImVec2{ 64.0f, 64.0f });
 }
 
 void TextureEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
@@ -42,7 +42,7 @@ void TextureEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	*this->texture = assetsManager->loadTexture(fileName.c_str(), this->textureMapType);
-	this->id = reinterpret_cast<void*>((*this->texture)->getId());
+	this->id = static_cast<uint64_t>((*this->texture)->getId());
 }
 
 void TextureEditorProperty::copy(AEditorProperty* destination)

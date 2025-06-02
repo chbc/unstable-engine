@@ -1,5 +1,5 @@
 #include "AEditorProperty.h"
-#include "imgui/imgui.h"
+#include "imgui.h"
 
 bool sre::AEditorProperty::isSaved()
 {

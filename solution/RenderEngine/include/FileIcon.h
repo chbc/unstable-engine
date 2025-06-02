@@ -9,7 +9,7 @@ struct FileIcon
 {
 	std::string filePath;
 	std::string fileName;
-	void* textureId{ nullptr };
+	uint64_t textureId{ 0 };
 
 	FileIcon(std::string arg_filePath, void* arg_textureId);
 };

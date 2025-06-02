@@ -185,7 +185,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>./;./include;./thirdParties;../../dependencies/;../../dependencies/SDL2/include;../../dependencies/SDL2_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;./include;./thirdParties;./thirdParties/imgui;../../dependencies/SDL2/include;../../dependencies/SDL2_image;../../dependencies/rapidyaml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
@@ -488,11 +488,11 @@
     <ClCompile Include="src\utils\FileUtils.cpp" />
     <ClCompile Include="src\utils\math\MathUtils.cpp" />
     <ClCompile Include="src\utils\math\Rect.cpp" />
+    <ClCompile Include="thirdParties\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="thirdParties\imgui\backends\imgui_impl_sdl2.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_demo.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_draw.cpp" />
-    <ClCompile Include="thirdParties\imgui\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="thirdParties\imgui\imgui_impl_sdl.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_tables.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_widgets.cpp" />
   </ItemGroup>
@@ -706,15 +706,10 @@
     <ClInclude Include="include\Vec2EditorProperty.h" />
     <ClInclude Include="include\WorldEditor.h" />
     <ClInclude Include="include\Vec3EditorProperty.h" />
-    <ClInclude Include="thirdParties\imgui\imconfig.h" />
+    <ClInclude Include="thirdParties\imgui\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="thirdParties\imgui\backends\imgui_impl_sdl2.h" />
     <ClInclude Include="thirdParties\imgui\imgui.h" />
-    <ClInclude Include="thirdParties\imgui\imgui_impl_opengl3.h" />
-    <ClInclude Include="thirdParties\imgui\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="thirdParties\imgui\imgui_impl_sdl.h" />
     <ClInclude Include="thirdParties\imgui\imgui_internal.h" />
-    <ClInclude Include="thirdParties\imgui\imstb_rectpack.h" />
-    <ClInclude Include="thirdParties\imgui\imstb_textedit.h" />
-    <ClInclude Include="thirdParties\imgui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Entity.tpp" />

@@ -1,8 +1,8 @@
 #include "ColorEditorProperty.h"
 
-#include "imgui/imgui.h"
+#include "imgui.h"
 #include <glm/gtc/type_ptr.hpp>
-#include <rapidyaml/rapidyaml.hpp>
+#include "rapidyaml.hpp"
 
 namespace sre
 {

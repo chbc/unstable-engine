@@ -6,7 +6,7 @@
 #include "EditorMessages.h"
 #include "EditorsController.h"
 
-#include "imgui/imgui.h"
+#include "imgui.h"
 
 namespace sre
 {
@@ -40,8 +40,8 @@ void EditorMenuBar::onEditorGUI()
 		ImGui::EndMenuBar();
 	}
 
-	if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Escape), false) ||
-		ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Home), false)
+	if (ImGui::IsKeyPressed(ImGuiKey_Escape, false) ||
+		ImGui::IsKeyPressed(ImGuiKey_Home, false)
 	)
 	{
 		exitEditor();

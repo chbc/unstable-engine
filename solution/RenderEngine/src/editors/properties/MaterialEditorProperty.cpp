@@ -5,8 +5,8 @@
 #include "AssetsManager.h"
 #include "MaterialLoader.h"
 
-#include <imgui/imgui.h>
-#include <rapidyaml/rapidyaml.hpp>
+#include "imgui.h"
+#include "rapidyaml.hpp"
 
 namespace sre
 {
