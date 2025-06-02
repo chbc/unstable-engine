@@ -2,6 +2,7 @@
 #include <sstream>
 #include "MessagesManager.h"
 #include "EntityDestroyedMessage.h"
+#include "EditorMessages.h"
 #include "SingletonsManager.h"
 #include "BoolEditorProperty.h"
 
@@ -151,6 +152,9 @@ void Entity::onPropertyChanged()
 	{
 		this->parent->onChildChanged();
 	}
+
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	messagesManager->notify<EntityChangedEditorMessage>();
 }
 
 void Entity::onComponentDeserialized()
@@ -167,6 +171,9 @@ void Entity::onComponentChanged()
 	{
 		this->parent->onChildChanged();
 	}
+
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	messagesManager->notify<EntityChangedEditorMessage>();
 }
 
 void Entity::onChildChanged()

@@ -63,7 +63,7 @@ void EditorSceneTree::drawScene(AScene* scene)
 {
 	if (scene && !scene->entities.empty())
 	{
-		if (ImGui::CollapsingHeader(scene->name.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+		if (ImGui::CollapsingHeader(scene->label.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 		{
 			for (const auto& item : scene->entities)
 				this->drawEntityTree(item.second.get(), 0);

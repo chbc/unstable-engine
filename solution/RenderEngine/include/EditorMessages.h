@@ -41,7 +41,12 @@ struct ShowPopupEditorMessage : public BaseMessage
 
 public:
 	AEditorPopup* popup;
-	ShowPopupEditorMessage(AEditorPopup* arg_popup);
+	ShowPopupEditorMessage(AEditorPopup* arg_popup) : popup(arg_popup) {}
+};
+
+struct EntityChangedEditorMessage : public BaseMessage
+{
+	DECLARE_MESSAGE()
 };
 
 } // namespace

@@ -3,19 +3,30 @@
 #include "SingletonsManager.h"
 #include "RenderManager.h"
 #include "AssetsManager.h"
+#include "MessagesManager.h"
+#include "EditorMessages.h"
 
 namespace sre
 {
 uint32_t AScene::EntityIndex = 0;
 
-AScene::AScene(std::string arg_name, std::string arg_filePath) : name(arg_name), filePath(arg_filePath)
+AScene::AScene(std::string arg_name, std::string arg_filePath) 
+    : name(arg_name), label(arg_name), filePath(arg_filePath)
 {
     this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+    Action* action = new Action{ [&](void* message) {this->onEntityChanged(message); } };
+    this->entityChangedAction = SPTR<Action>(action);
+
+    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+    messagesManager->addListener<EntityChangedEditorMessage>(this->entityChangedAction.get());
 }
 
 AScene::~AScene()
 {
     this->entities.clear();
+
+    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+    messagesManager->removeListener<EntityChangedEditorMessage>(this->entityChangedAction.get());
 }
 
 Entity* AScene::getEntity(const std::string& entityName)
@@ -106,6 +117,11 @@ std::string AScene::generateEntityId(const std::string& duplicateName)
     EntityIndex++;
 
     return result;
+}
+
+void AScene::onEntityChanged(void* data)
+{
+    this->label = this->name + "*";
 }
 
 } // namespace

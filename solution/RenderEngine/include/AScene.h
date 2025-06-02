@@ -5,6 +5,8 @@
 namespace sre
 {
 
+using Action = std::function<void(void*)>;
+
 class AScene
 {
 protected:
@@ -14,7 +16,9 @@ protected:
 
 private:
     std::string name;
+    std::string label;
     std::string filePath;
+    SPTR<Action> entityChangedAction;
 
 protected:
     AScene(std::string arg_name, std::string arg_filePath);
@@ -33,6 +37,7 @@ private:
     void onSceneLoaded();
     void resolveName(std::string& entityName);
     std::string generateEntityId(const std::string& duplicateName = "");
+    void onEntityChanged(void* data);
 
 friend class ScenesManager;
 friend class EditorSceneTree;
