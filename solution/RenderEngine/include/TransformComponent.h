@@ -2,7 +2,6 @@
 
 #include "AEntityComponent.h"
 #include <glm/gtc/type_ptr.hpp>
-#include <glm/detail/type_mat.hpp>
 
 namespace sre
 {

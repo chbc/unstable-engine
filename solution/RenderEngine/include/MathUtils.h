@@ -1,6 +1,6 @@
-#ifndef _MATH_UTILS_H_
-#define _MATH_UTILS_H_
+#pragma once
 
+#include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
 namespace sre
@@ -18,5 +18,3 @@ public:
 };
 
 } // namespace
-
-#endif
