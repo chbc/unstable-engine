@@ -15,8 +15,8 @@ namespace keys
 
 struct FontItem : public AtlasItem
 {
-	glm::vec2 offset;
-	float xAdvance;
+	glm::vec2 offset{ 0.0f };
+	float xAdvance{ 0.0f };
 
 	FontItem(AtlasItem *baseItem, glm::vec2 offset, float xAdvance) 
 		: AtlasItem(baseItem->uv, baseItem->pixelSize, baseItem->normalizedSize), offset(offset), xAdvance(xAdvance) 

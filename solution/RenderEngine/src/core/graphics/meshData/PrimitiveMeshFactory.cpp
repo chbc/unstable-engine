@@ -314,7 +314,7 @@ MeshData2D* PrimitiveMeshFactory::createPlane2D(const glm::vec2& size, const flo
 void PrimitiveMeshFactory::calculateTangentsAndBitangents(std::vector<VertexData>& vertexData, std::vector<uint32_t> indices, int facesCount)
 {
 	// Tangents and bitangents
-	glm::vec3 tangent, bitangent;
+	glm::vec3 tangent{ 0.0f }, bitangent{ 0.0f };
 	for (int i = 0; i < facesCount; i++)
 	{
 		MathUtils::calculateTangentAndBitangent

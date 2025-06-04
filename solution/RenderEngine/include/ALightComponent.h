@@ -15,7 +15,7 @@ namespace sre
 class SRE_API ALightComponent : public AEntityComponent
 {
 private:
-    glm::vec3 color;
+    glm::vec3 color{ 0.0f, 0.0f, 0.0f };
     UPTR<ShadowData> shadowData;
 
 protected:

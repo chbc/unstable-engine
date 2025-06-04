@@ -12,7 +12,7 @@ class SRE_API OrbitMovementComponent : public AEntityComponent
 	DECLARE_COMPONENT()
 
 private:
-	glm::vec3 target;
+	glm::vec3 target{ 0.0f, 0.0f, 0.0f };
 
 public:
 	OrbitMovementComponent(Entity* entity);

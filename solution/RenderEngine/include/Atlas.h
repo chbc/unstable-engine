@@ -21,8 +21,8 @@ namespace keys
 struct AtlasItem
 {
 	Rect uv;
-	glm::vec2 pixelSize;
-	glm::vec2 normalizedSize;
+	glm::vec2 pixelSize{ 0.0f, 0.0f };
+	glm::vec2 normalizedSize{ 0.0f, 0.0f };
 
 	AtlasItem(Rect uv, glm::vec2 pixelSize, glm::vec2 normalizedSize)
 		: uv(uv), pixelSize(pixelSize), normalizedSize(normalizedSize) { }

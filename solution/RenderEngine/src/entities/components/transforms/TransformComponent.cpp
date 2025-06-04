@@ -50,7 +50,7 @@ void TransformComponent::setScale(glm::vec3 arg_scale)
 
 void TransformComponent::setRotation(const glm::vec3& axis, float angle)
 {
-	glm::mat4 identity;
+	glm::mat4 identity{ 1.0f };
 	this->rotation = glm::rotate(identity, glm::radians(angle), axis);
 	this->updateMatrix();
 }

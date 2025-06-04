@@ -17,16 +17,16 @@ DECLARE_COMPONENT()
 
 protected:
 	TransformComponent *transform;
-	glm::mat4 projection;
-	glm::mat4 view;
+	glm::mat4 projection{ 1.0f };
+	glm::mat4 view{ 1.0f };
 
 private:
-	bool isPerspective;
-	float fov;
-	bool isMainCamera;
-	bool isApplicationCamera;
-	float orthoWidth;
-	float orthoHeight;
+	bool isPerspective{ true };
+	float fov{ 90.0f };
+	bool isMainCamera{ false };
+	bool isApplicationCamera{ true };
+	float orthoWidth{ 1.0f };
+	float orthoHeight{ 1.0f };
 
 public:
 	CameraComponent(Entity *entity);

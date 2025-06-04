@@ -27,7 +27,7 @@ private:
 	class FlyingMovementComponent* flyingComponent{ nullptr };
 	class OrbitMovementComponent* orbitComponent{ nullptr };
 	class MultimediaManager* multimediaManager{ nullptr };
-	glm::ivec2 initialMousePosition;
+	glm::ivec2 initialMousePosition{ 0 };
 	EditorsController* controller{ nullptr };
 	float currentWindowWidth{ 0.0f };
 	float currentWindowHeight{ 0.0f };

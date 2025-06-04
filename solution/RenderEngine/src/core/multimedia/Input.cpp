@@ -8,10 +8,10 @@ std::unordered_map<Key, bool> Input::JustPressedKeys;
 std::unordered_map<MouseButton, bool> Input::JustPressedMouseButtons;
 std::unordered_map<Key, bool> Input::KeysDown;
 std::unordered_map<MouseButton, bool> Input::MouseButtonsDown;
-glm::ivec2 Input::MousePosition;
-glm::ivec2 Input::MouseDeltaPosition;
-int Input::MouseWheelDirection;
-bool Input::CloseButton;
+glm::ivec2 Input::MousePosition{ 0 };
+glm::ivec2 Input::MouseDeltaPosition{ 0 };
+int Input::MouseWheelDirection{ 0 };
+bool Input::CloseButton{ false };
 
 bool Input::isKeyJustPressed(Key key)
 {
@@ -53,7 +53,7 @@ glm::vec3 Input::getMouseNormalizedPosition()
 	float halfWidth = static_cast<float>(EngineValues::SCREEN_WIDTH) * 0.5f;
 	float halfHeight = static_cast<float>(EngineValues::SCREEN_HEIGHT) * 0.5f;
 
-	glm::vec3 result;
+	glm::vec3 result{ 0.0f };
 	result.x = (static_cast<float>(MousePosition.x) / halfWidth) - 1.0f;
 	result.y = -(static_cast<float>(MousePosition.y) / halfHeight) + 1.0f;
 

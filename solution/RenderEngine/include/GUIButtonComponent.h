@@ -17,10 +17,10 @@ class SRE_API GUIButtonComponent : public AEntityComponent
 DECLARE_COMPONENT();
 
 private:
-	glm::vec2 extent;
-	glm::vec2 pivot;
-	glm::vec2 pivotizedExtent;
-	bool pressed;
+	glm::vec2 extent{ 0.0f };
+	glm::vec2 pivot{ 0.0f };
+	glm::vec2 pivotizedExtent{ 0.0f };
+	bool pressed{ false };
 
 public:
 	GUIButtonComponent(Entity* entity);

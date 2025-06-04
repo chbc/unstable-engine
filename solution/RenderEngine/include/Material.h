@@ -21,9 +21,9 @@ private:
     std::unordered_map<size_t, SPTR<AMaterialComponent>> componentsMap;
     std::bitset<EComponentId::SIZE> componentsBitset;
     std::vector<SPTR<AEditorProperty>> editorProperties;
-    glm::vec2 uvOffset;
-    glm::vec2 uvTiling;
-    bool castShadow;
+    glm::vec2 uvOffset{ 0.0f };
+    glm::vec2 uvTiling{ 1.0f };
+    bool castShadow{ false };
 
 private:
     Material(std::string arg_filePath);

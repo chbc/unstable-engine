@@ -16,9 +16,7 @@ namespace sre
 
 IMPLEMENT_COMPONENT(CameraComponent)
 
-CameraComponent::CameraComponent(Entity *entity) : AEntityComponent(entity),
-    projection(1.0f), isPerspective(true), fov(90.0f), orthoWidth(1.0f),
-    orthoHeight(1.0f), isMainCamera(false), isApplicationCamera(true)
+CameraComponent::CameraComponent(Entity *entity) : AEntityComponent(entity)
 {
     this->addEditorProperty(new BoolEditorProperty{ "Perspective", &this->isPerspective });
     this->addEditorProperty(new BoolEditorProperty{ "Main Camera", &this->isMainCamera });

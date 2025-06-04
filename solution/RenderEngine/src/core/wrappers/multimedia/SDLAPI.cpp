@@ -145,7 +145,7 @@ void SDLAPI::release()
 
 void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons, SDL_Event& currentEvent)
 {
-	glm::vec2 position;
+	glm::vec2 position{ 0.0f };
 
 	switch (currentEvent.type)
 	{

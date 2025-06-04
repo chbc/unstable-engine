@@ -22,7 +22,7 @@ private:
 	glm::mat4 parentMatrix{ 1.0f };
 	glm::mat4 worldMatrix{ 1.0f };
 
-	glm::mat4 rotation;
+	glm::mat4 rotation{ 1.0 };
 	glm::vec3 position{ 0.0f };
 	glm::vec3 eulerAngles{ 0.0f };
 	glm::vec3 scale{ 1.0f };

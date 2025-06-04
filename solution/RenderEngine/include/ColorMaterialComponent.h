@@ -13,7 +13,7 @@ class SRE_API ColorMaterialComponent : public AMaterialComponent
 DECLARE_MATERIAL_COMPONENT()
 
 private:
-	glm::vec4 color; 
+	glm::vec4 color{ 0.0f, 0.0f, 0.0f, 1.0f };
 
 public:
 	ColorMaterialComponent(Material *material);

@@ -162,7 +162,7 @@ void EditorSceneViewport::processCameraMovement(float elapsedTime)
 	{
 		TransformComponent* transform = this->camera->getTransform();
 
-		glm::vec3 moveDirection;
+		glm::vec3 moveDirection{ 0.0f };
 
 		if (Input::isKeyDown(KEY_a))
 			moveDirection -= transform->getRight();

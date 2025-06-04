@@ -12,7 +12,7 @@ class SRE_API DirectionalLightComponent : public ALightComponent
 DECLARE_COMPONENT()
 
 private:
-    glm::mat4 lightSpaceMatrix;
+	glm::mat4 lightSpaceMatrix{ 1.0f };
 
 public:
 	DirectionalLightComponent(Entity *entity);
