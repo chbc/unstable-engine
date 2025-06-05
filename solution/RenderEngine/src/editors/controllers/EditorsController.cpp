@@ -17,6 +17,12 @@ EditorsController::EditorsController(ScenesManager* arg_scenesManager)
 	: scenesManager(arg_scenesManager)
 { }
 
+void EditorsController::newScene()
+{
+	const char* defaultScene = "engine\\scenes\\Default.scene";
+	RenderEngine::getInstance()->loadScene(defaultScene);
+}
+
 void EditorsController::openScene()
 {
 	std::string resultFilePath;
@@ -151,6 +157,16 @@ void EditorsController::createMeshEntity(const char* file, const char* meshName)
 {
 	Entity* newEntity = this->scenesManager->createMeshEntity(file, meshName);
 	this->notifyNewEntity(newEntity);
+}
+
+void EditorsController::createDirectionalLight()
+{
+	this->scenesManager->createDirectionalLight();
+}
+
+void EditorsController::createPointLight()
+{
+	this->scenesManager->createPointLight();
 }
 
 void EditorsController::notifyNewEntity(Entity* entity)

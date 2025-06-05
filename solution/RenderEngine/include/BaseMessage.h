@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <functional>
 
 #define DECLARE_MESSAGE() \
     public: \
@@ -11,6 +12,8 @@
 
 namespace sre
 {
+
+using Action = std::function<void(void*)>;
 
 struct BaseMessage
 {

@@ -54,8 +54,7 @@ void EditorMenuBar::drawFileGroup()
 	{
 		if (ImGui::BeginMenu("Scene"))
 		{
-			ImGui::MenuItem("New scene");
-
+			MENU_ITEM("New scene", newScene);
 			MENU_ITEM("Open Scene", openScene);
 			MENU_ITEM("Save Scene", saveScene);
 
@@ -114,15 +113,8 @@ void EditorMenuBar::drawEntitiesGroup()
 
 		if (ImGui::BeginMenu("Lights"))
 		{
-			if (ImGui::MenuItem("Directional Light"))
-			{
-
-			}
-
-			if (ImGui::MenuItem("Point Light"))
-			{
-
-			}
+			MENU_ITEM("Directional Light", createDirectionalLight);
+			MENU_ITEM("Point Light", createPointLight);
 
 			ImGui::EndMenu();
 		}

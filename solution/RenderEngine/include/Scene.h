@@ -27,6 +27,8 @@ private:
     DirectionalLightComponent* createDirectionalLight(const std::string& entityName = "", Entity* parent = nullptr);
     PointLightComponent* createPointLight(const std::string& entityName = "", Entity* parent = nullptr);
 
+    void onRefreshMeshes();
+
 friend class ScenesManager;
 friend class SceneLoader;
 };

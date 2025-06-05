@@ -30,11 +30,11 @@ public:
 protected:
     Entity* createEntity(std::string entityName = "", Entity* parent = nullptr, const std::string& className = "Entity", const std::string& filePath = "");
     void removeDestroyedEntities();
+    void onSceneLoaded();
 
 private:
     void initEntities();
     void update(float elapsedTime);
-    void onSceneLoaded();
     void resolveName(std::string& entityName);
     std::string generateEntityId(const std::string& duplicateName = "");
     void onEntityChanged(void* data);

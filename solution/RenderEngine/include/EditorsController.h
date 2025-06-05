@@ -21,6 +21,7 @@ private:
 
 public:
 	EditorsController(ScenesManager* arg_scenesManager);
+	void newScene();
 	void openScene();
 	void openGui();
 	void saveScene();
@@ -31,6 +32,8 @@ public:
 	void loadFileFromBrowser(const char* filePath);
 	void importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, std::string& resultFilePath);
 	void createMeshEntity(const char* file, const char* meshName);
+	void createDirectionalLight();
+	void createPointLight();
 
 private:
 	void notifyNewEntity(Entity* entity);

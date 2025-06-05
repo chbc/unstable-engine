@@ -16,14 +16,12 @@ point_light:
   Components:
     TransformComponent:
       Enabled: 1
-      Position: [0,5,0]
-      Rotation: [0,0,0]
+      Position: [0,0,0]
+      Rotation: [45,-90,0]
       Scale: [1,1,1]
-    PointLightComponent:
+    DirectionalLightComponent:
       Enabled: 1
       Color: [0.6,0.6,0.6]
-      Intensity: 1.25
-      Range: 10
 plane:
   Enabled: 1
   Components:

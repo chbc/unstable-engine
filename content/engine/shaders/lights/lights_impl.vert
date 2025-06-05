@@ -4,9 +4,4 @@ void Lights_setup(vec3 vertexPosition)
 {
 	vec4 vec4Position = modelMatrix * vec4(vertexPosition, 1.0);
 	var_worldPosition = vec3(vec4Position);
-	
-	/*
-    // [DIRECTIONAL_LIGHTS] DirectionalLights_setup(vertexPosition);
-    // [POINT_LIGHTS] PointLights_setup(vertexPosition);
-	*/
 }

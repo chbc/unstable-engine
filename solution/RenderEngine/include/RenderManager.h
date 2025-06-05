@@ -70,6 +70,7 @@ private:
     void setupBufferSubData(MeshData2D* meshData);
     void removeDestroyedEntities();
     void cleanUp();
+    void cleanUpMeshes();
     void cleanUpGui();
 
     void setTargetFBO(uint32_t fbo);

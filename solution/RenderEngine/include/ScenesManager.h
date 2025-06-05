@@ -1,9 +1,9 @@
-#ifndef _ENTITY_MANAGER_H_
-#define _ENTITY_MANAGER_H_
+#pragma once
 
 #include "Scene.h"
 #include "GUIScene.h"
 #include "ASingleton.h"
+#include "RefreshMeshesMessage.h"
 
 namespace sre
 {
@@ -13,6 +13,12 @@ class ScenesManager : public ASingleton
 protected:
     UPTR<Scene> scene;
     UPTR<GUIScene> guiScene;
+
+private:
+    SPTR<Action> refreshMeshesAction;
+
+protected:
+    void init() override;
 
 public:
     SRE_API std::string getMainSceneName();
@@ -45,11 +51,11 @@ private:
     Entity* createMeshEntity(const char* filePath, const char* meshName);
     AScene* getScene();
     AScene* getGuiScene();
+    void onRefreshMeshes();
     void removeDestroyedEntities();
     void cleanUp();
     void preRelease() override;
 
-friend class RenderEngine;
 friend class AExecutionStrategy;
 friend class ApplicationStrategy;
 friend class EditorSceneTree;
@@ -58,5 +64,3 @@ friend class SingletonsManager;
 };
 
 } // namespace
-
-#endif

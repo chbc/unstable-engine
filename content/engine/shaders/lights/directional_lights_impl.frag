@@ -8,7 +8,7 @@ void DirectionalLights_compute(vec3 normal, vec3 toCameraDirection, inout vec3 k
     for (int i = 0; i < MAX_DIRECTIONAL_LIGHTS; i++)
     {
         vec3 lightColor = directionalLights[i].color;
-		vec3 lightVector = directionalLights[i].direction
+		vec3 lightVector = directionalLights[i].direction;
 		
 		// [NORMAL] Normal_getLightVector(lightVector);
         vec3 toLightDirection = normalize(-lightVector);

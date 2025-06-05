@@ -1,3 +1,5 @@
+#pragma once
+
 #include "EditorMessages.h"
 #include "AEditorPopup.h"
 

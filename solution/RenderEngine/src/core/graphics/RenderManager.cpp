@@ -268,17 +268,18 @@ void RenderManager::removeDestroyedEntities()
 
 void RenderManager::cleanUp()
 {
-    this->opaqueMeshRenderers.clear();
-    this->translucentMeshRenderers.clear();
-
-    if (this->guiRenderer.get() != nullptr)
-    {
-        this->guiRenderer.reset();
-    }
+    this->cleanUpMeshes();
+    this->cleanUpGui();
 
     this->lightManager->clean();
 
     this->currentCamera = nullptr;
+}
+
+void RenderManager::cleanUpMeshes()
+{
+    this->opaqueMeshRenderers.clear();
+    this->translucentMeshRenderers.clear();
 }
 
 void RenderManager::cleanUpGui()

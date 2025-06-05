@@ -468,6 +468,7 @@
     <ClCompile Include="src\entities\components\transforms\TransformComponent.cpp" />
     <ClCompile Include="src\messages\EditorMessages.cpp" />
     <ClCompile Include="src\messages\EntityDestroyedMessage.cpp" />
+    <ClCompile Include="src\messages\RefreshMeshesMessage.cpp" />
     <ClCompile Include="src\RenderEngine.cpp" />
     <ClCompile Include="src\entitiesManagers\scene\Scene.cpp" />
     <ClCompile Include="src\core\graphics\LightManager.cpp" />
@@ -566,6 +567,7 @@
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
     <ClInclude Include="include\ABaseTextureMaterialComponent.h" />
+    <ClInclude Include="include\AEditorPopup.h" />
     <ClInclude Include="include\AEntityComponent.h" />
     <ClInclude Include="include\ApplicationStrategy.h" />
     <ClInclude Include="include\AssetsManager.h" />
@@ -583,6 +585,7 @@
     <ClInclude Include="include\EntityParser.h" />
     <ClInclude Include="include\AExecutionStrategy.h" />
     <ClInclude Include="include\ImportMeshPopup.h" />
+    <ClInclude Include="include\RefreshMeshesMessage.h" />
     <ClInclude Include="include\MaterialComponentTypes.h" />
     <ClInclude Include="include\MaterialLoader.h" />
     <ClInclude Include="include\Model.h" />

@@ -83,4 +83,10 @@ PointLightComponent *Scene::createPointLight(const std::string& entityName, Enti
     return newEntity->addComponent<PointLightComponent>();
 }
 
+void Scene::onRefreshMeshes()
+{
+    this->renderManager->cleanUpMeshes();
+    AScene::onSceneLoaded();
+}
+
 } // namespace
