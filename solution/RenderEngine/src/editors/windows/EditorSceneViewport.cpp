@@ -222,12 +222,7 @@ void EditorSceneViewport::forceInitialMousePosition()
 
 void EditorSceneViewport::updateCameraPerspective(float newWidth, float newHeight)
 {
-	if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) &&
-		(
-			(newWidth != this->currentWindowWidth) ||
-			(newHeight != this->currentWindowHeight)
-		)
-	)
+	if((newWidth != this->currentWindowWidth) || (newHeight != this->currentWindowHeight))
 	{
 		this->currentWindowWidth = newWidth;
 		this->currentWindowHeight = newHeight;
