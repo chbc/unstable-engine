@@ -1,8 +1,10 @@
 #if defined(DEBUG) && !defined(__ANDROID__)
 
 #include "ImGuiAPIState.h"
+
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_sdl2.h"
+#include "imguizmo/ImGuizmo.h"
 
 #include <SDL.h>
 
@@ -32,6 +34,7 @@ void ImGuiAPIState::onNewFrame()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
 }
 
 void ImGuiAPIState::render()

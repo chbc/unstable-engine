@@ -399,6 +399,9 @@
     <ClCompile Include="src\messages\RefreshMeshesMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="thirdParties\imguizmo\ImGuizmo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1044,6 +1047,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\AEditorPopup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdParties\imguizmo\ImGuizmo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

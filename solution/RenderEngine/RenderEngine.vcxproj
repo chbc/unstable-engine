@@ -489,6 +489,7 @@
     <ClCompile Include="src\utils\FileUtils.cpp" />
     <ClCompile Include="src\utils\math\MathUtils.cpp" />
     <ClCompile Include="src\utils\math\Rect.cpp" />
+    <ClCompile Include="thirdParties\imguizmo\ImGuizmo.cpp" />
     <ClCompile Include="thirdParties\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="thirdParties\imgui\backends\imgui_impl_sdl2.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui.cpp" />
@@ -709,6 +710,7 @@
     <ClInclude Include="include\Vec2EditorProperty.h" />
     <ClInclude Include="include\WorldEditor.h" />
     <ClInclude Include="include\Vec3EditorProperty.h" />
+    <ClInclude Include="thirdParties\imguizmo\ImGuizmo.h" />
     <ClInclude Include="thirdParties\imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="thirdParties\imgui\backends\imgui_impl_sdl2.h" />
     <ClInclude Include="thirdParties\imgui\imgui.h" />

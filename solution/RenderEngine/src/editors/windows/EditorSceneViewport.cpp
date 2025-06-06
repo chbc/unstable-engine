@@ -10,9 +10,11 @@
 #include "OrbitMovementComponent.h"
 #include "Input.h"
 #include "EditorsController.h"
+#include "MessagesManager.h"
+#include "MathUtils.h"
 
 #include "imgui.h"
-
+#include "imguizmo/ImGuizmo.h"
 #include <glm/gtx/rotate_vector.hpp>
 
 namespace sre
@@ -21,7 +23,10 @@ namespace sre
 uint32_t EditorSceneViewport::Fbo = 0;
 
 EditorSceneViewport::EditorSceneViewport(EditorsController* arg_controller) : controller(arg_controller)
-{ }
+{
+	Action* action = new Action{ [&](void* message) { this->onEntitySelected(message); } };
+	this->selectionAction = SPTR<Action>(action);
+}
 
 void EditorSceneViewport::onInit()
 {
@@ -46,8 +51,8 @@ void EditorSceneViewport::onInit()
 		this->renderManager = singletonsManager->get<RenderManager>();
 
 		this->camera = SPTR<Entity>(new Entity{"_editor_camera"});
-		CameraComponent* cameraComponent = this->camera->addComponent<CameraComponent>();
-		cameraComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
+		this->cameraComponent = this->camera->addComponent<CameraComponent>();
+		this->cameraComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
 		
 		this->flyingComponent = this->camera->addComponent<FlyingMovementComponent>();
 		this->orbitComponent = this->camera->addComponent<OrbitMovementComponent>();
@@ -56,12 +61,16 @@ void EditorSceneViewport::onInit()
 
 		this->camera->onInit();
 
-		this->renderManager->setEditorCamera(cameraComponent);
+		this->renderManager->setEditorCamera(this->cameraComponent);
 		this->viewingState = EViewingState::NONE;
 	}
 
 	this->renderManager->setTargetFBO(Fbo);
 	this->canUpdate = false;
+
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	messagesManager->addListener<EntitySelectionMessage>(this->selectionAction.get());
+	this->selectedEntity = nullptr;
 }
 
 void EditorSceneViewport::onUpdate(float elapsedTime)
@@ -96,7 +105,41 @@ void EditorSceneViewport::onEditorGUI()
 	this->handleFileDrop();
 	this->updateCameraPerspective(size.x, size.y);
 
+
+	// GUIZMO
+	if (this->selectedEntity != nullptr)
+	{
+		ImGuizmo::SetOrthographic(false);
+		ImGuizmo::SetDrawlist();
+
+		ImVec2 windowPosition = ImGui::GetWindowPos();
+		ImGuizmo::SetRect(windowPosition.x, windowPosition.y, size.x, size.y);
+
+		const glm::mat4& viewMatrix = this->cameraComponent->getViewMatrix();
+		const glm::mat4& projectionMatrix = this->cameraComponent->getProjectionMatrix();
+		TransformComponent* entityTransform = this->selectedEntity->getTransform();
+		glm::mat4 entityMatrix = entityTransform->getMatrix();
+		
+		ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
+			ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, glm::value_ptr(entityMatrix));
+
+		if (ImGuizmo::IsUsing())
+		{
+			glm::vec3 position{ 0.0f }, scale{ 0.0f }, rotation{ 0.0f };
+			MathUtils::decomposeTransform(entityMatrix, position, scale, rotation);
+
+			entityTransform->setPosition(position);
+			entityTransform->setScale(scale);
+		}
+	}
+
 	ImGui::End();
+}
+
+void EditorSceneViewport::onCleanUp()
+{
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	messagesManager->removeListener<EntitySelectionMessage>(this->selectionAction.get());
 }
 
 void EditorSceneViewport::onRelease()
@@ -229,6 +272,12 @@ void EditorSceneViewport::updateCameraPerspective(float newWidth, float newHeigh
 		float aspectRatio = this->currentWindowWidth / this->currentWindowHeight;
 		this->camera->getComponent<CameraComponent>()->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
 	}
+}
+
+void EditorSceneViewport::onEntitySelected(void* data)
+{
+	EntitySelectionMessage* message = static_cast<EntitySelectionMessage*>(data);
+	this->selectedEntity = message->entity;
 }
 
 } // namespace

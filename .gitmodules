@@ -1,3 +1,6 @@
 [submodule "solution/RenderEngine/thirdParties/imgui"]
 	path = solution/RenderEngine/thirdParties/imgui
 	url = https://github.com/ocornut/imgui.git
+[submodule "solution/RenderEngine/thirdParties/imguizmo"]
+	path = solution/RenderEngine/thirdParties/imguizmo
+	url = https://github.com/CedricGuillemet/ImGuizmo.git

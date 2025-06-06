@@ -3,6 +3,7 @@
 #include "IEditorWindow.h"
 #include "Texture.h"
 #include "memory_aliases.h"
+#include "EditorMessages.h"
 
 #include "glm/vec2.hpp"
 
@@ -17,12 +18,16 @@ enum class EViewingState
 };
 
 class EditorsController;
+class Entity;
 
 class EditorSceneViewport : public IEditorWindow
 {
 private:
 	class RenderManager* renderManager{ nullptr };
 	SPTR<class Entity> camera{ nullptr };
+	class CameraComponent* cameraComponent{ nullptr };
+	Entity* selectedEntity{ nullptr };
+	SPTR<Action> selectionAction;
 	
 	class FlyingMovementComponent* flyingComponent{ nullptr };
 	class OrbitMovementComponent* orbitComponent{ nullptr };
@@ -42,6 +47,7 @@ public:
 	void onInit() override;
 	void onUpdate(float elapsedTime) override;
 	void onEditorGUI() override;
+	void onCleanUp() override;
 	void onRelease() override;
 
 private:
@@ -52,6 +58,7 @@ private:
 	void updateInitialMousePosition();
 	void forceInitialMousePosition();
 	void updateCameraPerspective(float newWidth, float newHeight);
+	void onEntitySelected(void* data);
 
 friend class WorldEditor;
 };
