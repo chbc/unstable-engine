@@ -23,13 +23,9 @@ void MaterialEditorProperty::draw()
 
 void MaterialEditorProperty::onDraw()
 {
-	ImGui::SetColumnWidth(0, 100.0f);
-
 	ImGui::Text((*this->value)->filePath.c_str());
 
-	ImGui::Columns(1);
-
-	if (ImGui::BeginPopupContextItem("Save Popup"))
+	if (ImGui::BeginPopupContextItem("Save Material"))
 	{
 		ImGui::Text("[%s]", this->title.c_str());
 		if (ImGui::Button("Save"))

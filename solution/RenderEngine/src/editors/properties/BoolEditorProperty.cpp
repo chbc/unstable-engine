@@ -17,8 +17,6 @@ BoolEditorProperty::BoolEditorProperty(const char* title, bool* arg_value)
 
 void BoolEditorProperty::onDraw()
 {
-	ImGui::SetColumnWidth(0, 100.0f);
-
 	if (ImGui::Checkbox("##id", this->value))
 	{
 		this->onPropertyChanged();

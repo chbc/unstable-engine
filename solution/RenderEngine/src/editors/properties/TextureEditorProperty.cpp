@@ -20,7 +20,6 @@ void TextureEditorProperty::setTextureId(void* arg_id)
 
 void TextureEditorProperty::onDraw()
 {
-	ImGui::SetColumnWidth(0, 100.0f);
 	ImGui::Image(this->id, ImVec2{ 64.0f, 64.0f });
 }
 

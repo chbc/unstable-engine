@@ -18,8 +18,6 @@ MeshEditorProperty::MeshEditorProperty(const char* title, MeshData** arg_value, 
 
 void MeshEditorProperty::onDraw()
 {
-	ImGui::SetColumnWidth(0, 100.0f);
-
 	std::stringstream ss;
 	ss << *this->modelPath << " (" << (*this->value)->name << ")";
 	ImGui::Text(ss.str().c_str());

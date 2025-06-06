@@ -30,9 +30,17 @@ void EditorEntityProperties::onEditorGUI()
 
 	if (this->entity != nullptr)
 	{
-		for (const auto& property : this->entity->editorProperties)
+		ImGuiTableFlags flags = ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable | ImGuiTableFlags_RowBg | ImGuiTableFlags_NoHostExtendX;
+
+		if (ImGui::BeginTable("Entity Properties", 2, flags))
 		{
-			property->draw();
+			for (const auto& property : this->entity->editorProperties)
+			{
+				ImGui::TableNextRow();
+				property->draw();
+			}
+
+			ImGui::EndTable();
 		}
 
 		for (const auto& component : this->entity->componentsMap)
@@ -41,9 +49,15 @@ void EditorEntityProperties::onEditorGUI()
 
 			if (ImGui::CollapsingHeader(componentName, ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				for (const auto& property : component.second->editorProperties)
+				if (ImGui::BeginTable("Component Properties", 2, flags))
 				{
-					property->draw();
+					for (const auto& property : component.second->editorProperties)
+					{
+						ImGui::TableNextRow();
+						property->draw();
+					}
+
+					ImGui::EndTable();
 				}
 			}
 		}

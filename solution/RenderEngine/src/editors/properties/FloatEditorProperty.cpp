@@ -17,8 +17,6 @@ FloatEditorProperty::FloatEditorProperty(const char* title, float* arg_values)
 
 void FloatEditorProperty::onDraw()
 {
-	ImGui::SetColumnWidth(0, 100.0f);
-
 	if (ImGui::DragFloat("##id", this->value, 0.1f, 0.0f, 0.0f, "%.2f"))
 	{
 		this->onPropertyChanged();

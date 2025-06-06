@@ -18,10 +18,9 @@ void sre::AEditorProperty::setStored(bool value)
 
 void sre::AEditorProperty::draw()
 {
-	ImGui::PushID(this->title.c_str());
+	ImGui::PushID(this);
 
-	ImGui::Columns(2);
-	ImGui::SetColumnWidth(0, 100.0f);
+	ImGui::TableNextColumn();
     if (this->saved)
     {
         ImGui::Text(this->title.c_str());
@@ -30,11 +29,9 @@ void sre::AEditorProperty::draw()
     {
         ImGui::TextColored(ImColor{ 0.75f, 0.5f, 0.0f }, this->title.c_str());
     }
-	ImGui::NextColumn();
+	ImGui::TableNextColumn();
 
     this->onDraw();
-
-	ImGui::Columns(1);
 
 	ImGui::PopID();
 }
