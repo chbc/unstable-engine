@@ -91,7 +91,7 @@ void EditorSceneViewport::onEditorGUI()
 
 	ImGui::Image(this->textureId, size, ImVec2{0.0f, 1.0f}, ImVec2{ 1.0f, 0.0f });
 
-	this->canUpdate = ImGui::IsWindowFocused() || ImGui::IsWindowHovered();
+	this->canUpdate = ImGui::IsWindowHovered();
 
 	this->handleFileDrop();
 	this->updateCameraPerspective(size.x, size.y);
