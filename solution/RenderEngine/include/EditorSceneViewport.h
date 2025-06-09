@@ -7,6 +7,11 @@
 
 #include "glm/vec2.hpp"
 
+namespace ImGuizmo
+{
+	enum OPERATION : int;
+}
+
 namespace sre
 {
 
@@ -40,6 +45,7 @@ private:
 	uint64_t textureId{ 0 };
 	bool canUpdate{ false };
 	EViewingState viewingState{ EViewingState::NONE };
+	ImGuizmo::OPERATION guizmoOperation{ 0u };
 
 public:
 	EditorSceneViewport(EditorsController* arg_controller);
@@ -55,6 +61,7 @@ private:
 	void updateViewingState();
 	void processCameraMovement(float elapsedTime);
 	void processMouseWheel(float elapsedTime);
+	void processGuizmoOperationSelection();
 	void updateInitialMousePosition();
 	void forceInitialMousePosition();
 	void updateCameraPerspective(float newWidth, float newHeight);

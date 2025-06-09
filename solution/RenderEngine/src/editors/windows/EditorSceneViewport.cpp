@@ -71,6 +71,7 @@ void EditorSceneViewport::onInit()
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	messagesManager->addListener<EntitySelectionMessage>(this->selectionAction.get());
 	this->selectedEntity = nullptr;
+	this->guizmoOperation = ImGuizmo::TRANSLATE;
 }
 
 void EditorSceneViewport::onUpdate(float elapsedTime)
@@ -79,6 +80,7 @@ void EditorSceneViewport::onUpdate(float elapsedTime)
 	{
 		this->updateViewingState();
 		this->processMouseWheel(elapsedTime);
+		this->processGuizmoOperationSelection();
 
 		if (this->viewingState != EViewingState::NONE)
 		{
@@ -120,16 +122,20 @@ void EditorSceneViewport::onEditorGUI()
 		TransformComponent* entityTransform = this->selectedEntity->getTransform();
 		glm::mat4 entityMatrix = entityTransform->getMatrix();
 		
-		ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
-			ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, glm::value_ptr(entityMatrix));
-
-		if (ImGuizmo::IsUsing())
+		if (this->viewingState == EViewingState::NONE)
 		{
-			glm::vec3 position{ 0.0f }, scale{ 0.0f }, rotation{ 0.0f };
-			MathUtils::decomposeTransform(entityMatrix, position, scale, rotation);
+			ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
+				this->guizmoOperation, ImGuizmo::LOCAL, glm::value_ptr(entityMatrix));
 
-			entityTransform->setPosition(position);
-			entityTransform->setScale(scale);
+			if (ImGuizmo::IsUsing())
+			{
+				glm::vec3 position{ 0.0f }, scale{ 0.0f }, rotation{ 0.0f };
+				MathUtils::decomposeTransform(entityMatrix, position, scale, rotation);
+
+				entityTransform->setPosition(position);
+				entityTransform->setScale(scale);
+				entityTransform->setRotation(glm::degrees(rotation));
+			}
 		}
 	}
 
@@ -246,6 +252,25 @@ void EditorSceneViewport::processMouseWheel(float elapsedTime)
 			position = position * targetDistance;
 
 			this->camera->getTransform()->setPosition(position);
+		}
+	}
+}
+
+void EditorSceneViewport::processGuizmoOperationSelection()
+{
+	if (this->viewingState == EViewingState::NONE)
+	{
+		if (ImGui::IsKeyPressed(ImGuiKey_W))
+		{
+			this->guizmoOperation = ImGuizmo::TRANSLATE;
+		}
+		else if (ImGui::IsKeyPressed(ImGuiKey_E))
+		{
+			this->guizmoOperation = ImGuizmo::ROTATE;
+		}
+		else if (ImGui::IsKeyPressed(ImGuiKey_R))
+		{
+			this->guizmoOperation = ImGuizmo::SCALE;
 		}
 	}
 }

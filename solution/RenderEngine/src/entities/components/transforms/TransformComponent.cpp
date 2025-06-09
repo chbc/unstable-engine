@@ -55,9 +55,12 @@ void TransformComponent::setRotation(const glm::vec3& axis, float angle)
 	this->updateMatrix();
 }
 
-void TransformComponent::setRotation(glm::quat arg_rotation)
+void TransformComponent::setRotation(const glm::vec3& arg_eulerAngles)
 {
-	this->rotation = glm::toMat4(arg_rotation);
+	this->eulerAngles = arg_eulerAngles;
+	glm::quat quaternionRotation = glm::quat{ glm::radians(arg_eulerAngles) };
+	this->rotation = glm::toMat4(quaternionRotation);
+
 	this->updateMatrix();
 }
 
