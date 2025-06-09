@@ -41,7 +41,7 @@ private:
 	static void removeKeyDown(Key key);
 	static void removeMouseButtonDown(MouseButton button);
 	static void setMousePosition(int x, int y);
-	static void setMouseDeltaPosition(int x, int y);
+	static void addMouseDeltaPosition(int x, int y);
 	static void setMouseWheel(int direction);
 	static void clear();
 

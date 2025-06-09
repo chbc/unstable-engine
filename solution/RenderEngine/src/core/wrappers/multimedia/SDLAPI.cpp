@@ -155,7 +155,7 @@ void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons, SD
 
 		case SDL_MOUSEMOTION:
 			Input::setMousePosition(currentEvent.motion.x, currentEvent.motion.y);
-			Input::setMouseDeltaPosition(currentEvent.motion.xrel, currentEvent.motion.yrel);
+			Input::addMouseDeltaPosition(currentEvent.motion.xrel, currentEvent.motion.yrel);
 			break;
 
 		case SDL_MOUSEBUTTONDOWN:

@@ -100,10 +100,10 @@ void Input::setMousePosition(int x, int y)
 	MousePosition.y = y;
 }
 
-void Input::setMouseDeltaPosition(int x, int y)
+void Input::addMouseDeltaPosition(int x, int y)
 {
-	MouseDeltaPosition.x = x;
-	MouseDeltaPosition.y = y;
+	MouseDeltaPosition.x += x;
+	MouseDeltaPosition.y += y;
 }
 
 void Input::setMouseWheel(int direction)
