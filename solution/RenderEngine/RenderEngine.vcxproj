@@ -419,6 +419,8 @@
     <ClCompile Include="src\editors\windows\FileIcons\FileIcon.cpp" />
     <ClCompile Include="src\editors\windows\popups\AEditorPopup.cpp" />
     <ClCompile Include="src\editors\windows\popups\ImportMeshPopup.cpp" />
+    <ClCompile Include="src\editors\windows\sceneViewportComponents\SceneViewportCamera.cpp" />
+    <ClCompile Include="src\editors\windows\sceneViewportComponents\SceneViewportGuizmos.cpp" />
     <ClCompile Include="src\entitiesManagers\scene\AScene.cpp" />
     <ClCompile Include="src\entities\components\movements\FlyingMovementComponent.cpp" />
     <ClCompile Include="src\entities\components\movements\OrbitMovementComponent.cpp" />
@@ -682,6 +684,7 @@
     <ClInclude Include="include\AScene.h" />
     <ClInclude Include="include\SceneLoader.h" />
     <ClInclude Include="include\Scene.h" />
+    <ClInclude Include="include\SceneViewportGuizmos.h" />
     <ClInclude Include="include\SDLAPI.h" />
     <ClInclude Include="include\SDLAndroidAPI.h" />
     <ClInclude Include="include\Shader.h" />
@@ -710,6 +713,7 @@
     <ClInclude Include="include\Vec2EditorProperty.h" />
     <ClInclude Include="include\WorldEditor.h" />
     <ClInclude Include="include\Vec3EditorProperty.h" />
+    <ClInclude Include="include\SceneViewportCamera.h" />
     <ClInclude Include="thirdParties\imguizmo\ImGuizmo.h" />
     <ClInclude Include="thirdParties\imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="thirdParties\imgui\backends\imgui_impl_sdl2.h" />

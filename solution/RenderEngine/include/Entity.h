@@ -124,7 +124,7 @@ private:
 
     friend class TestServicesProvider;
     friend class EditorEntityProperties;
-    friend class EditorSceneViewport;
+    friend class SceneViewportCamera;
     friend class EditorsController;
     friend class EditorSceneTree;
 };

@@ -2,25 +2,14 @@
 
 #include "IEditorWindow.h"
 #include "Texture.h"
-#include "memory_aliases.h"
+#include "SceneViewportCamera.h"
+#include "SceneViewportGuizmos.h"
 #include "EditorMessages.h"
 
-#include "glm/vec2.hpp"
 
-namespace ImGuizmo
-{
-	enum OPERATION : int;
-}
 
 namespace sre
 {
-
-enum class EViewingState
-{
-	NONE,
-	FLYING,
-	ORBIT
-};
 
 class EditorsController;
 class Entity;
@@ -28,24 +17,17 @@ class Entity;
 class EditorSceneViewport : public IEditorWindow
 {
 private:
+	SceneViewportCamera sceneViewportCamera;
+	SceneViewportGuizmos sceneViewportGuizmos;
+
 	class RenderManager* renderManager{ nullptr };
-	SPTR<class Entity> camera{ nullptr };
-	class CameraComponent* cameraComponent{ nullptr };
-	Entity* selectedEntity{ nullptr };
-	SPTR<Action> selectionAction;
-	
-	class FlyingMovementComponent* flyingComponent{ nullptr };
-	class OrbitMovementComponent* orbitComponent{ nullptr };
 	class MultimediaManager* multimediaManager{ nullptr };
-	glm::ivec2 initialMousePosition{ 0 };
+	
 	EditorsController* controller{ nullptr };
-	float currentWindowWidth{ 0.0f };
-	float currentWindowHeight{ 0.0f };
+
 	static uint32_t Fbo;
 	uint64_t textureId{ 0 };
 	bool canUpdate{ false };
-	EViewingState viewingState{ EViewingState::NONE };
-	ImGuizmo::OPERATION guizmoOperation{ 0u };
 
 public:
 	EditorSceneViewport(EditorsController* arg_controller);
@@ -58,14 +40,7 @@ public:
 
 private:
 	void handleFileDrop();
-	void updateViewingState();
-	void processCameraMovement(float elapsedTime);
-	void processMouseWheel(float elapsedTime);
-	void processGuizmoOperationSelection();
-	void updateInitialMousePosition();
-	void forceInitialMousePosition();
-	void updateCameraPerspective(float newWidth, float newHeight);
-	void onEntitySelected(void* data);
+
 
 friend class WorldEditor;
 };
