@@ -25,8 +25,10 @@ void SceneViewportGuizmos::onInit()
 	this->guizmoOperation = ImGuizmo::TRANSLATE;
 }
 
-void SceneViewportGuizmos::onEditorGUI(float windowWidth, float windowHeight, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
+bool SceneViewportGuizmos::drawAndManipulate(float windowWidth, float windowHeight, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
+	bool result = false;
+
 	if (this->selectedEntity != nullptr)
 	{
 		ImGuizmo::SetOrthographic(false);
@@ -34,7 +36,6 @@ void SceneViewportGuizmos::onEditorGUI(float windowWidth, float windowHeight, co
 
 		ImVec2 windowPosition = ImGui::GetWindowPos();
 		ImGuizmo::SetRect(windowPosition.x, windowPosition.y, windowWidth, windowHeight);
-
 
 		TransformComponent* entityTransform = this->selectedEntity->getTransform();
 		glm::mat4 entityMatrix = entityTransform->getMatrix();
@@ -50,8 +51,12 @@ void SceneViewportGuizmos::onEditorGUI(float windowWidth, float windowHeight, co
 			entityTransform->setPosition(position);
 			entityTransform->setScale(scale);
 			entityTransform->setRotation(glm::degrees(rotation));
+
+			result = true;
 		}
 	}
+
+	return result;
 }
 
 void SceneViewportGuizmos::processGuizmoOperationSelection()

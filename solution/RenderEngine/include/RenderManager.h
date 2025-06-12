@@ -92,6 +92,7 @@ friend class BaseRendererShaderSetup;
 friend class LightRendererShaderSetup;
 friend class EditorSceneViewport;
 friend class WorldEditor;
+friend class ScenesManager;
 };
 
 } // namespace

@@ -41,13 +41,13 @@ void EditorSceneTree::onEditorGUI()
 	
 	if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
 	{
-		this->notifySelection(nullptr);
+		this->controller->notifyEntitySelection(nullptr);
 	}
 
 	if (ImGui::IsKeyPressed(ImGuiKey_Delete, false) && (this->selectedEntity != nullptr))
 	{
 		this->selectedEntity->destroy();
-		this->notifySelection(nullptr);
+		this->controller->notifyEntitySelection(nullptr);
 	}
 
 	ImGui::End();
@@ -81,12 +81,12 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 	{
 		if (ImGui::Selectable(name, entity == this->selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
 		{
-			this->notifySelection(entity);
+			this->controller->notifyEntitySelection(entity);
 		}
 
 		if (ImGui::BeginPopupContextItem())
 		{
-			this->notifySelection(entity);
+			this->controller->notifyEntitySelection(entity);
 
 			ImGui::Text("[%s]", name);
 			if (!this->selectedEntity->isAsset())
@@ -108,7 +108,7 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 			if (ImGui::Button("Delete"))
 			{
 				this->selectedEntity->destroy();
-				this->notifySelection(nullptr);
+				this->controller->notifyEntitySelection(nullptr);
 				ImGui::CloseCurrentPopup();
 			}
 			ImGui::EndPopup();
@@ -126,7 +126,7 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 
 		if (ImGui::IsItemClicked())
 		{
-			this->notifySelection(entity);
+			this->controller->notifyEntitySelection(entity);
 		}
 
 		if (open)
@@ -138,13 +138,6 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 			ImGui::TreePop();
 		}
 	}
-}
-
-void EditorSceneTree::notifySelection(Entity* entity)
-{
-	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-	EntitySelectionMessage message{ entity };
-	messagesManager->notify(&message);
 }
 
 void EditorSceneTree::onEntitySelected(void* data)

@@ -70,6 +70,31 @@ const glm::mat4& CameraComponent::getViewMatrix() const
     return this->view;
 }
 
+Ray CameraComponent::getRayFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize) const
+{
+	float ndcX = ((2.0f * mousePosition.x) / viewportSize.x) - 1.0f;
+	float ndcY = 1.0f - ((2.0f * mousePosition.y) / viewportSize.y);
+
+	glm::vec4 rayClipNear{ ndcX, ndcY, -1.0f, 1.0f };
+	glm::vec4 rayClipFar{ ndcX, ndcY, 1.0f, 1.0f };
+
+	glm::mat4 inverseProjection = glm::inverse(this->projection);
+	glm::vec4 rayEyeNear = inverseProjection * rayClipNear;
+	glm::vec4 rayEyeFar = inverseProjection * rayClipFar;
+
+	rayEyeNear /= rayEyeNear.w;
+	rayEyeFar /= rayEyeFar.w;
+
+	glm::mat4 worldMatrix = this->transform->getMatrix();
+
+	glm::vec4 rayWorldNear = worldMatrix * rayEyeNear;
+	glm::vec4 rayWorldFar = worldMatrix * rayEyeFar;
+
+	glm::vec3 rayDirection = glm::normalize(glm::vec3(rayWorldFar) - glm::vec3(rayWorldNear));
+
+	return Ray{ rayWorldNear, rayDirection };
+}
+
 void CameraComponent::onPropertyDeserialized()
 {
     AEntityComponent::onPropertyDeserialized();

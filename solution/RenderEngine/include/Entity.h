@@ -2,8 +2,7 @@
 // USAR MACRO PRA SUBSTITUIR O TPP
 // USAR MACRO NO CORPO DOS COMPONENTES PRA IMPLEMENTAR O getComponent()
 
-#ifndef _ENTITY_H_
-#define _ENTITY_H_
+#pragma once
 
 #include "AEntityComponent.h"
 #include "TransformComponent.h"
@@ -132,5 +131,3 @@ private:
 } // namespace
 
 #include "Entity.tpp"
-
-#endif

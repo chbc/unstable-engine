@@ -33,7 +33,6 @@ public:
 private:
 	void drawScene(class AScene* scene);
 	void drawEntityTree(Entity* entity, int index);
-	void notifySelection(Entity* entity);
 	void onEntitySelected(void* data);
 };
 

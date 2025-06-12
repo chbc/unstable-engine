@@ -425,6 +425,7 @@
     <ClCompile Include="src\entities\components\movements\FlyingMovementComponent.cpp" />
     <ClCompile Include="src\entities\components\movements\OrbitMovementComponent.cpp" />
     <ClCompile Include="src\entities\components\EntityComponentTypes.cpp" />
+    <ClCompile Include="src\entities\components\renderables\ARenderableComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\ABaseTextureMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp" />
@@ -489,6 +490,7 @@
     <ClCompile Include="src\tests\TestServicesProvider.cpp" />
     <ClCompile Include="src\utils\Log.cpp" />
     <ClCompile Include="src\utils\FileUtils.cpp" />
+    <ClCompile Include="src\utils\math\Bounds.cpp" />
     <ClCompile Include="src\utils\math\MathUtils.cpp" />
     <ClCompile Include="src\utils\math\Rect.cpp" />
     <ClCompile Include="thirdParties\imguizmo\ImGuizmo.cpp" />
@@ -574,6 +576,7 @@
     <ClInclude Include="include\AEntityComponent.h" />
     <ClInclude Include="include\ApplicationStrategy.h" />
     <ClInclude Include="include\AssetsManager.h" />
+    <ClInclude Include="include\Bounds.h" />
     <ClInclude Include="include\EntityLoader.h" />
     <ClInclude Include="include\EntityTypes.h" />
     <ClInclude Include="include\FileIcon.h" />
@@ -596,6 +599,7 @@
     <ClInclude Include="include\MeshLoader.h" />
     <ClInclude Include="include\PBRMaterialComponent.h" />
     <ClInclude Include="include\PBRRendererComponent.h" />
+    <ClInclude Include="include\ARenderableComponent.h" />
     <ClInclude Include="include\ScenesManager.h" />
     <ClInclude Include="include\AGraphicsWrapper.h" />
     <ClInclude Include="include\AImGuiAPIState.h" />
@@ -721,6 +725,7 @@
     <ClInclude Include="thirdParties\imgui\imgui_internal.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="include\Entity.tpp" />
     <None Include="include\Material.tpp" />
     <None Include="include\MeshRenderer.tpp" />

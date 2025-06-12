@@ -45,14 +45,14 @@ void EditorSceneViewport::onInit()
 	}
 
 	this->renderManager->setTargetFBO(Fbo);
-	this->canUpdate = false;
+	this->isWindowHovered = false;
 
 	this->sceneViewportGuizmos.onInit();
 }
 
 void EditorSceneViewport::onUpdate(float elapsedTime)
 {
-	if (this->canUpdate)
+	if (this->isWindowHovered)
 	{
 		this->sceneViewportCamera.onUpdate(elapsedTime);
 
@@ -73,7 +73,7 @@ void EditorSceneViewport::onEditorGUI()
 
 	ImGui::Image(this->textureId, size, ImVec2{0.0f, 1.0f}, ImVec2{ 1.0f, 0.0f });
 
-	this->canUpdate = ImGui::IsWindowHovered();
+	this->isWindowHovered = ImGui::IsWindowHovered();
 
 	this->handleFileDrop();
 	this->sceneViewportCamera.updateCameraPerspective(size.x, size.y);
@@ -83,7 +83,12 @@ void EditorSceneViewport::onEditorGUI()
 		glm::mat4 viewMatrix;
 		glm::mat4 projectionMatrix;
 		this->sceneViewportCamera.getCameraMatrices(viewMatrix, projectionMatrix);
-		this->sceneViewportGuizmos.onEditorGUI(size.x, size.y, viewMatrix, projectionMatrix);
+
+		bool entityManipulated = this->sceneViewportGuizmos.drawAndManipulate(size.x, size.y, viewMatrix, projectionMatrix);
+		if (this->isWindowHovered && !entityManipulated)
+		{
+			tryPickEntity(size.x, size.y);
+		}
 	}
 
 	ImGui::End();
@@ -116,6 +121,19 @@ void EditorSceneViewport::handleFileDrop()
 			}
 		}
 		ImGui::EndDragDropTarget();
+	}
+}
+
+void EditorSceneViewport::tryPickEntity(float viewportWidth, float viewportHeight)
+{
+	if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+	{
+		ImVec2 mousePosition = ImGui::GetMousePos();
+		glm::vec2 viewportSize{ viewportWidth, viewportHeight };
+		
+		ScenesManager* scenesManager = SingletonsManager::getInstance()->get<ScenesManager>();
+		Entity* pickedEntity = scenesManager->raycastFromScreen({ mousePosition.x, mousePosition.y }, viewportSize);
+		this->controller->notifyEntitySelection(pickedEntity);
 	}
 }
 

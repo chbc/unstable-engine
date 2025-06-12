@@ -4,6 +4,7 @@
 #include "CameraComponent.h"
 #include "DirectionalLightComponent.h"
 #include "PointLightComponent.h"
+#include "Ray.h"
 
 namespace sre
 {
@@ -28,6 +29,8 @@ private:
     PointLightComponent* createPointLight(const std::string& entityName = "", Entity* parent = nullptr);
 
     void onRefreshMeshes();
+
+	Entity* raycast(const Ray& ray, float maxDistance);
 
 friend class ScenesManager;
 friend class SceneLoader;

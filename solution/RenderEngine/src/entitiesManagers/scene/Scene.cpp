@@ -89,4 +89,33 @@ void Scene::onRefreshMeshes()
     AScene::onSceneLoaded();
 }
 
+Entity* Scene::raycast(const Ray& ray, float maxDistance)
+{
+	Entity* result = nullptr;
+	float minDistance = maxDistance;
+
+	for (const auto& item : this->entities)
+	{
+		Entity* entity = item.second.get();
+		if (entity->hasComponent<MeshComponent>())
+		{
+            ARenderableComponent* renderableComponent = entity->getComponent<MeshComponent>();
+			const Bounds& bounds = renderableComponent->getBounds();
+            const glm::vec3& worldPosition = entity->getTransform()->getPosition();
+
+            float distance = 0;
+			if (bounds.intersects(ray, worldPosition, distance))
+			{
+				if (distance < minDistance)
+				{
+					minDistance = distance;
+					result = entity;
+				}
+			}
+		}
+	}
+
+	return result;
+}
+
 } // namespace

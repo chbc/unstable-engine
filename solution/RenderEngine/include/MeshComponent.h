@@ -1,27 +1,27 @@
 #pragma once
 
-#include "AEntityComponent.h"
 #include "memory_aliases.h"
 #include "Model.h"
 #include "Material.h"
+#include "ARenderableComponent.h"
 
 namespace sre
 {
 
 class Material;
 
-class SRE_API MeshComponent : public AEntityComponent
+class SRE_API MeshComponent : public ARenderableComponent
 {
 DECLARE_COMPONENT()
 
 protected:
-    MeshData* mesh;
+    MeshData* mesh{ nullptr };
     std::string modelPath;
     std::string meshName;
 
 private:
-    bool opaque;
-    Material* material;
+    bool opaque{ true };
+    Material* material{ nullptr };
 
 public:
     MeshComponent(Entity *entity);
@@ -41,6 +41,7 @@ public:
 protected:
     bool isOpaque();
     void load(Model* model, const char* meshName);
+    void onPropertyDeserialized() override;
     void onPropertyChanged() override;
 
 private:

@@ -12,8 +12,7 @@ namespace sre
 
 IMPLEMENT_COMPONENT(MeshComponent)
 
-MeshComponent::MeshComponent(Entity *entity)
-    : AEntityComponent(entity), opaque(true), material(nullptr), mesh(nullptr)
+MeshComponent::MeshComponent(Entity *entity) : ARenderableComponent(entity)
 {
     this->addEditorProperty(new MeshEditorProperty{ "Mesh", &this->mesh, &this->modelPath });
     this->addEditorProperty(new MaterialEditorProperty{ "Material", &this->material});
@@ -45,6 +44,7 @@ void MeshComponent::load(Model* model, const char* meshName)
 {
     this->mesh = model->getMesh(meshName);
 	this->modelPath = model->getFilePath();
+    this->bounds.setup(this->mesh->vertexData);
 
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
     AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
@@ -52,8 +52,21 @@ void MeshComponent::load(Model* model, const char* meshName)
     this->material = assetsManager->loadMaterial("engine\\media\\DefaultMaterial.mat");
 }
 
+void MeshComponent::onPropertyDeserialized()
+{
+	ARenderableComponent::onPropertyDeserialized();
+
+    if ((this->mesh != nullptr) && (!this->mesh->vertexData.empty()))
+    {
+        this->bounds.setup(this->mesh->vertexData);
+    }
+}
+
 void MeshComponent::onPropertyChanged()
 {
+	ARenderableComponent::onPropertyChanged();
+    this->bounds.setup(this->mesh->vertexData);
+
 	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 	renderManager->removeMesh(this);
     renderManager->addMesh(this);

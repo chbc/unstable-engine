@@ -408,6 +408,12 @@
     <ClCompile Include="src\editors\windows\sceneViewportComponents\SceneViewportGuizmos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utils\math\Bounds.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\ARenderableComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1064,6 +1070,12 @@
     <ClInclude Include="include\SceneViewportGuizmos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Bounds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ARenderableComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Entity.tpp" />
@@ -1071,5 +1083,6 @@
     <None Include="include\MeshRenderer.tpp" />
     <None Include="include\ShaderContentFactory.tpp" />
     <None Include="include\MessagesManager.tpp" />
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

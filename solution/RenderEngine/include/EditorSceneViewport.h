@@ -6,8 +6,6 @@
 #include "SceneViewportGuizmos.h"
 #include "EditorMessages.h"
 
-
-
 namespace sre
 {
 
@@ -27,7 +25,7 @@ private:
 
 	static uint32_t Fbo;
 	uint64_t textureId{ 0 };
-	bool canUpdate{ false };
+	bool isWindowHovered{ false };
 
 public:
 	EditorSceneViewport(EditorsController* arg_controller);
@@ -40,7 +38,7 @@ public:
 
 private:
 	void handleFileDrop();
-
+	void tryPickEntity(float viewportWidth, float viewportHeight);
 
 friend class WorldEditor;
 };

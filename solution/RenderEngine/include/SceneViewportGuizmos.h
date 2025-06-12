@@ -25,7 +25,7 @@ private:
 public:
 	SceneViewportGuizmos();
 	void onInit();
-	void onEditorGUI(float windowWidth, float windowHeight, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
+	bool drawAndManipulate(float windowWidth, float windowHeight, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 	void processGuizmoOperationSelection();
 	void onCleanUp();
 

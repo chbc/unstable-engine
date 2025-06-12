@@ -34,6 +34,7 @@ public:
 	void createMeshEntity(const char* file, const char* meshName);
 	void createDirectionalLight();
 	void createPointLight();
+	void notifyEntitySelection(Entity* entity);
 
 private:
 	void notifyNewEntity(Entity* entity);

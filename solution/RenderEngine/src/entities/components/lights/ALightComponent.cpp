@@ -1,5 +1,4 @@
 #include "ALightComponent.h"
-#include "TransformComponent.h"
 #include "Entity.h"
 #include "ColorEditorProperty.h"
 

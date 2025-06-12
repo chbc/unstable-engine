@@ -5,6 +5,7 @@
 #include "FileUtils.h"
 #include "SingletonsManager.h"
 #include "MessagesManager.h"
+#include "RenderManager.h"
 
 namespace sre
 {
@@ -74,6 +75,19 @@ Entity* ScenesManager::createGUIImageEntityFromAtlas(const std::string& filePath
 Entity* ScenesManager::createGUITextEntity(const std::string fontFile, const std::string& name, uint32_t maxItems)
 {
     return this->guiScene->createGUITextEntity(fontFile, name, maxItems);
+}
+
+Entity* ScenesManager::raycast(const Ray& ray, float maxDistance)
+{
+	return this->scene->raycast(ray, maxDistance);
+}
+
+Entity* ScenesManager::raycastFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize, float maxDistance)
+{
+	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+	CameraComponent* camera = renderManager->getCurrentCamera();
+	Ray ray = camera->getRayFromScreen(mousePosition, viewportSize);
+	return this->raycast(ray, maxDistance);
 }
 
 void ScenesManager::initEntities()

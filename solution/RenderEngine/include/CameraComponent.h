@@ -1,6 +1,8 @@
 #pragma once
 
 #include "AEntityComponent.h"
+#include "Ray.h"
+
 #include <glm/matrix.hpp>
 
 namespace sre
@@ -36,9 +38,9 @@ public:
 	void setOrthoProjection(float width, float height);
 	void setMainCamera();
 	void updateView();
-
 	inline const glm::mat4& getProjectionMatrix() const;
 	inline const glm::mat4& getViewMatrix() const;
+	Ray getRayFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize) const;
 
 protected:
 	void onPropertyDeserialized() override;

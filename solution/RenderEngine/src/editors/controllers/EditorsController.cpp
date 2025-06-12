@@ -169,6 +169,13 @@ void EditorsController::createPointLight()
 	this->scenesManager->createPointLight();
 }
 
+void EditorsController::notifyEntitySelection(Entity* entity)
+{
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	EntitySelectionMessage message{ entity };
+	messagesManager->notify(&message);
+}
+
 void EditorsController::notifyNewEntity(Entity* entity)
 {
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
