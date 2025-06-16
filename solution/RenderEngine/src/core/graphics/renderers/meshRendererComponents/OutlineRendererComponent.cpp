@@ -11,21 +11,21 @@ OutlineRendererComponent::OutlineRendererComponent(ShaderManager* shaderManager,
 	: ColorRendererComponent(shaderManager, graphicsWrapper)
 { }
 
-void OutlineRendererComponent::onSceneLoaded(class Shader* shader)
+void OutlineRendererComponent::onSceneLoaded(uint32_t program)
 {
     // XXX this->shaderManager->setupUniformLocation(shader, ShaderVariables::OUTLINE_COLOR);
 }
 
-void OutlineRendererComponent::setupShaderValues(MeshComponent* mesh, Shader* shader)
+void OutlineRendererComponent::setupShaderValues(MeshComponent* mesh, uint32_t program)
 {
 }
 
-void OutlineRendererComponent::preDraw(Shader* shader)
+void OutlineRendererComponent::preDraw(uint32_t program)
 {
     this->graphicsWrapper->enableVertexPositions();
 }
 
-void OutlineRendererComponent::postDraw(Shader* shader)
+void OutlineRendererComponent::postDraw(uint32_t program)
 {
     this->graphicsWrapper->disableVertexPositions();
 }

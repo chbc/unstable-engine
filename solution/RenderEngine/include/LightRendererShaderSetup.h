@@ -1,5 +1,4 @@
-#ifndef _LIGHT_RENDERER_SHADER_SETUP_H_
-#define _LIGHT_RENDERER_SHADER_SETUP_H_
+#pragma once
 
 #include "ShadowRendererShaderSetup.h"
 
@@ -23,19 +22,17 @@ private:
 protected:
     LightRendererShaderSetup(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-    void onSceneLoaded(Shader *shader) override;
-    void setupShaderValues(Shader *shader) override;
+    void onSceneLoaded(uint32_t program) override;
+    void setupShaderValues(uint32_t program) override;
 
 private:
-    void setupDirectionalsVariablesLocations(Shader *shader);
-    void setupPointsVariablesLocations(Shader *shader);
+    void setupDirectionalsVariablesLocations(uint32_t program);
+    void setupPointsVariablesLocations(uint32_t program);
 
-    void setupDirectionalValues(Shader *shader);
-    void setupPointValues(Shader *shader);
+    void setupDirectionalValues(uint32_t program);
+    void setupPointValues(uint32_t program);
 
 friend class MeshRenderer;
 };
 
 } // namespace
-
-#endif

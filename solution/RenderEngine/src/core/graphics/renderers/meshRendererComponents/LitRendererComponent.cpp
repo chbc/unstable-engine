@@ -15,22 +15,22 @@ LitRendererComponent::LitRendererComponent(ShaderManager *shaderManager, AGraphi
     );
 }
 
-void LitRendererComponent::onSceneLoaded(Shader *shader)
+void LitRendererComponent::onSceneLoaded(uint32_t program)
 {
-    this->state->onSceneLoaded(this->shaderManager, shader);
+    this->state->onSceneLoaded(this->shaderManager, program);
 }
 
-void LitRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
+void LitRendererComponent::setupShaderValues(MeshComponent *mesh, uint32_t program)
 {
-    this->state->setupShaderValues(this->shaderManager, mesh, shader);
+    this->state->setupShaderValues(this->shaderManager, mesh, program);
 }
 
-void LitRendererComponent::preDraw(Shader* shader)
+void LitRendererComponent::preDraw(uint32_t program)
 {
     this->state->preDraw(this->graphicsWrapper);
 }
 
-void LitRendererComponent::postDraw(Shader* shader)
+void LitRendererComponent::postDraw(uint32_t program)
 {
     this->state->postDraw(this->graphicsWrapper);
 }

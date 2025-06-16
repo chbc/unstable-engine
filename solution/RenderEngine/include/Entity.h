@@ -8,6 +8,7 @@
 #include "TransformComponent.h"
 #include "memory_aliases.h"
 #include "EntityTypes.h"
+#include "Bounds.h"
 
 #include <unordered_map>
 #include <vector>
@@ -83,6 +84,8 @@ public:
     }
 
     virtual const char* getClassName() const;
+
+	SRE_API void getBounds(Bounds& bounds) const;
 
 protected:
 	SRE_API virtual void onInit();

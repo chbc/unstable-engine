@@ -18,10 +18,10 @@ OutlineRendererPPComponent::OutlineRendererPPComponent(PostProcessingComponent* 
 	this->graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
 	this->shaderManager = singletonsManager->get<ShaderManager>();
 
-	this->outlineShader = this->shaderManager->loadPostProcessingShader(component);
-	this->shaderManager->setupUniformLocation(this->outlineShader, ShaderVariables::SCREEN_TEXTURE);
+	this->outlineProgram = this->shaderManager->loadPostProcessingShader(component);
+	this->shaderManager->setupUniformLocation(this->outlineProgram, ShaderVariables::SCREEN_TEXTURE);
 	
-	this->combineShader = this->shaderManager->loadFinalPassPostProcessingShader(component);
+	this->combineProgram = this->shaderManager->loadFinalPassPostProcessingShader(component);
 
 	MultimediaManager* multimediaManager = singletonsManager->get<MultimediaManager>();
 	uint32_t width = static_cast<uint32_t>(EngineValues::SCREEN_WIDTH);
@@ -54,8 +54,8 @@ OutlineRendererPPComponent::OutlineRendererPPComponent(PostProcessingComponent* 
 void OutlineRendererPPComponent::onPostRender(uint32_t targetFBO)
 {
 	// OUTLINE
-	this->shaderManager->enableShader(this->outlineShader);
-	this->shaderManager->setInt(this->outlineShader, ShaderVariables::SCREEN_TEXTURE, 0);
+	this->shaderManager->enableShader(this->outlineProgram);
+	this->shaderManager->setInt(this->outlineProgram, ShaderVariables::SCREEN_TEXTURE, 0);
 
 	this->graphicsWrapper->bindFrameBuffer(this->outlinePassFBO);
 	this->graphicsWrapper->activateGUITexture(this->outlineTextureId);
@@ -67,9 +67,9 @@ void OutlineRendererPPComponent::onPostRender(uint32_t targetFBO)
 	// COMBINE
 	this->graphicsWrapper->bindFrameBuffer(targetFBO);
 	this->graphicsWrapper->clearColorBuffer();
-	this->shaderManager->enableShader(this->combineShader);
-	this->shaderManager->setInt(this->combineShader, ShaderVariables::SCREEN_TEXTURE, 0);
-	this->shaderManager->setInt(this->combineShader, "brightnessTexture", 1);
+	this->shaderManager->enableShader(this->combineProgram);
+	this->shaderManager->setInt(this->combineProgram, ShaderVariables::SCREEN_TEXTURE, 0);
+	this->shaderManager->setInt(this->combineProgram, "brightnessTexture", 1);
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();

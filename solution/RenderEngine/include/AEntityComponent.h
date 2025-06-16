@@ -93,6 +93,8 @@ public:
     bool isSaved() const;
     bool isStored() const;
 
+	virtual bool isRenderable() const { return false; }
+
 protected:
     virtual uint16_t getId() = 0;
     virtual void checkAndRefreshId() = 0;

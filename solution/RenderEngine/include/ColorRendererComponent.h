@@ -1,5 +1,6 @@
-#ifndef _COLOR_RENDERER_COMPONENT_H_
-#define _COLOR_RENDERER_COMPONENT_H_
+#pragma once
+
+#include <cstdint>
 
 // ### TRANSFORMAR OS COMPONENTES EM INSTÂNCIA ÚNICA
 // ### RENOMEAR PRA REFERENCIAR OS MESHES
@@ -8,7 +9,6 @@ namespace sre
 
 class ShaderManager;
 class AGraphicsWrapper;
-class Shader;
 
 class ColorRendererComponent
 {
@@ -22,14 +22,12 @@ public:
 protected:
     ColorRendererComponent(ShaderManager* shaderManager, class AGraphicsWrapper* graphicsWrapper);
 
-    virtual void onSceneLoaded(Shader* shader);
-    virtual void setupShaderValues(class MeshComponent* mesh, Shader* shader);
-    virtual void preDraw(Shader* shader);
-    virtual void postDraw(Shader* shader);
+    virtual void onSceneLoaded(uint32_t program);
+    virtual void setupShaderValues(class MeshComponent* mesh, uint32_t program);
+    virtual void preDraw(uint32_t program);
+    virtual void postDraw(uint32_t program);
 
 friend class MeshRenderer;
 };
 
 } // namespace
-
-#endif

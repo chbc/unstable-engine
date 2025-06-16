@@ -29,10 +29,10 @@ void ShadowRenderer::init()
 
 void ShadowRenderer::setupDirectionalLightShader()
 {
-    this->directionalLightDepthShader = this->shaderManager->loadDirectionalLightDepthShader();
+    this->directionalLightDepthProgram = this->shaderManager->loadDirectionalLightDepthShader();
 
-    this->shaderManager->setupUniformLocation(this->directionalLightDepthShader, ShaderVariables::LIGHT_SPACE_MATRIX);
-    this->shaderManager->setupUniformLocation(this->directionalLightDepthShader, ShaderVariables::MODEL_MATRIX);
+    this->shaderManager->setupUniformLocation(this->directionalLightDepthProgram, ShaderVariables::LIGHT_SPACE_MATRIX);
+    this->shaderManager->setupUniformLocation(this->directionalLightDepthProgram, ShaderVariables::MODEL_MATRIX);
 
     glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 20.0f);
 
@@ -59,7 +59,7 @@ void ShadowRenderer::setupDirectionalLightShader()
 
 void ShadowRenderer::setupPointLightShader()
 {
-    this->pointLightDepthShader = this->shaderManager->loadPointLightDepthShader();
+    this->pointLightDepthProgram = this->shaderManager->loadPointLightDepthShader();
 
     for (PointLightComponent *item : this->lightManager->pointLights)
     {
@@ -69,15 +69,15 @@ void ShadowRenderer::setupPointLightShader()
         item->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
     }
 
-    this->shaderManager->setupUniformLocation(this->pointLightDepthShader, ShaderVariables::MODEL_MATRIX);
-    this->shaderManager->setupUniformLocation(this->pointLightDepthShader, ShaderVariables::FAR_PLANE);
-    this->shaderManager->setupUniformLocation(this->pointLightDepthShader, ShaderVariables::LIGHT_POSITION);
+    this->shaderManager->setupUniformLocation(this->pointLightDepthProgram, ShaderVariables::MODEL_MATRIX);
+    this->shaderManager->setupUniformLocation(this->pointLightDepthProgram, ShaderVariables::FAR_PLANE);
+    this->shaderManager->setupUniformLocation(this->pointLightDepthProgram, ShaderVariables::LIGHT_POSITION);
 
     std::string variable;
     for (unsigned int i = 0; i < 6; ++i)
     {
         variable = StringUtils::format(POINT_SHADOW_MATRICES_FORMAT, i);
-        this->shaderManager->setupUniformLocation(this->pointLightDepthShader, variable.c_str());
+        this->shaderManager->setupUniformLocation(this->pointLightDepthProgram, variable.c_str());
     }
 }
 
@@ -103,19 +103,19 @@ void ShadowRenderer::render()
 
 void ShadowRenderer::renderDirectionalLightShadows()
 {
-    this->shaderManager->enableShader(this->directionalLightDepthShader);
+    this->shaderManager->enableShader(this->directionalLightDepthProgram);
 
     for (DirectionalLightComponent *light : this->lightManager->directionalLights)
     {
         this->graphicsWrapper->bindFrameBuffer(light->shadowData->fbo);
         this->graphicsWrapper->clearDepthBuffer();
-        this->shaderManager->setMat4(this->directionalLightDepthShader, ShaderVariables::LIGHT_SPACE_MATRIX, &light->lightSpaceMatrix[0][0]);
+        this->shaderManager->setMat4(this->directionalLightDepthProgram, ShaderVariables::LIGHT_SPACE_MATRIX, &light->lightSpaceMatrix[0][0]);
 
         for (MeshComponent *item : this->items)
         {
             TransformComponent *transform = item->getTransform();
             const glm::mat4& modelMatrix = transform->getMatrix();
-            this->shaderManager->setMat4(this->directionalLightDepthShader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
+            this->shaderManager->setMat4(this->directionalLightDepthProgram, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
             MeshData* mesh = item->mesh;
             this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
@@ -129,7 +129,7 @@ void ShadowRenderer::renderDirectionalLightShadows()
 
 void ShadowRenderer::renderPointLightShadows()
 {
-    this->shaderManager->enableShader(this->pointLightDepthShader);
+    this->shaderManager->enableShader(this->pointLightDepthProgram);
 
     char variable[32];
     for (PointLightComponent *light : this->lightManager->pointLights)
@@ -143,17 +143,17 @@ void ShadowRenderer::renderPointLightShadows()
         for (unsigned int i = 0; i < 6; ++i)
         {
 			std::sprintf(variable, POINT_SHADOW_MATRICES_FORMAT, i);
-            this->shaderManager->setMat4(this->pointLightDepthShader, variable, &this->shadowMatrices[i][0][0]);
+            this->shaderManager->setMat4(this->pointLightDepthProgram, variable, &this->shadowMatrices[i][0][0]);
         }
 
-        this->shaderManager->setFloat(this->pointLightDepthShader, ShaderVariables::FAR_PLANE, light->getRange());
-        this->shaderManager->setVec3(this->pointLightDepthShader, ShaderVariables::LIGHT_POSITION, &lightPosition[0]);
+        this->shaderManager->setFloat(this->pointLightDepthProgram, ShaderVariables::FAR_PLANE, light->getRange());
+        this->shaderManager->setVec3(this->pointLightDepthProgram, ShaderVariables::LIGHT_POSITION, &lightPosition[0]);
 
         for (MeshComponent *item : this->items)
         {
             TransformComponent *transform = item->getTransform();
             glm::mat4 modelMatrix = transform->getMatrix();
-            this->shaderManager->setMat4(this->pointLightDepthShader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
+            this->shaderManager->setMat4(this->pointLightDepthProgram, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
             MeshData* mesh = item->mesh;
             this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);

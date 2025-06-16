@@ -56,6 +56,16 @@ bool Bounds::intersects(const Ray& ray, const glm::vec3& worldPosition, float& d
 	return result;
 }
 
+void Bounds::add(const Bounds& other)
+{
+	this->min = glm::min(this->min, other.min);
+	this->max = glm::max(this->max, other.max);
+	this->center = (this->min + this->max) * 0.5f;
+	this->extents = (this->max - this->min) * 0.5f;
+	this->size = this->extents * 2.0f;
+	this->fixVertices();
+}
+
 void Bounds::fixVertices()
 {
 	if (this->max.x - this->min.x < 0.0001f)

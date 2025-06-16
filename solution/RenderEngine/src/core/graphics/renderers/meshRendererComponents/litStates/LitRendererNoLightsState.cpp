@@ -3,9 +3,9 @@
 namespace sre
 {
 
-void LitRendererNoLightsState::onSceneLoaded(ShaderManager *shaderManager, Shader *shader) { }
+void LitRendererNoLightsState::onSceneLoaded(ShaderManager *shaderManager, uint32_t program) { }
 
-void LitRendererNoLightsState::setupShaderValues(ShaderManager *shaderManager, MeshComponent *mesh, Shader *shader) { }
+void LitRendererNoLightsState::setupShaderValues(ShaderManager *shaderManager, MeshComponent *mesh, uint32_t program) { }
 
 void LitRendererNoLightsState::preDraw(AGraphicsWrapper *graphicsWrapper) { }
 

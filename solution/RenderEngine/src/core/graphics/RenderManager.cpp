@@ -246,11 +246,6 @@ void RenderManager::render()
         this->guiRenderer->render();
 }
 
-void RenderManager::renderDebug()
-{
-
-}
-
 void RenderManager::DEBUG_drawTriangle()
 {
 /*
@@ -291,6 +286,7 @@ void RenderManager::cleanUp()
 {
     this->cleanUpMeshes();
     this->cleanUpGui();
+    this->cleanUpDebug();
 
     this->lightManager->clean();
 
@@ -305,10 +301,18 @@ void RenderManager::cleanUpMeshes()
 
 void RenderManager::cleanUpGui()
 {
-	if (this->guiRenderer.get() != nullptr)
+	if (this->guiRenderer)
 	{
 		this->guiRenderer.reset();
 	}
+}
+
+void RenderManager::cleanUpDebug()
+{
+    if (this->debugRenderer)
+    {
+        this->debugRenderer.reset();
+    }
 }
 
 void RenderManager::setTargetFBO(uint32_t fbo)

@@ -1,5 +1,4 @@
-#ifndef _DOF_RENDERER_COMPONENT_H_
-#define _DOF_RENDERER_COMPONENT_H_
+#pragma once
 
 #include "APostProcessingRendererComponent.h"
 #include "memory_aliases.h"
@@ -14,8 +13,7 @@ private:
 	class AGraphicsWrapper* graphicsWrapper;
 	UPTR<struct MeshData2D> meshData;
 
-	class Shader* depthShader;
-	class Shader* shader;
+	uint32_t program;
 	
 	uint32_t initialPassTextureId;
 	uint32_t brightnessTextureId;
@@ -33,5 +31,3 @@ friend class PostProcessingRenderer;
 };
 
 }  // namespace
-
-#endif

@@ -13,8 +13,8 @@ private:
 	class AGraphicsWrapper* graphicsWrapper;
 	UPTR<struct MeshData2D> meshData;
 
-	class Shader* blurShader;
-	class Shader* combineShader;
+	uint32_t blurProgram;
+	uint32_t combineProgram;
 	
 	uint32_t initialPassTextureId;
 	uint32_t brightnessTextureId;

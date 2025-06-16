@@ -8,15 +8,15 @@
 namespace sre
 {
 
-void LitRendererLightsState::onSceneLoaded(ShaderManager *shaderManager, Shader *shader)
+void LitRendererLightsState::onSceneLoaded(ShaderManager *shaderManager, uint32_t program)
 {
-    shaderManager->setupUniformLocation(shader, ShaderVariables::SHININESS);
+    shaderManager->setupUniformLocation(program, ShaderVariables::SHININESS);
 }
 
-void LitRendererLightsState::setupShaderValues(ShaderManager *shaderManager, MeshComponent *mesh, Shader *shader)
+void LitRendererLightsState::setupShaderValues(ShaderManager *shaderManager, MeshComponent *mesh, uint32_t program)
 {
     LitMaterialComponent *litComponent = mesh->getMaterial()->getComponent<LitMaterialComponent>();
-    shaderManager->setFloat(shader, ShaderVariables::SHININESS, litComponent->getShininess());
+    shaderManager->setFloat(program, ShaderVariables::SHININESS, litComponent->getShininess());
 }
 
 void LitRendererLightsState::preDraw(AGraphicsWrapper *graphicsWrapper)

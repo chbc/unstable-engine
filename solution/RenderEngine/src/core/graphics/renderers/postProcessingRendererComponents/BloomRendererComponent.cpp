@@ -18,11 +18,11 @@ BloomRendererComponent::BloomRendererComponent(PostProcessingComponent* componen
 	this->graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
 	this->shaderManager = singletonsManager->get<ShaderManager>();
 
-	this->blurShader = this->shaderManager->loadPostProcessingShader(component);
-	this->shaderManager->setupUniformLocation(this->blurShader, ShaderVariables::SCREEN_TEXTURE);
-	this->shaderManager->setupUniformLocation(this->blurShader, "horizontal");
-	this->shaderManager->setupUniformLocation(this->blurShader, "textureSize");
-	this->combineShader = this->shaderManager->loadFinalPassPostProcessingShader(component);
+	this->blurProgram = this->shaderManager->loadPostProcessingShader(component);
+	this->shaderManager->setupUniformLocation(this->blurProgram, ShaderVariables::SCREEN_TEXTURE);
+	this->shaderManager->setupUniformLocation(this->blurProgram, "horizontal");
+	this->shaderManager->setupUniformLocation(this->blurProgram, "textureSize");
+	this->combineProgram = this->shaderManager->loadFinalPassPostProcessingShader(component);
 
 	MultimediaManager* multimediaManager = singletonsManager->get<MultimediaManager>();
 	uint32_t width = static_cast<uint32_t>(EngineValues::SCREEN_WIDTH);
@@ -61,8 +61,8 @@ void BloomRendererComponent::onPostRender(uint32_t targetFBO)
 	// BLUR
 	bool firstIteration = true;
 	uint32_t horizontal = 1;
-	this->shaderManager->enableShader(this->blurShader);
-	this->shaderManager->setInt(this->blurShader, ShaderVariables::SCREEN_TEXTURE, 0);
+	this->shaderManager->enableShader(this->blurProgram);
+	this->shaderManager->setInt(this->blurProgram, ShaderVariables::SCREEN_TEXTURE, 0);
 
 	// ###
 	float textureSize[2] = { 1024 * 0.25f, 728 * 0.25f};
@@ -70,8 +70,8 @@ void BloomRendererComponent::onPostRender(uint32_t targetFBO)
 	for (uint32_t i = 0; i < this->blurInteractionsCount; i++)
 	{
 		this->graphicsWrapper->bindFrameBuffer(this->blurFBOs[horizontal]);
-		this->shaderManager->setInt(this->blurShader, "horizontal", horizontal);
-		this->shaderManager->setVec2(this->blurShader, "textureSize", textureSize);
+		this->shaderManager->setInt(this->blurProgram, "horizontal", horizontal);
+		this->shaderManager->setVec2(this->blurProgram, "textureSize", textureSize);
 		uint32_t textureId = firstIteration ? this->brightnessTextureId : this->blurTextureIds[!horizontal];
 		
 		this->graphicsWrapper->activateGUITexture(textureId);
@@ -99,9 +99,9 @@ void BloomRendererComponent::onPostRender(uint32_t targetFBO)
 	// COMBINE
 	this->graphicsWrapper->bindFrameBuffer(targetFBO);
 	this->graphicsWrapper->clearColorBuffer();
-	this->shaderManager->enableShader(this->combineShader);
-	this->shaderManager->setInt(this->combineShader, ShaderVariables::SCREEN_TEXTURE, 0);
-	this->shaderManager->setInt(this->combineShader, "bloom", 1);
+	this->shaderManager->enableShader(this->combineProgram);
+	this->shaderManager->setInt(this->combineProgram, ShaderVariables::SCREEN_TEXTURE, 0);
+	this->shaderManager->setInt(this->combineProgram, "bloom", 1);
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();

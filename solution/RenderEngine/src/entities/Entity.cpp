@@ -5,6 +5,7 @@
 #include "EditorMessages.h"
 #include "SingletonsManager.h"
 #include "BoolEditorProperty.h"
+#include "ARenderableComponent.h"
 
 namespace sre
 {
@@ -92,6 +93,19 @@ bool Entity::isEnabled() const
 const char* Entity::getClassName() const
 {
 	return BASE_CLASS_NAME;
+}
+
+void Entity::getBounds(Bounds& bounds) const
+{
+	for (const auto& item : this->componentsMap)
+	{
+		if (item.second->isEnabled() && item.second->isRenderable())
+		{
+			ARenderableComponent* renderableComponent = static_cast<ARenderableComponent*>(item.second.get());
+			const Bounds& componentBounds = renderableComponent->getBounds();
+			bounds.add(componentBounds);
+		}
+	}
 }
 
 bool Entity::isStored() const

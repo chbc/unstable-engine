@@ -1,5 +1,4 @@
-#ifndef _NORMAL_RENDERER_COMPONENT_H_
-#define _NORMAL_RENDERER_COMPONENT_H_
+#pragma once
 
 #include "DiffuseRendererComponent.h"
 
@@ -11,14 +10,12 @@ class NormalRendererComponent : public DiffuseRendererComponent
 protected:
     NormalRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-    void onSceneLoaded(class Shader *shader) override;
-    void setupShaderValues(class MeshComponent *mesh, class Shader *shader) override;
-    void preDraw(Shader* shader) override;
-    void postDraw(Shader* shader) override;
+    void onSceneLoaded(uint32_t program) override;
+    void setupShaderValues(class MeshComponent *mesh, uint32_t program) override;
+    void preDraw(uint32_t program) override;
+    void postDraw(uint32_t program) override;
 
 friend class MeshRenderer;
 };
 
 } // namespace
-
-#endif

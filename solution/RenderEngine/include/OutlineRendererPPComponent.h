@@ -1,5 +1,4 @@
-#ifndef _OUTLINE_RENDERER_PP_COMPONENT_H_
-#define _OUTLINE_RENDERER_PP_COMPONENT_H_
+#pragma once
 
 #include "APostProcessingRendererComponent.h"
 #include "memory_aliases.h"
@@ -14,8 +13,8 @@ private:
 	class AGraphicsWrapper* graphicsWrapper;
 	UPTR<struct MeshData2D> meshData;
 
-	class Shader* outlineShader;
-	class Shader* combineShader;
+	uint32_t outlineProgram;
+	uint32_t combineProgram;
 	
 	uint32_t initialPassTextureId;
 	uint32_t colorSourceTextureId;
@@ -33,5 +32,3 @@ friend class PostProcessingRenderer;
 };
 
 }  // namespace
-
-#endif

@@ -19,17 +19,17 @@ GUIRenderer::~GUIRenderer()
     this->guiComponents.clear();
     this->dynamicGuiComponents.clear();
 
-    this->shaderManager->releaseShader(this->shader);
+    this->shaderManager->releaseShader(this->program);
 }
 
 void GUIRenderer::loadShader()
 {
-    this->shader = this->shaderManager->loadGUIShader();
+    this->program = this->shaderManager->loadGUIShader();
 
-    this->shaderManager->setupUniformLocation(this->shader, ShaderVariables::GUI_TEXTURE);
-    this->shaderManager->setupUniformLocation(this->shader, ShaderVariables::MODEL_MATRIX);
-    this->shaderManager->setupAttributeLocation(this->shader, ShaderVariables::IN_POSITION);
-    this->shaderManager->setupAttributeLocation(this->shader, ShaderVariables::IN_TEXTURE_COORDS);
+    this->shaderManager->setupUniformLocation(this->program, ShaderVariables::GUI_TEXTURE);
+    this->shaderManager->setupUniformLocation(this->program, ShaderVariables::MODEL_MATRIX);
+    this->shaderManager->setupAttributeLocation(this->program, ShaderVariables::IN_POSITION);
+    this->shaderManager->setupAttributeLocation(this->program, ShaderVariables::IN_TEXTURE_COORDS);
 }
 
 void GUIRenderer::addGUIComponent(GUIImageComponent *guiComponent)
@@ -49,8 +49,8 @@ void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
 
 void GUIRenderer::render()
 {
-    this->shaderManager->enableShader(this->shader);
-    this->shaderManager->setInt(this->shader, ShaderVariables::GUI_TEXTURE, ETextureMap::GUI);
+    this->shaderManager->enableShader(this->program);
+    this->shaderManager->setInt(this->program, ShaderVariables::GUI_TEXTURE, ETextureMap::GUI);
 
     this->graphicsWrapper->disableDepthTest();
 
@@ -76,7 +76,7 @@ void GUIRenderer::render()
 
     this->graphicsWrapper->enableDepthTest();
 
-    this->shaderManager->disableVertexAttribute(this->shader, ShaderVariables::IN_TEXTURE_COORDS);
+    this->shaderManager->disableVertexAttribute(this->program, ShaderVariables::IN_TEXTURE_COORDS);
     this->shaderManager->disableShader();
 }
 
@@ -85,7 +85,7 @@ void GUIRenderer::setup(GUIImageComponent *guiComponent)
     // Matrix setup
     TransformComponent *transform = guiComponent->getTransform();
     glm::mat4 modelMatrix = transform->getMatrix();
-    this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
+    this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
     this->graphicsWrapper->bindVAO(guiComponent->meshData->vao, guiComponent->meshData->vbo);
     this->graphicsWrapper->enableGUISettings();

@@ -70,7 +70,6 @@ private:
     CameraComponent* getCurrentCamera();
 
     void render();
-    void renderDebug();
 
     static void DEBUG_drawTriangle();
 
@@ -79,6 +78,7 @@ private:
     void cleanUp();
     void cleanUpMeshes();
     void cleanUpGui();
+    void cleanUpDebug();
 
     void setTargetFBO(uint32_t fbo);
     void unbindFrameBuffer();

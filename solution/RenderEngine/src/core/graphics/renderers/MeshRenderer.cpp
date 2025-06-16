@@ -70,7 +70,7 @@ MeshRenderer::MeshRenderer(Material *material, ShaderManager *shaderManager, AGr
 
 MeshRenderer::~MeshRenderer()
 {
-    this->shaderManager->releaseShader(this->shader);
+    this->shaderManager->releaseShader(this->program);
 }
 
 void MeshRenderer::init(bool useBrightnessSegmentation, bool includeDepth)
@@ -79,10 +79,10 @@ void MeshRenderer::init(bool useBrightnessSegmentation, bool includeDepth)
     this->loadShader(useBrightnessSegmentation, includeDepth);
 
     for (const auto &item : this->shaderSetupItems)
-        item.second->onSceneLoaded(this->shader);
+        item.second->onSceneLoaded(this->program);
 
     for (const auto &item : this->componentsMap)
-        item.second->onSceneLoaded(this->shader);
+        item.second->onSceneLoaded(this->program);
 }
 
 void MeshRenderer::loadShaderSetupItems()
@@ -120,7 +120,7 @@ void MeshRenderer::loadShaderSetupItems()
 
 void MeshRenderer::loadShader(bool useBrightnessSegmentation, bool includeDepth)
 {
-    this->shader = this->shaderManager->loadShader(
+    this->program = this->shaderManager->loadShader(
 		this->componentsBitset, this->lightData, useBrightnessSegmentation, includeDepth
 	);
 }
@@ -138,10 +138,10 @@ void MeshRenderer::addMesh(MeshComponent * meshComponent)
 void MeshRenderer::render()
 {
     // Shader setup
-    this->shaderManager->enableShader(this->shader);
+    this->shaderManager->enableShader(this->program);
 
     for (const auto &item : this->shaderSetupItems)
-        item.second->setupShaderValues(this->shader);
+        item.second->setupShaderValues(this->program);
 
     for (MeshComponent *mesh : this->meshes)
     {
@@ -150,14 +150,14 @@ void MeshRenderer::render()
             // Matrix setup
             TransformComponent* transform = mesh->getTransform();
             glm::mat4 modelMatrix = transform->getMatrix();
-            this->shaderManager->setMat4(this->shader, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
+            this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
             MeshData* meshData = mesh->mesh;
             this->graphicsWrapper->bindVAO(meshData->vao, meshData->vbo);
             for (const auto& item : this->componentsMap)
             {
-                item.second->setupShaderValues(mesh, this->shader);
-                item.second->preDraw(this->shader);
+                item.second->setupShaderValues(mesh, this->program);
+                item.second->preDraw(this->program);
             }
 
             this->graphicsWrapper->drawElement(meshData->ebo, meshData->indices.size());
@@ -165,7 +165,7 @@ void MeshRenderer::render()
     }
 
     for (const auto &item : this->componentsMap)
-        item.second->postDraw(this->shader);
+        item.second->postDraw(this->program);
 
     this->shaderManager->disableShader();
 }

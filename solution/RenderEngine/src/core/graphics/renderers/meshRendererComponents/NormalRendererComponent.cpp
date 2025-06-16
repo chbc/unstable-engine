@@ -14,18 +14,18 @@ NormalRendererComponent::NormalRendererComponent(ShaderManager *shaderManager, A
     : DiffuseRendererComponent(shaderManager, graphicsWrapper)
 { }
 
-void NormalRendererComponent::onSceneLoaded(Shader *shader)
+void NormalRendererComponent::onSceneLoaded(uint32_t program)
 {
-    this->shaderManager->setupUniformLocation(shader, ShaderVariables::NORMAL_TEXTURE);
+    this->shaderManager->setupUniformLocation(program, ShaderVariables::NORMAL_TEXTURE);
 }
 
-void NormalRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
+void NormalRendererComponent::setupShaderValues(MeshComponent *mesh, uint32_t program)
 {
-    this->shaderManager->setInt(shader, ShaderVariables::NORMAL_TEXTURE, ETextureMap::NORMAL);
+    this->shaderManager->setInt(program, ShaderVariables::NORMAL_TEXTURE, ETextureMap::NORMAL);
     this->textureId = mesh->getMaterial()->getComponent<NormalMaterialComponent>()->getTextureID();
 }
 
-void NormalRendererComponent::preDraw(Shader* shader)
+void NormalRendererComponent::preDraw(uint32_t program)
 {
     this->graphicsWrapper->enableTexCoords();
     this->graphicsWrapper->enableVertexTangents();
@@ -33,7 +33,7 @@ void NormalRendererComponent::preDraw(Shader* shader)
     this->graphicsWrapper->activateNormalTexture(this->textureId);
 }
 
-void NormalRendererComponent::postDraw(Shader* shader)
+void NormalRendererComponent::postDraw(uint32_t program)
 {
     this->graphicsWrapper->disableVertexTangents();
     this->graphicsWrapper->disableVertexBitangents();

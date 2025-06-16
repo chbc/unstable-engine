@@ -1,5 +1,4 @@
-#ifndef _SPRITE_RENDERER_COMPONENT_H_
-#define _SPRITE_RENDERER_COMPONENT_H_
+#pragma once
 
 #include "DiffuseRendererComponent.h"
 
@@ -11,11 +10,9 @@ class SpriteRendererComponent : public DiffuseRendererComponent
 protected:
 	SpriteRendererComponent(ShaderManager* shaderManager, AGraphicsWrapper* graphicsWrapper);
 	
-	void setupShaderValues(MeshComponent* mesh, Shader* shader) override;
+	void setupShaderValues(MeshComponent* mesh, uint32_t program) override;
 
 friend class MeshRenderer;
 };
 	
 } // sre
-
-#endif

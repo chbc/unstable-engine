@@ -1,5 +1,4 @@
-#ifndef _SINGLE_PASS_RENDERER_COMPONENT_H_
-#define _SINGLE_PASS_RENDERER_COMPONENT_H_
+#pragma once
 
 #include "APostProcessingRendererComponent.h"
 #include "memory_aliases.h"
@@ -13,7 +12,7 @@ private:
 	class ShaderManager* shaderManager;
 	class AGraphicsWrapper* graphicsWrapper;
 
-	class Shader* shader;
+	uint32_t program;
 	UPTR<struct MeshData2D> meshData;
 	uint32_t textureId;
 
@@ -27,5 +26,3 @@ friend class PostProcessingRenderer;
 };
 
 }  // namespace
-
-#endif

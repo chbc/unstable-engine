@@ -27,7 +27,7 @@ private:
     std::bitset<EComponentId::SIZE> componentsBitset;
 
     std::list<MeshComponent *> meshes;
-    class Shader *shader = nullptr;
+    uint32_t program{ 0 };
 
     ShaderManager *shaderManager;
     AGraphicsWrapper *graphicsWrapper;

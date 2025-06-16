@@ -15,13 +15,10 @@ class GUIRenderer
 protected:
     std::list<GUIImageComponent *> guiComponents;
     std::list<GUIImageComponent *> dynamicGuiComponents;
-    uint32_t shaderProgram;
+    uint32_t program{ 0 };
 
     ShaderManager* shaderManager{ nullptr };
     AGraphicsWrapper* graphicsWrapper{ nullptr };
-
-private:
-    class Shader *shader;
 
 public:
     ~GUIRenderer();

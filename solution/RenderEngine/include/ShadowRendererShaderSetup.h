@@ -1,6 +1,3 @@
-#ifndef _SHADOW_RENDERER_SHADER_SETUP_H_
-#define _SHADOW_RENDERER_SHADER_SETUP_H_
-
 #include "BaseRendererShaderSetup.h"
 
 namespace sre
@@ -19,12 +16,10 @@ private:
 protected:
     ShadowRendererShaderSetup(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-    void onSceneLoaded(Shader *shader) override;
-    void setupShaderValues(Shader *shader) override;
+    void onSceneLoaded(uint32_t program) override;
+    void setupShaderValues(uint32_t program) override;
 
 friend class MeshRenderer;
 };
 
 } // namespace
-
-#endif

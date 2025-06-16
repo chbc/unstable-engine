@@ -15,24 +15,24 @@ AORendererComponent::AORendererComponent(ShaderManager* shaderManager, AGraphics
 {
 }
 
-void AORendererComponent::onSceneLoaded(Shader* shader)
+void AORendererComponent::onSceneLoaded(uint32_t program)
 {
-    this->shaderManager->setupUniformLocation(shader, ShaderVariables::AO_TEXTURE);
+    this->shaderManager->setupUniformLocation(program, ShaderVariables::AO_TEXTURE);
 }
 
-void AORendererComponent::setupShaderValues(MeshComponent* mesh, Shader* shader)
+void AORendererComponent::setupShaderValues(MeshComponent* mesh, uint32_t program)
 {
-    this->shaderManager->setInt(shader, ShaderVariables::AO_TEXTURE, ETextureMap::AMBIENT_OCCLUSION);
+    this->shaderManager->setInt(program, ShaderVariables::AO_TEXTURE, ETextureMap::AMBIENT_OCCLUSION);
     this->textureId = mesh->getMaterial()->getComponent<AmbientOcclusionMaterialComponent>()->getTextureID();
 }
 
-void AORendererComponent::preDraw(Shader* shader)
+void AORendererComponent::preDraw(uint32_t program)
 {
     this->graphicsWrapper->enableTexCoords();
     this->graphicsWrapper->activateAOTexture(this->textureId);
 }
 
-void AORendererComponent::postDraw(Shader* shader)
+void AORendererComponent::postDraw(uint32_t program)
 {
     this->graphicsWrapper->disableTexCoords();
 }

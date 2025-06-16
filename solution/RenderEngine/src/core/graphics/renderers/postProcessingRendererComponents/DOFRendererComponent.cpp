@@ -18,11 +18,11 @@ DOFRendererComponent::DOFRendererComponent(PostProcessingComponent* component)
 	this->graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
 	this->shaderManager = singletonsManager->get<ShaderManager>();
 
-	this->shader = this->shaderManager->loadPostProcessingShader(component);
-	this->shaderManager->setupUniformLocation(shader, ShaderVariables::SCREEN_TEXTURE);
-	this->shaderManager->setupUniformLocation(shader, "depthMap");
-	this->shaderManager->setupUniformLocation(shader, "focusNear");
-	this->shaderManager->setupUniformLocation(shader, "focusFar");
+	this->program = this->shaderManager->loadPostProcessingShader(component);
+	this->shaderManager->setupUniformLocation(program, ShaderVariables::SCREEN_TEXTURE);
+	this->shaderManager->setupUniformLocation(program, "depthMap");
+	this->shaderManager->setupUniformLocation(program, "focusNear");
+	this->shaderManager->setupUniformLocation(program, "focusFar");
 
 	MultimediaManager* multimediaManager = singletonsManager->get<MultimediaManager>();
 	uint32_t width = static_cast<uint32_t>(EngineValues::SCREEN_WIDTH);
@@ -51,11 +51,11 @@ void DOFRendererComponent::onPostRender(uint32_t targetFBO)
 {
 	this->graphicsWrapper->bindFrameBuffer(targetFBO);
 	this->graphicsWrapper->clearColorBuffer();
-	this->shaderManager->enableShader(this->shader);
-	this->shaderManager->setInt(this->shader, ShaderVariables::SCREEN_TEXTURE, 0);
-	this->shaderManager->setInt(this->shader, "depthMap", 1);
-	this->shaderManager->setFloat(this->shader, "focusNear", 10.0f);
-	this->shaderManager->setFloat(this->shader, "focusFar", 15.0f);
+	this->shaderManager->enableShader(this->program);
+	this->shaderManager->setInt(this->program, ShaderVariables::SCREEN_TEXTURE, 0);
+	this->shaderManager->setInt(this->program, "depthMap", 1);
+	this->shaderManager->setFloat(this->program, "focusNear", 10.0f);
+	this->shaderManager->setFloat(this->program, "focusFar", 15.0f);
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();

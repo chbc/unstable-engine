@@ -1,5 +1,4 @@
-#ifndef _LIT_COLOR_RENDERER_COMPONENT_H_
-#define _LIT_COLOR_RENDERER_COMPONENT_H_
+#pragma once
 
 #include "ColorRendererComponent.h"
 #include "LitRendererLightsState.h"
@@ -16,14 +15,12 @@ private:
 protected:
     LitRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper, bool hasLight);
 
-    virtual void onSceneLoaded(Shader *shader) override;
-    virtual void setupShaderValues(class MeshComponent *mesh, Shader *shader) override;
-    virtual void preDraw(Shader* shader) override;
-    virtual void postDraw(Shader* shader) override;
+    virtual void onSceneLoaded(uint32_t program) override;
+    virtual void setupShaderValues(class MeshComponent *mesh, uint32_t program) override;
+    virtual void preDraw(uint32_t program) override;
+    virtual void postDraw(uint32_t program) override;
 
     friend class MeshRenderer;
 };
 
 } // namespace
-
-#endif

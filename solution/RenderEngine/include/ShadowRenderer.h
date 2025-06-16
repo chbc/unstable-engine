@@ -14,8 +14,8 @@ private:
     class LightManager* lightManager;
     class TextureCreator* textureCreator;
 
-    class Shader *pointLightDepthShader;
-    class Shader *directionalLightDepthShader;
+    uint32_t pointLightDepthProgram;
+    uint32_t directionalLightDepthProgram;
 
     glm::mat4 shadowMatrices[6];
     const char *POINT_SHADOW_MATRICES_FORMAT = "pointShadowMatrices[%d]";

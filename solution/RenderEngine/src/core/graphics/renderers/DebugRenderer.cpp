@@ -12,7 +12,10 @@ DebugRenderer::DebugRenderer(ShaderManager* shaderManager, AGraphicsWrapper* gra
 
 DebugRenderer::~DebugRenderer()
 {
-	this->shaderManager->releaseShader(this->shader);
+	if (this->shaderManager != nullptr)
+	{
+		this->shaderManager->releaseShader(this->program);
+	}
 }
 
 void DebugRenderer::addBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color)
@@ -37,12 +40,9 @@ void DebugRenderer::addBox(const glm::vec3& position, const glm::vec3& size, con
 
     std::vector<unsigned int> indicesData =
     {
-        0, 1, 2,    2, 3, 0, // front
-		4, 5, 6,	6, 7, 4, // back
-		3, 2, 6,    6, 7, 3, // top
-		0, 4, 5,    5, 1, 0, // bottom
-        1, 5, 6,    6, 2, 1, // right
-        4, 0, 3,    3, 7, 4  // left
+        0, 1, 1, 2, 2, 3, 3, 0, // Front
+        4, 5, 5, 6, 6, 7, 7, 4, // Back
+        0, 4, 1, 5, 2, 6, 3, 7
     };
 
 	for (const glm::vec3& item : verticesData)
@@ -63,10 +63,10 @@ void DebugRenderer::addBox(const glm::vec3& position, const glm::vec3& size, con
 
 void DebugRenderer::loadShader()
 {
-    this->shader = this->shaderManager->loadDebugShader();
-    this->shaderManager->setupAttributeLocation(this->shader, ShaderVariables::IN_POSITION);
-    this->shaderManager->setupUniformLocation(shader, ShaderVariables::VIEW_MATRIX);
-    this->shaderManager->setupUniformLocation(shader, ShaderVariables::PROJECTION_MATRIX);
+    this->program = this->shaderManager->loadDebugShader();
+    this->shaderManager->setupAttributeLocation(this->program, ShaderVariables::IN_POSITION);
+    this->shaderManager->setupUniformLocation(this->program, ShaderVariables::VIEW_MATRIX);
+    this->shaderManager->setupUniformLocation(this->program, ShaderVariables::PROJECTION_MATRIX);
 }
 
 void DebugRenderer::render(CameraComponent* camera)
@@ -74,8 +74,10 @@ void DebugRenderer::render(CameraComponent* camera)
     const glm::mat4& viewMatrix = camera->getViewMatrix();
     const glm::mat4& projectionMatrix = camera->getProjectionMatrix();
 
-    this->shaderManager->setMat4(shader, ShaderVariables::VIEW_MATRIX, &viewMatrix[0][0]);
-    this->shaderManager->setMat4(shader, ShaderVariables::PROJECTION_MATRIX, &projectionMatrix[0][0]);
+	this->shaderManager->enableShader(this->program);
+
+    this->shaderManager->setMat4(this->program, ShaderVariables::VIEW_MATRIX, &viewMatrix[0][0]);
+	this->shaderManager->setMat4(this->program, ShaderVariables::PROJECTION_MATRIX, &projectionMatrix[0][0]);
 
 	for (const UPTR<ColorMeshData>& item : this->meshes)
 	{

@@ -1,18 +1,18 @@
-#ifndef _LIT_RENDERER_NO_LIGHTS_STATE_H_
-#define _LIT_RENDERER_NO_LIGHTS_STATE_H_
+#pragma once
+
+#include <cstdint>
 
 namespace sre
 {
 
-class Shader;
 class ShaderManager;
 class AGraphicsWrapper;
 
 class LitRendererNoLightsState
 {
 private:
-    virtual void onSceneLoaded(ShaderManager *shaderManager, Shader *shader);
-    virtual void setupShaderValues(ShaderManager *shaderManager, class MeshComponent *mesh, Shader *shader);
+    virtual void onSceneLoaded(ShaderManager *shaderManager, uint32_t program);
+    virtual void setupShaderValues(ShaderManager *shaderManager, class MeshComponent *mesh, uint32_t program);
     virtual void preDraw(AGraphicsWrapper *graphicsWrapper);
     virtual void postDraw(AGraphicsWrapper *graphicsWrapper);
 
@@ -20,6 +20,3 @@ friend class LitRendererComponent;
 };
 
 } // namespace
-
-
-#endif

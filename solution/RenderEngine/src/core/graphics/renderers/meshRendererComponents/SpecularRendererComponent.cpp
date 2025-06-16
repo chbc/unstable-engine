@@ -14,24 +14,24 @@ SpecularRendererComponent::SpecularRendererComponent(ShaderManager *shaderManage
     : DiffuseRendererComponent(shaderManager, graphicsWrapper)
 { }
 
-void SpecularRendererComponent::onSceneLoaded(Shader *shader)
+void SpecularRendererComponent::onSceneLoaded(uint32_t program)
 {
-    this->shaderManager->setupUniformLocation(shader, ShaderVariables::SPECULAR_TEXTURE);
+    this->shaderManager->setupUniformLocation(program, ShaderVariables::SPECULAR_TEXTURE);
 }
 
-void SpecularRendererComponent::setupShaderValues(MeshComponent *mesh, Shader *shader)
+void SpecularRendererComponent::setupShaderValues(MeshComponent *mesh, uint32_t program)
 {
-    this->shaderManager->setInt(shader, ShaderVariables::SPECULAR_TEXTURE, ETextureMap::SPECULAR);
+    this->shaderManager->setInt(program, ShaderVariables::SPECULAR_TEXTURE, ETextureMap::SPECULAR);
     this->textureId = mesh->getMaterial()->getComponent<SpecularMaterialComponent>()->getTextureID();
 }
 
-void SpecularRendererComponent::preDraw(Shader* shader)
+void SpecularRendererComponent::preDraw(uint32_t program)
 {
     this->graphicsWrapper->enableTexCoords();
     this->graphicsWrapper->activateSpecularTexture(this->textureId);
 }
 
-void SpecularRendererComponent::postDraw(Shader* shader)
+void SpecularRendererComponent::postDraw(uint32_t program)
 {
     this->graphicsWrapper->disableTexCoords();
 }

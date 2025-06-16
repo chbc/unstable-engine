@@ -18,7 +18,7 @@ class DebugRenderer
 private:
 	ShaderManager* shaderManager{ nullptr };
 	AGraphicsWrapper* graphicsWrapper{ nullptr };
-	class Shader* shader{ nullptr };
+	uint32_t program;
 	std::vector<UPTR<ColorMeshData>> meshes;
 
 private:

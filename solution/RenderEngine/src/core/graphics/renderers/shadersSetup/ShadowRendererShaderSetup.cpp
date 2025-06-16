@@ -15,26 +15,26 @@ ShadowRendererShaderSetup::ShadowRendererShaderSetup(ShaderManager *shaderManage
     this->lightManager = SingletonsManager::getInstance()->get<LightManager>();
 }
 
-void ShadowRendererShaderSetup::onSceneLoaded(Shader *shader)
+void ShadowRendererShaderSetup::onSceneLoaded(uint32_t program)
 {
     char variable[32];
     for (uint32_t i = 0; i < this->lightManager->directionalLights.size(); i++)
     {
         std::sprintf(variable, DIRECTIONAL_SHADOW_MAPS_FORMAT, i);
-        this->shaderManager->setupUniformLocation(shader, variable);
+        this->shaderManager->setupUniformLocation(program, variable);
 
         std::sprintf(variable, DIRECTIONAL_LIGHT_SPACE_FORMAT, i);
-        this->shaderManager->setupUniformLocation(shader, variable);
+        this->shaderManager->setupUniformLocation(program, variable);
     }
 
     for (uint32_t i = 0; i < this->lightManager->pointLights.size(); i++)
     {
         std::sprintf(variable, POINT_SHADOW_MAPS_FORMAT, i);
-        this->shaderManager->setupUniformLocation(shader, variable);
+        this->shaderManager->setupUniformLocation(program, variable);
     }
 }
 
-void ShadowRendererShaderSetup::setupShaderValues(Shader *shader)
+void ShadowRendererShaderSetup::setupShaderValues(uint32_t program)
 {
     char variable[32];
 
@@ -45,10 +45,10 @@ void ShadowRendererShaderSetup::setupShaderValues(Shader *shader)
         this->graphicsWrapper->activateShadowMapTexture(light->shadowData->textureId, light->shadowData->textureUnit);
 
         std::sprintf(variable, DIRECTIONAL_SHADOW_MAPS_FORMAT, i);
-        this->shaderManager->setInt(shader, variable, light->shadowData->textureUnit);
+        this->shaderManager->setInt(program, variable, light->shadowData->textureUnit);
 
         std::sprintf(variable, DIRECTIONAL_LIGHT_SPACE_FORMAT, i);
-        this->shaderManager->setMat4(shader, variable, &light->lightSpaceMatrix[0][0]);
+        this->shaderManager->setMat4(program, variable, &light->lightSpaceMatrix[0][0]);
     }
 
     for (uint32_t i = 0; i < this->lightManager->pointLights.size(); i++)
@@ -57,7 +57,7 @@ void ShadowRendererShaderSetup::setupShaderValues(Shader *shader)
         this->graphicsWrapper->activateShadowMapTexture(light->shadowData->textureId, light->shadowData->textureUnit, true);
 
         std::sprintf(variable, POINT_SHADOW_MAPS_FORMAT, i);
-        this->shaderManager->setInt(shader, variable, light->shadowData->textureUnit);
+        this->shaderManager->setInt(program, variable, light->shadowData->textureUnit);
     }
 }
 

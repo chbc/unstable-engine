@@ -137,9 +137,12 @@ void EditorSceneViewport::tryPickEntity(float viewportWidth, float viewportHeigh
 
 		if (pickedEntity != nullptr)
 		{
+			Bounds bounds;
+			pickedEntity->getBounds(bounds);
+
 			this->renderManager->addDebugBox(
-				pickedEntity->getTransform()->getPosition(),
-				glm::vec3{ 2.0f, 2.0f, 2.0f },
+				pickedEntity->getTransform()->getPosition() + bounds.center,
+				bounds.size,
 				glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }
 			);
 		}

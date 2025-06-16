@@ -18,8 +18,8 @@ SinglePassRendererComponent::SinglePassRendererComponent(PostProcessingComponent
 	this->graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
 	this->shaderManager = singletonsManager->get<ShaderManager>();
 
-	this->shader = this->shaderManager->loadPostProcessingShader(component);
-	this->shaderManager->setupUniformLocation(shader, ShaderVariables::SCREEN_TEXTURE);
+	this->program = this->shaderManager->loadPostProcessingShader(component);
+	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::SCREEN_TEXTURE);
 
 	MultimediaManager* multimediaManager = singletonsManager->get<MultimediaManager>();
 	uint32_t width = static_cast<uint32_t>(EngineValues::SCREEN_WIDTH);
@@ -46,8 +46,8 @@ void SinglePassRendererComponent::onPostRender(uint32_t targetFBO)
 {
 	this->graphicsWrapper->bindFrameBuffer(targetFBO);
 	this->graphicsWrapper->clearColorBuffer();
-	this->shaderManager->enableShader(this->shader);
-	this->shaderManager->setInt(this->shader, ShaderVariables::SCREEN_TEXTURE, ETextureMap::GUI);
+	this->shaderManager->enableShader(this->program);
+	this->shaderManager->setInt(this->program, ShaderVariables::SCREEN_TEXTURE, ETextureMap::GUI);
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();

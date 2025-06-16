@@ -1,5 +1,4 @@
-#ifndef _OUTLINE_RENDERER_COMPONENT_H_
-#define _OUTLINE_RENDERER_COMPONENT_H_
+#pragma once
 
 #include "ColorRendererComponent.h"
 
@@ -8,7 +7,6 @@ namespace sre
 
 class ShaderManager;
 class AGraphicsWrapper;
-class Shader;
 
 class OutlineRendererComponent : public ColorRendererComponent
 {
@@ -16,14 +14,12 @@ class OutlineRendererComponent : public ColorRendererComponent
 protected:
     OutlineRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
-    virtual void onSceneLoaded(Shader *shader) override;
-    virtual void setupShaderValues(class MeshComponent *mesh, Shader *shader) override;
-    virtual void preDraw(Shader* shader) override;
-    virtual void postDraw(Shader* shader) override;
+    virtual void onSceneLoaded(uint32_t program) override;
+    virtual void setupShaderValues(class MeshComponent *mesh, uint32_t program) override;
+    virtual void preDraw(uint32_t program) override;
+    virtual void postDraw(uint32_t program) override;
 
 friend class MeshRenderer;
 };
 
 } // namespace
-
-#endif
