@@ -1,5 +1,4 @@
-#ifndef _GLSL_SHADER_API_H_
-#define _GLSL_SHADER_API_H_
+#pragma once
 
 #include <bitset>
 
@@ -50,6 +49,7 @@ private:
     }
 
     Shader* loadGUIShader();
+    Shader* loadDebugShader();
     Shader* loadPointLightDepthShader();
     Shader* loadDirectionalLightDepthShader();
 	Shader* loadPostProcessingShader(class PostProcessingComponent* component);
@@ -86,6 +86,7 @@ friend class SingletonsManager;
 
 friend class MeshRenderer;
 friend class GUIRenderer;
+friend class DebugRenderer;
 friend class ColorRendererComponent;
 friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;
@@ -111,5 +112,3 @@ friend class OutlineRendererPPComponent;
 };
 
 } // namespace
-
-#endif

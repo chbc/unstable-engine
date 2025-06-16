@@ -16,12 +16,18 @@ private:
 
 protected:
     void init() override;
-    void createVAO(MeshData* meshData) override;
-    void createEBO(MeshData* meshData) override;
-    void createGUIVAO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) override;
-    void createGUIEBO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) override;
+    void createBuffers(MeshData* meshData) override;
+    void createBuffers(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) override;
+    void createBuffers(ColorMeshData* meshData) override;
+    void createVAO(MeshData* meshData);
+    void createEBO(MeshData* meshData);
+    void createVAO(ColorMeshData* meshData);
+    void createEBO(ColorMeshData* meshData);
+    void createVAO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic);
+    void createEBO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic);
 
     void bindVAO(uint32_t vao, uint32_t vbo) override;
+    void enableColorMeshSettings() override;
     void enableGUISettings() override;
 	void enablePostProcessingSettings() override;
     void enableVertexPositions() override;
@@ -39,7 +45,7 @@ protected:
 
     void setupBufferSubData(MeshData2D* meshData) override;
 
-    void drawElement(uint32_t indicesId, size_t indicesSize) override;
+    void drawElement(uint32_t indicesId, size_t indicesSize, EDrawMode::Type drawMode = EDrawMode::TRIANGLES) override;
 
     void disableVertexAttribute(int location) override;
     void enableDepthTest() override;
@@ -51,6 +57,7 @@ protected:
     void disableVertexTangents() override;
     void disableVertexBitangents() override;
     void disableGUISettings() override;
+    void disableColorMeshSettings() override;
 	void disablePostProcessingSettings() override;
 
 	void clearColorBuffer() override;

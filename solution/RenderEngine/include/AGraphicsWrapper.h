@@ -11,21 +11,35 @@ struct VertexData2D;
 struct AMeshData;
 struct MeshData;
 struct MeshData2D;
+struct ColorMeshData;
+
+namespace EDrawMode
+{
+    enum Type : uint32_t
+    {
+        POINTS = 0,
+        LINES = 1,
+        LINE_LOOP = 2,
+        LINE_STRIP = 3,
+        TRIANGLES = 4,
+        TRIANGLE_STRIP = 5,
+        TRIANGLE_FAN = 6
+    };
+} // namespace EDrawMode
 
 class AGraphicsWrapper : ASingleton
 {
 protected:
     AGraphicsWrapper() {}
 
-    virtual void createVAO(MeshData* meshData) =0;
-    virtual void createEBO(MeshData* meshData) =0;
-    virtual void createGUIVAO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) =0;
-    virtual void createGUIEBO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) =0;
-
+    virtual void createBuffers(MeshData* meshData) = 0;
+    virtual void createBuffers(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) = 0;
+    virtual void createBuffers(ColorMeshData* meshData) = 0;
     virtual void bindVAO(uint32_t vao, uint32_t vbo) =0;
 
     // XXX APAGAR
     virtual void enableGUISettings() =0;
+    virtual void enableColorMeshSettings() = 0;
 	virtual void enablePostProcessingSettings() = 0;
     virtual void enableVertexPositions() =0;
     virtual void enableVertexNormals() =0;
@@ -42,7 +56,7 @@ protected:
 
     virtual void setupBufferSubData(MeshData2D* meshData) =0;
 
-    virtual void drawElement(uint32_t indicesId, size_t indicesSize) = 0;
+    virtual void drawElement(uint32_t indicesId, size_t indicesSize, EDrawMode::Type drawMode = EDrawMode::TRIANGLES) = 0;
 
     virtual void disableVertexAttribute(int location) = 0;
     virtual void enableDepthTest() = 0;
@@ -55,6 +69,7 @@ protected:
     virtual void disableVertexTangents() =0;
     virtual void disableVertexBitangents() =0;
     virtual void disableGUISettings() =0;
+    virtual void disableColorMeshSettings() = 0;
 	virtual void disablePostProcessingSettings() =0;
 
 	virtual void clearColorBuffer() =0;
@@ -106,6 +121,7 @@ friend class ABaseMeshLoader;
 
 friend class MeshRenderer;
 friend class GUIRenderer;
+friend class DebugRenderer;
 friend class ShadowRenderer;
 friend class PostProcessingRenderer;
 friend class ColorRendererComponent;

@@ -13,6 +13,7 @@
 #include "MeshRenderer.h"
 #include "PostProcessingRenderer.h"
 #include "GUIRenderer.h"
+#include "DebugRenderer.h"
 #include "ShadowRenderer.h"
 #include "CollectionsUtils.h"
 
@@ -139,6 +140,17 @@ void RenderManager::addDynamicGUIComponent(GUIImageComponent *guiComponent)
     this->guiRenderer->addDynamicGUIComponent(guiComponent);
 }
 
+void RenderManager::addDebugBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color)
+{
+	if (!this->debugRenderer)
+	{
+		this->debugRenderer = SPTR<DebugRenderer>{ new DebugRenderer{this->shaderManager, this->graphicsWrapper} };
+		this->debugRenderer->loadShader();
+	}
+
+	this->debugRenderer->addBox(position, size, color);
+}
+
 void RenderManager::initGUIRenderer()
 {
     if (!this->guiRenderer)
@@ -225,9 +237,18 @@ void RenderManager::render()
 	if (this->postProcessingRenderer.get() != nullptr)
 		this->postProcessingRenderer->onPostRender(this->targetFBO);
 
+    // Debug rendering
+	if (this->debugRenderer.get() != nullptr)
+		this->debugRenderer->render(this->currentCamera);
+
     // GUI rendering
     if (this->guiRenderer.get() != nullptr)
         this->guiRenderer->render();
+}
+
+void RenderManager::renderDebug()
+{
+
 }
 
 void RenderManager::DEBUG_drawTriangle()

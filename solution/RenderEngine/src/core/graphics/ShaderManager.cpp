@@ -31,6 +31,17 @@ Shader *ShaderManager::loadGUIShader()
     return this->loadShader(vertexContent, fragmentContent);
 }
 
+Shader* ShaderManager::loadDebugShader()
+{
+    std::string vertexContent;
+    std::string fragmentContent;
+
+    ShaderContentFactory contentFactory;
+    contentFactory.createDebugShaderContent(vertexContent, fragmentContent);
+
+    return this->loadShader(vertexContent, fragmentContent);
+}
+
 Shader *ShaderManager::loadPointLightDepthShader()
 {
     std::string vertexContent;
@@ -193,6 +204,17 @@ void ShaderManager::releaseShader(Shader* shader)
     if (shader != nullptr)
     {
         this->graphicsWrapper->releaseShader(shader->program, shader->components);
+        
+        auto it = std::find_if
+        (
+            this->shaders.begin(), this->shaders.end(),
+            [shader](const UPTR<Shader>& item) { return item->program == shader->program; }
+        );
+
+		if (it != this->shaders.end())
+		{
+			this->shaders.erase(it);
+		}
     }
 }
 

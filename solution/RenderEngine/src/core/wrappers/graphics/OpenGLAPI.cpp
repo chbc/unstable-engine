@@ -46,6 +46,24 @@ void OpenGLAPI::init()
 	glEnable(GL_BLEND);
 }
 
+void OpenGLAPI::createBuffers(MeshData* meshData)
+{
+	this->createVAO(meshData);
+	this->createEBO(meshData);
+}
+
+void OpenGLAPI::createBuffers(MeshData2D* meshData, uint32_t maxItems, bool isDynamic)
+{
+	this->createVAO(meshData, maxItems, isDynamic);
+	this->createEBO(meshData, maxItems, isDynamic);
+}
+
+void OpenGLAPI::createBuffers(ColorMeshData* meshData)
+{
+	this->createVAO(meshData);
+	this->createEBO(meshData);
+}
+
 void OpenGLAPI::createVAO(MeshData* meshData)
 {
 	// data
@@ -71,7 +89,32 @@ void OpenGLAPI::createEBO(MeshData* meshData)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &meshData->indices[0], GL_STATIC_DRAW);
 }
 
-void OpenGLAPI::createGUIVAO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic)
+void OpenGLAPI::createVAO(ColorMeshData* meshData)
+{
+	// data
+	size_t dataSize = meshData->vertexData.size();
+
+	// VAO
+	glGenVertexArrays(1, &meshData->vao);
+	glBindVertexArray(meshData->vao);
+
+	// VBO
+	glGenBuffers(1, &meshData->vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, meshData->vbo);
+	glBufferData(GL_ARRAY_BUFFER, dataSize * sizeof(std::vector<glm::vec3>), &meshData->vertexData[0], GL_STATIC_DRAW);
+}
+
+void OpenGLAPI::createEBO(ColorMeshData* meshData)
+{
+	// EBO
+	glGenBuffers(1, &meshData->ebo);
+	size_t size = meshData->indices.size();
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(uint32_t), &meshData->indices[0], GL_STATIC_DRAW);
+}
+
+void OpenGLAPI::createVAO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic)
 {
 	void* data = nullptr;
 	size_t size = maxItems * 4;
@@ -95,7 +138,7 @@ void OpenGLAPI::createGUIVAO(MeshData2D* meshData, uint32_t maxItems, bool isDyn
 	glBufferData(GL_ARRAY_BUFFER, size * sizeof(VertexData2D), data, usage);
 }
 
-void OpenGLAPI::createGUIEBO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic)
+void OpenGLAPI::createEBO(MeshData2D* meshData, uint32_t maxItems, bool isDynamic)
 {
 	void* data = nullptr;
 	size_t size = maxItems * 6;
@@ -118,6 +161,15 @@ void OpenGLAPI::bindVAO(uint32_t vao, uint32_t vbo)
 {
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+}
+
+void OpenGLAPI::enableColorMeshSettings()
+{
+	glEnableVertexAttribArray(EAttribLocation::POSITION);
+	glVertexAttribPointer(EAttribLocation::POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void *)0);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 }
 
 void OpenGLAPI::enableGUISettings()
@@ -231,9 +283,9 @@ void OpenGLAPI::setupBufferSubData(MeshData2D* meshData)
 	glBufferSubData(GL_ARRAY_BUFFER, 0, size, &meshData->vertexData[0]);
 }
 
-void OpenGLAPI::drawElement(uint32_t indicesId, size_t indicesSize)
+void OpenGLAPI::drawElement(uint32_t indicesId, size_t indicesSize, EDrawMode::Type drawMode)
 {
-	glDrawElements(GL_TRIANGLES, indicesSize, GL_UNSIGNED_INT, nullptr);
+	glDrawElements(drawMode, indicesSize, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
 }
 
@@ -282,6 +334,12 @@ void OpenGLAPI::disableGUISettings()
 	glDisableVertexAttribArray(EAttribLocation::POSITION);
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
+}
+
+void OpenGLAPI::disableColorMeshSettings()
+{
+	glDisableVertexAttribArray(EAttribLocation::POSITION);
+	glEnable(GL_BLEND);
 }
 
 void OpenGLAPI::disablePostProcessingSettings()

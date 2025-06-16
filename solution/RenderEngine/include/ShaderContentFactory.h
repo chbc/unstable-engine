@@ -1,5 +1,4 @@
-#ifndef _SHADER_CONTENT_FACTORY_H_
-#define _SHADER_CONTENT_FACTORY_H_
+#pragma once
 
 #include <string>
 #include <bitset>
@@ -23,6 +22,7 @@ private:
         bool includeBrightnessSegmentation, bool includeDepth
     );
     void createGUIShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
+    void createDebugShaderContent(std::string& outVertexContent, std::string& outFragmentContent);
     void createPointLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent, std::string &outGeometryContent);
     void createDirectionalLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
 	void createPostProcessingShaderContent(class PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent);
@@ -65,5 +65,3 @@ friend class ShaderManager;
 } // namespace
 
 #include "ShaderContentFactory.tpp"
-
-#endif

@@ -134,6 +134,15 @@ void EditorSceneViewport::tryPickEntity(float viewportWidth, float viewportHeigh
 		ScenesManager* scenesManager = SingletonsManager::getInstance()->get<ScenesManager>();
 		Entity* pickedEntity = scenesManager->raycastFromScreen({ mousePosition.x, mousePosition.y }, viewportSize);
 		this->controller->notifyEntitySelection(pickedEntity);
+
+		if (pickedEntity != nullptr)
+		{
+			this->renderManager->addDebugBox(
+				pickedEntity->getTransform()->getPosition(),
+				glm::vec3{ 2.0f, 2.0f, 2.0f },
+				glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }
+			);
+		}
 	}
 }
 

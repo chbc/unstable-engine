@@ -369,6 +369,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\core\graphics\meshData\Model.cpp" />
+    <ClCompile Include="src\core\graphics\renderers\DebugRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\PBRRendererComponent.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MaterialLoader.cpp" />
@@ -590,6 +591,7 @@
     <ClInclude Include="include\EntityDestroyedMessage.h" />
     <ClInclude Include="include\EntityParser.h" />
     <ClInclude Include="include\AExecutionStrategy.h" />
+    <ClInclude Include="include\DebugRenderer.h" />
     <ClInclude Include="include\ImportMeshPopup.h" />
     <ClInclude Include="include\RefreshMeshesMessage.h" />
     <ClInclude Include="include\MaterialComponentTypes.h" />

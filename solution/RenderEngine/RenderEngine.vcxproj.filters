@@ -414,6 +414,9 @@
     <ClCompile Include="src\entities\components\renderables\ARenderableComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\DebugRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1074,6 +1077,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ARenderableComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DebugRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

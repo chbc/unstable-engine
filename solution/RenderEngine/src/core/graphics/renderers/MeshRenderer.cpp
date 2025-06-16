@@ -131,8 +131,7 @@ void MeshRenderer::addMesh(MeshComponent * meshComponent)
 
     if (meshComponent->mesh->ebo == 0)
     {
-        this->graphicsWrapper->createVAO(meshComponent->mesh);
-        this->graphicsWrapper->createEBO(meshComponent->mesh);
+        this->graphicsWrapper->createBuffers(meshComponent->mesh);
     }
 }
 

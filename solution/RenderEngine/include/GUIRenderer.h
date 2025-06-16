@@ -1,5 +1,4 @@
-#ifndef _GUI_RENDERER_H_
-#define _GUI_RENDERER_H_
+#pragma once
 
 #include <list>
 #include "memory_aliases.h"
@@ -18,8 +17,8 @@ protected:
     std::list<GUIImageComponent *> dynamicGuiComponents;
     uint32_t shaderProgram;
 
-    ShaderManager *shaderManager;
-    AGraphicsWrapper *graphicsWrapper;
+    ShaderManager* shaderManager{ nullptr };
+    AGraphicsWrapper* graphicsWrapper{ nullptr };
 
 private:
     class Shader *shader;
@@ -44,5 +43,3 @@ friend class RenderManager;
 };
 
 } // namespace
-
-#endif

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "memory_aliases.h"
-
 #include <vector>
 #include <string>
 
@@ -88,6 +86,22 @@ struct MeshData2D : public AMeshData
 	}
 
 	~MeshData2D() override
+	{
+		vertexData.clear();
+	}
+};
+
+struct ColorMeshData : AMeshData
+{
+	std::vector<glm::vec3> vertexData;
+	glm::vec4 color{ 1.0f, 1.0f, 1.0f, 1.0f };
+
+	ColorMeshData(std::string arg_name, const std::vector<glm::vec3>& arg_vertexData,
+		const std::vector<uint32_t>& arg_indices, glm::vec4 arg_color)
+		: vertexData(arg_vertexData), color(arg_color), AMeshData(arg_name, arg_indices)
+	{ }
+
+	~ColorMeshData() override
 	{
 		vertexData.clear();
 	}

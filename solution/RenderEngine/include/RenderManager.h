@@ -2,8 +2,11 @@
 
 #include "ASingleton.h"
 #include "memory_aliases.h"
-#include <string>
 #include "EExecutionMode.h"
+
+#include <string>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
 
 namespace sre
 {
@@ -16,6 +19,7 @@ class CameraComponent;
 class MeshRenderer;
 class ShadowRenderer;
 class GUIRenderer;
+class DebugRenderer;
 class PostProcessingRenderer;
 
 struct MeshData2D;
@@ -35,6 +39,7 @@ private:
     VECTOR_SPTR<MeshRenderer> translucentMeshRenderers;
     SPTR<ShadowRenderer> shadowRenderer;
     SPTR<GUIRenderer> guiRenderer;
+	SPTR<DebugRenderer> debugRenderer;
 	SPTR<PostProcessingRenderer> postProcessingRenderer;
 
     CameraComponent* applicationCamera{ nullptr };
@@ -53,6 +58,7 @@ private:
     void removeMesh(MeshComponent* mesh);
     void addGUIComponent(GUIImageComponent* guiComponent);
     void addDynamicGUIComponent(GUIImageComponent* guiComponent);
+	void addDebugBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color);
     void initGUIRenderer();
     void initShadowRenderer();
 
@@ -64,6 +70,7 @@ private:
     CameraComponent* getCurrentCamera();
 
     void render();
+    void renderDebug();
 
     static void DEBUG_drawTriangle();
 

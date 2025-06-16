@@ -9,17 +9,17 @@
 namespace sre
 {
 
+
+GUIRenderer::GUIRenderer(ShaderManager *arg_shaderManager, AGraphicsWrapper *arg_graphicsWrapper) 
+    : shaderManager(arg_shaderManager), graphicsWrapper(arg_graphicsWrapper)
+{ }
+
 GUIRenderer::~GUIRenderer()
 {
     this->guiComponents.clear();
     this->dynamicGuiComponents.clear();
 
     this->shaderManager->releaseShader(this->shader);
-}
-
-GUIRenderer::GUIRenderer(ShaderManager *arg_shaderManager, AGraphicsWrapper *arg_graphicsWrapper) 
-    : shaderManager(arg_shaderManager), graphicsWrapper(arg_graphicsWrapper)
-{
 }
 
 void GUIRenderer::loadShader()
@@ -36,8 +36,7 @@ void GUIRenderer::addGUIComponent(GUIImageComponent *guiComponent)
 {
     this->guiComponents.push_back(guiComponent);
 
-    this->graphicsWrapper->createGUIVAO(guiComponent->meshData, guiComponent->maxItems, guiComponent->isDynamic);
-    this->graphicsWrapper->createGUIEBO(guiComponent->meshData, guiComponent->maxItems, guiComponent->isDynamic);
+    this->graphicsWrapper->createBuffers(guiComponent->meshData, guiComponent->maxItems, guiComponent->isDynamic);
 }
 
 void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
@@ -45,8 +44,7 @@ void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
     this->dynamicGuiComponents.push_back(guiComponent);
 	
 	MeshData2D* meshData = static_cast<MeshData2D*>(guiComponent->meshData);
-	this->graphicsWrapper->createGUIVAO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
-	this->graphicsWrapper->createGUIEBO(meshData, guiComponent->maxItems, guiComponent->isDynamic);
+	this->graphicsWrapper->createBuffers(meshData, guiComponent->maxItems, guiComponent->isDynamic);
 }
 
 void GUIRenderer::render()

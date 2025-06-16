@@ -31,8 +31,7 @@ SinglePassRendererComponent::SinglePassRendererComponent(PostProcessingComponent
 	MeshData2D* quad = PrimitiveMeshFactory().createPlaneBottomUp(screenBasedSize);
 	this->meshData = UPTR<MeshData2D>{ quad };
 
-	this->graphicsWrapper->createGUIVAO(quad, 0, false);
-	this->graphicsWrapper->createGUIEBO(quad, 0, false);
+	this->graphicsWrapper->createBuffers(quad, 0, false);
 
 	TextureCreator* textureCreator = singletonsManager->get<TextureCreator>();
 	Texture* texture = textureCreator->createEmptyTexture(width, height);
