@@ -56,9 +56,8 @@ void DebugRenderer::addBox(const glm::vec3& position, const glm::vec3& size, con
 	}
 
 	ColorMeshData* meshData = new ColorMeshData{ "DebugBox", vertices, indices, color };
-	this->meshes.emplace_back(meshData);
-
 	this->graphicsWrapper->createBuffers(meshData);
+	this->meshes.emplace_back(meshData);
 }
 
 void DebugRenderer::loadShader()
@@ -67,6 +66,7 @@ void DebugRenderer::loadShader()
     this->shaderManager->setupAttributeLocation(this->program, ShaderVariables::IN_POSITION);
     this->shaderManager->setupUniformLocation(this->program, ShaderVariables::VIEW_MATRIX);
     this->shaderManager->setupUniformLocation(this->program, ShaderVariables::PROJECTION_MATRIX);
+	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::MATERIAL_COLOR);
 }
 
 void DebugRenderer::render(CameraComponent* camera)
@@ -84,6 +84,7 @@ void DebugRenderer::render(CameraComponent* camera)
         this->graphicsWrapper->bindVAO(item->vao, item->vbo);
         this->graphicsWrapper->enableColorMeshSettings();
 
+		this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &item->color[0]);
 		this->graphicsWrapper->drawElement(item->ebo, item->indices.size(), EDrawMode::LINES);
 
 		this->graphicsWrapper->disableColorMeshSettings();
