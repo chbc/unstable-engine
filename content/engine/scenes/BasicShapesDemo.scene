@@ -11,7 +11,7 @@ _main_camera:
       Perspective: 1
       Main Camera: 1
       FOV: 90
-point_light:
+directional_light:
   Enabled: 1
   Components:
     TransformComponent:
