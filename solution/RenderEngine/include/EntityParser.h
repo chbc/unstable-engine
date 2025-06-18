@@ -16,10 +16,10 @@ private:
 	static void serializeComponents(c4::yml::NodeRef& entityNode, Entity* entity);
 	static void serializeChildren(c4::yml::NodeRef& entityNode, Entity* entity);
 
-	static void deserialize(c4::yml::ConstNodeRef& entityNode, Entity* entity);
+	static void deserialize(c4::yml::ConstNodeRef& entityNode, AScene* scene, Entity* entity);
 
 	static void deserializeComponents(c4::yml::ConstNodeRef& propertyNode, Entity* entity);
-	static void deserializeChildren(c4::yml::ConstNodeRef& propertyNode, Entity* entity);
+	static void deserializeChildren(c4::yml::ConstNodeRef& propertyNode, AScene* scene, Entity* entity);
 
 friend class SceneLoader;
 friend class EntityLoader;

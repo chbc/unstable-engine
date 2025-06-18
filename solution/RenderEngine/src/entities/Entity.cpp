@@ -2,10 +2,10 @@
 #include <sstream>
 #include "MessagesManager.h"
 #include "EntityDestroyedMessage.h"
+#include "ARenderableComponent.h"
 #include "EditorMessages.h"
 #include "SingletonsManager.h"
 #include "BoolEditorProperty.h"
-#include "GuizmoComponent.h"
 
 namespace sre
 {
@@ -14,7 +14,6 @@ const char* Entity::BASE_CLASS_NAME = Entity::AddType<Entity>("Entity");
 
 Entity::Entity(std::string arg_name) : name(arg_name)
 {
-	this->addComponent<GuizmoComponent>();
 	this->transform = this->addComponent<TransformComponent>();
 	this->addEditorProperty(new BoolEditorProperty{ "Enabled", &this->enabled });
 }
@@ -42,11 +41,27 @@ AEntityComponent* Entity::addComponent(const char* className)
 
 void Entity::addChild(Entity* child)
 {
-	this->children[child->getName()] = UPTR<Entity>(child);
+	this->children[child->getName()] = child;
 	child->parent = this;
 	this->childrenList.push_back(child);
 
 	this->transform->propagateTransform();
+}
+
+void Entity::removeChild(Entity* child)
+{
+	if (this->children.count(child->getName()) > 0)
+	{
+		this->children.erase(child->getName());
+	
+		auto it = std::find(this->childrenList.begin(), this->childrenList.end(), child);
+		if (it != this->childrenList.end())
+		{
+			this->childrenList.erase(it);
+		}
+	
+		child->parent = nullptr;
+	}
 }
 
 Entity* Entity::getChild(size_t index)
@@ -55,6 +70,14 @@ Entity* Entity::getChild(size_t index)
 		throw "[Entity] - getChild - Index out of range!";
 
 	return this->childrenList[index];
+}
+
+void Entity::removeFromParent()
+{
+	if (this->parent != nullptr)
+	{
+		this->parent->removeChild(this);
+	}
 }
 
 TransformComponent* Entity::getTransform()

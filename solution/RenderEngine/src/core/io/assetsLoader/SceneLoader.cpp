@@ -66,7 +66,7 @@ void SceneLoader::load(AScene* scene)
 		}
 
 		Entity* entity = scene->createEntity(name, nullptr, className.c_str(), filePath.c_str());
-		EntityParser::deserialize(entityNode, entity);
+		EntityParser::deserialize(entityNode, scene, entity);
 	}
 }
 

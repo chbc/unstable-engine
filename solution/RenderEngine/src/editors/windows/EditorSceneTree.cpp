@@ -7,6 +7,7 @@
 #include "EditorMessages.h"
 #include "EngineValues.h"
 #include "EditorsController.h"
+#include "GuizmoComponent.h"
 
 #include "imgui.h"
 
@@ -73,8 +74,20 @@ void EditorSceneTree::drawScene(AScene* scene)
 
 void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 {
+	if (entity->hasComponent<GuizmoComponent>())
+	{
+		return;
+	}
+
 	const char* name = entity->getName();
-	const size_t childrenCount = entity->getChildrenCount();
+	size_t childrenCount = entity->getChildrenCount();
+
+	if (childrenCount == 1)
+	{
+		Entity* childEntity = entity->getChild(0);
+		childrenCount = childEntity->hasComponent<GuizmoComponent>() ? 0 : 1;
+	}
+
 	const ImGuiTreeNodeFlags BASE_FLAGS = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 
 	if (childrenCount == 0)

@@ -20,6 +20,8 @@ class Material;
 class Texture;
 class ColorMeshData;
 
+class AScene;
+
 using ModelPairType		= std::pair<size_t, SPTR<Model>>;
 using Model2DPairType	= std::pair<size_t, SPTR<Model2D>>;
 using MaterialPairType	= std::pair<size_t, SPTR<Material>>;
@@ -50,7 +52,7 @@ private:
 	GuizmosMapType guizmosMap;
 
 public:
-	Entity* loadEntity(const char* filePath, std::string name);
+	Entity* loadEntity(AScene* scene, const char* filePath, std::string name);
 	void releaseEntity(Entity* entity);
 	Model* loadModel(const char* filePath);
 	MeshData* loadMesh(const char* filePath, const char* meshName);

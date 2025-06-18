@@ -10,9 +10,9 @@
 namespace sre
 {
 
-Entity* AssetsManager::loadEntity(const char* filePath, std::string name)
+Entity* AssetsManager::loadEntity(AScene* scene, const char* filePath, std::string name)
 {
-	Entity* prototype = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, filePath, name);
+	Entity* prototype = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, filePath, name, scene);
 	Entity* result = prototype->clone();
 	result->name = name;
 

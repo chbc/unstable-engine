@@ -48,7 +48,7 @@ Entity* AScene::createEntity(std::string entityName, Entity* parent, const std::
     if (!filePath.empty())
     {
         AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-        result = assetsManager->loadEntity(filePath.c_str(), entityName);
+        result = assetsManager->loadEntity(this, filePath.c_str(), entityName);
     }
     else
     {
@@ -59,10 +59,8 @@ Entity* AScene::createEntity(std::string entityName, Entity* parent, const std::
     {
         parent->addChild(result);
     }
-    else
-    {
-        this->entities[entityName] = UPTR<Entity>{ result };
-    }
+
+    this->entities[entityName] = UPTR<Entity>{ result };
 
     return result;
 }

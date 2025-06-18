@@ -19,6 +19,7 @@ class SceneViewportGuizmos
 {
 private:
 	Entity* selectedEntity{ nullptr };
+	Entity* guizmoEntity{ nullptr };
 	SPTR<Action> selectionAction;
 	ImGuizmo::OPERATION guizmoOperation{ 0u };
 

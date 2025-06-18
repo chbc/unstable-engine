@@ -25,6 +25,9 @@ void SceneViewportGuizmos::onInit()
 	messagesManager->addListener<EntitySelectionMessage>(this->selectionAction.get());
 	this->selectedEntity = nullptr;
 	this->guizmoOperation = ImGuizmo::TRANSLATE;
+	
+	this->guizmoEntity = new Entity("Guizmo");
+	this->guizmoEntity->addComponent<GuizmoComponent>();
 }
 
 bool SceneViewportGuizmos::drawAndManipulate(float windowWidth, float windowHeight, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
@@ -85,13 +88,16 @@ void SceneViewportGuizmos::onCleanUp()
 
 void SceneViewportGuizmos::onEntitySelected(void* data)
 {
+	this->guizmoEntity->removeFromParent();
+
 	EntitySelectionMessage* message = static_cast<EntitySelectionMessage*>(data);
 	this->selectedEntity = message->entity;
 
 	GuizmoComponent* guizmoComponent = nullptr;
 	if (this->selectedEntity != nullptr)
 	{
-		guizmoComponent = this->selectedEntity->getComponent<GuizmoComponent>();
+		this->selectedEntity->addChild(this->guizmoEntity);
+		guizmoComponent = this->guizmoEntity->getComponent<GuizmoComponent>();
 	}
 
 	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();

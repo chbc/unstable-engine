@@ -33,7 +33,7 @@ void EntityLoader::save(Entity* entity, const char* filePath)
 	entity->setStored(true);
 }
 
-Entity* EntityLoader::load(const char* filePath, std::string name)
+Entity* EntityLoader::load(const char* filePath, std::string name, AScene* scene)
 {
 	std::string fileContent;
 	FileUtils::loadContentFile(filePath, fileContent);
@@ -48,7 +48,7 @@ Entity* EntityLoader::load(const char* filePath, std::string name)
 
 	Entity* result = Entity::Create(name, className.c_str());
 	result->filePath = FileUtils::getContentRelativePath(filePath);
-	EntityParser::deserialize(root, result);
+	EntityParser::deserialize(root, scene, result);
 	result->setStored(true);
 
 	return result;

@@ -78,7 +78,7 @@ void EntityParser::serializeChildren(c4::yml::NodeRef& entityNode, Entity* entit
 	entity->setChildrenSaved();
 }
 
-void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, Entity* entity)
+void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, AScene* scene, Entity* entity)
 {
 	for (c4::yml::ConstNodeRef propertyNode : entityNode.children())
 	{
@@ -98,7 +98,7 @@ void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, Entity* entity
 			}
 			else if (key == "Entities")
 			{
-				deserializeChildren(propertyNode, entity);
+				deserializeChildren(propertyNode, scene, entity);
 			}
 		}
 	}
@@ -112,7 +112,7 @@ void EntityParser::deserializeComponents(c4::yml::ConstNodeRef& propertyNode, En
 	}
 }
 
-void EntityParser::deserializeChildren(c4::yml::ConstNodeRef& propertyNode, Entity* entity)
+void EntityParser::deserializeChildren(c4::yml::ConstNodeRef& propertyNode, AScene* scene, Entity* entity)
 {
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	for (c4::yml::ConstNodeRef entityNode : propertyNode.children())
@@ -132,19 +132,9 @@ void EntityParser::deserializeChildren(c4::yml::ConstNodeRef& propertyNode, Enti
 			entityNode["FilePath"] >> filePath;
 		}
 
-		Entity* childEntity = nullptr;
-		if (!filePath.empty())
-		{
-			childEntity = assetsManager->loadEntity(filePath.c_str(), name);
-		}
-		else
-		{
-			childEntity = Entity::Create(name, className.c_str());
-		}
+		Entity* childEntity = scene->createEntity(name, entity, className, filePath);
 
-		entity->addChild(childEntity);
-
-		deserialize(entityNode, childEntity);
+		deserialize(entityNode, scene, childEntity);
 	}
 }
 
