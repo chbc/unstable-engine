@@ -38,11 +38,10 @@ void GuizmoRenderer::addGuizmo(GuizmoComponent* guizmoComponent)
 			this->graphicsWrapper->createBuffers(guizmoComponent->mesh);
 		}
 
-		/*
-		Bounds bounds;
-		Entity* entity = guizmoComponent->getEntity();
-		entity->getBounds(bounds);
-		*/
+		guizmoComponent->bounds.reset();
+
+		Entity* parentEntity = guizmoComponent->getEntity()->getParent();
+		parentEntity->getBounds(guizmoComponent->bounds);
 	}
 }
 
@@ -74,7 +73,9 @@ void GuizmoRenderer::render(CameraComponent* camera)
 
 		TransformComponent* transform = item->getTransform();
 		const glm::mat4& modelMatrix = transform->getMatrix();
-		this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
+		glm::mat4 resultMatrix = glm::scale(modelMatrix, item->bounds.size);
+
+		this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &resultMatrix[0][0]);
 		this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &mesh->color[0]);
 		this->graphicsWrapper->drawElement(mesh->ebo, mesh->indices.size(), EDrawMode::LINES);
 

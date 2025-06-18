@@ -100,11 +100,12 @@ Entity* Scene::raycast(const Ray& ray, float maxDistance)
 		if (entity->hasComponent<MeshComponent>())
 		{
             ARenderableComponent* renderableComponent = entity->getComponent<MeshComponent>();
-			const Bounds& bounds = renderableComponent->getBounds();
-            const glm::vec3& worldPosition = entity->getTransform()->getPosition();
+			TransformComponent* transform = entity->getTransform();
+			Bounds bounds = renderableComponent->getBounds();
 
+            const glm::mat4& modelMatrix = transform->getMatrix();
             float distance = 0;
-			if (bounds.intersects(ray, worldPosition, distance))
+			if (bounds.intersects(ray, modelMatrix, distance))
 			{
 				if (distance < minDistance)
 				{

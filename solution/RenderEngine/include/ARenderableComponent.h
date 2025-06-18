@@ -15,6 +15,7 @@ public:
 	ARenderableComponent(Entity* entity);
 	bool isRenderable() const override { return true; }
 	const Bounds& getBounds() const;
+	virtual void refreshBounds() {}
 };
 
 } // namespace

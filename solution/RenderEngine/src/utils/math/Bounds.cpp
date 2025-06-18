@@ -34,12 +34,15 @@ void Bounds::setup(const glm::vec3& center, const glm::vec3& extents)
 	this->max = center + extents;
 }
 
-bool Bounds::intersects(const Ray& ray, const glm::vec3& worldPosition, float& distance) const
+bool Bounds::intersects(const Ray& ray, const glm::mat4& worldMatrix, float& distance) const
 {
 	bool result = false;
 
-	glm::vec3 worldMin = this->center + worldPosition + this->min;
-	glm::vec3 worldMax = this->center + worldPosition + this->max;
+	glm::vec3 worldMin = this->center + this->min;
+	glm::vec3 worldMax = this->center + this->max;
+
+	worldMin = worldMatrix * glm::vec4{ worldMin, 1.0f };
+	worldMax = worldMatrix * glm::vec4{ worldMax, 1.0f };
 
 	glm::vec3 invDir = 1.0f / ray.direction;
 	glm::vec3 t0 = (worldMin - ray.origin) * invDir;
@@ -64,6 +67,15 @@ void Bounds::add(const Bounds& other)
 	this->extents = (this->max - this->min) * 0.5f;
 	this->size = this->extents * 2.0f;
 	this->fixVertices();
+}
+
+void Bounds::reset()
+{
+	this->center = glm::vec3{ 0.0f };
+	this->extents = glm::vec3{ 0.0f };
+	this->size = glm::vec3{ 0.0f };
+	this->min = glm::vec3{ 0.0f };
+	this->max = glm::vec3{ 0.0f };
 }
 
 void Bounds::fixVertices()

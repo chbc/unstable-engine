@@ -3,7 +3,7 @@
 #include "Ray.h"
 
 #include <vector>
-
+#include <glm/mat4x4.hpp>
 
 namespace sre
 {
@@ -23,8 +23,9 @@ public:
 	Bounds() = default;
 	void setup(const std::vector<VertexData>& vertexData);
 	void setup(const glm::vec3& center, const glm::vec3& extents);
-	bool intersects(const Ray& ray, const glm::vec3& worldPosition, float& distance) const;
+	bool intersects(const Ray& ray, const glm::mat4& worldMatrix, float& distance) const;
 	void add(const Bounds& other);
+	void reset();
 
 private:
 	void fixVertices();
