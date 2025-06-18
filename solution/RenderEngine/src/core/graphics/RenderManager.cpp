@@ -3,6 +3,7 @@
 #include "MeshComponent.h"
 #include "GUITextComponent.h"
 #include "CameraComponent.h"
+#include "GuizmoComponent.h"
 #include "SingletonsManager.h"
 #include "MeshData.h"
 #include "LightManager.h"
@@ -14,6 +15,7 @@
 #include "PostProcessingRenderer.h"
 #include "GUIRenderer.h"
 #include "DebugRenderer.h"
+#include "GuizmoRenderer.h"
 #include "ShadowRenderer.h"
 #include "CollectionsUtils.h"
 
@@ -140,6 +142,16 @@ void RenderManager::addDynamicGUIComponent(GUIImageComponent *guiComponent)
     this->guiRenderer->addDynamicGUIComponent(guiComponent);
 }
 
+void RenderManager::addGuizmoComponent(GuizmoComponent* guizmoComponent)
+{
+	if (!this->guizmoRenderer)
+	{
+		this->guizmoRenderer = SPTR<GuizmoRenderer>{ new GuizmoRenderer{this->shaderManager, this->graphicsWrapper} };
+		this->guizmoRenderer->loadShader();
+	}
+	this->guizmoRenderer->addGuizmo(guizmoComponent);
+}
+
 void RenderManager::addDebugBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color)
 {
 	if (!this->debugRenderer)
@@ -246,6 +258,18 @@ void RenderManager::render()
         this->guiRenderer->render();
 }
 
+void RenderManager::renderGuizmos()
+{
+    this->graphicsWrapper->disableDepthTest();
+
+	if (this->guizmoRenderer.get() != nullptr && this->currentCamera != nullptr)
+	{
+		this->guizmoRenderer->render(this->currentCamera);
+	}
+
+	this->graphicsWrapper->enableDepthTest();
+}
+
 void RenderManager::DEBUG_drawTriangle()
 {
 /*
@@ -287,6 +311,7 @@ void RenderManager::cleanUp()
     this->cleanUpMeshes();
     this->cleanUpGui();
     this->cleanUpDebug();
+	this->cleanUpGuizmos();
 
     this->lightManager->clean();
 
@@ -313,6 +338,14 @@ void RenderManager::cleanUpDebug()
     {
         this->debugRenderer.reset();
     }
+}
+
+void RenderManager::cleanUpGuizmos()
+{
+	if (this->guizmoRenderer)
+	{
+		this->guizmoRenderer.reset();
+	}
 }
 
 void RenderManager::setTargetFBO(uint32_t fbo)

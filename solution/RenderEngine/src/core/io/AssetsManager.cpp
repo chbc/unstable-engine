@@ -3,6 +3,7 @@
 #include "MaterialLoader.h"
 #include "EntityLoader.h"
 #include "TextureLoader.h"
+#include "GuizmoLoader.h"
 #include "SingletonsManager.h"
 #include "Material.h"
 
@@ -90,6 +91,27 @@ void AssetsManager::releaseIcon(Texture* texture)
 	this->releaseAsset(this->iconsMap, texture, releaseCallback);
 }
 
+ColorMeshData* AssetsManager::loadGuizmo(EGuizmoMesh type)
+{
+	std::string guizmoPath;
+	switch (type)
+	{
+		case EGuizmoMesh::Box:
+			guizmoPath = "BOX";
+			break;
+		case EGuizmoMesh::Sphere:
+			guizmoPath = "SPHERE";
+			break;
+		case EGuizmoMesh::SunRays:
+			guizmoPath = "SUN_RAYS";
+			break;
+		default: break;
+	}
+
+	ColorMeshData* result = this->loadAsset<GuizmosMapType, GuizmoLoader, ColorMeshData>(this->guizmosMap, guizmoPath.c_str());
+	return result;
+}
+
 void AssetsManager::preRelease()
 {
 	// Entities
@@ -124,6 +146,13 @@ void AssetsManager::preRelease()
 	{
 		TextureLoader().release((*it).second.second.get());
 		it = this->iconsMap.erase(it);
+	}
+
+	// Guizmos
+	for (auto& it = this->guizmosMap.begin(); it != this->guizmosMap.end();)
+	{
+		GuizmoLoader().release((*it).second.second.get());
+		it = this->guizmosMap.erase(it);
 	}
 }
 

@@ -3,16 +3,13 @@
 #ifndef __ANDROID__
 
 #include "AGraphicsWrapper.h"
+#include "ColorMeshData.h"
 
 namespace sre
 {
 
-class MultimediaManager;
-
 class OpenGLAPI : public AGraphicsWrapper
 {
-private:
-	MultimediaManager* multimediaManager;
 
 protected:
     void init() override;

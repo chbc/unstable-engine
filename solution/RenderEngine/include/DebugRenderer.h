@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MeshData.h"
+#include "ColorMeshData.h"
 #include "memory_aliases.h"
 
 #include <glm/vec3.hpp>

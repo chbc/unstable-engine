@@ -282,6 +282,51 @@ MeshData* PrimitiveMeshFactory::createSphere(float radius, uint16_t stackCount, 
 	return new MeshData{"Sphere", vertexData, indices};
 }
 
+ColorMeshData* PrimitiveMeshFactory::createBoxLines(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color)
+{
+	std::vector<glm::vec3> vertices;
+	std::vector<uint32_t> indices;
+
+	glm::vec3 halfSize = size * 0.5f;
+
+	std::vector<glm::vec3> verticesData =
+	{
+		{-halfSize.x, -halfSize.y,  halfSize.z},
+		{ halfSize.x, -halfSize.y,  halfSize.z},
+		{ halfSize.x,  halfSize.y,  halfSize.z},
+		{-halfSize.x,  halfSize.y,  halfSize.z},
+
+		{-halfSize.x, -halfSize.y, -halfSize.z},
+		{ halfSize.x, -halfSize.y, -halfSize.z},
+		{ halfSize.x,  halfSize.y, -halfSize.z},
+		{-halfSize.x,  halfSize.y, -halfSize.z}
+	};
+
+	std::vector<unsigned int> indicesData =
+	{
+		0, 1, 1, 2, 2, 3, 3, 0, // Front
+		4, 5, 5, 6, 6, 7, 7, 4, // Back
+		0, 4, 1, 5, 2, 6, 3, 7
+	};
+
+	for (const glm::vec3& item : verticesData)
+	{
+		vertices.push_back(position + item);
+	}
+
+	for (const unsigned int& item : indicesData)
+	{
+		indices.push_back(item);
+	}
+
+	return new ColorMeshData{ vertices, indices, color };
+}
+
+ColorMeshData* PrimitiveMeshFactory::createBoxLines(const glm::vec4& color)
+{
+	return this->createBoxLines(glm::vec3(0.0f), glm::vec3(1.0f), color);
+}
+
 MeshData2D* PrimitiveMeshFactory::createPlane2D(const glm::vec2& size, const float* texCoords)
 {
 	float planeVertices[] =

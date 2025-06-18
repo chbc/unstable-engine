@@ -29,7 +29,7 @@ public:
 public:
 	Model(const char* arg_filePath);
 	MeshData* getMesh(const char* meshName);
-	int getMeshCount();
+	size_t getMeshCount();
 };
 
 struct Model2D : ABaseModel

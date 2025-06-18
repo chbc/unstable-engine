@@ -370,8 +370,10 @@
   <ItemGroup>
     <ClCompile Include="src\core\graphics\meshData\Model.cpp" />
     <ClCompile Include="src\core\graphics\renderers\DebugRenderer.cpp" />
+    <ClCompile Include="src\core\graphics\renderers\GuizmoRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\PBRRendererComponent.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp" />
+    <ClCompile Include="src\core\io\assetsLoader\GuizmoLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MaterialLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MeshLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\TextureLoader.cpp" />
@@ -427,6 +429,7 @@
     <ClCompile Include="src\entities\components\movements\OrbitMovementComponent.cpp" />
     <ClCompile Include="src\entities\components\EntityComponentTypes.cpp" />
     <ClCompile Include="src\entities\components\renderables\ARenderableComponent.cpp" />
+    <ClCompile Include="src\entities\components\renderables\guizmos\GuizmoComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\ABaseTextureMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp" />
@@ -578,6 +581,8 @@
     <ClInclude Include="include\ApplicationStrategy.h" />
     <ClInclude Include="include\AssetsManager.h" />
     <ClInclude Include="include\Bounds.h" />
+    <ClInclude Include="include\ColorMeshData.h" />
+    <ClInclude Include="include\EGuizmoMesh.h" />
     <ClInclude Include="include\EntityLoader.h" />
     <ClInclude Include="include\EntityTypes.h" />
     <ClInclude Include="include\FileIcon.h" />
@@ -592,7 +597,11 @@
     <ClInclude Include="include\EntityParser.h" />
     <ClInclude Include="include\AExecutionStrategy.h" />
     <ClInclude Include="include\DebugRenderer.h" />
+    <ClInclude Include="include\GuizmoComponent.h" />
+    <ClInclude Include="include\GuizmoLoader.h" />
+    <ClInclude Include="include\GuizmoRenderer.h" />
     <ClInclude Include="include\ImportMeshPopup.h" />
+    <ClInclude Include="include\Ray.h" />
     <ClInclude Include="include\RefreshMeshesMessage.h" />
     <ClInclude Include="include\MaterialComponentTypes.h" />
     <ClInclude Include="include\MaterialLoader.h" />

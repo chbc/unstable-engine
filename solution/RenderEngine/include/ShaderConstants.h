@@ -23,8 +23,8 @@ namespace ShaderFiles
     const std::string GUI_V = BASE_FOLDER + "gui/gui.vert";
     const std::string GUI_F = BASE_FOLDER + "gui/gui.frag";
 
-    const std::string DEBUG_V = BASE_FOLDER + "debug/debug.vert";
-    const std::string DEBUG_F = BASE_FOLDER + "debug/debug.frag";
+    const std::string COLOR_V = BASE_FOLDER + "color/color.vert";
+    const std::string COLOR_F = BASE_FOLDER + "color/color.frag";
 
     const std::string LIGHTS_H_V    = BASE_FOLDER + "lights/lights_h.vert";
     const std::string LIGHTS_IMPL_V = BASE_FOLDER + "lights/lights_impl.vert";

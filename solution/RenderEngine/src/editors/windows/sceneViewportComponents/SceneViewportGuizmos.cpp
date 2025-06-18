@@ -1,8 +1,10 @@
 #include "SceneViewportGuizmos.h"
 #include "SingletonsManager.h"
 #include "MessagesManager.h"
+#include "RenderManager.h"
 #include "MathUtils.h"
 #include "Entity.h"
+#include "GuizmoComponent.h"
 
 #include <imgui/imgui.h>
 #include <imguizmo/ImGuizmo.h>
@@ -85,6 +87,15 @@ void SceneViewportGuizmos::onEntitySelected(void* data)
 {
 	EntitySelectionMessage* message = static_cast<EntitySelectionMessage*>(data);
 	this->selectedEntity = message->entity;
+
+	GuizmoComponent* guizmoComponent = nullptr;
+	if (this->selectedEntity != nullptr)
+	{
+		guizmoComponent = this->selectedEntity->getComponent<GuizmoComponent>();
+	}
+
+	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+	renderManager->addGuizmoComponent(guizmoComponent);
 }
 
 } // namespace

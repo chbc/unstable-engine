@@ -30,7 +30,6 @@ SingletonsManager::SingletonsManager()
     this->add<RenderManager>();
     this->add<AssetsManager>();
 
-
     this->add<TextureCreator>();
     this->add<MessagesManager>();
     this->add<AtlasManager>();

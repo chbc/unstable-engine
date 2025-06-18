@@ -36,4 +36,11 @@ void ApplicationStrategy::update(RenderEngine* controller, float elapsedTime)
 #endif
 }
 
+void ApplicationStrategy::render(RenderEngine* controller)
+{
+	this->renderManager->render();
+	controller->onGUI();
+	this->renderManager->unbindFrameBuffer();
+}
+
 } // namespace

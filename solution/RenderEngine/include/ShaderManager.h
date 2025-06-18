@@ -47,7 +47,7 @@ private:
     }
 
     uint32_t loadGUIShader();
-    uint32_t loadDebugShader();
+    uint32_t loadColorShader();
     uint32_t loadPointLightDepthShader();
     uint32_t loadDirectionalLightDepthShader();
 	uint32_t loadPostProcessingShader(class PostProcessingComponent* component);
@@ -85,6 +85,7 @@ friend class SingletonsManager;
 friend class MeshRenderer;
 friend class GUIRenderer;
 friend class DebugRenderer;
+friend class GuizmoRenderer;
 friend class ColorRendererComponent;
 friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;

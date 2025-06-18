@@ -1,5 +1,5 @@
 #pragma once
-#include "MeshData.h"
+#include "ColorMeshData.h"
 
 namespace sre
 {
@@ -19,6 +19,8 @@ public:
 	void createPlaneIndices(std::vector<uint32_t> &result, uint32_t planesCount = 1);
 	MeshData* createCube(float size);
 	MeshData* createSphere(float radius = 1.0f, uint16_t stackCount = 16, uint16_t sectorCount = 32);
+	ColorMeshData* createBoxLines(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color);
+	ColorMeshData* createBoxLines(const glm::vec4& color);
 
 private:
 	MeshData2D* createPlane2D(const glm::vec2 &size, const float* texCoords);

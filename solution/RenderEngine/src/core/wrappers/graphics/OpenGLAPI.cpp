@@ -6,9 +6,6 @@
 #include <GL/glew.h>
 
 #include "OpenGLAPI.h"
-#include "MeshData.h"
-#include "SingletonsManager.h"
-#include "MultimediaManager.h"
 
 namespace sre
 {
@@ -27,15 +24,9 @@ namespace EAttribLocation
 
 void OpenGLAPI::init()
 {
-	this->multimediaManager = SingletonsManager::getInstance()->get<MultimediaManager>();
-
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
 		throw std::string("GLEW didn't init");
-
-	const GLubyte * glVersion = glGetString(GL_VERSION);
-	std::string strGLVersion((char*)(glVersion));
-	multimediaManager->logMessage("OpenGL Version: " + strGLVersion);
 
 	glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
 

@@ -4,6 +4,7 @@
 #include "ASingleton.h"
 #include "memory_aliases.h"
 #include "ETextureMap.h"
+#include "EGuizmoMesh.h"
 
 #include <unordered_map>
 #include <string>
@@ -17,6 +18,7 @@ struct MeshData;
 struct MeshData2D;
 class Material;
 class Texture;
+class ColorMeshData;
 
 using ModelPairType		= std::pair<size_t, SPTR<Model>>;
 using Model2DPairType	= std::pair<size_t, SPTR<Model2D>>;
@@ -24,13 +26,15 @@ using MaterialPairType	= std::pair<size_t, SPTR<Material>>;
 using EntityPairType	= std::pair<size_t, SPTR<Entity>>;
 using TexturePairType	= std::pair<size_t, SPTR<Texture>>;
 using IconPairType		= std::pair<size_t, SPTR<Texture>>;
+using GuizmoPairType	= std::pair<size_t, SPTR<ColorMeshData>>;
 
 using ModelsMapType		= std::unordered_map<size_t, ModelPairType>;
 using Models2DMapType	= std::unordered_map<size_t, Model2DPairType>;
 using MaterialsMapType	= std::unordered_map<size_t, MaterialPairType>;
 using EntitiesMapType	= std::unordered_map<size_t, EntityPairType>;
 using TexturesMapType	= std::unordered_map<size_t, TexturePairType>;
-using IconsMapType = std::unordered_map<size_t, IconPairType>;
+using IconsMapType		= std::unordered_map<size_t, IconPairType>;
+using GuizmosMapType	= std::unordered_map<size_t, GuizmoPairType>;
 
 class AssetsManager : public ASingleton
 {
@@ -43,6 +47,7 @@ private:
 	EntitiesMapType entitiesMap;
 	TexturesMapType texturesMap;
 	IconsMapType iconsMap;
+	GuizmosMapType guizmosMap;
 
 public:
 	Entity* loadEntity(const char* filePath, std::string name);
@@ -58,6 +63,7 @@ public:
 	void releaseTexture(Texture* texture);
 	Texture* loadIcon(const char* filePath);
 	void releaseIcon(Texture* texture);
+	ColorMeshData* loadGuizmo(EGuizmoMesh type);
 
 protected:
 	void preRelease() override;

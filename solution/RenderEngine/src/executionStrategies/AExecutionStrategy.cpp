@@ -44,7 +44,6 @@ void AExecutionStrategy::render(RenderEngine* controller)
 {
     this->renderManager->render();
     controller->onGUI();
-    this->renderManager->unbindFrameBuffer();
 }
 
 void AExecutionStrategy::swapBuffers(RenderEngine* controller)

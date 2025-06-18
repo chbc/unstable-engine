@@ -39,14 +39,13 @@ struct VertexData : public ABaseVertexData
 
 struct AMeshData
 {
-	std::string name;
 	std::vector<uint32_t> indices;
 	uint32_t vao{0};
 	uint32_t vbo{0};
 	uint32_t ebo{0};
 
-	AMeshData(std::string arg_name, const std::vector<uint32_t> &arg_indices)
-		: name(arg_name), indices(arg_indices), vao(0), vbo(0), ebo(0)
+	AMeshData(const std::vector<uint32_t> &arg_indices)
+		: indices(arg_indices), vao(0), vbo(0), ebo(0)
 	{
 	}
 
@@ -59,11 +58,11 @@ struct AMeshData
 struct MeshData : public AMeshData
 {
 	std::vector<VertexData> vertexData;
+	std::string name;
 
 	MeshData(std::string arg_name, const std::vector<VertexData>& arg_vertexData, const std::vector<uint32_t>& arg_indices)
-		: vertexData(arg_vertexData), AMeshData(arg_name, arg_indices)
-	{
-	}
+		: AMeshData(arg_indices), vertexData(arg_vertexData), name(arg_name)
+	{ }
 
 	~MeshData() override
 	{
@@ -79,29 +78,13 @@ struct MeshData : public AMeshData
 struct MeshData2D : public AMeshData
 {
 	std::vector<VertexData2D> vertexData;
+	std::string name;
 
 	MeshData2D(std::string arg_name, const std::vector<VertexData2D>& arg_vertexData, const std::vector<uint32_t>& arg_indices)
-		: vertexData(arg_vertexData), AMeshData(arg_name, arg_indices)
-	{
-	}
-
-	~MeshData2D() override
-	{
-		vertexData.clear();
-	}
-};
-
-struct ColorMeshData : AMeshData
-{
-	std::vector<glm::vec3> vertexData;
-	glm::vec4 color{ 1.0f, 1.0f, 1.0f, 1.0f };
-
-	ColorMeshData(std::string arg_name, const std::vector<glm::vec3>& arg_vertexData,
-		const std::vector<uint32_t>& arg_indices, glm::vec4 arg_color)
-		: vertexData(arg_vertexData), color(arg_color), AMeshData(arg_name, arg_indices)
+		: AMeshData(arg_indices), vertexData(arg_vertexData), name(arg_name)
 	{ }
 
-	~ColorMeshData() override
+	~MeshData2D() override
 	{
 		vertexData.clear();
 	}

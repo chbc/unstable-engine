@@ -22,7 +22,7 @@ private:
         bool includeBrightnessSegmentation, bool includeDepth
     );
     void createGUIShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
-    void createDebugShaderContent(std::string& outVertexContent, std::string& outFragmentContent);
+    void createColorShaderContent(std::string& outVertexContent, std::string& outFragmentContent);
     void createPointLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent, std::string &outGeometryContent);
     void createDirectionalLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent);
 	void createPostProcessingShaderContent(class PostProcessingComponent* component, std::string& outVertexContent, std::string& outFragmentContent);

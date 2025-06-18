@@ -15,11 +15,13 @@ class Entity;
 class MeshComponent;
 class GUIImageComponent;
 class CameraComponent;
+class GuizmoComponent;
 
 class MeshRenderer;
 class ShadowRenderer;
 class GUIRenderer;
 class DebugRenderer;
+class GuizmoRenderer;
 class PostProcessingRenderer;
 
 struct MeshData2D;
@@ -40,6 +42,7 @@ private:
     SPTR<ShadowRenderer> shadowRenderer;
     SPTR<GUIRenderer> guiRenderer;
 	SPTR<DebugRenderer> debugRenderer;
+	SPTR<GuizmoRenderer> guizmoRenderer;
 	SPTR<PostProcessingRenderer> postProcessingRenderer;
 
     CameraComponent* applicationCamera{ nullptr };
@@ -58,6 +61,7 @@ private:
     void removeMesh(MeshComponent* mesh);
     void addGUIComponent(GUIImageComponent* guiComponent);
     void addDynamicGUIComponent(GUIImageComponent* guiComponent);
+	void addGuizmoComponent(GuizmoComponent* guizmoComponent);
 	void addDebugBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color);
     void initGUIRenderer();
     void initShadowRenderer();
@@ -70,6 +74,7 @@ private:
     CameraComponent* getCurrentCamera();
 
     void render();
+    void renderGuizmos();
 
     static void DEBUG_drawTriangle();
 
@@ -79,6 +84,7 @@ private:
     void cleanUpMeshes();
     void cleanUpGui();
     void cleanUpDebug();
+    void cleanUpGuizmos();
 
     void setTargetFBO(uint32_t fbo);
     void unbindFrameBuffer();
@@ -98,6 +104,7 @@ friend class SingletonsManager;
 friend class BaseRendererShaderSetup;
 friend class LightRendererShaderSetup;
 friend class EditorSceneViewport;
+friend class SceneViewportGuizmos;
 friend class WorldEditor;
 friend class ScenesManager;
 };

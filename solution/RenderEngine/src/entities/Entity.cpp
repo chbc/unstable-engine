@@ -5,7 +5,7 @@
 #include "EditorMessages.h"
 #include "SingletonsManager.h"
 #include "BoolEditorProperty.h"
-#include "ARenderableComponent.h"
+#include "GuizmoComponent.h"
 
 namespace sre
 {
@@ -14,6 +14,7 @@ const char* Entity::BASE_CLASS_NAME = Entity::AddType<Entity>("Entity");
 
 Entity::Entity(std::string arg_name) : name(arg_name)
 {
+	this->addComponent<GuizmoComponent>();
 	this->transform = this->addComponent<TransformComponent>();
 	this->addEditorProperty(new BoolEditorProperty{ "Enabled", &this->enabled });
 }

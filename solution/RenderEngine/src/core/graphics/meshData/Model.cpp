@@ -37,7 +37,7 @@ MeshData* Model::getMesh(const char* meshName)
 	return result;
 }
 
-int Model::getMeshCount()
+size_t Model::getMeshCount()
 {
 	return this->meshes.size();
 }

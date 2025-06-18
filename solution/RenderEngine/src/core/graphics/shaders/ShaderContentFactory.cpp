@@ -13,10 +13,10 @@ void ShaderContentFactory::createGUIShaderContent(std::string &outVertexContent,
     FileUtils::loadContentFile(ShaderFiles::GUI_F, outFragmentContent);
 }
 
-void ShaderContentFactory::createDebugShaderContent(std::string& outVertexContent, std::string& outFragmentContent)
+void ShaderContentFactory::createColorShaderContent(std::string& outVertexContent, std::string& outFragmentContent)
 {
-    FileUtils::loadContentFile(ShaderFiles::DEBUG_V, outVertexContent);
-    FileUtils::loadContentFile(ShaderFiles::DEBUG_F, outFragmentContent);
+    FileUtils::loadContentFile(ShaderFiles::COLOR_V, outVertexContent);
+    FileUtils::loadContentFile(ShaderFiles::COLOR_F, outFragmentContent);
 }
 
 void ShaderContentFactory::createPointLightDepthShaderContent(std::string &outVertexContent, std::string &outFragmentContent, std::string &outGeometryContent)

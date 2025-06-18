@@ -35,6 +35,9 @@ void EditorStrategy::update(RenderEngine* controller, float elapsedTime)
 void EditorStrategy::render(RenderEngine* controller)
 {
     AExecutionStrategy::render(controller);
+
+    this->renderManager->renderGuizmos();
+    this->renderManager->unbindFrameBuffer();
     this->worldEditor->onEditorGUI();
     controller->onEditorGUI();
 }

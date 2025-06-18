@@ -13,6 +13,7 @@ public:
 protected:
 	void init(RenderEngine* controller) override;
 	void update(RenderEngine* controller, float elapsedTime) override;
+	void render(RenderEngine* controller) override;
 };
 
 } // namespace

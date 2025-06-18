@@ -1,17 +1,22 @@
-#include "DebugRenderer.h"
+#include "GuizmoRenderer.h"
 #include "AGraphicsWrapper.h"
 #include "ShaderManager.h"
 #include "CameraComponent.h"
-#include "PrimitiveMeshFactory.h"
+#include "GuizmoComponent.h"
+#include "TransformComponent.h"
+#include "AssetsManager.h"
+#include "SingletonsManager.h"
 
 namespace sre
 {
 
-DebugRenderer::DebugRenderer(ShaderManager* shaderManager, AGraphicsWrapper* graphicsWrapper)
+GuizmoRenderer::GuizmoRenderer(ShaderManager* shaderManager, AGraphicsWrapper* graphicsWrapper)
 	: shaderManager(shaderManager), graphicsWrapper(graphicsWrapper)
-{ }
+{
+	this->assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+}
 
-DebugRenderer::~DebugRenderer()
+GuizmoRenderer::~GuizmoRenderer()
 {
 	if (this->shaderManager != nullptr)
 	{
@@ -19,14 +24,29 @@ DebugRenderer::~DebugRenderer()
 	}
 }
 
-void DebugRenderer::addBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color)
+void GuizmoRenderer::addGuizmo(GuizmoComponent* guizmoComponent)
 {
-	ColorMeshData* meshData = PrimitiveMeshFactory().createBoxLines(position, size, color);
-	this->graphicsWrapper->createBuffers(meshData);
-	this->meshes.emplace_back(meshData);
+	this->guizmoComponents.clear();
+
+	if (guizmoComponent != nullptr)
+	{
+		this->guizmoComponents.push_back(guizmoComponent);
+
+		guizmoComponent->mesh = this->assetsManager->loadGuizmo(guizmoComponent->guizmoType);
+		if (guizmoComponent->mesh->ebo == 0)
+		{
+			this->graphicsWrapper->createBuffers(guizmoComponent->mesh);
+		}
+
+		/*
+		Bounds bounds;
+		Entity* entity = guizmoComponent->getEntity();
+		entity->getBounds(bounds);
+		*/
+	}
 }
 
-void DebugRenderer::loadShader()
+void GuizmoRenderer::loadShader()
 {
     this->program = this->shaderManager->loadColorShader();
     this->shaderManager->setupAttributeLocation(this->program, ShaderVariables::IN_POSITION);
@@ -36,7 +56,7 @@ void DebugRenderer::loadShader()
 	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::MODEL_MATRIX);
 }
 
-void DebugRenderer::render(CameraComponent* camera)
+void GuizmoRenderer::render(CameraComponent* camera)
 {
     const glm::mat4& viewMatrix = camera->getViewMatrix();
     const glm::mat4& projectionMatrix = camera->getProjectionMatrix();
@@ -46,15 +66,17 @@ void DebugRenderer::render(CameraComponent* camera)
     this->shaderManager->setMat4(this->program, ShaderVariables::VIEW_MATRIX, &viewMatrix[0][0]);
 	this->shaderManager->setMat4(this->program, ShaderVariables::PROJECTION_MATRIX, &projectionMatrix[0][0]);
 
-	for (const UPTR<ColorMeshData>& item : this->meshes)
+	for (GuizmoComponent* item : this->guizmoComponents)
 	{
-        this->graphicsWrapper->bindVAO(item->vao, item->vbo);
+		ColorMeshData* mesh = item->mesh;
+        this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
         this->graphicsWrapper->enableColorMeshSettings();
 
-		glm::mat4 modelMatrix{ 1.0f };
+		TransformComponent* transform = item->getTransform();
+		const glm::mat4& modelMatrix = transform->getMatrix();
 		this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
-		this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &item->color[0]);
-		this->graphicsWrapper->drawElement(item->ebo, item->indices.size(), EDrawMode::LINES);
+		this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &mesh->color[0]);
+		this->graphicsWrapper->drawElement(mesh->ebo, mesh->indices.size(), EDrawMode::LINES);
 
 		this->graphicsWrapper->disableColorMeshSettings();
 	}

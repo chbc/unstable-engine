@@ -31,13 +31,13 @@ uint32_t ShaderManager::loadGUIShader()
     return this->loadShader(vertexContent, fragmentContent);
 }
 
-uint32_t ShaderManager::loadDebugShader()
+uint32_t ShaderManager::loadColorShader()
 {
     std::string vertexContent;
     std::string fragmentContent;
 
     ShaderContentFactory contentFactory;
-    contentFactory.createDebugShaderContent(vertexContent, fragmentContent);
+    contentFactory.createColorShaderContent(vertexContent, fragmentContent);
 
     return this->loadShader(vertexContent, fragmentContent);
 }
