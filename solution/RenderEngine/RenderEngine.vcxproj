@@ -419,7 +419,7 @@
     <ClCompile Include="src\editors\properties\Vec3EditorProperty.cpp" />
     <ClCompile Include="src\editors\windows\EditorFileBrowser.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
-    <ClCompile Include="src\editors\windows\fileIconsMUDOU\FileIcon.cpp" />
+    <ClCompile Include="src\editors\windows\fileIcons\FileIcon.cpp" />
     <ClCompile Include="src\editors\windows\popups\AEditorPopup.cpp" />
     <ClCompile Include="src\editors\windows\popups\ImportMeshPopup.cpp" />
     <ClCompile Include="src\editors\windows\sceneViewportComponents\SceneViewportCamera.cpp" />
