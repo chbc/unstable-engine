@@ -85,6 +85,12 @@ void EditorsController::createGUIImage()
 	this->notifyNewEntity(newEntity);
 }
 
+void EditorsController::createGUIText()
+{
+	Entity* newEntity = this->scenesManager->createGUITextEntity(TEXT_FONT_PATH);
+	this->notifyNewEntity(newEntity);
+}
+
 void EditorsController::refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result)
 {
 	result.clear();

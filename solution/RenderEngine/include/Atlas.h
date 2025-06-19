@@ -46,7 +46,7 @@ protected:
 
 private:
 	const AtlasItem *getItem(const std::string &id);
-	void load(const std::string &fontFileName);	// throws file not found
+	void load(const std::string& filePath);
 	void processLine(const std::string &input);
 	void getProperties(const std::string &input, std::unordered_map<std::string, std::string> &result);
 

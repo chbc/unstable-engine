@@ -1,8 +1,10 @@
 #include "Atlas.h"
-#include <fstream>
-#include <regex>
 #include "MultimediaManager.h"
 #include "SingletonsManager.h"
+#include "FileUtils.h"
+
+#include <fstream>
+#include <regex>
 
 namespace sre
 {
@@ -55,11 +57,11 @@ const AtlasItem *Atlas::getItem(const std::string &id)
 	return this->items[id].get();
 }
 
-void Atlas::load(const std::string &fontFileName)
+void Atlas::load(const std::string& filePath)
 {
+	std::string absolutePath = FileUtils::getContentAbsolutePath(filePath);
 	std::string line;
-	const std::string ASSETS_FOLDER = "../../media/";
-	std::ifstream file(ASSETS_FOLDER + fontFileName);
+	std::ifstream file(absolutePath);
 	if (file.is_open())
 	{
 		while (std::getline(file, line))
@@ -69,7 +71,7 @@ void Atlas::load(const std::string &fontFileName)
 		file.close();
 	}
 	else
-		throw "Couldn't find file: " + fontFileName;
+		throw "Couldn't find file: " + filePath;
 }
 
 void Atlas::processLine(const std::string &input)

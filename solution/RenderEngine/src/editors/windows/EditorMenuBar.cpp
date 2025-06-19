@@ -108,6 +108,7 @@ void EditorMenuBar::drawEntitiesGroup()
 		if (ImGui::BeginMenu("GUI"))
 		{
 			MENU_ITEM("Image", createGUIImage);
+			MENU_ITEM("Text", createGUIText);
 			ImGui::EndMenu();
 		}
 

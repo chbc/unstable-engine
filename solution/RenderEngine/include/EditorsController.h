@@ -18,6 +18,7 @@ private:
 	ScenesManager* scenesManager = nullptr;
 
 	const char* GUI_IMAGE_PATH = "engine\\media\\whiteTexture.png";
+	const char* TEXT_FONT_PATH = "engine\\media\\fonts\\verdana";
 
 public:
 	EditorsController(ScenesManager* arg_scenesManager);
@@ -27,6 +28,7 @@ public:
 	void saveScene();
 	void saveGui();
 	void createGUIImage();
+	void createGUIText();
 	void refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result);
 	void saveEntity(Entity* entity);
 	void loadFileFromBrowser(const char* filePath);
