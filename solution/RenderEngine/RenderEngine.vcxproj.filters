@@ -342,7 +342,7 @@
     <ClCompile Include="src\editors\windows\EditorFileBrowser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\editors\windows\FileIcons\FileIcon.cpp">
+    <ClCompile Include="src\editors\windows\fileIconsMUDOU\FileIcon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp">

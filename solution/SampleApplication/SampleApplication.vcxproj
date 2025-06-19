@@ -78,7 +78,7 @@
     <IntDir>../../obj/SampleApplication/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>../../bin</OutDir>
+    <OutDir>../../bin/</OutDir>
     <IntDir>../obj/$(ProjectName)/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
