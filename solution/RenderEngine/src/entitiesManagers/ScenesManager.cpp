@@ -114,12 +114,14 @@ void ScenesManager::update(float elapsedTime)
 
 void ScenesManager::loadScene(const char* scenePath)
 {
+    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+    messagesManager->removeListener<RefreshMeshesMessage>(this->refreshMeshesAction.get());
+
 	std::string sceneName = FileUtils::getFileName(scenePath);
     this->scene.reset(new Scene{ sceneName, scenePath });
     SceneLoader::load(this->scene.get());
     this->scene->onSceneLoaded();
 
-    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
     messagesManager->addListener<RefreshMeshesMessage>(this->refreshMeshesAction.get());
 }
 
@@ -206,18 +208,13 @@ void ScenesManager::removeDestroyedEntities()
     }
 }
 
-void ScenesManager::cleanUp()
+void ScenesManager::preRelease()
 {
     MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
     messagesManager->removeListener<RefreshMeshesMessage>(this->refreshMeshesAction.get());
 
     this->scene.reset();
     this->guiScene.reset();
-}
-
-void ScenesManager::preRelease()
-{
-    this->cleanUp();
 
     EntityTypes::release();
     EntityComponentTypes::release();

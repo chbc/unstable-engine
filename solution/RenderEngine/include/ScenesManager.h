@@ -51,7 +51,6 @@ private:
     AScene* getGuiScene();
     void onRefreshMeshes();
     void removeDestroyedEntities();
-    void cleanUp();
     void preRelease() override;
 
 friend class AExecutionStrategy;

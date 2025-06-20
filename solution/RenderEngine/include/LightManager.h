@@ -34,7 +34,7 @@ private:
     void addPointLight(PointLightComponent* item);
 
     void removeDestroyedEntities();
-    void clean();
+    void cleanUp();
 
 friend class RenderManager;
 friend class SingletonsManager;

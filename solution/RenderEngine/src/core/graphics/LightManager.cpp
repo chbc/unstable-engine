@@ -55,7 +55,7 @@ void LightManager::removeDestroyedEntities()
     }
 }
 
-void LightManager::clean()
+void LightManager::cleanUp()
 {
     this->directionalLights.clear();
     this->pointLights.clear();
