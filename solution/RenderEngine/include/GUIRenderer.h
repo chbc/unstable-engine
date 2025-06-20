@@ -6,15 +6,17 @@
 namespace sre
 {
 
+class ABaseGUIComponent;
 class GUIImageComponent;
+class GUITextComponent;
 class AGraphicsWrapper;
 class ShaderManager;
 
 class GUIRenderer
 {
 protected:
-    std::list<GUIImageComponent *> guiComponents;
-    std::list<GUIImageComponent *> dynamicGuiComponents;
+    std::list<GUIImageComponent*> imageComponents;
+    std::list<GUITextComponent*> textComponents;
     uint32_t program{ 0 };
 
     ShaderManager* shaderManager{ nullptr };
@@ -27,10 +29,10 @@ private:
     GUIRenderer(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
     void loadShader();
-    void addGUIComponent(GUIImageComponent *guiComponent);
-    void addDynamicGUIComponent(GUIImageComponent *guiComponent);
+    void addImageComponent(GUIImageComponent* imageComponent);
+    void addTextComponent(GUITextComponent* textComponent);
     void render();
-    void setup(GUIImageComponent *guiComponent);
+    void setup(ABaseGUIComponent* guiComponent);
 
     void removeDestroyedEntities();
 

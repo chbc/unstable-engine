@@ -1,7 +1,6 @@
 #pragma once
 
-#include "GUIImageComponent.h"
-#include "memory_aliases.h"
+#include "ABaseGUIComponent.h"
 
 #include <string>
 
@@ -10,23 +9,27 @@ namespace sre
 
 class FontAtlas;
 
-class GUITextComponent : public GUIImageComponent
+class GUITextComponent : public ABaseGUIComponent
 {
 DECLARE_COMPONENT()
 
 private:
-	FontAtlas *atlas;
+	FontAtlas* atlas{ nullptr };
+	uint32_t maxItems{ 10 };
+	bool isDynamic{ true };
 
 public:
 	GUITextComponent(Entity *entity);
-    void onInit() override;
 	SRE_API void setText(const std::string &text);
-
-private:
-	void loadFont(const std::string &fontFile);
 	uint32_t getTextureId() override;
 
+private:
+	void setMaxItems(uint32_t arg_maxItems);
+	inline bool getIsDynamic() { return this->isDynamic; }
+	void load(const std::string &fontFile);
+
 friend class GUIScene;
+friend class GUIRenderer;
 friend class Entity;
 };
 

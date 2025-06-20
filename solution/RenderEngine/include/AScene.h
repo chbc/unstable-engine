@@ -12,7 +12,6 @@ class AScene
 protected:
     std::unordered_map<std::string, UPTR<Entity>> entities;
     static uint32_t EntityIndex;
-    class RenderManager* renderManager{ nullptr };
 
 private:
     std::string name;

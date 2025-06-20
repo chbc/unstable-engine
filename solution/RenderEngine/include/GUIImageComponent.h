@@ -1,34 +1,26 @@
 #pragma once
 
-#include "AEntityComponent.h"
-#include "Model.h"
+#include "ABaseGUIComponent.h"
 
 namespace sre
 {
 
-class SRE_API GUIImageComponent : public AEntityComponent
+class SRE_API GUIImageComponent : public ABaseGUIComponent
 {
 DECLARE_COMPONENT()
 
-protected:
-    MeshData2D* meshData{ nullptr };
-    uint32_t maxItems{ 0 }; // ###
-	class TextureEditorProperty* textureEditorProperty{ nullptr };
-
 private:
     class Texture* texture{ nullptr };
-    bool isDynamic{ false }; // ###
+    class TextureEditorProperty* textureEditorProperty{ nullptr };
 
 public:
     GUIImageComponent(Entity *entity);
-    virtual ~GUIImageComponent();
-    void setMaxItems(uint32_t arg_maxItems);
-    virtual uint32_t getTextureId();
-    inline bool getIsDynamic() { return this->isDynamic; }
+    ~GUIImageComponent();
+
+    uint32_t getTextureId() override;
 
 protected:
     bool isAbleToBeRendered();
-    virtual void onPropertyDeserialized() override;
 
 private:
     void load(const std::string& filePath);

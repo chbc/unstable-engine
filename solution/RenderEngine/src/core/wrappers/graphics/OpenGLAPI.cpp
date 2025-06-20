@@ -47,6 +47,12 @@ void OpenGLAPI::createBuffers(MeshData2D* meshData, uint32_t maxItems, bool isDy
 {
 	this->createVAO(meshData, maxItems, isDynamic);
 	this->createEBO(meshData, maxItems, isDynamic);
+
+	if (isDynamic)
+	{
+		this->bindVAO(meshData->vao, meshData->vbo);
+		this->setupBufferSubData(meshData);
+	}
 }
 
 void OpenGLAPI::createBuffers(ColorMeshData* meshData)

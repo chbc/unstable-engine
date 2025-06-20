@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "GUIImageComponent.h"
+#include "GUITextComponent.h"
 #include "AGraphicsWrapper.h"
 #include "ShaderManager.h"
 #include "Texture.h"
@@ -16,8 +17,8 @@ GUIRenderer::GUIRenderer(ShaderManager *arg_shaderManager, AGraphicsWrapper *arg
 
 GUIRenderer::~GUIRenderer()
 {
-    this->guiComponents.clear();
-    this->dynamicGuiComponents.clear();
+    this->imageComponents.clear();
+    this->textComponents.clear();
 
     this->shaderManager->releaseShader(this->program);
 }
@@ -32,19 +33,19 @@ void GUIRenderer::loadShader()
     this->shaderManager->setupAttributeLocation(this->program, ShaderVariables::IN_TEXTURE_COORDS);
 }
 
-void GUIRenderer::addGUIComponent(GUIImageComponent *guiComponent)
+void GUIRenderer::addImageComponent(GUIImageComponent * imageComponent)
 {
-    this->guiComponents.push_back(guiComponent);
+    this->imageComponents.push_back(imageComponent);
 
-    this->graphicsWrapper->createBuffers(guiComponent->meshData, guiComponent->maxItems, guiComponent->isDynamic);
+    this->graphicsWrapper->createBuffers(imageComponent->meshData, 1, false);
 }
 
-void GUIRenderer::addDynamicGUIComponent(GUIImageComponent *guiComponent)
+void GUIRenderer::addTextComponent(GUITextComponent* textComponent)
 {
-    this->dynamicGuiComponents.push_back(guiComponent);
+    this->textComponents.push_back(textComponent);
 	
-	MeshData2D* meshData = static_cast<MeshData2D*>(guiComponent->meshData);
-	this->graphicsWrapper->createBuffers(meshData, guiComponent->maxItems, guiComponent->isDynamic);
+	MeshData2D* meshData = static_cast<MeshData2D*>(textComponent->meshData);
+	this->graphicsWrapper->createBuffers(meshData, textComponent->maxItems, textComponent->isDynamic);
 }
 
 void GUIRenderer::render()
@@ -55,7 +56,7 @@ void GUIRenderer::render()
     this->graphicsWrapper->disableDepthTest();
 
     // Static meshes
-    for (GUIImageComponent *item : this->guiComponents)
+    for (GUIImageComponent *item : this->imageComponents)
     {
         if (item->getEntity()->isEnabled())
         {
@@ -64,8 +65,8 @@ void GUIRenderer::render()
         }
     }
 
-    // Dynamic meshes
-    for (GUIImageComponent *item : this->dynamicGuiComponents)
+    // Text meshes
+    for (GUITextComponent *item : this->textComponents)
     {
         if ((item->meshData != nullptr) && item->getEntity()->isEnabled())
         {
@@ -80,7 +81,7 @@ void GUIRenderer::render()
     this->shaderManager->disableShader();
 }
 
-void GUIRenderer::setup(GUIImageComponent *guiComponent)
+void GUIRenderer::setup(ABaseGUIComponent* guiComponent)
 {
     // Matrix setup
     TransformComponent *transform = guiComponent->getTransform();
@@ -94,34 +95,36 @@ void GUIRenderer::setup(GUIImageComponent *guiComponent)
 
 void GUIRenderer::removeDestroyedEntities()
 {
-    std::list<GUIImageComponent *>::iterator it;
+    std::list<GUIImageComponent *>::iterator imageIt;
 
-    for (it = this->guiComponents.begin(); it != this->guiComponents.end(); )
+    for (imageIt = this->imageComponents.begin(); imageIt != this->imageComponents.end(); )
     {
-        if (!(*it)->getEntity()->isAlive())
+        if (!(*imageIt)->getEntity()->isAlive())
         {
-            this->graphicsWrapper->deleteBuffers((*it)->meshData);
-            it = this->guiComponents.erase(it);
+            this->graphicsWrapper->deleteBuffers((*imageIt)->meshData);
+            imageIt = this->imageComponents.erase(imageIt);
         }
         else
-            ++it;
+            ++imageIt;
     }
 
-    for (it = this->dynamicGuiComponents.begin(); it != this->dynamicGuiComponents.end(); )
+    std::list<GUITextComponent*>::iterator textIt;
+
+    for (textIt = this->textComponents.begin(); textIt != this->textComponents.end(); )
     {
-        if (!(*it)->getEntity()->isAlive())
+        if (!(*textIt)->getEntity()->isAlive())
         {
-            this->graphicsWrapper->deleteBuffers((*it)->meshData);
-            it = this->dynamicGuiComponents.erase(it);
+            this->graphicsWrapper->deleteBuffers((*textIt)->meshData);
+            textIt = this->textComponents.erase(textIt);
         }
         else
-            ++it;
+            ++textIt;
     }
 }
 
 bool GUIRenderer::isEmpty()
 {
-    return (this->guiComponents.empty() && this->dynamicGuiComponents.empty());
+    return (this->imageComponents.empty() && this->textComponents.empty());
 }
 
 } // namespace

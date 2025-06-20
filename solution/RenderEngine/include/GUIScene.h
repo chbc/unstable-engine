@@ -1,7 +1,7 @@
-#ifndef _GUI_MANAGER_H_
-#define _GUI_MANAGER_H_
+#pragma once
 
 #include "AScene.h"
+#include "GUIImageComponent.h"
 #include "GUITextComponent.h"
 #include "GUIButtonComponent.h"
 
@@ -30,5 +30,3 @@ friend class ScenesManager;
 };
 
 } // namespace
-
-#endif

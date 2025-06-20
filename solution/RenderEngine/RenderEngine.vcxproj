@@ -430,6 +430,7 @@
     <ClCompile Include="src\entities\components\EntityComponentTypes.cpp" />
     <ClCompile Include="src\entities\components\renderables\ARenderableComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\guizmos\GuizmoComponent.cpp" />
+    <ClCompile Include="src\entities\components\renderables\gui\ABaseGUIComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\ABaseTextureMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp" />
@@ -575,6 +576,7 @@
     <ClInclude Include="engine\core\wrappers\multimedia\SDLAPI.h" />
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
+    <ClInclude Include="include\ABaseGUIComponent.h" />
     <ClInclude Include="include\ABaseTextureMaterialComponent.h" />
     <ClInclude Include="include\AEditorPopup.h" />
     <ClInclude Include="include\AEntityComponent.h" />

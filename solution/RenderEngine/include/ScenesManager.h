@@ -16,6 +16,7 @@ protected:
 
 private:
     SPTR<Action> refreshMeshesAction;
+    RenderManager* renderManager{ nullptr };
 
 protected:
     void init() override;

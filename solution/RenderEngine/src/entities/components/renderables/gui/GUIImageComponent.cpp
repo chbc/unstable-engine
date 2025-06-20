@@ -2,20 +2,18 @@
 #include "MultimediaManager.h"
 #include "SingletonsManager.h"
 #include "AssetsManager.h"
-#include "AtlasManager.h"
 #include "TransformComponent.h"
-#include "PrimitiveMeshFactory.h"
-#include "Vec2EditorProperty.h"
 #include "TextureEditorProperty.h"
+#include "Texture.h"
+
+//#include "AtlasManager.h"
 
 namespace sre
 {
 
 IMPLEMENT_COMPONENT(GUIImageComponent)
 
-GUIImageComponent::GUIImageComponent(Entity *entity)
-	: AEntityComponent(entity),
-        maxItems(0), isDynamic(false)
+GUIImageComponent::GUIImageComponent(Entity *entity) : ABaseGUIComponent(entity)
 {
 	this->textureEditorProperty = new TextureEditorProperty{ "Texture", &this->texture, ETextureMap::GUI };
 	this->addEditorProperty(this->textureEditorProperty);
@@ -25,11 +23,6 @@ GUIImageComponent::~GUIImageComponent()
 {
     AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
     assetsManager->releaseTexture(this->texture);
-}
-
-void GUIImageComponent::setMaxItems(uint32_t arg_maxItems)
-{
-    maxItems = arg_maxItems;
 }
 
 uint32_t GUIImageComponent::getTextureId()
@@ -46,14 +39,6 @@ bool GUIImageComponent::isAbleToBeRendered()
     );
 }
 
-void GUIImageComponent::onPropertyDeserialized()
-{
-	AEntityComponent::onPropertyDeserialized();
-
-    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-    this->meshData = assetsManager->loadMesh2D();
-}
-
 void GUIImageComponent::load(const std::string& filePath)
 {
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
@@ -63,7 +48,7 @@ void GUIImageComponent::load(const std::string& filePath)
     glm::vec2 textureSize(texture->getWidth(), texture->getHeight());
     glm::vec2 normalizedSize = singletonsManager->get<MultimediaManager>()->getNormalizedSize(textureSize);
 
-    this->meshData = assetsManager->loadMesh2D();
+    ABaseGUIComponent::loadMesh();
     this->texture = texture;
 	this->textureEditorProperty->setTextureId(reinterpret_cast<void*>(texture->getId()));
 	this->getTransform()->setScale(glm::vec3(normalizedSize, 1.0f));
@@ -75,7 +60,7 @@ void GUIImageComponent::load(const std::string& filePath, const glm::vec2& norma
     AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
     Texture* texture = assetsManager->loadTexture(filePath.c_str(), ETextureMap::GUI);
 
-    this->meshData = assetsManager->loadMesh2D();
+    ABaseGUIComponent::loadMesh();
     this->texture = texture;
     this->textureEditorProperty->setTextureId(reinterpret_cast<void*>(texture->getId()));
     this->getTransform()->setScale(glm::vec3(normalizedSize, 1.0f));

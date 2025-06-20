@@ -1,6 +1,7 @@
 #include "RenderManager.h"
 #include "Entity.h"
 #include "MeshComponent.h"
+#include "GUIImageComponent.h"
 #include "GUITextComponent.h"
 #include "CameraComponent.h"
 #include "GuizmoComponent.h"
@@ -45,12 +46,12 @@ void RenderManager::addEntity(Entity *entity)
     else if (entity->hasComponent<GUIImageComponent>())
     {
         GUIImageComponent *guiComponent = entity->getComponent<GUIImageComponent>();
-        this->addGUIComponent(guiComponent);
+        this->addGUIImageComponent(guiComponent);
     }
     else if (entity->hasComponent<GUITextComponent>())
     {
         GUITextComponent *guiComponent = entity->getComponent<GUITextComponent>();
-        this->addDynamicGUIComponent(guiComponent);
+        this->addGUITextComponent(guiComponent);
     }
     else if (entity->hasComponent<CameraComponent>())
     {
@@ -127,19 +128,19 @@ void RenderManager::removeMesh(MeshComponent* mesh)
     }
 }
 
-void RenderManager::addGUIComponent(GUIImageComponent *guiComponent)
+void RenderManager::addGUIImageComponent(GUIImageComponent *guiComponent)
 {
     if (guiComponent->isAbleToBeRendered())
     {
         this->initGUIRenderer();
-        this->guiRenderer->addGUIComponent(guiComponent);
+        this->guiRenderer->addImageComponent(guiComponent);
     }
 }
 
-void RenderManager::addDynamicGUIComponent(GUIImageComponent *guiComponent)
+void RenderManager::addGUITextComponent(GUITextComponent*guiComponent)
 {
     this->initGUIRenderer();
-    this->guiRenderer->addDynamicGUIComponent(guiComponent);
+    this->guiRenderer->addTextComponent(guiComponent);
 }
 
 void RenderManager::addGuizmoComponent(GuizmoComponent* guizmoComponent)

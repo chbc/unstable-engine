@@ -14,6 +14,7 @@ namespace sre
 class Entity;
 class MeshComponent;
 class GUIImageComponent;
+class GUITextComponent;
 class CameraComponent;
 class GuizmoComponent;
 
@@ -26,9 +27,6 @@ class PostProcessingRenderer;
 
 struct MeshData2D;
 
-/*!
-	Singleton Class to handle renders
-*/
 class RenderManager : ASingleton
 {
 
@@ -59,8 +57,8 @@ private:
     void addMesh(MeshComponent* mesh);
     void addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent* mesh);
     void removeMesh(MeshComponent* mesh);
-    void addGUIComponent(GUIImageComponent* guiComponent);
-    void addDynamicGUIComponent(GUIImageComponent* guiComponent);
+    void addGUIImageComponent(GUIImageComponent* guiComponent);
+    void addGUITextComponent(GUITextComponent* guiComponent);
 	void addGuizmoComponent(GuizmoComponent* guizmoComponent);
 	void addDebugBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color);
     void initGUIRenderer();

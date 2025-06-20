@@ -426,6 +426,9 @@
     <ClCompile Include="src\core\io\assetsLoader\GuizmoLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\gui\ABaseGUIComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1107,6 +1110,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ColorMeshData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ABaseGUIComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

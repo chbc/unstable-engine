@@ -2,7 +2,6 @@
 
 #include "CameraComponent.h"
 #include "SingletonsManager.h"
-#include "RenderManager.h"
 #include "EngineValues.h"
 #include "MeshComponent.h"
 #include "AssetsManager.h"
@@ -50,8 +49,6 @@ Entity* Scene::createMeshEntity(const char* filePath, const char* meshName)
 		this->createMultiMeshEntity(entity, model);
     }
 
-    this->renderManager->addEntity(entity);
-
     return entity;
 }
 
@@ -85,7 +82,6 @@ PointLightComponent *Scene::createPointLight(const std::string& entityName, Enti
 
 void Scene::onRefreshMeshes()
 {
-    this->renderManager->cleanUpMeshes();
     AScene::onSceneLoaded();
 }
 

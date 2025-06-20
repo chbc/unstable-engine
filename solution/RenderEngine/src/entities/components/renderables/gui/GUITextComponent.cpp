@@ -3,7 +3,6 @@
 #include "SingletonsManager.h"
 #include "AtlasManager.h"
 #include "Texture.h"
-#include "Entity.h"
 #include "PrimitiveMeshFactory.h"
 #include "Log.h"
 
@@ -12,26 +11,23 @@ namespace sre
 
 IMPLEMENT_COMPONENT(GUITextComponent)
 
-GUITextComponent::GUITextComponent(Entity *entity)
-    : GUIImageComponent(entity), atlas(nullptr)
+GUITextComponent::GUITextComponent(Entity *entity) : ABaseGUIComponent(entity)
 {
     this->setMaxItems(10);
 }
 
-void GUITextComponent::loadFont(const std::string &fontFile)
+void GUITextComponent::setMaxItems(uint32_t arg_maxItems)
+{
+    this->maxItems = arg_maxItems;
+}
+
+void GUITextComponent::load(const std::string &fontFile)
 {
 	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
     this->atlas = singletonsManager->get<AtlasManager>()->getFont(fontFile);
 
 	this->meshData = PrimitiveMeshFactory().createPlaneTopDown(glm::vec2(1.0f, 1.0f));
-}
-
-void GUITextComponent::onInit()
-{
-	if (this->meshData != nullptr)
-	{
-		SingletonsManager::getInstance()->get<RenderManager>()->setupBufferSubData(meshData);
-	}
+    this->setText("Text");
 }
 
 void GUITextComponent::setText(const std::string &text)
@@ -68,7 +64,10 @@ void GUITextComponent::setText(const std::string &text)
 
         meshFactory.createPlaneIndices(meshData->indices, itemsCount);
 
-        SingletonsManager::getInstance()->get<RenderManager>()->setupBufferSubData(meshData);
+        if (meshData->ebo > 0)
+        {
+            SingletonsManager::getInstance()->get<RenderManager>()->setupBufferSubData(meshData);
+        }
     }
 }
 

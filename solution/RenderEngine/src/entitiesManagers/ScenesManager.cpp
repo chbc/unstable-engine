@@ -12,6 +12,8 @@ namespace sre
 
 void ScenesManager::init()
 {
+    this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+
     Action* action = new Action{ [&](void* message) { this->onRefreshMeshes(); } };
     this->refreshMeshesAction = SPTR<Action>(action);
 }
@@ -59,22 +61,30 @@ PointLightComponent* ScenesManager::createPointLight(const std::string& name, En
 
 Entity* ScenesManager::createGUIImageEntity(const std::string& filePath, const std::string& name)
 {
-    return this->guiScene->createGUIImageEntity(filePath, name);
+    Entity* entity = this->guiScene->createGUIImageEntity(filePath, name);
+    this->renderManager->addEntity(entity);
+    return entity;
 }
 
 Entity* ScenesManager::createGUIImageEntity(const std::string& filePath, const glm::vec2& normalizedSize, const std::string& name)
 {
-    return this->guiScene->createGUIImageEntity(filePath, normalizedSize, name);
+    Entity* entity = this->guiScene->createGUIImageEntity(filePath, normalizedSize, name);
+    this->renderManager->addEntity(entity);
+    return entity;
 }
 
 Entity* ScenesManager::createGUIImageEntityFromAtlas(const std::string& filePath, const std::string& imageId, const std::string& name)
 {
-    return this->guiScene->createGUIImageEntityFromAtlas(filePath, imageId, name);
+    Entity* entity = this->guiScene->createGUIImageEntityFromAtlas(filePath, imageId, name);
+    this->renderManager->addEntity(entity);
+    return entity;
 }
 
 Entity* ScenesManager::createGUITextEntity(const std::string fontFile, const std::string& name, uint32_t maxItems)
 {
-    return this->guiScene->createGUITextEntity(fontFile, name, maxItems);
+    Entity* entity = this->guiScene->createGUITextEntity(fontFile, name, maxItems);
+    this->renderManager->addEntity(entity);
+    return entity;
 }
 
 Entity* ScenesManager::raycast(const Ray& ray, float maxDistance)
@@ -161,7 +171,10 @@ bool ScenesManager::isBaseSceneStored(AScene* baseScene)
 
 Entity* ScenesManager::createMeshEntity(const char* filePath, const char* meshName)
 {
-    return this->scene->createMeshEntity(filePath, meshName);
+    Entity* entity = this->scene->createMeshEntity(filePath, meshName);
+    this->renderManager->addEntity(entity);
+
+    return entity;
 }
 
 AScene* ScenesManager::getScene()
@@ -176,6 +189,7 @@ AScene* ScenesManager::getGuiScene()
 
 void ScenesManager::onRefreshMeshes()
 {
+    this->renderManager->cleanUpMeshes();
     this->scene->onRefreshMeshes();
 }
 

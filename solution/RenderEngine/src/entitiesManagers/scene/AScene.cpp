@@ -13,7 +13,6 @@ uint32_t AScene::EntityIndex = 0;
 AScene::AScene(std::string arg_name, std::string arg_filePath) 
     : name(arg_name), label(arg_name), filePath(arg_filePath)
 {
-    this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
     Action* action = new Action{ [&](void* message) {this->onEntityChanged(message); } };
     this->entityChangedAction = SPTR<Action>(action);
 
@@ -72,6 +71,7 @@ void AScene::removeDestroyedEntities()
 
 void AScene::onSceneLoaded()
 {
+    RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
     for (const auto& item : this->entities)
     {
         renderManager->addEntity(item.second.get());

@@ -23,7 +23,6 @@ Entity *GUIScene::createGUIImageEntity(const std::string &filePath, const std::s
     Entity *result = this->createEntity(name);
     GUIImageComponent *component = result->addComponent<GUIImageComponent>();
     component->load(filePath);
-    this->renderManager->addEntity(result);
     return result;
 }
 
@@ -48,7 +47,7 @@ Entity *GUIScene::createGUITextEntity(const std::string fontFile, const std::str
     Entity *result = this->createEntity();
     GUITextComponent *component = result->addComponent<GUITextComponent>();
     component->setMaxItems(maxItems);
-    component->loadFont(fontFile);
+    component->load(fontFile);
 
     return result;
 }
