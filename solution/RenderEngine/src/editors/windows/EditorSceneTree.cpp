@@ -144,7 +144,7 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 
 		if (open)
 		{
-			for (uint32_t i = 0; i < childrenCount; i++)
+			for (uint32_t i = 0; i < entity->getChildrenCount(); i++)
 			{
 				drawEntityTree(entity->getChild(i), i);
 			}

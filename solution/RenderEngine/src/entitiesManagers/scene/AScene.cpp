@@ -58,8 +58,10 @@ Entity* AScene::createEntity(std::string entityName, Entity* parent, const std::
     {
         parent->addChild(result);
     }
-
-    this->entities[entityName] = UPTR<Entity>{ result };
+    else
+    {
+        this->entities[entityName] = UPTR<Entity>{ result };
+    }
 
     return result;
 }
