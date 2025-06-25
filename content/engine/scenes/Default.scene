@@ -13,19 +13,17 @@ _main_camera:
       Look At Target: [0,0,0]
       Up: [0,1,0]
       FOV: 90
-point_light:
+directional_light:
   Enabled: 1
   Components:
     TransformComponent:
       Enabled: 1
-      Position: [0,5,0]
-      Rotation: [0,0,0]
+      Position: [0,2,0]
+      Rotation: [135,0,0]
       Scale: [1,1,1]
-    PointLightComponent:
+    DirectionalLightComponent:
       Enabled: 1
       Color: [0.6,0.6,0.6]
-      Intensity: 1.25
-      Range: 10
 plane:
   Enabled: 1
   Components:
