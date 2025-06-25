@@ -4,6 +4,8 @@
 #include "AtlasManager.h"
 #include "Texture.h"
 #include "PrimitiveMeshFactory.h"
+#include "FontEditorProperty.h"
+#include "InputTextEditorProperty.h"
 #include "Log.h"
 
 namespace sre
@@ -13,7 +15,14 @@ IMPLEMENT_COMPONENT(GUITextComponent)
 
 GUITextComponent::GUITextComponent(Entity *entity) : ABaseGUIComponent(entity)
 {
-    this->setMaxItems(10);
+	this->meshData = PrimitiveMeshFactory().createPlaneTopDown(glm::vec2(1.0f, 1.0f));
+    this->addEditorProperty(new FontEditorProperty{ "Font", &this->atlas });
+    this->addEditorProperty(new InputTextEditorProperty{ "Text", &this->text });
+}
+
+GUITextComponent::~GUITextComponent()
+{
+    delete this->meshData;
 }
 
 void GUITextComponent::setMaxItems(uint32_t arg_maxItems)
@@ -25,9 +34,6 @@ void GUITextComponent::load(const std::string &fontFile)
 {
 	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
     this->atlas = singletonsManager->get<AtlasManager>()->getFont(fontFile);
-
-	this->meshData = PrimitiveMeshFactory().createPlaneTopDown(glm::vec2(1.0f, 1.0f));
-    this->setText("Text");
 }
 
 void GUITextComponent::setText(const std::string &text)
@@ -45,7 +51,7 @@ void GUITextComponent::setText(const std::string &text)
         int itemsCount = 0;
         for (char item : text)
         {
-            const FontItem *atlasItem = static_cast<const FontItem *>(this->atlas->getItem(std::to_string(item)));
+            const FontItem *atlasItem = static_cast<const FontItem *>(this->atlas->getItem(item));
             if (atlasItem == nullptr)
             {
 				Log::LogWarning("'" + std::to_string(item) + "' does not exists in the loaded atlas");
@@ -69,11 +75,19 @@ void GUITextComponent::setText(const std::string &text)
             SingletonsManager::getInstance()->get<RenderManager>()->setupBufferSubData(meshData);
         }
     }
+
+    this->text = text;
 }
 
 uint32_t GUITextComponent::getTextureId()
 {
     return this->atlas->getTexture()->getId();
+}
+
+void GUITextComponent::onPropertyChanged()
+{
+    ABaseGUIComponent::onPropertyChanged();
+    this->setText(this->text);
 }
 
 } // namespace

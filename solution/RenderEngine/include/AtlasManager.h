@@ -1,5 +1,4 @@
-#ifndef _ATLAS_MANAGER_H_
-#define _ATLAS_MANAGER_H_
+#pragma once
 
 #include <unordered_map>
 #include "FontAtlas.h"
@@ -29,8 +28,7 @@ private:
 friend class GUITextComponent;
 friend class GUIImageComponent;
 friend class SingletonsManager;
+friend class FontEditorProperty;
 };
 
 } // namespace
-
-#endif

@@ -33,6 +33,7 @@ namespace FileUtils
 	bool isDirectory(const std::string& filePath);
     bool isPathFromGameContent(const std::string& filePath);
 	EAssetType getAssetType(const std::string& filePath);
+    std::string removeExtension(const std::string& filePath);
 }
 
 } // namespace

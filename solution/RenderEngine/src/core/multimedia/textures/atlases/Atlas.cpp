@@ -14,6 +14,22 @@ Atlas::Atlas(Texture *texture)
 	this->texture = texture;
 }
 
+const AtlasItem* Atlas::getItem(const std::string& id)
+{
+	return this->items[id].get();
+}
+
+Texture* Atlas::getTexture()
+{
+	return this->texture;
+}
+
+std::string Atlas::getFilePath()
+{
+	std::string result = FileUtils::getContentRelativePath(this->texture->getFilePath());
+	return FileUtils::removeExtension(result);
+}
+
 bool Atlas::checkProperties(const std::unordered_map<std::string, std::string> &properties)
 {
 	return
@@ -50,11 +66,6 @@ uint16_t Atlas::getMinItems()
 float Atlas::getValue(std::unordered_map<std::string, std::string> &propertiesMap, const std::string &key)
 {
 	return std::stof(propertiesMap[key].c_str());
-}
-
-const AtlasItem *Atlas::getItem(const std::string &id)
-{
-	return this->items[id].get();
 }
 
 void Atlas::load(const std::string& filePath)
@@ -112,11 +123,6 @@ void Atlas::getProperties(const std::string &input, std::unordered_map<std::stri
 
 		++iter;
 	}
-}
-
-Texture* Atlas::getTexture()
-{
-	return this->texture;
 }
 
 } // namespace

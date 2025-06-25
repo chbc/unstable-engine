@@ -48,6 +48,7 @@ Entity *GUIScene::createGUITextEntity(const std::string fontFile, const std::str
     GUITextComponent *component = result->addComponent<GUITextComponent>();
     component->setMaxItems(maxItems);
     component->load(fontFile);
+    component->setText("Text");
 
     return result;
 }

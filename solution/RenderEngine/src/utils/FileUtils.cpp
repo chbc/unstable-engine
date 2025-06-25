@@ -262,6 +262,12 @@ EAssetType getAssetType(const std::string& filePath)
 	return result;
 }
 
+std::string removeExtension(const std::string& filePath)
+{
+	FS::path systemPath{ filePath };
+	return systemPath.replace_extension().string();
+}
+
 #endif
 
 } // namespace

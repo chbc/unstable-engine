@@ -1,5 +1,4 @@
-#ifndef _FONT_ATLAS_H_
-#define _FONT_ATLAS_H_
+#pragma once
 
 #include "Atlas.h"
 
@@ -30,6 +29,9 @@ class FontAtlas : public Atlas
 private:
 	FontAtlas(Texture *texture);
 
+public:
+	const AtlasItem* getItem(char id);
+
 protected:
 	bool checkProperties(const std::unordered_map<std::string, std::string> &properties) override;
 	AtlasItem *createItem(std::unordered_map<std::string, std::string> &propertiesMap) override;
@@ -39,4 +41,3 @@ friend class AtlasManager;
 };
 
 } // namespace
-#endif

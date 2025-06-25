@@ -3,6 +3,7 @@
 #include "Rect.h"
 #include "memory_aliases.h"
 #include "Texture.h"
+
 #include <unordered_map>
 #include <tuple>
 
@@ -36,6 +37,11 @@ private:
 	// <id, item>
 	std::unordered_map<std::string, UPTR<AtlasItem>> items;
 
+public:
+	const AtlasItem *getItem(const std::string &id);
+	Texture* getTexture();
+	std::string getFilePath();
+
 protected:
 	Atlas(Texture *texture);
 
@@ -45,12 +51,10 @@ protected:
 	float getValue(std::unordered_map<std::string, std::string> &propertiesMap, const std::string &key);
 
 private:
-	const AtlasItem *getItem(const std::string &id);
 	void load(const std::string& filePath);
 	void processLine(const std::string &input);
 	void getProperties(const std::string &input, std::unordered_map<std::string, std::string> &result);
 
-	Texture* getTexture();
 
 friend class AtlasManager;
 friend class GUITextComponent;

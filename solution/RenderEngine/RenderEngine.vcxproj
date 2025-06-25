@@ -368,6 +368,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\FontEditorProperty.h" />
     <ClCompile Include="src\core\graphics\meshData\Model.cpp" />
     <ClCompile Include="src\core\graphics\renderers\DebugRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renderers\GuizmoRenderer.cpp" />
@@ -412,8 +413,10 @@
     <ClCompile Include="src\editors\properties\BoolEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\ColorEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\FloatEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\FontEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\MaterialEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\MeshEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\TextEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\Vec2EditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\Vec3EditorProperty.cpp" />
@@ -506,6 +509,7 @@
     <ClCompile Include="thirdParties\imgui\imgui_draw.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_tables.cpp" />
     <ClCompile Include="thirdParties\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="thirdParties\imgui\misc\cpp\imgui_stdlib.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\core\graphics\renderers\components\LitRendererComponent.h" />
@@ -720,6 +724,7 @@
     <ClInclude Include="include\SpriteRendererComponent.h" />
     <ClInclude Include="include\StringUtils.h" />
     <ClInclude Include="include\TestServicesProvider.h" />
+    <ClInclude Include="include\InputTextEditorProperty.h" />
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\TextureCreator.h" />
     <ClInclude Include="include\TextureEditorProperty.h" />
@@ -736,6 +741,7 @@
     <ClInclude Include="thirdParties\imgui\backends\imgui_impl_sdl2.h" />
     <ClInclude Include="thirdParties\imgui\imgui.h" />
     <ClInclude Include="thirdParties\imgui\imgui_internal.h" />
+    <ClInclude Include="thirdParties\imgui\misc\cpp\imgui_stdlib.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

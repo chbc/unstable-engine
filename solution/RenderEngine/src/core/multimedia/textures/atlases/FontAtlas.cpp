@@ -7,6 +7,11 @@ namespace sre
 
 FontAtlas::FontAtlas(Texture *texture) : Atlas(texture) {}
 
+const AtlasItem* FontAtlas::getItem(char id)
+{
+	return Atlas::getItem(std::to_string(id));
+}
+
 bool FontAtlas::checkProperties(const std::unordered_map<std::string, std::string> &properties)
 {
 	return
