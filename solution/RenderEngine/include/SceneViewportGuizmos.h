@@ -32,6 +32,7 @@ public:
 
 private:
 	void onEntitySelected(void* data);
+	void onEntityManipulated();
 };
 
 } // namespace

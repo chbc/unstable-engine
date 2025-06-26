@@ -34,7 +34,8 @@ public:
 private:
 	void init();
 	void onUpdate(float elapsedTime);
-	void onEditorGUI();
+	bool onEditorGUI();
+	void onGUIEnd();
 	void onShowPopup(void* message);
 	void cleanUp();
 	void release();

@@ -1,8 +1,7 @@
-#if defined(DEBUG) && !defined(__ANDROID__)
-
 #pragma once
 
 #include "BaseMessage.h"
+#include "core_defines.h"
 
 #include <string>
 
@@ -26,7 +25,7 @@ struct ExitEditorMessage : public BaseMessage
 	DECLARE_MESSAGE()
 };
 
-struct FileDropEditorMessage : public BaseMessage
+struct SRE_API FileDropEditorMessage : public BaseMessage
 {
 	DECLARE_MESSAGE()
 
@@ -50,5 +49,3 @@ struct EntityChangedEditorMessage : public BaseMessage
 };
 
 } // namespace
-
-#endif

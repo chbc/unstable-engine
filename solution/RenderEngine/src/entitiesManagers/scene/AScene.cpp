@@ -124,4 +124,9 @@ void AScene::onEntityChanged(void* data)
     this->label = this->name + "*";
 }
 
+void AScene::onSceneSaved()
+{
+    this->label = this->name;
+}
+
 } // namespace

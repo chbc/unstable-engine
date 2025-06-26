@@ -441,6 +441,9 @@
     <ClCompile Include="thirdParties\imgui\misc\cpp\imgui_stdlib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utils\ImGuiLib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1131,6 +1134,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="thirdParties\imgui\misc\cpp\imgui_stdlib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImGuiLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

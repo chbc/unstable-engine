@@ -58,6 +58,8 @@ bool SceneViewportGuizmos::drawAndManipulate(float windowWidth, float windowHeig
 			entityTransform->setRotation(glm::degrees(rotation));
 
 			result = true;
+
+			this->onEntityManipulated();
 		}
 	}
 
@@ -102,6 +104,12 @@ void SceneViewportGuizmos::onEntitySelected(void* data)
 
 	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 	renderManager->addGuizmoComponent(guizmoComponent);
+}
+
+void SceneViewportGuizmos::onEntityManipulated()
+{
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	messagesManager->notify<EntityChangedEditorMessage>();
 }
 
 } // namespace

@@ -37,6 +37,7 @@ private:
     void resolveName(std::string& entityName);
     std::string generateEntityId(const std::string& duplicateName = "");
     void onEntityChanged(void* data);
+    void onSceneSaved();
 
 friend class ScenesManager;
 friend class EditorSceneTree;

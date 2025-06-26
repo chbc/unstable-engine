@@ -141,6 +141,8 @@ void ScenesManager::saveScene(std::string scenePath)
         this->scene->name = FileUtils::getFileName(scenePath);
     }
     SceneLoader::save(this->scene.get());
+
+    this->scene->onSceneSaved();
 }
 
 void ScenesManager::saveGuiScene(std::string scenePath)

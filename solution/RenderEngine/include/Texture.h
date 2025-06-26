@@ -1,13 +1,15 @@
 #pragma once
 
-#include <stdint.h>
 #include "ETextureMap.h"
+#include "core_defines.h"
+
+#include <stdint.h>
 #include <string>
 
 namespace sre
 {
 
-class Texture
+class SRE_API Texture
 {
 private:
 	uint32_t id;

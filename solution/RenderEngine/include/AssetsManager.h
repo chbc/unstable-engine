@@ -38,7 +38,7 @@ using TexturesMapType	= std::unordered_map<size_t, TexturePairType>;
 using IconsMapType		= std::unordered_map<size_t, IconPairType>;
 using GuizmosMapType	= std::unordered_map<size_t, GuizmoPairType>;
 
-class AssetsManager : public ASingleton
+class SRE_API AssetsManager : public ASingleton
 {
 private:
 	std::hash<std::string> hash;

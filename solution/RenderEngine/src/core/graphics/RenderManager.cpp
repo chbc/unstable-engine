@@ -323,8 +323,6 @@ void RenderManager::cleanUpMeshes()
 {
     this->opaqueMeshRenderers.clear();
     this->translucentMeshRenderers.clear();
-    
-    this->lightManager->cleanUp();
 }
 
 void RenderManager::cleanUpGui()

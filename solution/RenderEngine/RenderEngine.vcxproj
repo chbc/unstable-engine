@@ -496,6 +496,7 @@
     <ClCompile Include="src\core\wrappers\graphics\OpenGLAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\SDLAPI.cpp" />
     <ClCompile Include="src\tests\TestServicesProvider.cpp" />
+    <ClCompile Include="src\utils\ImGuiLib.cpp" />
     <ClCompile Include="src\utils\Log.cpp" />
     <ClCompile Include="src\utils\FileUtils.cpp" />
     <ClCompile Include="src\utils\math\Bounds.cpp" />
@@ -606,6 +607,7 @@
     <ClInclude Include="include\GuizmoComponent.h" />
     <ClInclude Include="include\GuizmoLoader.h" />
     <ClInclude Include="include\GuizmoRenderer.h" />
+    <ClInclude Include="include\ImGuiLib.h" />
     <ClInclude Include="include\ImportMeshPopup.h" />
     <ClInclude Include="include\Ray.h" />
     <ClInclude Include="include\RefreshMeshesMessage.h" />

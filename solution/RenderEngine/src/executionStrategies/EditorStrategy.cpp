@@ -19,6 +19,8 @@ void EditorStrategy::init(RenderEngine* controller)
     this->worldEditor->init();
     this->multimediaManager->setExecutionMode(EExecutionMode::EDITOR);
     this->renderManager->setExecutionMode(EExecutionMode::EDITOR);
+
+    controller->onInitEditor();
 }
 
 void EditorStrategy::update(RenderEngine* controller, float elapsedTime)
@@ -38,8 +40,14 @@ void EditorStrategy::render(RenderEngine* controller)
 
     this->renderManager->renderGuizmos();
     this->renderManager->unbindFrameBuffer();
-    this->worldEditor->onEditorGUI();
+    
+    bool guiDrawn = this->worldEditor->onEditorGUI();
     controller->onEditorGUI();
+
+    if (guiDrawn)
+    {
+        this->worldEditor->onGUIEnd();
+    }
 }
 
 void EditorStrategy::cleanUp()

@@ -11,7 +11,7 @@
 #include "EditorMessages.h"
 #include "MessagesManager.h"
 
-#include "imgui.h"
+#include "imgui/imgui.h"
 
 namespace sre
 {
@@ -50,7 +50,7 @@ void WorldEditor::onUpdate(float elapsedTime)
         item->onUpdate(elapsedTime);
 }
 
-void WorldEditor::onEditorGUI()
+bool WorldEditor::onEditorGUI()
 {
     if (this->showDemo)
     {
@@ -62,7 +62,7 @@ void WorldEditor::onEditorGUI()
         }
 
         ImGui::ShowDemoWindow(&this->showDemo);
-        return;
+        return false;
     }
     
     if (this->wasShowingDemo)
@@ -124,6 +124,12 @@ void WorldEditor::onEditorGUI()
         this->currentPopup->onEditorGUI();
     }
     // ------------- //
+
+    return true;
+}
+
+void WorldEditor::onGUIEnd()
+{
     ImGui::End();
 }
 
