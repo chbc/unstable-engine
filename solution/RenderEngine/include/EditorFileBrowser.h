@@ -25,7 +25,9 @@ private:
 	SPTR<Action_OnClosePopup> onClosePopupAction;
 	EditorsController* controller{ nullptr };
 	std::string gameContentFolder;
+	std::string engineContentFolder;
 	std::string currentDirectory;
+	FileIcon* selectedItem{ nullptr };
 
 public:
 	EditorFileBrowser(EditorsController* arg_controller);

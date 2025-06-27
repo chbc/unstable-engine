@@ -37,6 +37,7 @@ public:
 	void createDirectionalLight();
 	void createPointLight();
 	void notifyEntitySelection(Entity* entity);
+	void deleteFile(const char* filePath);
 
 private:
 	void notifyNewEntity(Entity* entity);

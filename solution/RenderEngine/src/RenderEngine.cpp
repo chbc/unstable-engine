@@ -60,6 +60,8 @@ void RenderEngine::run()
             this->dispatchEndFrameActions();
             this->currentStrategy->delay(this);
         }
+
+        this->onQuit();
     }
     catch (std::string& message)
     {

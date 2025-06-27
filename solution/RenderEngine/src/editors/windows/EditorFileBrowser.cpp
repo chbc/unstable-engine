@@ -22,6 +22,7 @@ EditorFileBrowser::EditorFileBrowser(EditorsController* arg_controller)
 void EditorFileBrowser::onInit()
 {
 	this->gameContentFolder = FileUtils::getContentAbsolutePath("game");
+	this->engineContentFolder = FileUtils::getContentAbsolutePath("engine");
 	this->currentDirectory = this->gameContentFolder;
 	this->controller->refreshFileIcons(this->gameContentFolder, this->fileIcons);
 
@@ -35,6 +36,13 @@ void EditorFileBrowser::onEditorGUI()
 	if (ImGui::Button("Content", ImVec2{ 64, 16 }))
 	{
 		this->controller->refreshFileIcons(this->gameContentFolder, this->fileIcons);
+	}
+	
+	ImGui::SameLine();
+
+	if (ImGui::Button("Engine", ImVec2{ 64, 16 }))
+	{
+		this->controller->refreshFileIcons(this->engineContentFolder, this->fileIcons);
 	}
 
 	const ImVec2 size{ 64, 64 };

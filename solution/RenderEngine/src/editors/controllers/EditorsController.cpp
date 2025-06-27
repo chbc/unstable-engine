@@ -145,10 +145,10 @@ void EditorsController::loadFileFromBrowser(const char* filePath)
 
 void EditorsController::importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, std::string& resultFilePath)
 {
-	std::stringstream commandoStream;
+	std::stringstream commandStream;
 	std::string toolPath = FileUtils::getToolsAbsolutePath("MeshConverter.exe");
-	commandoStream << toolPath << " " << sourceFilePath << " " << destinationPath << " " << scaleFactor;
-	std::string command = commandoStream.str();
+	commandStream << toolPath << " " << sourceFilePath << " " << destinationPath << " " << scaleFactor;
+	std::string command = commandStream.str();
 
 	system(command.c_str());
 
@@ -180,6 +180,15 @@ void EditorsController::notifyEntitySelection(Entity* entity)
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	EntitySelectionMessage message{ entity };
 	messagesManager->notify(&message);
+}
+
+void EditorsController::deleteFile(const char* filePath)
+{
+	std::stringstream commandStream;
+	commandStream << "rm" << " " << filePath;
+	std::string command = commandStream.str();
+
+	system(command.c_str());
 }
 
 void EditorsController::notifyNewEntity(Entity* entity)
