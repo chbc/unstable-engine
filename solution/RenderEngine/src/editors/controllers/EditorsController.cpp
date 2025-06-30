@@ -182,10 +182,11 @@ void EditorsController::notifyEntitySelection(Entity* entity)
 	messagesManager->notify(&message);
 }
 
-void EditorsController::deleteFile(const char* filePath)
+void EditorsController::deleteFile(const char* filePath, bool isDirectory)
 {
 	std::stringstream commandStream;
-	commandStream << "rm" << " " << filePath;
+	std::string delCommand = isDirectory ? "rmdir /S/Q" : "del /F/Q";
+	commandStream << delCommand << " " << filePath;
 	std::string command = commandStream.str();
 
 	system(command.c_str());

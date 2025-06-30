@@ -23,6 +23,7 @@ private:
 	std::vector<UPTR<FileIcon>> fileIcons;
 	SPTR<Action> externalFileDropAction;
 	SPTR<Action_OnClosePopup> onClosePopupAction;
+	SPTR<Action> entitySelectionAction;
 	EditorsController* controller{ nullptr };
 	std::string gameContentFolder;
 	std::string engineContentFolder;
@@ -36,7 +37,13 @@ public:
 	void onCleanUp() override;
 
 private:
+	void setupColumns(const ImVec2& iconSize);
+	void showRootContentButtons();
+	void showIcon(FileIcon* icon, const ImVec2& size);
+	void handleDelete();
+	void handleIconDrag(FileIcon* icon, const ImVec2& size);
 	void handleExternalFileDrop(void* message);
+	void onEntitySelected(void* data);
 };
 
 } // namespace
