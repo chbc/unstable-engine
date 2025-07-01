@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core_defines.h"
+
 #include <stdint.h>
 #include <functional>
 
@@ -15,7 +17,7 @@ namespace sre
 
 using Action = std::function<void(void*)>;
 
-struct BaseMessage
+SRE_API struct BaseMessage
 {
 private:
     static uint16_t Index;

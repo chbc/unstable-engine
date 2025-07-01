@@ -23,9 +23,29 @@ void image(uint64_t textureId, float width, float height)
 	ImGui::Image(textureId, ImVec2{ width, height });
 }
 
+bool button(const char* label, float width, float height)
+{
+	return ImGui::Button(label, ImVec2{ width, height });
+}
+
+void setNextItemAllowOverlap()
+{
+	ImGui::SetNextItemAllowOverlap();
+}
+
+bool selectable(const char* label, bool selected)
+{
+	return ImGui::Selectable(label, selected);
+}
+
 void sameLine()
 {
 	ImGui::SameLine();
+}
+
+void separatorText(const char* label)
+{
+	ImGui::SeparatorText(label);
 }
 
 void end()
