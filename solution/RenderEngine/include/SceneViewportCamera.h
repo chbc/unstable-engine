@@ -18,7 +18,7 @@ enum class EViewingState
 class SceneViewportCamera
 {
 private:
-	SPTR<class Entity> camera{ nullptr };
+	class TransformComponent* cameraTransform{ nullptr };
 	class CameraComponent* cameraComponent{ nullptr };
 	class FlyingMovementComponent* flyingComponent{ nullptr };
 	class OrbitMovementComponent* orbitComponent{ nullptr };

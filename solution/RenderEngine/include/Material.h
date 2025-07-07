@@ -3,6 +3,7 @@
 #include "memory_aliases.h"
 #include "core_defines.h"
 #include "AEditorProperty.h"
+
 #include <unordered_map>
 #include <glm/glm.hpp>
 #include <string>

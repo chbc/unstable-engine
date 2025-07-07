@@ -12,22 +12,22 @@ namespace sre
 
 Scene::Scene(std::string arg_name, std::string arg_filePath) : AScene(arg_name, arg_filePath) { }
 
-Entity* Scene::createPerspectiveCamera(float fov, float near, float far, Entity* parent, bool isMainCamera)
+Entity* Scene::createPerspectiveCamera(float fov, float near, float far, Entity* parent)
 {
-    Entity* mainCamera = this->createEntity("_main_camera", parent);
-    CameraComponent* cameraComponent = mainCamera->addComponent<CameraComponent>();
+    Entity* result = this->createEntity("_main_camera", parent);
+    CameraComponent* cameraComponent = result->addComponent<CameraComponent>();
     cameraComponent->setPerspectiveProjection(fov, EngineValues::ASPECT_RATIO, near, far);
 
-    return mainCamera;
+    return result;
 }
 
-Entity* Scene::createOrthoCamera(Entity* parent, bool isMainCamera)
+Entity* Scene::createOrthoCamera(Entity* parent)
 {
-    Entity* mainCamera = this->createEntity("_main_camera", parent);
-    CameraComponent* cameraComponent = mainCamera->addComponent<CameraComponent>();
+    Entity* result = this->createEntity("_main_camera", parent);
+    CameraComponent* cameraComponent = result->addComponent<CameraComponent>();
     cameraComponent->setOrthoProjection();
 
-    return mainCamera;
+    return result;
 }
 
 Entity* Scene::createMeshEntity(const char* filePath, const char* meshName)

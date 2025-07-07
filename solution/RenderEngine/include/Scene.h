@@ -17,8 +17,8 @@ private:
     Scene(std::string arg_name, std::string arg_filePath);
 
 private:
-    Entity* createPerspectiveCamera(float fov = 70.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr, bool isMainCamera = true);
-    Entity* createOrthoCamera(Entity* parent = nullptr, bool isMainCamera = true);
+    Entity* createPerspectiveCamera(float fov = 70.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr);
+    Entity* createOrthoCamera(Entity* parent = nullptr);
 
     // renderables //
     Entity* createMeshEntity(const char* filePath, const char* meshName);
@@ -34,6 +34,7 @@ private:
 
 friend class ScenesManager;
 friend class SceneLoader;
+friend class SceneViewportCamera;
 };
 
 } // namespace

@@ -7,6 +7,7 @@
 #include "SingletonsManager.h"
 #include "EngineValues.h"
 #include "Input.h"
+#include "ScenesManager.h"
 
 #include "imgui/imgui.h"
 
@@ -15,18 +16,17 @@ namespace sre
 
 void SceneViewportCamera::onInit()
 {
-	this->camera = SPTR<Entity>(new Entity{ "_editor_camera" });
-	this->cameraComponent = this->camera->addComponent<CameraComponent>();
-	this->cameraComponent->setPerspectiveProjection(70.0f, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
+	ScenesManager* scenesManager = SingletonsManager::getInstance()->get<ScenesManager>();
+	Scene* editorScene = scenesManager->getEditorScene();
 
-	this->flyingComponent = this->camera->addComponent<FlyingMovementComponent>();
-	this->orbitComponent = this->camera->addComponent<OrbitMovementComponent>();
-
-	this->camera->getTransform()->setPosition({ 0.0f, 2.0f, 5.0f });
-	this->camera->onInit();
+	Entity* camera = editorScene->createPerspectiveCamera();
+	this->flyingComponent = camera->addComponent<FlyingMovementComponent>();
+	this->orbitComponent = camera->addComponent<OrbitMovementComponent>();
+	this->cameraComponent = camera->getComponent<CameraComponent>();
+	this->cameraTransform = camera->getTransform();
+	this->cameraTransform->setPosition({ 0.0f, 2.0f, 5.0f });
 
 	this->viewingState = EViewingState::NONE;
-
 	this->multimediaManager = SingletonsManager::getInstance()->get<MultimediaManager>();
 }
 
@@ -40,8 +40,6 @@ void SceneViewportCamera::onUpdate(float elapsedTime)
 		this->processCameraMovement(elapsedTime);
 		this->forceInitialMousePosition();
 	}
-
-	this->camera->onUpdate(elapsedTime);
 }
  
 void SceneViewportCamera::updateCameraPerspective(float newWidth, float newHeight)
@@ -51,7 +49,7 @@ void SceneViewportCamera::updateCameraPerspective(float newWidth, float newHeigh
 		this->currentWindowWidth = newWidth;
 		this->currentWindowHeight = newHeight;
 		float aspectRatio = this->currentWindowWidth / this->currentWindowHeight;
-		this->camera->getComponent<CameraComponent>()->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
+		this->cameraComponent->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
 	}
 }
 
@@ -97,18 +95,16 @@ void SceneViewportCamera::processCameraMovement(float elapsedTime)
 
 	if (this->viewingState == EViewingState::FLYING)
 	{
-		TransformComponent* transform = this->camera->getTransform();
-
 		glm::vec3 moveDirection{ 0.0f };
 
 		if (Input::isKeyDown(KEY_a))
-			moveDirection -= transform->getRight();
+			moveDirection -= this->cameraTransform->getRight();
 		if (Input::isKeyDown(KEY_d))
-			moveDirection += transform->getRight();
+			moveDirection += this->cameraTransform->getRight();
 		if (Input::isKeyDown(KEY_w))
-			moveDirection -= transform->getForward();
+			moveDirection -= this->cameraTransform->getForward();
 		if (Input::isKeyDown(KEY_s))
-			moveDirection += transform->getForward();
+			moveDirection += this->cameraTransform->getForward();
 
 		this->flyingComponent->processMovement(moveDirection, mouseDelta, elapsedTime);
 	}
@@ -130,7 +126,7 @@ void SceneViewportCamera::processMouseWheel(float elapsedTime)
 		else
 		{
 			const float WHEEL_RATE = 100.0f;
-			glm::vec3 position = this->camera->getTransform()->getPosition();
+			glm::vec3 position = this->cameraTransform->getPosition();
 			glm::vec3 targetPosition = TransformComponent::ZERO;
 			float targetDistance = glm::distance(position, targetPosition);
 			targetDistance = targetDistance - (mouseWheel * WHEEL_RATE * elapsedTime);
@@ -139,7 +135,7 @@ void SceneViewportCamera::processMouseWheel(float elapsedTime)
 			position = glm::normalize(position);
 			position = position * targetDistance;
 
-			this->camera->getTransform()->setPosition(position);
+			this->cameraTransform->setPosition(position);
 		}
 	}
 }

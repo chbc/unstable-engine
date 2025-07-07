@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "Material.h"
 #include "ARenderableComponent.h"
+#include "EDrawMode.h"
 
 namespace sre
 {
@@ -22,6 +23,7 @@ protected:
 private:
     bool opaque{ true };
     Material* material{ nullptr };
+    bool wireframe{ false };
 
 public:
     MeshComponent(Entity *entity);
@@ -37,6 +39,8 @@ public:
     }
 
     void setIsOpaque(bool value);
+    void setWireframeMode(bool value);
+    EDrawMode::Type getDrawMode();
 
 protected:
     bool isOpaque();

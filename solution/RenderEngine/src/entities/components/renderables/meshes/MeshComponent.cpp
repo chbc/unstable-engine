@@ -35,6 +35,16 @@ void MeshComponent::setIsOpaque(bool value)
     this->opaque = value;
 }
 
+void MeshComponent::setWireframeMode(bool value)
+{
+    this->wireframe = value;
+}
+
+EDrawMode::Type MeshComponent::getDrawMode()
+{
+    return this->wireframe ? EDrawMode::LINES : EDrawMode::TRIANGLES;
+}
+
 bool MeshComponent::isOpaque()
 {
     return this->opaque;

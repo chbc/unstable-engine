@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ASingleton.h"
+#include "EDrawMode.h"
 
 #include <vector>
 #include <string>
@@ -13,20 +14,6 @@ struct AMeshData;
 struct MeshData;
 struct MeshData2D;
 struct ColorMeshData;
-
-namespace EDrawMode
-{
-    enum Type : uint32_t
-    {
-        POINTS = 0,
-        LINES = 1,
-        LINE_LOOP = 2,
-        LINE_STRIP = 3,
-        TRIANGLES = 4,
-        TRIANGLE_STRIP = 5,
-        TRIANGLE_FAN = 6
-    };
-} // namespace EDrawMode
 
 class AGraphicsWrapper : ASingleton
 {

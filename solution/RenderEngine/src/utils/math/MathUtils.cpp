@@ -1,5 +1,6 @@
 #include "MathUtils.h"
 #include <glm/gtx/matrix_decompose.hpp>
+#include <glm/vec3.hpp>
 
 namespace sre
 {
@@ -78,6 +79,16 @@ bool decomposeTransform(const glm::mat4& inputmatrix, glm::vec3& position, glm::
 	}
 
 	return true;
+}
+
+bool areNearlyEqual(const glm::vec3& vertex1, const glm::vec3& vertex2, const float threshold)
+{
+	return
+	(
+		glm::epsilonEqual(vertex1.x, vertex2.x, threshold) &&
+		glm::epsilonEqual(vertex1.y, vertex2.y, threshold) &&
+		glm::epsilonEqual(vertex1.z, vertex2.z, threshold)
+	);
 }
 
 } // namespace

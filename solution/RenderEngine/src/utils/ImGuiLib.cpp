@@ -28,6 +28,11 @@ bool button(const char* label, float width, float height)
 	return ImGui::Button(label, ImVec2{ width, height });
 }
 
+bool imageButton(const char* id, uint64_t textureId, float width, float height)
+{
+	return ImGui::ImageButton(id, textureId, ImVec2{ width, height });
+}
+
 void setNextItemAllowOverlap()
 {
 	ImGui::SetNextItemAllowOverlap();

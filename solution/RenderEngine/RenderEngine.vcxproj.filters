@@ -123,10 +123,10 @@
     <ClCompile Include="src\entities\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entitiesManagers\gui\GUIScene.cpp">
+    <ClCompile Include="src\entitiesManagers\scenes\GUIScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entitiesManagers\scene\Scene.cpp">
+    <ClCompile Include="src\entitiesManagers\scenes\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\entitiesManagers\ScenesManager.cpp">
@@ -285,7 +285,7 @@
     <ClCompile Include="src\entities\components\movements\OrbitMovementComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entitiesManagers\scene\AScene.cpp">
+    <ClCompile Include="src\entitiesManagers\scenes\AScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\io\parsers\ComponentParser.cpp">
@@ -1137,6 +1137,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ImGuiLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EDrawMode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EditorScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

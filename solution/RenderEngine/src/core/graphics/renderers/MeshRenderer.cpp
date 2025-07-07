@@ -143,24 +143,24 @@ void MeshRenderer::render()
     for (const auto &item : this->shaderSetupItems)
         item.second->setupShaderValues(this->program);
 
-    for (MeshComponent *mesh : this->meshes)
+    for (MeshComponent *meshComponent : this->meshes)
     {
-        if (mesh->getEntity()->isEnabled())
+        if (meshComponent->getEntity()->isEnabled())
         {
             // Matrix setup
-            TransformComponent* transform = mesh->getTransform();
+            TransformComponent* transform = meshComponent->getTransform();
             glm::mat4 modelMatrix = transform->getMatrix();
             this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
-            MeshData* meshData = mesh->mesh;
+            MeshData* meshData = meshComponent->mesh;
             this->graphicsWrapper->bindVAO(meshData->vao, meshData->vbo);
             for (const auto& item : this->componentsMap)
             {
-                item.second->setupShaderValues(mesh, this->program);
+                item.second->setupShaderValues(meshComponent, this->program);
                 item.second->preDraw(this->program);
             }
 
-            this->graphicsWrapper->drawElement(meshData->ebo, meshData->indices.size());
+            this->graphicsWrapper->drawElement(meshData->ebo, meshData->indices.size(), meshComponent->getDrawMode());
         }
     }
 

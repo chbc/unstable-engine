@@ -39,14 +39,14 @@ Entity* ScenesManager::getEntity(const std::string& name)
     return result;
 }
 
-Entity* ScenesManager::createPerspectiveCamera(float fov, float near, float far, Entity* parent, bool isMainCamera)
+Entity* ScenesManager::createPerspectiveCamera(float fov, float near, float far, Entity* parent)
 {
-    return this->scene->createPerspectiveCamera(fov, near, far, parent, isMainCamera);
+    return this->scene->createPerspectiveCamera(fov, near, far, parent);
 }
 
-Entity* ScenesManager::createOrthoCamera(Entity* parent, bool isMainCamera)
+Entity* ScenesManager::createOrthoCamera(Entity* parent)
 {
-    return this->scene->createOrthoCamera(parent, isMainCamera);
+    return this->scene->createOrthoCamera(parent);
 }
 
 DirectionalLightComponent* ScenesManager::createDirectionalLight(const std::string& name, Entity* parent)
@@ -104,12 +104,14 @@ void ScenesManager::initEntities()
 {
     this->scene->initEntities();
     this->guiScene->initEntities();
+    this->editorScene->initEntities();
 }
 
 void ScenesManager::update(float elapsedTime)
 {
     this->scene->update(elapsedTime);
     this->guiScene->update(elapsedTime);
+    this->editorScene->update(elapsedTime);
 }
 
 void ScenesManager::loadScene(const char* scenePath)
@@ -121,6 +123,8 @@ void ScenesManager::loadScene(const char* scenePath)
     this->scene.reset(new Scene{ sceneName, scenePath });
     SceneLoader::load(this->scene.get());
     this->scene->onSceneLoaded();
+
+    this->editorScene.reset(new Scene{ "_editor_scene", "" });
 
     messagesManager->addListener<RefreshMeshesMessage>(this->refreshMeshesAction.get());
 }
@@ -191,6 +195,11 @@ AScene* ScenesManager::getGuiScene()
     return this->guiScene.get();
 }
 
+Scene* ScenesManager::getEditorScene()
+{
+    return this->editorScene.get();
+}
+
 void ScenesManager::onRefreshMeshes()
 {
     this->renderManager->cleanUpMeshes();
@@ -217,6 +226,7 @@ void ScenesManager::preRelease()
 
     this->scene.reset();
     this->guiScene.reset();
+    this->editorScene.reset();
 
     EntityTypes::release();
     EntityComponentTypes::release();

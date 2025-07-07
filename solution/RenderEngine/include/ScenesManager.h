@@ -12,11 +12,12 @@ class ScenesManager : public ASingleton
 {
 protected:
     UPTR<Scene> scene;
+    UPTR<Scene> editorScene;
     UPTR<GUIScene> guiScene;
 
 private:
     SPTR<Action> refreshMeshesAction;
-    RenderManager* renderManager{ nullptr };
+    class RenderManager* renderManager{ nullptr };
 
 protected:
     void init() override;
@@ -25,8 +26,8 @@ public:
     SRE_API std::string getMainSceneName();
 	SRE_API Entity* createEntity(std::string name = "", Entity* parent = nullptr);
     SRE_API Entity* getEntity(const std::string& name);
-    SRE_API Entity* createPerspectiveCamera(float fov = 70.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr, bool isMainCamera = true);
-    SRE_API Entity* createOrthoCamera(Entity* parent = nullptr, bool isMainCamera = true);
+    SRE_API Entity* createPerspectiveCamera(float fov = 70.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr);
+    SRE_API Entity* createOrthoCamera(Entity* parent = nullptr);
     SRE_API DirectionalLightComponent* createDirectionalLight(const std::string& name = "", Entity* parent = nullptr);
     SRE_API PointLightComponent* createPointLight(const std::string& name = "", Entity* parent = nullptr);
     SRE_API Entity* createGUIImageEntity(const std::string& filePath, const std::string& name = "");
@@ -49,6 +50,7 @@ private:
     Entity* createMeshEntity(const char* filePath, const char* meshName);
     AScene* getScene();
     AScene* getGuiScene();
+    Scene* getEditorScene();
     void onRefreshMeshes();
     void removeDestroyedEntities();
     void preRelease() override;
@@ -58,6 +60,7 @@ friend class ApplicationStrategy;
 friend class EditorSceneTree;
 friend class EditorsController;
 friend class SingletonsManager;
+friend class SceneViewportCamera;
 };
 
 } // namespace

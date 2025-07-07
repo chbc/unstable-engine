@@ -23,7 +23,7 @@ private:
     static uint16_t Index;
 
 protected:
-    static uint16_t generateId();
+    SRE_API static uint16_t generateId();
 };
 
 } // namespace
