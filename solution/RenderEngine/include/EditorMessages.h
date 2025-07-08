@@ -9,13 +9,14 @@ namespace sre
 {
 
 class AEditorPopup;
+class Entity;
 
 struct EntitySelectionMessage : public BaseMessage
 {
 	DECLARE_MESSAGE()
 
 public:
-	class Entity* entity;
+	Entity* entity;
 
 	EntitySelectionMessage(class Entity* arg_entity) : entity(arg_entity) {}
 };
@@ -25,7 +26,7 @@ struct ExitEditorMessage : public BaseMessage
 	DECLARE_MESSAGE()
 };
 
-struct SRE_API FileDropEditorMessage : public BaseMessage
+struct FileDropEditorMessage : public BaseMessage
 {
 	DECLARE_MESSAGE()
 
@@ -46,6 +47,26 @@ public:
 struct EntityChangedEditorMessage : public BaseMessage
 {
 	DECLARE_MESSAGE()
+};
+
+struct SRE_API MeshImportedEditorMessage : public BaseMessage
+{
+	DECLARE_MESSAGE()
+
+public:
+	std::string filePath;
+	float scaleFactor;
+	MeshImportedEditorMessage(const std::string& arg_filePath, float arg_scaleFactor)
+		: filePath(arg_filePath), scaleFactor(arg_scaleFactor) {}
+};
+
+struct SRE_API MeshEntityLoadedEditorMessage : public BaseMessage
+{
+	DECLARE_MESSAGE()
+
+public:
+	Entity* entity;
+	MeshEntityLoadedEditorMessage(Entity* arg_entity) : entity(arg_entity) {}
 };
 
 } // namespace

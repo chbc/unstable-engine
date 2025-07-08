@@ -432,9 +432,6 @@
     <ClCompile Include="include\FontEditorProperty.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\editors\properties\FontEditorProperty.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\editors\properties\TextEditorProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -442,6 +439,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\utils\ImGuiLib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editors\properties\FontEditorProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -17,13 +17,13 @@ namespace sre
 
 using Action = std::function<void(void*)>;
 
-SRE_API struct BaseMessage
+struct SRE_API BaseMessage
 {
 private:
     static uint16_t Index;
 
 protected:
-    SRE_API static uint16_t generateId();
+    static uint16_t generateId();
 };
 
 } // namespace

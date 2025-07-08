@@ -38,9 +38,6 @@ public:
 	void createPointLight();
 	void notifyEntitySelection(Entity* entity);
 	void deleteFile(const char* filePath, bool isDirectory);
-
-private:
-	void notifyNewEntity(Entity* entity);
 };
 
 } // namespace

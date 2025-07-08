@@ -100,6 +100,19 @@ Entity* ScenesManager::raycastFromScreen(const glm::vec2& mousePosition, const g
 	return this->raycast(ray, maxDistance);
 }
 
+Scene* ScenesManager::getEditorScene()
+{
+    return this->editorScene.get();
+}
+
+Entity* ScenesManager::createMeshEntity(Model* model, const char* meshName, Entity* parent)
+{
+    Entity* result = this->scene->createMeshEntity(model, meshName, parent);
+    this->renderManager->addEntity(result);
+
+    return result;
+}
+
 void ScenesManager::initEntities()
 {
     this->scene->initEntities();
@@ -193,11 +206,6 @@ AScene* ScenesManager::getScene()
 AScene* ScenesManager::getGuiScene()
 {
     return this->guiScene.get();
-}
-
-Scene* ScenesManager::getEditorScene()
-{
-    return this->editorScene.get();
 }
 
 void ScenesManager::onRefreshMeshes()

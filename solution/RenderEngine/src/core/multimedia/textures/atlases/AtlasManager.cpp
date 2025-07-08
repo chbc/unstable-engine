@@ -5,6 +5,18 @@
 namespace sre
 {
 
+FontAtlas* AtlasManager::getFont(const std::string &filePath)
+{
+	FontAtlas *result = static_cast<FontAtlas *>(this->atlases[filePath].get());
+
+	if (result == nullptr)
+	{
+		result = this->loadFont(filePath);
+	}
+
+	return result;
+}
+
 void AtlasManager::release()
 {
     this->atlases.clear();
@@ -32,18 +44,6 @@ Atlas* AtlasManager::loadAtlas(const std::string &baseFileName)
 	UPTR<Atlas> newItem{ result };
 	result->load(baseFileName + ".atlas");
 	this->atlases[baseFileName] = std::move(newItem);
-
-	return result;
-}
-
-FontAtlas* AtlasManager::getFont(const std::string &filePath)
-{
-	FontAtlas *result = static_cast<FontAtlas *>(this->atlases[filePath].get());
-
-	if (result == nullptr)
-	{
-		result = this->loadFont(filePath);
-	}
 
 	return result;
 }

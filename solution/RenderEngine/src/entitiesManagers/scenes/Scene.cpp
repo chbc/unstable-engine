@@ -12,6 +12,34 @@ namespace sre
 
 Scene::Scene(std::string arg_name, std::string arg_filePath) : AScene(arg_name, arg_filePath) { }
 
+Entity* Scene::createMeshEntity(const char* filePath, const char* meshName)
+{
+    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+    Model* model = assetsManager->loadModel(filePath);
+
+    Entity* entity = this->createMeshEntity(model, meshName);
+    return entity;
+}
+
+Entity* Scene::createMeshEntity(Model* model, const char* meshName, Entity* parent)
+{
+    Entity* result{ nullptr };
+    if (model->getMeshCount() == 1)
+    {
+        std::string resultMeshName{ meshName };
+        result = this->createEntity(resultMeshName.c_str(), parent);
+        MeshComponent* meshComponent = result->addComponent<MeshComponent>();
+        meshComponent->load(model, resultMeshName.c_str());
+    }
+    else
+    {
+        result = this->createEntity(FileUtils::getFileName(model->getFilePath()), parent);
+        this->createMultiMeshEntity(result, model);
+    }
+
+    return result;
+}
+
 Entity* Scene::createPerspectiveCamera(float fov, float near, float far, Entity* parent)
 {
     Entity* result = this->createEntity("_main_camera", parent);
@@ -28,28 +56,6 @@ Entity* Scene::createOrthoCamera(Entity* parent)
     cameraComponent->setOrthoProjection();
 
     return result;
-}
-
-Entity* Scene::createMeshEntity(const char* filePath, const char* meshName)
-{
-    Entity* entity = nullptr;
-	std::string resultMeshName{ meshName };
-    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-    Model* model = assetsManager->loadModel(filePath);
-
-    if (model->getMeshCount() == 1)
-    {
-        entity = this->createEntity(resultMeshName.c_str());
-        MeshComponent* meshComponent = entity->addComponent<MeshComponent>();
-        meshComponent->load(model, resultMeshName.c_str());
-    }
-    else
-    {
-		entity = this->createEntity(FileUtils::getFileName(filePath));
-		this->createMultiMeshEntity(entity, model);
-    }
-
-    return entity;
 }
 
 void Scene::createMultiMeshEntity(Entity* entity, Model* model)

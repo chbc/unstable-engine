@@ -2,6 +2,7 @@
 
 #include "MeshData.h"
 #include "memory_aliases.h"
+#include "core_defines.h"
 
 #include <string>
 #include <unordered_map>
@@ -24,10 +25,11 @@ friend class AssetsManager;
 struct Model : ABaseModel
 {
 public:
+	// mesh name, mesh data
 	std::unordered_map<std::string, UPTR<MeshData>> meshes;
 
 public:
-	Model(const char* arg_filePath);
+	SRE_API Model(const char* arg_filePath);
 	MeshData* getMesh(const char* meshName);
 	size_t getMeshCount();
 };

@@ -36,6 +36,8 @@ public:
     SRE_API Entity* createGUITextEntity(const std::string fontFile, const std::string& name = "", uint32_t maxItems = 100u);
     SRE_API Entity* raycast(const Ray& ray, float maxDistance = 1000);
 	SRE_API Entity* raycastFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize, float maxDistance = 1000);
+    SRE_API Scene* getEditorScene();
+    SRE_API Entity* createMeshEntity(Model* model, const char* meshName = "", Entity* parent = nullptr);
 
 private:
     void initEntities();
@@ -50,7 +52,6 @@ private:
     Entity* createMeshEntity(const char* filePath, const char* meshName);
     AScene* getScene();
     AScene* getGuiScene();
-    Scene* getEditorScene();
     void onRefreshMeshes();
     void removeDestroyedEntities();
     void preRelease() override;
