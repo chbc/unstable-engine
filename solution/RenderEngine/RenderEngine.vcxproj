@@ -370,6 +370,8 @@
   <ItemGroup>
     <ClCompile Include="include\FontEditorProperty.h" />
     <ClCompile Include="src\core\graphics\meshData\Model.cpp" />
+    <ClCompile Include="src\core\graphics\renderers\ABaseRenderer.cpp" />
+    <ClCompile Include="src\core\graphics\renderers\CustomRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renderers\DebugRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renderers\GuizmoRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\PBRRendererComponent.cpp" />
@@ -416,7 +418,8 @@
     <ClCompile Include="src\editors\properties\FontEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\MaterialEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\MeshEditorProperty.cpp" />
-    <ClCompile Include="src\editors\properties\TextEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\InputTextEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\StringEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\Vec2EditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\Vec3EditorProperty.cpp" />
@@ -434,11 +437,13 @@
     <ClCompile Include="src\entities\components\renderables\ARenderableComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\guizmos\GuizmoComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\ABaseGUIComponent.cpp" />
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\ABaseMaterial.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\ABaseTextureMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\MaterialComponentTypes.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\PBRMaterialComponent.cpp" />
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\CustomMaterial.cpp" />
     <ClCompile Include="src\entities\EntityTypes.cpp" />
     <ClCompile Include="src\executionStrategies\AExecutionStrategy.cpp" />
     <ClCompile Include="src\executionStrategies\ApplicationStrategy.cpp" />
@@ -582,6 +587,8 @@
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
     <ClInclude Include="include\ABaseGUIComponent.h" />
+    <ClInclude Include="include\ABaseMaterial.h" />
+    <ClInclude Include="include\ABaseRenderer.h" />
     <ClInclude Include="include\ABaseTextureMaterialComponent.h" />
     <ClInclude Include="include\AEditorPopup.h" />
     <ClInclude Include="include\AEntityComponent.h" />
@@ -589,6 +596,8 @@
     <ClInclude Include="include\AssetsManager.h" />
     <ClInclude Include="include\Bounds.h" />
     <ClInclude Include="include\ColorMeshData.h" />
+    <ClInclude Include="include\CustomMaterial.h" />
+    <ClInclude Include="include\CustomRenderer.h" />
     <ClInclude Include="include\EditorScene.h" />
     <ClInclude Include="include\EDrawMode.h" />
     <ClInclude Include="include\EGuizmoMesh.h" />
@@ -726,6 +735,7 @@
     <ClInclude Include="include\SpecularRendererComponent.h" />
     <ClInclude Include="include\SpriteMaterialComponent.h" />
     <ClInclude Include="include\SpriteRendererComponent.h" />
+    <ClInclude Include="include\StringEditorProperty.h" />
     <ClInclude Include="include\StringUtils.h" />
     <ClInclude Include="include\TestServicesProvider.h" />
     <ClInclude Include="include\InputTextEditorProperty.h" />

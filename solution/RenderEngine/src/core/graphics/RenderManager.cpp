@@ -1,6 +1,8 @@
 #include "RenderManager.h"
 #include "Entity.h"
 #include "MeshComponent.h"
+#include "Material.h"
+#include "CustomMaterial.h"
 #include "GUIImageComponent.h"
 #include "GUITextComponent.h"
 #include "CameraComponent.h"
@@ -13,6 +15,7 @@
 #include "EngineValues.h"
 #include "AGraphicsWrapper.h"
 #include "MeshRenderer.h"
+#include "CustomRenderer.h"
 #include "PostProcessingRenderer.h"
 #include "GUIRenderer.h"
 #include "DebugRenderer.h"
@@ -69,29 +72,43 @@ void RenderManager::addEntity(Entity *entity)
     
     size_t size = entity->getChildrenCount();
     for (size_t i = 0; i < size; i++)
+    {
         this->addEntity(entity->getChild(i));
+    }
 }
 
 void RenderManager::addMesh(MeshComponent *mesh)
 {
-    if (mesh->isOpaque())
-        this->addMesh(this->opaqueMeshRenderers, mesh);
-    else
-        this->addMesh(this->translucentMeshRenderers, mesh);
-
-    if (mesh->getMaterial()->castShadow)
+    if (mesh->isMaterialStandard())
     {
-        this->initShadowRenderer();
-        this->shadowRenderer->addItem(mesh);
+        if (mesh->isOpaque())
+        {
+            this->addMesh(this->opaqueMeshRenderers, mesh);
+        }
+        else
+        {
+            this->addMesh(this->translucentMeshRenderers, mesh);
+        }
+
+        if (static_cast<Material*>(mesh->getMaterial())->castShadow)
+        {
+            this->initShadowRenderer();
+            this->shadowRenderer->addItem(mesh);
+        }
+    }
+    else
+    {
+        this->addMeshCustomMaterial(mesh);
     }
 }
 
 void RenderManager::addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent* mesh)
 {
     MeshRenderer* renderer = nullptr;
+    Material* material = static_cast<Material*>(mesh->getMaterial());
     for (const SPTR<MeshRenderer>& item : renderers)
     {
-        if (item->fitsWithMaterial(mesh->getMaterial()))
+        if (item->fitsWithMaterial(material))
         {
             renderer = item.get();
             break;
@@ -100,7 +117,7 @@ void RenderManager::addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent*
 
     if (renderer == nullptr)
     {
-        renderer = new MeshRenderer{ mesh->getMaterial(), this->shaderManager, this->graphicsWrapper };
+        renderer = new MeshRenderer{ material, this->shaderManager, this->graphicsWrapper };
         renderers.emplace_back(renderer);
 
         renderer->init(false, false);
@@ -109,23 +126,66 @@ void RenderManager::addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent*
     renderer->addMesh(mesh);
 }
 
+void RenderManager::addMeshCustomMaterial(MeshComponent* mesh)
+{
+    CustomMaterial* material = static_cast<CustomMaterial*>(mesh->getMaterial());
+    const std::string& shaderPath = material->getShaderFilePath();
+    CustomRenderer* renderer{ nullptr };
+    if (this->customRenderers.count(shaderPath) > 0)
+    {
+        renderer = this->customRenderers[shaderPath].get();
+    }
+    else
+    {
+        renderer = new CustomRenderer{ shaderPath, this->shaderManager, this->graphicsWrapper };
+        this->customRenderers[shaderPath] = SPTR<CustomRenderer>(renderer);
+        renderer->init();
+    }
+
+    renderer->addMesh(mesh);
+}
+
 void RenderManager::removeMesh(MeshComponent* mesh)
 {
-    std::vector<SPTR<MeshRenderer>>::iterator it;
-	VECTOR_SPTR<MeshRenderer>& renderers = mesh->isOpaque() ? this->opaqueMeshRenderers : this->translucentMeshRenderers;
+    bool meshRemoved = false;
 
-    for (it = renderers.begin(); it != renderers.end(); ++it)
+    std::vector<SPTR<MeshRenderer>>::iterator it;
+    for (it = this->opaqueMeshRenderers.begin(); it != this->opaqueMeshRenderers.end(); ++it)
     {
         if ((*it)->removeMesh(mesh))
         {
+            meshRemoved = true;
             break;
         }
     }
 
-    if ((it != renderers.end() && (*it)->isEmpty()))
-    {
-        renderers.erase(it);
-    }
+	if (!meshRemoved)
+	{
+		for (it = this->translucentMeshRenderers.begin(); it != this->translucentMeshRenderers.end(); ++it)
+		{
+			if ((*it)->removeMesh(mesh))
+			{
+				meshRemoved = true;
+				break;
+			}
+		}
+	}
+
+	if (!meshRemoved)
+	{
+		for (auto& item : this->customRenderers)
+		{
+			if (item.second->removeMesh(mesh))
+			{
+				meshRemoved = true;
+				break;
+			}
+		}
+	}
+
+    CollectionsUtils::removeIfRendererIsEmpty(this->opaqueMeshRenderers);
+    CollectionsUtils::removeIfRendererIsEmpty(this->translucentMeshRenderers);
+	CollectionsUtils::removeIfRendererIsEmpty(this->customRenderers);
 }
 
 void RenderManager::addGUIImageComponent(GUIImageComponent *guiComponent)
@@ -239,31 +299,50 @@ void RenderManager::render()
     if (this->currentCamera != nullptr)
     {
         this->currentCamera->updateView();
-        for (const SPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
-            item->render();
 
-        for (const SPTR<MeshRenderer>& item : this->translucentMeshRenderers)
+        // Opaque meshes rendering
+        for (const SPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
+        {
             item->render();
+        }
+
+        // Custom meshes rendering
+        for (const auto& item : this->customRenderers)
+        {
+            item.second->render(this->currentCamera);
+        }
+
+        // Translucent meshes rendering
+        for (const SPTR<MeshRenderer>& item : this->translucentMeshRenderers)
+        {
+            item->render();
+        }
     }
 
 	// Post processing rendering
-	if (this->postProcessingRenderer.get() != nullptr)
-		this->postProcessingRenderer->onPostRender(this->targetFBO);
+    if (this->postProcessingRenderer.get() != nullptr)
+    {
+        this->postProcessingRenderer->onPostRender(this->targetFBO);
+    }
 
     // Debug rendering
-	if (this->debugRenderer.get() != nullptr)
-		this->debugRenderer->render(this->currentCamera);
+    if (this->debugRenderer.get() != nullptr)
+    {
+        this->debugRenderer->render(this->currentCamera);
+    }
 
     // GUI rendering
     if (this->guiRenderer.get() != nullptr)
+    {
         this->guiRenderer->render();
+    }
 }
 
 void RenderManager::renderGuizmos()
 {
     this->graphicsWrapper->disableDepthTest();
 
-	if (this->guizmoRenderer.get() != nullptr && this->currentCamera != nullptr)
+	if (this->guizmoRenderer.get() && this->currentCamera)
 	{
 		this->guizmoRenderer->render(this->currentCamera);
 	}
@@ -288,14 +367,25 @@ void RenderManager::setupBufferSubData(MeshData2D* meshData)
 
 void RenderManager::removeDestroyedEntities()
 {
-    for (const SPTR<MeshRenderer> &item : this->opaqueMeshRenderers)
+    for (const SPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
+    {
         item->removeDestroyedEntities();
+    }
 
     for (const SPTR<MeshRenderer>& item : this->translucentMeshRenderers)
+    {
         item->removeDestroyedEntities();
+    }
 
     CollectionsUtils::removeIfRendererIsEmpty(this->opaqueMeshRenderers);
     CollectionsUtils::removeIfRendererIsEmpty(this->translucentMeshRenderers);
+
+	for (const auto& item : this->customRenderers)
+	{
+		item.second->removeDestroyedEntities();
+	}
+
+    CollectionsUtils::removeIfRendererIsEmpty(this->customRenderers);
 
     if (this->guiRenderer.get() != nullptr)
     {
@@ -323,6 +413,7 @@ void RenderManager::cleanUpMeshes()
 {
     this->opaqueMeshRenderers.clear();
     this->translucentMeshRenderers.clear();
+    this->customRenderers.clear();
 }
 
 void RenderManager::cleanUpGui()

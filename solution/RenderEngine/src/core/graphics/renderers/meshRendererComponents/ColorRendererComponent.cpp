@@ -4,6 +4,7 @@
 #include "MeshComponent.h"
 #include "ShaderManager.h"
 #include "AGraphicsWrapper.h"
+#include "Material.h"
 
 namespace sre
 {
@@ -22,7 +23,8 @@ void ColorRendererComponent::onSceneLoaded(uint32_t program)
 
 void ColorRendererComponent::setupShaderValues(MeshComponent *mesh, uint32_t program)
 {
-    ColorMaterialComponent *colorMaterial = mesh->getMaterial()->getComponent<ColorMaterialComponent>();
+    Material* material = static_cast<Material*>(mesh->getMaterial());
+    ColorMaterialComponent *colorMaterial = material->getComponent<ColorMaterialComponent>();
     glm::vec4 color = colorMaterial->getColor();
     this->shaderManager->setVec4(program, ShaderVariables::MATERIAL_COLOR, &color[0]);
 }

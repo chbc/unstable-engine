@@ -261,6 +261,21 @@ void ShaderContentFactory::loadPbrContent(std::string& outVertexContent, std::st
     }
 }
 
+void ShaderContentFactory::loadCustomContent(const std::string& shaderPath, std::string& outVertexContent, std::string& outFragmentContent)
+{
+    std::string vertexFile = shaderPath + ".vert";
+    std::string fragmentFile = shaderPath + ".frag";
+
+    FileUtils::loadContentFile(vertexFile, outVertexContent);
+    FileUtils::loadContentFile(fragmentFile, outFragmentContent);
+    
+    size_t lightsCount = this->lightData.pointLightsCount;
+    if (lightsCount > 0)
+    {
+        outFragmentContent = StringUtils::format(outFragmentContent, lightsCount);
+    }
+}
+
 void ShaderContentFactory::loadSecondTargetColorContentImplementation(std::string& outFragmentContent)
 {
     std::string content;

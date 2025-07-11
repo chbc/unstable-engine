@@ -6,17 +6,17 @@
 namespace sre
 {
 
-class Material;
+class ABaseMaterial;
 
 class MaterialEditorProperty : public AEditorProperty
 {
 DECLARE_PROPERTY()
 
 private:
-	Material** value;
+	ABaseMaterial** value;
 
 public:
-	MaterialEditorProperty(const char* title, Material** arg_value);
+	MaterialEditorProperty(const char* title, ABaseMaterial** arg_value);
 	void draw() override;
 
 private:

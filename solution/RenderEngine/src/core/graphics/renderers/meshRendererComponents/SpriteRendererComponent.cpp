@@ -15,7 +15,8 @@ SpriteRendererComponent::SpriteRendererComponent(ShaderManager* shaderManager, A
 void SpriteRendererComponent::setupShaderValues(MeshComponent* mesh, uint32_t program)
 {
 	this->shaderManager->setInt(program, ShaderVariables::DIFFUSE_TEXTURE, ETextureMap::DIFFUSE);
-	this->textureId = mesh->getMaterial()->getComponent<SpriteMaterialComponent>()->getTextureID();
+	Material* material = static_cast<Material*>(mesh->getMaterial());
+	this->textureId = material->getComponent<SpriteMaterialComponent>()->getTextureID();
 }
 	
 } // namespace

@@ -5,6 +5,7 @@
 #include "EExecutionMode.h"
 
 #include <string>
+#include <unordered_map>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
@@ -23,6 +24,7 @@ class ShadowRenderer;
 class GUIRenderer;
 class DebugRenderer;
 class GuizmoRenderer;
+class CustomRenderer;
 class PostProcessingRenderer;
 
 struct MeshData2D;
@@ -37,6 +39,8 @@ private:
 
 	VECTOR_SPTR<MeshRenderer> opaqueMeshRenderers;
     VECTOR_SPTR<MeshRenderer> translucentMeshRenderers;
+    // <filePath, renderers>
+    std::unordered_map<std::string, SPTR<CustomRenderer>> customRenderers;
     SPTR<ShadowRenderer> shadowRenderer;
     SPTR<GUIRenderer> guiRenderer;
 	SPTR<DebugRenderer> debugRenderer;
@@ -56,6 +60,7 @@ private:
     void addEntity(Entity* entity);
     void addMesh(MeshComponent* mesh);
     void addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent* mesh);
+    void addMeshCustomMaterial(MeshComponent* mesh);
     void removeMesh(MeshComponent* mesh);
     void addGUIImageComponent(GUIImageComponent* guiComponent);
     void addGUITextComponent(GUITextComponent* guiComponent);

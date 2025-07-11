@@ -108,10 +108,12 @@ friend class TextureCreator;
 friend class ABaseMeshLoader;
 friend class GuizmoLoader;
 
+friend class ABaseRenderer;
 friend class MeshRenderer;
 friend class GUIRenderer;
 friend class DebugRenderer;
 friend class GuizmoRenderer;
+friend class CustomRenderer;
 friend class ShadowRenderer;
 friend class PostProcessingRenderer;
 friend class ColorRendererComponent;

@@ -83,4 +83,20 @@ void GuizmoRenderer::render(CameraComponent* camera)
 	}
 }
 
+void GuizmoRenderer::removeDestroyedEntities()
+{
+	std::list<GuizmoComponent*>::iterator it;
+
+	for (it = this->guizmoComponents.begin(); it != this->guizmoComponents.end(); )
+	{
+		GuizmoComponent* item = *it;
+		if (!item->getEntity()->isAlive())
+		{
+			it = this->guizmoComponents.erase(it);
+		}
+		else
+			++it;
+	}
+}
+
 } // namespace

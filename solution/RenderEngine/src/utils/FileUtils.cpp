@@ -220,7 +220,7 @@ bool isPathFromGameContent(const std::string& filePath)
 		pathToEvaluate = gameContentPath.string();
 	}
 	
-	int stringPosition = filePath.find(pathToEvaluate);
+	size_t stringPosition = filePath.find(pathToEvaluate);
 	result = (stringPosition == 0) || (stringPosition == 1);
 
 	return result;

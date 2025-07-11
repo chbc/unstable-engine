@@ -48,6 +48,7 @@ private:
 
     uint32_t loadGUIShader();
     uint32_t loadColorShader();
+    uint32_t loadCustomShader(const std::string& shaderPath);
     uint32_t loadPointLightDepthShader();
     uint32_t loadDirectionalLightDepthShader();
 	uint32_t loadPostProcessingShader(class PostProcessingComponent* component);
@@ -73,7 +74,6 @@ private:
     void setMat4(uint32_t program, ShaderVariables::Type variableKey, const float *value);
     void setMat4(uint32_t program, const char *variable, const float *value);
 
-
     void enableShader(uint32_t program);
     void disableShader();
     void releaseShader(uint32_t program);
@@ -86,6 +86,7 @@ friend class MeshRenderer;
 friend class GUIRenderer;
 friend class DebugRenderer;
 friend class GuizmoRenderer;
+friend class CustomRenderer;
 friend class ColorRendererComponent;
 friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;

@@ -4,6 +4,7 @@
 #include "ShaderManager.h"
 #include "AGraphicsWrapper.h"
 #include "LitMaterialComponent.h"
+#include "Material.h"
 
 namespace sre
 {
@@ -15,7 +16,8 @@ void LitRendererLightsState::onSceneLoaded(ShaderManager *shaderManager, uint32_
 
 void LitRendererLightsState::setupShaderValues(ShaderManager *shaderManager, MeshComponent *mesh, uint32_t program)
 {
-    LitMaterialComponent *litComponent = mesh->getMaterial()->getComponent<LitMaterialComponent>();
+    Material* material = static_cast<Material*>(mesh->getMaterial());
+    LitMaterialComponent *litComponent = material->getComponent<LitMaterialComponent>();
     shaderManager->setFloat(program, ShaderVariables::SHININESS, litComponent->getShininess());
 }
 

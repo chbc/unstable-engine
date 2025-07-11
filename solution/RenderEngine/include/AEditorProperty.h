@@ -71,7 +71,7 @@ friend class ComponentParser;
 friend class MaterialLoader;
 friend class SceneLoader;
 friend class AEntityComponent;
-friend class Material;
+friend class ABaseMaterial;
 friend class AMaterialComponent;
 };
 

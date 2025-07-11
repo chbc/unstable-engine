@@ -65,6 +65,22 @@ void removeIfRendererIsEmpty(std::vector<T>& items)
     }
 }
 
+template <typename TKey, typename TValue>
+void removeIfRendererIsEmpty(std::unordered_map<TKey, TValue>& items)
+{
+    typename std::unordered_map<TKey, TValue>::iterator it;
+
+    for (it = items.begin(); it != items.end();)
+    {
+        if ((*it).second->isEmpty())
+        {
+            it = items.erase(it);
+        }
+        else
+            ++it;
+    }
+}
+
 } // namespace CollectionsUtils
 
 } // namespace sre

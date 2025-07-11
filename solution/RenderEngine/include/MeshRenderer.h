@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ABaseRenderer.h"
+
 #include "ColorRendererComponent.h"
 #include "ShaderLightData.h"
 #include "EComponentId.h"
@@ -14,29 +16,20 @@
 namespace sre
 {
 
-class MeshComponent;
 class Material;
 class AGraphicsWrapper;
 class ShaderManager;
 
-class MeshRenderer
+class MeshRenderer : public ABaseRenderer
 {
 private:
     std::unordered_map<size_t, UPTR<ColorRendererComponent>> componentsMap;
     std::unordered_map<std::string, UPTR<class BaseRendererShaderSetup>> shaderSetupItems;
     std::bitset<EComponentId::SIZE> componentsBitset;
-
-    std::list<MeshComponent *> meshes;
-    uint32_t program{ 0 };
-
-    ShaderManager *shaderManager;
-    AGraphicsWrapper *graphicsWrapper;
-
     ShaderLightData lightData;
 
 public:
     virtual ~MeshRenderer();
-    inline bool isEmpty() { return this->meshes.empty(); }
 
 private:
 	MeshRenderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
@@ -50,18 +43,10 @@ private:
     void init(bool useBrightnessSegmentation, bool includeDepth);
     void loadShaderSetupItems();
     void loadShader(bool useBrightnessSegmentation, bool includeDepth);
-    
-    void addMesh(MeshComponent *meshComponent);
-
     void render();
-
-    bool contains(MeshComponent *mesh);
     bool fitsWithMaterial(Material *material);
 
-    void removeDestroyedEntities();
-	bool removeMesh(MeshComponent* mesh);
-
-    friend class RenderManager;
+friend class RenderManager;
 };
 
 } // namespace

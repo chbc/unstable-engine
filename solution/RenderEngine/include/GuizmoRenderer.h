@@ -36,7 +36,6 @@ private:
 	void render(CameraComponent* camera);
 
 	void removeDestroyedEntities();
-	bool removeMesh(GuizmoComponent* mesh);
 
 friend class RenderManager;
 };

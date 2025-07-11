@@ -1,6 +1,7 @@
 #include "MaterialLoader.h"
 #include "FileUtils.h"
 #include "Material.h"
+#include "CustomMaterial.h"
 #include "AMaterialComponent.h"
 #include "ColorMaterialComponent.h"
 
@@ -9,7 +10,7 @@
 namespace sre
 {
 
-void MaterialLoader::save(Material* material, const char* filePath)
+void MaterialLoader::save(ABaseMaterial* material, const char* filePath)
 {
 	c4::yml::Tree tree;
 	c4::yml::NodeRef root = tree.rootref();
@@ -21,26 +22,63 @@ void MaterialLoader::save(Material* material, const char* filePath)
 		property->serialize(propertyNode);
 	}
 
-	c4::yml::NodeRef ComponentsNode = root["Components"];
-	ComponentsNode |= ryml::MAP;
-	for (const auto& componentItem : material->componentsMap)
+	if (material->isStandard())
 	{
-		AMaterialComponent* component = componentItem.second.get();
-		c4::yml::NodeRef itemtNode = ComponentsNode[component->getClassName()];
-		serializeComponent(itemtNode, component);
+		Material* standardMaterial = static_cast<Material*>(material);
+		c4::yml::NodeRef componentsNode = root["Components"];
+		this->saveComponents(standardMaterial, componentsNode);
 	}
 
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
 	FileUtils::saveContentFile(filePath, content);
 }
 
-Material* sre::MaterialLoader::load(const char* filePath)
+ABaseMaterial* sre::MaterialLoader::load(const char* filePath)
 {
 	std::string fileContent;
 	FileUtils::loadContentFile(filePath, fileContent);
 	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
 	c4::yml::ConstNodeRef root = tree.crootref();
 
+	std::string type;
+	root["Material Type"] >> type;
+
+	ABaseMaterial* result = nullptr;
+	if (type == "Standard")
+	{
+		result = this->loadStandardMaterial(filePath, root);
+	}
+	else
+	{
+		result = this->loadCustomMaterial(filePath, root);
+	}
+
+	return result;
+}
+
+void MaterialLoader::saveComponents(Material* material, c4::yml::NodeRef& componentsNode)
+{
+	componentsNode |= ryml::MAP;
+	for (const auto& componentItem : material->componentsMap)
+	{
+		AMaterialComponent* component = componentItem.second.get();
+		c4::yml::NodeRef itemtNode = componentsNode[component->getClassName()];
+		serializeComponent(itemtNode, component);
+	}
+}
+
+void MaterialLoader::serializeComponent(c4::yml::NodeRef& componentNode, AMaterialComponent* component)
+{
+	componentNode |= ryml::MAP;
+	for (const SPTR<AEditorProperty>& property : component->editorProperties)
+	{
+		c4::yml::NodeRef& propertyNode = componentNode[property->title.c_str()];
+		property->serialize(propertyNode);
+	}
+}
+
+ABaseMaterial* MaterialLoader::loadStandardMaterial(const std::string& filePath, c4::yml::ConstNodeRef& root)
+{
 	Material* result = new Material{ filePath };
 	for (auto& property : result->editorProperties)
 	{
@@ -57,14 +95,13 @@ Material* sre::MaterialLoader::load(const char* filePath)
 	return result;
 }
 
-void MaterialLoader::serializeComponent(c4::yml::NodeRef& componentNode, AMaterialComponent* component)
+ABaseMaterial* MaterialLoader::loadCustomMaterial(const std::string& filePath, c4::yml::ConstNodeRef& root)
 {
-	componentNode |= ryml::MAP;
-	for (const SPTR<AEditorProperty>& property : component->editorProperties)
-	{
-		c4::yml::NodeRef& propertyNode = componentNode[property->title.c_str()];
-		property->serialize(propertyNode);
-	}
+	std::string shaderPath;
+	root["Shader Path"] >> shaderPath;
+
+	CustomMaterial* result = new CustomMaterial{ filePath, shaderPath };
+	return result;
 }
 
 void MaterialLoader::deserializeComponent(c4::yml::ConstNodeRef& componentNode, Material* material)

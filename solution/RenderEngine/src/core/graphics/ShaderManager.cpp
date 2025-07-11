@@ -42,6 +42,17 @@ uint32_t ShaderManager::loadColorShader()
     return this->loadShader(vertexContent, fragmentContent);
 }
 
+uint32_t ShaderManager::loadCustomShader(const std::string& shaderPath)
+{
+    std::string vertexContent;
+    std::string fragmentContent;
+
+    ShaderContentFactory contentFactory;
+    contentFactory.loadCustomContent(shaderPath, vertexContent, fragmentContent);
+
+    return this->loadShader(vertexContent, fragmentContent);
+}
+
 uint32_t ShaderManager::loadPointLightDepthShader()
 {
     std::string vertexContent;

@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "MeshComponent.h"
+#include "Material.h"
 #include "AGraphicsWrapper.h"
 #include "ShaderManager.h"
 #include "SingletonsManager.h"
@@ -21,9 +22,8 @@ namespace sre
 {
 
 MeshRenderer::MeshRenderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
+    : ABaseRenderer(shaderManager, graphicsWrapper)
 {
-    this->shaderManager = shaderManager;
-    this->graphicsWrapper = graphicsWrapper;
     LightManager * lightManager = SingletonsManager::getInstance()->get<LightManager>();
 
     // ### COLOCAR NUM FACTORY
@@ -125,16 +125,6 @@ void MeshRenderer::loadShader(bool useBrightnessSegmentation, bool includeDepth)
 	);
 }
 
-void MeshRenderer::addMesh(MeshComponent * meshComponent)
-{
-    this->meshes.push_back(meshComponent);
-
-    if (meshComponent->mesh->ebo == 0)
-    {
-        this->graphicsWrapper->createBuffers(meshComponent->mesh);
-    }
-}
-
 void MeshRenderer::render()
 {
     // Shader setup
@@ -143,13 +133,13 @@ void MeshRenderer::render()
     for (const auto &item : this->shaderSetupItems)
         item.second->setupShaderValues(this->program);
 
-    for (MeshComponent *meshComponent : this->meshes)
+    for (MeshComponent *meshComponent : this->meshComponents)
     {
         if (meshComponent->getEntity()->isEnabled())
         {
             // Matrix setup
             TransformComponent* transform = meshComponent->getTransform();
-            glm::mat4 modelMatrix = transform->getMatrix();
+            const glm::mat4& modelMatrix = transform->getMatrix();
             this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 
             MeshData* meshData = meshComponent->mesh;
@@ -160,6 +150,7 @@ void MeshRenderer::render()
                 item.second->preDraw(this->program);
             }
 
+            meshComponent->notifyRenderAction(this->shaderManager, this->program);
             this->graphicsWrapper->drawElement(meshData->ebo, meshData->indices.size(), meshComponent->getDrawMode());
         }
     }
@@ -170,63 +161,9 @@ void MeshRenderer::render()
     this->shaderManager->disableShader();
 }
 
-bool MeshRenderer::contains(MeshComponent *mesh)
-{
-    bool result = false;
-
-    for (MeshComponent *item : this->meshes)
-    {
-        if (item == mesh)
-        {
-            result = true;
-            break;
-        }
-    }
-
-    return result;
-}
-
 bool MeshRenderer::fitsWithMaterial(Material* material)
 {
     return (this->componentsBitset == material->componentsBitset);
-}
-
-void MeshRenderer::removeDestroyedEntities()
-{
-    std::list<MeshComponent *>::iterator it;
-
-    for (it = this->meshes.begin(); it != this->meshes.end(); )
-    {
-        MeshComponent* item = *it;
-        if (!item->getEntity()->isAlive())
-        {
-            it = this->meshes.erase(it);
-        }
-        else
-            ++it;
-    }
-}
-
-bool MeshRenderer::removeMesh(MeshComponent* mesh)
-{
-    bool result = false;
-    std::list<MeshComponent*>::iterator it;
-
-    for (it = this->meshes.begin(); it != this->meshes.end(); ++it)
-    {
-        if (*it == mesh)
-        {
-            break;
-        }
-    }
-
-	if (it != this->meshes.end())
-	{
-		this->meshes.erase(it);
-		result = true;
-	}
-
-    return result;
 }
 
 } // namespace

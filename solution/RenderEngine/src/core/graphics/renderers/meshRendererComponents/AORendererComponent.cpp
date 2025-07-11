@@ -23,7 +23,8 @@ void AORendererComponent::onSceneLoaded(uint32_t program)
 void AORendererComponent::setupShaderValues(MeshComponent* mesh, uint32_t program)
 {
     this->shaderManager->setInt(program, ShaderVariables::AO_TEXTURE, ETextureMap::AMBIENT_OCCLUSION);
-    this->textureId = mesh->getMaterial()->getComponent<AmbientOcclusionMaterialComponent>()->getTextureID();
+    Material* material = static_cast<Material*>(mesh->getMaterial());
+    this->textureId = material->getComponent<AmbientOcclusionMaterialComponent>()->getTextureID();
 }
 
 void AORendererComponent::preDraw(uint32_t program)

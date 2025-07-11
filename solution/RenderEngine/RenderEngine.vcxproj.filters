@@ -432,7 +432,7 @@
     <ClCompile Include="include\FontEditorProperty.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\editors\properties\TextEditorProperty.cpp">
+    <ClCompile Include="src\editors\properties\InputTextEditorProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="thirdParties\imgui\misc\cpp\imgui_stdlib.cpp">
@@ -442,6 +442,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\editors\properties\FontEditorProperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\CustomRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\ABaseMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\CustomMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editors\properties\StringEditorProperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\ABaseRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1143,6 +1158,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\EditorScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CustomRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ABaseMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CustomMaterial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StringEditorProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ABaseRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,32 +16,31 @@ struct Model;
 struct Model2D;
 struct MeshData;
 struct MeshData2D;
-class Material;
+class ABaseMaterial;
 class Texture;
-class ColorMeshData;
+struct ColorMeshData;
 
 class AScene;
 
 using ModelPairType		= std::pair<size_t, SPTR<Model>>;
 using Model2DPairType	= std::pair<size_t, SPTR<Model2D>>;
-using MaterialPairType	= std::pair<size_t, SPTR<Material>>;
+using MaterialPairType	= std::pair<size_t, SPTR<ABaseMaterial>>;
 using EntityPairType	= std::pair<size_t, SPTR<Entity>>;
 using TexturePairType	= std::pair<size_t, SPTR<Texture>>;
 using IconPairType		= std::pair<size_t, SPTR<Texture>>;
 using GuizmoPairType	= std::pair<size_t, SPTR<ColorMeshData>>;
 
-using ModelsMapType		= std::unordered_map<size_t, ModelPairType>;
-using Models2DMapType	= std::unordered_map<size_t, Model2DPairType>;
-using MaterialsMapType	= std::unordered_map<size_t, MaterialPairType>;
-using EntitiesMapType	= std::unordered_map<size_t, EntityPairType>;
-using TexturesMapType	= std::unordered_map<size_t, TexturePairType>;
-using IconsMapType		= std::unordered_map<size_t, IconPairType>;
-using GuizmosMapType	= std::unordered_map<size_t, GuizmoPairType>;
+using ModelsMapType		= std::unordered_map<std::string, ModelPairType>;
+using Models2DMapType	= std::unordered_map<std::string, Model2DPairType>;
+using MaterialsMapType	= std::unordered_map<std::string, MaterialPairType>;
+using EntitiesMapType	= std::unordered_map<std::string, EntityPairType>;
+using TexturesMapType	= std::unordered_map<std::string, TexturePairType>;
+using IconsMapType		= std::unordered_map<std::string, IconPairType>;
+using GuizmosMapType	= std::unordered_map<std::string, GuizmoPairType>;
 
 class SRE_API AssetsManager : public ASingleton
 {
 private:
-	std::hash<std::string> hash;
 	// <key, <ref count, asset>
 	ModelsMapType modelsMap;
 	Models2DMapType models2DMap;
@@ -59,8 +58,8 @@ public:
 	MeshData2D* loadMesh2D();
 	void releaseModel(const char* filePath);
 	void releaseModel2D(Model2D* model);
-	Material* loadMaterial(const char* filePath);
-	void releaseMaterial(Material* material);
+	ABaseMaterial* loadMaterial(const char* filePath);
+	void releaseMaterial(ABaseMaterial* material);
 	Texture* loadTexture(const char* filePath, ETextureMap::Type mapType);
 	void releaseTexture(Texture* texture);
 	Texture* loadIcon(const char* filePath);
@@ -72,11 +71,11 @@ protected:
 
 private:
 	template <typename TCollection, typename TLoader, typename TItem, typename... TArgs>
-	TItem* loadAsset(TCollection& collection, const char* filePath, TArgs&&... parameters)
+	TItem* loadAsset(TCollection& collection, const std::string& filePath, TArgs&&... parameters)
 	{
 		TItem* result = nullptr;
 
-		size_t key = generateKey(filePath);
+		std::string key{ filePath };
 		if (collection.count(key) > 0)
 		{
 			auto& itemPair = collection[key];
@@ -85,8 +84,8 @@ private:
 		}
 		else
 		{
-			result = TLoader().load(filePath, std::forward<TArgs>(parameters)...);
-			collection.emplace(key, std::make_pair<size_t, SPTR<TItem>>(1, SPTR<TItem>{result}));
+			result = TLoader().load(filePath.c_str(), std::forward<TArgs>(parameters)...);
+			collection.emplace(key, std::make_pair<std::size_t, SPTR<TItem>>(1, SPTR<TItem>{result}));
 		}
 
 		return result;
@@ -106,7 +105,7 @@ private:
 			return;
 		}
 
-		size_t key = this->generateKey(filePath.c_str());
+		std::string key = filePath;
 		if (collection.count(key) > 0)
 		{
 			auto& assetPair = collection[key];
@@ -122,8 +121,6 @@ private:
 			}
 		}
 	}
-
-	size_t generateKey(const char* input);
 };
 
 } // namespace

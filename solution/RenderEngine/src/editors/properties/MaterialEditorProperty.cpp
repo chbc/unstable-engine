@@ -11,9 +11,11 @@
 namespace sre
 {
 
-MaterialEditorProperty::MaterialEditorProperty(const char* title, Material** arg_value)
-	: AEditorProperty(title), value(arg_value)
-{ }
+MaterialEditorProperty::MaterialEditorProperty(const char* title, ABaseMaterial** arg_value)
+	: AEditorProperty(title)
+{
+	this->value = arg_value;
+}
 
 void MaterialEditorProperty::draw()
 {
@@ -52,21 +54,26 @@ void MaterialEditorProperty::onDraw()
 
 void MaterialEditorProperty::drawSubProperties()
 {
+
 	for (const auto& property : (*this->value)->editorProperties)
 	{
 		property->draw();
 	}
 
-	for (const auto& component : (*this->value)->componentsMap)
+	if ((*this->value)->isStandard())
 	{
-		const char* componentName = component.second->getClassName();
-		if (ImGui::TreeNodeEx(componentName, ImGuiTreeNodeFlags_DefaultOpen))
+		Material** standardMaterial = reinterpret_cast<Material**>(this->value);
+		for (const auto& component : (*standardMaterial)->componentsMap)
 		{
-			for (const auto& property : component.second->editorProperties)
+			const char* componentName = component.second->getClassName();
+			if (ImGui::TreeNodeEx(componentName, ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				property->draw();
+				for (const auto& property : component.second->editorProperties)
+				{
+					property->draw();
+				}
+				ImGui::TreePop();
 			}
-			ImGui::TreePop();
 		}
 	}
 }

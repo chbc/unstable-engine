@@ -6,6 +6,7 @@
 #include "AssetsManager.h"
 #include "RenderManager.h"
 #include "FileUtils.h"
+#include "ABaseMaterial.h"
 
 namespace sre
 {
@@ -25,7 +26,7 @@ MeshComponent::~MeshComponent()
     assetsManager->releaseMaterial(this->material);
 }
 
-Material *MeshComponent::getMaterial()
+ABaseMaterial *MeshComponent::getMaterial()
 {
     return this->material;
 }
@@ -43,6 +44,20 @@ void MeshComponent::setWireframeMode(bool value)
 EDrawMode::Type MeshComponent::getDrawMode()
 {
     return this->wireframe ? EDrawMode::LINES : EDrawMode::TRIANGLES;
+}
+
+void MeshComponent::loadMaterial(const char* filePath)
+{
+    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+    assetsManager->releaseMaterial(this->material);
+
+    this->material = assetsManager->loadMaterial(filePath);
+    this->refreshMesh();
+}
+
+bool MeshComponent::isMaterialStandard()
+{
+    return this->material->isStandard();
 }
 
 bool MeshComponent::isOpaque()
@@ -76,13 +91,10 @@ void MeshComponent::onPropertyChanged()
 {
 	ARenderableComponent::onPropertyChanged();
     this->bounds.setup(this->mesh->vertexData);
-
-	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
-	renderManager->removeMesh(this);
-    renderManager->addMesh(this);
+    this->refreshMesh();
 }
 
-void MeshComponent::setMaterial(Material* arg_material)
+void MeshComponent::setMaterial(ABaseMaterial* arg_material)
 {
     if (this->material != nullptr)
     {
@@ -91,6 +103,13 @@ void MeshComponent::setMaterial(Material* arg_material)
     }
 
     this->material = arg_material;
+}
+
+void MeshComponent::refreshMesh()
+{
+    RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+    renderManager->removeMesh(this);
+    renderManager->addMesh(this);
 }
 
 } // namespace

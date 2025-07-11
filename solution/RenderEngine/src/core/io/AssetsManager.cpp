@@ -5,14 +5,16 @@
 #include "TextureLoader.h"
 #include "GuizmoLoader.h"
 #include "SingletonsManager.h"
-#include "Material.h"
+#include "ABaseMaterial.h"
+#include "FileUtils.h"
 
 namespace sre
 {
 
 Entity* AssetsManager::loadEntity(AScene* scene, const char* filePath, std::string name)
 {
-	Entity* prototype = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, filePath, name, scene);
+	std::string relativePath = FileUtils::getContentRelativePath(filePath);
+	Entity* prototype = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, relativePath, name, scene);
 	Entity* result = prototype->clone();
 	result->name = name;
 
@@ -26,13 +28,15 @@ void AssetsManager::releaseEntity(Entity* entity)
 
 Model* AssetsManager::loadModel(const char* filePath)
 {
-	Model* result = this->loadAsset<ModelsMapType, MeshLoader, Model>(this->modelsMap, filePath);
+	std::string relativePath = FileUtils::getContentRelativePath(filePath);
+	Model* result = this->loadAsset<ModelsMapType, MeshLoader, Model>(this->modelsMap, relativePath);
 	return result;
 }
 
 MeshData* AssetsManager::loadMesh(const char* filePath, const char* meshName)
 {
-	Model* model = this->loadAsset<ModelsMapType, MeshLoader, Model>(this->modelsMap, filePath);
+	std::string relativePath = FileUtils::getContentRelativePath(filePath);
+	Model* model = this->loadAsset<ModelsMapType, MeshLoader, Model>(this->modelsMap, relativePath);
 	MeshData* result = model->getMesh(meshName);
 	return result;
 }
@@ -56,20 +60,22 @@ void AssetsManager::releaseModel2D(Model2D* model)
 	this->releaseAsset(this->models2DMap, model, releaseCallback);
 }
 
-Material* AssetsManager::loadMaterial(const char* filePath)
+ABaseMaterial* AssetsManager::loadMaterial(const char* filePath)
 {
-	Material* result = this->loadAsset<MaterialsMapType, MaterialLoader, Material>(this->materialsMap, filePath);
+	std::string relativePath = FileUtils::getContentRelativePath(filePath);
+	ABaseMaterial* result = this->loadAsset<MaterialsMapType, MaterialLoader, ABaseMaterial>(this->materialsMap, relativePath);
 	return result;
 }
 
-void AssetsManager::releaseMaterial(Material* material)
+void AssetsManager::releaseMaterial(ABaseMaterial* material)
 {
 	this->releaseAsset(this->materialsMap, material);
 }
 
 Texture* AssetsManager::loadTexture(const char* filePath, ETextureMap::Type mapType)
 {
-	Texture* result = this->loadAsset<TexturesMapType, TextureLoader, Texture>(this->texturesMap, filePath, mapType);
+	std::string relativePath = FileUtils::getContentRelativePath(filePath);
+	Texture* result = this->loadAsset<TexturesMapType, TextureLoader, Texture>(this->texturesMap, relativePath, mapType);
 	return result;
 }
 
@@ -81,7 +87,8 @@ void AssetsManager::releaseTexture(Texture* texture)
 
 Texture* AssetsManager::loadIcon(const char* filePath)
 {
-	Texture* result = this->loadAsset<IconsMapType, TextureLoader, Texture>(this->iconsMap, filePath, ETextureMap::GUI);
+	std::string relativePath = FileUtils::getContentRelativePath(filePath);
+	Texture* result = this->loadAsset<IconsMapType, TextureLoader, Texture>(this->iconsMap, relativePath, ETextureMap::GUI);
 	return result;
 }
 
@@ -154,11 +161,6 @@ void AssetsManager::preRelease()
 		GuizmoLoader().release((*it).second.second.get());
 		it = this->guizmosMap.erase(it);
 	}
-}
-
-size_t AssetsManager::generateKey(const char* input)
-{
-	return this->hash(std::string(input));
 }
 
 } // namespace

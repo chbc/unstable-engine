@@ -22,7 +22,8 @@ void SpecularRendererComponent::onSceneLoaded(uint32_t program)
 void SpecularRendererComponent::setupShaderValues(MeshComponent *mesh, uint32_t program)
 {
     this->shaderManager->setInt(program, ShaderVariables::SPECULAR_TEXTURE, ETextureMap::SPECULAR);
-    this->textureId = mesh->getMaterial()->getComponent<SpecularMaterialComponent>()->getTextureID();
+    Material* material = static_cast<Material*>(mesh->getMaterial());
+    this->textureId = material->getComponent<SpecularMaterialComponent>()->getTextureID();
 }
 
 void SpecularRendererComponent::preDraw(uint32_t program)

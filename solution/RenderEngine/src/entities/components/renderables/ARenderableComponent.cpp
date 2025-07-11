@@ -12,4 +12,17 @@ const Bounds& ARenderableComponent::getBounds() const
 	return this->bounds;
 }
 
+void ARenderableComponent::setRenderActionListener(RenderAction* renderActionListener)
+{
+	this->onRenderAction = renderActionListener;
+}
+
+void ARenderableComponent::notifyRenderAction(ShaderManager* shaderManager, uint32_t program)
+{
+	if (this->onRenderAction)
+	{
+		(*this->onRenderAction)(shaderManager, program);
+	}
+}
+
 } // namespace

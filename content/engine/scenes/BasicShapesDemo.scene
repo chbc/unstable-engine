@@ -77,7 +77,7 @@ cone:
       Mesh:
         FilePath: engine\media\Cone.mesh
         MeshName: Cone
-      Material: engine\media\DefaultMaterial.mat
+      Material: engine\media\ColorCustomMaterial.mat
 cylinder:
   Enabled: 1
   Components:

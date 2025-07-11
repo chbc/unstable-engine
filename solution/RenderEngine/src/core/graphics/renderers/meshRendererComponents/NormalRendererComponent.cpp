@@ -22,7 +22,8 @@ void NormalRendererComponent::onSceneLoaded(uint32_t program)
 void NormalRendererComponent::setupShaderValues(MeshComponent *mesh, uint32_t program)
 {
     this->shaderManager->setInt(program, ShaderVariables::NORMAL_TEXTURE, ETextureMap::NORMAL);
-    this->textureId = mesh->getMaterial()->getComponent<NormalMaterialComponent>()->getTextureID();
+    Material* material = static_cast<Material*>(mesh->getMaterial());
+    this->textureId = material->getComponent<NormalMaterialComponent>()->getTextureID();
 }
 
 void NormalRendererComponent::preDraw(uint32_t program)
