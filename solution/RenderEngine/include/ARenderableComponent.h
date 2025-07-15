@@ -7,7 +7,8 @@ namespace sre
 {
 
 class ShaderManager;
-using RenderAction = std::function<void(ShaderManager* shaderManager, uint32_t program)>;
+class AGraphicsWrapper;
+using RenderAction = std::function<void(AGraphicsWrapper* graphicsWrapper, ShaderManager* shaderManager, uint32_t program)>;
 
 class SRE_API ARenderableComponent : public AEntityComponent
 {
@@ -23,7 +24,7 @@ public:
 	void setRenderActionListener(RenderAction* renderActionListener);
 
 private:
-	void notifyRenderAction(ShaderManager* shaderManager, uint32_t program);
+	void notifyRenderAction(AGraphicsWrapper* graphicsWrapper, ShaderManager* shaderManager, uint32_t program);
 
 friend class MeshRenderer;
 friend class CustomRenderer;

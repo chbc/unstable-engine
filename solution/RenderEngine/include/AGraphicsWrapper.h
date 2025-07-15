@@ -20,6 +20,12 @@ class AGraphicsWrapper : ASingleton
 protected:
     AGraphicsWrapper() {}
 
+public:
+    virtual void createUniformBuffer(uint32_t* id, const std::vector<int>& data) = 0;
+	virtual void bindUniformBuffer(uint32_t id) = 0;
+    virtual void deleteUniformBuffer(uint32_t id) = 0;
+
+protected:
     virtual void createBuffers(MeshData* meshData) = 0;
     virtual void createBuffers(MeshData2D* meshData, uint32_t maxItems, bool isDynamic) = 0;
     virtual void createBuffers(ColorMeshData* meshData) = 0;
@@ -99,6 +105,7 @@ protected:
     virtual void deleteFrameBuffer(uint32_t fbo) =0;
     virtual void setViewport(uint32_t width, uint32_t height) =0;
     virtual void activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap = false) =0;
+	virtual void setLineWidth(float width) = 0;
 
 friend class RenderManager;
 friend class ShaderManager;

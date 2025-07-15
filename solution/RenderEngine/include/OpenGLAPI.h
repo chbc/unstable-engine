@@ -11,6 +11,11 @@ namespace sre
 class OpenGLAPI : public AGraphicsWrapper
 {
 
+public:
+    void createUniformBuffer(uint32_t* id, const std::vector<int>& data) override;
+    void bindUniformBuffer(uint32_t id) override;
+    void deleteUniformBuffer(uint32_t id) override;
+
 protected:
     void init() override;
     void createBuffers(MeshData* meshData) override;
@@ -99,6 +104,7 @@ protected:
     void deleteFrameBuffer(uint32_t fbo) override;
     void setViewport(uint32_t width, uint32_t height) override;
     void activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap) override;
+    void setLineWidth(float width) override;
 
 private:
     uint32_t compileShader(const std::string &source, uint32_t mode);

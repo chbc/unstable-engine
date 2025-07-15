@@ -60,6 +60,11 @@ bool MeshComponent::isMaterialStandard()
     return this->material->isStandard();
 }
 
+void MeshComponent::setLineWidth(float value)
+{
+	this->lineWidth = value;
+}
+
 bool MeshComponent::isOpaque()
 {
     return this->opaque;

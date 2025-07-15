@@ -17,11 +17,11 @@ void ARenderableComponent::setRenderActionListener(RenderAction* renderActionLis
 	this->onRenderAction = renderActionListener;
 }
 
-void ARenderableComponent::notifyRenderAction(ShaderManager* shaderManager, uint32_t program)
+void ARenderableComponent::notifyRenderAction(AGraphicsWrapper* graphicsWrapper, ShaderManager* shaderManager, uint32_t program)
 {
 	if (this->onRenderAction)
 	{
-		(*this->onRenderAction)(shaderManager, program);
+		(*this->onRenderAction)(graphicsWrapper, shaderManager, program);
 	}
 }
 

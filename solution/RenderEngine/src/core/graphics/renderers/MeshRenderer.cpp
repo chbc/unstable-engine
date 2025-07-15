@@ -150,7 +150,7 @@ void MeshRenderer::render()
                 item.second->preDraw(this->program);
             }
 
-            meshComponent->notifyRenderAction(this->shaderManager, this->program);
+            meshComponent->notifyRenderAction(this->graphicsWrapper, this->shaderManager, this->program);
             this->graphicsWrapper->drawElement(meshData->ebo, meshData->indices.size(), meshComponent->getDrawMode());
         }
     }

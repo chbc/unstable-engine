@@ -23,6 +23,7 @@ private:
     bool opaque{ true };
     ABaseMaterial* material{ nullptr };
     bool wireframe{ false };
+	float lineWidth{ 1.0f };
 
 public:
     MeshComponent(Entity *entity);
@@ -44,6 +45,7 @@ public:
     EDrawMode::Type getDrawMode();
     void loadMaterial(const char* filePath);
     bool isMaterialStandard();
+    void setLineWidth(float value);
 
 protected:
     bool isOpaque();

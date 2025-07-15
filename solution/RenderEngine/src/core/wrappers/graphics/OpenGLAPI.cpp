@@ -22,6 +22,30 @@ namespace EAttribLocation
 	};
 }
 
+void OpenGLAPI::createUniformBuffer(uint32_t* id, const std::vector<int>& data)
+{
+	glGenBuffers(1, id);
+	glBindBuffer(GL_UNIFORM_BUFFER, *id);
+	glBufferData(GL_UNIFORM_BUFFER, (sizeof(int) * 50) + sizeof(int), nullptr, GL_DYNAMIC_DRAW);
+
+	glBindBufferBase(GL_UNIFORM_BUFFER, 0, *id);
+	size_t size = data.size();
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(int), &size);	// size
+	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(int), size * sizeof(int), &data[0]);	// array
+
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
+void OpenGLAPI::bindUniformBuffer(uint32_t id)
+{
+	glBindBuffer(GL_UNIFORM_BUFFER, id);
+}
+
+void OpenGLAPI::deleteUniformBuffer(uint32_t id)
+{
+	glDeleteBuffers(1, &id);
+}
+
 void OpenGLAPI::init()
 {
 	glewExperimental = GL_TRUE;
@@ -269,6 +293,11 @@ void OpenGLAPI::activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool
 {
 	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(cubeMap ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D, textureId);
+}
+
+void OpenGLAPI::setLineWidth(float width)
+{
+	glLineWidth(width);
 }
 
 void OpenGLAPI::setupBufferSubData(MeshData2D* meshData)

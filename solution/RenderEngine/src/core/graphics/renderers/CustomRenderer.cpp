@@ -46,10 +46,12 @@ void CustomRenderer::render(CameraComponent* camera)
 			MeshData* meshData = item->mesh;
 			this->graphicsWrapper->bindVAO(meshData->vao, meshData->vbo);
 
-			item->notifyRenderAction(this->shaderManager, this->program);
+			item->notifyRenderAction(this->graphicsWrapper, this->shaderManager, this->program);
 			this->graphicsWrapper->enableVertexPositions();
-			this->graphicsWrapper->drawElement(meshData->ebo, meshData->indices.size(), item->getDrawMode());
 
+			this->graphicsWrapper->setLineWidth(item->lineWidth);
+			this->graphicsWrapper->drawElement(meshData->ebo, meshData->indices.size(), item->getDrawMode());
+			this->graphicsWrapper->setLineWidth(1.0f);
 		}
 	}
 
