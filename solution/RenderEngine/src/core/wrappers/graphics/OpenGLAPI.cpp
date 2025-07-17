@@ -22,23 +22,35 @@ namespace EAttribLocation
 	};
 }
 
-void OpenGLAPI::createUniformBuffer(uint32_t* id, const std::vector<int>& data)
+void OpenGLAPI::createUniformBuffer(uint32_t* id)
 {
 	glGenBuffers(1, id);
 	glBindBuffer(GL_UNIFORM_BUFFER, *id);
-	glBufferData(GL_UNIFORM_BUFFER, (sizeof(int) * 50) + sizeof(int), nullptr, GL_DYNAMIC_DRAW);
 
+	std::vector<int> dummyData(51, 0);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(int) * 51, &dummyData[0], GL_STATIC_DRAW);
 	glBindBufferBase(GL_UNIFORM_BUFFER, 0, *id);
-	size_t size = data.size();
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(int), &size);	// size
-	glBufferSubData(GL_UNIFORM_BUFFER, sizeof(int), size * sizeof(int), &data[0]);	// array
-
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void OpenGLAPI::bindUniformBuffer(uint32_t id)
 {
 	glBindBuffer(GL_UNIFORM_BUFFER, id);
+}
+
+void OpenGLAPI::updateUniformBuffer(uint32_t id, const std::vector<int>& data)
+{
+	glBindBuffer(GL_UNIFORM_BUFFER, id);
+	
+	int size = static_cast<int>(data.size());
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(int), &size);	// size
+
+	if (size > 0)
+	{
+		glBufferSubData(GL_UNIFORM_BUFFER, sizeof(int), size * sizeof(int), &data[0]);	// array
+	}
+
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void OpenGLAPI::deleteUniformBuffer(uint32_t id)

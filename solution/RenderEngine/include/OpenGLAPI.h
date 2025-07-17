@@ -12,8 +12,9 @@ class OpenGLAPI : public AGraphicsWrapper
 {
 
 public:
-    void createUniformBuffer(uint32_t* id, const std::vector<int>& data) override;
+    void createUniformBuffer(uint32_t* id) override;
     void bindUniformBuffer(uint32_t id) override;
+	void updateUniformBuffer(uint32_t id, const std::vector<int>& data) override;
     void deleteUniformBuffer(uint32_t id) override;
 
 protected:
