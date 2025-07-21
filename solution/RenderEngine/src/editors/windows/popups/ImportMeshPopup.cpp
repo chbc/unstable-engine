@@ -5,7 +5,7 @@ namespace sre
 {
 
 float ImportMeshPopup::scaleFactor{1.0f};
-bool ImportMeshPopup::loadToScene{ false };
+bool ImportMeshPopup::loadToScene{ true };
 
 ImportMeshPopup::ImportMeshPopup(Action_OnClosePopup* onCloseAction, std::string arg_sourceFilePath, std::string arg_destinationPath)
 	: AEditorPopup(onCloseAction), sourceFilePath(arg_sourceFilePath), destinationPath(arg_destinationPath)

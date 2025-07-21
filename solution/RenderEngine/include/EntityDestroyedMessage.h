@@ -5,7 +5,7 @@
 namespace sre
 {
 
-struct EntityDestroyedMessage : public BaseMessage
+struct SRE_API EntityDestroyedMessage : public BaseMessage
 {
 	DECLARE_MESSAGE()
 };
