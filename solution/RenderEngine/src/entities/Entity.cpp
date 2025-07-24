@@ -130,6 +130,19 @@ void Entity::getBounds(Bounds& bounds) const
 			bounds.add(componentBounds);
 		}
 	}
+
+	for (Entity* item : this->childrenList)
+	{
+		if (item->isEnabled())
+		{
+			item->getBounds(bounds);
+		}
+	}
+}
+
+void Entity::setDontShowInEditorSceneTree(bool value)
+{
+	this->dontShowInEditorSceneTree = value;
 }
 
 bool Entity::isStored() const

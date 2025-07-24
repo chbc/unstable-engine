@@ -74,7 +74,7 @@ void EditorSceneTree::drawScene(AScene* scene)
 
 void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 {
-	if (entity->hasComponent<GuizmoComponent>())
+	if (entity->dontShowInEditorSceneTree || entity->hasComponent<GuizmoComponent>())
 	{
 		return;
 	}

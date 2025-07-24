@@ -25,15 +25,6 @@ void Bounds::setup(const std::vector<VertexData>& vertexData)
 	this->fixVertices();
 }
 
-void Bounds::setup(const glm::vec3& center, const glm::vec3& extents)
-{
-	this->center = center;
-	this->extents = extents;
-	this->size = extents * 2.0f;
-	this->min = center - extents;
-	this->max = center + extents;
-}
-
 bool Bounds::intersects(const Ray& ray, const glm::mat4& worldMatrix, float& distance) const
 {
 	bool result = false;

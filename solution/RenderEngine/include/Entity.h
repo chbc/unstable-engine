@@ -46,6 +46,7 @@ private:
     bool propertiesStored{ true };
     bool componentsStored{ true };
     bool childrenStored{ true };
+	bool dontShowInEditorSceneTree{ false };
 
 protected:
 	TransformComponent* transform;
@@ -88,6 +89,7 @@ public:
     virtual const char* getClassName() const;
 
 	SRE_API void getBounds(Bounds& bounds) const;
+	SRE_API void setDontShowInEditorSceneTree(bool value);
 
 protected:
 	SRE_API virtual void onInit();
