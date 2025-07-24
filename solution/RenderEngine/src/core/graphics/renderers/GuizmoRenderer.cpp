@@ -71,9 +71,11 @@ void GuizmoRenderer::render(CameraComponent* camera)
         this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
         this->graphicsWrapper->enableColorMeshSettings();
 
-		TransformComponent* transform = item->getTransform();
+		Entity* parentEntity = item->getEntity()->getParent();
+		TransformComponent* transform = parentEntity->getTransform();
 		const glm::mat4& modelMatrix = transform->getMatrix();
-		glm::mat4 resultMatrix = glm::scale(modelMatrix, item->bounds.size);
+		glm::mat4 resultMatrix = glm::translate(modelMatrix, item->bounds.center);
+		resultMatrix = glm::scale(resultMatrix, item->bounds.size);
 
 		this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &resultMatrix[0][0]);
 		this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &mesh->color[0]);

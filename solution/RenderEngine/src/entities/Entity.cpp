@@ -121,23 +121,8 @@ const char* Entity::getClassName() const
 
 void Entity::getBounds(Bounds& bounds) const
 {
-	for (const auto& item : this->componentsMap)
-	{
-		if (item.second->isEnabled() && item.second->isRenderable())
-		{
-			ARenderableComponent* renderableComponent = static_cast<ARenderableComponent*>(item.second.get());
-			const Bounds& componentBounds = renderableComponent->getBounds();
-			bounds.add(componentBounds);
-		}
-	}
-
-	for (Entity* item : this->childrenList)
-	{
-		if (item->isEnabled())
-		{
-			item->getBounds(bounds);
-		}
-	}
+	bool baseEntity = true;
+	this->getBounds(bounds, baseEntity);
 }
 
 void Entity::setDontShowInEditorSceneTree(bool value)
@@ -235,6 +220,36 @@ void Entity::onChildChanged()
 	if (this->parent != nullptr)
 	{
 		this->parent->onChildChanged();
+	}
+}
+
+void Entity::getBounds(Bounds& bounds, bool& baseEntity) const
+{
+	for (const auto& item : this->componentsMap)
+	{
+		if (item.second->isEnabled() && item.second->isRenderable())
+		{
+			ARenderableComponent* renderableComponent = static_cast<ARenderableComponent*>(item.second.get());
+			const Bounds& componentBounds = renderableComponent->getBounds();
+
+			if (baseEntity)
+			{
+				bounds = componentBounds;
+				baseEntity = false;
+			}
+			else
+			{
+				bounds.add(componentBounds);
+			}
+		}
+	}
+
+	for (Entity* item : this->childrenList)
+	{
+		if (item->isEnabled())
+		{
+			item->getBounds(bounds, baseEntity);
+		}
 	}
 }
 

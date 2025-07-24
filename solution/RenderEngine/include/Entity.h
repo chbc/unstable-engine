@@ -103,6 +103,7 @@ private:
     void onComponentDeserialized();
     void onComponentChanged();
     void onChildChanged();
+    void getBounds(Bounds& bounds, bool& baseEntity) const;
     void setPropertiesSaved();
     void setComponentsSaved();
     void setChildrenSaved();
