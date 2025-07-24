@@ -8,8 +8,16 @@
 namespace sre
 {
 
+struct IndexBufferData
+{
+    int indicesSize;
+    int targetIndices[511];
+};
+
 class OpenGLAPI : public AGraphicsWrapper
 {
+private:
+	IndexBufferData indexBufferData;
 
 public:
     void createUniformBuffer(uint32_t* id) override;

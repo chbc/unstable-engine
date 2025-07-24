@@ -17,7 +17,6 @@ DECLARE_COMPONENT()
 protected:
     MeshData* mesh{ nullptr };
     std::string modelPath;
-    std::string meshName;
 
 private:
     bool opaque{ true };
@@ -46,6 +45,7 @@ public:
     void loadMaterial(const char* filePath);
     bool isMaterialStandard();
     void setLineWidth(float value);
+    std::string getMeshName() const;
 
 protected:
     bool isOpaque();

@@ -11,7 +11,7 @@ namespace sre
 class AEditorPopup;
 class Entity;
 
-struct EntitySelectionMessage : public BaseMessage
+struct SRE_API EntitySelectionMessage : public BaseMessage
 {
 	DECLARE_MESSAGE()
 

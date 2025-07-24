@@ -65,6 +65,17 @@ void MeshComponent::setLineWidth(float value)
 	this->lineWidth = value;
 }
 
+std::string MeshComponent::getMeshName() const
+{
+    std::string result;
+    if (this->mesh != nullptr)
+    {
+        result = this->mesh->name;
+    }
+
+    return result;
+}
+
 bool MeshComponent::isOpaque()
 {
     return this->opaque;
