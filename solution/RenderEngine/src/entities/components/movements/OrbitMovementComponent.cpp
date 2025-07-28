@@ -21,20 +21,29 @@ void OrbitMovementComponent::move(const glm::vec2& deltaMovement, float elapsedT
 
 		const float SPEED = 10.0f;
 		glm::vec3 position = transform->getPosition();
-		glm::vec3 toPlayer = position - this->target;
-		glm::vec3 direction = glm::normalize(toPlayer);
+		glm::vec3 toTarget = position - this->target;
+		glm::vec3 direction = glm::normalize(toTarget);
 		glm::vec3 right = glm::cross(direction, glm::vec3{ 0.0f, 1.0f, 0.0f });
 		glm::vec3 axis = glm::normalize((right * deltaY) + (glm::vec3{ 0.0f, 1.0f, 0.0f } *(-deltaX)));
 		float angle = (glm::abs(deltaX) + glm::abs(deltaY)) * SPEED * elapsedTime;
 
 		direction = glm::rotate(direction, glm::radians(angle), axis);
 
-		float targetDistance = glm::length(toPlayer);
+		float targetDistance = glm::length(toTarget);
 		position = this->target + (direction * targetDistance);
 
 		transform->setPosition(position);
 		transform->setLookAtRotation(this->target);
 	}
+}
+
+void OrbitMovementComponent::updateTarget()
+{
+	TransformComponent* transform = this->getTransform();
+	glm::vec3 position = transform->getPosition();
+	float distance = glm::distance(position, this->target);
+	glm::vec3 forward = transform->getForward();
+	this->target = position + (forward * distance);
 }
 
 } // namespace

@@ -434,6 +434,7 @@
     <ClCompile Include="src\entities\components\movements\FlyingMovementComponent.cpp" />
     <ClCompile Include="src\entities\components\movements\OrbitMovementComponent.cpp" />
     <ClCompile Include="src\entities\components\EntityComponentTypes.cpp" />
+    <ClCompile Include="src\entities\components\movements\PanMovementComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\ARenderableComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\guizmos\GuizmoComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\ABaseGUIComponent.cpp" />
@@ -620,6 +621,7 @@
     <ClInclude Include="include\GuizmoRenderer.h" />
     <ClInclude Include="include\ImGuiLib.h" />
     <ClInclude Include="include\ImportMeshPopup.h" />
+    <ClInclude Include="include\PanMovementComponent.h" />
     <ClInclude Include="include\Ray.h" />
     <ClInclude Include="include\RefreshMeshesMessage.h" />
     <ClInclude Include="include\MaterialComponentTypes.h" />

@@ -66,10 +66,18 @@ void TransformComponent::setRotation(const glm::vec3& arg_eulerAngles)
 
 void TransformComponent::setLookAtRotation(const glm::vec3& targetPosition)
 {
-	this->rotation = glm::inverse(glm::lookAt(this->getPosition(), targetPosition, UP));
-	this->rotation[3][0] = 0.0f;
-	this->rotation[3][1] = 0.0f;
-	this->rotation[3][2] = 0.0f;
+	this->rotation = glm::mat4{ 1.0f };
+	glm::vec3 direction = glm::normalize(targetPosition - this->getPosition());
+	glm::vec3 right = glm::cross(direction, UP);
+	if (glm::length(right) < 0.0001f)
+	{
+		right = glm::cross(direction, FRONT);
+	}
+
+	glm::vec3 up = glm::cross(right, direction);
+	this->rotation[0] = glm::vec4{ right, 0.0f };
+	this->rotation[1] = glm::vec4{ up, 0.0f };
+	this->rotation[2] = glm::vec4{ -direction, 0.0f };
 
 	this->updateMatrix();
 }
@@ -175,9 +183,8 @@ void TransformComponent::updateMatrix()
 {
 	glm::mat4 translationMatrix = glm::translate(glm::mat4{ 1.0 }, this->position);
 	glm::mat4 scaleMatrix = glm::scale(glm::mat4{ 1.0f }, this->scale);
-	glm::mat4 rotationMatrix = this->rotation;
 
-	glm::mat4 localMatrix = translationMatrix * rotationMatrix * scaleMatrix;
+	glm::mat4 localMatrix = translationMatrix * this->rotation * scaleMatrix;
 	this->worldMatrix = this->parentMatrix * localMatrix;
 
 	this->propagateTransform();

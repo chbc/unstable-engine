@@ -459,6 +459,9 @@
     <ClCompile Include="src\core\graphics\renderers\ABaseRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\components\movements\PanMovementComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1173,6 +1176,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ABaseRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PanMovementComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

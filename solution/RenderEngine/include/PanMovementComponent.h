@@ -7,19 +7,13 @@
 namespace sre
 {
 
-class SRE_API OrbitMovementComponent : public AEntityComponent
+class SRE_API PanMovementComponent : public AEntityComponent
 {
 	DECLARE_COMPONENT()
 
-private:
-	glm::vec3 target{ 0.0f, 0.0f, 0.0f };
-
 public:
-	OrbitMovementComponent(Entity* entity);
+	PanMovementComponent(Entity* entity);
 	void move(const glm::vec2& deltaMovement, float elapsedTime);
-
-private:
-	void updateTarget();
 };
 
 } // namespace

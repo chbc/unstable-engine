@@ -12,7 +12,8 @@ enum class EViewingState
 {
 	NONE,
 	FLYING,
-	ORBIT
+	ORBIT,
+	PAN
 };
 
 class SceneViewportCamera
@@ -22,6 +23,7 @@ private:
 	class CameraComponent* cameraComponent{ nullptr };
 	class FlyingMovementComponent* flyingComponent{ nullptr };
 	class OrbitMovementComponent* orbitComponent{ nullptr };
+	class PanMovementComponent* panComponent{ nullptr };
 	class MultimediaManager* multimediaManager{ nullptr };
 	EViewingState viewingState{ EViewingState::NONE };
 	float currentWindowWidth{ 0.0f };

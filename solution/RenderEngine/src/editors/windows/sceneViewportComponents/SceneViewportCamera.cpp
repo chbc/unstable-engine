@@ -3,6 +3,7 @@
 #include "CameraComponent.h"
 #include "FlyingMovementComponent.h"
 #include "OrbitMovementComponent.h"
+#include "PanMovementComponent.h"
 #include "MultimediaManager.h"
 #include "SingletonsManager.h"
 #include "EngineValues.h"
@@ -22,6 +23,7 @@ void SceneViewportCamera::onInit()
 	Entity* camera = editorScene->createPerspectiveCamera();
 	this->flyingComponent = camera->addComponent<FlyingMovementComponent>();
 	this->orbitComponent = camera->addComponent<OrbitMovementComponent>();
+	this->panComponent = camera->addComponent<PanMovementComponent>();
 	this->cameraComponent = camera->getComponent<CameraComponent>();
 	this->cameraTransform = camera->getTransform();
 	this->cameraTransform->setPosition({ 0.0f, 2.0f, 5.0f });
@@ -70,11 +72,20 @@ void SceneViewportCamera::updateViewingState()
 			this->updateInitialMousePosition();
 		}
 	}
-	else if (ImGui::IsMouseDown(ImGuiMouseButton_Left) && ImGui::IsKeyDown(ImGuiKey_LeftAlt))
+	else if	(ImGui::IsKeyDown(ImGuiKey_LeftAlt) && (ImGui::IsMouseDown(ImGuiMouseButton_Left)))
 	{
 		if (this->viewingState != EViewingState::ORBIT)
 		{
 			this->viewingState = EViewingState::ORBIT;
+			this->multimediaManager->showMouseCursor(false);
+			this->updateInitialMousePosition();
+		}
+	}
+	else if (ImGui::IsMouseDown(ImGuiMouseButton_Middle))
+	{
+		if (this->viewingState != EViewingState::PAN)
+		{
+			this->viewingState = EViewingState::PAN;
 			this->multimediaManager->showMouseCursor(false);
 			this->updateInitialMousePosition();
 		}
@@ -93,24 +104,31 @@ void SceneViewportCamera::processCameraMovement(float elapsedTime)
 {
 	const glm::ivec2& mouseDelta = Input::getMouseDeltaPosition();
 
-	if (this->viewingState == EViewingState::FLYING)
+	switch (this->viewingState)
 	{
-		glm::vec3 moveDirection{ 0.0f };
+		case EViewingState::FLYING:
+		{
+			glm::vec3 moveDirection{ 0.0f };
 
-		if (Input::isKeyDown(KEY_a))
-			moveDirection -= this->cameraTransform->getRight();
-		if (Input::isKeyDown(KEY_d))
-			moveDirection += this->cameraTransform->getRight();
-		if (Input::isKeyDown(KEY_w))
-			moveDirection -= this->cameraTransform->getForward();
-		if (Input::isKeyDown(KEY_s))
-			moveDirection += this->cameraTransform->getForward();
+			if (Input::isKeyDown(KEY_a))
+				moveDirection -= this->cameraTransform->getRight();
+			if (Input::isKeyDown(KEY_d))
+				moveDirection += this->cameraTransform->getRight();
+			if (Input::isKeyDown(KEY_w))
+				moveDirection -= this->cameraTransform->getForward();
+			if (Input::isKeyDown(KEY_s))
+				moveDirection += this->cameraTransform->getForward();
 
-		this->flyingComponent->processMovement(moveDirection, mouseDelta, elapsedTime);
-	}
-	else
-	{
-		this->orbitComponent->move(mouseDelta, elapsedTime);
+			this->flyingComponent->processMovement(moveDirection, mouseDelta, elapsedTime);
+			break;
+		}
+		case EViewingState::ORBIT:
+			this->orbitComponent->move(mouseDelta, elapsedTime);
+			break;
+		case EViewingState::PAN:
+			this->panComponent->move(mouseDelta, elapsedTime);
+			break;
+		default: break;
 	}
 }
 
