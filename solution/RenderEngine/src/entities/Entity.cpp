@@ -72,6 +72,28 @@ Entity* Entity::getChild(size_t index)
 	return this->childrenList[index];
 }
 
+Entity* Entity::getChild(const std::string& name)
+{
+	Entity* result{ nullptr };
+	if (this->children.count(name) > 0)
+	{
+		result = this->children[name];
+	}
+	else
+	{
+		for (Entity* item : this->childrenList)
+		{
+			result = item->getChild(name);
+			if (result)
+			{
+				break;
+			}
+		}
+	}
+
+	return result;
+}
+
 void Entity::removeFromParent()
 {
 	if (this->parent != nullptr)
@@ -97,9 +119,17 @@ void Entity::destroy()
 	messagesManager->notify(&message);
 }
 
-void Entity::setEnabled(bool value)
+void Entity::setEnabled(bool value, bool changeChildren)
 {
 	this->enabled = value;
+
+	if (changeChildren)
+	{
+		for (Entity* item : this->childrenList)
+		{
+			item->setEnabled(value, changeChildren);
+		}
+	}
 }
 
 bool Entity::isEnabled() const

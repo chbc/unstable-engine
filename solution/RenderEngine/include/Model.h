@@ -18,6 +18,7 @@ private:
 public:
 	ABaseModel(const char* arg_filePath);
 	const std::string& getFilePath();
+	virtual bool isEmpty() = 0;
 
 friend class AssetsManager;
 };
@@ -31,7 +32,8 @@ public:
 public:
 	SRE_API Model(const char* arg_filePath);
 	MeshData* getMesh(const char* meshName);
-	size_t getMeshCount();
+	SRE_API size_t getMeshCount();
+	bool isEmpty() override;
 };
 
 struct Model2D : ABaseModel
@@ -42,6 +44,7 @@ public:
 public:
 	Model2D(const char* arg_filePath);
 	MeshData2D* getMesh(const char* meshName);
+	bool isEmpty() override;
 };
 
 } // namespace

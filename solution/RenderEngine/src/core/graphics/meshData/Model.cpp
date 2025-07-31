@@ -42,6 +42,11 @@ size_t Model::getMeshCount()
 	return this->meshes.size();
 }
 
+bool Model::isEmpty()
+{
+	return this->meshes.empty();
+}
+
 Model2D::Model2D(const char* arg_filePath) : ABaseModel(arg_filePath)
 {
 }
@@ -56,6 +61,11 @@ MeshData2D* Model2D::getMesh(const char* meshName)
 	}
 
 	return result;
+}
+
+bool Model2D::isEmpty()
+{
+	return this->meshes.empty();
 }
 
 } // namespace

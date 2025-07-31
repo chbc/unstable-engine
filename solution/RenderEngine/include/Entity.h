@@ -66,6 +66,7 @@ public:
 	SRE_API void removeChild(Entity* child);
 	SRE_API inline size_t getChildrenCount() { return this->children.size(); }
 	SRE_API Entity *getChild(size_t index);
+	SRE_API Entity* getChild(const std::string& name);
 	SRE_API inline Entity *getParent() { return this->parent; }
     SRE_API void removeFromParent();
 
@@ -75,7 +76,7 @@ public:
 	SRE_API inline bool isAlive() const { return this->alive; }
     SRE_API const char* getName() const { return this->name.c_str(); }
 
-    SRE_API void setEnabled(bool value);
+    SRE_API void setEnabled(bool value, bool changeChildren = false);
     SRE_API bool isEnabled() const;
 
     template <typename Type>
