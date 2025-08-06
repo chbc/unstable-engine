@@ -115,7 +115,7 @@ void Entity::destroy()
 		item->destroy();
 
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-	EntityDestroyedMessage message;
+	EntityDestroyedMessage message{ this };
 	messagesManager->notify(&message);
 }
 

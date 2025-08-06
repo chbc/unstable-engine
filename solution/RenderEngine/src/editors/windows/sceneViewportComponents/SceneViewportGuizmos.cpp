@@ -30,18 +30,16 @@ void SceneViewportGuizmos::onInit()
 	this->guizmoEntity->addComponent<GuizmoComponent>();
 }
 
-bool SceneViewportGuizmos::drawAndManipulate(float windowWidth, float windowHeight, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
+bool SceneViewportGuizmos::drawAndManipulate(bool cameraMoving, const glm::vec2& windowPos, const glm::vec2& windowSize, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
 	bool result = false;
 
-	if (this->selectedEntity != nullptr)
+	ImGuizmo::SetOrthographic(false);
+	ImGuizmo::SetDrawlist();
+	ImGuizmo::SetRect(windowPos.x, windowPos.y, windowSize.x, windowSize.y);
+
+	if (!cameraMoving && this->selectedEntity)
 	{
-		ImGuizmo::SetOrthographic(false);
-		ImGuizmo::SetDrawlist();
-
-		ImVec2 windowPosition = ImGui::GetWindowPos();
-		ImGuizmo::SetRect(windowPosition.x, windowPosition.y, windowWidth, windowHeight);
-
 		TransformComponent* entityTransform = this->selectedEntity->getTransform();
 		glm::mat4 entityMatrix = entityTransform->getMatrix();
 
@@ -62,6 +60,9 @@ bool SceneViewportGuizmos::drawAndManipulate(float windowWidth, float windowHeig
 			this->onEntityManipulated();
 		}
 	}
+
+	static const glm::mat4 identityMatrix{ 1.0f };
+	ImGuizmo::DrawGrid(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), glm::value_ptr(identityMatrix), 20.0f);
 
 	return result;
 }

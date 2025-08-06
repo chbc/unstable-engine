@@ -51,7 +51,7 @@ void SceneViewportCamera::updateCameraPerspective(float newWidth, float newHeigh
 		this->currentWindowWidth = newWidth;
 		this->currentWindowHeight = newHeight;
 		float aspectRatio = this->currentWindowWidth / this->currentWindowHeight;
-		this->cameraComponent->setPerspectiveProjection(70.0f, aspectRatio, 0.1f, 1000.0f);
+		this->cameraComponent->setPerspectiveProjection(70.0f, aspectRatio, 0.01f, 1000.0f);
 	}
 }
 

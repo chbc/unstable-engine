@@ -100,7 +100,7 @@ void CameraComponent::onPropertyDeserialized()
     AEntityComponent::onPropertyDeserialized();
     if (this->isPerspective)
     {
-        this->setPerspectiveProjection(this->fov, EngineValues::ASPECT_RATIO, 0.1f, 1000.0f);
+        this->setPerspectiveProjection(this->fov, EngineValues::ASPECT_RATIO, 0.01f, 1000.0f);
     }
     else
     {

@@ -69,7 +69,12 @@ void EditorSceneViewport::onEditorGUI()
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.WindowBorderSize = 0.0f;
 	style.WindowPadding = ImVec2{ 0.0f, 0.0f };
+
+	ImVec2 position = ImGui::GetCursorScreenPos();
 	ImVec2 size = ImGui::GetContentRegionAvail();
+
+	glm::vec2 windowPosition{ position.x, position.y };
+	glm::vec2 windowSize{ size.x, size.y };
 
 	ImGui::Image(this->textureId, size, ImVec2{0.0f, 1.0f}, ImVec2{ 1.0f, 0.0f });
 
@@ -78,17 +83,20 @@ void EditorSceneViewport::onEditorGUI()
 	this->handleFileDrop();
 	this->sceneViewportCamera.updateCameraPerspective(size.x, size.y);
 
-	if (!this->sceneViewportCamera.isCameraMoving())
-	{
-		glm::mat4 viewMatrix;
-		glm::mat4 projectionMatrix;
-		this->sceneViewportCamera.getCameraMatrices(viewMatrix, projectionMatrix);
+	bool cameraMoving = this->sceneViewportCamera.isCameraMoving();
 
-		bool entityManipulated = this->sceneViewportGuizmos.drawAndManipulate(size.x, size.y, viewMatrix, projectionMatrix);
-		if (this->isWindowHovered && !entityManipulated)
-		{
-			tryPickEntity(size.x, size.y);
-		}
+	glm::mat4 viewMatrix;
+	glm::mat4 projectionMatrix;
+	this->sceneViewportCamera.getCameraMatrices(viewMatrix, projectionMatrix);
+
+	bool entityManipulated = this->sceneViewportGuizmos.drawAndManipulate
+	(
+		cameraMoving, windowPosition, windowSize, viewMatrix, projectionMatrix
+	);
+
+	if (!cameraMoving && this->isWindowHovered && !entityManipulated)
+	{
+		tryPickEntity(windowSize, windowPosition);
 	}
 
 	ImGui::End();
@@ -124,15 +132,15 @@ void EditorSceneViewport::handleFileDrop()
 	}
 }
 
-void EditorSceneViewport::tryPickEntity(float viewportWidth, float viewportHeight)
+void EditorSceneViewport::tryPickEntity(const glm::vec2& viewportSize, const glm::vec2& windowPosition)
 {
 	if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
 	{
 		ImVec2 mousePosition = ImGui::GetMousePos();
-		glm::vec2 viewportSize{ viewportWidth, viewportHeight };
+		glm::vec2 resultMousePosition{ mousePosition.x - windowPosition.x, mousePosition.y - windowPosition.y };
 		
 		ScenesManager* scenesManager = SingletonsManager::getInstance()->get<ScenesManager>();
-		Entity* pickedEntity = scenesManager->raycastFromScreen({ mousePosition.x, mousePosition.y }, viewportSize);
+		Entity* pickedEntity = scenesManager->raycastFromScreen(resultMousePosition, viewportSize);
 		this->controller->notifyEntitySelection(pickedEntity);
 	}
 }

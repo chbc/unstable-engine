@@ -38,7 +38,7 @@ public:
 
 private:
 	void handleFileDrop();
-	void tryPickEntity(float viewportWidth, float viewportHeight);
+	void tryPickEntity(const glm::vec2& viewportSize, const glm::vec2& windowPosition);
 
 friend class WorldEditor;
 };
