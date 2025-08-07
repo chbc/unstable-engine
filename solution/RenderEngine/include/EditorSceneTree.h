@@ -20,20 +20,16 @@ class EditorSceneTree : public IEditorWindow
 private:
 	AScene* scene{ nullptr };
 	AScene* guiScene{ nullptr };
-	Entity* selectedEntity{ nullptr };
-	SPTR<Action> selectionAction;
 	EditorsController* controller{ nullptr };
 
 public:
-	EditorSceneTree(ScenesManager* arg_scenesManager, EditorsController* arg_controller);
+	EditorSceneTree(EditorsController* arg_controller);
 	void onInit() override;
 	void onEditorGUI() override;
-	void onCleanUp() override;
 
 private:
 	void drawScene(class AScene* scene);
 	void drawEntityTree(Entity* entity, int index);
-	void onEntitySelected(void* data);
 };
 
 } // namespace

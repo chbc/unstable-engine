@@ -3,8 +3,6 @@
 #include "EditorSceneTree.h"
 #include "SingletonsManager.h"
 #include "ScenesManager.h"
-#include "MessagesManager.h"
-#include "EditorMessages.h"
 #include "EngineValues.h"
 #include "EditorsController.h"
 #include "GuizmoComponent.h"
@@ -14,20 +12,13 @@
 namespace sre
 {
 
-EditorSceneTree::EditorSceneTree(ScenesManager* arg_scenesManager, EditorsController* arg_controller)
-{
-	Action* action = new Action{ [&](void* message) { this->onEntitySelected(message); } };
-	this->selectionAction = SPTR<Action>(action);
-}
+EditorSceneTree::EditorSceneTree(EditorsController* arg_controller)
+	: controller(arg_controller)
+{ }
 
 void EditorSceneTree::onInit()
 {
 	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
-	
-	MessagesManager* messagesManager = singletonsManager->get<MessagesManager>();
-	messagesManager->addListener<EntitySelectionMessage>(this->selectionAction.get());
-	this->selectedEntity = nullptr;
-
 	ScenesManager* scenesManager = singletonsManager->get<ScenesManager>();
 	this->scene = scenesManager->getScene();
 	this->guiScene = scenesManager->getGuiScene();
@@ -40,24 +31,19 @@ void EditorSceneTree::onEditorGUI()
 	this->drawScene(this->scene);
 	this->drawScene(this->guiScene);
 	
-	if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsWindowHovered())
+	if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
 	{
-		this->controller->notifyEntitySelection(nullptr);
+		this->controller->setSelectedEntity(nullptr);
 	}
 
-	if (ImGui::IsKeyPressed(ImGuiKey_Delete, false) && (this->selectedEntity != nullptr))
+	Entity* selectedEntity = this->controller->getSelectedEntity();
+	if (selectedEntity && ImGui::IsKeyPressed(ImGuiKey_Delete, false))
 	{
-		this->selectedEntity->destroy();
-		this->controller->notifyEntitySelection(nullptr);
+		selectedEntity->destroy();
+		this->controller->setSelectedEntity(nullptr);
 	}
 
 	ImGui::End();
-}
-
-void EditorSceneTree::onCleanUp()
-{
-	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-	messagesManager->removeListener<EntitySelectionMessage>(this->selectionAction.get());
 }
 
 void EditorSceneTree::drawScene(AScene* scene)
@@ -90,38 +76,40 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 
 	const ImGuiTreeNodeFlags BASE_FLAGS = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 
+	Entity* selectedEntity = this->controller->getSelectedEntity();
+
 	if (childrenCount == 0)
 	{
-		if (ImGui::Selectable(name, entity == this->selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
+		if (ImGui::Selectable(name, entity == selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
 		{
-			this->controller->notifyEntitySelection(entity);
+			this->controller->setSelectedEntity(entity);
 		}
 
 		if (ImGui::BeginPopupContextItem())
 		{
-			this->controller->notifyEntitySelection(entity);
+			this->controller->setSelectedEntity(entity);
 
 			ImGui::Text("[%s]", name);
-			if (!this->selectedEntity->isAsset())
+			if (!selectedEntity->isAsset())
 			{
 				if (ImGui::Button("Save new Entity Asset"))
 				{
-					this->controller->saveEntity(this->selectedEntity);
+					this->controller->saveEntity(selectedEntity);
 					ImGui::CloseCurrentPopup();
 				}
 			}
-			else if (!this->selectedEntity->isStored())
+			else if (!selectedEntity->isStored())
 			{
 				if (ImGui::Button("Save Entity Asset"))
 				{
-					this->controller->saveEntity(this->selectedEntity);
+					this->controller->saveEntity(selectedEntity);
 					ImGui::CloseCurrentPopup();
 				}
 			}
 			if (ImGui::Button("Delete"))
 			{
-				this->selectedEntity->destroy();
-				this->controller->notifyEntitySelection(nullptr);
+				selectedEntity->destroy();
+				this->controller->setSelectedEntity(nullptr);
 				ImGui::CloseCurrentPopup();
 			}
 			ImGui::EndPopup();
@@ -130,7 +118,7 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 	else
 	{
 		ImGuiTreeNodeFlags flags = BASE_FLAGS;
-		if (entity == this->selectedEntity)
+		if (entity == selectedEntity)
 		{
 			flags |= ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_Selected;
 		}
@@ -139,7 +127,7 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 
 		if (ImGui::IsItemClicked())
 		{
-			this->controller->notifyEntitySelection(entity);
+			this->controller->setSelectedEntity(entity);
 		}
 
 		if (open)
@@ -151,12 +139,6 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 			ImGui::TreePop();
 		}
 	}
-}
-
-void EditorSceneTree::onEntitySelected(void* data)
-{
-	EntitySelectionMessage* message = static_cast<EntitySelectionMessage*>(data);
-	this->selectedEntity = message->entity;
 }
 
 } // namespace

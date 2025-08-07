@@ -15,7 +15,8 @@ class Entity;
 class EditorsController
 {
 private:
-	ScenesManager* scenesManager = nullptr;
+	ScenesManager* scenesManager{ nullptr };
+	Entity* selectedEntity{ nullptr };
 
 	const char* GUI_IMAGE_PATH = "engine\\media\\whiteTexture.png";
 	const char* TEXT_FONT_PATH = "engine\\media\\fonts\\verdana";
@@ -36,7 +37,8 @@ public:
 	void createMeshEntity(const char* file, const char* meshName);
 	void createDirectionalLight();
 	void createPointLight();
-	void notifyEntitySelection(Entity* entity);
+	void setSelectedEntity(Entity* entity);
+	Entity* getSelectedEntity();
 	void deleteFile(const char* filePath, bool isDirectory);
 };
 

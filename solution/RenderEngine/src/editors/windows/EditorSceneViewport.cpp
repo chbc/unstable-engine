@@ -141,7 +141,7 @@ void EditorSceneViewport::tryPickEntity(const glm::vec2& viewportSize, const glm
 		
 		ScenesManager* scenesManager = SingletonsManager::getInstance()->get<ScenesManager>();
 		Entity* pickedEntity = scenesManager->raycastFromScreen(resultMousePosition, viewportSize);
-		this->controller->notifyEntitySelection(pickedEntity);
+		this->controller->setSelectedEntity(pickedEntity);
 	}
 }
 

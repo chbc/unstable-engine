@@ -133,7 +133,7 @@ void EditorFileBrowser::showIcon(FileIcon* icon, const ImVec2& size)
 	ImGui::PushStyleColor(ImGuiCol_Button, IconColor);
 	if (ImGui::ImageButton(icon->fileName.c_str(), icon->textureId, size))
 	{
-		this->controller->notifyEntitySelection(nullptr);
+		this->controller->setSelectedEntity(nullptr);
 		this->selectedItem = icon;
 	}
 	ImGui::PopStyleColor();

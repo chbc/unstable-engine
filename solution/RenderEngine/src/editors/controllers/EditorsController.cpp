@@ -82,13 +82,13 @@ void EditorsController::saveGui()
 void EditorsController::createGUIImage()
 {
 	Entity* newEntity = this->scenesManager->createGUIImageEntity(GUI_IMAGE_PATH);
-	this->notifyEntitySelection(newEntity);
+	this->setSelectedEntity(newEntity);
 }
 
 void EditorsController::createGUIText()
 {
 	Entity* newEntity = this->scenesManager->createGUITextEntity(TEXT_FONT_PATH);
-	this->notifyEntitySelection(newEntity);
+	this->setSelectedEntity(newEntity);
 }
 
 void EditorsController::refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result)
@@ -165,7 +165,7 @@ void EditorsController::importMesh(const char* sourceFilePath, const char* desti
 void EditorsController::createMeshEntity(const char* file, const char* meshName)
 {
 	Entity* newEntity = this->scenesManager->createMeshEntity(file, meshName);
-	this->notifyEntitySelection(newEntity);
+	this->setSelectedEntity(newEntity);
 
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	MeshEntityLoadedEditorMessage message{ newEntity };
@@ -182,11 +182,17 @@ void EditorsController::createPointLight()
 	this->scenesManager->createPointLight();
 }
 
-void EditorsController::notifyEntitySelection(Entity* entity)
+void EditorsController::setSelectedEntity(Entity* entity)
 {
+	this->selectedEntity = entity;
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	EntitySelectionMessage message{ entity };
 	messagesManager->notify(&message);
+}
+
+Entity* EditorsController::getSelectedEntity()
+{
+	return this->selectedEntity;
 }
 
 void EditorsController::deleteFile(const char* filePath, bool isDirectory)
