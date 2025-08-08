@@ -2,7 +2,7 @@
 #include <sstream>
 #include "MessagesManager.h"
 #include "EntityDestroyedMessage.h"
-#include "ARenderableComponent.h"
+#include "MeshComponent.h"
 #include "EditorMessages.h"
 #include "SingletonsManager.h"
 #include "BoolEditorProperty.h"
@@ -158,6 +158,55 @@ void Entity::getBounds(Bounds& bounds) const
 void Entity::setDontShowInEditorSceneTree(bool value)
 {
 	this->dontShowInEditorSceneTree = value;
+}
+
+bool Entity::raycast(const Ray& ray, float& distance)
+{
+	bool result = false;
+
+	if (this->hasComponent<MeshComponent>())
+	{
+		ARenderableComponent* renderableComponent = this->getComponent<MeshComponent>();
+		TransformComponent* transform = this->getTransform();
+		Bounds bounds = renderableComponent->getBounds();
+
+		const glm::mat4& modelMatrix = transform->getMatrix();
+		if (bounds.intersects(ray, modelMatrix, distance))
+		{
+			result = true;
+		}
+	}
+	else
+	{
+		for (Entity* item : this->childrenList)
+		{
+			if (item->raycast(ray, distance))
+			{
+				result = true;
+				break;
+			}
+		}
+	}
+
+	return result;
+}
+
+Entity* Entity::raycastChildren(const Ray& ray, float maxDistance)
+{
+	Entity* result{ nullptr };
+
+	float minDistance = maxDistance;
+	for (Entity* item : this->childrenList)
+	{
+		float distance = 0;
+		if (item->raycast(ray, distance) && (distance < minDistance))
+		{
+			result = item;
+			minDistance = distance;
+		}
+	}
+
+	return result;
 }
 
 bool Entity::isStored() const

@@ -91,6 +91,8 @@ public:
 
 	SRE_API void getBounds(Bounds& bounds) const;
 	SRE_API void setDontShowInEditorSceneTree(bool value);
+    SRE_API bool raycast(const Ray& ray, float& distance);
+    SRE_API Entity* raycastChildren(const Ray& ray, float maxDistance);
 
 protected:
 	SRE_API virtual void onInit();

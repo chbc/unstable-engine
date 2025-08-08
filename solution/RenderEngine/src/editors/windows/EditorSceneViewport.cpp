@@ -140,7 +140,8 @@ void EditorSceneViewport::tryPickEntity(const glm::vec2& viewportSize, const glm
 		glm::vec2 resultMousePosition{ mousePosition.x - windowPosition.x, mousePosition.y - windowPosition.y };
 		
 		ScenesManager* scenesManager = SingletonsManager::getInstance()->get<ScenesManager>();
-		Entity* pickedEntity = scenesManager->raycastFromScreen(resultMousePosition, viewportSize);
+		Entity* currentEntity = this->controller->getSelectedEntity();
+		Entity* pickedEntity = scenesManager->raycastFromScreen(resultMousePosition, viewportSize, currentEntity);
 		this->controller->setSelectedEntity(pickedEntity);
 	}
 }

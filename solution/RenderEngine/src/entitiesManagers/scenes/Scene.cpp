@@ -91,32 +91,32 @@ void Scene::onRefreshMeshes()
     AScene::onSceneLoaded();
 }
 
-Entity* Scene::raycast(const Ray& ray, float maxDistance)
+Entity* Scene::raycast(const Ray& ray, Entity* parentEntity, float maxDistance)
 {
 	Entity* result = nullptr;
 	float minDistance = maxDistance;
 
-	for (const auto& item : this->entities)
-	{
-		Entity* entity = item.second.get();
-		if (entity->hasComponent<MeshComponent>())
-		{
-            ARenderableComponent* renderableComponent = entity->getComponent<MeshComponent>();
-			TransformComponent* transform = entity->getTransform();
-			Bounds bounds = renderableComponent->getBounds();
-
-            const glm::mat4& modelMatrix = transform->getMatrix();
+    if (parentEntity)
+    {
+        result = parentEntity->raycastChildren(ray, maxDistance);
+    }
+    
+    if (!result)
+    {
+	    for (const auto& item : this->entities)
+	    {
+		    Entity* entity = item.second.get();
             float distance = 0;
-			if (bounds.intersects(ray, modelMatrix, distance))
-			{
-				if (distance < minDistance)
-				{
-					minDistance = distance;
-					result = entity;
-				}
-			}
-		}
-	}
+            if (entity->raycast(ray, distance))
+            {
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    result = entity;
+                }
+            }
+	    }
+    }
 
 	return result;
 }

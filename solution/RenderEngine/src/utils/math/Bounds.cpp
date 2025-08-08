@@ -29,8 +29,8 @@ bool Bounds::intersects(const Ray& ray, const glm::mat4& worldMatrix, float& dis
 {
 	bool result = false;
 
-	glm::vec3 worldMin = this->center + this->min;
-	glm::vec3 worldMax = this->center + this->max;
+	glm::vec3 worldMin = this->min;
+	glm::vec3 worldMax = this->max;
 
 	worldMin = worldMatrix * glm::vec4{ worldMin, 1.0f };
 	worldMax = worldMatrix * glm::vec4{ worldMax, 1.0f };

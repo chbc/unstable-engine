@@ -34,8 +34,8 @@ public:
     SRE_API Entity* createGUIImageEntity(const std::string& filePath, const glm::vec2& normalizedSize, const std::string& name = "");
     SRE_API Entity* createGUIImageEntityFromAtlas(const std::string& filePath, const std::string& imageId, const std::string& name = "");
     SRE_API Entity* createGUITextEntity(const std::string fontFile, const std::string& name = "", uint32_t maxItems = 100u);
-    SRE_API Entity* raycast(const Ray& ray, float maxDistance = 1000);
-	SRE_API Entity* raycastFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize, float maxDistance = 1000);
+	SRE_API Entity* raycastFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize, Entity* parentEntity, float maxDistance = 1000);
+    SRE_API Entity* raycast(const Ray& ray, Entity* parentEntity = nullptr, float maxDistance = 1000);
     SRE_API Scene* getEditorScene();
     SRE_API Entity* createMeshEntity(Model* model, const char* meshName = "", Entity* parent = nullptr);
 

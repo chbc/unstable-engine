@@ -87,17 +87,17 @@ Entity* ScenesManager::createGUITextEntity(const std::string fontFile, const std
     return entity;
 }
 
-Entity* ScenesManager::raycast(const Ray& ray, float maxDistance)
-{
-	return this->scene->raycast(ray, maxDistance);
-}
-
-Entity* ScenesManager::raycastFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize, float maxDistance)
+Entity* ScenesManager::raycastFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize, Entity* parentEntity, float maxDistance)
 {
 	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 	CameraComponent* camera = renderManager->getCurrentCamera();
 	Ray ray = camera->getRayFromScreen(mousePosition, viewportSize);
-	return this->raycast(ray, maxDistance);
+	return this->raycast(ray, parentEntity, maxDistance);
+}
+
+Entity* ScenesManager::raycast(const Ray& ray, Entity* parentEntity, float maxDistance)
+{
+	return this->scene->raycast(ray, parentEntity, maxDistance);
 }
 
 Scene* ScenesManager::getEditorScene()
