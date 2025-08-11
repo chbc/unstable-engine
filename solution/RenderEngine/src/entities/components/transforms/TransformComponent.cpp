@@ -64,6 +64,12 @@ void TransformComponent::setRotation(const glm::vec3& arg_eulerAngles)
 	this->updateMatrix();
 }
 
+void TransformComponent::setRotation(const glm::quat& arg_rotation)
+{
+	this->rotation = glm::toMat4(arg_rotation);
+	this->updateMatrix();
+}
+
 void TransformComponent::setLookAtRotation(const glm::vec3& targetPosition)
 {
 	this->rotation = glm::mat4{ 1.0f };
@@ -84,7 +90,7 @@ void TransformComponent::setLookAtRotation(const glm::vec3& targetPosition)
 
 void TransformComponent::rotate(const glm::vec3& axis, float angle)
 {
-	this->rotation = glm::rotate(this->rotation, glm::radians(angle), axis);
+	this->rotation = glm::rotate(this->rotation, glm::radians(-angle), axis);
 	this->updateMatrix();
 }
 
@@ -103,6 +109,20 @@ glm::quat TransformComponent::getRotation() const
 {
 	glm::mat4 result = this->parentMatrix * this->rotation;
 	return glm::quat{ result };
+}
+
+void TransformComponent::getRotation(float& pitch, float& yaw, float& roll) const
+{
+	glm::vec3 forward = this->getForward();
+	pitch = glm::atan(forward.y, glm::sqrt((forward.x * forward.x) + (forward.z * forward.z)));
+	yaw = glm::atan(forward.x, forward.z);
+
+	glm::vec3 up = this->getUp();
+	roll = glm::atan(up.x, up.y);
+
+	pitch = glm::degrees(pitch);
+	yaw = glm::degrees(yaw);
+	roll = glm::degrees(roll);
 }
 
 glm::vec3 TransformComponent::getScale() const
@@ -133,7 +153,7 @@ const glm::vec3 TransformComponent::getInternalMatrixPosition() const
 
 glm::vec3 TransformComponent::getForward() const
 {
-	glm::vec3 result{ this->worldMatrix[2].x, this->worldMatrix[2].y, this->worldMatrix[2].z };
+	glm::vec3 result{ this->worldMatrix[2] };
 	return glm::normalize(result);
 }
 

@@ -34,11 +34,13 @@ public:
 	void setScale(glm::vec3 arg_scale);
 	void setRotation(const glm::vec3& axis, float angle);
 	void setRotation(const glm::vec3& arg_eulerAngles);
+	void setRotation(const glm::quat& arg_rotation);
 	void setLookAtRotation(const glm::vec3& targetPosition);
 	void rotate(const glm::vec3& axis, float angle);
 	void rotate(glm::vec3 arg_eulerAngles);
 	glm::vec3 getPosition() const;
 	glm::quat getRotation() const;
+	void getRotation(float& pitch, float& yaw, float& roll) const;
 	glm::vec3 getScale() const;
 	glm::vec3 getLocalPosition() const;
 	glm::quat getLocalRotation() const;

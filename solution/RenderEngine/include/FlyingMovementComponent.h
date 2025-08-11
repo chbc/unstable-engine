@@ -13,9 +13,8 @@ class SRE_API FlyingMovementComponent : public AEntityComponent
 DECLARE_COMPONENT()
 
 private:
-	float yaw{ 0.0f };
-	float pitch{ 0.0f };
 	float moveSpeed{ 10.0f };
+	const float WHEEL_RATE = 30.0f;
 
 public:
 	FlyingMovementComponent(Entity* entity);

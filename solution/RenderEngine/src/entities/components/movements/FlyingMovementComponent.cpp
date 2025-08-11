@@ -19,28 +19,27 @@ void FlyingMovementComponent::processMovement(const glm::vec3& moveDirection, co
 
 void FlyingMovementComponent::updateOrientation(const glm::vec2& mouseDelta, float elapsedTime)
 {
-	static float pitch = 0.0f;
-	static float yaw = 0.0f;
-
 	if ((mouseDelta.x != 0.0f) || (mouseDelta.y != 0.0f))
 	{
 		const float SPEED = 15.0f;
-		float deltaX = mouseDelta.x;
+		float deltaX = -mouseDelta.x;
 		float deltaY = mouseDelta.y;
 
-		this->yaw -= deltaX * SPEED * elapsedTime;
-		this->pitch -= deltaY * SPEED * elapsedTime;
+		TransformComponent* transform = this->getTransform();
+		float pitch, yaw, roll;
+		transform->getRotation(pitch, yaw, roll);
 
-		this->pitch = glm::clamp(this->pitch, -89.0f, 89.0f);
+		yaw += deltaX * SPEED * elapsedTime;
+		pitch += deltaY * SPEED * elapsedTime;
+		pitch = glm::clamp(pitch, -89.0f, 89.0f);
 
-		this->getTransform()->setRotation(TransformComponent::UP, this->yaw);
-		this->getTransform()->rotate(TransformComponent::RIGHT, this->pitch);
+		transform->setRotation(TransformComponent::UP, yaw);
+		transform->rotate(TransformComponent::RIGHT, pitch);
 	}
 }
 
 void FlyingMovementComponent::addSpeed(float mouseWheel, float elapsedTime)
 {
-	const float WHEEL_RATE = 50.0f;
 	this->moveSpeed += mouseWheel * WHEEL_RATE * elapsedTime;
 	this->moveSpeed = glm::clamp(this->moveSpeed, 0.1f, 100.0f);
 }
