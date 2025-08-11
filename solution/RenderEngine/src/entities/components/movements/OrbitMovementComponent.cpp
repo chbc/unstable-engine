@@ -43,7 +43,7 @@ void OrbitMovementComponent::updateTarget()
 	glm::vec3 position = transform->getPosition();
 	float distance = glm::distance(position, this->target);
 	glm::vec3 forward = transform->getForward();
-	this->target = position + (forward * distance);
+	this->target = position - (forward * distance);
 }
 
 } // namespace

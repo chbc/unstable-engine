@@ -107,7 +107,6 @@ void LightRendererShaderSetup::setupPointValues(uint32_t program)
 {
     std::string variable;
 
-
     PointLightComponent *light = nullptr;
     size_t size = this->lightManager->pointLights.size();
     for (int i = 0; i < size; i++)

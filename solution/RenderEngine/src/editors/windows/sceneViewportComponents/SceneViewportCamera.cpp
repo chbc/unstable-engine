@@ -79,6 +79,7 @@ void SceneViewportCamera::updateViewingState()
 			this->viewingState = EViewingState::ORBIT;
 			this->multimediaManager->showMouseCursor(false);
 			this->updateInitialMousePosition();
+			this->orbitComponent->updateTarget();
 		}
 	}
 	else if (ImGui::IsMouseDown(ImGuiMouseButton_Middle))
