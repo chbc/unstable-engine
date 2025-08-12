@@ -25,6 +25,7 @@ public:
 	virtual void bindUniformBuffer(uint32_t id) = 0;
 	virtual void updateUniformBuffer(uint32_t id, const std::vector<int>& data) = 0;
     virtual void deleteUniformBuffer(uint32_t id) = 0;
+	virtual void enableBackfaceCulling(bool enable) = 0;
 
 protected:
     virtual void createBuffers(MeshData* meshData) = 0;

@@ -24,6 +24,7 @@ public:
     void bindUniformBuffer(uint32_t id) override;
 	void updateUniformBuffer(uint32_t id, const std::vector<int>& data) override;
     void deleteUniformBuffer(uint32_t id) override;
+    void enableBackfaceCulling(bool enable) override;
 
 protected:
     void init() override;

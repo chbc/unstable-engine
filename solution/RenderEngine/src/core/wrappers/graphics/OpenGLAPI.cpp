@@ -58,6 +58,18 @@ void OpenGLAPI::deleteUniformBuffer(uint32_t id)
 	glDeleteBuffers(1, &id);
 }
 
+void OpenGLAPI::enableBackfaceCulling(bool enable)
+{
+	if (enable)
+	{
+		glEnable(GL_CULL_FACE);
+	}
+	else
+	{
+		glDisable(GL_CULL_FACE);
+	}
+}
+
 void OpenGLAPI::init()
 {
 	glewExperimental = GL_TRUE;

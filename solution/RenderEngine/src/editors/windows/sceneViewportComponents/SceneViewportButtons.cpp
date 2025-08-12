@@ -2,6 +2,7 @@
 #include "Texture.h"
 #include "SingletonsManager.h"
 #include "MessagesManager.h"
+#include "AGraphicsWrapper.h"
 #include "EditorMessages.h"
 
 #include <imgui/imgui.h>
@@ -21,19 +22,41 @@ void SceneViewportButtons::drawContent(const glm::vec2& windowPos, const glm::ve
     
 	ImGui::SetNextWindowPos(position, ImGuiCond_Always, pivot);
     ImGui::SetNextWindowBgAlpha(0.35f);
-    int previousOrientationItem = this->currentOrientationItem;
     if (ImGui::Begin("Viewport buttons", &open, window_flags))
     {
-        ImGuiStyle& style = ImGui::GetStyle();
-        ImGui::SetNextItemWidth(70);
-		ImGui::Combo("##Orientation", &this->currentOrientationItem, this->orientationComboItems, 2);
+		this->drawOrientationItem();
+	    ImGui::SameLine();
+		this->drawBackfaceCullingItem();
     }
-    ImGui::End();
 
-    if (previousOrientationItem != this->currentOrientationItem)
+    ImGui::End();
+}
+
+void SceneViewportButtons::drawOrientationItem()
+{
+    ImGui::SetNextItemWidth(70);
+    if (ImGui::Combo("##Orientation", &this->currentOrientationItem, this->orientationComboItems, 2))
     {
         this->notifyOrientationChanged();
-	}
+    }
+
+    if (ImGui::IsItemHovered())
+    {
+        ImGui::SetTooltip("Change orientation mode (Local/Global)");
+    }
+}
+
+void SceneViewportButtons::drawBackfaceCullingItem()
+{
+    if (ImGui::Selectable("Backface Culling", &this->backfaceCullingEnabled))
+    {
+        this->refreshBackfaceCulling();
+    }
+
+    if (ImGui::IsItemHovered())
+    {
+        ImGui::SetTooltip("Toggle backface culling");
+    }
 }
 
 void SceneViewportButtons::notifyOrientationChanged()
@@ -41,6 +64,12 @@ void SceneViewportButtons::notifyOrientationChanged()
     ChangeGuizmoModeMessage message{ this->currentOrientationItem };
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	messagesManager->notify(&message);
+}
+
+void SceneViewportButtons::refreshBackfaceCulling()
+{
+	AGraphicsWrapper* graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
+	graphicsWrapper->enableBackfaceCulling(this->backfaceCullingEnabled);
 }
 
 } // namespace
