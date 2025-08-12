@@ -462,6 +462,9 @@
     <ClCompile Include="src\entities\components\movements\PanMovementComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\editors\windows\sceneViewportComponents\SceneViewportButtons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1179,6 +1182,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PanMovementComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SceneViewportButtons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

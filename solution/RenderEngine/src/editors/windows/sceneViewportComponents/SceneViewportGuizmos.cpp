@@ -17,12 +17,14 @@ SceneViewportGuizmos::SceneViewportGuizmos()
 {
 	Action* action = new Action{ [&](void* message) { this->onEntitySelected(message); } };
 	this->selectionAction = SPTR<Action>(action);
+	this->orientationModeAction = SPTR<Action>(new Action{ [&](void* message) { this->onOrientationModeChanged(message); } });
 }
 
 void SceneViewportGuizmos::onInit()
 {
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	messagesManager->addListener<EntitySelectionMessage>(this->selectionAction.get());
+	messagesManager->addListener<ChangeGuizmoModeMessage>(this->orientationModeAction.get());
 	this->selectedEntity = nullptr;
 	this->guizmoOperation = ImGuizmo::TRANSLATE;
 	
@@ -44,7 +46,7 @@ bool SceneViewportGuizmos::drawAndManipulate(bool cameraMoving, const glm::vec2&
 		glm::mat4 entityMatrix = entityTransform->getMatrix();
 
 		ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
-			this->guizmoOperation, ImGuizmo::LOCAL, glm::value_ptr(entityMatrix));
+			this->guizmoOperation, this->guizmoMode, glm::value_ptr(entityMatrix));
 
 		if (ImGuizmo::IsUsing())
 		{
@@ -87,6 +89,7 @@ void SceneViewportGuizmos::onCleanUp()
 {
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	messagesManager->removeListener<EntitySelectionMessage>(this->selectionAction.get());
+	messagesManager->removeListener<ChangeGuizmoModeMessage>(this->orientationModeAction.get());
 }
 
 void SceneViewportGuizmos::onEntitySelected(void* data)
@@ -111,6 +114,12 @@ void SceneViewportGuizmos::onEntityManipulated()
 {
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	messagesManager->notify<EntityChangedEditorMessage>();
+}
+
+void SceneViewportGuizmos::onOrientationModeChanged(void* message)
+{
+	ChangeGuizmoModeMessage* orientationMessage = static_cast<ChangeGuizmoModeMessage*>(message);
+	this->guizmoMode = static_cast<ImGuizmo::MODE>(orientationMessage->mode);
 }
 
 } // namespace

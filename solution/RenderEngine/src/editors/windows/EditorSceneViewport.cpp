@@ -100,6 +100,8 @@ void EditorSceneViewport::onEditorGUI()
 	}
 
 	ImGui::End();
+
+	this->sceneViewportButtons.drawContent(windowPosition, windowSize);
 }
 
 void EditorSceneViewport::onCleanUp()

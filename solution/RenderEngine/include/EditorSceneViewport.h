@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "SceneViewportCamera.h"
 #include "SceneViewportGuizmos.h"
+#include "SceneViewportButtons.h"
 #include "EditorMessages.h"
 
 namespace sre
@@ -17,6 +18,7 @@ class EditorSceneViewport : public IEditorWindow
 private:
 	SceneViewportCamera sceneViewportCamera;
 	SceneViewportGuizmos sceneViewportGuizmos;
+	SceneViewportButtons sceneViewportButtons;
 
 	class RenderManager* renderManager{ nullptr };
 	class MultimediaManager* multimediaManager{ nullptr };

@@ -69,4 +69,13 @@ public:
 	MeshEntityLoadedEditorMessage(Entity* arg_entity) : entity(arg_entity) {}
 };
 
+struct ChangeGuizmoModeMessage : public BaseMessage
+{
+	DECLARE_MESSAGE()
+
+public:
+	int mode{ 0 };
+	ChangeGuizmoModeMessage(int arg_mode) : mode(arg_mode) { }
+};
+
 } // namespace

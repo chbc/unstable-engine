@@ -1,13 +1,14 @@
 #pragma once
 
-#include "memory_aliases.h"
 #include "EditorMessages.h"
+#include "memory_aliases.h"
 
 #include <glm/mat4x4.hpp>
 
 namespace ImGuizmo
 {
 	enum OPERATION : int;
+	enum MODE : int;
 }
 
 namespace sre
@@ -21,7 +22,9 @@ private:
 	Entity* selectedEntity{ nullptr };
 	Entity* guizmoEntity{ nullptr };
 	SPTR<Action> selectionAction;
+	SPTR<Action> orientationModeAction;
 	ImGuizmo::OPERATION guizmoOperation{ 0u };
+	ImGuizmo::MODE guizmoMode{ 0u };
 
 public:
 	SceneViewportGuizmos();
@@ -33,6 +36,7 @@ public:
 private:
 	void onEntitySelected(void* data);
 	void onEntityManipulated();
+	void onOrientationModeChanged(void* message);
 };
 
 } // namespace

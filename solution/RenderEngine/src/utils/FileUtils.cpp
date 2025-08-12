@@ -8,7 +8,7 @@ namespace FS = std::filesystem;
 FS::path contentPath;
 FS::path gameContentPath;
 FS::path configPath;
-FS::path iconsPath;
+FS::path fileIconsPath;
 FS::path toolsPath;
 
 #ifdef __ANDROID__
@@ -62,7 +62,7 @@ void initializeStoragePaths()
 	contentPath = FS::absolute(bin / ".." / "content/");
 	gameContentPath = FS::absolute(bin / ".." / "content/game/");
 	configPath = FS::absolute(bin / ".." / "config/");
-	iconsPath = FS::absolute(bin / ".." / "content/engine/icons/");
+	fileIconsPath = FS::absolute(bin / ".." / "content/engine/icons/fileBrowser");
 	toolsPath = FS::absolute(bin / ".." / "tools/");
 }
 
@@ -152,7 +152,7 @@ void getFileAndIconPaths(std::string directoryPath, std::vector<std::string>& ic
 
 		if (hasIcon)
 		{
-			iconPath = iconsPath / iconName.append(".png");
+			iconPath = fileIconsPath / iconName.append(".png");
 		}
 
 		std::string resultPath = getContentRelativePath(iconPath.string());
