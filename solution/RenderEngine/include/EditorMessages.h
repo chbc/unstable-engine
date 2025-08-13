@@ -66,7 +66,9 @@ struct SRE_API MeshEntityLoadedEditorMessage : public BaseMessage
 
 public:
 	Entity* entity;
-	MeshEntityLoadedEditorMessage(Entity* arg_entity) : entity(arg_entity) {}
+	std::string filePath;
+	MeshEntityLoadedEditorMessage(Entity* arg_entity, const std::string& arg_filePath)
+		: entity(arg_entity), filePath(arg_filePath) {}
 };
 
 struct ChangeGuizmoModeMessage : public BaseMessage

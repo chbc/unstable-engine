@@ -18,6 +18,7 @@ public:
 	OrbitMovementComponent(Entity* entity);
 	void move(const glm::vec2& deltaMovement, float elapsedTime);
 	void updateTarget();
+	void setTarget(const glm::vec3& newTarget);
 };
 
 } // namespace

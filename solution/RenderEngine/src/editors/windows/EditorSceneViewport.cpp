@@ -55,11 +55,11 @@ void EditorSceneViewport::onUpdate(float elapsedTime)
 	if (this->isWindowHovered)
 	{
 		this->sceneViewportCamera.onUpdate(elapsedTime);
-
 		if (!this->sceneViewportCamera.isCameraMoving())
 		{
 			this->sceneViewportGuizmos.processGuizmoOperationSelection();
 		}
+		this->handleFocusInput();
 	}
 }
 
@@ -131,6 +131,19 @@ void EditorSceneViewport::handleFileDrop()
 			}
 		}
 		ImGui::EndDragDropTarget();
+	}
+}
+
+void EditorSceneViewport::handleFocusInput()
+{
+	if (ImGui::IsKeyPressed(ImGuiKey_F))
+	{
+		Entity* selectedEntity = this->controller->getSelectedEntity();
+		if (selectedEntity != nullptr)
+		{
+			glm::vec3 position = selectedEntity->getTransform()->getPosition();
+			this->sceneViewportCamera.setCameraFocus(position);
+		}
 	}
 }
 

@@ -168,7 +168,7 @@ void EditorsController::createMeshEntity(const char* file, const char* meshName)
 	this->setSelectedEntity(newEntity);
 
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-	MeshEntityLoadedEditorMessage message{ newEntity };
+	MeshEntityLoadedEditorMessage message{ newEntity, file };
 	messagesManager->notify(&message);
 }
 

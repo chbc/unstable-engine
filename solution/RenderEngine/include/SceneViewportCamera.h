@@ -37,6 +37,7 @@ public:
 	void getCameraMatrices(glm::mat4& viewMatrix, glm::mat4& projectionMatrix);
 	inline bool isCameraMoving() { return this->viewingState != EViewingState::NONE; };
 	inline CameraComponent* getCameraComponent() { return this->cameraComponent; };
+	void setCameraFocus(const glm::vec3& newTarget);
 
 private:
 	void updateViewingState();

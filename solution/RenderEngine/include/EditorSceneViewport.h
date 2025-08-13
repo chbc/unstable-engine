@@ -11,7 +11,6 @@ namespace sre
 {
 
 class EditorsController;
-class Entity;
 
 class EditorSceneViewport : public IEditorWindow
 {
@@ -40,6 +39,7 @@ public:
 
 private:
 	void handleFileDrop();
+	void handleFocusInput();
 	void tryPickEntity(const glm::vec2& viewportSize, const glm::vec2& windowPosition);
 
 friend class WorldEditor;

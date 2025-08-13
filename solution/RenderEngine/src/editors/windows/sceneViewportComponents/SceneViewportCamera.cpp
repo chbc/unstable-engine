@@ -26,7 +26,7 @@ void SceneViewportCamera::onInit()
 	this->panComponent = camera->addComponent<PanMovementComponent>();
 	this->cameraComponent = camera->getComponent<CameraComponent>();
 	this->cameraTransform = camera->getTransform();
-	this->cameraTransform->setPosition({ 0.0f, 2.0f, 5.0f });
+	this->cameraTransform->setPosition({ 0.0f, 2.0f, 5.0f }); 
 
 	this->viewingState = EViewingState::NONE;
 	this->multimediaManager = SingletonsManager::getInstance()->get<MultimediaManager>();
@@ -59,6 +59,11 @@ void SceneViewportCamera::getCameraMatrices(glm::mat4& viewMatrix, glm::mat4& pr
 {
 	viewMatrix = this->cameraComponent->getViewMatrix();
 	projectionMatrix = this->cameraComponent->getProjectionMatrix();
+}
+
+void SceneViewportCamera::setCameraFocus(const glm::vec3& newTarget)
+{
+	this->orbitComponent->setTarget(newTarget);
 }
 
 void SceneViewportCamera::updateViewingState()

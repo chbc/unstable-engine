@@ -46,4 +46,10 @@ void OrbitMovementComponent::updateTarget()
 	this->target = position - (forward * distance);
 }
 
+void OrbitMovementComponent::setTarget(const glm::vec3& newTarget)
+{
+	this->target = newTarget;
+	this->getTransform()->setLookAtRotation(newTarget);
+}
+
 } // namespace
