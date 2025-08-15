@@ -10,6 +10,9 @@ lib/SRE.lib
 bin/SRE_d.dll
 bin/SRE_d.exp
 bin/SRE_d.lib
+bin/SRE.dll
+bin/SRE.exp
+bin/SRE.lib
 android/app/src/main/assets/
 *.ilk
 *.pdb

@@ -1,5 +1,4 @@
-#ifndef _IMGUI_API_EMPTY_STATE_H_
-#define _IMGUI_API_EMPTY_STATE_H_
+#pragma once
 
 #include "AImGuiAPIState.h"
 
@@ -17,5 +16,3 @@ private:
 };
 	
 } // namespace
-
-#endif

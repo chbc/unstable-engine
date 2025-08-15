@@ -1,4 +1,4 @@
-#if defined(DEBUG) && !defined(__ANDROID__)
+#if !defined(__ANDROID__)
 
 #include "EditorSceneTree.h"
 #include "SingletonsManager.h"

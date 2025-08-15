@@ -92,7 +92,7 @@ void loadConfigFile(const std::string& filePath, std::vector<std::string>& lines
 
 	if (!in.is_open())
 	{
-		throw "[FileUtils] - Error: " + filePath + " can't be found!";
+		throw "[FileUtils] - Error: " + absolutePath + " can't be found!";
 	}
 
 	char temp[300];

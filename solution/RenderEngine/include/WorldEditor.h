@@ -1,4 +1,4 @@
-#if !defined(RELEASE) && !defined(__ANDROID__)
+#if !defined(__ANDROID__)
 
 #pragma once
 
