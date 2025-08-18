@@ -1,5 +1,6 @@
 #include "SDLAPI.h"
 #include "EngineValues.h"
+#include "DefaultGameValues.h"
 #include "GUIButtonComponent.h"
 #include "Entity.h"
 #include "Input.h"
@@ -39,6 +40,14 @@ void SDLAPI::init()
 
 	if (this->window == NULL)
 		throw this->getError();
+
+	std::string iconPath = DefaultGameValues::get<std::string>("APPLICATION_ICON");
+	SDL_Surface* icon = IMG_Load(iconPath.c_str());
+	if (icon)
+	{
+		SDL_SetWindowIcon(this->window, icon);
+		SDL_FreeSurface(icon);
+	}
 
 	void *context = SDL_GL_CreateContext(this->window);
 
@@ -173,10 +182,12 @@ void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons, SD
 			break;
 
 		case SDL_DROPFILE:
+		{
 			FileDropEditorMessage message{ currentEvent.drop.file };
 			MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 			messagesManager->notify<FileDropEditorMessage>(&message);
 			break;
+		}
 
 		/*
 		case SDL_WINDOWEVENT:
@@ -189,6 +200,8 @@ void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons, SD
 			}
 			break;
 		*/
+
+		default: break;
 	}
 }
 

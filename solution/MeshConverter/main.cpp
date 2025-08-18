@@ -1,7 +1,6 @@
 #include "MeshData.h"
 #include "ModelLoader.h"
 
-#include <iostream>
 #include <fstream>
 #include <filesystem>
 
@@ -14,8 +13,6 @@ int main(int argc, const char* args[])
 {
 	if ((argc < 2) || (argc > 4))
     {
-        std::cout << "Usage: MeshConverter.exe [source_file] [destination_path] [scale_factor]" << std::endl;
-        system("pause");
         return 1;
     }
 
@@ -26,10 +23,8 @@ int main(int argc, const char* args[])
     {
         ModelLoader().load(args[1], scaleFactor, meshes);
     }
-    catch (const std::string& error)
+    catch (...)
     {
-		std::cout << "[MeshConverter] - Error: " << error << std::endl;
-		system("pause");
         return 1;
     }
 
@@ -41,11 +36,6 @@ int main(int argc, const char* args[])
     {
 		destinationPath = FS::path{ args[2] } / fileName;
     }
-
-	std::cout << "[MeshConverter]" << std::endl;
-	std::cout << "File name: " << fileName.string() << std::endl;
-	std::cout << "Source path: " << sourcePath.string() << std::endl;
-	std::cout << "Destination path: " << destinationPath.string() << std::endl;
 
 	int result = 0;
     std::ofstream saveStream(destinationPath, std::ios::out | std::ios::binary);
@@ -64,7 +54,6 @@ int main(int argc, const char* args[])
     }
 	else
 	{
-		std::cout << "[MeshConverter] - Error: Can't open file for writing: " << destinationPath.string() << std::endl;
 		result = 1;
 	}
 

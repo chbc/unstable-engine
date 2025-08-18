@@ -3,8 +3,6 @@
 #include "MultimediaManager.h"
 #include "TransformComponent.h"
 
-#include <iostream>
-
 namespace sre
 {
 

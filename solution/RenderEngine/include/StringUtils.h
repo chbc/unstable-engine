@@ -1,8 +1,6 @@
-#ifndef _STRING_UTILS_H_
-#define _STRING_UTILS_H_
+#pragma once
 
 #include <memory>
-#include <iostream>
 #include <string>
 #include <cstdio>
 
@@ -22,4 +20,3 @@ namespace StringUtils
 } // namespace
 
 }
-#endif
