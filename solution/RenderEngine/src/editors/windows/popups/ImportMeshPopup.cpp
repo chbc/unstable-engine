@@ -6,6 +6,7 @@ namespace sre
 
 float ImportMeshPopup::scaleFactor{1.0f};
 bool ImportMeshPopup::loadToScene{ true };
+bool ImportMeshPopup::importMaterials{ true };
 
 ImportMeshPopup::ImportMeshPopup(Action_OnClosePopup* onCloseAction, std::string arg_sourceFilePath, std::string arg_destinationPath)
 	: AEditorPopup(onCloseAction), sourceFilePath(arg_sourceFilePath), destinationPath(arg_destinationPath)
@@ -22,10 +23,14 @@ void ImportMeshPopup::onEditorGUI()
 		ImGui::Separator();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-		ImGui::Checkbox("Load to scene?", &loadToScene);
+		ImGui::Checkbox("Load to scene", &loadToScene);
 		ImGui::PopStyleVar();
 
-		ImGui::DragFloat("Scale factor:", &scaleFactor, 0.01f, 0.001f, 1000.0f, "%.3f");
+		ImGui::DragFloat("Scale factor", &scaleFactor, 0.01f, 0.001f, 1000.0f, "%.3f");
+
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+		ImGui::Checkbox("Import materials", &loadToScene);
+		ImGui::PopStyleVar();
 
 		if (ImGui::Button("OK", ImVec2(120, 0)))
 		{

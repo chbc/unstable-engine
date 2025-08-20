@@ -14,6 +14,7 @@ namespace FS = std::filesystem;
 
 void saveMesh(const MeshData& mesh, std::ofstream& saveStream);
 void saveMaterial(const ModelImportData& modelData, const std::string& filePath);
+void copyTextureFiles(const ModelImportData& modelData, const FS::path& sourcePath, const FS::path& destinationPath);
 
 int main(int argc, const char* args[])
 {
@@ -70,6 +71,7 @@ int main(int argc, const char* args[])
         {
 		    destinationPath = destinationPath.replace_extension("");
 		    saveMaterial(modelData, destinationPath.string());
+            copyTextureFiles(modelData, sourcePath.parent_path().string(), destinationPath.parent_path().string());
 		}
     }
 	else
@@ -143,6 +145,26 @@ void saveMaterial(const ModelImportData& modelData, const std::string& filePath)
                 std::string resultPath = filePath + meshMaterial.first + ".mat";
                 materialSaver.save(materialData, resultPath);
             }
+        }
+    }
+}
+
+void copyTextureFiles(const ModelImportData& modelData, const FS::path& sourcePath, const FS::path& destinationPath)
+{
+    for (const auto& material : modelData.materials)
+    {
+        for (const auto& texture : material.texturePaths)
+        {
+            FS::path resultSourcePath = sourcePath / FS::path{ texture.second };
+            FS::path resultDestPath = destinationPath / FS::path{ texture.second };
+            
+			FS::path destinationBasePath = resultDestPath.parent_path();
+            if (!FS::exists(destinationBasePath))
+            {
+				FS::create_directories(destinationBasePath);
+			}
+
+            FS::copy(resultSourcePath, resultDestPath, FS::copy_options::overwrite_existing);
         }
     }
 }

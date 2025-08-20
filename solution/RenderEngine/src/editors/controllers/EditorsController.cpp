@@ -143,11 +143,14 @@ void EditorsController::loadFileFromBrowser(const char* filePath)
 	}
 }
 
-void EditorsController::importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, std::string& resultFilePath)
+void EditorsController::importMesh(const char* sourceFilePath, const char* destinationPath,
+	float scaleFactor, bool importMaterials, std::string& resultFilePath)
 {
 	std::stringstream commandStream;
 	std::string toolPath = FileUtils::getToolsAbsolutePath("MeshConverter.exe");
-	commandStream << toolPath << " " << sourceFilePath << " " << destinationPath << " " << scaleFactor;
+	int importMaterialsParam = importMaterials ? 1 : 0;
+	commandStream << toolPath << " " << sourceFilePath << " " << destinationPath
+		<< " " << scaleFactor << " " << importMaterialsParam;
 	std::string command = commandStream.str();
 
 	system(command.c_str());

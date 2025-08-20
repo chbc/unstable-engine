@@ -14,6 +14,7 @@ public:
 	std::string destinationPath;
 	static float scaleFactor;
 	static bool loadToScene;
+	static bool importMaterials;
 
 public:
 	ImportMeshPopup(Action_OnClosePopup* onCloseAction, std::string arg_sourceFilePath, std::string arg_destinationPath);

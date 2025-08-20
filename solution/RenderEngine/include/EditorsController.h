@@ -33,7 +33,7 @@ public:
 	void refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result);
 	void saveEntity(Entity* entity);
 	void loadFileFromBrowser(const char* filePath);
-	void importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, std::string& resultFilePath);
+	void importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, bool importMaterials, std::string& resultFilePath);
 	void createMeshEntity(const char* file, const char* meshName);
 	void createDirectionalLight();
 	void createPointLight();

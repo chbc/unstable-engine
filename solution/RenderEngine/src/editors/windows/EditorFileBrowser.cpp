@@ -171,7 +171,11 @@ void EditorFileBrowser::handleExternalFileDrop(void* message)
 			{
 				ImportMeshPopup* importPopup = static_cast<ImportMeshPopup*>(popup);
 				std::string resultFilePath;
-				this->controller->importMesh(importPopup->sourceFilePath.c_str(), importPopup->destinationPath.c_str(), importPopup->scaleFactor, resultFilePath);
+				this->controller->importMesh
+				(
+					importPopup->sourceFilePath.c_str(), importPopup->destinationPath.c_str(), 
+					importPopup->scaleFactor, importPopup->importMaterials, resultFilePath
+				);
 				this->controller->refreshFileIcons(this->currentDirectory, this->fileIcons);
 
 				if (importPopup->loadToScene)

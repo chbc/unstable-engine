@@ -14,10 +14,10 @@ void MaterialSaver::save(const MaterialImportData& modelData, const std::string&
 
 	root |= ryml::MAP;
 
-	c4::yml::NodeRef propertyNode = root["Cast Shadow"];
-	propertyNode << 0;
+	root["Material Type"] << "Standard";
+	root["Cast Shadow"] << 0;
 
-	propertyNode = root["UV Offset"];
+	c4::yml::NodeRef propertyNode = root["UV Offset"];
 	propertyNode |= c4::yml::SEQ | c4::yml::CONTAINER_STYLE;
 	propertyNode.append_child() << 0;
 	propertyNode.append_child() << 0;
