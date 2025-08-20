@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rapidyaml.hpp"
+#include "rapidyaml/rapidyaml.hpp"
 
 namespace sre
 {
@@ -13,7 +13,7 @@ class AMaterialComponent;
 class MaterialLoader
 {
 public:
-	void save(ABaseMaterial* material, const char* filePath);
+	void save(ABaseMaterial* material, const std::string& filePath);
 	ABaseMaterial* load(const char* filePath);
 
 private:

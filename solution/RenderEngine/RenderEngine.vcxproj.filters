@@ -1187,6 +1187,9 @@
     <ClInclude Include="include\SceneViewportButtons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\ModelImportData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Entity.tpp" />

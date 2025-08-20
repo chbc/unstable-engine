@@ -5,12 +5,10 @@
 #include "AMaterialComponent.h"
 #include "ColorMaterialComponent.h"
 
-#include "rapidyaml.hpp"
-
 namespace sre
 {
 
-void MaterialLoader::save(ABaseMaterial* material, const char* filePath)
+void MaterialLoader::save(ABaseMaterial* material, const std::string& filePath)
 {
 	c4::yml::Tree tree;
 	c4::yml::NodeRef root = tree.rootref();

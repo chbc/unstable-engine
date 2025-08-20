@@ -204,6 +204,12 @@ std::string getToolsAbsolutePath(const std::string& fileName)
 	return (toolsPath / fileName).string();
 }
 
+std::string getBasePath(const std::string& filePath)
+{
+	FS::path resultPath{ filePath };
+	return resultPath.parent_path().string();
+}
+
 bool isDirectory(const std::string& filePath)
 {
 	return FS::is_directory(filePath);

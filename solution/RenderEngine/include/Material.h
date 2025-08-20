@@ -23,10 +23,8 @@ private:
     glm::vec2 uvTiling{ 1.0f };
     bool castShadow{ false };
 
-private:
-    Material(std::string arg_filePath);
-
 public:
+    Material(std::string arg_filePath);
     template <typename T> T* addComponent();
     template <typename T> void removeComponent();
     template <typename T> T* getComponent();

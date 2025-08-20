@@ -9,7 +9,7 @@
 namespace sre
 {
 
-void ModelLoader::load(const char* fileName, float scaleFactor, std::vector<MeshData>& result)
+void ModelLoader::load(const char* fileName, float scaleFactor, bool importMaterial, ModelImportData& result)
 {
 	std::ifstream fin(fileName);
 	if (fin.fail())
@@ -31,24 +31,30 @@ void ModelLoader::load(const char* fileName, float scaleFactor, std::vector<Mesh
 		throw "[ModelLoader] - Load Error: " + std::string(importer.GetErrorString());
 	}
 
+	if (importMaterial)
+	{
+		this->processMaterials(scene, result);
+	}
+
 	aiMatrix4x4 initialTransform = aiMatrix4x4{} * scaleFactor;
-    processNode(scene, scene->mRootNode, initialTransform, result);
+    this->processNode(scene, scene->mRootNode, initialTransform, result);
 }
 
-void ModelLoader::processNode(const aiScene* scene, aiNode *node, aiMatrix4x4& parentTransform, std::vector<MeshData>& result)
+void ModelLoader::processNode(const aiScene* scene, aiNode *node, aiMatrix4x4& parentTransform, ModelImportData& result)
 {
     for (uint32_t i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh* inputMesh = scene->mMeshes[node->mMeshes[i]];
 		aiMatrix4x4 meshTransform = parentTransform * node->mTransformation;
-		MeshData newMesh = processMesh(inputMesh, meshTransform);
-		result.emplace_back(newMesh);
+		MeshData newMesh = this->processMesh(inputMesh, meshTransform);
+		result.meshes.emplace_back(newMesh);
+		result.meshesMaterialMap.emplace(newMesh.name, inputMesh->mMaterialIndex);
     }
 
     for (uint32_t i = 0; i < node->mNumChildren; i++)
     {
 		aiMatrix4x4 nodeTransform = parentTransform * node->mTransformation;
-        processNode(scene, node->mChildren[i], nodeTransform, result);
+		this->processNode(scene, node->mChildren[i], nodeTransform, result);
     }
 }
 
@@ -92,6 +98,49 @@ MeshData ModelLoader::processMesh(aiMesh* inputMesh, aiMatrix4x4& nodeTransform)
 
 	MeshData result{ inputMesh->mName.C_Str(), vertexData, indices };
 	return result;
+}
+
+void ModelLoader::processMaterials(const aiScene* scene, ModelImportData& result)
+{
+	if (scene->mNumMaterials > 0)
+	{
+		for (uint32_t i = 0; i < scene->mNumMaterials; ++i)
+		{
+			aiMaterial* inputMaterial = scene->mMaterials[i];
+			MaterialImportData material;
+
+			aiString path;
+			if (inputMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS)
+			{
+				material.texturePaths.emplace(ETextureMap::DIFFUSE, path.C_Str());
+			}
+			if (inputMaterial->GetTexture(aiTextureType_NORMALS, 0, &path) == AI_SUCCESS)
+			{
+				material.texturePaths.emplace(ETextureMap::NORMAL, path.C_Str());
+			}
+			if (inputMaterial->GetTexture(aiTextureType_SPECULAR, 0, &path) == AI_SUCCESS)
+			{
+				material.texturePaths.emplace(ETextureMap::SPECULAR, path.C_Str());
+			}
+			if (inputMaterial->GetTexture(aiTextureType_DIFFUSE_ROUGHNESS, 0, &path) == AI_SUCCESS)
+			{
+				material.texturePaths.emplace(ETextureMap::ROUGHNESS, path.C_Str());
+			}
+			if (inputMaterial->GetTexture(aiTextureType_METALNESS, 0, &path) == AI_SUCCESS)
+			{
+				material.texturePaths.emplace(ETextureMap::METALLIC, path.C_Str());
+			}
+			if (inputMaterial->GetTexture(aiTextureType_AMBIENT_OCCLUSION, 0, &path) == AI_SUCCESS)
+			{
+				material.texturePaths.emplace(ETextureMap::AMBIENT_OCCLUSION, path.C_Str());
+			}
+
+			if (!material.texturePaths.empty())
+			{
+				result.materials.emplace_back(material);
+			}
+		}
+	}
 }
 
 glm::mat4 ModelLoader::AssimpToGLM(const aiMatrix4x4& ai_mat)
