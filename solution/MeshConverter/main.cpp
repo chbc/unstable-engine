@@ -13,7 +13,7 @@ using namespace sre;
 namespace FS = std::filesystem;
 
 void saveMesh(const MeshData& mesh, std::ofstream& saveStream);
-void saveMaterial(const ModelImportData& modelData, const std::string& filePath);
+void saveMaterial(ModelImportData& modelData, const std::string& filePath);
 void copyTextureFiles(const ModelImportData& modelData, const FS::path& sourcePath, const FS::path& destinationPath);
 
 int main(int argc, const char* args[])
@@ -70,8 +70,8 @@ int main(int argc, const char* args[])
         if (importMaterials)
         {
 		    destinationPath = destinationPath.replace_extension("");
-		    saveMaterial(modelData, destinationPath.string());
             copyTextureFiles(modelData, sourcePath.parent_path().string(), destinationPath.parent_path().string());
+		    saveMaterial(modelData, destinationPath.string());
 		}
     }
 	else
@@ -122,7 +122,7 @@ void saveMesh(const MeshData& mesh, std::ofstream& saveStream)
     }
 }
 
-void saveMaterial(const ModelImportData& modelData, const std::string& filePath)
+void saveMaterial(ModelImportData& modelData, const std::string& filePath)
 {
     MaterialSaver materialSaver;
 

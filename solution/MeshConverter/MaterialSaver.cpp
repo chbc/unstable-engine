@@ -7,7 +7,7 @@
 namespace sre
 {
 
-void MaterialSaver::save(const MaterialImportData& modelData, const std::string& filePath)
+void MaterialSaver::save(MaterialImportData& modelData, const std::string& filePath)
 {
 	c4::yml::Tree tree;
 	c4::yml::NodeRef root = tree.rootref();
@@ -28,13 +28,13 @@ void MaterialSaver::save(const MaterialImportData& modelData, const std::string&
 	propertyNode.append_child() << 1;
 
 	c4::yml::NodeRef componentsNode = root["Components"];
-	this->saveComponents(componentsNode, modelData, filePath);
+	this->saveComponents(modelData, componentsNode, filePath);
 
 	std::string content = c4::yml::emitrs_yaml<std::string>(tree);
 	FileUtils::saveContentFile(filePath, content);
 }
 
-void MaterialSaver::saveComponents(c4::yml::NodeRef& componentsNode, const MaterialImportData& materialData, const std::string& filePath)
+void MaterialSaver::saveComponents(const MaterialImportData& materialData, c4::yml::NodeRef& componentsNode, const std::string& filePath)
 {
 	componentsNode |= ryml::MAP;
 	c4::yml::NodeRef componentNode = componentsNode["LitMaterialComponent"];
@@ -56,6 +56,34 @@ void MaterialSaver::saveComponents(c4::yml::NodeRef& componentsNode, const Mater
 		std::string texturePath = FileUtils::getBasePath(filePath) + "\\" + item.second;
 		texturePath = FileUtils::getContentRelativePath(texturePath);
 		propertyNode["FilePath"] << texturePath;
+	}
+
+	this->setupMissingMaterialTextures(materialData, pbrNode);
+}
+
+void MaterialSaver::setupMissingMaterialTextures(const MaterialImportData& material, c4::yml::NodeRef& pbrNode)
+{
+	std::unordered_map<ETextureMap::Type, std::string> defaultTextures =
+	{
+		{ ETextureMap::DIFFUSE, "engine/media/textures/pbr_default_albedo.png" },
+		{ ETextureMap::NORMAL, "engine/media/textures/pbr_default_normal.png" },
+		{ ETextureMap::ROUGHNESS, "engine/media/textures/pbr_default_occlusion_roughness_metallic.png" },
+		{ ETextureMap::METALLIC, "engine/media/textures/pbr_default_occlusion_roughness_metallic.png" },
+		{ ETextureMap::AMBIENT_OCCLUSION, "engine/media/textures/pbr_default_occlusion_roughness_metallic.png" }
+	};
+
+	for (const auto& item : defaultTextures)
+	{
+		if (material.texturePaths.count(item.first) < 1)
+		{
+			const char* typeString = MaterialImportData::getTypeString(item.first);
+			pbrNode |= ryml::MAP;
+			c4::yml::NodeRef propertyNode = pbrNode[typeString];
+
+			propertyNode |= ryml::MAP;
+			propertyNode["TextureMapType"] << static_cast<int>(item.first);
+			propertyNode["FilePath"] << item.second;
+		}
 	}
 }
 

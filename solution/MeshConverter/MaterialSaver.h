@@ -16,10 +16,11 @@ namespace sre
 class MaterialSaver
 {
 public:
-	void save(const MaterialImportData& modelData, const std::string& filePath);
+	void save(MaterialImportData& modelData, const std::string& filePath);
 
 private:
-	void saveComponents(c4::yml::NodeRef& componentsNode, const MaterialImportData& materialData, const std::string& filePath);
+	void saveComponents(const MaterialImportData& materialData, c4::yml::NodeRef& componentsNode, const std::string& filePath);
+	void setupMissingMaterialTextures(const MaterialImportData& material, c4::yml::NodeRef& pbrNode);
 };
 
 } // namespace

@@ -15,6 +15,13 @@ in vec3 WorldPos;
 in vec3 Normal;
 
 // Types
+struct DirectionalLight
+{
+    vec3 color;
+	vec3 direction;
+};
+
+/* XXX
 struct PointLight
 {
 	vec3 position;
@@ -22,10 +29,16 @@ struct PointLight
     float range;
     float intensity;
 };
+*/
 
 // Uniform variables
-const int MAX_POINT_LIGHTS = %d;
+const int MAX_DIRECTIONAL_LIGHTS = 1;
+uniform DirectionalLight directionalLights[MAX_DIRECTIONAL_LIGHTS];
+
+/* XXX
+const int MAX_POINT_LIGHTS = 0;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
+*/
 
 
 uniform vec3 cameraPosition;
@@ -93,6 +106,30 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0)
     return F0 + (1.0 - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
 }
 // ----------------------------------------------------------------------------
+void computeDiffuseSpecular(vec3 V, vec3 N, vec3 L, vec3 F0, float roughness, float metallic, out vec3 kD, out vec3 specular)
+{
+	// Cook-Torrance BRDF
+	vec3 H = normalize(V + L);
+	float NDF = DistributionGGX(N, H, roughness);   
+	float G   = GeometrySmith(N, V, L, roughness);      
+	vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);
+	   
+	vec3 numerator    = NDF * G * F * shininess; // XXX
+	float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
+	specular = numerator / denominator;
+	
+	// kS is equal to Fresnel
+	vec3 kS = F;
+	// for energy conservation, the diffuse and specular light can't
+	// be above 1.0 (unless the surface emits light); to preserve this
+	// relationship the diffuse component (kD) should equal 1.0 - kS.
+	kD = vec3(1.0) - kS;
+	// multiply kD by the inverse metalness such that only non-metals 
+	// have diffuse lighting, or a linear blend if partly metal (pure metals
+	// have no diffuse light).
+	kD *= 1.0 - metallic;	  
+}
+// ----------------------------------------------------------------------------
 void main()
 {
     vec3 albedo     = pow(texture(albedoTexture, TexCoords).rgb, vec3(2.2));
@@ -110,44 +147,48 @@ void main()
 
     // reflectance equation
     vec3 Lo = vec3(0.0);
-    for(int i = 0; i < MAX_POINT_LIGHTS; ++i) 
+	
+    for(int i = 0; i < MAX_DIRECTIONAL_LIGHTS; ++i) 
     {
         // calculate per-light radiance
-        vec3 L = normalize(pointLights[i].position - WorldPos);
-        vec3 H = normalize(V + L);
-        float distance = length(pointLights[i].position - WorldPos);
-
-		float attenuation = 1.0 / (distance * distance);
-		attenuation *= pointLights[i].intensity * pointLights[i].range; // XXX
-		vec3 radiance = pointLights[i].color * attenuation; // XXX
-
-		// Cook-Torrance BRDF
-		float NDF = DistributionGGX(N, H, roughness);   
-		float G   = GeometrySmith(N, V, L, roughness);      
-		vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);
-		   
-		vec3 numerator    = NDF * G * F * shininess; // XXX
-		float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
-		vec3 specular = numerator / denominator;
+		vec3 toLight = directionalLights[i].direction;
+        vec3 L = normalize(toLight);
+		vec3 radiance = directionalLights[i].color;
 		
-		// kS is equal to Fresnel
-		vec3 kS = F;
-		// for energy conservation, the diffuse and specular light can't
-		// be above 1.0 (unless the surface emits light); to preserve this
-		// relationship the diffuse component (kD) should equal 1.0 - kS.
-		vec3 kD = vec3(1.0) - kS;
-		// multiply kD by the inverse metalness such that only non-metals 
-		// have diffuse lighting, or a linear blend if partly metal (pure metals
-		// have no diffuse light).
-		kD *= 1.0 - metallic;	  
+		vec3 kD;
+		vec3 specular;
+		computeDiffuseSpecular(V, N, L, F0, roughness, metallic, kD, specular);
 
 		// scale light by NdotL
 		float NdotL = max(dot(N, L), 0.0);        
 
 		// add to outgoing radiance Lo
 		Lo += (kD * albedo / PI + specular) * radiance * NdotL;  // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
-    }   
-    
+    }
+	/* XXX
+    for(int i = 0; i < MAX_POINT_LIGHTS; ++i) 
+    {
+        // calculate per-light radiance
+		vec3 toLight = pointLights[i].position - WorldPos;
+        vec3 L = normalize(toLight);
+        float distance = length(toLight);
+
+		float attenuation = 1.0 / (distance * distance);
+		attenuation *= pointLights[i].intensity * pointLights[i].range; // XXX
+		vec3 radiance = pointLights[i].color * attenuation; // XXX
+		
+		vec3 kD;
+		vec3 specular, 
+		computeDiffuseSpecular(V, N, roughness, kD, specular);
+
+		// scale light by NdotL
+		float NdotL = max(dot(N, L), 0.0);        
+
+		// add to outgoing radiance Lo
+		Lo += (kD * albedo / PI + specular) * radiance * NdotL;  // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
+    }
+    */
+	
     // ambient lighting (note that the next IBL tutorial will replace 
     // this ambient lighting with environment lighting).
     vec3 ambient = ambientLightColor * albedo * ao;

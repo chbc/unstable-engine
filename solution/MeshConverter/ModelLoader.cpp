@@ -118,10 +118,6 @@ void ModelLoader::processMaterials(const aiScene* scene, ModelImportData& result
 			{
 				material.texturePaths.emplace(ETextureMap::NORMAL, path.C_Str());
 			}
-			if (inputMaterial->GetTexture(aiTextureType_SPECULAR, 0, &path) == AI_SUCCESS)
-			{
-				material.texturePaths.emplace(ETextureMap::SPECULAR, path.C_Str());
-			}
 			if (inputMaterial->GetTexture(aiTextureType_DIFFUSE_ROUGHNESS, 0, &path) == AI_SUCCESS)
 			{
 				material.texturePaths.emplace(ETextureMap::ROUGHNESS, path.C_Str());

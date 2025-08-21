@@ -10,4 +10,4 @@ Components:
   DiffuseMaterialComponent:
     Diffuse:
       TextureMapType: 1
-      FilePath: engine\media\checker.jpg
+      FilePath: engine\media\textures\checker.jpg
