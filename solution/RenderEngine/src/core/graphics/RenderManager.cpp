@@ -404,13 +404,12 @@ void RenderManager::cleanUp()
     this->cleanUpDebug();
 	this->cleanUpGuizmos();
 
-    this->lightManager->cleanUp();
-
     this->currentCamera = nullptr;
 }
 
 void RenderManager::cleanUpMeshes()
 {
+    this->lightManager->cleanUp();
     this->opaqueMeshRenderers.clear();
     this->translucentMeshRenderers.clear();
     this->customRenderers.clear();

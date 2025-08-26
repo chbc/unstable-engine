@@ -81,8 +81,8 @@ void ShaderContentFactory::createShaderContent
     outVertexContent = vertexContentHeader + vertexContentImpl;
     outFragmentContent = fragmentContentHeader + fragmentContentImpl;
 #else
-    outVertexContent = "#version 400\n" + vertexContentHeader + vertexContentImpl;
-    outFragmentContent = "#version 400\n" + fragmentContentHeader + fragmentContentImpl;
+    outVertexContent = "#version 420\n" + vertexContentHeader + vertexContentImpl;
+    outFragmentContent = "#version 420\n" + fragmentContentHeader + fragmentContentImpl;
 #endif
 }
 

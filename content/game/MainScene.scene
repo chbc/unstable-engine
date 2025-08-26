@@ -1,0 +1,61 @@
+_main_camera:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,5,5]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    CameraComponent:
+      Enabled: 1
+      Perspective: 1
+      Main Camera: 1
+      FOV: 90
+directional_light:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,0,0]
+      Rotation: [45,-90,0]
+      Scale: [1,1,1]
+    DirectionalLightComponent:
+      Enabled: 1
+      Color: [0.6,0.6,0.6]
+GobbletTextured:
+  Enabled: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,0,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+  Entities:
+    Cylinder.002:
+      Enabled: 1
+      Components:
+        TransformComponent:
+          Enabled: 1
+          Position: [0,0,0]
+          Rotation: [0,0,0]
+          Scale: [1,1,1]
+        MeshComponent:
+          Enabled: 1
+          Mesh:
+            FilePath: game\GobbletTextured.mesh
+            MeshName: Cylinder.002
+          Material: game\GobbletTextured.mat
+    Sphere.002:
+      Enabled: 1
+      Components:
+        TransformComponent:
+          Enabled: 1
+          Position: [0,0,0]
+          Rotation: [0,0,0]
+          Scale: [1,1,1]
+        MeshComponent:
+          Enabled: 1
+          Mesh:
+            FilePath: game\GobbletTextured.mesh
+            MeshName: Sphere.002
+          Material: game\GobbletTextured.mat

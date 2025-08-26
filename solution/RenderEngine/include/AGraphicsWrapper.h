@@ -21,9 +21,8 @@ protected:
     AGraphicsWrapper() {}
 
 public:
-    virtual void createUniformBuffer(uint32_t* id) = 0;
-	virtual void bindUniformBuffer(uint32_t id) = 0;
-	virtual void updateUniformBuffer(uint32_t id, const std::vector<int>& data) = 0;
+    virtual void createUniformBuffer(uint32_t& id, size_t size, const void* data) = 0;
+	virtual void updateUniformBuffer(uint32_t id, size_t size, const void* data) = 0;
     virtual void deleteUniformBuffer(uint32_t id) = 0;
 	virtual void enableBackfaceCulling(bool enable) = 0;
 

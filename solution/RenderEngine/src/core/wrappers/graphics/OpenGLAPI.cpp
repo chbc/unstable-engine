@@ -22,34 +22,20 @@ namespace EAttribLocation
 	};
 }
 
-void OpenGLAPI::createUniformBuffer(uint32_t* id)
+void OpenGLAPI::createUniformBuffer(uint32_t& id, size_t size, const void* data)
 {
-	glGenBuffers(1, id);
-	glBindBuffer(GL_UNIFORM_BUFFER, *id);
+	glGenBuffers(1, &id);
 
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(IndexBufferData), &this->indexBufferData, GL_STATIC_DRAW);
-	glBindBufferBase(GL_UNIFORM_BUFFER, 0, *id);
+	glBindBuffer(GL_UNIFORM_BUFFER, id);
+	glBufferData(GL_UNIFORM_BUFFER, size, data, GL_STATIC_DRAW);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 0, id);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void OpenGLAPI::bindUniformBuffer(uint32_t id)
+void OpenGLAPI::updateUniformBuffer(uint32_t id, size_t size, const void* data)
 {
 	glBindBuffer(GL_UNIFORM_BUFFER, id);
-}
-
-void OpenGLAPI::updateUniformBuffer(uint32_t id, const std::vector<int>& data)
-{
-	int size = static_cast<int>(data.size());
-	size = std::min(size, 511);
-	this->indexBufferData.indicesSize = size;
-
-	for (int i = 0; i < size; ++i)
-	{
-		this->indexBufferData.targetIndices[i] = data[i];
-	}
-
-	glBindBuffer(GL_UNIFORM_BUFFER, id);
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(IndexBufferData), &this->indexBufferData);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, size, data);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 

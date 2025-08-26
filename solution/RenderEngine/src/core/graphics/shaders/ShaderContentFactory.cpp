@@ -251,14 +251,13 @@ void ShaderContentFactory::loadAOMapContentImplementation(std::string &outVertex
 
 void ShaderContentFactory::loadPbrContent(std::string& outVertexContent, std::string& outFragmentContent)
 {
-    size_t lightsCount = this->lightData.pointLightsCount;
-    if (lightsCount > 0)
-    {
-        FileUtils::loadContentFile(ShaderFiles::PBR_V, outVertexContent);
-	    FileUtils::loadContentFile(ShaderFiles::PBR_F, outFragmentContent);
+    FileUtils::loadContentFile(ShaderFiles::PBR_V, outVertexContent);
+	FileUtils::loadContentFile(ShaderFiles::PBR_F, outFragmentContent);
 
-        outFragmentContent = StringUtils::format(outFragmentContent, lightsCount);
-    }
+    /*
+    outFragmentContent = StringUtils::format(outFragmentContent, this->lightData.pointLightsCount);
+    outFragmentContent = StringUtils::format(outFragmentContent, this->lightData.directionalLightsCount);
+    */
 }
 
 void ShaderContentFactory::loadCustomContent(const std::string& shaderPath, std::string& outVertexContent, std::string& outFragmentContent)

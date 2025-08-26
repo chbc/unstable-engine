@@ -4,14 +4,15 @@ void PointLights_compute(vec3 normal, vec3 toCameraDirection, inout vec3 kd, ino
 {
     float diffuseEnergy = 0;
     float specularEnergy = 0;
-    for (int i = 0; i < MAX_POINT_LIGHTS; i++)
+    for (int i = 0; i < maxPointLights; i++)
     {
-		vec3 lightVector = var_worldPosition - pointLights[i].position;
+		vec3 lightVector = var_worldPosition - vec3(pointLights[i].position);
 		// [NORMAL] Normal_getLightVector(lightVector);
 		vec3 toPointLightVector = -lightVector;
         Lights_computeEnergies(normal, toCameraDirection, normalize(toPointLightVector), diffuseEnergy, specularEnergy);
 
-        if ((diffuseEnergy > 0) && (length(toPointLightVector) < pointLights[i].range))
+		float range = pointLights[i].rangeAndIntensity.x;
+        if ((diffuseEnergy > 0) && (length(toPointLightVector) < range))
         {
             float shadow = 0;
             // [POINT_SHADOWS] shadow = Shadows_computePointLightShadow(i);
@@ -21,7 +22,7 @@ void PointLights_compute(vec3 normal, vec3 toCameraDirection, inout vec3 kd, ino
 
             float attenuation = PointLights_getAttenuation(i, toPointLightVector);
 
-            vec3 lightColor = pointLights[i].color;
+            vec3 lightColor = vec3(pointLights[i].color);
 
             kd += lightColor * diffuseEnergy * attenuation;
             ks += lightColor * specularEnergy * attenuation;
@@ -34,8 +35,10 @@ float PointLights_getAttenuation(int lightIndex, vec3 toPointLightVector)
     float result = 0.0f;
 
     float distance = length(toPointLightVector);
-    result = 1 - (distance / pointLights[lightIndex].range);
-    result *= pointLights[lightIndex].intensity;
+	float range = pointLights[lightIndex].rangeAndIntensity.x;
+	float intensity = pointLights[lightIndex].rangeAndIntensity.y;
+    result = 1 - (distance / range);
+    result *= intensity;
 
     return result;
 }

@@ -1,0 +1,23 @@
+Material Type: Standard
+Cast Shadow: 0
+UV Offset: [0,0]
+UV Tiling: [1,1]
+Components:
+  LitMaterialComponent:
+    Shininess: 1
+  PBRMaterialComponent:
+    Albedo:
+      TextureMapType: 1
+      FilePath: game\Textures\BS_Gobblet01_LTB_M_Gobblet01_BaseColor.png
+    Normal:
+      TextureMapType: 2
+      FilePath: engine/media/textures/pbr_default_normal.png
+    Roughness:
+      TextureMapType: 6
+      FilePath: engine/media/textures/pbr_default_occlusion_roughness_metallic.png
+    Metallic:
+      TextureMapType: 5
+      FilePath: engine/media/textures/pbr_default_occlusion_roughness_metallic.png
+    Ambient Occlusion:
+      TextureMapType: 4
+      FilePath: engine/media/textures/pbr_default_occlusion_roughness_metallic.png

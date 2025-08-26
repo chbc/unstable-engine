@@ -16,6 +16,8 @@ void ScenesManager::init()
 
     Action* action = new Action{ [&](void* message) { this->onRefreshMeshes(); } };
     this->refreshMeshesAction = SPTR<Action>(action);
+
+    this->editorScene.reset(new Scene{ "_editor_scene", "" });
 }
 
 std::string ScenesManager::getMainSceneName()
@@ -136,8 +138,6 @@ void ScenesManager::loadScene(const char* scenePath)
     this->scene.reset(new Scene{ sceneName, scenePath });
     SceneLoader::load(this->scene.get());
     this->scene->onSceneLoaded();
-
-    this->editorScene.reset(new Scene{ "_editor_scene", "" });
 
     messagesManager->addListener<RefreshMeshesMessage>(this->refreshMeshesAction.get());
 }
