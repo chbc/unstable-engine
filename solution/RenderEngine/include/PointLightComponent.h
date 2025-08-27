@@ -22,6 +22,9 @@ public:
 	void setIntensity(float intensity);
 	float getIntensity();
 
+protected:
+	void onPropertyChanged() override;
+
 friend class Entity;
 };
 

@@ -42,9 +42,10 @@ class TransformComponent;
 class SRE_API AEntityComponent
 {
 private:
+    std::vector<SPTR<AEditorProperty>> editorProperties;
+	std::list<std::function<void()>> propertyChangedCallbacks;
     Entity* entity{ nullptr };
     bool enabled{ true };
-    std::vector<SPTR<AEditorProperty>> editorProperties;
     bool saved{ true };
     bool stored{ true };
 
@@ -82,18 +83,15 @@ public:
     }
 
     static AEntityComponent* Create(const char* className, Entity* entity);
-
     inline Entity* getEntity() { return this->entity; }
-
     TransformComponent* getTransform();
     virtual const char* getClassName() = 0;
-
     bool isEnabled() const;
     void setEnabled(bool value);
     bool isSaved() const;
     bool isStored() const;
-
 	virtual bool isRenderable() const { return false; }
+	void addPropertyChangedCallback(std::function<void()> callback);
 
 protected:
     virtual uint16_t getId() = 0;

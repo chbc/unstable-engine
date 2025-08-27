@@ -34,21 +34,19 @@ void LightManager::init()
 void LightManager::addDirectionalLight(DirectionalLightComponent* item)
 {
     this->directionalLights.push_back(item);
-    this->updateUniformBuffer();
+	this->updateDirectionalLightsUBO();
 }
 
 void LightManager::addPointLight(PointLightComponent* item)
 {
     this->pointLights.push_back(item);
-    this->updateUniformBuffer();
+	this->updatePointLightsUBO();
 }
 
-void LightManager::updateUniformBuffer()
+void LightManager::updateDirectionalLightsUBO()
 {
     int maxDirectionalLights = static_cast<int>(this->directionalLights.size());
-	int maxPointLights = static_cast<int>(this->pointLights.size());
     this->lightsUBO.maxDirectionalLights = maxDirectionalLights;
-    this->lightsUBO.maxPointLights = maxPointLights;
 
     for (int i = 0; i < maxDirectionalLights; ++i)
     {
@@ -56,6 +54,14 @@ void LightManager::updateUniformBuffer()
         this->lightsUBO.directionalLights[i].direction = glm::vec4{ light->getTransform()->getForward(), 0.0f };
         this->lightsUBO.directionalLights[i].color = glm::vec4{ light->getColor(), 1.0f };
     }
+
+    this->updateUniformBuffer();
+}
+
+void LightManager::updatePointLightsUBO()
+{
+    int maxPointLights = static_cast<int>(this->pointLights.size());
+    this->lightsUBO.maxPointLights = maxPointLights;
 
     for (int i = 0; i < maxPointLights; ++i)
     {
@@ -66,7 +72,12 @@ void LightManager::updateUniformBuffer()
         this->lightsUBO.pointLights[i].rangeAndIntensity.y = light->getIntensity();
     }
 
-	size_t dataSize = sizeof(LightsUBO);
+    this->updateUniformBuffer();
+}
+
+void LightManager::updateUniformBuffer()
+{
+    size_t dataSize = sizeof(LightsUBO);
     if (this->ubo == 0)
     {
         this->graphicsWrapper->createUniformBuffer(this->ubo, dataSize, &this->lightsUBO);
@@ -80,12 +91,17 @@ void LightManager::updateUniformBuffer()
 void LightManager::removeDestroyedEntities()
 {
     bool lightRemoved = CollectionsUtils::removeIfEntityIsDestroyed(this->directionalLights);
-    lightRemoved |= CollectionsUtils::removeIfEntityIsDestroyed(this->pointLights);
-
     if (lightRemoved)
     {
-        this->updateUniformBuffer();
+        this->updateDirectionalLightsUBO();
     }
+
+    lightRemoved = CollectionsUtils::removeIfEntityIsDestroyed(this->pointLights);
+    if (lightRemoved)
+    {
+        this->updatePointLightsUBO();
+	}
+
 }
 
 void LightManager::cleanUp()

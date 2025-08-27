@@ -36,6 +36,8 @@ private:
     void addDirectionalLight(DirectionalLightComponent* item);
     void addPointLight(PointLightComponent* item);
 	void updateUniformBuffer();
+    void updateDirectionalLightsUBO();
+	void updatePointLightsUBO();
     void removeDestroyedEntities();
     void cleanUp();
 

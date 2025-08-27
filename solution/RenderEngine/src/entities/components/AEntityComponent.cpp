@@ -16,6 +16,7 @@ AEntityComponent::AEntityComponent(Entity* arg_entity) : entity(arg_entity), ena
 AEntityComponent::~AEntityComponent()
 {
 	this->editorProperties.clear();
+	this->propertyChangedCallbacks.clear();
 }
 
 AEntityComponent* AEntityComponent::Create(const char* className, Entity* entity)
@@ -66,6 +67,11 @@ bool AEntityComponent::isStored() const
 	return this->stored;
 }
 
+void AEntityComponent::addPropertyChangedCallback(std::function<void()> callback)
+{
+	this->propertyChangedCallbacks.push_back(callback);
+}
+
 void AEntityComponent::onPropertySerialized()
 {
 	if (!this->saved)
@@ -85,6 +91,11 @@ void AEntityComponent::onPropertyChanged()
 	this->saved = false;
 	this->stored = false;
 	this->entity->onComponentChanged();
+
+	for (const std::function<void()>& callback : this->propertyChangedCallbacks)
+	{
+		callback();
+	}
 }
 
 void AEntityComponent::addEditorProperty(AEditorProperty* editorProperty)

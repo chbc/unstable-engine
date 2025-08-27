@@ -16,8 +16,11 @@ PointLightComponent::PointLightComponent(Entity *entity)
 	this->addEditorProperty(new FloatEditorProperty{ "Range", &this->range });
 
 	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
-	LightManager* lightManager = singletonsManager->get<LightManager>();
-	lightManager->addPointLight(this);
+	this->lightManager = singletonsManager->get<LightManager>();
+	this->lightManager->addPointLight(this);
+
+	TransformComponent* transform = this->getTransform();
+	transform->addPropertyChangedCallback([this](){ this->lightManager->updatePointLightsUBO(); });
 }
 
 void PointLightComponent::setRange(float range)
@@ -38,6 +41,12 @@ void PointLightComponent::setIntensity(float intensity)
 float PointLightComponent::getIntensity()
 {
 	return this->intensity;
+}
+
+void PointLightComponent::onPropertyChanged()
+{
+	this->lightManager->updatePointLightsUBO();
+	AEntityComponent::onPropertyChanged();
 }
 
 } // namespace

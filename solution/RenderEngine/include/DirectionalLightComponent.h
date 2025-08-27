@@ -1,5 +1,4 @@
-#ifndef _DIRECTIONAL_LIGHT_COMPONENT_H_
-#define _DIRECTIONAL_LIGHT_COMPONENT_H_
+#pragma once
 
 #include "ALightComponent.h"
 #include <glm/gtc/matrix_transform.hpp>
@@ -17,10 +16,12 @@ private:
 public:
 	DirectionalLightComponent(Entity *entity);
 
+protected:
+	void onPropertyChanged() override;
+
 friend class Entity;
 friend class ShadowRenderer;
 friend class ShadowRendererShaderSetup;
 };
 
 } // namespace
-#endif

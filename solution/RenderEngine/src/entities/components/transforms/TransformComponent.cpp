@@ -195,8 +195,8 @@ void TransformComponent::onPropertyDeserialized()
 
 void TransformComponent::onPropertyChanged()
 {
-	AEntityComponent::onPropertyChanged();
 	this->onPropertyDeserialized();
+	AEntityComponent::onPropertyChanged();
 }
 
 void TransformComponent::updateMatrix()

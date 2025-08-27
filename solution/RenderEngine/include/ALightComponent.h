@@ -20,6 +20,7 @@ private:
 
 protected:
 	ALightComponent(Entity *entity);
+    class LightManager* lightManager{ nullptr };
 
 public:
     void setColor(const glm::vec3 &color);
