@@ -14,36 +14,33 @@ in vec2 TexCoords;
 in vec3 WorldPos;
 in vec3 Normal;
 
-// Types
-struct DirectionalLight
-{
-    vec3 color;
-	vec3 direction;
-};
-
-/* XXX
-struct PointLight
-{
-	vec3 position;
-    vec3 color;
-    float range;
-    float intensity;
-};
-*/
-
-// Uniform variables
-const int MAX_DIRECTIONAL_LIGHTS = 1;
-uniform DirectionalLight directionalLights[MAX_DIRECTIONAL_LIGHTS];
-
-/* XXX
-const int MAX_POINT_LIGHTS = 0;
-uniform PointLight pointLights[MAX_POINT_LIGHTS];
-*/
-
-
 uniform vec3 cameraPosition;
 
 const float PI = 3.14159265359;
+
+// UBO
+struct DirectionalLight
+{
+	vec4 direction;
+    vec4 color;
+};
+
+struct PointLight
+{
+	vec4 position;
+    vec4 color;
+	vec2 rangeAndIntensity;
+};
+
+layout (std140, binding = 0) uniform LightsBuffer
+{
+	DirectionalLight directionalLights[4];
+	PointLight pointLights[4];
+
+    int maxDirectionalLights;
+    int maxPointLights;
+};
+
 // ----------------------------------------------------------------------------
 // Easy trick to get tangent-normals to world-space to keep PBR code simplified.
 // Don't worry if you don't get what's going on; you generally want to do normal 
@@ -148,12 +145,12 @@ void main()
     // reflectance equation
     vec3 Lo = vec3(0.0);
 	
-    for(int i = 0; i < MAX_DIRECTIONAL_LIGHTS; ++i) 
+    for(int i = 0; i < maxDirectionalLights; ++i) 
     {
         // calculate per-light radiance
-		vec3 toLight = directionalLights[i].direction;
+		vec3 toLight = -vec3(directionalLights[i].direction);
         vec3 L = normalize(toLight);
-		vec3 radiance = directionalLights[i].color;
+		vec3 radiance = vec3(directionalLights[i].color);
 		
 		vec3 kD;
 		vec3 specular;
@@ -165,21 +162,23 @@ void main()
 		// add to outgoing radiance Lo
 		Lo += (kD * albedo / PI + specular) * radiance * NdotL;  // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
     }
-	/* XXX
-    for(int i = 0; i < MAX_POINT_LIGHTS; ++i) 
+	
+    for(int i = 0; i < maxPointLights; ++i) 
     {
         // calculate per-light radiance
-		vec3 toLight = pointLights[i].position - WorldPos;
+		vec3 toLight = vec3(pointLights[i].position) - WorldPos;
         vec3 L = normalize(toLight);
         float distance = length(toLight);
 
 		float attenuation = 1.0 / (distance * distance);
-		attenuation *= pointLights[i].intensity * pointLights[i].range; // XXX
-		vec3 radiance = pointLights[i].color * attenuation; // XXX
+		float range = pointLights[i].rangeAndIntensity.x;
+		float intensity = pointLights[i].rangeAndIntensity.y;
+		attenuation *= range * intensity; // XXX
+		vec3 radiance = vec3(pointLights[i].color) * attenuation; // XXX
 		
 		vec3 kD;
-		vec3 specular, 
-		computeDiffuseSpecular(V, N, roughness, kD, specular);
+		vec3 specular;
+		computeDiffuseSpecular(V, N, L, F0, roughness, metallic, kD, specular);
 
 		// scale light by NdotL
 		float NdotL = max(dot(N, L), 0.0);        
@@ -187,7 +186,6 @@ void main()
 		// add to outgoing radiance Lo
 		Lo += (kD * albedo / PI + specular) * radiance * NdotL;  // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
     }
-    */
 	
     // ambient lighting (note that the next IBL tutorial will replace 
     // this ambient lighting with environment lighting).
