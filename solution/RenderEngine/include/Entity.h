@@ -58,6 +58,7 @@ public:
     template <typename T> T* addComponent();
     template <typename T> void removeComponent();
     template <typename T> T* getComponent();
+    template <typename T> void getComponents(std::vector<T*>& result);
     template <typename T> bool hasComponent();
 
     AEntityComponent* addComponent(const char* className);

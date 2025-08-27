@@ -9,6 +9,7 @@
 #include "AssetsManager.h"
 #include "Texture.h"
 #include "EntityLoader.h"
+#include "MeshComponent.h"
 
 namespace sre
 {
@@ -165,7 +166,7 @@ void EditorsController::importMesh(const char* sourceFilePath, const char* desti
 	messagesManager->notify(&message);
 }
 
-void EditorsController::createMeshEntity(const char* file, const char* meshName)
+Entity* EditorsController::createMeshEntity(const char* file, const char* meshName)
 {
 	Entity* newEntity = this->scenesManager->createMeshEntity(file, meshName);
 	this->setSelectedEntity(newEntity);
@@ -173,6 +174,8 @@ void EditorsController::createMeshEntity(const char* file, const char* meshName)
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	MeshEntityLoadedEditorMessage message{ newEntity, file };
 	messagesManager->notify(&message);
+
+	return newEntity;
 }
 
 void EditorsController::createDirectionalLight()
@@ -206,6 +209,20 @@ void EditorsController::deleteFile(const char* filePath, bool isDirectory)
 	std::string command = commandStream.str();
 
 	system(command.c_str());
+}
+
+void EditorsController::loadMaterialToEntity(Entity* entity, const std::string& materialFilePath)
+{
+	if (FileUtils::fileExists(materialFilePath))
+	{
+		std::vector<MeshComponent*> meshComponents;
+		entity->getComponents<MeshComponent>(meshComponents);
+
+		for (MeshComponent* meshComponent : meshComponents)
+		{
+			meshComponent->loadMaterial(materialFilePath.c_str());
+		}
+	}
 }
 
 } // namespace

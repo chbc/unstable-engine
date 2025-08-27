@@ -180,7 +180,15 @@ void EditorFileBrowser::handleExternalFileDrop(void* message)
 
 				if (importPopup->loadToScene)
 				{
-					this->controller->loadFileFromBrowser(resultFilePath.c_str());
+					std::string name = FileUtils::getFileName(resultFilePath);
+					const char* entityFilePath = resultFilePath.c_str();
+					Entity* meshEntity = this->controller->createMeshEntity(entityFilePath, name.c_str());
+
+					if (importPopup->importMaterials)
+					{
+						std::string materialFilePath = FileUtils::replaceExtension(entityFilePath, ".mat");
+						this->controller->loadMaterialToEntity(meshEntity, materialFilePath);
+					}
 				}
 			}
 		}

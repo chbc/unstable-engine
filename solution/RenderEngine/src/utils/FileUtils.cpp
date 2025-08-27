@@ -274,6 +274,12 @@ std::string removeExtension(const std::string& filePath)
 	return systemPath.replace_extension().string();
 }
 
+std::string replaceExtension(const std::string& filePath, const std::string& extension)
+{
+	FS::path systemPath{ filePath };
+	return systemPath.replace_extension(extension).string();
+}
+
 #endif
 
 } // namespace

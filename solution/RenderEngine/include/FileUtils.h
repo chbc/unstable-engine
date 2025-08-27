@@ -35,6 +35,7 @@ namespace FileUtils
     bool isPathFromGameContent(const std::string& filePath);
 	EAssetType getAssetType(const std::string& filePath);
     std::string removeExtension(const std::string& filePath);
+    std::string replaceExtension(const std::string& filePath, const std::string& extension);
 }
 
 } // namespace

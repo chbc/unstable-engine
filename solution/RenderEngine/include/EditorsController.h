@@ -34,12 +34,13 @@ public:
 	void saveEntity(Entity* entity);
 	void loadFileFromBrowser(const char* filePath);
 	void importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, bool importMaterials, std::string& resultFilePath);
-	void createMeshEntity(const char* file, const char* meshName);
+	Entity* createMeshEntity(const char* file, const char* meshName);
 	void createDirectionalLight();
 	void createPointLight();
 	void setSelectedEntity(Entity* entity);
 	Entity* getSelectedEntity();
 	void deleteFile(const char* filePath, bool isDirectory);
+	void loadMaterialToEntity(Entity* entity, const std::string& materialFilePath);
 };
 
 } // namespace

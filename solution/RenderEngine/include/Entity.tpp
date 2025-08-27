@@ -31,12 +31,28 @@ T* Entity::getComponent()
 {
     T* component{ nullptr };
 
-    assert(this->hasComponent<T>());
-
-    uint16_t id = this->getComponentId<T>();
-    component = static_cast<T*>(componentsMap[id].get());
+    if (this->hasComponent<T>())
+    {
+        uint16_t id = this->getComponentId<T>();
+        component = static_cast<T*>(componentsMap[id].get());
+    }
 
     return component;
+}
+
+template <typename T>
+void Entity::getComponents(std::vector<T*>& result)
+{
+    T* component = this->getComponent<T>();
+    if (component)
+    {
+		result.push_back(component);
+    }
+
+    for (Entity* child : this->childrenList)
+    {
+		child->getComponents<T>(result);
+	}
 }
 
 template<typename T>

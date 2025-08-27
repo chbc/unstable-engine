@@ -67,7 +67,7 @@ int main(int argc, const char* args[])
         saveStream.close();
 
         // materials
-        if (importMaterials)
+        if (!modelData.materials.empty())
         {
 		    destinationPath = destinationPath.replace_extension("");
             copyTextureFiles(modelData, sourcePath.parent_path().string(), destinationPath.parent_path().string());

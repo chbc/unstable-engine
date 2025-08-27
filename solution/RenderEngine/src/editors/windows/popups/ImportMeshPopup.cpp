@@ -29,7 +29,7 @@ void ImportMeshPopup::onEditorGUI()
 		ImGui::DragFloat("Scale factor", &scaleFactor, 0.01f, 0.001f, 1000.0f, "%.3f");
 
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-		ImGui::Checkbox("Import materials", &loadToScene);
+		ImGui::Checkbox("Import materials", &importMaterials);
 		ImGui::PopStyleVar();
 
 		if (ImGui::Button("OK", ImVec2(120, 0)))
