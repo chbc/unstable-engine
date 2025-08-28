@@ -12,5 +12,6 @@ IMPLEMENT_MESSAGE(EntityChangedEditorMessage)
 IMPLEMENT_MESSAGE(MeshImportedEditorMessage)
 IMPLEMENT_MESSAGE(MeshEntityLoadedEditorMessage)
 IMPLEMENT_MESSAGE(ChangeGuizmoModeMessage)
+IMPLEMENT_MESSAGE(SetGridEnabledEditorMessage)
 
 } // namespace

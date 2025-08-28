@@ -80,4 +80,15 @@ public:
 	ChangeGuizmoModeMessage(int arg_mode) : mode(arg_mode) { }
 };
 
+struct SetGridEnabledEditorMessage : public BaseMessage
+{
+	DECLARE_MESSAGE()
+
+public:
+	bool enabled{ true };
+
+public:
+	SetGridEnabledEditorMessage(bool arg_enabled) : enabled(arg_enabled) {}
+};
+
 } // namespace

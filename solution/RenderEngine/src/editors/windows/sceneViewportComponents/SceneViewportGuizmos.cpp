@@ -18,6 +18,7 @@ SceneViewportGuizmos::SceneViewportGuizmos()
 	Action* action = new Action{ [&](void* message) { this->onEntitySelected(message); } };
 	this->selectionAction = SPTR<Action>(action);
 	this->orientationModeAction = SPTR<Action>(new Action{ [&](void* message) { this->onOrientationModeChanged(message); } });
+	this->gridEnabledAction = SPTR<Action>(new Action{ [&](void* message) { this->onSetGridEnabled(message); } });
 }
 
 void SceneViewportGuizmos::onInit()
@@ -25,6 +26,7 @@ void SceneViewportGuizmos::onInit()
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	messagesManager->addListener<EntitySelectionMessage>(this->selectionAction.get());
 	messagesManager->addListener<ChangeGuizmoModeMessage>(this->orientationModeAction.get());
+	messagesManager->addListener<SetGridEnabledEditorMessage>(this->gridEnabledAction.get());
 	this->selectedEntity = nullptr;
 	this->guizmoOperation = ImGuizmo::TRANSLATE;
 	
@@ -63,8 +65,15 @@ bool SceneViewportGuizmos::drawAndManipulate(bool cameraMoving, const glm::vec2&
 		}
 	}
 
-	static const glm::mat4 identityMatrix{ 1.0f };
-	ImGuizmo::DrawGrid(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), glm::value_ptr(identityMatrix), 20.0f);
+	if (this->gridEnabled)
+	{
+		static const glm::mat4 identityMatrix{ 1.0f };
+		ImGuizmo::DrawGrid
+		(
+			glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
+			glm::value_ptr(identityMatrix), 20.0f
+		);
+	}
 
 	return result;
 }
@@ -90,6 +99,7 @@ void SceneViewportGuizmos::onCleanUp()
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	messagesManager->removeListener<EntitySelectionMessage>(this->selectionAction.get());
 	messagesManager->removeListener<ChangeGuizmoModeMessage>(this->orientationModeAction.get());
+	messagesManager->removeListener<SetGridEnabledEditorMessage>(this->gridEnabledAction.get());
 }
 
 void SceneViewportGuizmos::onEntitySelected(void* data)
@@ -120,6 +130,12 @@ void SceneViewportGuizmos::onOrientationModeChanged(void* message)
 {
 	ChangeGuizmoModeMessage* orientationMessage = static_cast<ChangeGuizmoModeMessage*>(message);
 	this->guizmoMode = static_cast<ImGuizmo::MODE>(orientationMessage->mode);
+}
+
+void SceneViewportGuizmos::onSetGridEnabled(void* message)
+{
+	SetGridEnabledEditorMessage* gridMessage = static_cast<SetGridEnabledEditorMessage*>(message);
+	this->gridEnabled = gridMessage->enabled;
 }
 
 } // namespace

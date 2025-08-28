@@ -27,6 +27,8 @@ void SceneViewportButtons::drawContent(const glm::vec2& windowPos, const glm::ve
 		this->drawOrientationItem();
 	    ImGui::SameLine();
 		this->drawBackfaceCullingItem();
+		ImGui::SameLine();
+        this->drawGridItem();
     }
 
     ImGui::End();
@@ -48,8 +50,9 @@ void SceneViewportButtons::drawOrientationItem()
 
 void SceneViewportButtons::drawBackfaceCullingItem()
 {
-    if (ImGui::Selectable("Backface Culling", &this->backfaceCullingEnabled))
+    if (ImGui::Button("Backface Culling")) //, &this->backfaceCullingEnabled))
     {
+		this->backfaceCullingEnabled = !this->backfaceCullingEnabled;
         this->refreshBackfaceCulling();
     }
 
@@ -59,10 +62,31 @@ void SceneViewportButtons::drawBackfaceCullingItem()
     }
 }
 
+void SceneViewportButtons::drawGridItem()
+{
+    if (ImGui::Button("Grid"))
+    {
+		this->gridEnabled = !this->gridEnabled;
+		this->notifyGridEnabledChanged();
+    }
+
+    if (ImGui::IsItemHovered())
+    {
+        ImGui::SetTooltip("Toggle grid");
+    }
+}
+
 void SceneViewportButtons::notifyOrientationChanged()
 {
     ChangeGuizmoModeMessage message{ this->currentOrientationItem };
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	messagesManager->notify(&message);
+}
+
+void SceneViewportButtons::notifyGridEnabledChanged()
+{
+    SetGridEnabledEditorMessage message{ this->gridEnabled };
+    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	messagesManager->notify(&message);
 }
 
