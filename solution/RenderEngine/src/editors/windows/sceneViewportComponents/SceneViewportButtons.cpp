@@ -50,11 +50,13 @@ void SceneViewportButtons::drawOrientationItem()
 
 void SceneViewportButtons::drawBackfaceCullingItem()
 {
-    if (ImGui::Button("Backface Culling")) //, &this->backfaceCullingEnabled))
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, this->backfaceCullingEnabled ? 1.0f : 0.5f);
+    if (ImGui::Button("Backface Culling"))
     {
 		this->backfaceCullingEnabled = !this->backfaceCullingEnabled;
         this->refreshBackfaceCulling();
     }
+	ImGui::PopStyleVar();
 
     if (ImGui::IsItemHovered())
     {
@@ -64,11 +66,13 @@ void SceneViewportButtons::drawBackfaceCullingItem()
 
 void SceneViewportButtons::drawGridItem()
 {
+    ImGui::PushStyleVar(ImGuiStyleVar_Alpha, this->gridEnabled ? 1.0f : 0.5f);
     if (ImGui::Button("Grid"))
     {
 		this->gridEnabled = !this->gridEnabled;
 		this->notifyGridEnabledChanged();
     }
+	ImGui::PopStyleVar();
 
     if (ImGui::IsItemHovered())
     {

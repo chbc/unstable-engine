@@ -54,7 +54,6 @@ void MaterialEditorProperty::onDraw()
 
 void MaterialEditorProperty::drawSubProperties()
 {
-
 	for (const auto& property : (*this->value)->editorProperties)
 	{
 		property->draw();

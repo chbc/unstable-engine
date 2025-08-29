@@ -21,6 +21,7 @@ void TextureEditorProperty::setTextureId(void* arg_id)
 void TextureEditorProperty::onDraw()
 {
 	ImGui::Image(this->id, ImVec2{ 64.0f, 64.0f });
+	this->handleTextureDragAndDrop();
 }
 
 void TextureEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
@@ -50,6 +51,26 @@ void TextureEditorProperty::copy(AEditorProperty* destination)
 	derivedProperty->textureMapType = this->textureMapType;
 	*derivedProperty->texture = *this->texture;
 	derivedProperty->id = this->id;
+}
+
+void TextureEditorProperty::handleTextureDragAndDrop()
+{
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE"))
+		{
+			const char* filePath = static_cast<const char*>(payload->Data);
+			if (filePath != nullptr)
+			{
+				AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+				*this->texture = assetsManager->loadTexture(filePath, this->textureMapType);
+				this->id = static_cast<uint64_t>((*this->texture)->getId());
+
+				this->onPropertyChanged();
+			}
+		}
+		ImGui::EndDragDropTarget();
+	}
 }
 
 } // namespace
