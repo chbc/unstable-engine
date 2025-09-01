@@ -114,14 +114,16 @@ void EditorFileBrowser::showRootContentButtons()
 {
 	if (ImGui::Button("Content", ImVec2{ 64, 16 }))
 	{
-		this->controller->refreshFileIcons(this->gameContentFolder, this->fileIcons);
+		this->currentDirectory = this->gameContentFolder;
+		this->controller->refreshFileIcons(this->currentDirectory, this->fileIcons);
 	}
 
 	ImGui::SameLine();
 
 	if (ImGui::Button("Engine", ImVec2{ 64, 16 }))
 	{
-		this->controller->refreshFileIcons(this->engineContentFolder, this->fileIcons);
+		this->currentDirectory = this->engineContentFolder;
+		this->controller->refreshFileIcons(this->currentDirectory, this->fileIcons);
 	}
 }
 

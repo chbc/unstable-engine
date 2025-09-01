@@ -282,7 +282,14 @@ std::string replaceExtension(const std::string& filePath, const std::string& ext
 
 void deleteFile(const std::string& filePath)
 {
-	FS::remove(FS::path{ filePath });
+	if (FS::is_directory(filePath))
+	{
+		FS::remove_all(FS::path{ filePath });
+	}
+	else
+	{
+		FS::remove(FS::path{ filePath });
+	}
 }
 
 #endif
