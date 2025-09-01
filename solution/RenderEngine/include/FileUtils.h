@@ -36,6 +36,7 @@ namespace FileUtils
 	EAssetType getAssetType(const std::string& filePath);
     std::string removeExtension(const std::string& filePath);
     std::string replaceExtension(const std::string& filePath, const std::string& extension);
+	void deleteFile(const std::string& filePath);
 }
 
 } // namespace

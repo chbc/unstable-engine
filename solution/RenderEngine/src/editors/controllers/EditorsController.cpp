@@ -201,14 +201,9 @@ Entity* EditorsController::getSelectedEntity()
 	return this->selectedEntity;
 }
 
-void EditorsController::deleteFile(const char* filePath, bool isDirectory)
+void EditorsController::deleteFile(const char* filePath)
 {
-	std::stringstream commandStream;
-	std::string delCommand = isDirectory ? "rmdir /S/Q" : "del /F/Q";
-	commandStream << delCommand << " " << filePath;
-	std::string command = commandStream.str();
-
-	system(command.c_str());
+	FileUtils::deleteFile(filePath);
 }
 
 void EditorsController::loadMaterialToEntity(Entity* entity, const std::string& materialFilePath)

@@ -143,8 +143,7 @@ void EditorFileBrowser::handleDelete()
 {
 	if (this->selectedItem && ImGui::IsKeyPressed(ImGuiKey_Delete))
 	{
-		EAssetType assetType = FileUtils::getAssetType(this->selectedItem->filePath);
-		this->controller->deleteFile(this->selectedItem->filePath.c_str(), assetType == EAssetType::DIRECTORY);
+		this->controller->deleteFile(this->selectedItem->filePath.c_str());
 		this->controller->refreshFileIcons(this->currentDirectory, this->fileIcons);
 	}
 }

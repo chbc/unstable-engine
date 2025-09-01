@@ -39,7 +39,7 @@ public:
 	void createPointLight();
 	void setSelectedEntity(Entity* entity);
 	Entity* getSelectedEntity();
-	void deleteFile(const char* filePath, bool isDirectory);
+	void deleteFile(const char* filePath);
 	void loadMaterialToEntity(Entity* entity, const std::string& materialFilePath);
 };
 

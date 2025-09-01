@@ -280,6 +280,11 @@ std::string replaceExtension(const std::string& filePath, const std::string& ext
 	return systemPath.replace_extension(extension).string();
 }
 
+void deleteFile(const std::string& filePath)
+{
+	FS::remove(FS::path{ filePath });
+}
+
 #endif
 
 } // namespace
