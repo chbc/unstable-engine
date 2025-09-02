@@ -412,7 +412,7 @@ uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, v
 
 	if (bpp == 1)
 	{
-		colorFormat = GL_RED;
+		colorFormat = GL_LUMINANCE;
 	}
 	else if (bpp == 3)
 	{
