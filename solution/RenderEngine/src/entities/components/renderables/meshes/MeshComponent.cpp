@@ -48,11 +48,14 @@ EDrawMode::Type MeshComponent::getDrawMode()
 
 void MeshComponent::loadMaterial(const char* filePath)
 {
-    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-    assetsManager->releaseMaterial(this->material);
+    if (!this->lockMaterial)
+    {
+        AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+        assetsManager->releaseMaterial(this->material);
 
-    this->material = assetsManager->loadMaterial(filePath);
-    this->refreshMesh();
+        this->material = assetsManager->loadMaterial(filePath);
+        this->refreshMesh();
+    }
 }
 
 bool MeshComponent::isMaterialStandard()
@@ -74,6 +77,11 @@ std::string MeshComponent::getMeshName() const
     }
 
     return result;
+}
+
+void MeshComponent::setMaterialLock(bool value)
+{
+	this->lockMaterial = value;
 }
 
 bool MeshComponent::isOpaque()
@@ -108,17 +116,6 @@ void MeshComponent::onPropertyChanged()
 	ARenderableComponent::onPropertyChanged();
     this->bounds.setup(this->mesh->vertexData);
     this->refreshMesh();
-}
-
-void MeshComponent::setMaterial(ABaseMaterial* arg_material)
-{
-    if (this->material != nullptr)
-    {
-        AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-        assetsManager->releaseMaterial(this->material);
-    }
-
-    this->material = arg_material;
 }
 
 void MeshComponent::refreshMesh()

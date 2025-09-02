@@ -19,10 +19,11 @@ protected:
     std::string modelPath;
 
 private:
-    bool opaque{ true };
-    ABaseMaterial* material{ nullptr };
-    bool wireframe{ false };
 	float lineWidth{ 1.0f };
+    ABaseMaterial* material{ nullptr };
+    bool opaque{ true };
+    bool wireframe{ false };
+	bool lockMaterial{ false };
 
 public:
     MeshComponent(Entity *entity);
@@ -46,6 +47,7 @@ public:
     bool isMaterialStandard();
     void setLineWidth(float value);
     std::string getMeshName() const;
+    void setMaterialLock(bool value);
 
 protected:
     bool isOpaque();
@@ -54,7 +56,6 @@ protected:
     void onPropertyChanged() override;
 
 private:
-    void setMaterial(ABaseMaterial* arg_material);
     void refreshMesh();
 
 friend class RenderManager;
