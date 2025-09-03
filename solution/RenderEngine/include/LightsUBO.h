@@ -23,6 +23,7 @@ struct LightsUBO
     DirectionalLight directionalLights[4];
     PointLight pointLights[4];
 
+	glm::vec4 ambientLightColor{ 0.05f, 0.05f, 0.05f, 1.0f };
     int maxDirectionalLights{ 0 };
     int maxPointLights{ 0 };
 };

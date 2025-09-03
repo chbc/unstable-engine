@@ -2,7 +2,7 @@
 
 vec3 Lights_computeAmbientLight(vec3 materialColor)
 {
-    return ambientLightColor * materialColor;
+    return ambientLightColor.xyz * materialColor;
 }
 
 void Lights_computeDiffuseAndSpecularLights(vec3 normal, inout vec3 kd, inout vec3 ks)

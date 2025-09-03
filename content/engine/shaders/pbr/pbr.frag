@@ -5,7 +5,6 @@ uniform sampler2D metallicTexture;
 uniform sampler2D roughnessTexture;
 uniform sampler2D aoTexture;
 
-uniform vec3 ambientLightColor;
 uniform float shininess;
 
 // Varying variables
@@ -37,6 +36,7 @@ layout (std140, binding = 0) uniform LightsBuffer
 	DirectionalLight directionalLights[4];
 	PointLight pointLights[4];
 
+	vec4 ambientLightColor;
     int maxDirectionalLights;
     int maxPointLights;
 };
@@ -48,7 +48,8 @@ layout (std140, binding = 0) uniform LightsBuffer
 // technique somewhere later in the normal mapping tutorial.
 vec3 getNormalFromMap()
 {
-    vec3 tangentNormal = texture(normalTexture, TexCoords).xyz * 2.0 - 1.0;
+	vec3 normalPixel = texture(normalTexture, TexCoords).xyz;
+    vec3 tangentNormal = normalPixel * 2.0 - 1.0;
 
     vec3 Q1  = dFdx(WorldPos);
     vec3 Q2  = dFdy(WorldPos);
@@ -189,7 +190,7 @@ void main()
 	
     // ambient lighting (note that the next IBL tutorial will replace 
     // this ambient lighting with environment lighting).
-    vec3 ambient = ambientLightColor * albedo * ao;
+    vec3 ambient = ambientLightColor.xyz * albedo * ao;
     
     vec3 color = ambient + Lo;
 

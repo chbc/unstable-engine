@@ -20,7 +20,6 @@ LightRendererShaderSetup::LightRendererShaderSetup(ShaderManager *shaderManager,
 void LightRendererShaderSetup::onSceneLoaded(uint32_t program)
 {
 	this->shaderManager->setupUniformLocation(program, ShaderVariables::CAMERA_POSITION);
-    this->shaderManager->setupUniformLocation(program, ShaderVariables::AMBIENT_LIGHT_COLOR);
 }
 
 void LightRendererShaderSetup::setupShaderValues(uint32_t program)
@@ -31,7 +30,6 @@ void LightRendererShaderSetup::setupShaderValues(uint32_t program)
     const glm::vec3& cameraPosition = cameraTransform->getInternalMatrixPosition();
 
 	this->shaderManager->setVec3(program, ShaderVariables::CAMERA_POSITION, &cameraPosition[0]);
-	this->shaderManager->setVec3(program, ShaderVariables::AMBIENT_LIGHT_COLOR, &this->lightManager->ambientLightColor[0]);
 }
 
 } // namespace

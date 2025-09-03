@@ -2,7 +2,6 @@
 
 // Uniform variables
 uniform vec3 cameraPosition;
-uniform vec3 ambientLightColor;
 uniform float shininess;
 
 // Varying variables
@@ -27,6 +26,7 @@ layout (std140, binding = 0) uniform LightsBuffer
 	DirectionalLight directionalLights[4];
 	PointLight pointLights[4];
 
+	vec4 ambientLightColor;
     int maxDirectionalLights;
     int maxPointLights;
 };
