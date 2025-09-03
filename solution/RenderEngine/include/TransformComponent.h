@@ -62,6 +62,7 @@ private:
 
 friend class Entity;
 friend class TransformEditorProperty;
+friend class SceneViewportGuizmos;
 };
 
 } // namespace

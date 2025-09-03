@@ -29,7 +29,7 @@ struct PointLight
 {
 	vec4 position;
     vec4 color;
-	vec2 rangeAndIntensity;
+	vec4 rangeAndIntensity;
 };
 
 layout (std140, binding = 0) uniform LightsBuffer

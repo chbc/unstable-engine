@@ -292,27 +292,6 @@ void ShaderContentFactory::loadLightsContentHeader(std::string &outVertexContent
     FileUtils::loadContentFile(ShaderFiles::LIGHTS_H_V, vertexContent);
     FileUtils::loadContentFile(ShaderFiles::LIGHTS_H_F, fragmentContent);
 
-    size_t lightsCount = this->lightData.directionalLightsCount;
-
-    if (lightsCount > 0)
-    {
-        std::string directionalFragmentContent;
-        FileUtils::loadContentFile(ShaderFiles::DIRECTIONAL_LIGHTS_H_F, directionalFragmentContent);
-
-        directionalFragmentContent = StringUtils::format(directionalFragmentContent, lightsCount);
-        fragmentContent += directionalFragmentContent;
-    }
-
-    lightsCount = this->lightData.pointLightsCount;
-    if (lightsCount > 0)
-    {
-        std::string pointFragmentContent;
-        FileUtils::loadContentFile(ShaderFiles::POINT_LIGHTS_H_F, pointFragmentContent);
-
-        pointFragmentContent = StringUtils::format(pointFragmentContent, lightsCount);
-        fragmentContent += pointFragmentContent;
-    }
-
     outVertexContent = vertexContent + outVertexContent;
     outFragmentContent = fragmentContent + outFragmentContent;
 }
@@ -327,27 +306,6 @@ void ShaderContentFactory::loadLightsContentImplementation(std::string &outVerte
 
     this->uncommentCode(outVertexContent, "// [LIGHTS]");
     this->uncommentCode(outFragmentContent, "// [LIGHTS]");
-
-    if (this->lightData.directionalLightsCount > 0)
-    {
-        std::string directionalFragmentContent;
-        FileUtils::loadContentFile(ShaderFiles::DIRECTIONAL_LIGHTS_IMPL_F, directionalFragmentContent);
-
-        this->uncommentCode(fragmentContent, "// [DIRECTIONAL_LIGHTS]");
-
-        fragmentContent += directionalFragmentContent;
-    }
-
-    if (this->lightData.pointLightsCount > 0)
-    {
-        std::string pointVertexContent;
-        std::string pointFragmentContent;
-        FileUtils::loadContentFile(ShaderFiles::POINT_LIGHTS_IMPL_F, pointFragmentContent);
-
-        this->uncommentCode(fragmentContent, "// [POINT_LIGHTS]");
-
-        fragmentContent += pointFragmentContent;
-    }
 
     outVertexContent = vertexContent + outVertexContent;
     outFragmentContent = fragmentContent + outFragmentContent;

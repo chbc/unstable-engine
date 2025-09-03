@@ -37,7 +37,6 @@ public:
 
 private:
 	void onEntitySelected(void* data);
-	void onEntityManipulated();
 	void onOrientationModeChanged(void* message);
 	void onSetGridEnabled(void* message);
 };

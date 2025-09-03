@@ -23,8 +23,8 @@ struct LightsUBO
     DirectionalLight directionalLights[4];
     PointLight pointLights[4];
 
-    int maxDirectionalLights;
-    int maxPointLights;
+    int maxDirectionalLights{ 0 };
+    int maxPointLights{ 0 };
 };
 
 } // namespace sre

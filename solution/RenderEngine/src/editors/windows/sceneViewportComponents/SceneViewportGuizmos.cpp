@@ -61,7 +61,7 @@ bool SceneViewportGuizmos::drawAndManipulate(bool cameraMoving, const glm::vec2&
 
 			result = true;
 
-			this->onEntityManipulated();
+			entityTransform->onPropertyChanged();
 		}
 	}
 
@@ -118,12 +118,6 @@ void SceneViewportGuizmos::onEntitySelected(void* data)
 
 	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 	renderManager->addGuizmoComponent(guizmoComponent);
-}
-
-void SceneViewportGuizmos::onEntityManipulated()
-{
-	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-	messagesManager->notify<EntityChangedEditorMessage>();
 }
 
 void SceneViewportGuizmos::onOrientationModeChanged(void* message)

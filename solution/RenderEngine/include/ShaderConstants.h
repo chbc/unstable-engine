@@ -31,12 +31,6 @@ namespace ShaderFiles
     const std::string LIGHTS_H_F    = BASE_FOLDER + "lights/lights_h.frag";
     const std::string LIGHTS_IMPL_F = BASE_FOLDER + "lights/lights_impl.frag";
 
-    const std::string DIRECTIONAL_LIGHTS_H_F    = BASE_FOLDER + "lights/directional_lights_h.frag";
-    const std::string DIRECTIONAL_LIGHTS_IMPL_F = BASE_FOLDER + "lights/directional_lights_impl.frag";
-
-    const std::string POINT_LIGHTS_H_F      = BASE_FOLDER + "lights/point_lights_h.frag";
-    const std::string POINT_LIGHTS_IMPL_F   = BASE_FOLDER + "lights/point_lights_impl.frag";
-
     const std::string POINT_SHADOW_DEPTH_V = BASE_FOLDER + "shadows/point_shadow_depth.vert";
     const std::string POINT_SHADOW_DEPTH_F = BASE_FOLDER + "shadows/point_shadow_depth.frag";
     const std::string POINT_SHADOW_DEPTH_G = BASE_FOLDER + "shadows/point_shadow_depth.geom";

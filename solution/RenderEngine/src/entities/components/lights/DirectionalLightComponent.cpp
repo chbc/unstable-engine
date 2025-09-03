@@ -21,9 +21,7 @@ DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightCom
 void DirectionalLightComponent::onPropertyChanged()
 {
 	AEntityComponent::onPropertyChanged();
-	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
-	LightManager* lightManager = singletonsManager->get<LightManager>();
-	lightManager->updateDirectionalLightsUBO();
+	this->lightManager->updateDirectionalLightsUBO();
 }
 
 } // namespace
