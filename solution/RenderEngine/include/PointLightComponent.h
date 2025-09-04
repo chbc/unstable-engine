@@ -16,6 +16,7 @@ private:
 
 public:
     PointLightComponent(Entity *entity);
+
 	void setRange(float range);
 	float getRange();
 

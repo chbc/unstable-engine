@@ -67,9 +67,17 @@ bool AEntityComponent::isStored() const
 	return this->stored;
 }
 
-void AEntityComponent::addPropertyChangedCallback(std::function<void()> callback)
+size_t AEntityComponent::addPropertyChangedCallback(const std::function<void()>& callback)
 {
-	this->propertyChangedCallbacks.push_back(callback);
+	size_t result = this->propertyChangedCallbacks.size();
+	this->propertyChangedCallbacks[result] = callback;
+
+	return result;
+}
+
+void AEntityComponent::removePropertyChangedCallback(size_t id)
+{
+	this->propertyChangedCallbacks.erase(id);
 }
 
 void AEntityComponent::onPropertySerialized()
@@ -92,9 +100,9 @@ void AEntityComponent::onPropertyChanged()
 	this->stored = false;
 	this->entity->onComponentChanged();
 
-	for (const std::function<void()>& callback : this->propertyChangedCallbacks)
+	for (const auto& item : this->propertyChangedCallbacks)
 	{
-		callback();
+		item.second();
 	}
 }
 

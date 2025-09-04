@@ -20,7 +20,10 @@ PointLightComponent::PointLightComponent(Entity *entity)
 	this->lightManager->addPointLight(this);
 
 	TransformComponent* transform = this->getTransform();
-	transform->addPropertyChangedCallback([this](){ this->lightManager->updatePointLightsUBO(); });
+	this->propertyChangedCallbackId = transform->addPropertyChangedCallback
+	(
+		[this](){ this->lightManager->updatePointLightsUBO(); }
+	);
 }
 
 void PointLightComponent::setRange(float range)

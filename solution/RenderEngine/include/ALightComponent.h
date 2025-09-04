@@ -21,6 +21,7 @@ private:
 protected:
 	ALightComponent(Entity *entity);
     class LightManager* lightManager{ nullptr };
+	size_t propertyChangedCallbackId{ 0 };
 
 public:
     void setColor(const glm::vec3 &color);

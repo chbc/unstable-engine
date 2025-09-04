@@ -15,7 +15,10 @@ DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightCom
 	this->lightManager->addDirectionalLight(this);
 
 	TransformComponent* transform = this->getTransform();
-	transform->addPropertyChangedCallback([this]() { this->lightManager->updateDirectionalLightsUBO(); });
+	this->propertyChangedCallbackId = transform->addPropertyChangedCallback
+	(
+		[this]() { this->lightManager->updateDirectionalLightsUBO(); }
+	);
 }
 
 void DirectionalLightComponent::onPropertyChanged()

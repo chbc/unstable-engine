@@ -43,7 +43,7 @@ class SRE_API AEntityComponent
 {
 private:
     std::vector<SPTR<AEditorProperty>> editorProperties;
-	std::list<std::function<void()>> propertyChangedCallbacks;
+	std::unordered_map<size_t, std::function<void()>> propertyChangedCallbacks;
     Entity* entity{ nullptr };
     bool enabled{ true };
     bool saved{ true };
@@ -91,7 +91,8 @@ public:
     bool isSaved() const;
     bool isStored() const;
 	virtual bool isRenderable() const { return false; }
-	void addPropertyChangedCallback(std::function<void()> callback);
+	size_t addPropertyChangedCallback(const std::function<void()>& callback);
+    void removePropertyChangedCallback(size_t id);
 
 protected:
     virtual uint16_t getId() = 0;

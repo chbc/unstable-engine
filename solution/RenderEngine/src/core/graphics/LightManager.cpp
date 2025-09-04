@@ -101,7 +101,6 @@ void LightManager::removeDestroyedEntities()
     {
         this->updatePointLightsUBO();
 	}
-
 }
 
 void LightManager::cleanUp()
