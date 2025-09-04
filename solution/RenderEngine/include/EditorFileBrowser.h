@@ -4,7 +4,7 @@
 #include "IEditorWindow.h"
 #include "FileIcon.h"
 #include "memory_aliases.h"
-#include "ImportMeshPopup.h"
+#include "ExternalFileDropHandler.h"
 
 #include <vector>
 #include <functional>
@@ -14,16 +14,13 @@ namespace sre
 
 class EditorsController;
 
-using Action = std::function<void(void*)>;
-
 class EditorFileBrowser : public IEditorWindow
 {
-
 private:
+	ExternalFileDropHandler externalFileDropHandler;
 	std::vector<UPTR<FileIcon>> fileIcons;
-	SPTR<Action> externalFileDropAction;
-	SPTR<Action_OnClosePopup> onClosePopupAction;
 	SPTR<Action> entitySelectionAction;
+	SPTR<Action> refreshIconsAction;
 	EditorsController* controller{ nullptr };
 	std::string gameContentFolder;
 	std::string engineContentFolder;
@@ -35,6 +32,8 @@ public:
 	void onInit() override;
 	void onEditorGUI() override;
 	void onCleanUp() override;
+	void refreshFileIcons();
+	std::string getCurrentDirectory() const;
 
 private:
 	void setupColumns(const ImVec2& iconSize);
@@ -42,7 +41,6 @@ private:
 	void showIcon(FileIcon* icon, const ImVec2& size);
 	void handleDelete();
 	void handleIconDrag(FileIcon* icon, const ImVec2& size);
-	void handleExternalFileDrop(void* message);
 	void onEntitySelected(void* data);
 };
 

@@ -166,6 +166,19 @@ void EditorsController::importMesh(const char* sourceFilePath, const char* desti
 	messagesManager->notify(&message);
 }
 
+void EditorsController::copyFile(const std::string& sourceFilePath, const std::string& destinationPath)
+{
+	std::string fileName = FileUtils::getFileWithExtension(sourceFilePath);
+	std::stringstream resultStream;
+	resultStream << destinationPath << "\\" << fileName;
+	std::string resultFilePath = resultStream.str();
+	FileUtils::copyFile(sourceFilePath, resultFilePath);
+
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	RefreshFileIconsMessage message;
+	messagesManager->notify(&message);
+}
+
 Entity* EditorsController::createMeshEntity(const char* file, const char* meshName)
 {
 	Entity* newEntity = this->scenesManager->createMeshEntity(file, meshName);

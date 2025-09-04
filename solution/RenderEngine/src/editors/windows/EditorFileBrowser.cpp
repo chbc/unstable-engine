@@ -8,7 +8,6 @@
 #include "EditorMessages.h"
 
 #include "imgui.h"
-#include <sstream>
 
 namespace sre
 {
@@ -16,8 +15,8 @@ namespace sre
 EditorFileBrowser::EditorFileBrowser(EditorsController* arg_controller) 
 {
 	this->controller = arg_controller;
-	this->externalFileDropAction = SPTR<Action>(new Action([&](void* message) { this->handleExternalFileDrop(message); }));
 	this->entitySelectionAction = SPTR<Action>(new Action([&](void* message) { this->onEntitySelected(message); }));
+	this->refreshIconsAction = SPTR<Action>(new Action([&](void* message) { this->refreshFileIcons(); }));
 }
 
 void EditorFileBrowser::onInit()
@@ -25,11 +24,12 @@ void EditorFileBrowser::onInit()
 	this->gameContentFolder = FileUtils::getContentAbsolutePath("game");
 	this->engineContentFolder = FileUtils::getContentAbsolutePath("engine");
 	this->currentDirectory = this->gameContentFolder;
-	this->controller->refreshFileIcons(this->gameContentFolder, this->fileIcons);
+	this->refreshFileIcons();
+	this->externalFileDropHandler.onInit(this->controller, this);
 
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-	messagesManager->addListener<FileDropEditorMessage>(this->externalFileDropAction.get());
 	messagesManager->addListener<EntitySelectionMessage>(this->entitySelectionAction.get());
+	messagesManager->addListener<RefreshFileIconsMessage>(this->refreshIconsAction.get());
 }
 
 void EditorFileBrowser::onEditorGUI()
@@ -80,7 +80,7 @@ void EditorFileBrowser::onEditorGUI()
 		if (directoryChanged)
 		{
 			this->currentDirectory = item->filePath;
-			this->controller->refreshFileIcons(item->filePath, this->fileIcons);
+			this->refreshFileIcons();
 			break;
 		}
 	}
@@ -93,8 +93,20 @@ void EditorFileBrowser::onEditorGUI()
 void EditorFileBrowser::onCleanUp()
 {
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-	messagesManager->removeListener<FileDropEditorMessage>(this->externalFileDropAction.get());
 	messagesManager->removeListener<EntitySelectionMessage>(this->entitySelectionAction.get());
+	messagesManager->removeListener<RefreshFileIconsMessage>(this->refreshIconsAction.get());
+
+	this->externalFileDropHandler.onCleanUp();
+}
+
+void EditorFileBrowser::refreshFileIcons()
+{
+	this->controller->refreshFileIcons(this->currentDirectory, this->fileIcons);
+}
+
+std::string EditorFileBrowser::getCurrentDirectory() const
+{
+	return this->currentDirectory;
 }
 
 void EditorFileBrowser::setupColumns(const ImVec2& iconSize)
@@ -115,7 +127,7 @@ void EditorFileBrowser::showRootContentButtons()
 	if (ImGui::Button("Content", ImVec2{ 64, 16 }))
 	{
 		this->currentDirectory = this->gameContentFolder;
-		this->controller->refreshFileIcons(this->currentDirectory, this->fileIcons);
+		this->refreshFileIcons();
 	}
 
 	ImGui::SameLine();
@@ -123,7 +135,7 @@ void EditorFileBrowser::showRootContentButtons()
 	if (ImGui::Button("Engine", ImVec2{ 64, 16 }))
 	{
 		this->currentDirectory = this->engineContentFolder;
-		this->controller->refreshFileIcons(this->currentDirectory, this->fileIcons);
+		this->refreshFileIcons();
 	}
 }
 
@@ -146,7 +158,7 @@ void EditorFileBrowser::handleDelete()
 	if (this->selectedItem && ImGui::IsKeyPressed(ImGuiKey_Delete))
 	{
 		this->controller->deleteFile(this->selectedItem->filePath.c_str());
-		this->controller->refreshFileIcons(this->currentDirectory, this->fileIcons);
+		this->refreshFileIcons();
 	}
 }
 
@@ -158,49 +170,6 @@ void EditorFileBrowser::handleIconDrag(FileIcon* icon, const ImVec2& size)
 		ImGui::Image(icon->textureId, size);
 		ImGui::EndDragDropSource();
 	}
-}
-
-void EditorFileBrowser::handleExternalFileDrop(void* message)
-{
-	FileDropEditorMessage* fileDropMessage = static_cast<FileDropEditorMessage*>(message);
-
-	Action_OnClosePopup* onClosePopup = new Action_OnClosePopup
-	{
-		[&](AEditorPopup* popup, bool confirm)
-		{
-			if (confirm)
-			{
-				ImportMeshPopup* importPopup = static_cast<ImportMeshPopup*>(popup);
-				std::string resultFilePath;
-				this->controller->importMesh
-				(
-					importPopup->sourceFilePath.c_str(), importPopup->destinationPath.c_str(), 
-					importPopup->scaleFactor, importPopup->importMaterials, resultFilePath
-				);
-				this->controller->refreshFileIcons(this->currentDirectory, this->fileIcons);
-
-				if (importPopup->loadToScene)
-				{
-					std::string name = FileUtils::getFileName(resultFilePath);
-					const char* entityFilePath = resultFilePath.c_str();
-					Entity* meshEntity = this->controller->createMeshEntity(entityFilePath, name.c_str());
-
-					if (importPopup->importMaterials)
-					{
-						std::string materialFilePath = FileUtils::replaceExtension(entityFilePath, ".mat");
-						this->controller->loadMaterialToEntity(meshEntity, materialFilePath);
-					}
-				}
-			}
-		}
-	};
-
-	this->onClosePopupAction = SPTR<Action_OnClosePopup>(onClosePopup);
-	
-	ImportMeshPopup* importPopup = new ImportMeshPopup { this->onClosePopupAction.get(), fileDropMessage->filePath, this->currentDirectory};
-	ShowPopupEditorMessage popupMessage{ importPopup };
-	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-	messagesManager->notify(&popupMessage);
 }
 
 void EditorFileBrowser::onEntitySelected(void* data)

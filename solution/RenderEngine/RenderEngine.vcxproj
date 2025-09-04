@@ -426,6 +426,7 @@
     <ClCompile Include="src\editors\properties\Vec3EditorProperty.cpp" />
     <ClCompile Include="src\editors\windows\EditorFileBrowser.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
+    <ClCompile Include="src\editors\windows\fileBrowserComponents\ExternalFileDropHandler.cpp" />
     <ClCompile Include="src\editors\windows\fileIcons\FileIcon.cpp" />
     <ClCompile Include="src\editors\windows\popups\AEditorPopup.cpp" />
     <ClCompile Include="src\editors\windows\popups\ImportMeshPopup.cpp" />
@@ -757,6 +758,7 @@
     <ClInclude Include="include\WorldEditor.h" />
     <ClInclude Include="include\Vec3EditorProperty.h" />
     <ClInclude Include="include\SceneViewportCamera.h" />
+    <ClInclude Include="include\ExternalFileDropHandler.h" />
     <ClInclude Include="thirdParties\imguizmo\ImGuizmo.h" />
     <ClInclude Include="thirdParties\imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="thirdParties\imgui\backends\imgui_impl_sdl2.h" />

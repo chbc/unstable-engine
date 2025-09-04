@@ -91,4 +91,9 @@ public:
 	SetGridEnabledEditorMessage(bool arg_enabled) : enabled(arg_enabled) {}
 };
 
+struct RefreshFileIconsMessage : public BaseMessage
+{
+	DECLARE_MESSAGE()
+};
+
 } // namespace

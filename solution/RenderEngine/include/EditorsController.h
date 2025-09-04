@@ -34,6 +34,7 @@ public:
 	void saveEntity(Entity* entity);
 	void loadFileFromBrowser(const char* filePath);
 	void importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, bool importMaterials, std::string& resultFilePath);
+	void copyFile(const std::string& sourceFilePath, const std::string& destinationPath);
 	Entity* createMeshEntity(const char* file, const char* meshName);
 	void createDirectionalLight();
 	void createPointLight();

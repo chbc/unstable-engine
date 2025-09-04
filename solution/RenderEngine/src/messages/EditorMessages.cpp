@@ -13,5 +13,6 @@ IMPLEMENT_MESSAGE(MeshImportedEditorMessage)
 IMPLEMENT_MESSAGE(MeshEntityLoadedEditorMessage)
 IMPLEMENT_MESSAGE(ChangeGuizmoModeMessage)
 IMPLEMENT_MESSAGE(SetGridEnabledEditorMessage)
+IMPLEMENT_MESSAGE(RefreshFileIconsMessage)
 
 } // namespace

@@ -465,6 +465,9 @@
     <ClCompile Include="src\editors\windows\sceneViewportComponents\SceneViewportButtons.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\editors\windows\fileBrowserComponents\ExternalFileDropHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1191,6 +1194,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\LightsUBO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ExternalFileDropHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

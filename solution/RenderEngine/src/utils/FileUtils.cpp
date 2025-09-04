@@ -168,6 +168,12 @@ std::string getFileName(const std::string& filePath)
 	return systemPath.stem().string();
 }
 
+std::string getFileWithExtension(const std::string& filePath)
+{
+	FS::path systemPath{ filePath };
+	return systemPath.filename().string();
+}
+
 bool fileExists(const std::string& filePath)
 {
 	FS::path systemPath{ filePath };
@@ -263,6 +269,10 @@ EAssetType getAssetType(const std::string& filePath)
 		{
 			result = EAssetType::SCENE;
 		}
+		else if (extension == ".fbx" || extension == ".obj" || extension == ".dae" || extension == ".3ds" || extension == ".glTF")
+		{
+			result = EAssetType::SOURCE_MODEL;
+		}
 	}
 
 	return result;
@@ -290,6 +300,11 @@ void deleteFile(const std::string& filePath)
 	{
 		FS::remove(FS::path{ filePath });
 	}
+}
+
+void copyFile(const std::string& sourceFilePath, const std::string& destinationFilePath)
+{
+	FS::copy_file(FS::path{ sourceFilePath }, FS::path{ destinationFilePath }, FS::copy_options::overwrite_existing);
 }
 
 #endif
