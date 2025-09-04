@@ -48,8 +48,8 @@ layout (std140, binding = 0) uniform LightsBuffer
 // technique somewhere later in the normal mapping tutorial.
 vec3 getNormalFromMap()
 {
-	vec3 normalPixel = texture(normalTexture, TexCoords).xyz;
-    vec3 tangentNormal = normalPixel * 2.0 - 1.0;
+	vec3 normalTexel = texture(normalTexture, TexCoords).xyz;
+    vec3 tangentNormal = normalTexel * 2.0 - 1.0;
 
     vec3 Q1  = dFdx(WorldPos);
     vec3 Q2  = dFdy(WorldPos);
