@@ -56,6 +56,11 @@ void MaterialSaver::saveComponents(const MaterialImportData& materialData, c4::y
 		std::string texturePath = FileUtils::getBasePath(filePath) + "\\" + item.second;
 		texturePath = FileUtils::getContentRelativePath(texturePath);
 		propertyNode["FilePath"] << texturePath;
+
+		if (item.first == ETextureMap::NORMAL)
+		{
+			propertyNode["FlipGreenChannel"] << 0;
+		}
 	}
 
 	this->setupMissingMaterialTextures(materialData, pbrNode);

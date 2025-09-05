@@ -420,6 +420,7 @@
     <ClCompile Include="src\editors\properties\MaterialEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\MeshEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\InputTextEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\NormalTextureEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\StringEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\Vec2EditorProperty.cpp" />
@@ -626,6 +627,7 @@
     <ClInclude Include="include\ImportMeshPopup.h" />
     <ClInclude Include="include\LightsUBO.h" />
     <ClInclude Include="include\ModelImportData.h" />
+    <ClInclude Include="include\NormalTextureEditorProperty.h" />
     <ClInclude Include="include\PanMovementComponent.h" />
     <ClInclude Include="include\Ray.h" />
     <ClInclude Include="include\RefreshMeshesMessage.h" />

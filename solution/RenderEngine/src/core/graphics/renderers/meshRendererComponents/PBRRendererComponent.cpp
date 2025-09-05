@@ -25,6 +25,7 @@ void PBRRendererComponent::onSceneLoaded(uint32_t program)
 
 	this->shaderManager->setupUniformLocation(program, ShaderVariables::UV_OFFSET);
 	this->shaderManager->setupUniformLocation(program, ShaderVariables::UV_TILING);
+	this->shaderManager->setupUniformLocation(program, ShaderVariables::NORMAL_FLIP_GREEN_CHANNEL);
 	this->shaderManager->setupAttributeLocation(program, ShaderVariables::IN_TEXTURE_COORDS);
 }
 
@@ -36,6 +37,9 @@ void PBRRendererComponent::setupShaderValues(MeshComponent* mesh, uint32_t progr
 	glm::vec2 uvTiling = material->getUVTiling();
 	float uvTilingData[2] = { uvTiling.x, uvTiling.y };
 
+	PBRMaterialComponent* pbrMaterial = material->getComponent<PBRMaterialComponent>();
+	float normalFlipGreenChannel = pbrMaterial->getNormalFlipGreenChannelValue();
+
 	this->shaderManager->setVec2(program, ShaderVariables::UV_OFFSET, uvOffsetData);
 	this->shaderManager->setVec2(program, ShaderVariables::UV_TILING, uvTilingData);
 
@@ -44,11 +48,13 @@ void PBRRendererComponent::setupShaderValues(MeshComponent* mesh, uint32_t progr
 	this->shaderManager->setInt(program, ShaderVariables::METALLIC_TEXTURE, ETextureMap::METALLIC);
 	this->shaderManager->setInt(program, ShaderVariables::ROUGHNESS_TEXTURE, ETextureMap::ROUGHNESS);
 	this->shaderManager->setInt(program, ShaderVariables::AO_TEXTURE, ETextureMap::AMBIENT_OCCLUSION);
-	this->albedoTextureId = material->getComponent<PBRMaterialComponent>()->getAlbedoTextureID();
-	this->normalTextureId = material->getComponent<PBRMaterialComponent>()->getNormalTextureID();
-	this->metallicTextureId = material->getComponent<PBRMaterialComponent>()->getMetallicTextureID();
-	this->roughnessTextureId = material->getComponent<PBRMaterialComponent>()->getRoughnessTextureID();
-	this->aoTextureId = material->getComponent<PBRMaterialComponent>()->getAOTextureID();
+	this->shaderManager->setFloat(program, ShaderVariables::NORMAL_FLIP_GREEN_CHANNEL, normalFlipGreenChannel);
+
+	this->albedoTextureId = pbrMaterial->getAlbedoTextureID();
+	this->normalTextureId = pbrMaterial->getNormalTextureID();
+	this->metallicTextureId = pbrMaterial->getMetallicTextureID();
+	this->roughnessTextureId = pbrMaterial->getRoughnessTextureID();
+	this->aoTextureId = pbrMaterial->getAOTextureID();
 }
 
 void PBRRendererComponent::preDraw(uint32_t program)

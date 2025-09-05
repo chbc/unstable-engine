@@ -2,7 +2,7 @@
 #include "Texture.h"
 #include "SingletonsManager.h"
 #include "AssetsManager.h"
-#include "TextureEditorProperty.h"
+#include "NormalTextureEditorProperty.h"
 #include "Material.h"
 #include "ColorMaterialComponent.h"
 
@@ -15,7 +15,7 @@ PBRMaterialComponent::PBRMaterialComponent(Material* material)
 	: AMaterialComponent(material)
 {
 	this->addEditorProperty(new TextureEditorProperty{ "Albedo", &this->albedoTexture, ETextureMap::DIFFUSE });
-	this->addEditorProperty(new TextureEditorProperty{ "Normal", &this->normalTexture, ETextureMap::NORMAL });
+	this->addEditorProperty(new NormalTextureEditorProperty{ "Normal", &this->normalTexture });
 	this->addEditorProperty(new TextureEditorProperty{ "Metallic", &this->metallicTexture, ETextureMap::METALLIC });
 	this->addEditorProperty(new TextureEditorProperty{ "Roughness", &this->roughnessTexture, ETextureMap::ROUGHNESS });
 	this->addEditorProperty(new TextureEditorProperty{ "Ambient Occlusion", &this->aoTexture, ETextureMap::AMBIENT_OCCLUSION });
@@ -56,6 +56,12 @@ uint32_t PBRMaterialComponent::getRoughnessTextureID() const
 uint32_t PBRMaterialComponent::getAOTextureID() const
 {
 	return aoTexture->getId();
+}
+
+float PBRMaterialComponent::getNormalFlipGreenChannelValue() const
+{
+	float result = this->normalTexture->getFlipGreenChannel() ? 1.0f : 0.0f;
+	return result;
 }
 
 } // namespace

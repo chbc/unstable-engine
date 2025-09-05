@@ -468,6 +468,9 @@
     <ClCompile Include="src\editors\windows\fileBrowserComponents\ExternalFileDropHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\editors\properties\NormalTextureEditorProperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1197,6 +1200,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ExternalFileDropHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NormalTextureEditorProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

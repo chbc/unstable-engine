@@ -28,6 +28,7 @@ public:
 	uint32_t getMetallicTextureID() const;
 	uint32_t getRoughnessTextureID() const;
 	uint32_t getAOTextureID() const;
+	float getNormalFlipGreenChannelValue() const;
 };
 
 } // namespace

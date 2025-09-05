@@ -6,6 +6,7 @@ uniform sampler2D roughnessTexture;
 uniform sampler2D aoTexture;
 
 uniform float shininess;
+uniform float normalFlipGreenChannel;
 
 // Varying variables
 out vec4 FragColor;
@@ -49,6 +50,7 @@ layout (std140, binding = 0) uniform LightsBuffer
 vec3 getNormalFromMap()
 {
 	vec3 normalTexel = texture(normalTexture, TexCoords).xyz;
+	normalTexel.y = ((1.0 - normalFlipGreenChannel) * normalTexel.y) + (normalFlipGreenChannel * (1.0 - normalTexel.y));
     vec3 tangentNormal = normalTexel * 2.0 - 1.0;
 
     vec3 Q1  = dFdx(WorldPos);

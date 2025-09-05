@@ -44,4 +44,14 @@ const std::string &Texture::getFilePath()
 	return this->filePath;
 }
 
+bool Texture::getFlipGreenChannel() const
+{
+	return this->flipGreenChannel;
+}
+
+void Texture::setFlipGreenChannel(bool newValue)
+{
+	this->flipGreenChannel = newValue;
+}
+
 } // namespace

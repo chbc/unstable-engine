@@ -1,6 +1,6 @@
 #include "NormalMaterialComponent.h"
 #include "Texture.h"
-#include "TextureEditorProperty.h"
+#include "NormalTextureEditorProperty.h"
 
 namespace sre
 {
@@ -9,7 +9,7 @@ IMPLEMENT_MATERIAL_COMPONENT(NormalMaterialComponent, NORMAL_MATERIAL)
 NormalMaterialComponent::NormalMaterialComponent(Material *material)
 	: ABaseTextureMaterialComponent(material)
 {
-	this->addEditorProperty(new TextureEditorProperty{ "Normal", &this->texture, ETextureMap::NORMAL });
+	this->addEditorProperty(new NormalTextureEditorProperty{ "Normal", &this->texture });
 }
 
 } // namespace

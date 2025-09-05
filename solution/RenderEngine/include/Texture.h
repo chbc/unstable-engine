@@ -18,6 +18,7 @@ private:
 	ETextureMap::Type mapType;
     uint32_t unit;
 	std::string filePath;
+	bool flipGreenChannel{ false };
 
 public:
 	Texture(uint32_t id, uint32_t width, uint32_t height, ETextureMap::Type mapType, std::string filePath, uint32_t unitOffset = 0);
@@ -28,6 +29,8 @@ public:
 	ETextureMap::Type getMapType();
     uint32_t getUnit();
 	const std::string &getFilePath();
+	bool getFlipGreenChannel() const;
+	void setFlipGreenChannel(bool newValue);
 
 friend class AssetsManager;
 };
