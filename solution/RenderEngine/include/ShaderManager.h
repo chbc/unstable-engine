@@ -53,7 +53,7 @@ private:
     uint32_t loadDirectionalLightDepthShader();
 	uint32_t loadPostProcessingShader(class PostProcessingComponent* component);
 	uint32_t loadFinalPassPostProcessingShader(class PostProcessingComponent* component);
-    uint32_t loadShader(const std::string &vertexContent, const std::string &fragmentContent);
+    uint32_t loadShader(const std::string &vertexContent, const std::string &fragmentContent, const std::string& geometryContent = "");
 
     // passing values //
     void setupUniformLocation(uint32_t program, ShaderVariables::Type variableKey);

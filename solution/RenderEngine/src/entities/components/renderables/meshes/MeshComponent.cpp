@@ -36,14 +36,14 @@ void MeshComponent::setIsOpaque(bool value)
     this->opaque = value;
 }
 
-void MeshComponent::setWireframeMode(bool value)
+void MeshComponent::setDrawMode(EDrawMode::Type arg_drawMode)
 {
-    this->wireframe = value;
+    this->drawMode = arg_drawMode;
 }
 
 EDrawMode::Type MeshComponent::getDrawMode()
 {
-    return this->wireframe ? EDrawMode::LINES : EDrawMode::TRIANGLES;
+    return this->drawMode;
 }
 
 void MeshComponent::loadMaterial(const char* filePath)

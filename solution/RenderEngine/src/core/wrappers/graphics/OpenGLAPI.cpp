@@ -310,6 +310,11 @@ void OpenGLAPI::setLineWidth(float width)
 	glLineWidth(width);
 }
 
+void OpenGLAPI::setPointSize(float size)
+{
+	glPointSize(size);
+}
+
 void OpenGLAPI::setupBufferSubData(MeshData2D* meshData)
 {
 	uint32_t size = meshData->indices.size() * sizeof(uint32_t);

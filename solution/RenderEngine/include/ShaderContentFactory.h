@@ -44,7 +44,8 @@ private:
     void loadAOMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 
     void loadPbrContent(std::string& outVertexContent, std::string& outFragmentContent);
-    void loadCustomContent(const std::string& shaderPath, std::string& outVertexContent, std::string& outFragmentContent);
+    void loadCustomContent(const std::string& shaderPath, std::string& outVertexContent,
+        std::string& outFragmentContent, std::string& outGeometryContent);
 
     void loadSecondTargetColorContentImplementation(std::string& outFragmentContent);
 

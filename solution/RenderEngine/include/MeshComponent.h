@@ -22,7 +22,7 @@ private:
 	float lineWidth{ 1.0f };
     ABaseMaterial* material{ nullptr };
     bool opaque{ true };
-    bool wireframe{ false };
+    EDrawMode::Type drawMode{ EDrawMode::TRIANGLES };
 	bool lockMaterial{ false };
 
 public:
@@ -41,7 +41,7 @@ public:
     */
 
     void setIsOpaque(bool value);
-    void setWireframeMode(bool value);
+    void setDrawMode(EDrawMode::Type arg_drawMode);
     EDrawMode::Type getDrawMode();
     void loadMaterial(const char* filePath);
     bool isMaterialStandard();

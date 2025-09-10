@@ -15,7 +15,8 @@ namespace EDrawMode
         LINE_STRIP = 3,
         TRIANGLES = 4,
         TRIANGLE_STRIP = 5,
-        TRIANGLE_FAN = 6
+        TRIANGLE_FAN = 6,
+        LINES_AND_POINTS = 7
     };
 } // namespace EDrawMode
 

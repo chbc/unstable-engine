@@ -46,11 +46,12 @@ uint32_t ShaderManager::loadCustomShader(const std::string& shaderPath)
 {
     std::string vertexContent;
     std::string fragmentContent;
+    std::string geometryContent;
 
     ShaderContentFactory contentFactory;
-    contentFactory.loadCustomContent(shaderPath, vertexContent, fragmentContent);
+    contentFactory.loadCustomContent(shaderPath, vertexContent, fragmentContent, geometryContent);
 
-    return this->loadShader(vertexContent, fragmentContent);
+    return this->loadShader(vertexContent, fragmentContent, geometryContent);
 }
 
 uint32_t ShaderManager::loadPointLightDepthShader()
@@ -107,19 +108,31 @@ uint32_t ShaderManager::loadFinalPassPostProcessingShader(PostProcessingComponen
 	return this->loadShader(vertexContent, fragmentContent);
 }
 
-uint32_t ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent)
+uint32_t ShaderManager::loadShader(const std::string &vertexContent, const std::string &fragmentContent, const std::string& geometryContent)
 {
     uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);
     uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentContent);
+    uint32_t program{ 0 };
 
-    uint32_t program = this->graphicsWrapper->createProgram(vertShader, fragShader);
+    if (geometryContent.empty())
+    {
+        program = this->graphicsWrapper->createProgram(vertShader, fragShader);
 
-    Shader* shader = new Shader{ program, vertShader, fragShader };
-    this->shaders.emplace(program, shader);
+        Shader* shader = new Shader{ program, vertShader, fragShader };
+        this->shaders.emplace(program, shader);
+    }
+    else
+    {
+        uint32_t geomShader = this->graphicsWrapper->loadGeometryShader(geometryContent);
+        program = this->graphicsWrapper->createProgram(vertShader, fragShader, geomShader);
+
+        Shader* shader = new Shader{ program, vertShader, fragShader, geomShader };
+        this->shaders.emplace(program, shader);
+    }
 
     return program;
 }
-
+    
 void ShaderManager::setupUniformLocation(uint32_t program, ShaderVariables::Type variableKey)
 {
     std::string variableName = ShaderVariables::Map.at(variableKey);

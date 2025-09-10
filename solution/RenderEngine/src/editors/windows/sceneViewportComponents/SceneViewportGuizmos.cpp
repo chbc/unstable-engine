@@ -15,8 +15,7 @@ namespace sre
 
 SceneViewportGuizmos::SceneViewportGuizmos()
 {
-	Action* action = new Action{ [&](void* message) { this->onEntitySelected(message); } };
-	this->selectionAction = SPTR<Action>(action);
+	this->selectionAction = SPTR<Action>(new Action{ [&](void* message) { this->onEntitySelected(message); } });
 	this->orientationModeAction = SPTR<Action>(new Action{ [&](void* message) { this->onOrientationModeChanged(message); } });
 	this->gridEnabledAction = SPTR<Action>(new Action{ [&](void* message) { this->onSetGridEnabled(message); } });
 }

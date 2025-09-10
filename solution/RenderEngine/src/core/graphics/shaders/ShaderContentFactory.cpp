@@ -253,26 +253,18 @@ void ShaderContentFactory::loadPbrContent(std::string& outVertexContent, std::st
 {
     FileUtils::loadContentFile(ShaderFiles::PBR_V, outVertexContent);
 	FileUtils::loadContentFile(ShaderFiles::PBR_F, outFragmentContent);
-
-    /*
-    outFragmentContent = StringUtils::format(outFragmentContent, this->lightData.pointLightsCount);
-    outFragmentContent = StringUtils::format(outFragmentContent, this->lightData.directionalLightsCount);
-    */
 }
 
-void ShaderContentFactory::loadCustomContent(const std::string& shaderPath, std::string& outVertexContent, std::string& outFragmentContent)
+void ShaderContentFactory::loadCustomContent(const std::string& shaderPath, std::string& outVertexContent,
+    std::string& outFragmentContent, std::string& outGeometryContent)
 {
     std::string vertexFile = shaderPath + ".vert";
     std::string fragmentFile = shaderPath + ".frag";
+    std::string geometryFile = shaderPath + ".geom";
 
     FileUtils::loadContentFile(vertexFile, outVertexContent);
     FileUtils::loadContentFile(fragmentFile, outFragmentContent);
-    
-    size_t lightsCount = this->lightData.pointLightsCount;
-    if (lightsCount > 0)
-    {
-        outFragmentContent = StringUtils::format(outFragmentContent, lightsCount);
-    }
+    FileUtils::loadContentFile(geometryFile, outGeometryContent, false);
 }
 
 void ShaderContentFactory::loadSecondTargetColorContentImplementation(std::string& outFragmentContent)

@@ -13,9 +13,9 @@ class Shader
 {
 
 private:
-    uint32_t program;
+    uint32_t program{ 0 };
     std::vector<uint32_t> components;
-    bool isLit;
+    bool isLit{ false };
 
     std::unordered_map<ShaderVariables::Type, int> variableLocations;
     std::unordered_map<std::string, int> customVariableLocations;

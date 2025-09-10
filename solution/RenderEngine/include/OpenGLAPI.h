@@ -105,6 +105,7 @@ protected:
     void setViewport(uint32_t width, uint32_t height) override;
     void activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap) override;
     void setLineWidth(float width) override;
+    void setPointSize(float size) override;
 
 private:
     uint32_t compileShader(const std::string &source, uint32_t mode);
