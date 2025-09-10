@@ -66,22 +66,24 @@ void initializeStoragePaths()
 	toolsPath = FS::absolute(bin / ".." / "tools/");
 }
 
-void loadContentFile(const std::string& filePath, std::string& dest)
+void loadContentFile(const std::string& filePath, std::string& dest, bool canThrowError)
 {
 	std::string absolutePath = getContentAbsolutePath(filePath);
 	std::ifstream in{ absolutePath };
 
-	if (!in.is_open())
+	if (in.is_open())
+	{
+		char temp[300];
+		while (!in.eof())
+		{
+			in.getline(temp, 300);
+			dest += temp;
+			dest += '\n';
+		}
+	}
+	else if (canThrowError)
 	{
 		throw "[FileUtils] - Error: " + filePath + " can't be found!";
-	}
-
-	char temp[300];
-	while (!in.eof())
-	{
-		in.getline(temp, 300);
-		dest += temp;
-		dest += '\n';
 	}
 }
 
@@ -249,6 +251,10 @@ EAssetType getAssetType(const std::string& filePath)
 	else
 	{
 		std::string extension = FS::path{ filePath }.extension().string();
+		std::transform(extension.begin(), extension.end(), extension.begin(),
+			[](unsigned char c) { return std::tolower(c); }
+		);
+
 		if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
 		{
 			result = EAssetType::TEXTURE;
