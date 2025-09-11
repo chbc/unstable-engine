@@ -50,16 +50,15 @@ void CustomRenderer::render(CameraComponent* camera)
 			this->graphicsWrapper->enableVertexPositions();
 
 			this->graphicsWrapper->setLineWidth(item->lineWidth);
+			this->graphicsWrapper->setPointSize(item->pointSize);
 
 			EDrawMode::Type drawMode = item->getDrawMode();
 			if (drawMode == EDrawMode::LINES_AND_POINTS)
 			{
-				this->graphicsWrapper->setPointSize(item->lineWidth * 2.0f);
 				this->graphicsWrapper->drawElement(meshData->ebo, meshData->indices.size(), EDrawMode::LINES);
 
 				this->graphicsWrapper->bindVAO(meshData->vao, meshData->vbo);
 				this->graphicsWrapper->drawElement(meshData->ebo, meshData->indices.size(), EDrawMode::POINTS);
-				this->graphicsWrapper->setPointSize(1.0f);
 			}
 			else
 			{
@@ -67,6 +66,7 @@ void CustomRenderer::render(CameraComponent* camera)
 			}
 
 			this->graphicsWrapper->setLineWidth(1.0f);
+			this->graphicsWrapper->setPointSize(1.0f);
 		}
 	}
 

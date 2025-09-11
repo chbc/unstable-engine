@@ -68,6 +68,11 @@ void MeshComponent::setLineWidth(float value)
 	this->lineWidth = value;
 }
 
+void MeshComponent::setPointSize(float value)
+{
+    this->pointSize = value;
+}
+
 std::string MeshComponent::getMeshName() const
 {
     std::string result;

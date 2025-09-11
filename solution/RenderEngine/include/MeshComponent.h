@@ -20,6 +20,7 @@ protected:
 
 private:
 	float lineWidth{ 1.0f };
+	float pointSize{ 1.0f };
     ABaseMaterial* material{ nullptr };
     bool opaque{ true };
     EDrawMode::Type drawMode{ EDrawMode::TRIANGLES };
@@ -46,6 +47,7 @@ public:
     void loadMaterial(const char* filePath);
     bool isMaterialStandard();
     void setLineWidth(float value);
+	void setPointSize(float value);
     std::string getMeshName() const;
     void setMaterialLock(bool value);
 
