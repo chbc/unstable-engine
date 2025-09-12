@@ -47,8 +47,12 @@ void ModelLoader::processNode(const aiScene* scene, aiNode *node, aiMatrix4x4& p
         aiMesh* inputMesh = scene->mMeshes[node->mMeshes[i]];
 		aiMatrix4x4 meshTransform = parentTransform * node->mTransformation;
 		MeshData newMesh = this->processMesh(inputMesh, meshTransform);
-		result.meshes.emplace_back(newMesh);
-		result.meshesMaterialMap.emplace(newMesh.name, inputMesh->mMaterialIndex);
+
+		if (!newMesh.vertexData.empty() && !newMesh.indices.empty())
+		{
+			result.meshes.emplace_back(newMesh);
+			result.meshesMaterialMap.emplace(newMesh.name, inputMesh->mMaterialIndex);
+		}
     }
 
     for (uint32_t i = 0; i < node->mNumChildren; i++)
@@ -90,9 +94,15 @@ MeshData ModelLoader::processMesh(aiMesh* inputMesh, aiMatrix4x4& nodeTransform)
 	for (uint32_t i = 0; i < inputMesh->mNumFaces; i++)
 	{
 		const aiFace& face = inputMesh->mFaces[i];
-		for (uint32_t j = 0; j < face.mNumIndices; j++)
+
+		if (face.mNumIndices == 3)
 		{
-			indices.push_back(face.mIndices[j]);
+			for (uint32_t j = 0; j < face.mNumIndices; j++)
+			{
+				indices.push_back(face.mIndices[j]);
+
+				aiVector3D pos = inputMesh->mVertices[face.mIndices[j]];
+			}
 		}
 	}
 
