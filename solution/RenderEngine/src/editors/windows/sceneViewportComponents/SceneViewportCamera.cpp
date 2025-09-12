@@ -151,14 +151,7 @@ void SceneViewportCamera::processMouseWheel(float elapsedTime)
 		{
 			const float WHEEL_RATE = 100.0f;
 			glm::vec3 position = this->cameraTransform->getPosition();
-			glm::vec3 targetPosition = TransformComponent::ZERO;
-			float targetDistance = glm::distance(position, targetPosition);
-			targetDistance = targetDistance - (mouseWheel * WHEEL_RATE * elapsedTime);
-			targetDistance = (targetDistance < 1.0f) ? 1.0f : targetDistance;
-
-			position = glm::normalize(position);
-			position = position * targetDistance;
-
+			position -= this->cameraTransform->getForward() * (static_cast<float>(mouseWheel) * WHEEL_RATE * elapsedTime);
 			this->cameraTransform->setPosition(position);
 		}
 	}
