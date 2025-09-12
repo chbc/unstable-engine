@@ -15,7 +15,7 @@ const char* Entity::BASE_CLASS_NAME = Entity::AddType<Entity>("Entity");
 Entity::Entity(std::string arg_name) : name(arg_name)
 {
 	this->transform = this->addComponent<TransformComponent>();
-	this->addEditorProperty(new BoolEditorProperty{ "Enabled", &this->enabled });
+	this->addEditorProperty(new BoolEditorProperty{ arg_name.c_str(), &this->enabled});
 }
 
 Entity::~Entity()

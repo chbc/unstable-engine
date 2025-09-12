@@ -58,7 +58,7 @@ void GUIRenderer::render()
     // Static meshes
     for (GUIImageComponent *item : this->imageComponents)
     {
-        if (item->getEntity()->isEnabled())
+        if (item->isEnabled() && item->getEntity()->isEnabled())
         {
             this->setup(item);
             this->graphicsWrapper->drawElement(item->meshData->ebo, item->meshData->indices.size());

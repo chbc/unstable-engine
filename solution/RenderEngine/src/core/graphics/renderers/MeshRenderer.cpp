@@ -135,7 +135,7 @@ void MeshRenderer::render()
 
     for (MeshComponent *meshComponent : this->meshComponents)
     {
-        if (meshComponent->getEntity()->isEnabled())
+        if (meshComponent->isEnabled() && meshComponent->getEntity()->isEnabled())
         {
             // Matrix setup
             TransformComponent* transform = meshComponent->getTransform();

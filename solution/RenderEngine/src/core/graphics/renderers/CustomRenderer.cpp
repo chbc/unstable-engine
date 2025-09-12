@@ -36,7 +36,7 @@ void CustomRenderer::render(CameraComponent* camera)
 
 	for (MeshComponent* item : this->meshComponents)
 	{
-		if (item->getEntity()->isEnabled())
+		if (item->isEnabled() && item->getEntity()->isEnabled())
 		{
 			// Matrix setup
 			TransformComponent* transform = item->getTransform();
