@@ -84,7 +84,7 @@ void ExternalFileDropHandler::handleImportMesh(const std::string& sourceFilePath
 
 	this->onClosePopupAction = SPTR<Action_OnClosePopup>(onClosePopup);
 
-	std::string currentDirectory = this->fileBrowser->getCurrentDirectory();
+	std::string currentDirectory = this->controller->getCurrentDirectory();
 	ImportMeshPopup* importPopup = new ImportMeshPopup{ this->onClosePopupAction.get(), sourceFilePath, currentDirectory };
 	ShowPopupEditorMessage popupMessage{ importPopup };
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
@@ -93,7 +93,7 @@ void ExternalFileDropHandler::handleImportMesh(const std::string& sourceFilePath
 
 void ExternalFileDropHandler::handleCopyFile(const std::string& sourceFilePath)
 {
-	this->controller->copyFile(sourceFilePath, this->fileBrowser->getCurrentDirectory());
+	this->controller->copyFile(sourceFilePath, this->controller->getCurrentDirectory());
 }
 
 } // namespace sre

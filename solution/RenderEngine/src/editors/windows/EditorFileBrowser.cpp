@@ -23,9 +23,10 @@ void EditorFileBrowser::onInit()
 {
 	this->gameContentFolder = FileUtils::getContentAbsolutePath("game");
 	this->engineContentFolder = FileUtils::getContentAbsolutePath("engine");
-	this->currentDirectory = this->gameContentFolder;
+	this->controller->setCurrentDirectory(this->gameContentFolder);
 	this->refreshFileIcons();
 	this->externalFileDropHandler.onInit(this->controller, this);
+	this->contextMenu.onInit(this->controller);
 
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	messagesManager->addListener<EntitySelectionMessage>(this->entitySelectionAction.get());
@@ -79,11 +80,13 @@ void EditorFileBrowser::onEditorGUI()
 
 		if (directoryChanged)
 		{
-			this->currentDirectory = item->filePath;
+			this->controller->setCurrentDirectory(item->filePath);
 			this->refreshFileIcons();
 			break;
 		}
 	}
+
+	this->contextMenu.onEditorGUI();
 
 	this->handleDelete();
 
@@ -101,12 +104,7 @@ void EditorFileBrowser::onCleanUp()
 
 void EditorFileBrowser::refreshFileIcons()
 {
-	this->controller->refreshFileIcons(this->currentDirectory, this->fileIcons);
-}
-
-std::string EditorFileBrowser::getCurrentDirectory() const
-{
-	return this->currentDirectory;
+	this->controller->refreshFileIcons(this->fileIcons);
 }
 
 void EditorFileBrowser::setupColumns(const ImVec2& iconSize)
@@ -126,7 +124,7 @@ void EditorFileBrowser::showRootContentButtons()
 {
 	if (ImGui::Button("Content", ImVec2{ 64, 16 }))
 	{
-		this->currentDirectory = this->gameContentFolder;
+		this->controller->setCurrentDirectory(this->gameContentFolder);
 		this->refreshFileIcons();
 	}
 
@@ -134,7 +132,7 @@ void EditorFileBrowser::showRootContentButtons()
 
 	if (ImGui::Button("Engine", ImVec2{ 64, 16 }))
 	{
-		this->currentDirectory = this->engineContentFolder;
+		this->controller->setCurrentDirectory(this->engineContentFolder);
 		this->refreshFileIcons();
 	}
 }

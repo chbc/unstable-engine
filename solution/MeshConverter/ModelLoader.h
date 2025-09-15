@@ -10,6 +10,8 @@
 struct aiNode;
 struct aiScene;
 struct aiMesh;
+struct aiMaterial;
+enum aiTextureType;
 
 namespace sre
 {
@@ -23,6 +25,7 @@ private:
     void processNode(const aiScene *scene, aiNode* node, aiMatrix4x4& parentTransform, ModelImportData& result);
     MeshData processMesh(aiMesh *inputMesh, aiMatrix4x4& nodeTransform);
 	void processMaterials(const aiScene* scene, ModelImportData& result);
+	void checkAndAddTexturePath(aiMaterial* inputMaterial, aiTextureType aiTextureType, ETextureMap::Type textureMap, MaterialImportData& result);
     glm::mat4 AssimpToGLM(const aiMatrix4x4& ai_mat);
 
 friend class Scene;

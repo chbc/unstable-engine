@@ -1,4 +1,5 @@
 #include "ModelLoader.h"
+#include "FileUtils.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -119,32 +120,28 @@ void ModelLoader::processMaterials(const aiScene* scene, ModelImportData& result
 			aiMaterial* inputMaterial = scene->mMaterials[i];
 			MaterialImportData material;
 
-			aiString path;
-			if (inputMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS)
-			{
-				material.texturePaths.emplace(ETextureMap::DIFFUSE, path.C_Str());
-			}
-			if (inputMaterial->GetTexture(aiTextureType_NORMALS, 0, &path) == AI_SUCCESS)
-			{
-				material.texturePaths.emplace(ETextureMap::NORMAL, path.C_Str());
-			}
-			if (inputMaterial->GetTexture(aiTextureType_DIFFUSE_ROUGHNESS, 0, &path) == AI_SUCCESS)
-			{
-				material.texturePaths.emplace(ETextureMap::ROUGHNESS, path.C_Str());
-			}
-			if (inputMaterial->GetTexture(aiTextureType_METALNESS, 0, &path) == AI_SUCCESS)
-			{
-				material.texturePaths.emplace(ETextureMap::METALLIC, path.C_Str());
-			}
-			if (inputMaterial->GetTexture(aiTextureType_AMBIENT_OCCLUSION, 0, &path) == AI_SUCCESS)
-			{
-				material.texturePaths.emplace(ETextureMap::AMBIENT_OCCLUSION, path.C_Str());
-			}
+			this->checkAndAddTexturePath(inputMaterial, aiTextureType_DIFFUSE, ETextureMap::DIFFUSE, material);
+			this->checkAndAddTexturePath(inputMaterial, aiTextureType_NORMALS, ETextureMap::NORMAL, material);
+			this->checkAndAddTexturePath(inputMaterial, aiTextureType_DIFFUSE_ROUGHNESS, ETextureMap::ROUGHNESS, material);
+			this->checkAndAddTexturePath(inputMaterial, aiTextureType_METALNESS, ETextureMap::METALLIC, material);
+			this->checkAndAddTexturePath(inputMaterial, aiTextureType_AMBIENT_OCCLUSION, ETextureMap::AMBIENT_OCCLUSION, material);
 
 			if (!material.texturePaths.empty())
 			{
 				result.materials.emplace_back(material);
 			}
+		}
+	}
+}
+
+void ModelLoader::checkAndAddTexturePath(aiMaterial* inputMaterial, aiTextureType aiTextureType, ETextureMap::Type textureMap, MaterialImportData& result)
+{
+	aiString path;
+	if (inputMaterial->GetTexture(aiTextureType, 0, &path) == AI_SUCCESS)
+	{
+		if (FileUtils::fileExists(path.C_Str()))
+		{
+			result.texturePaths.emplace(textureMap, path.C_Str());
 		}
 	}
 }

@@ -5,6 +5,7 @@
 #include "FileIcon.h"
 #include "memory_aliases.h"
 #include "ExternalFileDropHandler.h"
+#include "FileBrowserContextMenu.h"
 
 #include <vector>
 #include <functional>
@@ -18,13 +19,13 @@ class EditorFileBrowser : public IEditorWindow
 {
 private:
 	ExternalFileDropHandler externalFileDropHandler;
+	FileBrowserContextMenu contextMenu;
 	std::vector<UPTR<FileIcon>> fileIcons;
 	SPTR<Action> entitySelectionAction;
 	SPTR<Action> refreshIconsAction;
 	EditorsController* controller{ nullptr };
 	std::string gameContentFolder;
 	std::string engineContentFolder;
-	std::string currentDirectory;
 	FileIcon* selectedItem{ nullptr };
 
 public:
@@ -33,7 +34,6 @@ public:
 	void onEditorGUI() override;
 	void onCleanUp() override;
 	void refreshFileIcons();
-	std::string getCurrentDirectory() const;
 
 private:
 	void setupColumns(const ImVec2& iconSize);

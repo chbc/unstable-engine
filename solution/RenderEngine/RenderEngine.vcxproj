@@ -428,6 +428,7 @@
     <ClCompile Include="src\editors\windows\EditorFileBrowser.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
     <ClCompile Include="src\editors\windows\fileBrowserComponents\ExternalFileDropHandler.cpp" />
+    <ClCompile Include="src\editors\windows\fileBrowserComponents\FileBrowserContextMenu.cpp" />
     <ClCompile Include="src\editors\windows\fileIcons\FileIcon.cpp" />
     <ClCompile Include="src\editors\windows\popups\AEditorPopup.cpp" />
     <ClCompile Include="src\editors\windows\popups\ImportMeshPopup.cpp" />
@@ -608,6 +609,7 @@
     <ClInclude Include="include\EGuizmoMesh.h" />
     <ClInclude Include="include\EntityLoader.h" />
     <ClInclude Include="include\EntityTypes.h" />
+    <ClInclude Include="include\FileBrowserContextMenu.h" />
     <ClInclude Include="include\FileIcon.h" />
     <ClInclude Include="include\BoolEditorProperty.h" />
     <ClInclude Include="include\ComponentParser.h" />

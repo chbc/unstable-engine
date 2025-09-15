@@ -10,6 +10,7 @@
 #include "Texture.h"
 #include "EntityLoader.h"
 #include "MeshComponent.h"
+#include "MaterialLoader.h"
 
 namespace sre
 {
@@ -82,22 +83,22 @@ void EditorsController::saveGui()
 
 void EditorsController::createGUIImage()
 {
-	Entity* newEntity = this->scenesManager->createGUIImageEntity(GUI_IMAGE_PATH);
+	Entity* newEntity = this->scenesManager->createGUIImageEntity(DEFAULT_GUI_IMAGE_PATH);
 	this->setSelectedEntity(newEntity);
 }
 
 void EditorsController::createGUIText()
 {
-	Entity* newEntity = this->scenesManager->createGUITextEntity(TEXT_FONT_PATH);
+	Entity* newEntity = this->scenesManager->createGUITextEntity(DEFAULT_TEXT_FONT_PATH);
 	this->setSelectedEntity(newEntity);
 }
 
-void EditorsController::refreshFileIcons(std::string directoryPath, std::vector<UPTR<FileIcon>>& result)
+void EditorsController::refreshFileIcons(std::vector<UPTR<FileIcon>>& result)
 {
 	result.clear();
 	std::vector<std::string> iconPaths;
 	std::vector<std::string> filePaths;
-	FileUtils::getFileAndIconPaths(directoryPath, iconPaths, filePaths);
+	FileUtils::getFileAndIconPaths(this->currentDirectory, iconPaths, filePaths);
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 
@@ -174,9 +175,7 @@ void EditorsController::copyFile(const std::string& sourceFilePath, const std::s
 	std::string resultFilePath = resultStream.str();
 	FileUtils::copyFile(sourceFilePath, resultFilePath);
 
-	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-	RefreshFileIconsMessage message;
-	messagesManager->notify(&message);
+	this->notifyRefreshFileIcons();
 }
 
 Entity* EditorsController::createMeshEntity(const char* file, const char* meshName)
@@ -231,6 +230,33 @@ void EditorsController::loadMaterialToEntity(Entity* entity, const std::string& 
 			meshComponent->loadMaterial(materialFilePath.c_str());
 		}
 	}
+}
+
+void EditorsController::createMaterial()
+{
+	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+	ABaseMaterial* material = assetsManager->loadMaterial(DEFAULT_MATERIAL_PATH);
+	std::string resultPath = this->currentDirectory + "/NewMaterial.mat";
+	MaterialLoader().save(material, resultPath);
+
+	this->notifyRefreshFileIcons();
+}
+
+void EditorsController::notifyRefreshFileIcons()
+{
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	RefreshFileIconsMessage message;
+	messagesManager->notify(&message);
+}
+
+std::string EditorsController::getCurrentDirectory() const
+{
+	return this->currentDirectory;
+}
+
+void EditorsController::setCurrentDirectory(const std::string& directory)
+{
+	this->currentDirectory = directory;
 }
 
 } // namespace

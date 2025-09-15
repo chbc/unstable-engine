@@ -92,7 +92,7 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 			ImGui::Text("[%s]", name);
 			if (!selectedEntity->isAsset())
 			{
-				if (ImGui::Button("Save new Entity Asset"))
+				if (ImGui::MenuItem("Save new Entity Asset"))
 				{
 					this->controller->saveEntity(selectedEntity);
 					ImGui::CloseCurrentPopup();
@@ -100,13 +100,13 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 			}
 			else if (!selectedEntity->isStored())
 			{
-				if (ImGui::Button("Save Entity Asset"))
+				if (ImGui::MenuItem("Save Entity Asset"))
 				{
 					this->controller->saveEntity(selectedEntity);
 					ImGui::CloseCurrentPopup();
 				}
 			}
-			if (ImGui::Button("Delete"))
+			if (ImGui::MenuItem("Delete"))
 			{
 				selectedEntity->destroy();
 				this->controller->setSelectedEntity(nullptr);

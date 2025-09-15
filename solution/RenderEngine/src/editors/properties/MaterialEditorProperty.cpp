@@ -30,7 +30,7 @@ void MaterialEditorProperty::onDraw()
 	if (ImGui::BeginPopupContextItem("Save Material"))
 	{
 		ImGui::Text("[%s]", this->title.c_str());
-		if (ImGui::Button("Save"))
+		if (ImGui::MenuItem("Save"))
 		{
 			MaterialLoader().save((*this->value), (*this->value)->filePath.c_str());
 			ImGui::CloseCurrentPopup();
