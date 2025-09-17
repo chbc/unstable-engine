@@ -12,7 +12,7 @@ namespace sre
 
 Scene::Scene(std::string arg_name, std::string arg_filePath) : AScene(arg_name, arg_filePath) { }
 
-Entity* Scene::createMeshEntity(const char* filePath, const char* meshName)
+Entity* Scene::createMeshEntity(const std::string& filePath, const char* meshName)
 {
     AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
     Model* model = assetsManager->loadModel(filePath);

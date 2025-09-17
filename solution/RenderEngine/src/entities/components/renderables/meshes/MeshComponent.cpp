@@ -54,7 +54,7 @@ void MeshComponent::loadMaterial(const char* filePath)
         assetsManager->releaseMaterial(this->material);
 
         this->material = assetsManager->loadMaterial(filePath);
-        this->refreshMesh();
+        this->reloadMeshInRenderer();
     }
 }
 
@@ -120,10 +120,18 @@ void MeshComponent::onPropertyChanged()
 {
 	ARenderableComponent::onPropertyChanged();
     this->bounds.setup(this->mesh->vertexData);
-    this->refreshMesh();
+    this->reloadMeshInRenderer();
 }
 
-void MeshComponent::refreshMesh()
+void MeshComponent::onClone()
+{
+    if (this->mesh != nullptr)
+    {
+        this->bounds.setup(this->mesh->vertexData);
+    }
+}
+
+void MeshComponent::reloadMeshInRenderer()
 {
     RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
     renderManager->removeMesh(this);

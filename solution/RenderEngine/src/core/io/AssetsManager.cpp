@@ -26,7 +26,7 @@ void AssetsManager::releaseEntity(Entity* entity)
 	this->releaseAsset(this->entitiesMap, entity);
 }
 
-Model* AssetsManager::loadModel(const char* filePath)
+Model* AssetsManager::loadModel(const std::string& filePath)
 {
 	std::string relativePath = FileUtils::getContentRelativePath(filePath);
 	Model* result = this->loadAsset<ModelsMapType, MeshLoader, Model>(this->modelsMap, relativePath);

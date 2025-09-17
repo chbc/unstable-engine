@@ -432,6 +432,7 @@ Entity* Entity::clone()
 		}
 
 		item.second->clone(resultComponent);
+		resultComponent->onClone();
 	}
 
 	// children

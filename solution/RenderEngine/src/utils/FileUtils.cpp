@@ -142,6 +142,10 @@ void getFileAndIconPaths(std::string directoryPath, std::vector<std::string>& ic
 		{
 			iconName = "material_icon";
 		}
+		else if (extension == ".ent")
+		{
+			iconName = "entity_icon";
+		}
 		else if ((extension == ".png") || (extension == "jpg") || (extension == "jpeg"))
 		{
 			iconPath = item.path();
@@ -255,7 +259,11 @@ EAssetType getAssetType(const std::string& filePath)
 			[](unsigned char c) { return std::tolower(c); }
 		);
 
-		if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
+		if (extension == ".ent")
+		{
+			result = EAssetType::ENTITY;
+		}
+		else if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
 		{
 			result = EAssetType::TEXTURE;
 		}
@@ -310,7 +318,28 @@ void deleteFile(const std::string& filePath)
 
 void copyFile(const std::string& sourceFilePath, const std::string& destinationFilePath)
 {
-	FS::copy_file(FS::path{ sourceFilePath }, FS::path{ destinationFilePath }, FS::copy_options::overwrite_existing);
+	std::string resultDestinationPath = getContentAbsolutePath(destinationFilePath);
+	FS::copy_file(FS::path{ sourceFilePath }, FS::path{ resultDestinationPath }, FS::copy_options::overwrite_existing);
+}
+
+void resolveFileNameConflict(std::string& filePath)
+{
+	FS::path systemPath{ filePath };
+	if (FS::exists(systemPath))
+	{
+		std::string baseName = systemPath.stem().string();
+		std::string extension = systemPath.extension().string();
+		FS::path parentPath = systemPath.parent_path();
+		int counter = 1;
+		do
+		{
+			std::string newFileName;
+			newFileName = baseName + "_" + std::to_string(counter) + extension;
+			systemPath = parentPath / newFileName;
+			counter++;
+		} while (FS::exists(systemPath));
+		filePath = systemPath.string();
+	}
 }
 
 #endif

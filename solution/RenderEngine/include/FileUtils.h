@@ -9,6 +9,7 @@ namespace sre
 enum class EAssetType
 {
     NONE,
+    ENTITY,
     DIRECTORY,
     TEXTURE,
     MESH,
@@ -40,6 +41,7 @@ namespace FileUtils
     std::string replaceExtension(const std::string& filePath, const std::string& extension);
 	void deleteFile(const std::string& filePath);
 	void copyFile(const std::string& sourceFilePath, const std::string& destinationFilePath);
+	void resolveFileNameConflict(std::string& filePath);
 }
 
 } // namespace

@@ -22,6 +22,7 @@ void FileBrowserContextMenu::onEditorGUI()
 	{
 		if (ImGui::MenuItem("New Entity"))
 		{
+			this->controller->createStoredEntity();
 			ImGui::CloseCurrentPopup();
 		}
 		if (ImGui::MenuItem("New Material"))
@@ -31,6 +32,7 @@ void FileBrowserContextMenu::onEditorGUI()
 		}
 		if (ImGui::MenuItem("New Scene"))
 		{
+			this->controller->createScene();
 			ImGui::CloseCurrentPopup();
 		}
 

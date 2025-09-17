@@ -102,6 +102,7 @@ protected:
     virtual void onEnable() {}
     virtual void onDisable() {}
     virtual void onUpdate(float elapsedTime) {}
+	virtual void onClone() {}
     virtual void onPropertySerialized();
     virtual void onPropertyDeserialized();
     virtual void onPropertyChanged();

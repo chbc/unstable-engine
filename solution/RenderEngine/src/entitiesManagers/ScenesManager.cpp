@@ -31,6 +31,11 @@ Entity* ScenesManager::createEntity(std::string name, Entity* parent)
     return this->scene->createEntity(name, parent);
 }
 
+Entity* ScenesManager::createEntityFromFile(std::string filePath, Entity* parent)
+{
+    return this->scene->createEntityFromFile(filePath, parent);
+}
+
 Entity* ScenesManager::getEntity(const std::string& name)
 {
     Entity* result = this->scene->getEntity(name);
@@ -64,28 +69,28 @@ PointLightComponent* ScenesManager::createPointLight(const std::string& name, En
 Entity* ScenesManager::createGUIImageEntity(const std::string& filePath, const std::string& name)
 {
     Entity* entity = this->guiScene->createGUIImageEntity(filePath, name);
-    this->renderManager->addEntity(entity);
+    this->addToRenderer(entity);
     return entity;
 }
 
 Entity* ScenesManager::createGUIImageEntity(const std::string& filePath, const glm::vec2& normalizedSize, const std::string& name)
 {
     Entity* entity = this->guiScene->createGUIImageEntity(filePath, normalizedSize, name);
-    this->renderManager->addEntity(entity);
+    this->addToRenderer(entity);
     return entity;
 }
 
 Entity* ScenesManager::createGUIImageEntityFromAtlas(const std::string& filePath, const std::string& imageId, const std::string& name)
 {
     Entity* entity = this->guiScene->createGUIImageEntityFromAtlas(filePath, imageId, name);
-    this->renderManager->addEntity(entity);
+    this->addToRenderer(entity);
     return entity;
 }
 
 Entity* ScenesManager::createGUITextEntity(const std::string fontFile, const std::string& name, uint32_t maxItems)
 {
     Entity* entity = this->guiScene->createGUITextEntity(fontFile, name, maxItems);
-    this->renderManager->addEntity(entity);
+    this->addToRenderer(entity);
     return entity;
 }
 
@@ -110,9 +115,14 @@ Scene* ScenesManager::getEditorScene()
 Entity* ScenesManager::createMeshEntity(Model* model, const char* meshName, Entity* parent)
 {
     Entity* result = this->scene->createMeshEntity(model, meshName, parent);
-    this->renderManager->addEntity(result);
+    this->addToRenderer(result);
 
     return result;
+}
+
+void ScenesManager::addToRenderer(Entity* entity)
+{
+	this->renderManager->addEntity(entity);
 }
 
 void ScenesManager::initEntities()
@@ -190,10 +200,10 @@ bool ScenesManager::isBaseSceneStored(AScene* baseScene)
     return result;
 }
 
-Entity* ScenesManager::createMeshEntity(const char* filePath, const char* meshName)
+Entity* ScenesManager::createMeshEntity(const std::string& filePath, const char* meshName)
 {
     Entity* entity = this->scene->createMeshEntity(filePath, meshName);
-    this->renderManager->addEntity(entity);
+    this->addToRenderer(entity);
 
     return entity;
 }

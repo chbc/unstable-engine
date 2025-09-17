@@ -1,0 +1,7 @@
+entity: 1
+Components:
+  TransformComponent:
+    Enabled: 1
+    Position: [0,0,0]
+    Rotation: [120,0,0]
+    Scale: [1,1,1]

@@ -25,6 +25,7 @@ protected:
 public:
     SRE_API std::string getMainSceneName();
 	SRE_API Entity* createEntity(std::string name = "", Entity* parent = nullptr);
+    SRE_API Entity* createEntityFromFile(std::string filePath, Entity* parent = nullptr);
     SRE_API Entity* getEntity(const std::string& name);
     SRE_API Entity* createPerspectiveCamera(float fov = 70.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr);
     SRE_API Entity* createOrthoCamera(Entity* parent = nullptr);
@@ -39,6 +40,8 @@ public:
     SRE_API Scene* getEditorScene();
     SRE_API Entity* createMeshEntity(Model* model, const char* meshName = "", Entity* parent = nullptr);
 
+	void addToRenderer(Entity* entity);
+
 private:
     void initEntities();
     void update(float elapsedTime);
@@ -49,7 +52,7 @@ private:
     bool isSceneStored();
     bool isGuiSceneStored();
     bool isBaseSceneStored(AScene* baseScene);
-    Entity* createMeshEntity(const char* filePath, const char* meshName);
+    Entity* createMeshEntity(const std::string& filePath, const char* meshName);
     AScene* getScene();
     AScene* getGuiScene();
     void onRefreshMeshes();

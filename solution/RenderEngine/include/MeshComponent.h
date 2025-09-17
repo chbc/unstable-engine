@@ -56,9 +56,10 @@ protected:
     void load(Model* model, const char* meshName);
     void onPropertyDeserialized() override;
     void onPropertyChanged() override;
+    void onClone() override;
 
 private:
-    void refreshMesh();
+    void reloadMeshInRenderer();
 
 friend class RenderManager;
 friend class Entity;

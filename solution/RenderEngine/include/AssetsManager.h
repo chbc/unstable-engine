@@ -53,7 +53,7 @@ private:
 public:
 	Entity* loadEntity(AScene* scene, const char* filePath, std::string name);
 	void releaseEntity(Entity* entity);
-	Model* loadModel(const char* filePath);
+	Model* loadModel(const std::string& filePath);
 	MeshData* loadMesh(const char* filePath, const char* meshName);
 	MeshData2D* loadMesh2D();
 	void releaseModel(const char* filePath);

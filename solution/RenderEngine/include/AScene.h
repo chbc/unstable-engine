@@ -27,7 +27,8 @@ public:
     Entity* getEntity(const std::string& entityName);
 
 protected:
-    Entity* createEntity(std::string entityName = "", Entity* parent = nullptr, const std::string& className = "Entity", const std::string& filePath = "");
+    Entity* createEntity(std::string name = "", Entity* parent = nullptr, const std::string& className = "Entity");
+	Entity* createEntityFromFile(std::string filePath, Entity* parent = nullptr);
     void removeDestroyedEntities();
     void onSceneLoaded();
 

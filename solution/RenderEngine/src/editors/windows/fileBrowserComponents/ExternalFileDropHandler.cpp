@@ -68,15 +68,7 @@ void ExternalFileDropHandler::handleImportMesh(const std::string& sourceFilePath
 
 				if (importPopup->loadToScene)
 				{
-					std::string name = FileUtils::getFileName(resultFilePath);
-					const char* entityFilePath = resultFilePath.c_str();
-					Entity* meshEntity = this->controller->createMeshEntity(entityFilePath, name.c_str());
-
-					if (importPopup->importMaterials)
-					{
-						std::string materialFilePath = FileUtils::replaceExtension(entityFilePath, ".mat");
-						this->controller->loadMaterialToEntity(meshEntity, materialFilePath);
-					}
+					this->controller->loadFileFromBrowser(resultFilePath);
 				}
 			}
 		}
@@ -93,7 +85,7 @@ void ExternalFileDropHandler::handleImportMesh(const std::string& sourceFilePath
 
 void ExternalFileDropHandler::handleCopyFile(const std::string& sourceFilePath)
 {
-	this->controller->copyFile(sourceFilePath, this->controller->getCurrentDirectory());
+	this->controller->copyFileToCurrentDirectory(sourceFilePath);
 }
 
 } // namespace sre

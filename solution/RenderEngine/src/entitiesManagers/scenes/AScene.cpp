@@ -5,6 +5,7 @@
 #include "AssetsManager.h"
 #include "MessagesManager.h"
 #include "EditorMessages.h"
+#include "FileUtils.h"
 
 namespace sre
 {
@@ -39,20 +40,12 @@ Entity* AScene::getEntity(const std::string& entityName)
     return result;
 }
 
-Entity* AScene::createEntity(std::string entityName, Entity* parent, const std::string& className, const std::string& filePath)
+Entity* AScene::createEntity(std::string name, Entity* parent, const std::string& className)
 {
     Entity* result = nullptr;
-    this->resolveName(entityName);
+    this->resolveName(name);
 
-    if (!filePath.empty())
-    {
-        AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-        result = assetsManager->loadEntity(this, filePath.c_str(), entityName);
-    }
-    else
-    {
-        result = Entity::Create(entityName, className);
-    }
+    result = Entity::Create(name, className);
 
     if (parent != nullptr)
     {
@@ -60,7 +53,28 @@ Entity* AScene::createEntity(std::string entityName, Entity* parent, const std::
     }
     else
     {
-        this->entities[entityName] = UPTR<Entity>{ result };
+        this->entities[name] = UPTR<Entity>{ result };
+    }
+
+    return result;
+}
+
+Entity* AScene::createEntityFromFile(std::string filePath, Entity* parent)
+{
+    Entity* result = nullptr;
+	std::string name = FileUtils::getFileName(filePath);
+    this->resolveName(name);
+
+    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+    result = assetsManager->loadEntity(this, filePath.c_str(), name);
+
+    if (parent != nullptr)
+    {
+        parent->addChild(result);
+    }
+    else
+    {
+        this->entities[name] = UPTR<Entity>{ result };
     }
 
     return result;

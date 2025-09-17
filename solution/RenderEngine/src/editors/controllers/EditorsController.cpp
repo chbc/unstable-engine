@@ -11,6 +11,7 @@
 #include "EntityLoader.h"
 #include "MeshComponent.h"
 #include "MaterialLoader.h"
+#include "SceneLoader.h"
 
 namespace sre
 {
@@ -119,14 +120,16 @@ void EditorsController::saveEntity(Entity* entity)
 	std::string filePath{ entity->filePath };
 	if (filePath.empty())
 	{
-		filePath = entity->getName();
+		filePath = this->currentDirectory + "/" + entity->getName() + ".ent";
+		FileUtils::resolveFileNameConflict(filePath);
 		entity->filePath = filePath;
 	}
 
 	EntityLoader().save(entity, filePath.c_str());
+	this->notifyRefreshFileIcons();
 }
 
-void EditorsController::loadFileFromBrowser(const char* filePath)
+void EditorsController::loadFileFromBrowser(const std::string& filePath)
 {
 	EAssetType fileType = FileUtils::getAssetType(filePath);
 	switch (fileType)
@@ -134,10 +137,18 @@ void EditorsController::loadFileFromBrowser(const char* filePath)
 		case EAssetType::SCENE:
 			RenderEngine::getInstance()->loadScene(filePath);
 			break;
+		case EAssetType::ENTITY:
+		{
+			Entity* entity = this->scenesManager->createEntityFromFile(filePath);
+			this->scenesManager->addToRenderer(entity);
+			this->tryLoadMaterialToEntity(entity, filePath);
+			break;
+		}
 		case EAssetType::MESH:
 		{
 			std::string name = FileUtils::getFileName(filePath);
-			this->createMeshEntity(filePath, name.c_str());
+			Entity* entity = this->createMeshEntity(filePath, name.c_str());
+			this->tryLoadMaterialToEntity(entity, filePath);
 			break;
 		}
 
@@ -167,24 +178,29 @@ void EditorsController::importMesh(const char* sourceFilePath, const char* desti
 	messagesManager->notify(&message);
 }
 
-void EditorsController::copyFile(const std::string& sourceFilePath, const std::string& destinationPath)
+void EditorsController::copyFileToCurrentDirectory(const std::string& sourceFilePath, const std::string& destinationFileName)
 {
-	std::string fileName = FileUtils::getFileWithExtension(sourceFilePath);
-	std::stringstream resultStream;
-	resultStream << destinationPath << "\\" << fileName;
-	std::string resultFilePath = resultStream.str();
-	FileUtils::copyFile(sourceFilePath, resultFilePath);
+	std::string resultDestinationFileName = destinationFileName;
+	if (resultDestinationFileName.empty())
+	{
+		resultDestinationFileName = FileUtils::getFileWithExtension(sourceFilePath);
+	}
+
+	const std::string resultSourceFilePath = FileUtils::getContentAbsolutePath(sourceFilePath);
+	std::string resultDestinationPath = this->currentDirectory + "/" + resultDestinationFileName;
+	FileUtils::resolveFileNameConflict(resultDestinationPath);
+	FileUtils::copyFile(resultSourceFilePath, resultDestinationPath);
 
 	this->notifyRefreshFileIcons();
 }
 
-Entity* EditorsController::createMeshEntity(const char* file, const char* meshName)
+Entity* EditorsController::createMeshEntity(const std::string& filePath, const char* meshName)
 {
-	Entity* newEntity = this->scenesManager->createMeshEntity(file, meshName);
+	Entity* newEntity = this->scenesManager->createMeshEntity(filePath, meshName);
 	this->setSelectedEntity(newEntity);
 
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-	MeshEntityLoadedEditorMessage message{ newEntity, file };
+	MeshEntityLoadedEditorMessage message{ newEntity, filePath };
 	messagesManager->notify(&message);
 
 	return newEntity;
@@ -232,14 +248,19 @@ void EditorsController::loadMaterialToEntity(Entity* entity, const std::string& 
 	}
 }
 
+void EditorsController::createScene()
+{
+	this->copyFileToCurrentDirectory(DEFAULT_SCENE_PATH, "NewScene.scene");
+}
+
+void EditorsController::createStoredEntity()
+{
+	this->copyFileToCurrentDirectory(DEFAULT_ENTITY_PATH, "NewEntity.ent");
+}
+
 void EditorsController::createMaterial()
 {
-	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-	ABaseMaterial* material = assetsManager->loadMaterial(DEFAULT_MATERIAL_PATH);
-	std::string resultPath = this->currentDirectory + "/NewMaterial.mat";
-	MaterialLoader().save(material, resultPath);
-
-	this->notifyRefreshFileIcons();
+	this->copyFileToCurrentDirectory(DEFAULT_MATERIAL_PATH, "NewMaterial.mat");
 }
 
 void EditorsController::notifyRefreshFileIcons()
@@ -257,6 +278,12 @@ std::string EditorsController::getCurrentDirectory() const
 void EditorsController::setCurrentDirectory(const std::string& directory)
 {
 	this->currentDirectory = directory;
+}
+
+void EditorsController::tryLoadMaterialToEntity(Entity* entity, const std::string& entityPath)
+{
+	std::string materialFilePath = FileUtils::replaceExtension(entityPath, ".mat");
+	this->loadMaterialToEntity(entity, materialFilePath);
 }
 
 } // namespace

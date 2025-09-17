@@ -123,16 +123,20 @@ void EntityParser::deserializeChildren(c4::yml::ConstNodeRef& propertyNode, ASce
 		std::string filePath;
 		std::string className{ "Entity" };
 
-		if (entityNode.has_child("Class"))
-		{
-			entityNode["Class"] >> className;
-		}
+		Entity* childEntity = nullptr;
 		if (entityNode.has_child("FilePath"))
 		{
 			entityNode["FilePath"] >> filePath;
+			childEntity = scene->createEntityFromFile(filePath, entity);
 		}
-
-		Entity* childEntity = scene->createEntity(name, entity, className, filePath);
+		else
+		{
+			if (entityNode.has_child("Class"))
+			{
+				entityNode["Class"] >> className;
+			}
+			childEntity = scene->createEntity(name, entity, className);
+		}
 
 		deserialize(entityNode, scene, childEntity);
 	}

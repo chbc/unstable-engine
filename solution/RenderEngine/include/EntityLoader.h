@@ -4,7 +4,6 @@
 
 namespace sre
 {
-
 class Entity;
 class AScene;
 

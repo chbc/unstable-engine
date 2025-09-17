@@ -56,16 +56,21 @@ void SceneLoader::load(AScene* scene)
 		std::string filePath;
 		std::string className{ "Entity" };
 
-		if (entityNode.has_child("Class"))
-		{
-			entityNode["Class"] >> className;
-		}
+		Entity* entity = nullptr;
 		if (entityNode.has_child("FilePath"))
 		{
 			entityNode["FilePath"] >> filePath;
+			entity = scene->createEntityFromFile(filePath);
+		}
+		else
+		{
+			if (entityNode.has_child("Class"))
+			{
+				entityNode["Class"] >> className;
+			}
+			entity = scene->createEntity(name, nullptr, className);
 		}
 
-		Entity* entity = scene->createEntity(name, nullptr, className.c_str(), filePath.c_str());
 		EntityParser::deserialize(entityNode, scene, entity);
 	}
 }
