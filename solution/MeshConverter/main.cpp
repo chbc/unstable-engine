@@ -157,8 +157,8 @@ void copyTextureFiles(const ModelImportData& modelData, const FS::path& sourcePa
         {
             FS::path resultSourcePath = sourcePath / FS::path{ texture.second };
             FS::path resultDestPath = destinationPath / FS::path{ texture.second };
-            
 			FS::path destinationBasePath = resultDestPath.parent_path();
+
             if (!FS::exists(destinationBasePath))
             {
 				FS::create_directories(destinationBasePath);

@@ -10,17 +10,17 @@
 namespace sre
 {
 
-void ModelLoader::load(const char* fileName, float scaleFactor, bool importMaterial, ModelImportData& result)
+void ModelLoader::load(const char* filePath, float scaleFactor, bool importMaterial, ModelImportData& result)
 {
-	std::ifstream fin(fileName);
+	std::ifstream fin(filePath);
 	if (fin.fail())
 	{
-		throw "[ModelLoader] - Couldn't open file: " + std::string{ fileName };
+		throw "[ModelLoader] - Couldn't open file: " + std::string{ filePath };
 	}
 	fin.close();
 
     Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(fileName, aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs);
+	const aiScene* scene = importer.ReadFile(filePath, aiProcessPreset_TargetRealtime_Quality | aiProcess_FlipUVs);
 
     if
     (
@@ -34,7 +34,8 @@ void ModelLoader::load(const char* fileName, float scaleFactor, bool importMater
 
 	if (importMaterial)
 	{
-		this->processMaterials(scene, result);
+		std::string basePath = FileUtils::getBasePath(filePath);
+		this->processMaterials(scene, basePath, result);
 	}
 
 	aiMatrix4x4 initialTransform = aiMatrix4x4{} * scaleFactor;
@@ -111,7 +112,7 @@ MeshData ModelLoader::processMesh(aiMesh* inputMesh, aiMatrix4x4& nodeTransform)
 	return result;
 }
 
-void ModelLoader::processMaterials(const aiScene* scene, ModelImportData& result)
+void ModelLoader::processMaterials(const aiScene* scene, const std::string& basePath, ModelImportData& result)
 {
 	if (scene->mNumMaterials > 0)
 	{
@@ -120,11 +121,11 @@ void ModelLoader::processMaterials(const aiScene* scene, ModelImportData& result
 			aiMaterial* inputMaterial = scene->mMaterials[i];
 			MaterialImportData material;
 
-			this->checkAndAddTexturePath(inputMaterial, aiTextureType_DIFFUSE, ETextureMap::DIFFUSE, material);
-			this->checkAndAddTexturePath(inputMaterial, aiTextureType_NORMALS, ETextureMap::NORMAL, material);
-			this->checkAndAddTexturePath(inputMaterial, aiTextureType_DIFFUSE_ROUGHNESS, ETextureMap::ROUGHNESS, material);
-			this->checkAndAddTexturePath(inputMaterial, aiTextureType_METALNESS, ETextureMap::METALLIC, material);
-			this->checkAndAddTexturePath(inputMaterial, aiTextureType_AMBIENT_OCCLUSION, ETextureMap::AMBIENT_OCCLUSION, material);
+			this->checkAndAddTexturePath(inputMaterial, basePath, aiTextureType_DIFFUSE, ETextureMap::DIFFUSE, material);
+			this->checkAndAddTexturePath(inputMaterial, basePath, aiTextureType_NORMALS, ETextureMap::NORMAL, material);
+			this->checkAndAddTexturePath(inputMaterial, basePath, aiTextureType_DIFFUSE_ROUGHNESS, ETextureMap::ROUGHNESS, material);
+			this->checkAndAddTexturePath(inputMaterial, basePath, aiTextureType_METALNESS, ETextureMap::METALLIC, material);
+			this->checkAndAddTexturePath(inputMaterial, basePath, aiTextureType_AMBIENT_OCCLUSION, ETextureMap::AMBIENT_OCCLUSION, material);
 
 			if (!material.texturePaths.empty())
 			{
@@ -134,12 +135,14 @@ void ModelLoader::processMaterials(const aiScene* scene, ModelImportData& result
 	}
 }
 
-void ModelLoader::checkAndAddTexturePath(aiMaterial* inputMaterial, aiTextureType aiTextureType, ETextureMap::Type textureMap, MaterialImportData& result)
+void ModelLoader::checkAndAddTexturePath(aiMaterial* inputMaterial, const std::string& basePath, 
+	aiTextureType aiTextureType, ETextureMap::Type textureMap, MaterialImportData& result)
 {
 	aiString path;
 	if (inputMaterial->GetTexture(aiTextureType, 0, &path) == AI_SUCCESS)
 	{
-		if (FileUtils::fileExists(path.C_Str()))
+		std::string fullPath = basePath + "\\" + path.C_Str();
+		if (FileUtils::fileExists(fullPath))
 		{
 			result.texturePaths.emplace(textureMap, path.C_Str());
 		}
