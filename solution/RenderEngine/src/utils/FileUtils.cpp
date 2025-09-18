@@ -342,6 +342,15 @@ void resolveFileNameConflict(std::string& filePath)
 	}
 }
 
+void createDirectoryIfNotExists(const std::string& directoryPath)
+{
+	FS::path systemPath{ directoryPath };
+	if (!FS::exists(systemPath))
+	{
+		FS::create_directories(systemPath);
+	}
+}
+
 #endif
 
 } // namespace

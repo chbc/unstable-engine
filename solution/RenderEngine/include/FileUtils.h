@@ -42,6 +42,7 @@ namespace FileUtils
 	void deleteFile(const std::string& filePath);
 	void copyFile(const std::string& sourceFilePath, const std::string& destinationFilePath);
 	void resolveFileNameConflict(std::string& filePath);
+	void createDirectoryIfNotExists(const std::string& directoryPath);
 }
 
 } // namespace

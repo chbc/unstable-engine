@@ -286,4 +286,12 @@ void EditorsController::tryLoadMaterialToEntity(Entity* entity, const std::strin
 	this->loadMaterialToEntity(entity, materialFilePath);
 }
 
+void EditorsController::createFolderInCurrentDirectory()
+{
+	std::string folderPath = this->currentDirectory + "/NewFolder";
+	FileUtils::resolveFileNameConflict(folderPath);
+	FileUtils::createDirectoryIfNotExists(folderPath);
+	this->notifyRefreshFileIcons();
+}
+
 } // namespace

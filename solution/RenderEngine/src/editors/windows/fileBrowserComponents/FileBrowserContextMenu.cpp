@@ -20,19 +20,32 @@ void FileBrowserContextMenu::onEditorGUI()
 
 	if (ImGui::BeginPopup("FILE_BROWSER_CONTEXT"))
 	{
+		bool closePopup = false;
+
+		if (ImGui::MenuItem("New Folder"))
+		{
+			this->controller->createFolderInCurrentDirectory();
+			closePopup = true;
+		}
+		ImGui::Separator();
 		if (ImGui::MenuItem("New Entity"))
 		{
 			this->controller->createStoredEntity();
-			ImGui::CloseCurrentPopup();
+			closePopup = true;
 		}
 		if (ImGui::MenuItem("New Material"))
 		{
 			this->controller->createMaterial();
-			ImGui::CloseCurrentPopup();
+			closePopup = true;
 		}
 		if (ImGui::MenuItem("New Scene"))
 		{
 			this->controller->createScene();
+			closePopup = true;
+		}
+
+		if (closePopup)
+		{
 			ImGui::CloseCurrentPopup();
 		}
 

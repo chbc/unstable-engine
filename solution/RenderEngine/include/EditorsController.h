@@ -54,6 +54,7 @@ public:
 	std::string getCurrentDirectory() const;
 	void setCurrentDirectory(const std::string& directory);
 	void tryLoadMaterialToEntity(Entity* entity, const std::string& entityPath);
+	void createFolderInCurrentDirectory();
 };
 
 } // namespace
