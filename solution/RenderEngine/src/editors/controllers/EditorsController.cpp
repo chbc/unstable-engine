@@ -234,6 +234,11 @@ void EditorsController::deleteFile(const char* filePath)
 	FileUtils::deleteFile(filePath);
 }
 
+void EditorsController::duplicateFile(const std::string& filePath)
+{
+	FileUtils::duplicateFile(filePath);
+}
+
 void EditorsController::loadMaterialToEntity(Entity* entity, const std::string& materialFilePath)
 {
 	if (FileUtils::fileExists(materialFilePath))

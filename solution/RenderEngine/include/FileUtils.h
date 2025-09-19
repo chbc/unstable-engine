@@ -40,6 +40,7 @@ namespace FileUtils
     std::string removeExtension(const std::string& filePath);
     std::string replaceExtension(const std::string& filePath, const std::string& extension);
 	void deleteFile(const std::string& filePath);
+    void duplicateFile(const std::string& filePath);
 	void copyFile(const std::string& sourceFilePath, const std::string& destinationFilePath);
 	void resolveFileNameConflict(std::string& filePath);
 	void createDirectoryIfNotExists(const std::string& directoryPath);

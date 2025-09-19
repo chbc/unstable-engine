@@ -316,6 +316,13 @@ void deleteFile(const std::string& filePath)
 	}
 }
 
+void duplicateFile(const std::string& filePath)
+{
+	std::string newFilePath = filePath;
+	resolveFileNameConflict(newFilePath);
+	copyFile(filePath, newFilePath);
+}
+
 void copyFile(const std::string& sourceFilePath, const std::string& destinationFilePath)
 {
 	std::string resultDestinationPath = getContentAbsolutePath(destinationFilePath);

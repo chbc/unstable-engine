@@ -46,6 +46,7 @@ public:
 	void setSelectedEntity(Entity* entity);
 	Entity* getSelectedEntity();
 	void deleteFile(const char* filePath);
+	void duplicateFile(const std::string& filePath);
 	void loadMaterialToEntity(Entity* entity, const std::string& materialFilePath);
 	void createScene();
 	void createStoredEntity();

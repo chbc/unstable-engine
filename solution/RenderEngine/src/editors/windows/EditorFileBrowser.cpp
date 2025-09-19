@@ -160,6 +160,15 @@ void EditorFileBrowser::handleDelete()
 	}
 }
 
+void EditorFileBrowser::handleDuplicate()
+{
+	if (this->selectedItem && ImGui::IsKeyPressed(ImGuiKey_D) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+	{
+		this->controller->duplicateFile(this->selectedItem->filePath.c_str());
+		this->refreshFileIcons();
+	}
+}
+
 void EditorFileBrowser::handleIconDrag(FileIcon* icon, const ImVec2& size)
 {
 	if (ImGui::BeginDragDropSource())

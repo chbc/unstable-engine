@@ -40,6 +40,7 @@ private:
 	void showRootContentButtons();
 	void showIcon(FileIcon* icon, const ImVec2& size);
 	void handleDelete();
+	void handleDuplicate();
 	void handleIconDrag(FileIcon* icon, const ImVec2& size);
 	void onEntitySelected(void* data);
 };
