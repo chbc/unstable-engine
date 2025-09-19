@@ -5,6 +5,7 @@
 #include "ShaderContentFactory.h"
 #include "Shader.h"
 #include "ShaderLightData.h"
+#include "EShaderComponent.h"
 
 #include <bitset>
 #include <unordered_map>
@@ -48,12 +49,13 @@ private:
 
     uint32_t loadGUIShader();
     uint32_t loadColorShader();
-    uint32_t loadCustomShader(const std::string& shaderPath);
+    uint32_t loadCustomShader(const std::unordered_map<EShaderComponent::Type, std::string>& shaderPaths);
     uint32_t loadPointLightDepthShader();
     uint32_t loadDirectionalLightDepthShader();
 	uint32_t loadPostProcessingShader(class PostProcessingComponent* component);
 	uint32_t loadFinalPassPostProcessingShader(class PostProcessingComponent* component);
-    uint32_t loadShader(const std::string &vertexContent, const std::string &fragmentContent, const std::string& geometryContent = "");
+    uint32_t loadShader(const std::string& vertexContent, const std::string& fragmentContent, const std::string& geometryContent = "");
+    uint32_t loadShader(const std::unordered_map<EShaderComponent::Type, std::string>& shaderContents);
 
     // passing values //
     void setupUniformLocation(uint32_t program, ShaderVariables::Type variableKey);

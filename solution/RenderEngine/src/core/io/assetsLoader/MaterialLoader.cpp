@@ -31,7 +31,7 @@ void MaterialLoader::save(ABaseMaterial* material, const std::string& filePath)
 	FileUtils::saveContentFile(filePath, content);
 }
 
-ABaseMaterial* sre::MaterialLoader::load(const char* filePath)
+ABaseMaterial* sre::MaterialLoader::load(const std::string& filePath)
 {
 	std::string fileContent;
 	FileUtils::loadContentFile(filePath, fileContent);
@@ -95,10 +95,30 @@ ABaseMaterial* MaterialLoader::loadStandardMaterial(const std::string& filePath,
 
 ABaseMaterial* MaterialLoader::loadCustomMaterial(const std::string& filePath, c4::yml::ConstNodeRef& root)
 {
-	std::string shaderPath;
-	root["Shader Path"] >> shaderPath;
+	c4::yml::ConstNodeRef& shadersNode = root["Shaders"];
+	ShaderPathsMap shaderPaths;
+	for (c4::yml::ConstNodeRef itemNode : shadersNode.children())
+	{
+		std::ostringstream keyStream;
+		keyStream << itemNode.key();
+		std::string key = keyStream.str();
+		std::string valuePath;
+		itemNode >> valuePath;
+		if (key == "VERTEX")
+		{
+			shaderPaths[EShaderComponent::VERTEX] = valuePath;
+		}
+		else if (key == "FRAGMENT")
+		{
+			shaderPaths[EShaderComponent::FRAGMENT] = valuePath;
+		}
+		else if (key == "GEOMETRY")
+		{
+			shaderPaths[EShaderComponent::GEOMETRY] = valuePath;
+		}
+	}
 
-	CustomMaterial* result = new CustomMaterial{ filePath, shaderPath };
+	CustomMaterial* result = new CustomMaterial{ filePath, shaderPaths };
 	return result;
 }
 

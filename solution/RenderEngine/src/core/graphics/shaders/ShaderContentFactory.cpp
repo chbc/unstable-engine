@@ -255,16 +255,15 @@ void ShaderContentFactory::loadPbrContent(std::string& outVertexContent, std::st
 	FileUtils::loadContentFile(ShaderFiles::PBR_F, outFragmentContent);
 }
 
-void ShaderContentFactory::loadCustomContent(const std::string& shaderPath, std::string& outVertexContent,
-    std::string& outFragmentContent, std::string& outGeometryContent)
+void ShaderContentFactory::loadCustomContent(const std::unordered_map<EShaderComponent::Type, std::string>& shaderPaths,
+    std::unordered_map<EShaderComponent::Type, std::string>& outContents)
 {
-    std::string vertexFile = shaderPath + ".vert";
-    std::string fragmentFile = shaderPath + ".frag";
-    std::string geometryFile = shaderPath + ".geom";
-
-    FileUtils::loadContentFile(vertexFile, outVertexContent);
-    FileUtils::loadContentFile(fragmentFile, outFragmentContent);
-    FileUtils::loadContentFile(geometryFile, outGeometryContent, false);
+    for (const auto& item : shaderPaths)
+    {
+        std::string shaderContent;
+		FileUtils::loadContentFile(item.second, shaderContent);
+		outContents[item.first] = shaderContent;
+	}
 }
 
 void ShaderContentFactory::loadSecondTargetColorContentImplementation(std::string& outFragmentContent)

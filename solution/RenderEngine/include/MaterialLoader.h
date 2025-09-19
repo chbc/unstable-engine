@@ -14,7 +14,7 @@ class MaterialLoader
 {
 public:
 	void save(ABaseMaterial* material, const std::string& filePath);
-	ABaseMaterial* load(const char* filePath);
+	ABaseMaterial* load(const std::string& filePath);
 
 private:
 	void saveComponents(Material* material, c4::yml::NodeRef& componentsNode);

@@ -582,24 +582,14 @@ uint32_t OpenGLAPI::loadGeometryShader(const std::string & geometryContent)
 	return this->compileShader(geometryContent, GL_GEOMETRY_SHADER);
 }
 
-uint32_t OpenGLAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader)
+uint32_t OpenGLAPI::createProgram(const std::vector<uint32_t>& shaders)
 {
 	uint32_t program = glCreateProgram();
-	glAttachShader(program, vertexShader);
-	glAttachShader(program, fragmentShader);
 
-	glLinkProgram(program);
-	this->checkProgramLink(program);
-
-	return program;
-}
-
-uint32_t OpenGLAPI::createProgram(uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader)
-{
-	uint32_t program = glCreateProgram();
-	glAttachShader(program, vertexShader);
-	glAttachShader(program, fragmentShader);
-	glAttachShader(program, geometryShader);
+	for (uint32_t item : shaders)
+	{
+		glAttachShader(program, item);
+	}
 
 	glLinkProgram(program);
 	this->checkProgramLink(program);

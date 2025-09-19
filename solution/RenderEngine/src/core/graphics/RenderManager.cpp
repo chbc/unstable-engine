@@ -77,7 +77,7 @@ void RenderManager::addEntity(Entity *entity)
     }
 }
 
-void RenderManager::addMesh(MeshComponent *mesh)
+void RenderManager::addMesh(MeshComponent* mesh)
 {
     if (mesh->isMaterialStandard())
     {
@@ -102,24 +102,18 @@ void RenderManager::addMesh(MeshComponent *mesh)
     }
 }
 
-void RenderManager::addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent* mesh)
+void RenderManager::addMesh(StandardRendererMap& renderers, MeshComponent* mesh)
 {
-    MeshRenderer* renderer = nullptr;
-    Material* material = static_cast<Material*>(mesh->getMaterial());
-    for (const SPTR<MeshRenderer>& item : renderers)
+    ABaseMaterial* material = mesh->getMaterial();
+    MeshRenderer* renderer{ nullptr };
+    if (renderers.count(material) > 0)
     {
-        if (item->fitsWithMaterial(material))
-        {
-            renderer = item.get();
-            break;
-        }
-    }
-
-    if (renderer == nullptr)
+        renderer = renderers[material].get();
+	}
+    else
     {
         renderer = new MeshRenderer{ material, this->shaderManager, this->graphicsWrapper };
-        renderers.emplace_back(renderer);
-
+		renderers[material] = SPTR<MeshRenderer>(renderer);
         renderer->init(false, false);
     }
 
@@ -128,17 +122,16 @@ void RenderManager::addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent*
 
 void RenderManager::addMeshCustomMaterial(MeshComponent* mesh)
 {
-    CustomMaterial* material = static_cast<CustomMaterial*>(mesh->getMaterial());
-    const std::string& shaderPath = material->getShaderFilePath();
+    ABaseMaterial* material = mesh->getMaterial();
     CustomRenderer* renderer{ nullptr };
-    if (this->customRenderers.count(shaderPath) > 0)
+    if (this->customRenderers.count(material) > 0)
     {
-        renderer = this->customRenderers[shaderPath].get();
+        renderer = this->customRenderers[material].get();
     }
     else
     {
-        renderer = new CustomRenderer{ shaderPath, this->shaderManager, this->graphicsWrapper };
-        this->customRenderers[shaderPath] = SPTR<CustomRenderer>(renderer);
+        renderer = new CustomRenderer{ material, this->shaderManager, this->graphicsWrapper };
+        this->customRenderers[material] = SPTR<CustomRenderer>(renderer);
         renderer->init();
     }
 
@@ -149,10 +142,10 @@ void RenderManager::removeMesh(MeshComponent* mesh)
 {
     bool meshRemoved = false;
 
-    std::vector<SPTR<MeshRenderer>>::iterator it;
+    StandardRendererMap::iterator it;
     for (it = this->opaqueMeshRenderers.begin(); it != this->opaqueMeshRenderers.end(); ++it)
     {
-        if ((*it)->removeMesh(mesh))
+        if ((it)->second->removeMesh(mesh))
         {
             meshRemoved = true;
             break;
@@ -163,7 +156,7 @@ void RenderManager::removeMesh(MeshComponent* mesh)
 	{
 		for (it = this->translucentMeshRenderers.begin(); it != this->translucentMeshRenderers.end(); ++it)
 		{
-			if ((*it)->removeMesh(mesh))
+            if ((it)->second->removeMesh(mesh))
 			{
 				meshRemoved = true;
 				break;
@@ -301,9 +294,9 @@ void RenderManager::render()
         this->currentCamera->updateView();
 
         // Opaque meshes rendering
-        for (const SPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
+        for (const auto& item : this->opaqueMeshRenderers)
         {
-            item->render();
+            item.second->render();
         }
 
         // Custom meshes rendering
@@ -313,9 +306,9 @@ void RenderManager::render()
         }
 
         // Translucent meshes rendering
-        for (const SPTR<MeshRenderer>& item : this->translucentMeshRenderers)
+        for (const auto& item : this->translucentMeshRenderers)
         {
-            item->render();
+            item.second->render();
         }
     }
 
@@ -367,14 +360,14 @@ void RenderManager::setupBufferSubData(MeshData2D* meshData)
 
 void RenderManager::removeDestroyedEntities()
 {
-    for (const SPTR<MeshRenderer>& item : this->opaqueMeshRenderers)
+    for (const auto& item : this->opaqueMeshRenderers)
     {
-        item->removeDestroyedEntities();
+        item.second->removeDestroyedEntities();
     }
 
-    for (const SPTR<MeshRenderer>& item : this->translucentMeshRenderers)
+    for (const auto& item : this->translucentMeshRenderers)
     {
-        item->removeDestroyedEntities();
+        item.second->removeDestroyedEntities();
     }
 
     CollectionsUtils::removeIfRendererIsEmpty(this->opaqueMeshRenderers);

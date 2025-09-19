@@ -46,7 +46,7 @@ private:
 	bool stored{ true };
 
 public:
-	AEditorProperty(const char* arg_title)
+	AEditorProperty(const std::string& arg_title)
 		: title(arg_title) { }
 
 	virtual ~AEditorProperty() { }

@@ -3,20 +3,9 @@
 namespace sre
 {
 
-Shader::Shader(uint32_t arg_program, uint32_t vertexShader, uint32_t fragmentShader)
-        : program(arg_program)
-{
-    this->components.push_back(vertexShader);
-    this->components.push_back(fragmentShader);
-}
-
-Shader::Shader(uint32_t arg_program, uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader)
-        : program(arg_program)
-{
-    this->components.push_back(vertexShader);
-    this->components.push_back(fragmentShader);
-    this->components.push_back(geometryShader);
-}
+Shader::Shader(uint32_t arg_program, const std::vector<uint32_t>& arg_components)
+	: program(arg_program), components(arg_components)
+{ }
 
 void Shader::addVariableLocation(ShaderVariables::Type variable, int location)
 {

@@ -4,15 +4,19 @@
 namespace sre
 {
 
-CustomMaterial::CustomMaterial(const std::string& arg_filePath, const std::string& arg_shaderFilePath)
-	: ABaseMaterial(arg_filePath, EMaterialType::CUSTOM), shaderFilePath(arg_shaderFilePath)
+CustomMaterial::CustomMaterial(const std::string& arg_filePath, ShaderPathsMap& arg_shaderPaths)
+	: ABaseMaterial(arg_filePath, EMaterialType::CUSTOM), shaderPaths(arg_shaderPaths)
 {
-	this->addEditorProperty(new StringEditorProperty{ "Shader File", this->shaderFilePath });
+	for (const auto& item : this->shaderPaths)
+	{
+		std::string propertyTitle = getShaderComponentString(item.first);
+		this->addEditorProperty(new StringEditorProperty{ propertyTitle, item.second });
+	}
 }
 
-const std::string& CustomMaterial::getShaderFilePath()
+const ShaderPathsMap& CustomMaterial::getShaderFilePaths() const
 {
-	return this->shaderFilePath;
+	return this->shaderPaths;
 }
 
 } // namespace

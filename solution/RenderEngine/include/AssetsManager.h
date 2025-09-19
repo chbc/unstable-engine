@@ -58,7 +58,7 @@ public:
 	MeshData2D* loadMesh2D();
 	void releaseModel(const char* filePath);
 	void releaseModel2D(Model2D* model);
-	ABaseMaterial* loadMaterial(const char* filePath);
+	ABaseMaterial* loadMaterial(const std::string& filePath);
 	void releaseMaterial(ABaseMaterial* material);
 	Texture* loadTexture(const char* filePath, ETextureMap::Type mapType);
 	void releaseTexture(Texture* texture);

@@ -1,5 +1,4 @@
-#ifndef _SHADER_H_
-#define _SHADER_H_
+#pragma once
 
 #include <unordered_map>
 #include <string>
@@ -26,9 +25,7 @@ public:
     int getVariableLocation(const char *variable);
 
 private:
-    Shader(uint32_t arg_program, uint32_t vertexShader, uint32_t fragmentShader);
-    Shader(uint32_t arg_program, uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader);
-
+    Shader(uint32_t arg_program, const std::vector<uint32_t>& arg_components);
     void addVariableLocation(ShaderVariables::Type variable, int location);
     void addVariableLocation(std::string variable, int location);
 
@@ -36,5 +33,3 @@ friend class ShaderManager;
 };
 
 } // namespace
-
-#endif

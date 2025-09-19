@@ -21,15 +21,16 @@
 namespace sre
 {
 
-MeshRenderer::MeshRenderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
+MeshRenderer::MeshRenderer(ABaseMaterial* material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
     : ABaseRenderer(shaderManager, graphicsWrapper)
 {
     LightManager * lightManager = SingletonsManager::getInstance()->get<LightManager>();
+	Material* standardMaterial = static_cast<Material*>(material);
 
     // ### COLOCAR NUM FACTORY
     for (std::size_t i = EComponentId::COLOR_MATERIAL; i < EComponentId::SIZE; i++)
     {
-        if (material->componentsBitset[i])
+        if (standardMaterial->componentsBitset[i])
         {
             switch (i)
             {
@@ -159,11 +160,6 @@ void MeshRenderer::render()
         item.second->postDraw(this->program);
 
     this->shaderManager->disableShader();
-}
-
-bool MeshRenderer::fitsWithMaterial(Material* material)
-{
-    return (this->componentsBitset == material->componentsBitset);
 }
 
 } // namespace

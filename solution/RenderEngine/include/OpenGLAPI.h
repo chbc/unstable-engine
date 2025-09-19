@@ -80,8 +80,7 @@ protected:
     uint32_t loadFragmentShader(const std::string &fragmentContent) override;  // throws "file can't be found"
     uint32_t loadGeometryShader(const std::string &geometryContent) override; // throws "file can't be found"
 
-    uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) override;
-    uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader) override;
+    uint32_t createProgram(const std::vector<uint32_t>& shaders) override;
 
     int getUniformLocation(uint32_t program, const std::string &varName) override;
     int getAttributeLocation(uint32_t program, const std::string& varName) override;

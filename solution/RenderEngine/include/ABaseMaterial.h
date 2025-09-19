@@ -39,4 +39,20 @@ friend class AssetsManager;
 friend class MaterialEditorProperty;
 };
 
+struct MaterialHash
+{
+	size_t operator()(const ABaseMaterial* material) const
+	{
+		return std::hash<std::string>()(material->getFilePath());
+	}
+};
+
+struct MaterialEqual
+{
+	bool operator()(const ABaseMaterial* material1, const ABaseMaterial* material2) const
+	{
+		return material1->getFilePath() == material2->getFilePath();
+	}
+};
+
 } // namespace

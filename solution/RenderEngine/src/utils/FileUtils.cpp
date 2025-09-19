@@ -66,7 +66,7 @@ void initializeStoragePaths()
 	toolsPath = FS::absolute(bin / ".." / "tools/");
 }
 
-void loadContentFile(const std::string& filePath, std::string& dest, bool canThrowError)
+void loadContentFile(const std::string& filePath, std::string& dest)
 {
 	std::string absolutePath = getContentAbsolutePath(filePath);
 	std::ifstream in{ absolutePath };
@@ -81,7 +81,7 @@ void loadContentFile(const std::string& filePath, std::string& dest, bool canThr
 			dest += '\n';
 		}
 	}
-	else if (canThrowError)
+	else
 	{
 		throw "[FileUtils] - Error: " + filePath + " can't be found!";
 	}

@@ -1,8 +1,11 @@
 #pragma once
 
+#include "ShaderLightData.h"
+#include "EShaderComponent.h"
+
+#include <unordered_map>
 #include <string>
 #include <bitset>
-#include "ShaderLightData.h"
 
 namespace sre
 {
@@ -44,8 +47,7 @@ private:
     void loadAOMapContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 
     void loadPbrContent(std::string& outVertexContent, std::string& outFragmentContent);
-    void loadCustomContent(const std::string& shaderPath, std::string& outVertexContent,
-        std::string& outFragmentContent, std::string& outGeometryContent);
+    void loadCustomContent(const std::unordered_map<EShaderComponent::Type, std::string>& shaderPaths, std::unordered_map<EShaderComponent::Type, std::string>& outContents);
 
     void loadSecondTargetColorContentImplementation(std::string& outFragmentContent);
 

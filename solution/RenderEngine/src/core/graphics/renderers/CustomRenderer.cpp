@@ -5,19 +5,19 @@
 #include "CameraComponent.h"
 #include "TransformComponent.h"
 #include "Entity.h"
+#include "CustomMaterial.h"
 
 namespace sre
 {
 
-CustomRenderer::CustomRenderer(const std::string& arg_shaderPath, ShaderManager* arg_shaderManager, AGraphicsWrapper* arg_graphicsWeapper)
-	: ABaseRenderer(arg_shaderManager, arg_graphicsWeapper)
-{
-	this->shaderPath = arg_shaderPath;
-}
+CustomRenderer::CustomRenderer(ABaseMaterial* arg_material,	ShaderManager* arg_shaderManager, AGraphicsWrapper* arg_graphicsWeapper)
+	: ABaseRenderer(arg_shaderManager, arg_graphicsWeapper), material(arg_material)
+{ }
 
 void CustomRenderer::init()
 {
-	this->program = this->shaderManager->loadCustomShader(this->shaderPath);
+	CustomMaterial* customMaterial = static_cast<CustomMaterial*>(this->material);
+	this->program = this->shaderManager->loadCustomShader(customMaterial->getShaderFilePaths());
 	this->shaderManager->setupAttributeLocation(this->program, ShaderVariables::IN_POSITION);
 	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::VIEW_MATRIX);
 	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::PROJECTION_MATRIX);

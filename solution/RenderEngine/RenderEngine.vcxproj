@@ -376,6 +376,7 @@
     <ClCompile Include="src\core\graphics\renderers\DebugRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renderers\GuizmoRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\PBRRendererComponent.cpp" />
+    <ClCompile Include="src\core\graphics\shaders\EShaderComponent.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\GuizmoLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MaterialLoader.cpp" />
@@ -609,6 +610,7 @@
     <ClInclude Include="include\EGuizmoMesh.h" />
     <ClInclude Include="include\EntityLoader.h" />
     <ClInclude Include="include\EntityTypes.h" />
+    <ClInclude Include="include\EShaderComponent.h" />
     <ClInclude Include="include\FileBrowserContextMenu.h" />
     <ClInclude Include="include\FileIcon.h" />
     <ClInclude Include="include\BoolEditorProperty.h" />

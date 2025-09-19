@@ -16,7 +16,7 @@
 namespace sre
 {
 
-class Material;
+class ABaseMaterial;
 class AGraphicsWrapper;
 class ShaderManager;
 
@@ -32,7 +32,7 @@ public:
     virtual ~MeshRenderer();
 
 private:
-	MeshRenderer(Material *material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
+	MeshRenderer(ABaseMaterial* material, ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
     template <typename T, typename... TArgs> T* addComponent(TArgs&&... mArgs);
     template <typename T> void removeComponent();
@@ -44,7 +44,6 @@ private:
     void loadShaderSetupItems();
     void loadShader(bool useBrightnessSegmentation, bool includeDepth);
     void render();
-    bool fitsWithMaterial(Material *material);
 
 friend class RenderManager;
 };

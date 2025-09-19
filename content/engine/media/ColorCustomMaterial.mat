@@ -1,2 +1,4 @@
 Material Type: Custom
-Shader Path: engine\customShaders\red
+Shaders:
+  VERTEX: engine\customShaders\red.vert
+  FRAGMENT: engine\customShaders\red.frag

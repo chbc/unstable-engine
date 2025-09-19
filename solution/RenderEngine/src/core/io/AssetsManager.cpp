@@ -60,7 +60,7 @@ void AssetsManager::releaseModel2D(Model2D* model)
 	this->releaseAsset(this->models2DMap, model, releaseCallback);
 }
 
-ABaseMaterial* AssetsManager::loadMaterial(const char* filePath)
+ABaseMaterial* AssetsManager::loadMaterial(const std::string& filePath)
 {
 	std::string relativePath = FileUtils::getContentRelativePath(filePath);
 	ABaseMaterial* result = this->loadAsset<MaterialsMapType, MaterialLoader, ABaseMaterial>(this->materialsMap, relativePath);

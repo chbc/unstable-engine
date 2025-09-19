@@ -82,8 +82,7 @@ protected:
     virtual uint32_t loadVertexShader(const std::string &vertexContent) =0;
     virtual uint32_t loadFragmentShader(const std::string &vertexContent) =0;
     virtual uint32_t loadGeometryShader(const std::string &geometryContent) =0;
-    virtual uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader) =0;
-    virtual uint32_t createProgram(uint32_t vertexShader, uint32_t fragmentShader, uint32_t geometryShader) =0;
+    virtual uint32_t createProgram(const std::vector<uint32_t>& shaders) =0;
 
     virtual int getUniformLocation(uint32_t program, const std::string &varName) = 0;
     virtual int getAttributeLocation(uint32_t program, const std::string& varName) = 0;

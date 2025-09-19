@@ -14,7 +14,7 @@ private:
 	std::string text;
 
 public:
-	StringEditorProperty(const char* title, const std::string& arg_text);
+	StringEditorProperty(const std::string& title, const std::string& arg_text);
 };
 
 } // namespace

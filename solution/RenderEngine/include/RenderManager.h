@@ -3,6 +3,7 @@
 #include "ASingleton.h"
 #include "memory_aliases.h"
 #include "EExecutionMode.h"
+#include "ABaseMaterial.h"
 
 #include <string>
 #include <unordered_map>
@@ -29,18 +30,19 @@ class PostProcessingRenderer;
 
 struct MeshData2D;
 
+using StandardRendererMap = std::unordered_map<ABaseMaterial*, SPTR<MeshRenderer>, MaterialHash, MaterialEqual>;
+using CustomRendererMap = std::unordered_map<ABaseMaterial*, SPTR<CustomRenderer>, MaterialHash, MaterialEqual>;
+
 class RenderManager : ASingleton
 {
-
 private:
     class ShaderManager       *shaderManager;
     class AGraphicsWrapper    *graphicsWrapper;
     class LightManager        *lightManager;
 
-	VECTOR_SPTR<MeshRenderer> opaqueMeshRenderers;
-    VECTOR_SPTR<MeshRenderer> translucentMeshRenderers;
-    // <filePath, renderers>
-    std::unordered_map<std::string, SPTR<CustomRenderer>> customRenderers;
+	StandardRendererMap opaqueMeshRenderers;
+    StandardRendererMap translucentMeshRenderers;
+    CustomRendererMap customRenderers;
     SPTR<ShadowRenderer> shadowRenderer;
     SPTR<GUIRenderer> guiRenderer;
 	SPTR<DebugRenderer> debugRenderer;
@@ -59,7 +61,7 @@ protected:
 private:
     void addEntity(Entity* entity);
     void addMesh(MeshComponent* mesh);
-    void addMesh(VECTOR_SPTR<MeshRenderer>& renderers, MeshComponent* mesh);
+    void addMesh(StandardRendererMap& renderers, MeshComponent* mesh);
     void addMeshCustomMaterial(MeshComponent* mesh);
     void removeMesh(MeshComponent* mesh);
     void addGUIImageComponent(GUIImageComponent* guiComponent);

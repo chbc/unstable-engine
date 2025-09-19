@@ -42,16 +42,14 @@ uint32_t ShaderManager::loadColorShader()
     return this->loadShader(vertexContent, fragmentContent);
 }
 
-uint32_t ShaderManager::loadCustomShader(const std::string& shaderPath)
+uint32_t ShaderManager::loadCustomShader(const std::unordered_map<EShaderComponent::Type, std::string>& shaderPaths)
 {
-    std::string vertexContent;
-    std::string fragmentContent;
-    std::string geometryContent;
+    std::unordered_map<EShaderComponent::Type, std::string> shaderContents;
 
     ShaderContentFactory contentFactory;
-    contentFactory.loadCustomContent(shaderPath, vertexContent, fragmentContent, geometryContent);
+    contentFactory.loadCustomContent(shaderPaths, shaderContents);
 
-    return this->loadShader(vertexContent, fragmentContent, geometryContent);
+    return this->loadShader(shaderContents);
 }
 
 uint32_t ShaderManager::loadPointLightDepthShader()
@@ -67,9 +65,10 @@ uint32_t ShaderManager::loadPointLightDepthShader()
     uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentContent);
     uint32_t geomShader = this->graphicsWrapper->loadGeometryShader(geometryContent);
 
-    uint32_t program = this->graphicsWrapper->createProgram(vertShader, fragShader, geomShader);
+    std::vector<uint32_t> shaderComponents{ vertShader, fragShader, geomShader };
+    uint32_t program = this->graphicsWrapper->createProgram(shaderComponents);
 
-    Shader* shader = new Shader{ program, vertShader, fragShader, geomShader};
+    Shader* shader = new Shader{ program, shaderComponents };
     this->shaders.emplace(program, shader);
 
     return program;
@@ -112,27 +111,56 @@ uint32_t ShaderManager::loadShader(const std::string &vertexContent, const std::
 {
     uint32_t vertShader = this->graphicsWrapper->loadVertexShader(vertexContent);
     uint32_t fragShader = this->graphicsWrapper->loadFragmentShader(fragmentContent);
-    uint32_t program{ 0 };
+	std::vector<uint32_t> shaderComponents{ vertShader, fragShader};
 
-    if (geometryContent.empty())
-    {
-        program = this->graphicsWrapper->createProgram(vertShader, fragShader);
-
-        Shader* shader = new Shader{ program, vertShader, fragShader };
-        this->shaders.emplace(program, shader);
-    }
-    else
+    if (!geometryContent.empty())
     {
         uint32_t geomShader = this->graphicsWrapper->loadGeometryShader(geometryContent);
-        program = this->graphicsWrapper->createProgram(vertShader, fragShader, geomShader);
-
-        Shader* shader = new Shader{ program, vertShader, fragShader, geomShader };
-        this->shaders.emplace(program, shader);
+        shaderComponents.push_back(geomShader);
     }
+
+    uint32_t program{ 0 };
+
+    program = this->graphicsWrapper->createProgram(shaderComponents);
+
+    Shader* shader = new Shader{ program, shaderComponents };
+    this->shaders.emplace(program, shader);
 
     return program;
 }
-    
+
+uint32_t ShaderManager::loadShader(const std::unordered_map<EShaderComponent::Type, std::string>& shaderContents)
+{
+    std::vector<uint32_t> shaderComponents;
+    for (const auto& item : shaderContents)
+    {
+        uint32_t shaderId{ 0 };
+        switch (item.first)
+        {
+            case EShaderComponent::Type::VERTEX:
+                shaderId = this->graphicsWrapper->loadVertexShader(item.second);
+                break;
+            case EShaderComponent::FRAGMENT:
+                shaderId = this->graphicsWrapper->loadFragmentShader(item.second);
+                break;
+            case EShaderComponent::GEOMETRY:
+                shaderId = this->graphicsWrapper->loadGeometryShader(item.second);
+                break;
+            default: break;
+        }
+
+        shaderComponents.push_back(shaderId);
+	}
+
+    uint32_t program{ 0 };
+    program = this->graphicsWrapper->createProgram(shaderComponents);
+
+    Shader* shader = new Shader{ program, shaderComponents };
+    this->shaders.emplace(program, shader);
+
+    return program;
+}
+
 void ShaderManager::setupUniformLocation(uint32_t program, ShaderVariables::Type variableKey)
 {
     std::string variableName = ShaderVariables::Map.at(variableKey);
