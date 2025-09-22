@@ -138,6 +138,7 @@ private:
     friend class SceneViewportCamera;
     friend class EditorsController;
     friend class EditorSceneTree;
+    friend class ScenesManager;
 };
 
 } // namespace

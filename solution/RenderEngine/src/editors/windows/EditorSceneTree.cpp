@@ -37,10 +37,18 @@ void EditorSceneTree::onEditorGUI()
 	}
 
 	Entity* selectedEntity = this->controller->getSelectedEntity();
-	if (selectedEntity && ImGui::IsKeyPressed(ImGuiKey_Delete, false))
+	if (selectedEntity)
 	{
-		selectedEntity->destroy();
-		this->controller->setSelectedEntity(nullptr);
+		if (ImGui::IsKeyPressed(ImGuiKey_Delete, false))
+		{
+			selectedEntity->destroy();
+			this->controller->setSelectedEntity(nullptr);
+		}
+
+		if (ImGui::IsKeyPressed(ImGuiKey_D, false) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+		{
+			this->controller->duplicateSelectedEntity();
+		}
 	}
 
 	ImGui::End();

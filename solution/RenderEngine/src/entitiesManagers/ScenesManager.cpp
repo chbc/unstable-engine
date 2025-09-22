@@ -36,6 +36,13 @@ Entity* ScenesManager::createEntityFromFile(std::string filePath, Entity* parent
     return this->scene->createEntityFromFile(filePath, parent);
 }
 
+Entity* ScenesManager::duplicateEntity(Entity* entity)
+{
+	Entity* result = this->scene->duplicateEntity(entity);
+	this->addToRenderer(result);
+	return result;
+}
+
 Entity* ScenesManager::getEntity(const std::string& name)
 {
     Entity* result = this->scene->getEntity(name);

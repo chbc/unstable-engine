@@ -45,6 +45,7 @@ public:
 	void createPointLight();
 	void setSelectedEntity(Entity* entity);
 	Entity* getSelectedEntity();
+	void duplicateSelectedEntity();
 	void deleteFile(const char* filePath);
 	void duplicateFile(const std::string& filePath);
 	void loadMaterialToEntity(Entity* entity, const std::string& materialFilePath);

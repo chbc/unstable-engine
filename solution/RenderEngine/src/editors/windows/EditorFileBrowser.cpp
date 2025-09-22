@@ -89,6 +89,7 @@ void EditorFileBrowser::onEditorGUI()
 	this->contextMenu.onEditorGUI();
 
 	this->handleDelete();
+	this->handleDuplicate();
 
 	ImGui::End();
 }

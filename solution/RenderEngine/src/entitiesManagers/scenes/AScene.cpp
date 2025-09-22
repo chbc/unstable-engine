@@ -80,6 +80,26 @@ Entity* AScene::createEntityFromFile(std::string filePath, Entity* parent)
     return result;
 }
 
+Entity* AScene::duplicateEntity(Entity* entity)
+{
+    Entity* result = nullptr;
+    if (entity != nullptr)
+    {
+        std::string name = entity->name;
+        this->resolveName(name);
+        result = entity->clone();
+        result->name = name;
+        this->entities[name] = UPTR<Entity>{ result };
+
+		TransformComponent* resultTransform = result->getTransform();
+		TransformComponent* entityTransform = entity->getTransform();
+        resultTransform->setPosition(entityTransform->getPosition());
+		resultTransform->setRotation(entityTransform->getRotation());
+		resultTransform->setScale(entityTransform->getScale());
+    }
+	return result;
+}
+
 void AScene::removeDestroyedEntities()
 {
     CollectionsUtils::removeIfEntityIsDestroyed(this->entities);

@@ -229,6 +229,15 @@ Entity* EditorsController::getSelectedEntity()
 	return this->selectedEntity;
 }
 
+void EditorsController::duplicateSelectedEntity()
+{
+	if (this->selectedEntity)
+	{
+		Entity* newEntity = this->scenesManager->duplicateEntity(this->selectedEntity);
+		this->setSelectedEntity(newEntity);
+	}
+}
+
 void EditorsController::deleteFile(const char* filePath)
 {
 	FileUtils::deleteFile(filePath);
