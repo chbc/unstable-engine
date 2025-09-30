@@ -10,6 +10,7 @@
 #include <iostream>
 
 #include "Utils.h"
+#include "IBLFileSaver.h"
 
 // lights
 // ------
@@ -56,6 +57,8 @@ unsigned int brdfLUTMap{ 0 };
 
 SDL_Window* window{ nullptr };
 
+IBLFileSaver iblFileSaver;
+
 int setupWindow()
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -94,7 +97,7 @@ int setupWindow()
     return 0;
 }
 
-void setupFramebuffer()
+void setupHdr(const char* hdrPath)
 {
     // pbr: setup cubemap to render to and attach to framebuffer
     // ---------------------------------------------------------
@@ -119,10 +122,7 @@ void setupFramebuffer()
     glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 512, 512);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, captureRBO);
-}
 
-void setupHdr()
-{
     // pbr: load the HDR environment map
     // ---------------------------------
 
@@ -134,7 +134,7 @@ void setupHdr()
     glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "projection"), 1, GL_FALSE, &captureProjection[0][0]);
 
     glActiveTexture(GL_TEXTURE0);
-    unsigned int hdrTexture = Utils::loadHdrTexture("../content/engine/media/hdr/newport_loft.hdr");
+    unsigned int hdrTexture = Utils::loadHdrTexture(hdrPath);
     glBindTexture(GL_TEXTURE_2D, hdrTexture);
 
     glViewport(0, 0, 512, 512); // don't forget to configure the viewport to the capture dimensions.
@@ -147,6 +147,7 @@ void setupHdr()
 
         Utils::renderCube();
     }
+
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     // then let OpenGL generate mipmaps from first mip face (combatting visible dots artifact)
@@ -193,6 +194,8 @@ void setupIrradianceMap()
         Utils::renderCube();
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	iblFileSaver.setIrradianceMapParams(irradianceMap, 32);
 }
 
 void bindIrradianceMap()
@@ -251,6 +254,8 @@ void setupPrefilterMap()
         }
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	iblFileSaver.setPrefilterMapParams(prefilterMap, 128);
 }
 
 void bindPrefilterMap()
@@ -287,6 +292,8 @@ void setupBRDFLUTMap()
     Utils::renderQuad();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	iblFileSaver.setBRDFLUTMapParams(brdfLUTMap, 512);
 }
 
 void bindBRDFLUTMap()
@@ -350,52 +357,65 @@ void setupPBR()
 
 void renderPBR(const glm::vec3& cameraPosition, const glm::mat4& view)
 {
-        // render scene, supplying the convoluted irradiance map to the final shader.
-        // ------------------------------------------------------------------------------------------
+    // render scene, supplying the convoluted irradiance map to the final shader.
+    // ------------------------------------------------------------------------------------------
 
-        glm::mat4 model = glm::mat4{ 1.0f };
-		glUseProgram(pbrProgram);
-		glUniformMatrix4fv(glGetUniformLocation(pbrProgram, "view"), 1, GL_FALSE, &view[0][0]);
-        glUniform3fv(glGetUniformLocation(pbrProgram, "camPos"), 1, &cameraPosition[0]);
+    glm::mat4 model = glm::mat4{ 1.0f };
+	glUseProgram(pbrProgram);
+	glUniformMatrix4fv(glGetUniformLocation(pbrProgram, "view"), 1, GL_FALSE, &view[0][0]);
+    glUniform3fv(glGetUniformLocation(pbrProgram, "camPos"), 1, &cameraPosition[0]);
 
-        // rusted iron
-        glActiveTexture(GL_TEXTURE3);
-        glBindTexture(GL_TEXTURE_2D, ironAlbedoMap);
-        glActiveTexture(GL_TEXTURE4);
-        glBindTexture(GL_TEXTURE_2D, ironNormalMap);
-        glActiveTexture(GL_TEXTURE5);
-        glBindTexture(GL_TEXTURE_2D, ironMetallicMap);
-        glActiveTexture(GL_TEXTURE6);
-        glBindTexture(GL_TEXTURE_2D, ironRoughnessMap);
-        glActiveTexture(GL_TEXTURE7);
-        glBindTexture(GL_TEXTURE_2D, ironAOMap);
+    // rusted iron
+    glActiveTexture(GL_TEXTURE3);
+    glBindTexture(GL_TEXTURE_2D, ironAlbedoMap);
+    glActiveTexture(GL_TEXTURE4);
+    glBindTexture(GL_TEXTURE_2D, ironNormalMap);
+    glActiveTexture(GL_TEXTURE5);
+    glBindTexture(GL_TEXTURE_2D, ironMetallicMap);
+    glActiveTexture(GL_TEXTURE6);
+    glBindTexture(GL_TEXTURE_2D, ironRoughnessMap);
+    glActiveTexture(GL_TEXTURE7);
+    glBindTexture(GL_TEXTURE_2D, ironAOMap);
 
-        model = glm::mat4(1.0f);
-		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model)));
-		glUniformMatrix4fv(glGetUniformLocation(pbrProgram, "model"), 1, GL_FALSE, &model[0][0]);
-		glUniformMatrix3fv(glGetUniformLocation(pbrProgram, "normalMatrix"), 1, GL_FALSE, &normalMatrix[0][0]);
-        Utils::renderSphere();
+    model = glm::mat4(1.0f);
+	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model)));
+	glUniformMatrix4fv(glGetUniformLocation(pbrProgram, "model"), 1, GL_FALSE, &model[0][0]);
+	glUniformMatrix3fv(glGetUniformLocation(pbrProgram, "normalMatrix"), 1, GL_FALSE, &normalMatrix[0][0]);
+    Utils::renderSphere();
 }
 
 int main(int argc, char* argv[])
 {
+    if (argc != 3)
+    {
+#ifdef DEBUG
+        std::cout << "Usage: IBLCreator.exe [source_file] [destination_path]" << std::endl;
+#endif
+        return 1;
+    }
+
 	int result = setupWindow();
     if (result != 0)
     {
         return result;
     }
 
-    setupFramebuffer();
-    setupHdr();
+	const char* sourceFilePath = argv[1];
+	const char* destinationPath = argv[2];
+
+    setupHdr(sourceFilePath);
     setupIrradianceMap();
     setupPrefilterMap();
     setupBRDFLUTMap();
+
+    iblFileSaver.save(sourceFilePath, destinationPath);
+
 	setupSkybox();
     setupPBR();
 
     // initialize static shader uniforms before rendering
     // --------------------------------------------------
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(90.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     glm::mat4 view = glm::lookAt(glm::vec3{ 0.0f, 0.0f, 10.0f }, glm::vec3{ 0.0f }, glm::vec3{ 0.0f, 1.0f, 0.0f });
     glm::vec3 cameraPosition{ 0.0f, 0.0f, 10.0f };
     glUseProgram(pbrProgram);
@@ -411,7 +431,6 @@ int main(int argc, char* argv[])
         // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
         // bind pre-computed IBL data
 		bindIrradianceMap();
