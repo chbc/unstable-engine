@@ -12,23 +12,6 @@
 #include "Utils.h"
 #include "IBLFileSaver.h"
 
-// lights
-// ------
-glm::vec3 lightPositions[] =
-{
-    glm::vec3(-10.0f,  10.0f, 10.0f),
-    glm::vec3(10.0f,  10.0f, 10.0f),
-    glm::vec3(-10.0f, -10.0f, 10.0f),
-    glm::vec3(10.0f, -10.0f, 10.0f),
-};
-glm::vec3 lightColors[] =
-{
-    glm::vec3(300.0f, 300.0f, 300.0f),
-    glm::vec3(300.0f, 300.0f, 300.0f),
-    glm::vec3(300.0f, 300.0f, 300.0f),
-    glm::vec3(300.0f, 300.0f, 300.0f)
-};
-
 // pbr: set up projection and view matrices for capturing data onto the 6 cubemap face directions
 // ----------------------------------------------------------------------------------------------
 glm::mat4 captureProjection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
@@ -46,14 +29,9 @@ glm::mat4 captureViews[] =
 const unsigned int SCR_WIDTH = 1280;
 const unsigned int SCR_HEIGHT = 720;
 
-uint32_t backgroundProgram{ 0 };
 unsigned int envCubemap{ 0 };
 unsigned int captureFBO{ 0 };
 unsigned int captureRBO{ 0 };
-
-unsigned int irradianceMap{ 0 };
-unsigned int prefilterMap{ 0 };
-unsigned int brdfLUTMap{ 0 };
 
 SDL_Window* window{ nullptr };
 
@@ -128,7 +106,7 @@ void setupHdr(const char* hdrPath)
 
     // pbr: convert HDR equirectangular environment map to cubemap equivalent
     // ----------------------------------------------------------------------
-	uint32_t equirectangularToCubemapProgram = Utils::createShader("../content/engine/shaders/irradiance/cubemap.vert", "../content/engine/shaders/irradiance/equirectangular_to_cubemap.frag");
+	uint32_t equirectangularToCubemapProgram = Utils::createShader("../content/engine/shaders/pbr/cubemap.vert", "../content/engine/shaders/pbr/equirectangular_to_cubemap.frag");
     glUseProgram(equirectangularToCubemapProgram);
     glUniform1d(glGetUniformLocation(equirectangularToCubemapProgram, "equirectangularMap"), 0);
     glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "projection"), 1, GL_FALSE, &captureProjection[0][0]);
@@ -153,12 +131,16 @@ void setupHdr(const char* hdrPath)
     // then let OpenGL generate mipmaps from first mip face (combatting visible dots artifact)
     glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
     glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+
+    glDeleteProgram(equirectangularToCubemapProgram);
+    glDeleteTextures(1, &hdrTexture);
 }
 
 void setupIrradianceMap()
 {
     // pbr: create an irradiance cubemap, and re-scale capture FBO to irradiance scale.
     // --------------------------------------------------------------------------------
+    unsigned int irradianceMap{ 0 };
     glGenTextures(1, &irradianceMap);
     glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap);
     for (unsigned int i = 0; i < 6; ++i)
@@ -176,7 +158,7 @@ void setupIrradianceMap()
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 32, 32);
 
 
-	uint32_t irradianceProgram = Utils::createShader("../content/engine/shaders/irradiance/cubemap.vert", "../content/engine/shaders/irradiance/irradiance_convolution.frag");
+	uint32_t irradianceProgram = Utils::createShader("../content/engine/shaders/pbr/cubemap.vert", "../content/engine/shaders/pbr/irradiance_convolution.frag");
     glUseProgram(irradianceProgram);
     glUniform1i(glGetUniformLocation(irradianceProgram, "environmentMap"), 0);
     glUniformMatrix4fv(glGetUniformLocation(irradianceProgram, "projection"), 1, GL_FALSE, &captureProjection[0][0]);
@@ -198,18 +180,16 @@ void setupIrradianceMap()
 
     // Chamamos a nova função de geração:
     iblFileSaver.generateIrradianceCrossMap(irradianceMap, 32);
-}
 
-void bindIrradianceMap()
-{
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap);
+    glDeleteProgram(irradianceProgram);
+    glDeleteTextures(1, &irradianceMap);
 }
 
 void setupPrefilterMap()
 {
     // pbr: create a pre-filter cubemap, and re-scale capture FBO to pre-filter scale.
     // --------------------------------------------------------------------------------
+    unsigned int prefilterMap{ 0 };
     glGenTextures(1, &prefilterMap);
     glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
     for (unsigned int i = 0; i < 6; ++i)
@@ -226,7 +206,7 @@ void setupPrefilterMap()
 
     // pbr: run a quasi monte-carlo simulation on the environment lighting to create a prefilter (cube)map.
      // ----------------------------------------------------------------------------------------------------
-	uint32_t prefilterProgram = Utils::createShader("../content/engine/shaders/irradiance/cubemap.vert", "../content/engine/shaders/irradiance/prefilter.frag");
+	uint32_t prefilterProgram = Utils::createShader("../content/engine/shaders/pbr/cubemap.vert", "../content/engine/shaders/pbr/prefilter.frag");
     glUseProgram(prefilterProgram);
     glUniform1i(glGetUniformLocation(prefilterProgram, "environmentMap"), 0);
     glUniformMatrix4fv(glGetUniformLocation(prefilterProgram, "projection"), 1, GL_FALSE, &captureProjection[0][0]);
@@ -258,22 +238,19 @@ void setupPrefilterMap()
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	iblFileSaver.generatePrefilterMapParams(prefilterMap, 128);
+
+    glDeleteProgram(prefilterProgram);
+    glDeleteTextures(1, &prefilterMap);
 }
 
-void bindPrefilterMap()
-{
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
-}
-
-void setupBRDFLUTMap()
+void setupBRDFLUTMap(unsigned int textureMap)
 {
     // pbr: generate a 2D LUT from the BRDF equations used.
     // ----------------------------------------------------
-    glGenTextures(1, &brdfLUTMap);
+    glGenTextures(1, &textureMap);
 
     // pre-allocate enough memory for the LUT texture.
-    glBindTexture(GL_TEXTURE_2D, brdfLUTMap);
+    glBindTexture(GL_TEXTURE_2D, textureMap);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, 512, 512, 0, GL_RG, GL_FLOAT, 0);
     // be sure to set wrapping mode to GL_CLAMP_TO_EDGE
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -285,105 +262,19 @@ void setupBRDFLUTMap()
     glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
     glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 512, 512);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, brdfLUTMap, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureMap, 0);
 
     glViewport(0, 0, 512, 512);
-    uint32_t brdfProgram = Utils::createShader("../content/engine/shaders/irradiance/brdf.vert", "../content/engine/shaders/irradiance/brdf.frag");
+    uint32_t brdfProgram = Utils::createShader("../content/engine/shaders/pbr/brdf.vert", "../content/engine/shaders/pbr/brdf.frag");
     glUseProgram(brdfProgram);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     Utils::renderQuad();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	iblFileSaver.generateBRDFLUTMapParams(brdfLUTMap, 512);
-}
+	iblFileSaver.generateBRDFLUTMapParams(textureMap, 512);
 
-void bindBRDFLUTMap()
-{
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, brdfLUTMap);
-}
-
-void setupSkybox()
-{
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
-
-    backgroundProgram = Utils::createShader("../content/engine/shaders/irradiance/background.vert", "../content/engine/shaders/irradiance/background.frag");
-
-    glUseProgram(backgroundProgram);
-    glUniform1i(glGetUniformLocation(backgroundProgram, "environmentMap"), 0);
-}
-
-void renderSkybox(const glm::mat4& projection, const glm::mat4& view)
-{
-    glUseProgram(backgroundProgram);
-    glUniformMatrix4fv(glGetUniformLocation(backgroundProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(backgroundProgram, "view"), 1, GL_FALSE, &view[0][0]);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
-    Utils::renderCube();
-}
-
-uint32_t pbrProgram{ 0 };
-unsigned int ironAlbedoMap{ 0 };
-unsigned int ironNormalMap{ 0 };
-unsigned int ironMetallicMap{ 0 };
-unsigned int ironRoughnessMap{ 0 };
-unsigned int ironAOMap{ 0 };
-
-void setupPBR()
-{
-    pbrProgram = Utils::createShader("../content/engine/shaders/irradiance/pbr.vert", "../content/engine/shaders/irradiance/pbr.frag");
-
-    glUseProgram(pbrProgram);
-    glUniform1i(glGetUniformLocation(pbrProgram, "irradianceMap"), 0);
-    glUniform1i(glGetUniformLocation(pbrProgram, "prefilterMap"), 1);
-    glUniform1i(glGetUniformLocation(pbrProgram, "brdfLUT"), 2);
-    glUniform1i(glGetUniformLocation(pbrProgram, "albedoMap"), 3);
-    glUniform1i(glGetUniformLocation(pbrProgram, "normalMap"), 4);
-    glUniform1i(glGetUniformLocation(pbrProgram, "metallicMap"), 5);
-    glUniform1i(glGetUniformLocation(pbrProgram, "roughnessMap"), 6);
-    glUniform1i(glGetUniformLocation(pbrProgram, "aoMap"), 7);
-
-    // load PBR material textures
-    // --------------------------
-    // rusted iron
-    ironAlbedoMap = Utils::loadTexture("../content/game/pbr/rusted_iron/albedo.png");
-    ironNormalMap = Utils::loadTexture("../content/game/pbr/rusted_iron/normal.png");
-    ironMetallicMap = Utils::loadTexture("../content/game/pbr/rusted_iron/metallic.png");
-    ironRoughnessMap = Utils::loadTexture("../content/game/pbr/rusted_iron/roughness.png");
-    ironAOMap = Utils::loadTexture("../content/game/pbr/rusted_iron/ao.png");
-}
-
-void renderPBR(const glm::vec3& cameraPosition, const glm::mat4& view)
-{
-    // render scene, supplying the convoluted irradiance map to the final shader.
-    // ------------------------------------------------------------------------------------------
-
-    glm::mat4 model = glm::mat4{ 1.0f };
-	glUseProgram(pbrProgram);
-	glUniformMatrix4fv(glGetUniformLocation(pbrProgram, "view"), 1, GL_FALSE, &view[0][0]);
-    glUniform3fv(glGetUniformLocation(pbrProgram, "camPos"), 1, &cameraPosition[0]);
-
-    // rusted iron
-    glActiveTexture(GL_TEXTURE3);
-    glBindTexture(GL_TEXTURE_2D, ironAlbedoMap);
-    glActiveTexture(GL_TEXTURE4);
-    glBindTexture(GL_TEXTURE_2D, ironNormalMap);
-    glActiveTexture(GL_TEXTURE5);
-    glBindTexture(GL_TEXTURE_2D, ironMetallicMap);
-    glActiveTexture(GL_TEXTURE6);
-    glBindTexture(GL_TEXTURE_2D, ironRoughnessMap);
-    glActiveTexture(GL_TEXTURE7);
-    glBindTexture(GL_TEXTURE_2D, ironAOMap);
-
-    model = glm::mat4(1.0f);
-	glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(model)));
-	glUniformMatrix4fv(glGetUniformLocation(pbrProgram, "model"), 1, GL_FALSE, &model[0][0]);
-	glUniformMatrix3fv(glGetUniformLocation(pbrProgram, "normalMatrix"), 1, GL_FALSE, &normalMatrix[0][0]);
-    Utils::renderSphere();
+    glDeleteProgram(brdfProgram);
 }
 
 int main(int argc, char* argv[])
@@ -408,48 +299,17 @@ int main(int argc, char* argv[])
     setupHdr(sourceFilePath);
     setupIrradianceMap();
     setupPrefilterMap();
-    setupBRDFLUTMap();
+
+    unsigned int brdfLUTMap{ 0 };
+    setupBRDFLUTMap(brdfLUTMap);
 
     iblFileSaver.save(sourceFilePath, destinationPath);
 
-	setupSkybox();
-    setupPBR();
+    glDeleteTextures(1, &brdfLUTMap);
+    glDeleteTextures(1, &envCubemap);
+    glDeleteRenderbuffers(1, &captureRBO);
+    glDeleteFramebuffers(1, &captureFBO);
 
-    // initialize static shader uniforms before rendering
-    // --------------------------------------------------
-    glm::mat4 projection = glm::perspective(glm::radians(90.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-    glm::mat4 view = glm::lookAt(glm::vec3{ 0.0f, 0.0f, 10.0f }, glm::vec3{ 0.0f }, glm::vec3{ 0.0f, 1.0f, 0.0f });
-    glm::vec3 cameraPosition{ 0.0f, 0.0f, 10.0f };
-    glUseProgram(pbrProgram);
-    glUniformMatrix4fv(glGetUniformLocation(pbrProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
-
-    int drawableWidth, drawableHeight;
-    SDL_GL_GetDrawableSize(window, &drawableWidth, &drawableHeight);
-    glViewport(0, 0, drawableWidth, drawableHeight);
-
-    // render loop
-    // -----------
-        // render
-        // ------
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        // bind pre-computed IBL data
-		bindIrradianceMap();
-        bindPrefilterMap();
-        bindBRDFLUTMap();
-
-        renderPBR(cameraPosition, view);
-
-        // render skybox (render as last to prevent overdraw)
-		renderSkybox(projection, view);
-
-		SDL_GL_SwapWindow(window);
-
-		// XXX SDL_Delay(5000);
-
-    // glfw: terminate, clearing all previously allocated GLFW resources.
-    // ------------------------------------------------------------------
     SDL_DestroyWindow(window);
     SDL_Quit();
 
