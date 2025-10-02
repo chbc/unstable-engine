@@ -15,8 +15,11 @@ private:
 	TextureMapParams brdfLUTMapParams;
 
 public:
-	void setIrradianceMapParams(unsigned int textureId, int size);
-	void setPrefilterMapParams(unsigned int textureId, int size);
-	void setBRDFLUTMapParams(unsigned int textureId, int size);
+	void generateIrradianceCrossMap(unsigned int sourceCubemapId, int faceSize);
+	void generatePrefilterMapParams(unsigned int sourceCubemapId, int faceSize);
+	void generateBRDFLUTMapParams(unsigned int textureId, int size);
 	void save(const char* sourceFilePath, const char* destinationPath);
+
+private:
+	void generateTextureFromCubemap(TextureMapParams& mapParams, unsigned int sourceCubemapId, int faceSize);
 };

@@ -288,12 +288,22 @@ unsigned int loadHdrTexture(const char* path)
 	return hdrTexture;
 }
 
-void saveHdrTexture(int width, int height, const std::string& filePath, float* data)
+void saveHdrTexture(int width, int height, int channels, const std::string& filePath, const std::vector<float>& data)
 {
-    if (!stbi_write_hdr(filePath.c_str(), width, height, 3, data))
+    if (!stbi_write_hdr(filePath.c_str(), width, height, channels, data.data()))
     {
         throw "[Utils] Failed to save HDR image at path: " + filePath;
 	}
+}
+
+void saveBinaryTexture(const std::string& filePath, const std::vector<float>& data)
+{
+    std::ofstream file(filePath, std::ios::out | std::ios::binary);
+    if (file.is_open())
+    {
+        file.write(reinterpret_cast<const char*>(data.data()), data.size() * sizeof(float));
+        file.close();
+    }
 }
 
 uint32_t createShader(const std::string& vertexFile, const std::string& fragmentFile)

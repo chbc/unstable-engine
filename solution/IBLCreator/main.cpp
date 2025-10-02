@@ -183,7 +183,7 @@ void setupIrradianceMap()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
 
-    glViewport(0, 0, 32, 32); // don't forget to configure the viewport to the capture dimensions.
+    glViewport(0, 0, 32, 32);
     glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
     for (unsigned int i = 0; i < 6; ++i)
     {
@@ -193,9 +193,11 @@ void setupIrradianceMap()
 
         Utils::renderCube();
     }
+    // Desvincula o FBO de captura (prática recomendada)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	iblFileSaver.setIrradianceMapParams(irradianceMap, 32);
+    // Chamamos a nova função de geração:
+    iblFileSaver.generateIrradianceCrossMap(irradianceMap, 32);
 }
 
 void bindIrradianceMap()
@@ -255,7 +257,7 @@ void setupPrefilterMap()
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	iblFileSaver.setPrefilterMapParams(prefilterMap, 128);
+	iblFileSaver.generatePrefilterMapParams(prefilterMap, 128);
 }
 
 void bindPrefilterMap()
@@ -293,7 +295,7 @@ void setupBRDFLUTMap()
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	iblFileSaver.setBRDFLUTMapParams(brdfLUTMap, 512);
+	iblFileSaver.generateBRDFLUTMapParams(brdfLUTMap, 512);
 }
 
 void bindBRDFLUTMap()
@@ -444,7 +446,7 @@ int main(int argc, char* argv[])
 
 		SDL_GL_SwapWindow(window);
 
-		SDL_Delay(5000);
+		// XXX SDL_Delay(5000);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
