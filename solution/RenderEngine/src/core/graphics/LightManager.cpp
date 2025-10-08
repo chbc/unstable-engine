@@ -3,9 +3,15 @@
 #include "CollectionsUtils.h"
 #include "SingletonsManager.h"
 #include "AGraphicsWrapper.h"
+#include "AssetsManager.h"
+#include "Texture.h"
 
 namespace sre
 {
+
+const char* IBL_IRRADIANCE_PATH = "engine/media/hdr/newport_loft_irradiance.hdr";
+const char* IBL_PREFILTER_PATH  = "engine/media/hdr/newport_loft_preFilter.hdr";
+const char* IBL_BRDF_PATH       = "engine/media/hdr/newport_loft_brdf.hdr";
 
 void LightManager::setAmbientLightColor(const glm::vec3 &ambientLightColor)
 {
@@ -26,6 +32,11 @@ bool LightManager::hasAnyShadowCaster()
     );
 }
 
+bool LightManager::hasIBLData() const
+{
+    return this->iblData.loaded;
+}
+
 void LightManager::init()
 {
 	this->graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
@@ -35,12 +46,16 @@ void LightManager::addDirectionalLight(DirectionalLightComponent* item)
 {
     this->directionalLights.push_back(item);
 	this->updateDirectionalLightsUBO();
+
+    this->loadIBL();
 }
 
 void LightManager::addPointLight(PointLightComponent* item)
 {
     this->pointLights.push_back(item);
 	this->updatePointLightsUBO();
+
+    this->loadIBL();
 }
 
 void LightManager::updateDirectionalLightsUBO()
@@ -73,6 +88,23 @@ void LightManager::updatePointLightsUBO()
     }
 
     this->updateUniformBuffer();
+}
+
+void LightManager::loadIBL()
+{
+    if (!iblData.loaded)
+    {
+        iblData.loaded = true;
+
+        AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+        Texture* irradiance = assetsManager->loadHdrTexture(IBL_IRRADIANCE_PATH, ETextureMap::IBL_IRRADIANCE);
+        Texture* prefilter = assetsManager->loadHdrTexture(IBL_PREFILTER_PATH, ETextureMap::IBL_PREFILTER);
+        Texture* brdfLUT = assetsManager->loadHdrTexture(IBL_BRDF_PATH, ETextureMap::IBL_BRDF_LUT);
+
+        iblData.irradianceMap = irradiance->getId();
+        iblData.prefilterMap = prefilter->getId();
+        iblData.brdfLUTMap = brdfLUT->getId();
+    }
 }
 
 void LightManager::updateUniformBuffer()

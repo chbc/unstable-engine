@@ -37,6 +37,8 @@ protected:
     void enableTexCoords() override;
     void enableVertexTangents() override;
     void enableVertexBitangents() override;
+    void activateTexture(uint32_t textureId, uint32_t unit) override;
+    void activateCubeMapTexture(uint32_t textureId, uint32_t unit) override;
     void activateGUITexture(uint32_t textureId) override;
     void activateDiffuseTexture(uint32_t textureId) override;
     void activateNormalTexture(uint32_t textureId) override;
@@ -66,6 +68,8 @@ protected:
 	void clearDepthBuffer() override;
 	void clearColorAndDepthBuffer() override;
 	uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void* data, uint32_t unit, bool genMipmap = true) override;
+    uint32_t setupHdrTexture(int width, int height, int bpp, float* data, uint32_t unit, bool genMipmap) override;
+    uint32_t setupHdrCubemap(int width, int height, int bpp, float* data, uint32_t unit, uint32_t faceSize, bool genMipmap) override;
     uint32_t createTexture(uint32_t width, uint32_t height, uint32_t unit);
 	uint32_t createTexture(uint32_t width, uint32_t height);
 	uint32_t createFloatingPointTexture(uint32_t width, uint32_t height);
@@ -89,6 +93,7 @@ protected:
     void setVec2(uint32_t program, int location, const float* value) override;
     void setVec3(uint32_t program, int location, const float *value) override;
     void setVec4(uint32_t program, int location, const float *value) override;
+    void setMat3(uint32_t program, int location, const float* value) override;
     void setMat4(uint32_t program, int location, const float *value) override;
 
     void enableShader(uint32_t program) override;
@@ -102,7 +107,6 @@ protected:
     void unbindFrameBuffer() override;
     void deleteFrameBuffer(uint32_t fbo) override;
     void setViewport(uint32_t width, uint32_t height) override;
-    void activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap) override;
     void setLineWidth(float width) override;
     void setPointSize(float size) override;
 

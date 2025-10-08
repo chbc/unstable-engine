@@ -61,6 +61,7 @@ public:
 	ABaseMaterial* loadMaterial(const std::string& filePath);
 	void releaseMaterial(ABaseMaterial* material);
 	Texture* loadTexture(const char* filePath, ETextureMap::Type mapType);
+	Texture* loadHdrTexture(const char* filePath, ETextureMap::Type mapType);
 	void releaseTexture(Texture* texture);
 	Texture* loadIcon(const char* filePath);
 	void releaseIcon(Texture* texture);

@@ -91,6 +91,7 @@ namespace ShaderVariables
         VIEW_MATRIX,
         PROJECTION_MATRIX,
         MODEL_MATRIX,
+        NORMAL_MATRIX,
         LIGHT_SPACE_MATRIX,
         CAMERA_POSITION,
         FAR_PLANE,
@@ -111,6 +112,10 @@ namespace ShaderVariables
         METALLIC_TEXTURE,
         ROUGHNESS_TEXTURE,
 
+        IBL_IRRADIANCE,
+        IBL_PREFILTER,
+        IBL_BRDF_LUT,
+
         IN_POSITION,
         IN_TEXTURE_COORDS,
         UV_OFFSET,
@@ -123,6 +128,7 @@ namespace ShaderVariables
         { VIEW_MATRIX,                  "viewMatrix"                },
         { PROJECTION_MATRIX,            "projectionMatrix"          },
         { MODEL_MATRIX,                 "modelMatrix"               },
+        { NORMAL_MATRIX,                "normalMatrix"              },
         { LIGHT_SPACE_MATRIX,           "lightSpaceMatrix"          },
         { CAMERA_POSITION,              "cameraPosition"            },
         { FAR_PLANE,                    "farPlane"                  },
@@ -139,12 +145,15 @@ namespace ShaderVariables
 		{ ALBEDO_TEXTURE,               "albedoTexture"             },
 		{ METALLIC_TEXTURE,             "metallicTexture"           },
 		{ ROUGHNESS_TEXTURE,            "roughnessTexture"          },
+        { IBL_IRRADIANCE,               "irradianceMap"             },
+        { IBL_PREFILTER,                "prefilterMap"              },
+        { IBL_BRDF_LUT,                 "brdfLUT"                   },
         { SHADOW_MAP,                   "shadowMap"                 },
         { IN_POSITION,                  "in_position"               },
         { IN_TEXTURE_COORDS,            "in_textureCoords"          },
         { UV_OFFSET,                    "uvOffset"                  },
         { UV_TILING,                    "uvTiling"                  },
-        { NORMAL_FLIP_GREEN_CHANNEL,    "normalFlipGreenChannel"   }
+        { NORMAL_FLIP_GREEN_CHANNEL,    "normalFlipGreenChannel"    }
     };
 }
 

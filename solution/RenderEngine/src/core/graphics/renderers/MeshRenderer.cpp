@@ -10,6 +10,7 @@
 #include "AssetsManager.h"
 
 #include "LightRendererShaderSetup.h"
+#include "IBLRendererShaderSetup.h"
 #include "LitRendererComponent.h"
 #include "NormalRendererComponent.h"
 #include "SpecularRendererComponent.h"
@@ -109,6 +110,12 @@ void MeshRenderer::loadShaderSetupItems()
 				item = new ShadowRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
 				this->shaderSetupItems[typeid(ShadowRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
 			}
+
+            if (lightManager->hasIBLData())
+            {
+                item = new IBLRendererShaderSetup{ this->shaderManager, this->graphicsWrapper };
+                this->shaderSetupItems[typeid(IBLRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
+            }
 		}
 		else
 		{
@@ -141,7 +148,9 @@ void MeshRenderer::render()
             // Matrix setup
             TransformComponent* transform = meshComponent->getTransform();
             const glm::mat4& modelMatrix = transform->getMatrix();
+            glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(modelMatrix)));
             this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
+            this->shaderManager->setMat3(this->program, ShaderVariables::NORMAL_MATRIX, &normalMatrix[0][0]);
 
             MeshData* meshData = meshComponent->mesh;
             this->graphicsWrapper->bindVAO(meshData->vao, meshData->vbo);

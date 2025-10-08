@@ -257,6 +257,18 @@ void OpenGLAPI::enableVertexBitangents()
 	glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getBitangentOffset());
 }
 
+void OpenGLAPI::activateTexture(uint32_t textureId, uint32_t unit)
+{
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+}
+
+void OpenGLAPI::activateCubeMapTexture(uint32_t textureId, uint32_t unit)
+{
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
+}
+
 void OpenGLAPI::activateGUITexture(uint32_t textureId)
 {
 	glActiveTexture(GL_TEXTURE0);
@@ -297,12 +309,6 @@ void OpenGLAPI::activateRoughnessTexture(uint32_t textureId)
 {
 	glActiveTexture(GL_TEXTURE6);
 	glBindTexture(GL_TEXTURE_2D, textureId);
-}
-
-void OpenGLAPI::activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap)
-{
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glBindTexture(cubeMap ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D, textureId);
 }
 
 void OpenGLAPI::setLineWidth(float width)
@@ -443,6 +449,91 @@ uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, v
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilterParam);
 
 	// XXX glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+	return result;
+}
+
+uint32_t OpenGLAPI::setupHdrTexture(int width, int height, int bpp, float* data, uint32_t unit, bool genMipmap)
+{
+	unsigned int result;
+	glGenTextures(1, &result);
+
+	glBindTexture(GL_TEXTURE_2D, result);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	return result;
+}
+
+uint32_t OpenGLAPI::setupHdrCubemap(int width, int height, int bpp, float* data, uint32_t unit, uint32_t faceSize, bool genMipmap)
+{
+	unsigned int result;
+	glGenTextures(1, &result);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, result);
+
+	for (unsigned int i = 0; i < 6; ++i)
+	{
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, faceSize, faceSize, 0, GL_RGB, GL_FLOAT, nullptr);
+	}
+
+	unsigned int tempTexture2D;
+	glGenTextures(1, &tempTexture2D);
+	glBindTexture(GL_TEXTURE_2D, tempTexture2D);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data);
+
+	const int FS = faceSize;
+
+	std::vector<int> offsets =
+	{
+		2 * FS, 1 * FS, // +X
+		0 * FS, 1 * FS, // -X
+		1 * FS, 0 * FS, // +Y
+		1 * FS, 2 * FS, // -Y
+		1 * FS, 1 * FS, // +Z
+		1 * FS, 3 * FS  // -Z
+	};
+
+	glBindTexture(GL_TEXTURE_CUBE_MAP, result);
+
+	uint32_t srcFBO{ 0 }, dstFBO{ 0 };
+	glGenFramebuffers(1, &srcFBO);
+	glGenFramebuffers(1, &dstFBO);
+
+	for (unsigned int i = 0; i < 6; ++i)
+	{
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, dstFBO);
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, result, 0);
+
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, srcFBO);
+		glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tempTexture2D, 0);
+
+		glBlitFramebuffer
+		(
+			offsets[i * 2], offsets[i * 2 + 1],
+			offsets[i * 2] + FS, offsets[i * 2 + 1] + FS,
+			0, 0, FS, FS,
+			GL_COLOR_BUFFER_BIT, GL_NEAREST
+		);
+	}
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	if (genMipmap)
+	{
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+	}
+
+	glDeleteTextures(1, &tempTexture2D);
 
 	return result;
 }
@@ -636,6 +727,11 @@ void OpenGLAPI::setVec3(uint32_t program, int location, const float* value)
 void OpenGLAPI::setVec4(uint32_t program, int location, const float* value)
 {
 	glUniform4fv(location, 1, value);
+}
+
+void OpenGLAPI::setMat3(uint32_t program, int location, const float* value)
+{
+	glUniformMatrix3fv(location, 1, GL_FALSE, value);
 }
 
 void OpenGLAPI::setMat4(uint32_t program, int location, const float* value)

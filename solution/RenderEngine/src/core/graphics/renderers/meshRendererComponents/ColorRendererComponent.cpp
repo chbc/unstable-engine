@@ -17,8 +17,8 @@ ColorRendererComponent::ColorRendererComponent(ShaderManager *shaderManager, AGr
 
 void ColorRendererComponent::onSceneLoaded(uint32_t program)
 {
-    this->shaderManager->setupUniformLocation(program, ShaderVariables::MATERIAL_COLOR);
-    this->shaderManager->setupAttributeLocation(program, ShaderVariables::IN_POSITION);
+    this->shaderManager->setupUniformLocation(program, ShaderVariables::MATERIAL_COLOR); // XXX APAGAR?
+    this->shaderManager->setupAttributeLocation(program, ShaderVariables::IN_POSITION);  // XXX APAGAR?
 }
 
 void ColorRendererComponent::setupShaderValues(MeshComponent *mesh, uint32_t program)

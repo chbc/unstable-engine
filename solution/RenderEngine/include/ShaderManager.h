@@ -73,6 +73,7 @@ private:
     void setVec3(uint32_t program, ShaderVariables::Type variableKey, const float *value);
     void setVec3(uint32_t program, const char *variable, const float *value);
     void setVec4(uint32_t program, ShaderVariables::Type variableKey, const float *value);
+    void setMat3(uint32_t program, ShaderVariables::Type variableKey, const float* value);
     void setMat4(uint32_t program, ShaderVariables::Type variableKey, const float *value);
     void setMat4(uint32_t program, const char *variable, const float *value);
 
@@ -102,6 +103,7 @@ friend class LitRendererLightsState;
 
 friend class BaseRendererShaderSetup;
 friend class LightRendererShaderSetup;
+friend class IBLRendererShaderSetup;
 friend class ShadowRendererShaderSetup;
 friend class ShadowRenderer;
 friend class PostProcessingRenderer;

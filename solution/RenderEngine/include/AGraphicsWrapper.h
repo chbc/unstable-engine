@@ -71,6 +71,8 @@ protected:
     virtual void clearDepthBuffer() =0;
     virtual void clearColorAndDepthBuffer() =0;
     virtual uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void *data, uint32_t unit, bool genMipmap) =0;
+    virtual uint32_t setupHdrTexture(int width, int height, int bpp, float* data, uint32_t unit, bool genMipmap) = 0;
+    virtual uint32_t setupHdrCubemap(int width, int height, int bpp, float* data, uint32_t unit, uint32_t faceSize, bool genMipmap) = 0;
     virtual uint32_t createTexture(uint32_t width, uint32_t height, uint32_t unit) =0;
 	virtual uint32_t createTexture(uint32_t width, uint32_t height) =0;
 	virtual uint32_t createFloatingPointTexture(uint32_t width, uint32_t height) = 0;
@@ -91,6 +93,7 @@ protected:
     virtual void setVec2(uint32_t program, int location, const float* value) = 0;
     virtual void setVec3(uint32_t program, int location, const float *value) =0;
     virtual void setVec4(uint32_t program, int location, const float *value) =0;
+    virtual void setMat3(uint32_t program, int location, const float* value) = 0;
     virtual void setMat4(uint32_t program, int location, const float *value) =0;
 
     virtual void enableShader(uint32_t program) =0;
@@ -104,7 +107,8 @@ protected:
     virtual void unbindFrameBuffer() =0;
     virtual void deleteFrameBuffer(uint32_t fbo) =0;
     virtual void setViewport(uint32_t width, uint32_t height) =0;
-    virtual void activateShadowMapTexture(uint32_t textureId, uint32_t unit, bool cubeMap = false) =0;
+    virtual void activateTexture(uint32_t textureId, uint32_t unit) =0;
+    virtual void activateCubeMapTexture(uint32_t textureId, uint32_t unit) = 0;
 	virtual void setLineWidth(float width) = 0;
     virtual void setPointSize(float size) = 0;
 
@@ -112,6 +116,7 @@ friend class RenderManager;
 friend class ShaderManager;
 friend class SingletonsManager;
 friend class TextureLoader;
+friend class HDRTextureLoader;
 friend class TextureCreator;
 friend class ABaseMeshLoader;
 friend class GuizmoLoader;
@@ -132,6 +137,7 @@ friend class AORendererComponent;
 friend class OutlineRendererComponent;
 friend class PBRRendererComponent;
 friend class ShadowRendererShaderSetup;
+friend class IBLRendererShaderSetup;
 
 friend class LitRendererLightsState;
 

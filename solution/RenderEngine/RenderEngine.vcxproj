@@ -376,9 +376,11 @@
     <ClCompile Include="src\core\graphics\renderers\DebugRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renderers\GuizmoRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\PBRRendererComponent.cpp" />
+    <ClCompile Include="src\core\graphics\renderers\shadersSetup\IBLRendererShaderSetup.cpp" />
     <ClCompile Include="src\core\graphics\shaders\EShaderComponent.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\GuizmoLoader.cpp" />
+    <ClCompile Include="src\core\io\assetsLoader\HDRTextureLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MaterialLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MeshLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\TextureLoader.cpp" />
@@ -411,6 +413,7 @@
     <ClCompile Include="src\core\wrappers\graphics\OpenGLESAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPIState.cpp" />
+    <ClCompile Include="src\core\wrappers\multimedia\hdr\STBIAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\SDLAndroidAPI.cpp" />
     <ClCompile Include="src\editors\controllers\EditorsController.cpp" />
     <ClCompile Include="src\editors\properties\AEditorProperty.cpp" />
@@ -599,6 +602,7 @@
     <ClInclude Include="include\ABaseTextureMaterialComponent.h" />
     <ClInclude Include="include\AEditorPopup.h" />
     <ClInclude Include="include\AEntityComponent.h" />
+    <ClInclude Include="include\AHDRTexturesWrapper.h" />
     <ClInclude Include="include\ApplicationStrategy.h" />
     <ClInclude Include="include\AssetsManager.h" />
     <ClInclude Include="include\Bounds.h" />
@@ -627,6 +631,9 @@
     <ClInclude Include="include\GuizmoComponent.h" />
     <ClInclude Include="include\GuizmoLoader.h" />
     <ClInclude Include="include\GuizmoRenderer.h" />
+    <ClInclude Include="include\HDRTextureLoader.h" />
+    <ClInclude Include="include\IBLData.h" />
+    <ClInclude Include="include\IBLRendererShaderSetup.h" />
     <ClInclude Include="include\ImGuiLib.h" />
     <ClInclude Include="include\ImportMeshPopup.h" />
     <ClInclude Include="include\LightsUBO.h" />
@@ -765,12 +772,14 @@
     <ClInclude Include="include\Vec3EditorProperty.h" />
     <ClInclude Include="include\SceneViewportCamera.h" />
     <ClInclude Include="include\ExternalFileDropHandler.h" />
+    <ClInclude Include="include\STBIAPI.h" />
     <ClInclude Include="thirdParties\imguizmo\ImGuizmo.h" />
     <ClInclude Include="thirdParties\imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="thirdParties\imgui\backends\imgui_impl_sdl2.h" />
     <ClInclude Include="thirdParties\imgui\imgui.h" />
     <ClInclude Include="thirdParties\imgui\imgui_internal.h" />
     <ClInclude Include="thirdParties\imgui\misc\cpp\imgui_stdlib.h" />
+    <ClInclude Include="thirdParties\stbi\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

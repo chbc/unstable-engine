@@ -10,9 +10,9 @@ namespace sre
 
 struct MaterialImportData
 {
-	std::unordered_map<ETextureMap::Type, std::string> texturePaths;
+	std::unordered_map<size_t, std::string> texturePaths;
 
-	static const char* getTypeString(ETextureMap::Type type)
+	static const char* getTypeString(size_t type)
 	{
 		switch(type)
 		{

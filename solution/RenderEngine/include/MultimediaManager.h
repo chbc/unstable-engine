@@ -3,6 +3,7 @@
 #include "ASingleton.h"
 #include "Timer.h"
 #include "AMultimediaWrapper.h"
+#include "AHDRTexturesWrapper.h"
 
 #include <glm/vec2.hpp>
 #include <string>
@@ -19,9 +20,10 @@ class GUIButtonComponent;
 class MultimediaManager : public ASingleton
 {
 private:
+	std::vector<GUIButtonComponent*> guiButtons;
 	UPTR<AMultimediaWrapper> multimediaWrapper;
 	UPTR<Timer> timer;
-	std::vector<GUIButtonComponent*> guiButtons;
+	UPTR<AHDRTexturesWrapper> hdrTexturesWrapper;
 
 protected:
     void init() override;
@@ -49,7 +51,8 @@ private:
     uint32_t stopTimer();
 	void delay();
 	uint32_t getLastFrameTime();
-	void *loadTexture(const std::string &filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp);
+	void* loadTexture(const std::string &filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp);
+	float* loadHdrTexture(const std::string& filePath, int* outWidth, int* outHeight, int* outBpp);
 	void saveTexture(unsigned char* pixels, const char* filePath, uint32_t width, uint32_t height);
 	void addGUIButton(GUIButtonComponent* guiButton);
 	void removeDestroyedEntities();
@@ -59,6 +62,7 @@ friend class AExecutionStrategy;
 friend class EditorStrategy;
 friend class ApplicationStrategy;
 friend class TextureLoader;
+friend class HDRTextureLoader;
 friend class SingletonsManager;
 friend class GUIButtonComponent;
 friend class TextureCreator;

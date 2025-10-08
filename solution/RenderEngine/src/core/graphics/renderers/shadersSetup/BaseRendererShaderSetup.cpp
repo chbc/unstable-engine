@@ -17,9 +17,10 @@ BaseRendererShaderSetup::BaseRendererShaderSetup(ShaderManager *arg_shaderManage
 
 void BaseRendererShaderSetup::onSceneLoaded(uint32_t program)
 {
-    this->shaderManager->setupUniformLocation(program, ShaderVariables::VIEW_MATRIX);
     this->shaderManager->setupUniformLocation(program, ShaderVariables::PROJECTION_MATRIX);
+    this->shaderManager->setupUniformLocation(program, ShaderVariables::VIEW_MATRIX);
     this->shaderManager->setupUniformLocation(program, ShaderVariables::MODEL_MATRIX);
+    this->shaderManager->setupUniformLocation(program, ShaderVariables::NORMAL_MATRIX);
 }
 
 void BaseRendererShaderSetup::setupShaderValues(uint32_t program)

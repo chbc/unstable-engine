@@ -15,7 +15,11 @@ PBRRendererComponent::PBRRendererComponent(ShaderManager *shaderManager, AGraphi
 
 void PBRRendererComponent::onSceneLoaded(uint32_t program)
 {
-	this->shaderManager->setupAttributeLocation(program, ShaderVariables::IN_POSITION);
+	this->shaderManager->setupAttributeLocation(program, ShaderVariables::IN_POSITION); // XXX APAGAR?
+	this->shaderManager->setupAttributeLocation(program, ShaderVariables::IN_TEXTURE_COORDS); // XXX APAGAR?
+	
+	this->shaderManager->setupUniformLocation(program, ShaderVariables::UV_OFFSET);
+	this->shaderManager->setupUniformLocation(program, ShaderVariables::UV_TILING);
 
 	this->shaderManager->setupUniformLocation(program, ShaderVariables::ALBEDO_TEXTURE);
 	this->shaderManager->setupUniformLocation(program, ShaderVariables::NORMAL_TEXTURE);
@@ -23,10 +27,7 @@ void PBRRendererComponent::onSceneLoaded(uint32_t program)
 	this->shaderManager->setupUniformLocation(program, ShaderVariables::ROUGHNESS_TEXTURE);
 	this->shaderManager->setupUniformLocation(program, ShaderVariables::AO_TEXTURE);
 
-	this->shaderManager->setupUniformLocation(program, ShaderVariables::UV_OFFSET);
-	this->shaderManager->setupUniformLocation(program, ShaderVariables::UV_TILING);
 	this->shaderManager->setupUniformLocation(program, ShaderVariables::NORMAL_FLIP_GREEN_CHANNEL);
-	this->shaderManager->setupAttributeLocation(program, ShaderVariables::IN_TEXTURE_COORDS);
 }
 
 void PBRRendererComponent::setupShaderValues(MeshComponent* mesh, uint32_t program)

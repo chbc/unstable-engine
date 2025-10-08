@@ -6,7 +6,7 @@
 namespace sre
 {
 
-Texture* TextureLoader::load(const std::string& filePath, ETextureMap::Type mapType)
+Texture* TextureLoader::load(const std::string& filePath, size_t mapType)
 {
     MultimediaManager* multimediaManager = SingletonsManager::getInstance()->get<MultimediaManager>();
     AGraphicsWrapper* graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();

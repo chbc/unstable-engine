@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "SingletonsManager.h"
 #include "AGraphicsWrapper.h"
+#include "STBIAPI.h"
 
 #ifdef __ANDROID__
 #include "SDLAndroidAPI.h"
@@ -26,6 +27,7 @@ void MultimediaManager::init()
 
 	this->multimediaWrapper->init();
 	this->timer = UPTR<Timer>{ new Timer{this->multimediaWrapper.get()} };
+	this->hdrTexturesWrapper = UPTR<AHDRTexturesWrapper>{ new STBIAPI{} };
 }
 
 void MultimediaManager::release()
@@ -87,6 +89,11 @@ uint32_t MultimediaManager::getLastFrameTime()
 void *MultimediaManager::loadTexture(const std::string& filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp)
 {
 	return this->multimediaWrapper->loadTexture(filePath, outWidth, outHeight, outBpp);
+}
+
+float* MultimediaManager::loadHdrTexture(const std::string& filePath, int* outWidth, int* outHeight, int* outBpp)
+{
+	return this->hdrTexturesWrapper->load(filePath, outWidth, outHeight, outBpp);
 }
 
 void MultimediaManager::saveTexture(unsigned char* pixels, const char* filePath, uint32_t width, uint32_t height)

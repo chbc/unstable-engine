@@ -4,6 +4,7 @@
 #include "PointLightComponent.h"
 #include "ASingleton.h"
 #include "LightsUBO.h"
+#include "IBLData.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -17,17 +18,20 @@ class Entity;
 class LightManager : public ASingleton
 {
 private:
-    std::vector<DirectionalLightComponent *> directionalLights;
-    std::vector<PointLightComponent *> pointLights;
+    std::vector<DirectionalLightComponent*> directionalLights;
+    std::vector<PointLightComponent*> pointLights;
     glm::vec3 ambientLightColor{ 0.15f };
 	class AGraphicsWrapper* graphicsWrapper{ nullptr };
     LightsUBO lightsUBO;
 	uint32_t ubo{ 0 };
+    IBLData iblData;
 
 public:
     void setAmbientLightColor(const glm::vec3 &ambientLightColor);
     bool hasAnyLight();
     bool hasAnyShadowCaster();
+    inline const IBLData& getIBLData() { return iblData; }
+    bool hasIBLData() const;
 
 protected:
     void init() override;
@@ -38,6 +42,7 @@ private:
 	void updateUniformBuffer();
     void updateDirectionalLightsUBO();
 	void updatePointLightsUBO();
+    void loadIBL();
     void removeDestroyedEntities();
     void cleanUp();
 

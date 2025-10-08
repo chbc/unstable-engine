@@ -5,8 +5,6 @@
 namespace sre
 {
 
-class AGraphicsWrapper;
-
 class TextureLoader
 {
 private:

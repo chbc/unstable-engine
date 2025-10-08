@@ -1,5 +1,4 @@
-#ifndef _AMULTIMEDIA_WRAPPER_H_
-#define _AMULTIMEDIA_WRAPPER_H_
+#pragma once
 
 #include "memory_aliases.h"
 #include "EExecutionMode.h"
@@ -38,4 +37,3 @@ friend class Timer;
 };
 
 } // namespace
-#endif

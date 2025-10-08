@@ -245,6 +245,12 @@ void ShaderManager::setVec4(uint32_t program, ShaderVariables::Type variableKey,
     this->graphicsWrapper->setVec4(program, shader->variableLocations[variableKey], value);
 }
 
+void ShaderManager::setMat3(uint32_t program, ShaderVariables::Type variableKey, const float* value)
+{
+    const UPTR<Shader>& shader = this->shaders[program];
+    this->graphicsWrapper->setMat3(program, shader->variableLocations[variableKey], value);
+}
+
 void ShaderManager::setMat4(uint32_t program, ShaderVariables::Type variableKey, const float *value)
 {
     const UPTR<Shader>& shader = this->shaders[program];

@@ -42,7 +42,7 @@ void ShadowRendererShaderSetup::setupShaderValues(uint32_t program)
     {
         DirectionalLightComponent *light = this->lightManager->directionalLights[i];
 
-        this->graphicsWrapper->activateShadowMapTexture(light->shadowData->textureId, light->shadowData->textureUnit);
+        this->graphicsWrapper->activateTexture(light->shadowData->textureId, light->shadowData->textureUnit);
 
         std::sprintf(variable, DIRECTIONAL_SHADOW_MAPS_FORMAT, i);
         this->shaderManager->setInt(program, variable, light->shadowData->textureUnit);
@@ -54,7 +54,7 @@ void ShadowRendererShaderSetup::setupShaderValues(uint32_t program)
     for (uint32_t i = 0; i < this->lightManager->pointLights.size(); i++)
     {
         PointLightComponent *light = this->lightManager->pointLights[i];
-        this->graphicsWrapper->activateShadowMapTexture(light->shadowData->textureId, light->shadowData->textureUnit, true);
+        this->graphicsWrapper->activateCubeMapTexture(light->shadowData->textureId, light->shadowData->textureUnit);
 
         std::sprintf(variable, POINT_SHADOW_MAPS_FORMAT, i);
         this->shaderManager->setInt(program, variable, light->shadowData->textureUnit);
