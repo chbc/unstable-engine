@@ -4,7 +4,7 @@
 namespace sre
 {
 
-AMaterialComponent::AMaterialComponent(Material* arg_material) : material(arg_material)
+AMaterialComponent::AMaterialComponent(ABaseMaterial* arg_material) : material(arg_material)
 { }
 
 void AMaterialComponent::addEditorProperty(AEditorProperty* editorProperty)
@@ -15,7 +15,7 @@ void AMaterialComponent::addEditorProperty(AEditorProperty* editorProperty)
 	this->editorProperties.emplace_back(editorProperty);
 }
 
-AMaterialComponent* AMaterialComponent::Create(const char* className, Material* material)
+AMaterialComponent* AMaterialComponent::Create(const char* className, ABaseMaterial* material)
 {
 	MaterialComponentTypes* types = MaterialComponentTypes::getInstance();
 	size_t key = std::hash<std::string>{}(className);

@@ -19,7 +19,7 @@ protected:
 	uint64_t id{ 0 };
 
 public:
-	TextureEditorProperty(const char* title, Texture** arg_texture, ETextureMap::Type arg_textureMapType);
+	TextureEditorProperty(const std::string& title, Texture** arg_texture, ETextureMap::Type arg_textureMapType);
 	void setTextureId(void* arg_id);
 
 private:

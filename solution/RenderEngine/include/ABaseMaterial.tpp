@@ -4,7 +4,7 @@ namespace sre
 {
 
 template <typename T>
-T* Material::addComponent()
+T* ABaseMaterial::addComponent()
 {
     T* newComponent{ nullptr };
 
@@ -19,7 +19,7 @@ T* Material::addComponent()
 }
 
 template<typename T>
-void Material::removeComponent()
+void ABaseMaterial::removeComponent()
 {
     if (this->hasComponent<T>())
     {
@@ -30,7 +30,7 @@ void Material::removeComponent()
 }
 
 template <typename T>
-T* Material::getComponent()
+T* ABaseMaterial::getComponent()
 {
     T* component{ nullptr };
 
@@ -44,7 +44,7 @@ T* Material::getComponent()
 }
 
 template<typename T>
-bool Material::hasComponent()
+bool ABaseMaterial::hasComponent()
 {
     uint16_t id = T::ID;
     return (this->componentsMap.count(id) > 0);

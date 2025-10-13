@@ -23,17 +23,17 @@
 namespace sre
 {
 
-class Material;
+class ABaseMaterial;
 
 class SRE_API AMaterialComponent
 {
 
 protected:
-    Material* material;
+    ABaseMaterial* material;
     std::vector<SPTR<AEditorProperty>> editorProperties;
 
 public:
-    AMaterialComponent(Material* arg_material);
+    AMaterialComponent(ABaseMaterial* arg_material);
     virtual ~AMaterialComponent() { }
     virtual const char* getClassName() = 0;
 
@@ -54,10 +54,10 @@ protected:
     virtual void onPropertyChanged() {}
     void addEditorProperty(AEditorProperty* editorProperty);
 
-    static AMaterialComponent* Create(const char* className, Material* material);
+    static AMaterialComponent* Create(const char* className, ABaseMaterial* material);
 
 friend class MaterialEditorProperty;
-friend class Material;
+friend class ABaseMaterial;
 friend class MaterialLoader;
 };
 

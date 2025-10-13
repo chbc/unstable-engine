@@ -5,7 +5,7 @@ namespace sre
 {
 IMPLEMENT_MATERIAL_COMPONENT(LitMaterialComponent, LIT_MATERIAL)
 
-LitMaterialComponent::LitMaterialComponent(Material* material) : AMaterialComponent(material), shininess(50)
+LitMaterialComponent::LitMaterialComponent(ABaseMaterial* material) : AMaterialComponent(material), shininess(50)
 {
 	this->addEditorProperty(new FloatEditorProperty{ "Shininess", &this->shininess });
 }

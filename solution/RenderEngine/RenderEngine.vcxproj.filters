@@ -486,6 +486,15 @@
     <ClCompile Include="src\core\graphics\renderers\shadersSetup\IBLRendererShaderSetup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\skyboxes\SkyboxComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\graphics\renderers\SkyboxRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\CustomMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1244,10 +1253,19 @@
     <ClInclude Include="include\IBLRendererShaderSetup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\SkyboxComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SkyboxRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CustomMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Entity.tpp" />
-    <None Include="include\Material.tpp" />
+    <None Include="include\ABaseMaterial.tpp" />
     <None Include="include\MeshRenderer.tpp" />
     <None Include="include\ShaderContentFactory.tpp" />
     <None Include="include\MessagesManager.tpp" />

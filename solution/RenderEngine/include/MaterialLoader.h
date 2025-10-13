@@ -21,7 +21,8 @@ private:
 	void serializeComponent(c4::yml::NodeRef& componentNode, AMaterialComponent* component);
 	ABaseMaterial* loadStandardMaterial(const std::string& filePath, c4::yml::ConstNodeRef& root);
 	ABaseMaterial* loadCustomMaterial(const std::string& filePath, c4::yml::ConstNodeRef& root);
-	void deserializeComponent(c4::yml::ConstNodeRef& componentNode, Material* material);
+	void deserializeComponent(c4::yml::ConstNodeRef& componentNode, ABaseMaterial* material);
+	void deserializeCustomComponent(c4::yml::ConstNodeRef& componentNode, ABaseMaterial* material);
 };
 
 } // namespace

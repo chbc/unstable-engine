@@ -1,4 +1,4 @@
 Material Type: Custom
 Shaders:
-  VERTEX: engine\customShaders\red.vert
-  FRAGMENT: engine\customShaders\red.frag
+  Vertex: engine\customShaders\red.vert
+  Fragment: engine\customShaders\red.frag

@@ -2,7 +2,6 @@
 #include "Entity.h"
 #include "MeshComponent.h"
 #include "Material.h"
-#include "CustomMaterial.h"
 #include "GUIImageComponent.h"
 #include "GUITextComponent.h"
 #include "CameraComponent.h"
@@ -90,7 +89,7 @@ void RenderManager::addMesh(MeshComponent* mesh)
             this->addMesh(this->translucentMeshRenderers, mesh);
         }
 
-        if (static_cast<Material*>(mesh->getMaterial())->castShadow)
+        if (static_cast<Material*>(mesh->getMaterial())->getCastShadow())
         {
             this->initShadowRenderer();
             this->shadowRenderer->addItem(mesh);

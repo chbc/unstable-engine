@@ -5,14 +5,12 @@
 namespace sre
 {
 
-class Texture;
-
 class SRE_API DiffuseMaterialComponent : public ABaseTextureMaterialComponent
 {
 DECLARE_MATERIAL_COMPONENT()
 	
 public:
-	DiffuseMaterialComponent(Material *material);
+	DiffuseMaterialComponent(ABaseMaterial *material);
 };
 
 } // namespace

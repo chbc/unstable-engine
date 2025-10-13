@@ -11,7 +11,7 @@ namespace sre
 
 IMPLEMENT_MATERIAL_COMPONENT(PBRMaterialComponent, PBR_MATERIAL)
 
-PBRMaterialComponent::PBRMaterialComponent(Material* material)
+PBRMaterialComponent::PBRMaterialComponent(ABaseMaterial* material)
 	: AMaterialComponent(material)
 {
 	this->addEditorProperty(new TextureEditorProperty{ "Albedo", &this->albedoTexture, ETextureMap::DIFFUSE });

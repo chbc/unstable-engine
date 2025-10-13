@@ -6,7 +6,7 @@ namespace sre
 {
 IMPLEMENT_MATERIAL_COMPONENT(DiffuseMaterialComponent, DIFFUSE_MATERIAL)
 
-DiffuseMaterialComponent::DiffuseMaterialComponent(Material *material)
+DiffuseMaterialComponent::DiffuseMaterialComponent(ABaseMaterial *material)
     : ABaseTextureMaterialComponent(material)
 {
     this->addEditorProperty(new TextureEditorProperty{ "Diffuse", &this->texture, ETextureMap::DIFFUSE });

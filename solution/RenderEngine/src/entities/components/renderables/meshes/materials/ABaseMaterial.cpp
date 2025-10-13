@@ -1,6 +1,8 @@
 #include "ABaseMaterial.h"
 #include "FileUtils.h"
 #include "StringEditorProperty.h"
+#include "AMaterialComponent.h"
+#include <cassert>
 
 namespace sre
 {
@@ -12,6 +14,20 @@ ABaseMaterial::ABaseMaterial(const std::string& arg_filePath, EMaterialType arg_
     std::string typeString = (this->type == EMaterialType::STANDARD) ? "Standard" : "Custom";
     
     this->addEditorProperty(new StringEditorProperty{ "Material Type", typeString });
+}
+
+AMaterialComponent* ABaseMaterial::addComponent(const char* className)
+{
+    AMaterialComponent* newComponent{ nullptr };
+
+    newComponent = AMaterialComponent::Create(className, this);
+    uint16_t id = newComponent->getId();
+    assert(this->componentsMap.count(id) == 0);
+
+    this->componentsMap.emplace(id, newComponent);
+    this->componentsBitset[id] = true;
+
+    return newComponent;
 }
 
 bool ABaseMaterial::isStandard()

@@ -10,7 +10,7 @@ class SRE_API NormalMaterialComponent : public ABaseTextureMaterialComponent
 DECLARE_MATERIAL_COMPONENT()
 
 public:
-	NormalMaterialComponent(Material *material);
+	NormalMaterialComponent(ABaseMaterial *material);
 };
 
 } // namespace

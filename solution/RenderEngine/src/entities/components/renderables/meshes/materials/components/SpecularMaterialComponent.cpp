@@ -6,7 +6,7 @@ namespace sre
 {
 IMPLEMENT_MATERIAL_COMPONENT(SpecularMaterialComponent, SPECULAR_MATERIAL)
 
-SpecularMaterialComponent::SpecularMaterialComponent(Material *material)
+SpecularMaterialComponent::SpecularMaterialComponent(ABaseMaterial *material)
 	: ABaseTextureMaterialComponent(material)
 {
 	this->addEditorProperty(new TextureEditorProperty{ "Specular", &this->texture, ETextureMap::SPECULAR });

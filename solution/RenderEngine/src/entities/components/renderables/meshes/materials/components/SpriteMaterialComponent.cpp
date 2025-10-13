@@ -6,7 +6,7 @@ namespace sre
 {
 IMPLEMENT_MATERIAL_COMPONENT(SpriteMaterialComponent, SPRITE_MATERIAL)
 
-SpriteMaterialComponent::SpriteMaterialComponent(Material* material)
+SpriteMaterialComponent::SpriteMaterialComponent(ABaseMaterial* material)
 	: ABaseTextureMaterialComponent(material)
 {
 	this->addEditorProperty(new TextureEditorProperty{ "Sprite", &this->texture, ETextureMap::GUI });

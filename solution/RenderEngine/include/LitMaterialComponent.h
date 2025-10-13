@@ -1,5 +1,4 @@
-#ifndef _LIT_MATERIAL_COMPONENT_H_
-#define _LIT_MATERIAL_COMPONENT_H_
+#pragma once
 
 #include "AMaterialComponent.h"
 
@@ -14,12 +13,10 @@ private:
     float shininess;
 
 public:
-    LitMaterialComponent(Material* material);
+    LitMaterialComponent(ABaseMaterial* material);
     
     void setShininess(float shininess);
     float getShininess();
 };
 
 } // namespace
-
-#endif

@@ -10,7 +10,7 @@ class SRE_API SpriteMaterialComponent : public ABaseTextureMaterialComponent
 DECLARE_MATERIAL_COMPONENT()
 
 public:
-	SpriteMaterialComponent(Material* material);
+	SpriteMaterialComponent(ABaseMaterial* material);
 };
 	
 } // namespace

@@ -16,7 +16,7 @@ private:
 	glm::vec4 color{ 0.0f, 0.0f, 0.0f, 1.0f };
 
 public:
-	ColorMaterialComponent(Material *material);
+	ColorMaterialComponent(ABaseMaterial *material);
 
 	void setColor(const glm::vec4 &color);
 	glm::vec4 getColor();

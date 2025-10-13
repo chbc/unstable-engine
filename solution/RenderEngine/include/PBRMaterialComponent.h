@@ -5,7 +5,7 @@
 namespace sre
 {
 
-class Material;
+class ABaseMaterial;
 class Texture;
 
 class SRE_API PBRMaterialComponent : public AMaterialComponent
@@ -20,7 +20,7 @@ protected:
 	Texture* aoTexture{ nullptr };
 
 public:
-	PBRMaterialComponent(Material* material);
+	PBRMaterialComponent(ABaseMaterial* material);
 	~PBRMaterialComponent();
 
 	uint32_t getAlbedoTextureID() const;

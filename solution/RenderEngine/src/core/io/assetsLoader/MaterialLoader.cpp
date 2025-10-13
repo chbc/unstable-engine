@@ -4,6 +4,7 @@
 #include "CustomMaterial.h"
 #include "AMaterialComponent.h"
 #include "ColorMaterialComponent.h"
+#include "CustomMaterialComponent.h"
 
 namespace sre
 {
@@ -95,6 +96,7 @@ ABaseMaterial* MaterialLoader::loadStandardMaterial(const std::string& filePath,
 
 ABaseMaterial* MaterialLoader::loadCustomMaterial(const std::string& filePath, c4::yml::ConstNodeRef& root)
 {
+	// Shaders
 	c4::yml::ConstNodeRef& shadersNode = root["Shaders"];
 	ShaderPathsMap shaderPaths;
 	for (c4::yml::ConstNodeRef itemNode : shadersNode.children())
@@ -104,25 +106,50 @@ ABaseMaterial* MaterialLoader::loadCustomMaterial(const std::string& filePath, c
 		std::string key = keyStream.str();
 		std::string valuePath;
 		itemNode >> valuePath;
-		if (key == "VERTEX")
+		if (key == "Vertex")
 		{
 			shaderPaths[EShaderComponent::VERTEX] = valuePath;
 		}
-		else if (key == "FRAGMENT")
+		else if (key == "Fragment")
 		{
 			shaderPaths[EShaderComponent::FRAGMENT] = valuePath;
 		}
-		else if (key == "GEOMETRY")
+		else if (key == "Geometry")
 		{
 			shaderPaths[EShaderComponent::GEOMETRY] = valuePath;
 		}
 	}
 
+	/*
+	// Textures
+	c4::yml::ConstNodeRef &texturesNode = root["Textures"];
+	TexturesMap texturesMap;
+	for (c4::yml::ConstNodeRef itemNode : shadersNode.children())
+	{
+		std::ostringstream keyStream;
+		keyStream << itemNode.key();
+		std::string key = keyStream.str();
+		std::string valuePath;
+		itemNode >> valuePath;
+	
+		texturesMap[key] = valuePath;
+	}
+	*/
+
 	CustomMaterial* result = new CustomMaterial{ filePath, shaderPaths };
+	if (root.has_child("Components"))
+	{
+		c4::yml::ConstNodeRef& componentsNode = root["Components"];
+		for (c4::yml::ConstNodeRef componentNode : componentsNode.children())
+		{
+			this->deserializeCustomComponent(componentNode, result);
+		}
+	}
+
 	return result;
 }
 
-void MaterialLoader::deserializeComponent(c4::yml::ConstNodeRef& componentNode, Material* material)
+void MaterialLoader::deserializeComponent(c4::yml::ConstNodeRef& componentNode, ABaseMaterial* material)
 {
 	std::ostringstream keyStream;
 	keyStream << componentNode.key();
@@ -142,6 +169,23 @@ void MaterialLoader::deserializeComponent(c4::yml::ConstNodeRef& componentNode, 
 	{
 		c4::yml::ConstNodeRef& propertyNode = componentNode[property->title.c_str()];
 		property->deserialize(propertyNode);
+	}
+}
+
+void MaterialLoader::deserializeCustomComponent(c4::yml::ConstNodeRef& componentNode, ABaseMaterial* material)
+{
+	std::ostringstream keyStream;
+	keyStream << componentNode.key();
+	std::string type = keyStream.str();
+
+	CustomMaterialComponent* component = static_cast<CustomMaterialComponent*>(material->addComponent(type.c_str()));
+	for (c4::yml::ConstNodeRef& propertyNode : componentNode.children())
+	{
+		std::ostringstream uniformStream;
+		uniformStream << propertyNode.key();
+
+		AEditorProperty* editorProperty = component->addTextureProperty(uniformStream.str());
+		editorProperty->deserialize(propertyNode);
 	}
 }
 

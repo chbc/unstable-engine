@@ -1,10 +1,11 @@
 #include "CustomMaterial.h"
 #include "StringEditorProperty.h"
+#include "TextureEditorProperty.h"
 
 namespace sre
 {
 
-CustomMaterial::CustomMaterial(const std::string& arg_filePath, ShaderPathsMap& arg_shaderPaths)
+CustomMaterial::CustomMaterial(const std::string& arg_filePath, const ShaderPathsMap& arg_shaderPaths)
 	: ABaseMaterial(arg_filePath, EMaterialType::CUSTOM), shaderPaths(arg_shaderPaths)
 {
 	for (const auto& item : this->shaderPaths)

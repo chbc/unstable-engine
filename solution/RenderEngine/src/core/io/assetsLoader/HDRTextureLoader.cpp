@@ -7,7 +7,7 @@
 namespace sre
 {
 
-Texture* HDRTextureLoader::load(const std::string& filePath, size_t mapType)
+Texture* HDRTextureLoader::load(const std::string& filePath, ETextureMap::Type mapType)
 {
     MultimediaManager* multimediaManager = SingletonsManager::getInstance()->get<MultimediaManager>();
     AGraphicsWrapper* graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();

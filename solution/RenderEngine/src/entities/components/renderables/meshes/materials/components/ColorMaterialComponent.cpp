@@ -9,7 +9,7 @@ namespace sre
 
 IMPLEMENT_MATERIAL_COMPONENT(ColorMaterialComponent, COLOR_MATERIAL)
 
-ColorMaterialComponent::ColorMaterialComponent(Material *material) : AMaterialComponent(material)
+ColorMaterialComponent::ColorMaterialComponent(ABaseMaterial *material) : AMaterialComponent(material)
 {
 	this->color = glm::vec4{ 1.0f };
 

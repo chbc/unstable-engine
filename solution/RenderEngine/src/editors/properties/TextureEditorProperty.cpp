@@ -9,7 +9,7 @@
 namespace sre
 {
 
-TextureEditorProperty::TextureEditorProperty(const char* title, Texture** arg_texture, ETextureMap::Type arg_textureMapType)
+TextureEditorProperty::TextureEditorProperty(const std::string& title, Texture** arg_texture, ETextureMap::Type arg_textureMapType)
 	: AEditorProperty(title), texture(arg_texture), textureMapType(arg_textureMapType)
 { }
 

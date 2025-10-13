@@ -6,7 +6,7 @@ namespace sre
 {
 IMPLEMENT_MATERIAL_COMPONENT(AmbientOcclusionMaterialComponent, AO_MATERIAL)
 
-AmbientOcclusionMaterialComponent::AmbientOcclusionMaterialComponent(Material *material)
+AmbientOcclusionMaterialComponent::AmbientOcclusionMaterialComponent(ABaseMaterial *material)
 	: ABaseTextureMaterialComponent(material)
 {
 	this->addEditorProperty(new TextureEditorProperty{ "Ambient Occlusion", &this->texture, ETextureMap::AMBIENT_OCCLUSION });

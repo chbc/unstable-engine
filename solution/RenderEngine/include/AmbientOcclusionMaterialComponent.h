@@ -10,7 +10,7 @@ class SRE_API AmbientOcclusionMaterialComponent : public ABaseTextureMaterialCom
 DECLARE_MATERIAL_COMPONENT()
 	
 public:
-	AmbientOcclusionMaterialComponent(Material *material);
+	AmbientOcclusionMaterialComponent(ABaseMaterial *material);
 };
 
 } // namespace

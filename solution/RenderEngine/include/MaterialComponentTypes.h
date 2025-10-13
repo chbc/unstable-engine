@@ -7,8 +7,8 @@ namespace sre
 {
 
 class AMaterialComponent;
-class Material;
-using CreateMaterialObjectFunc = std::function<AMaterialComponent* (Material*)>;
+class ABaseMaterial;
+using CreateMaterialObjectFunc = std::function<AMaterialComponent* (ABaseMaterial*)>;
 
 class MaterialComponentTypes
 {
@@ -36,7 +36,7 @@ public:
     void addType(const char* className)
     {
         size_t key = std::hash<std::string>{}(className);
-        typesMap[key] = [](Material* material) { return new Type(material); };
+        typesMap[key] = [](ABaseMaterial* material) { return new Type(material); };
     }
 
 friend class AMaterialComponent;

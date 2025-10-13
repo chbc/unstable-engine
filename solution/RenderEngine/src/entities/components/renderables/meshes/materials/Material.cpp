@@ -16,23 +16,14 @@ Material::Material(std::string arg_filePath) : ABaseMaterial(arg_filePath, EMate
     this->addComponent<ColorMaterialComponent>();
 }
 
-AMaterialComponent* Material::addComponent(const char* className)
-{
-    AMaterialComponent* newComponent{ nullptr };
-
-    newComponent = AMaterialComponent::Create(className, this);
-    uint16_t id = newComponent->getId();
-    assert(this->componentsMap.count(id) == 0);
-
-    this->componentsMap.emplace(id, newComponent);
-    this->componentsBitset[id] = true;
-
-    return newComponent;
-}
-
 void Material::setCastShadow(bool value)
 {
 	this->castShadow = value;
+}
+
+bool Material::getCastShadow()
+{
+    return this->castShadow;
 }
 
 void Material::setReceivesLight(bool value)

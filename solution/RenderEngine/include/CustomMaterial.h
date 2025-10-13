@@ -8,6 +8,8 @@
 namespace sre
 {
 
+class Texture;
+
 using ShaderPathsMap = std::unordered_map<EShaderComponent::Type, std::string>;
 
 class CustomMaterial : public ABaseMaterial
@@ -16,7 +18,7 @@ private:
 	ShaderPathsMap shaderPaths;
 
 public:
-	CustomMaterial(const std::string& arg_filePath, ShaderPathsMap& arg_shaderPaths);
+	CustomMaterial(const std::string& arg_filePath, const ShaderPathsMap& arg_shaderPaths);
 	const ShaderPathsMap& getShaderFilePaths() const;
 };
 

@@ -5,13 +5,16 @@
 
 namespace sre
 {
-ABaseTextureMaterialComponent::ABaseTextureMaterialComponent(Material* material)
+ABaseTextureMaterialComponent::ABaseTextureMaterialComponent(ABaseMaterial* material)
     : AMaterialComponent(material), texture(nullptr) {}
 
 ABaseTextureMaterialComponent::~ABaseTextureMaterialComponent()
 {
-	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-	assetsManager->releaseTexture(this->texture);
+	if (this->texture)
+	{
+		AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+		assetsManager->releaseTexture(this->texture);
+	}
 }
 
 uint32_t ABaseTextureMaterialComponent::getTextureID() const

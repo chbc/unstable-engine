@@ -8,7 +8,7 @@ namespace sre
 class HDRTextureLoader
 {
 private:
-    Texture* load(const std::string& filePath, size_t mapType);
+    Texture* load(const std::string& filePath, ETextureMap::Type mapType);
 
 friend class AssetsManager;
 };

@@ -10,7 +10,7 @@ class SRE_API SpecularMaterialComponent : public ABaseTextureMaterialComponent
 DECLARE_MATERIAL_COMPONENT()
 	
 public:
-	SpecularMaterialComponent(Material *material);
+	SpecularMaterialComponent(ABaseMaterial *material);
 };
 
 } // namespace

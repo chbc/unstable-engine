@@ -377,6 +377,7 @@
     <ClCompile Include="src\core\graphics\renderers\GuizmoRenderer.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\PBRRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renderers\shadersSetup\IBLRendererShaderSetup.cpp" />
+    <ClCompile Include="src\core\graphics\renderers\SkyboxRenderer.cpp" />
     <ClCompile Include="src\core\graphics\shaders\EShaderComponent.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\GuizmoLoader.cpp" />
@@ -450,10 +451,12 @@
     <ClCompile Include="src\entities\components\renderables\meshes\materials\ABaseMaterial.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\ABaseTextureMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp" />
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\CustomMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\MaterialComponentTypes.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\PBRMaterialComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\meshes\materials\CustomMaterial.cpp" />
+    <ClCompile Include="src\entities\components\renderables\skyboxes\SkyboxComponent.cpp" />
     <ClCompile Include="src\entities\EntityTypes.cpp" />
     <ClCompile Include="src\executionStrategies\AExecutionStrategy.cpp" />
     <ClCompile Include="src\executionStrategies\ApplicationStrategy.cpp" />
@@ -608,6 +611,7 @@
     <ClInclude Include="include\Bounds.h" />
     <ClInclude Include="include\ColorMeshData.h" />
     <ClInclude Include="include\CustomMaterial.h" />
+    <ClInclude Include="include\CustomMaterialComponent.h" />
     <ClInclude Include="include\CustomRenderer.h" />
     <ClInclude Include="include\EditorScene.h" />
     <ClInclude Include="include\EDrawMode.h" />
@@ -752,6 +756,8 @@
     <ClInclude Include="include\ShadowRendererShaderSetup.h" />
     <ClInclude Include="include\SinglePassRendererComponent.h" />
     <ClInclude Include="include\SingletonsManager.h" />
+    <ClInclude Include="include\SkyboxComponent.h" />
+    <ClInclude Include="include\SkyboxRenderer.h" />
     <ClInclude Include="include\SpecularMaterialComponent.h" />
     <ClInclude Include="include\SpecularRendererComponent.h" />
     <ClInclude Include="include\SpriteMaterialComponent.h" />
@@ -784,7 +790,7 @@
   <ItemGroup>
     <None Include="cpp.hint" />
     <None Include="include\Entity.tpp" />
-    <None Include="include\Material.tpp" />
+    <None Include="include\ABaseMaterial.tpp" />
     <None Include="include\MeshRenderer.tpp" />
     <None Include="include\MessagesManager.tpp" />
     <None Include="include\ShaderContentFactory.tpp" />

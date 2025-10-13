@@ -22,6 +22,7 @@ enum Type : std::size_t
     IBL_IRRADIANCE,
     IBL_PREFILTER,
     SHADOW,
+    CUSTOM,
     EMPTY
 };
 

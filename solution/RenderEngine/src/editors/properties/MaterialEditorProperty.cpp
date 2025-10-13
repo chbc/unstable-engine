@@ -102,10 +102,11 @@ void MaterialEditorProperty::copy(AEditorProperty* destination)
 void MaterialEditorProperty::reloadMaterial(const char* filePath)
 {
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-	assetsManager->releaseMaterial(*this->value);
+	ABaseMaterial* oldMaterial = *this->value;
 	*this->value = assetsManager->loadMaterial(filePath);
 	
 	this->onPropertyChanged();
+	assetsManager->releaseMaterial(oldMaterial);
 }
 
 } // namespace
