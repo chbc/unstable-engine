@@ -267,6 +267,10 @@ EAssetType getAssetType(const std::string& filePath)
 		{
 			result = EAssetType::TEXTURE;
 		}
+		else if (extension == ".hdr")
+		{
+			result = EAssetType::HDR_TEXTURE;
+		}
 		else if (extension == ".mesh")
 		{
 			result = EAssetType::MESH;

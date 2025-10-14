@@ -32,6 +32,7 @@ public:
     SRE_API Entity* createOrthoCamera(Entity* parent = nullptr);
     SRE_API DirectionalLightComponent* createDirectionalLight(const std::string& name = "", Entity* parent = nullptr);
     SRE_API PointLightComponent* createPointLight(const std::string& name = "", Entity* parent = nullptr);
+	SRE_API Entity* createSkybox(const std::string& meshFilePath, const std::string& name = "", Entity* parent = nullptr);
     SRE_API Entity* createGUIImageEntity(const std::string& filePath, const std::string& name = "");
     SRE_API Entity* createGUIImageEntity(const std::string& filePath, const glm::vec2& normalizedSize, const std::string& name = "");
     SRE_API Entity* createGUIImageEntityFromAtlas(const std::string& filePath, const std::string& imageId, const std::string& name = "");
@@ -39,7 +40,6 @@ public:
 	SRE_API Entity* raycastFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize, Entity* parentEntity, float maxDistance = 1000);
     SRE_API Entity* raycast(const Ray& ray, Entity* parentEntity = nullptr, float maxDistance = 1000);
     SRE_API Scene* getEditorScene();
-    SRE_API Entity* createMeshEntity(Model* model, const char* meshName = "", Entity* parent = nullptr);
 
 	void addToRenderer(Entity* entity);
 

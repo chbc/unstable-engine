@@ -85,6 +85,16 @@ uint32_t ShaderManager::loadDirectionalLightDepthShader()
     return this->loadShader(vertexContent, fragmentContent);
 }
 
+uint32_t ShaderManager::loadSkyboxShader()
+{
+    std::string vertexContent;
+    std::string fragmentContent;
+
+    ShaderContentFactory contentFactory;
+
+    return this->loadShader(vertexContent, fragmentContent);
+}
+
 uint32_t ShaderManager::loadPostProcessingShader(PostProcessingComponent* component)
 {
 	std::string vertexContent;

@@ -94,16 +94,13 @@ bool MeshComponent::isOpaque()
     return this->opaque;
 }
 
-void MeshComponent::load(Model* model, const char* meshName)
+void MeshComponent::load(Model* model, ABaseMaterial* arg_material, const char* meshName)
 {
     this->mesh = model->getMesh(meshName);
 	this->modelPath = model->getFilePath();
     this->bounds.setup(this->mesh->vertexData);
 
-    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
-    AssetsManager* assetsManager = singletonsManager->get<AssetsManager>();
-
-    this->material = assetsManager->loadMaterial("engine\\media\\DefaultMaterial.mat");
+    this->material = arg_material;
 }
 
 void MeshComponent::onPropertyDeserialized()

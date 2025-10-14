@@ -19,6 +19,7 @@ class GUIImageComponent;
 class GUITextComponent;
 class CameraComponent;
 class GuizmoComponent;
+class SkyboxComponent;
 
 class MeshRenderer;
 class ShadowRenderer;
@@ -26,6 +27,7 @@ class GUIRenderer;
 class DebugRenderer;
 class GuizmoRenderer;
 class CustomRenderer;
+class SkyboxRenderer;
 class PostProcessingRenderer;
 
 struct MeshData2D;
@@ -47,6 +49,7 @@ private:
     SPTR<GUIRenderer> guiRenderer;
 	SPTR<DebugRenderer> debugRenderer;
 	SPTR<GuizmoRenderer> guizmoRenderer;
+	SPTR<SkyboxRenderer> skyboxRenderer;
 	SPTR<PostProcessingRenderer> postProcessingRenderer;
 
     CameraComponent* applicationCamera{ nullptr };
@@ -68,6 +71,7 @@ private:
     void addGUITextComponent(GUITextComponent* guiComponent);
 	void addGuizmoComponent(GuizmoComponent* guizmoComponent);
 	void addDebugBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color);
+    void addSkybox(SkyboxComponent* mesh);
     void initGUIRenderer();
     void initShadowRenderer();
 

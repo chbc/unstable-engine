@@ -116,6 +116,7 @@ void EditorMenuBar::drawEntitiesGroup()
 		{
 			MENU_ITEM("Directional Light", createDirectionalLight);
 			MENU_ITEM("Point Light", createPointLight);
+			MENU_ITEM("Skybox", createSkybox);
 
 			ImGui::EndMenu();
 		}

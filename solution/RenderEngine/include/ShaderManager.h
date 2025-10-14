@@ -52,6 +52,7 @@ private:
     uint32_t loadCustomShader(const std::unordered_map<EShaderComponent::Type, std::string>& shaderPaths);
     uint32_t loadPointLightDepthShader();
     uint32_t loadDirectionalLightDepthShader();
+    uint32_t loadSkyboxShader();
 	uint32_t loadPostProcessingShader(class PostProcessingComponent* component);
 	uint32_t loadFinalPassPostProcessingShader(class PostProcessingComponent* component);
     uint32_t loadShader(const std::string& vertexContent, const std::string& fragmentContent, const std::string& geometryContent = "");
@@ -90,6 +91,7 @@ friend class GUIRenderer;
 friend class DebugRenderer;
 friend class GuizmoRenderer;
 friend class CustomRenderer;
+friend class SkyboxRenderer;
 friend class ColorRendererComponent;
 friend class DiffuseRendererComponent;
 friend class NormalRendererComponent;

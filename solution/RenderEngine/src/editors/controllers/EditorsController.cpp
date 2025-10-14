@@ -216,6 +216,11 @@ void EditorsController::createPointLight()
 	this->scenesManager->createPointLight();
 }
 
+void EditorsController::createSkybox()
+{
+	this->scenesManager->createSkybox(DEFAULT_SKYBOX_PATH);
+}
+
 void EditorsController::setSelectedEntity(Entity* entity)
 {
 	this->selectedEntity = entity;

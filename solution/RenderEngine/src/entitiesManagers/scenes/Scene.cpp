@@ -1,6 +1,9 @@
 #include "Scene.h"
 
 #include "CameraComponent.h"
+#include "DirectionalLightComponent.h"
+#include "PointLightComponent.h"
+#include "SkyboxComponent.h"
 #include "SingletonsManager.h"
 #include "EngineValues.h"
 #include "MeshComponent.h"
@@ -16,12 +19,13 @@ Entity* Scene::createMeshEntity(const std::string& filePath, const char* meshNam
 {
     AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
     Model* model = assetsManager->loadModel(filePath);
+	ABaseMaterial* material = assetsManager->loadMaterial(this->DEFAULT_MATERIAL_PATH);
 
-    Entity* entity = this->createMeshEntity(model, meshName);
+    Entity* entity = this->createMeshEntity(model, material, meshName);
     return entity;
 }
 
-Entity* Scene::createMeshEntity(Model* model, const char* meshName, Entity* parent)
+Entity* Scene::createMeshEntity(Model* model, ABaseMaterial* material, const char* meshName, Entity* parent)
 {
     Entity* result{ nullptr };
     if (model->getMeshCount() == 1)
@@ -29,12 +33,12 @@ Entity* Scene::createMeshEntity(Model* model, const char* meshName, Entity* pare
         std::string resultMeshName{ meshName };
         result = this->createEntity(resultMeshName.c_str(), parent);
         MeshComponent* meshComponent = result->addComponent<MeshComponent>();
-        meshComponent->load(model, resultMeshName.c_str());
+        meshComponent->load(model, material, resultMeshName.c_str());
     }
     else
     {
         result = this->createEntity(FileUtils::getFileName(model->getFilePath()), parent);
-        this->createMultiMeshEntity(result, model);
+        this->createMultiMeshEntity(result, model, material);
     }
 
     return result;
@@ -58,14 +62,29 @@ Entity* Scene::createOrthoCamera(Entity* parent)
     return result;
 }
 
-void Scene::createMultiMeshEntity(Entity* entity, Model* model)
+Entity* Scene::createSkybox(const std::string& meshFilePath, const std::string& entityName, Entity* parent)
+{
+    std::string resultName = entityName.empty() ? "skybox" : entityName;
+    Entity* result = this->createEntity(resultName, parent);
+
+    AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
+    Model* model = assetsManager->loadModel(meshFilePath);
+	ABaseMaterial* material = assetsManager->loadMaterial(this->SKYBOX_MATERIAL_PATH);
+
+	SkyboxComponent* skyboxComponent = result->addComponent<SkyboxComponent>();
+	skyboxComponent->load(model, material, resultName.c_str());
+
+    return result;
+}
+
+void Scene::createMultiMeshEntity(Entity* entity, Model* model, ABaseMaterial* material)
 {
 	for (const auto& mesh : model->meshes)
 	{
 		std::string meshName = mesh.first;
 		Entity* childEntity = this->createEntity(meshName, entity);
 		MeshComponent* meshComponent = childEntity->addComponent<MeshComponent>();
-		meshComponent->load(model, meshName.c_str());
+		meshComponent->load(model, material, meshName.c_str());
 	}
 }
 

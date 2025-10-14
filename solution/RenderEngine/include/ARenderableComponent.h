@@ -27,6 +27,7 @@ private:
 
 friend class MeshRenderer;
 friend class CustomRenderer;
+friend class SkyboxRenderer;
 };
 
 } // namespace

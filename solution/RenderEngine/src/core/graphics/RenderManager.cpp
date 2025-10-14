@@ -6,6 +6,7 @@
 #include "GUITextComponent.h"
 #include "CameraComponent.h"
 #include "GuizmoComponent.h"
+#include "SkyboxComponent.h"
 #include "SingletonsManager.h"
 #include "MeshData.h"
 #include "LightManager.h"
@@ -20,6 +21,7 @@
 #include "DebugRenderer.h"
 #include "GuizmoRenderer.h"
 #include "ShadowRenderer.h"
+#include "SkyboxRenderer.h"
 #include "CollectionsUtils.h"
 
 namespace sre
@@ -40,7 +42,12 @@ void RenderManager::preRelease()
 
 void RenderManager::addEntity(Entity *entity)
 {
-    if (entity->hasComponent<MeshComponent>())
+    if (entity->hasComponent<SkyboxComponent>())
+    {
+        SkyboxComponent* mesh = entity->getComponent<SkyboxComponent>();
+        this->addSkybox(mesh);
+    }
+	else if (entity->hasComponent<MeshComponent>())
     {
         MeshComponent *mesh = entity->getComponent<MeshComponent>();
         this->addMesh(mesh);
@@ -216,6 +223,17 @@ void RenderManager::addDebugBox(const glm::vec3& position, const glm::vec3& size
 	this->debugRenderer->addBox(position, size, color);
 }
 
+void RenderManager::addSkybox(SkyboxComponent* mesh)
+{
+    if (!this->skyboxRenderer)
+    {
+        this->skyboxRenderer = SPTR<SkyboxRenderer>{ new SkyboxRenderer{ mesh->getMaterial(), this->shaderManager, this->graphicsWrapper } };
+        this->skyboxRenderer->init();
+	}
+
+	this->skyboxRenderer->addMesh(mesh);
+}
+
 void RenderManager::initGUIRenderer()
 {
     if (!this->guiRenderer)
@@ -309,6 +327,12 @@ void RenderManager::render()
         {
             item.second->render();
         }
+
+		// Skybox rendering
+        if (this->skyboxRenderer.get() != nullptr)
+        {
+			this->skyboxRenderer->render(this->currentCamera);
+		}
     }
 
 	// Post processing rendering

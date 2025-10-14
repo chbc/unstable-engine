@@ -112,6 +112,7 @@ namespace ShaderVariables
         METALLIC_TEXTURE,
         ROUGHNESS_TEXTURE,
 
+        SKYBOX_MAP,
         IBL_IRRADIANCE,
         IBL_PREFILTER,
         IBL_BRDF_LUT,
@@ -145,6 +146,7 @@ namespace ShaderVariables
 		{ ALBEDO_TEXTURE,               "albedoTexture"             },
 		{ METALLIC_TEXTURE,             "metallicTexture"           },
 		{ ROUGHNESS_TEXTURE,            "roughnessTexture"          },
+        { SKYBOX_MAP,                   "skyboxMap"                 },
         { IBL_IRRADIANCE,               "irradianceMap"             },
         { IBL_PREFILTER,                "prefilterMap"              },
         { IBL_BRDF_LUT,                 "brdfLUT"                   },

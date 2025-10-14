@@ -28,7 +28,7 @@ private:
 
 public:
     MeshComponent(Entity *entity);
-    ~MeshComponent();
+    virtual ~MeshComponent();
 
     ABaseMaterial* getMaterial();
 
@@ -53,7 +53,7 @@ public:
 
 protected:
     bool isOpaque();
-    void load(Model* model, const char* meshName);
+    void load(Model* model, ABaseMaterial* arg_material, const char* meshName);
     void onPropertyDeserialized() override;
     void onPropertyChanged() override;
     void onClone() override;
@@ -69,6 +69,7 @@ friend class ABaseRenderer;
 friend class MeshRenderer;
 friend class CustomRenderer;
 friend class ShadowRenderer;
+friend class SkyboxRenderer;
 friend class LightManager;
 friend class Scene;
 };

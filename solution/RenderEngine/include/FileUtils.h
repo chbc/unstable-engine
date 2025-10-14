@@ -12,6 +12,7 @@ enum class EAssetType
     ENTITY,
     DIRECTORY,
     TEXTURE,
+	HDR_TEXTURE,
     MESH,
     MATERIAL,
     GUI,

@@ -25,6 +25,7 @@ private:
 	const char* DEFAULT_GUI_SCENE_PATH	= "engine/scenes/DefaultGui.gui";
 	const char* DEFAULT_ENTITY_PATH		= "engine/media/DefaultEntity.ent";
 	const char* DEFAULT_MATERIAL_PATH	= "engine/media/DefaultMaterial.mat";
+	const char* DEFAULT_SKYBOX_PATH		= "engine/media/Skybox.mesh";
 
 public:
 	EditorsController(ScenesManager* arg_scenesManager);
@@ -43,6 +44,7 @@ public:
 	Entity* createMeshEntity(const std::string& filePath, const char* meshName);
 	void createDirectionalLight();
 	void createPointLight();
+	void createSkybox();
 	void setSelectedEntity(Entity* entity);
 	Entity* getSelectedEntity();
 	void duplicateSelectedEntity();

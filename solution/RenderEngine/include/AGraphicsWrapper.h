@@ -128,6 +128,7 @@ friend class DebugRenderer;
 friend class GuizmoRenderer;
 friend class CustomRenderer;
 friend class ShadowRenderer;
+friend class SkyboxRenderer;
 friend class PostProcessingRenderer;
 friend class ColorRendererComponent;
 friend class DiffuseRendererComponent;

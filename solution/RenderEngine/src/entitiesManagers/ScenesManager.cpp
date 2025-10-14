@@ -73,6 +73,13 @@ PointLightComponent* ScenesManager::createPointLight(const std::string& name, En
     return this->scene->createPointLight(name, parent);
 }
 
+Entity* ScenesManager::createSkybox(const std::string& meshFilePath, const std::string& name, Entity* parent)
+{
+	Entity* result = this->scene->createSkybox(meshFilePath, name, parent);
+	this->addToRenderer(result);
+    return result;
+}
+
 Entity* ScenesManager::createGUIImageEntity(const std::string& filePath, const std::string& name)
 {
     Entity* entity = this->guiScene->createGUIImageEntity(filePath, name);
@@ -117,14 +124,6 @@ Entity* ScenesManager::raycast(const Ray& ray, Entity* parentEntity, float maxDi
 Scene* ScenesManager::getEditorScene()
 {
     return this->editorScene.get();
-}
-
-Entity* ScenesManager::createMeshEntity(Model* model, const char* meshName, Entity* parent)
-{
-    Entity* result = this->scene->createMeshEntity(model, meshName, parent);
-    this->addToRenderer(result);
-
-    return result;
 }
 
 void ScenesManager::addToRenderer(Entity* entity)
