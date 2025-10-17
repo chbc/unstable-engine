@@ -109,7 +109,7 @@ void setupHdr(const char* hdrPath)
 	uint32_t equirectangularToCubemapProgram = Utils::createShader("../content/engine/shaders/pbr/cubemap.vert", "../content/engine/shaders/pbr/equirectangular_to_cubemap.frag");
     glUseProgram(equirectangularToCubemapProgram);
     glUniform1d(glGetUniformLocation(equirectangularToCubemapProgram, "equirectangularMap"), 0);
-    glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "projection"), 1, GL_FALSE, &captureProjection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "projectionMatrix"), 1, GL_FALSE, &captureProjection[0][0]);
 
     glActiveTexture(GL_TEXTURE0);
     unsigned int hdrTexture = Utils::loadHdrTexture(hdrPath);
@@ -119,7 +119,7 @@ void setupHdr(const char* hdrPath)
     glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
     for (unsigned int i = 0; i < 6; ++i)
     {
-        glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "view"), 1, GL_FALSE, &captureViews[i][0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "viewMatrix"), 1, GL_FALSE, &captureViews[i][0][0]);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, envCubemap, 0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -161,7 +161,7 @@ void setupIrradianceMap()
 	uint32_t irradianceProgram = Utils::createShader("../content/engine/shaders/pbr/cubemap.vert", "../content/engine/shaders/pbr/irradiance_convolution.frag");
     glUseProgram(irradianceProgram);
     glUniform1i(glGetUniformLocation(irradianceProgram, "environmentMap"), 0);
-    glUniformMatrix4fv(glGetUniformLocation(irradianceProgram, "projection"), 1, GL_FALSE, &captureProjection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(irradianceProgram, "projectionMatrix"), 1, GL_FALSE, &captureProjection[0][0]);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
 
@@ -169,7 +169,7 @@ void setupIrradianceMap()
     glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
     for (unsigned int i = 0; i < 6; ++i)
     {
-        glUniformMatrix4fv(glGetUniformLocation(irradianceProgram, "view"), 1, GL_FALSE, &captureViews[i][0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(irradianceProgram, "viewMatrix"), 1, GL_FALSE, &captureViews[i][0][0]);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradianceMap, 0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -209,7 +209,7 @@ void setupPrefilterMap()
 	uint32_t prefilterProgram = Utils::createShader("../content/engine/shaders/pbr/cubemap.vert", "../content/engine/shaders/pbr/prefilter.frag");
     glUseProgram(prefilterProgram);
     glUniform1i(glGetUniformLocation(prefilterProgram, "environmentMap"), 0);
-    glUniformMatrix4fv(glGetUniformLocation(prefilterProgram, "projection"), 1, GL_FALSE, &captureProjection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(prefilterProgram, "projectionMatrix"), 1, GL_FALSE, &captureProjection[0][0]);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
 
@@ -228,7 +228,7 @@ void setupPrefilterMap()
         glUniform1f(glGetUniformLocation(prefilterProgram, "roughness"), roughness);
         for (unsigned int i = 0; i < 6; ++i)
         {
-            glUniformMatrix4fv(glGetUniformLocation(prefilterProgram, "view"), 1, GL_FALSE, &captureViews[i][0][0]);
+            glUniformMatrix4fv(glGetUniformLocation(prefilterProgram, "viewMatrix"), 1, GL_FALSE, &captureViews[i][0][0]);
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, prefilterMap, mip);
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
