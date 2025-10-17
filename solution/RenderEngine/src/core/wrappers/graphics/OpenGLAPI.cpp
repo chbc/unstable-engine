@@ -453,7 +453,7 @@ uint32_t OpenGLAPI::setupTexture(uint32_t width, uint32_t height, uint8_t bpp, v
 	return result;
 }
 
-uint32_t OpenGLAPI::setupHdrTexture(int width, int height, int bpp, float* data, uint32_t unit, bool genMipmap)
+uint32_t OpenGLAPI::setupFloatingPointTexture(int width, int height, float* data, bool genMipmap)
 {
 	unsigned int result;
 	glGenTextures(1, &result);
@@ -470,9 +470,74 @@ uint32_t OpenGLAPI::setupHdrTexture(int width, int height, int bpp, float* data,
 	return result;
 }
 
-uint32_t OpenGLAPI::setupHdrCubemap(int width, int height, int bpp, float* data, uint32_t unit, uint32_t faceSize, bool genMipmap)
+uint32_t OpenGLAPI::setupHdrBase(int faceSize)
 {
-	unsigned int result;
+	uint32_t result{ 0 };
+	// pbr: setup cubemap to render to and attach to framebuffer
+	// ---------------------------------------------------------
+	glGenTextures(1, &result);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, result);
+	for (unsigned int i = 0; i < 6; ++i)
+	{
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, faceSize, faceSize, 0, GL_RGB, GL_FLOAT, nullptr);
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// pbr: setup framebuffer
+	// ----------------------
+	/*
+	uint32_t captureFBO{ 0 };
+	uint32_t captureRBO{ 0 };
+	glGenFramebuffers(1, &captureFBO);
+	glGenRenderbuffers(1, &captureRBO);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
+	glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, captureRBO);
+
+	// pbr: load the HDR environment map
+	// ---------------------------------
+
+	// pbr: convert HDR equirectangular environment map to cubemap equivalent
+	// ----------------------------------------------------------------------
+	uint32_t equirectangularToCubemapProgram = Utils::createShader("../content/engine/shaders/irradiance/cubemap.vert", "../content/engine/shaders/irradiance/equirectangular_to_cubemap.frag");
+	glUseProgram(equirectangularToCubemapProgram);
+	glUniform1d(glGetUniformLocation(equirectangularToCubemapProgram, "equirectangularMap"), 0);
+	glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "projection"), 1, GL_FALSE, &captureProjection[0][0]);
+
+	glActiveTexture(GL_TEXTURE0);
+	unsigned int hdrTexture = Utils::loadHdrTexture(hdrPath);
+	glBindTexture(GL_TEXTURE_2D, hdrTexture);
+
+	glViewport(0, 0, 512, 512); // don't forget to configure the viewport to the capture dimensions.
+	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
+	for (unsigned int i = 0; i < 6; ++i)
+	{
+		glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "view"), 1, GL_FALSE, &captureViews[i][0][0]);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, envCubemap, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		Utils::renderCube();
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	// then let OpenGL generate mipmaps from first mip face (combatting visible dots artifact)
+	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
+	glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+	*/
+
+	return result;
+}
+
+uint32_t OpenGLAPI::setupHdrFromCrossedImage(int width, int height, float* data, uint32_t faceSize, bool genMipmap)
+{
+	uint32_t result = this->setupHdrBase(faceSize);
 	glGenTextures(1, &result);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, result);
 
@@ -480,6 +545,12 @@ uint32_t OpenGLAPI::setupHdrCubemap(int width, int height, int bpp, float* data,
 	{
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, faceSize, faceSize, 0, GL_RGB, GL_FLOAT, nullptr);
 	}
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	unsigned int tempTexture2D;
 	glGenTextures(1, &tempTexture2D);
@@ -521,12 +592,6 @@ uint32_t OpenGLAPI::setupHdrCubemap(int width, int height, int bpp, float* data,
 		);
 	}
 
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
 	if (genMipmap)
 	{
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -537,6 +602,79 @@ uint32_t OpenGLAPI::setupHdrCubemap(int width, int height, int bpp, float* data,
 
 	return result;
 }
+
+uint32_t OpenGLAPI::setupHdrFromEquirectangularImage(int width, int height, uint32_t sourceTextureId, uint32_t faceSize, MeshData* mesh, uint32_t program, bool genMipmap)
+{
+	uint32_t result = this->setupHdrBase(faceSize);
+
+	uint32_t captureFBO{ 0 };
+	uint32_t captureRBO{ 0 };
+	glGenFramebuffers(1, &captureFBO);
+	glGenRenderbuffers(1, &captureRBO);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
+	glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, captureRBO);
+
+	// pbr: load the HDR environment map
+	// ---------------------------------
+
+	// pbr: convert HDR equirectangular environment map to cubemap equivalent
+	// ----------------------------------------------------------------------
+	uint32_t equirectangularToCubemapProgram = Utils::createShader("../content/engine/shaders/irradiance/cubemap.vert", "../content/engine/shaders/irradiance/equirectangular_to_cubemap.frag");
+	glUseProgram(equirectangularToCubemapProgram);
+	glUniform1d(glGetUniformLocation(equirectangularToCubemapProgram, "equirectangularMap"), 0);
+	glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "projection"), 1, GL_FALSE, &captureProjection[0][0]);
+
+	glActiveTexture(GL_TEXTURE0);
+	unsigned int hdrTexture = Utils::loadHdrTexture(hdrPath);
+	glBindTexture(GL_TEXTURE_2D, hdrTexture);
+
+	glViewport(0, 0, 512, 512); // don't forget to configure the viewport to the capture dimensions.
+	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
+	for (unsigned int i = 0; i < 6; ++i)
+	{
+		glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "view"), 1, GL_FALSE, &captureViews[i][0][0]);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, envCubemap, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		Utils::renderCube();
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	// then let OpenGL generate mipmaps from first mip face (combatting visible dots artifact)
+	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
+	glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+}
+
+uint32_t OpenGLAPI::setupDepthCubemap(uint32_t width, uint32_t height, uint32_t unit)
+{
+	uint32_t result{ 0 };
+
+	glGenTextures(1, &result);
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, result);
+
+	for (uint32_t i = 0; i < 6; i++)
+	{
+		glTexImage2D
+		(
+			GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, width, height,
+			0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr
+		);
+	}
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	return result;
+}
+
 
 uint32_t OpenGLAPI::createTexture(uint32_t width, uint32_t height, uint32_t unit)
 {
@@ -583,32 +721,6 @@ uint32_t OpenGLAPI::createFloatingPointTexture(uint32_t width, uint32_t height)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGB, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	return result;
-}
-
-uint32_t OpenGLAPI::generateCubemap(uint32_t width, uint32_t height, uint32_t unit)
-{
-	uint32_t result{ 0 };
-
-	glGenTextures(1, &result);
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, result);
-
-	for (uint32_t i = 0; i < 6; i++)
-	{
-		glTexImage2D
-		(
-			GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, width, height,
-			0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr
-		);
-	}
-
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
 	return result;
 }

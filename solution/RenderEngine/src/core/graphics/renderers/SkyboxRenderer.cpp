@@ -23,7 +23,6 @@ void SkyboxRenderer::init()
 	this->shaderManager->setupAttributeLocation(this->program, ShaderVariables::IN_POSITION);
 	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::VIEW_MATRIX);
 	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::PROJECTION_MATRIX);
-	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::SKYBOX_MAP);
 
 	this->initTextures();
 }

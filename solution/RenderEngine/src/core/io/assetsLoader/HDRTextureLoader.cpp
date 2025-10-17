@@ -20,7 +20,7 @@ Texture* HDRTextureLoader::load(const std::string& filePath, ETextureMap::Type m
 
     if (mapType == ETextureMap::IBL_BRDF_LUT)
     {
-        id = graphicsWrapper->setupHdrTexture(width, height, bpp, data, mapType, false);
+        id = graphicsWrapper->setupFloatingPointTexture(width, height, bpp, data, mapType, false);
     }
     else
     {
@@ -33,7 +33,7 @@ Texture* HDRTextureLoader::load(const std::string& filePath, ETextureMap::Type m
             mipmap = true;
         }
 
-        id = graphicsWrapper->setupHdrCubemap(width, height, bpp, data, mapType, faceSize, mipmap);
+        id = graphicsWrapper->setupHdrFromCrossedImage(width, height, data, faceSize, mipmap);
     }
     free(data);
 

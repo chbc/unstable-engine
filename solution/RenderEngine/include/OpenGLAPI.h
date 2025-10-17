@@ -68,13 +68,15 @@ protected:
 	void clearDepthBuffer() override;
 	void clearColorAndDepthBuffer() override;
 	uint32_t setupTexture(uint32_t width, uint32_t height, uint8_t bpp, void* data, uint32_t unit, bool genMipmap = true) override;
-    uint32_t setupHdrTexture(int width, int height, int bpp, float* data, uint32_t unit, bool genMipmap) override;
-    uint32_t setupHdrCubemap(int width, int height, int bpp, float* data, uint32_t unit, uint32_t faceSize, bool genMipmap) override;
-    uint32_t createTexture(uint32_t width, uint32_t height, uint32_t unit);
-	uint32_t createTexture(uint32_t width, uint32_t height);
-	uint32_t createFloatingPointTexture(uint32_t width, uint32_t height);
-    uint32_t generateCubemap(uint32_t width, uint32_t height, uint32_t unit);
-    void readFramebuffer(uint32_t width, uint32_t height, unsigned char* pixels);
+    uint32_t setupFloatingPointTexture(int width, int height, float* data, bool genMipmap) override;
+    uint32_t setupHdrBase(int faceSize) override;
+    uint32_t setupHdrFromCrossedImage(int width, int height, float* data, uint32_t faceSize, bool genMipmap) override;
+    uint32_t setupHdrFromEquirectangularImage(int width, int height, uint32_t sourceTextureId, uint32_t faceSize, MeshData* mesh, uint32_t program, bool genMipmap) override;
+    uint32_t createTexture(uint32_t width, uint32_t height, uint32_t unit) override;
+	uint32_t createTexture(uint32_t width, uint32_t height) override;
+	uint32_t createFloatingPointTexture(uint32_t width, uint32_t height) override;
+    uint32_t setupDepthCubemap(uint32_t width, uint32_t height, uint32_t unit) override;
+    void readFramebuffer(uint32_t width, uint32_t height, unsigned char* pixels) override;
     void deleteTexture(uint32_t id) override;
 
     static void DEBUG_drawTriangle();
