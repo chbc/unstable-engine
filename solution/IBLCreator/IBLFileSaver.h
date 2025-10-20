@@ -10,13 +10,15 @@ struct TextureMapParams
 class IBLFileSaver
 {
 private:
+	TextureMapParams hdrMapParams;
 	TextureMapParams irradianceMapParams;
 	TextureMapParams prefilterMapParams;
 	TextureMapParams brdfLUTMapParams;
 
 public:
+	void generateHdrCrossMap(unsigned int sourceCubemapId, int faceSize);
 	void generateIrradianceCrossMap(unsigned int sourceCubemapId, int faceSize);
-	void generatePrefilterMapParams(unsigned int sourceCubemapId, int faceSize);
+	void generatePrefilterCrossMap(unsigned int sourceCubemapId, int faceSize);
 	void generateBRDFLUTMapParams(unsigned int textureId, int size);
 	void save(const char* sourceFilePath, const char* destinationPath);
 

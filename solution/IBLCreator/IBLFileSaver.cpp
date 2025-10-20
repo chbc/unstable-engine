@@ -7,12 +7,17 @@
 #include <filesystem>
 
 namespace FS = std::filesystem;
+void IBLFileSaver::generateHdrCrossMap(unsigned int sourceCubemapId, int faceSize)
+{
+	this->generateTextureFromCubemap(this->hdrMapParams, sourceCubemapId, faceSize);
+}
+
 void IBLFileSaver::generateIrradianceCrossMap(unsigned int sourceCubemapId, int faceSize)
 {
 	this->generateTextureFromCubemap(this->irradianceMapParams, sourceCubemapId, faceSize);
 }
 
-void IBLFileSaver::generatePrefilterMapParams(unsigned int sourceCubemapId, int faceSize)
+void IBLFileSaver::generatePrefilterCrossMap(unsigned int sourceCubemapId, int faceSize)
 {
 	this->generateTextureFromCubemap(this->prefilterMapParams, sourceCubemapId, faceSize);
 }
@@ -27,11 +32,27 @@ void IBLFileSaver::generateBRDFLUTMapParams(unsigned int textureId, int size)
 void IBLFileSaver::save(const char* sourceFilePath, const char* destinationPath)
 {
 	FS::path sourcePath{ sourceFilePath };
-	FS::path fileName = sourcePath.stem().string() + "_irradiance.hdr";
+
+	// HDR
+	FS::path fileName = sourcePath.stem().string() + "_hdr.hdr";
 	FS::path destinationPathFile = FS::path{ destinationPath } / fileName;
 
+	const int hdrDataSize = this->hdrMapParams.width * this->hdrMapParams.height * 3;
+	std::vector<float> data(hdrDataSize);
+
+	glBindTexture(GL_TEXTURE_2D, this->hdrMapParams.textureId);
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_FLOAT, data.data());
+
+	Utils::saveHdrTexture(this->hdrMapParams.width, this->hdrMapParams.height, 3, destinationPathFile.string(), data);
+	glDeleteTextures(1, &this->hdrMapParams.textureId);
+
+	// Irradiance
+	fileName = sourcePath.stem().string() + "_irradiance.hdr";
+	destinationPathFile = FS::path{ destinationPath } / fileName;
+
 	const int irradianceDataSize = this->irradianceMapParams.width * this->irradianceMapParams.height * 3;
-	std::vector<float> data(irradianceDataSize);
+	data.clear();
+	data.resize(irradianceDataSize);
 
 	glBindTexture(GL_TEXTURE_2D, this->irradianceMapParams.textureId);
 	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_FLOAT, data.data());
@@ -39,6 +60,7 @@ void IBLFileSaver::save(const char* sourceFilePath, const char* destinationPath)
 	Utils::saveHdrTexture(this->irradianceMapParams.width, this->irradianceMapParams.height, 3, destinationPathFile.string(), data);
 	glDeleteTextures(1, &this->irradianceMapParams.textureId);
 
+	// Prefilter
 	fileName = sourcePath.stem().string() + "_preFilter.hdr";
 	destinationPathFile = FS::path{ destinationPath } / fileName;
 
@@ -52,6 +74,7 @@ void IBLFileSaver::save(const char* sourceFilePath, const char* destinationPath)
 	Utils::saveHdrTexture(this->prefilterMapParams.width, this->prefilterMapParams.height, 3, destinationPathFile.string(), data);
 	glDeleteTextures(1, &this->prefilterMapParams.textureId);
 
+	// BRDF LUT
 	fileName = sourcePath.stem().string() + "_brdf.hdr";
 	destinationPathFile = FS::path{ destinationPath } / fileName;
 

@@ -134,6 +134,8 @@ void setupHdr(const char* hdrPath)
 
     glDeleteProgram(equirectangularToCubemapProgram);
     glDeleteTextures(1, &hdrTexture);
+
+	iblFileSaver.generateHdrCrossMap(envCubemap, 512);
 }
 
 void setupIrradianceMap()
@@ -237,7 +239,7 @@ void setupPrefilterMap()
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	iblFileSaver.generatePrefilterMapParams(prefilterMap, 128);
+	iblFileSaver.generatePrefilterCrossMap(prefilterMap, 128);
 
     glDeleteProgram(prefilterProgram);
     glDeleteTextures(1, &prefilterMap);
