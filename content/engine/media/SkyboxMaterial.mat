@@ -6,4 +6,4 @@ Components:
   CustomMaterialComponent:
     skyboxMap:
       TextureMapType: 8
-      FilePath: engine\media\hdr\newport_loft_hdr.hdr
+      FilePath: engine\media\hdr\industrialSunset\industrial_sunset_hdr.hdr

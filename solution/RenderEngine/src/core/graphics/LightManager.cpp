@@ -9,10 +9,9 @@
 namespace sre
 {
 
-const char* IBL_SKYBOX_PATH     = "engine/media/hdr/newport_loft.hdr";
-const char* IBL_IRRADIANCE_PATH = "engine/media/hdr/newport_loft_irradiance.hdr";
-const char* IBL_PREFILTER_PATH  = "engine/media/hdr/newport_loft_preFilter.hdr";
-const char* IBL_BRDF_PATH       = "engine/media/hdr/newport_loft_brdf.hdr";
+const char* IBL_IRRADIANCE_PATH = "engine/media/hdr/industrialSunset/industrial_sunset_irradiance.hdr";
+const char* IBL_PREFILTER_PATH  = "engine/media/hdr/industrialSunset/industrial_sunset_preFilter.hdr";
+const char* IBL_BRDF_PATH       = "engine/media/hdr/industrialSunset/industrial_sunset_brdf.hdr";
 
 void LightManager::setAmbientLightColor(const glm::vec3 &ambientLightColor)
 {

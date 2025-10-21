@@ -49,7 +49,7 @@ int setupWindow()
     Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
     window = SDL_CreateWindow
     (
-        "Irradiance Converter",
+        "IBL Map Creator",
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
         SCR_WIDTH, SCR_HEIGHT,
         flags
@@ -281,11 +281,11 @@ void setupBRDFLUTMap(unsigned int textureMap)
 
 int main(int argc, char* argv[])
 {
-    if (argc != 3)
+    if ((argc < 2) || (argc > 3))
     {
-#ifdef DEBUG
         std::cout << "Usage: IBLCreator.exe [source_file] [destination_path]" << std::endl;
-#endif
+        
+        system("pause");
         return 1;
     }
 
@@ -296,7 +296,7 @@ int main(int argc, char* argv[])
     }
 
 	const char* sourceFilePath = argv[1];
-	const char* destinationPath = argv[2];
+	const char* destinationPath = (argc > 2) ? argv[2] : sourceFilePath;
 
     setupHdr(sourceFilePath);
     setupIrradianceMap();

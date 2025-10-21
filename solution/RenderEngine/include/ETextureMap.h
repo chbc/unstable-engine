@@ -18,7 +18,7 @@ enum Type : std::size_t
     METALLIC,
     ROUGHNESS,
     IBL_BRDF_LUT,
-    ENVIRONMENT_MAP,
+    SKYBOX,
     IBL_IRRADIANCE,
     IBL_PREFILTER,
     SHADOW,

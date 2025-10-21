@@ -63,7 +63,7 @@ Texture* TextureLoader::loadHdrTexture(const std::string& filePath, ETextureMap:
     {
         uint32_t faceSize{ 32 };
         bool mipmap{ false };
-        if (mapType == ETextureMap::ENVIRONMENT_MAP)
+        if (mapType == ETextureMap::SKYBOX)
         {
             faceSize = 512;
         }

@@ -10,5 +10,5 @@ out vec3 WorldPos;
 void main()
 {
     WorldPos = in_position;  
-    gl_Position =  projectionMatrix * viewMatrix * in_position;
+    gl_Position =  projectionMatrix * viewMatrix * vec4(WorldPos, 1.0);
 }

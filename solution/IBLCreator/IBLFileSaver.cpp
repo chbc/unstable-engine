@@ -35,7 +35,13 @@ void IBLFileSaver::save(const char* sourceFilePath, const char* destinationPath)
 
 	// HDR
 	FS::path fileName = sourcePath.stem().string() + "_hdr.hdr";
-	FS::path destinationPathFile = FS::path{ destinationPath } / fileName;
+	FS::path destinationBasePath = FS::path{ destinationPath };
+	if (destinationBasePath.has_extension())
+	{
+		destinationBasePath = destinationBasePath.parent_path();
+	}
+
+	FS::path destinationPathFile = destinationBasePath / fileName;
 
 	const int hdrDataSize = this->hdrMapParams.width * this->hdrMapParams.height * 3;
 	std::vector<float> data(hdrDataSize);
@@ -48,7 +54,7 @@ void IBLFileSaver::save(const char* sourceFilePath, const char* destinationPath)
 
 	// Irradiance
 	fileName = sourcePath.stem().string() + "_irradiance.hdr";
-	destinationPathFile = FS::path{ destinationPath } / fileName;
+	destinationPathFile = destinationBasePath / fileName;
 
 	const int irradianceDataSize = this->irradianceMapParams.width * this->irradianceMapParams.height * 3;
 	data.clear();
@@ -62,7 +68,7 @@ void IBLFileSaver::save(const char* sourceFilePath, const char* destinationPath)
 
 	// Prefilter
 	fileName = sourcePath.stem().string() + "_preFilter.hdr";
-	destinationPathFile = FS::path{ destinationPath } / fileName;
+	destinationPathFile = destinationBasePath / fileName;
 
 	const int prefilterDataSize = this->prefilterMapParams.width * this->prefilterMapParams.height * 3;
 	data.clear();
@@ -76,7 +82,7 @@ void IBLFileSaver::save(const char* sourceFilePath, const char* destinationPath)
 
 	// BRDF LUT
 	fileName = sourcePath.stem().string() + "_brdf.hdr";
-	destinationPathFile = FS::path{ destinationPath } / fileName;
+	destinationPathFile = destinationBasePath / fileName;
 
 	size_t brdfLUTDataSize = this->brdfLUTMapParams.width * this->brdfLUTMapParams.height * 2;
 
