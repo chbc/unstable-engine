@@ -28,7 +28,7 @@ Texture* TextureCreator::createShadowTexture(uint32_t width, uint32_t height)
 {
     std::string name{ "_shadow_map_" + std::to_string(this->shadowIndex) };
 
-    uint32_t id = this->graphicsWrapper->createTexture(width, height, ETextureMap::SHADOW + this->shadowIndex);
+    uint32_t id = this->graphicsWrapper->createEmptyTexture(width, height, ETextureMap::SHADOW + this->shadowIndex);
 
     Texture *result = new Texture{ id, width, height, ETextureMap::SHADOW, name, this->shadowIndex };
     this->createdTextures.emplace_back(result);
@@ -52,7 +52,7 @@ Texture* TextureCreator::createCubemapTexture(uint32_t width, uint32_t height)
 Texture* TextureCreator::createEmptyTexture(uint32_t width, uint32_t height)
 {
 	std::string name{ "_empty_" + std::to_string(this->emptyIndex) };
-	uint32_t id = this->graphicsWrapper->createTexture(width, height);
+	uint32_t id = this->graphicsWrapper->createEmptyTexture(width, height);
 
 	Texture* result = new Texture{ id, width, height, ETextureMap::GUI, name };
     this->createdTextures.emplace_back(result);

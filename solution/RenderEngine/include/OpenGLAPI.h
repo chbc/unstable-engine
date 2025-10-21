@@ -37,6 +37,7 @@ protected:
     void enableTexCoords() override;
     void enableVertexTangents() override;
     void enableVertexBitangents() override;
+    void enableCubemapSettings() override;
     void activateTexture(uint32_t textureId, uint32_t unit) override;
     void activateCubeMapTexture(uint32_t textureId, uint32_t unit) override;
     void activateGUITexture(uint32_t textureId) override;
@@ -63,6 +64,7 @@ protected:
     void disableGUISettings() override;
     void disableColorMeshSettings() override;
 	void disablePostProcessingSettings() override;
+    void disableCubemapSettings() override;
 
 	void clearColorBuffer() override;
 	void clearDepthBuffer() override;
@@ -71,9 +73,8 @@ protected:
     uint32_t setupFloatingPointTexture(int width, int height, float* data, bool genMipmap) override;
     uint32_t setupHdrBase(int faceSize) override;
     uint32_t setupHdrFromCrossedImage(int width, int height, float* data, uint32_t faceSize, bool genMipmap) override;
-    uint32_t setupHdrFromEquirectangularImage(int width, int height, uint32_t sourceTextureId, uint32_t faceSize, MeshData* mesh, uint32_t program, bool genMipmap) override;
-    uint32_t createTexture(uint32_t width, uint32_t height, uint32_t unit) override;
-	uint32_t createTexture(uint32_t width, uint32_t height) override;
+    uint32_t createEmptyTexture(uint32_t width, uint32_t height, uint32_t unit) override;
+	uint32_t createEmptyTexture(uint32_t width, uint32_t height) override;
 	uint32_t createFloatingPointTexture(uint32_t width, uint32_t height) override;
     uint32_t setupDepthCubemap(uint32_t width, uint32_t height, uint32_t unit) override;
     void readFramebuffer(uint32_t width, uint32_t height, unsigned char* pixels) override;
@@ -117,9 +118,11 @@ private:
     void checkVariableLocation(int location, const std::string &varName); // throws "invalid variable"
     void checkProgramLink(uint32_t program);	// throws "link error"
     static void DEBUG_renderQuad();
+	static void DEBUG_renderCube();
 
 friend class RenderManager;
 friend class SingletonsManager;
+friend class SkyboxRenderer;
 };
 
 } // namespace

@@ -98,9 +98,9 @@ void LightManager::loadIBL()
         iblData.loaded = true;
 
         AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-        Texture* irradiance = assetsManager->loadHdrTexture(IBL_IRRADIANCE_PATH, ETextureMap::IBL_IRRADIANCE);
-        Texture* prefilter = assetsManager->loadHdrTexture(IBL_PREFILTER_PATH, ETextureMap::IBL_PREFILTER);
-        Texture* brdfLUT = assetsManager->loadHdrTexture(IBL_BRDF_PATH, ETextureMap::IBL_BRDF_LUT);
+        Texture* irradiance = assetsManager->loadTexture(IBL_IRRADIANCE_PATH, ETextureMap::IBL_IRRADIANCE);
+        Texture* prefilter = assetsManager->loadTexture(IBL_PREFILTER_PATH, ETextureMap::IBL_PREFILTER);
+        Texture* brdfLUT = assetsManager->loadTexture(IBL_BRDF_PATH, ETextureMap::IBL_BRDF_LUT);
 
         iblData.irradianceMap = irradiance->getId();
         iblData.prefilterMap = prefilter->getId();

@@ -477,9 +477,6 @@
     <ClCompile Include="src\core\graphics\shaders\EShaderComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\io\assetsLoader\HDRTextureLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\wrappers\multimedia\hdr\STBIAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1233,9 +1230,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\EShaderComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\HDRTextureLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\AHDRTexturesWrapper.h">

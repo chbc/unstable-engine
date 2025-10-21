@@ -41,6 +41,7 @@ protected:
     virtual void enableTexCoords() =0;
     virtual void enableVertexTangents() =0;
     virtual void enableVertexBitangents() =0;
+	virtual void enableCubemapSettings() = 0;
     virtual void activateGUITexture(uint32_t textureId) =0;
     virtual void activateDiffuseTexture(uint32_t textureId) =0;
     virtual void activateNormalTexture(uint32_t textureId) =0;
@@ -66,6 +67,7 @@ protected:
     virtual void disableGUISettings() =0;
     virtual void disableColorMeshSettings() = 0;
 	virtual void disablePostProcessingSettings() =0;
+	virtual void disableCubemapSettings() = 0;
 
 	virtual void clearColorBuffer() =0;
     virtual void clearDepthBuffer() =0;
@@ -74,10 +76,9 @@ protected:
     virtual uint32_t setupFloatingPointTexture(int width, int height, float* data, bool genMipmap) = 0;
 	virtual uint32_t setupHdrBase(int faceSize) = 0;
     virtual uint32_t setupHdrFromCrossedImage(int width, int height, float* data, uint32_t faceSize, bool genMipmap) = 0;
-    virtual uint32_t setupHdrFromEquirectangularImage(int width, int height, uint32_t sourceTextureId, uint32_t faceSize, MeshData* mesh, uint32_t program, bool genMipmap) = 0;
     virtual uint32_t setupDepthCubemap(uint32_t width, uint32_t height, uint32_t unit) =0;
-    virtual uint32_t createTexture(uint32_t width, uint32_t height, uint32_t unit) =0;
-	virtual uint32_t createTexture(uint32_t width, uint32_t height) =0;
+    virtual uint32_t createEmptyTexture(uint32_t width, uint32_t height, uint32_t unit) =0;
+	virtual uint32_t createEmptyTexture(uint32_t width, uint32_t height) =0;
 	virtual uint32_t createFloatingPointTexture(uint32_t width, uint32_t height) = 0;
     virtual void readFramebuffer(uint32_t width, uint32_t height, unsigned char* pixels) = 0;
     virtual void deleteTexture(uint32_t id) =0;

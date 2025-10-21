@@ -381,7 +381,6 @@
     <ClCompile Include="src\core\graphics\shaders\EShaderComponent.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\GuizmoLoader.cpp" />
-    <ClCompile Include="src\core\io\assetsLoader\HDRTextureLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MaterialLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MeshLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\TextureLoader.cpp" />
@@ -635,7 +634,6 @@
     <ClInclude Include="include\GuizmoComponent.h" />
     <ClInclude Include="include\GuizmoLoader.h" />
     <ClInclude Include="include\GuizmoRenderer.h" />
-    <ClInclude Include="include\HDRTextureLoader.h" />
     <ClInclude Include="include\IBLData.h" />
     <ClInclude Include="include\IBLRendererShaderSetup.h" />
     <ClInclude Include="include\ImGuiLib.h" />

@@ -57,7 +57,7 @@ Texture* TextureLoader::loadHdrTexture(const std::string& filePath, ETextureMap:
 
     if (mapType == ETextureMap::IBL_BRDF_LUT)
     {
-        id = graphicsWrapper->setupFloatingPointTexture(width, height, bpp, data, mapType, false);
+        id = graphicsWrapper->setupFloatingPointTexture(width, height, data, false);
     }
     else
     {

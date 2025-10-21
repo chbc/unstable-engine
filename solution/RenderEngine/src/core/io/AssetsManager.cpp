@@ -3,7 +3,6 @@
 #include "MaterialLoader.h"
 #include "EntityLoader.h"
 #include "TextureLoader.h"
-#include "HDRTextureLoader.h"
 #include "GuizmoLoader.h"
 #include "SingletonsManager.h"
 #include "ABaseMaterial.h"
@@ -77,13 +76,6 @@ Texture* AssetsManager::loadTexture(const char* filePath, ETextureMap::Type mapT
 {
 	std::string relativePath = FileUtils::getContentRelativePath(filePath);
 	Texture* result = this->loadAsset<TexturesMapType, TextureLoader, Texture>(this->texturesMap, relativePath, mapType);
-	return result;
-}
-
-Texture* AssetsManager::loadHdrTexture(const char* filePath, ETextureMap::Type mapType)
-{
-	std::string relativePath = FileUtils::getContentRelativePath(filePath);
-	Texture* result = this->loadAsset<TexturesMapType, HDRTextureLoader, Texture>(this->texturesMap, relativePath, mapType);
 	return result;
 }
 

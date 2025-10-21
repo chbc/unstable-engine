@@ -1,9 +1,9 @@
 Material Type: Custom
 Shaders:
-  Vertex: engine\shaders\pbr\cubemap.vert
-  Fragment: engine\shaders\pbr\equirectangular_to_cubemap.frag
+  Vertex: engine\shaders\cubemap\background.vert
+  Fragment: engine\shaders\cubemap\background.frag
 Components:
   CustomMaterialComponent:
     skyboxMap:
       TextureMapType: 8
-      FilePath: engine\media\hdr\newport_loft.hdr
+      FilePath: engine\media\hdr\newport_loft_hdr.hdr

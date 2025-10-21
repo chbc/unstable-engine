@@ -69,6 +69,8 @@ void OpenGLAPI::init()
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
+
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 }
 
 void OpenGLAPI::createBuffers(MeshData* meshData)
@@ -257,6 +259,11 @@ void OpenGLAPI::enableVertexBitangents()
 	glVertexAttribPointer(EAttribLocation::BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(VertexData), VertexData::getBitangentOffset());
 }
 
+void OpenGLAPI::enableCubemapSettings()
+{
+	glDepthFunc(GL_LEQUAL);
+}
+
 void OpenGLAPI::activateTexture(uint32_t textureId, uint32_t unit)
 {
 	glActiveTexture(GL_TEXTURE0 + unit);
@@ -395,6 +402,11 @@ void OpenGLAPI::disablePostProcessingSettings()
 	glEnable(GL_DEPTH_TEST);
 }
 
+void OpenGLAPI::disableCubemapSettings()
+{
+	glDepthFunc(GL_LESS);
+}
+
 void OpenGLAPI::clearColorBuffer()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -473,8 +485,7 @@ uint32_t OpenGLAPI::setupFloatingPointTexture(int width, int height, float* data
 uint32_t OpenGLAPI::setupHdrBase(int faceSize)
 {
 	uint32_t result{ 0 };
-	// pbr: setup cubemap to render to and attach to framebuffer
-	// ---------------------------------------------------------
+
 	glGenTextures(1, &result);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, result);
 	for (unsigned int i = 0; i < 6; ++i)
@@ -486,51 +497,6 @@ uint32_t OpenGLAPI::setupHdrBase(int faceSize)
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	// pbr: setup framebuffer
-	// ----------------------
-	/*
-	uint32_t captureFBO{ 0 };
-	uint32_t captureRBO{ 0 };
-	glGenFramebuffers(1, &captureFBO);
-	glGenRenderbuffers(1, &captureRBO);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-	glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, captureRBO);
-
-	// pbr: load the HDR environment map
-	// ---------------------------------
-
-	// pbr: convert HDR equirectangular environment map to cubemap equivalent
-	// ----------------------------------------------------------------------
-	uint32_t equirectangularToCubemapProgram = Utils::createShader("../content/engine/shaders/irradiance/cubemap.vert", "../content/engine/shaders/irradiance/equirectangular_to_cubemap.frag");
-	glUseProgram(equirectangularToCubemapProgram);
-	glUniform1d(glGetUniformLocation(equirectangularToCubemapProgram, "equirectangularMap"), 0);
-	glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "projection"), 1, GL_FALSE, &captureProjection[0][0]);
-
-	glActiveTexture(GL_TEXTURE0);
-	unsigned int hdrTexture = Utils::loadHdrTexture(hdrPath);
-	glBindTexture(GL_TEXTURE_2D, hdrTexture);
-
-	glViewport(0, 0, 512, 512); // don't forget to configure the viewport to the capture dimensions.
-	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-	for (unsigned int i = 0; i < 6; ++i)
-	{
-		glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "view"), 1, GL_FALSE, &captureViews[i][0][0]);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, envCubemap, 0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		Utils::renderCube();
-	}
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	// then let OpenGL generate mipmaps from first mip face (combatting visible dots artifact)
-	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
-	glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
-	*/
 
 	return result;
 }
@@ -538,19 +504,6 @@ uint32_t OpenGLAPI::setupHdrBase(int faceSize)
 uint32_t OpenGLAPI::setupHdrFromCrossedImage(int width, int height, float* data, uint32_t faceSize, bool genMipmap)
 {
 	uint32_t result = this->setupHdrBase(faceSize);
-	glGenTextures(1, &result);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, result);
-
-	for (unsigned int i = 0; i < 6; ++i)
-	{
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, faceSize, faceSize, 0, GL_RGB, GL_FLOAT, nullptr);
-	}
-
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	unsigned int tempTexture2D;
 	glGenTextures(1, &tempTexture2D);
@@ -603,52 +556,6 @@ uint32_t OpenGLAPI::setupHdrFromCrossedImage(int width, int height, float* data,
 	return result;
 }
 
-uint32_t OpenGLAPI::setupHdrFromEquirectangularImage(int width, int height, uint32_t sourceTextureId, uint32_t faceSize, MeshData* mesh, uint32_t program, bool genMipmap)
-{
-	uint32_t result = this->setupHdrBase(faceSize);
-
-	uint32_t captureFBO{ 0 };
-	uint32_t captureRBO{ 0 };
-	glGenFramebuffers(1, &captureFBO);
-	glGenRenderbuffers(1, &captureRBO);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-	glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, captureRBO);
-
-	// pbr: load the HDR environment map
-	// ---------------------------------
-
-	// pbr: convert HDR equirectangular environment map to cubemap equivalent
-	// ----------------------------------------------------------------------
-	uint32_t equirectangularToCubemapProgram = Utils::createShader("../content/engine/shaders/irradiance/cubemap.vert", "../content/engine/shaders/irradiance/equirectangular_to_cubemap.frag");
-	glUseProgram(equirectangularToCubemapProgram);
-	glUniform1d(glGetUniformLocation(equirectangularToCubemapProgram, "equirectangularMap"), 0);
-	glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "projection"), 1, GL_FALSE, &captureProjection[0][0]);
-
-	glActiveTexture(GL_TEXTURE0);
-	unsigned int hdrTexture = Utils::loadHdrTexture(hdrPath);
-	glBindTexture(GL_TEXTURE_2D, hdrTexture);
-
-	glViewport(0, 0, 512, 512); // don't forget to configure the viewport to the capture dimensions.
-	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-	for (unsigned int i = 0; i < 6; ++i)
-	{
-		glUniformMatrix4fv(glGetUniformLocation(equirectangularToCubemapProgram, "view"), 1, GL_FALSE, &captureViews[i][0][0]);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, envCubemap, 0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		Utils::renderCube();
-	}
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	// then let OpenGL generate mipmaps from first mip face (combatting visible dots artifact)
-	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
-	glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
-}
-
 uint32_t OpenGLAPI::setupDepthCubemap(uint32_t width, uint32_t height, uint32_t unit)
 {
 	uint32_t result{ 0 };
@@ -675,8 +582,7 @@ uint32_t OpenGLAPI::setupDepthCubemap(uint32_t width, uint32_t height, uint32_t 
 	return result;
 }
 
-
-uint32_t OpenGLAPI::createTexture(uint32_t width, uint32_t height, uint32_t unit)
+uint32_t OpenGLAPI::createEmptyTexture(uint32_t width, uint32_t height, uint32_t unit)
 {
 	uint32_t result{ 0 };
 	glGenTextures(1, &result);
@@ -699,7 +605,7 @@ uint32_t OpenGLAPI::createTexture(uint32_t width, uint32_t height, uint32_t unit
 	return result;
 }
 
-uint32_t OpenGLAPI::createTexture(uint32_t width, uint32_t height)
+uint32_t OpenGLAPI::createEmptyTexture(uint32_t width, uint32_t height)
 {
 	uint32_t result;
 	glGenTextures(1, &result);
@@ -1016,10 +922,10 @@ void OpenGLAPI::DEBUG_renderQuad()
 
 		float quadVertices[] = {
 			// positions        // texture Coords
-			-w,  1.0f, 0.0f, 0.0f, 1.0f,
-			-w, -1.0f, 0.0f, 0.0f, 0.0f,
-			w,  1.0f, 0.0f, 1.0f, 1.0f,
-			w, -1.0f, 0.0f, 1.0f, 0.0f,
+			-w,  1.0f, -1.0f, 0.0f, 1.0f,
+			-w, -1.0f, -1.0f, 0.0f, 0.0f,
+			w,  1.0f, -1.0f, 1.0f, 1.0f,
+			w, -1.0f, -1.0f, 1.0f, 0.0f,
 		};
 		// setup plane VAO
 		glGenVertexArrays(1, &quadVAO);
@@ -1035,6 +941,87 @@ void OpenGLAPI::DEBUG_renderQuad()
 	glBindVertexArray(quadVAO);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
+}
+
+// renderCube() renders a 1x1 3D cube in NDC.
+// -------------------------------------------------
+unsigned int cubeVAO = 0;
+unsigned int cubeVBO = 0;
+void OpenGLAPI::DEBUG_renderCube()
+{
+	// initialize (if necessary)
+	if (cubeVAO == 0)
+	{
+		float HALF_SIZE = 1.0f;
+		float vertices[] = {
+			// back face
+			-HALF_SIZE, -HALF_SIZE, -HALF_SIZE,  0.0f,  0.0f, -HALF_SIZE, 0.0f, 0.0f, // bottom-left
+			 HALF_SIZE,  HALF_SIZE, -HALF_SIZE,  0.0f,  0.0f, -HALF_SIZE, HALF_SIZE, HALF_SIZE, // top-right
+			 HALF_SIZE, -HALF_SIZE, -HALF_SIZE,  0.0f,  0.0f, -HALF_SIZE, HALF_SIZE, 0.0f, // bottom-right         
+			 HALF_SIZE,  HALF_SIZE, -HALF_SIZE,  0.0f,  0.0f, -HALF_SIZE, HALF_SIZE, HALF_SIZE, // top-right
+			-HALF_SIZE, -HALF_SIZE, -HALF_SIZE,  0.0f,  0.0f, -HALF_SIZE, 0.0f, 0.0f, // bottom-left
+			-HALF_SIZE,  HALF_SIZE, -HALF_SIZE,  0.0f,  0.0f, -HALF_SIZE, 0.0f, HALF_SIZE, // top-left
+			// front face
+			-HALF_SIZE, -HALF_SIZE,  HALF_SIZE,  0.0f,  0.0f,  HALF_SIZE, 0.0f, 0.0f, // bottom-left
+			 HALF_SIZE, -HALF_SIZE,  HALF_SIZE,  0.0f,  0.0f,  HALF_SIZE, HALF_SIZE, 0.0f, // bottom-right
+			 HALF_SIZE,  HALF_SIZE,  HALF_SIZE,  0.0f,  0.0f,  HALF_SIZE, HALF_SIZE, HALF_SIZE, // top-right
+			 HALF_SIZE,  HALF_SIZE,  HALF_SIZE,  0.0f,  0.0f,  HALF_SIZE, HALF_SIZE, HALF_SIZE, // top-right
+			-HALF_SIZE,  HALF_SIZE,  HALF_SIZE,  0.0f,  0.0f,  HALF_SIZE, 0.0f, HALF_SIZE, // top-left
+			-HALF_SIZE, -HALF_SIZE,  HALF_SIZE,  0.0f,  0.0f,  HALF_SIZE, 0.0f, 0.0f, // bottom-left
+			// left face
+			-HALF_SIZE,  HALF_SIZE,  HALF_SIZE, -HALF_SIZE,  0.0f,  0.0f, HALF_SIZE, 0.0f, // top-right
+			-HALF_SIZE,  HALF_SIZE, -HALF_SIZE, -HALF_SIZE,  0.0f,  0.0f, HALF_SIZE, HALF_SIZE, // top-left
+			-HALF_SIZE, -HALF_SIZE, -HALF_SIZE, -HALF_SIZE,  0.0f,  0.0f, 0.0f, HALF_SIZE, // bottom-left
+			-HALF_SIZE, -HALF_SIZE, -HALF_SIZE, -HALF_SIZE,  0.0f,  0.0f, 0.0f, HALF_SIZE, // bottom-left
+			-HALF_SIZE, -HALF_SIZE,  HALF_SIZE, -HALF_SIZE,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-right
+			-HALF_SIZE,  HALF_SIZE,  HALF_SIZE, -HALF_SIZE,  0.0f,  0.0f, HALF_SIZE, 0.0f, // top-right
+			// right face
+			 HALF_SIZE,  HALF_SIZE,  HALF_SIZE,  HALF_SIZE,  0.0f,  0.0f, HALF_SIZE, 0.0f, // top-left
+			 HALF_SIZE, -HALF_SIZE, -HALF_SIZE,  HALF_SIZE,  0.0f,  0.0f, 0.0f, HALF_SIZE, // bottom-right
+			 HALF_SIZE,  HALF_SIZE, -HALF_SIZE,  HALF_SIZE,  0.0f,  0.0f, HALF_SIZE, HALF_SIZE, // top-right         
+			 HALF_SIZE, -HALF_SIZE, -HALF_SIZE,  HALF_SIZE,  0.0f,  0.0f, 0.0f, HALF_SIZE, // bottom-right
+			 HALF_SIZE,  HALF_SIZE,  HALF_SIZE,  HALF_SIZE,  0.0f,  0.0f, HALF_SIZE, 0.0f, // top-left
+			 HALF_SIZE, -HALF_SIZE,  HALF_SIZE,  HALF_SIZE,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-left     
+			 // bottom face
+			 -HALF_SIZE, -HALF_SIZE, -HALF_SIZE,  0.0f, -HALF_SIZE,  0.0f, 0.0f, HALF_SIZE, // top-right
+			  HALF_SIZE, -HALF_SIZE, -HALF_SIZE,  0.0f, -HALF_SIZE,  0.0f, HALF_SIZE, HALF_SIZE, // top-left
+			  HALF_SIZE, -HALF_SIZE,  HALF_SIZE,  0.0f, -HALF_SIZE,  0.0f, HALF_SIZE, 0.0f, // bottom-left
+			  HALF_SIZE, -HALF_SIZE,  HALF_SIZE,  0.0f, -HALF_SIZE,  0.0f, HALF_SIZE, 0.0f, // bottom-left
+			 -HALF_SIZE, -HALF_SIZE,  HALF_SIZE,  0.0f, -HALF_SIZE,  0.0f, 0.0f, 0.0f, // bottom-right
+			 -HALF_SIZE, -HALF_SIZE, -HALF_SIZE,  0.0f, -HALF_SIZE,  0.0f, 0.0f, HALF_SIZE, // top-right
+			 // top face
+			 -HALF_SIZE,  HALF_SIZE, -HALF_SIZE,  0.0f,  HALF_SIZE,  0.0f, 0.0f, HALF_SIZE, // top-left
+			  HALF_SIZE,  HALF_SIZE , HALF_SIZE,  0.0f,  HALF_SIZE,  0.0f, HALF_SIZE, 0.0f, // bottom-right
+			  HALF_SIZE,  HALF_SIZE, -HALF_SIZE,  0.0f,  HALF_SIZE,  0.0f, HALF_SIZE, HALF_SIZE, // top-right     
+			  HALF_SIZE,  HALF_SIZE,  HALF_SIZE,  0.0f,  HALF_SIZE,  0.0f, HALF_SIZE, 0.0f, // bottom-right
+			 -HALF_SIZE,  HALF_SIZE, -HALF_SIZE,  0.0f,  HALF_SIZE,  0.0f, 0.0f, HALF_SIZE, // top-left
+			 -HALF_SIZE,  HALF_SIZE,  HALF_SIZE,  0.0f,  HALF_SIZE,  0.0f, 0.0f, 0.0f  // bottom-left        
+		};
+		glGenVertexArrays(1, &cubeVAO);
+		glGenBuffers(1, &cubeVBO);
+		// fill buffer
+		glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		// link vertex attributes
+		glBindVertexArray(cubeVAO);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+	}
+	// render Cube
+
+	glDisable(GL_CULL_FACE);
+
+	glBindVertexArray(cubeVAO);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glBindVertexArray(0);
+
+	glEnable(GL_CULL_FACE);
 }
 
 } // namespace

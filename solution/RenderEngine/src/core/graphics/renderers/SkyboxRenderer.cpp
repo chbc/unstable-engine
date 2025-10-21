@@ -9,6 +9,8 @@
 #include "CustomMaterialComponent.h"
 #include "Texture.h"
 
+#include "OpenGLAPI.h"
+
 namespace sre
 {
 
@@ -53,6 +55,8 @@ void SkyboxRenderer::render(CameraComponent* camera)
 
 	this->setupTextures();
 
+	this->graphicsWrapper->enableCubemapSettings();
+
 	for (MeshComponent* item : this->meshComponents)
 	{
 		if (item->isEnabled() && item->getEntity()->isEnabled())
@@ -61,13 +65,18 @@ void SkyboxRenderer::render(CameraComponent* camera)
 			this->graphicsWrapper->bindVAO(meshData->vao, meshData->vbo);
 
 			item->notifyRenderAction(this->graphicsWrapper, this->shaderManager, this->program);
+			
+			/*
 			this->graphicsWrapper->enableVertexPositions();
 
 			EDrawMode::Type drawMode = item->getDrawMode();
 			this->graphicsWrapper->drawElement(meshData->ebo, meshData->indices.size(), drawMode);
+			*/
+			OpenGLAPI::DEBUG_renderCube();
 		}
 	}
 
+	this->graphicsWrapper->disableCubemapSettings();
 	this->shaderManager->disableVertexAttribute(program, ShaderVariables::IN_POSITION);
 	this->shaderManager->disableShader();
 }
