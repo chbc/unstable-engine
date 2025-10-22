@@ -8,6 +8,7 @@
 #include "CustomMaterial.h"
 #include "CustomMaterialComponent.h"
 #include "Texture.h"
+#include "LightManager.h"
 
 #include "OpenGLAPI.h"
 
@@ -34,12 +35,24 @@ void SkyboxRenderer::initTextures()
 	if (this->material->hasComponent<CustomMaterialComponent>())
 	{
 		CustomMaterialComponent* materialComponent = this->material->getComponent<CustomMaterialComponent>();
-		this->texturesMap = materialComponent->getTexturesMap();
+		std::unordered_map<std::string, Texture*> inputTexturesMap = materialComponent->getTexturesMap();
+		std::unordered_map<ETextureMap::Type, Texture*> iblTexturesMap;
 
-		for (const auto& item : this->texturesMap)
+		for (const auto& item : inputTexturesMap)
 		{
-			this->shaderManager->setupUniformLocation(this->program, item.first.c_str());
+			if (item.second->getMapType() == ETextureMap::SKYBOX)
+			{
+				this->texturesMap[item.first] = item.second;
+				this->shaderManager->setupUniformLocation(this->program, item.first.c_str());
+			}
+			else
+			{
+				iblTexturesMap[item.second->getMapType()] = item.second;
+			}
 		}
+
+		LightManager* lightManager = SingletonsManager::getInstance()->get<LightManager>();
+		lightManager->loadIBL(iblTexturesMap);
 	}
 }
 
@@ -66,13 +79,10 @@ void SkyboxRenderer::render(CameraComponent* camera)
 
 			item->notifyRenderAction(this->graphicsWrapper, this->shaderManager, this->program);
 			
-			/*
 			this->graphicsWrapper->enableVertexPositions();
 
 			EDrawMode::Type drawMode = item->getDrawMode();
 			this->graphicsWrapper->drawElement(meshData->ebo, meshData->indices.size(), drawMode);
-			*/
-			OpenGLAPI::DEBUG_renderCube();
 		}
 	}
 
@@ -90,6 +100,12 @@ void SkyboxRenderer::setupTextures()
 		this->graphicsWrapper->activateCubeMapTexture(texture->getId(), textureMap);
 		this->shaderManager->setInt(this->program, item.first.c_str(), textureMap);
 	}
+}
+
+void SkyboxRenderer::reloadMaterial(ABaseMaterial* newMaterial)
+{
+	this->material = static_cast<CustomMaterial*>(newMaterial);
+	this->initTextures();
 }
 
 } // namespace

@@ -1,0 +1,18 @@
+Material Type: Custom
+Shaders:
+  Vertex: engine\shaders\cubemap\background.vert
+  Fragment: engine\shaders\cubemap\background.frag
+Components:
+  CustomMaterialComponent:
+    brdfLUT:
+      TextureMapType: 7
+      FilePath: engine\media\hdr\newportLoft\newport_loft_brdf.hdr
+    skyboxMap:
+      TextureMapType: 8
+      FilePath: engine\media\hdr\newportLoft\newport_loft_hdr.hdr
+    irradianceMap:
+      TextureMapType: 9
+      FilePath: engine\media\hdr\newportLoft\newport_loft_irradiance.hdr
+    prefilterMap:
+      TextureMapType: 10
+      FilePath: engine\media\hdr\newportLoft\newport_loft_preFilter.hdr

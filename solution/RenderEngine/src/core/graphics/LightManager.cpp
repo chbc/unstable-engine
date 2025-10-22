@@ -9,10 +9,6 @@
 namespace sre
 {
 
-const char* IBL_IRRADIANCE_PATH = "engine/media/hdr/industrialSunset/industrial_sunset_irradiance.hdr";
-const char* IBL_PREFILTER_PATH  = "engine/media/hdr/industrialSunset/industrial_sunset_preFilter.hdr";
-const char* IBL_BRDF_PATH       = "engine/media/hdr/industrialSunset/industrial_sunset_brdf.hdr";
-
 void LightManager::setAmbientLightColor(const glm::vec3 &ambientLightColor)
 {
     this->ambientLightColor = ambientLightColor;
@@ -32,11 +28,6 @@ bool LightManager::hasAnyShadowCaster()
     );
 }
 
-bool LightManager::hasIBLData() const
-{
-    return this->iblData.loaded;
-}
-
 void LightManager::init()
 {
 	this->graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
@@ -46,16 +37,12 @@ void LightManager::addDirectionalLight(DirectionalLightComponent* item)
 {
     this->directionalLights.push_back(item);
 	this->updateDirectionalLightsUBO();
-
-    this->loadIBL();
 }
 
 void LightManager::addPointLight(PointLightComponent* item)
 {
     this->pointLights.push_back(item);
 	this->updatePointLightsUBO();
-
-    this->loadIBL();
 }
 
 void LightManager::updateDirectionalLightsUBO()
@@ -90,21 +77,24 @@ void LightManager::updatePointLightsUBO()
     this->updateUniformBuffer();
 }
 
-void LightManager::loadIBL()
+void LightManager::loadIBL(std::unordered_map<ETextureMap::Type, Texture*>& texturesMap)
 {
-    if (!iblData.loaded)
-    {
-        iblData.loaded = true;
+    Texture* irradiance = texturesMap[ETextureMap::IBL_IRRADIANCE];
+    Texture* prefilter = texturesMap[ETextureMap::IBL_PREFILTER];
+    Texture* brdfLUT = texturesMap[ETextureMap::IBL_BRDF_LUT];
 
-        AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-        Texture* irradiance = assetsManager->loadTexture(IBL_IRRADIANCE_PATH, ETextureMap::IBL_IRRADIANCE);
-        Texture* prefilter = assetsManager->loadTexture(IBL_PREFILTER_PATH, ETextureMap::IBL_PREFILTER);
-        Texture* brdfLUT = assetsManager->loadTexture(IBL_BRDF_PATH, ETextureMap::IBL_BRDF_LUT);
+    iblData.irradianceMap = irradiance->getId();
+    iblData.prefilterMap = prefilter->getId();
+    iblData.brdfLUTMap = brdfLUT->getId();
+    iblData.loaded = true;
+}
 
-        iblData.irradianceMap = irradiance->getId();
-        iblData.prefilterMap = prefilter->getId();
-        iblData.brdfLUTMap = brdfLUT->getId();
-    }
+void LightManager::clearIBLData()
+{
+    iblData.irradianceMap = 0;
+    iblData.prefilterMap = 0;
+    iblData.brdfLUTMap = 0;
+	iblData.loaded = false;
 }
 
 void LightManager::updateUniformBuffer()

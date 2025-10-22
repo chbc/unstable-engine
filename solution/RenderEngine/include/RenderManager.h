@@ -72,6 +72,7 @@ private:
 	void addGuizmoComponent(GuizmoComponent* guizmoComponent);
 	void addDebugBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color);
     void addSkybox(SkyboxComponent* mesh);
+	void reloadSkyboxMaterial(ABaseMaterial* newMaterial);
     void initGUIRenderer();
     void initShadowRenderer();
 
@@ -104,6 +105,7 @@ friend class GUIScene;
 friend class AtlasManager;
 friend class CameraComponent;
 friend class MeshComponent;
+friend class SkyboxComponent;
 friend class AExecutionStrategy;
 friend class EditorStrategy;
 friend class ApplicationStrategy;

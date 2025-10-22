@@ -55,7 +55,7 @@ protected:
     bool isOpaque();
     void load(Model* model, ABaseMaterial* arg_material, const char* meshName);
     void onPropertyDeserialized() override;
-    void onPropertyChanged() override;
+    virtual void onPropertyChanged() override;
     void onClone() override;
 
 private:

@@ -16,8 +16,8 @@ class SkyboxComponent;
 class Scene : public AScene
 {
 private:
-    const char* DEFAULT_MATERIAL_PATH = "engine/media/DefaultMaterial.mat";
-	const char* SKYBOX_MATERIAL_PATH = "engine/media/SkyboxMaterial.mat";
+    const char* DEFAULT_MATERIAL_PATH = "engine/media/materials/DefaultMaterial.mat";
+	const char* SKYBOX_MATERIAL_PATH = "engine/media/materials/IndustrialSunsetSkybox.mat";
 
 private:
     Scene(std::string arg_name, std::string arg_filePath);

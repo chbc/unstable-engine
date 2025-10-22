@@ -5,6 +5,7 @@
 #include "ASingleton.h"
 #include "LightsUBO.h"
 #include "IBLData.h"
+#include "ETextureMap.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -14,6 +15,7 @@ namespace sre
 {
 
 class Entity;
+class Texture;
 
 class LightManager : public ASingleton
 {
@@ -31,7 +33,6 @@ public:
     bool hasAnyLight();
     bool hasAnyShadowCaster();
     inline const IBLData& getIBLData() { return iblData; }
-    bool hasIBLData() const;
 
 protected:
     void init() override;
@@ -42,7 +43,8 @@ private:
 	void updateUniformBuffer();
     void updateDirectionalLightsUBO();
 	void updatePointLightsUBO();
-    void loadIBL();
+    void loadIBL(std::unordered_map<ETextureMap::Type, Texture*>& texturesMap);
+    void clearIBLData();
     void removeDestroyedEntities();
     void cleanUp();
 
@@ -52,6 +54,7 @@ friend class MeshRenderer;
 friend class LightRendererShaderSetup;
 friend class ShadowRendererShaderSetup;
 friend class ShadowRenderer;
+friend class SkyboxRenderer;
 friend class DirectionalLightComponent;
 friend class PointLightComponent;
 };

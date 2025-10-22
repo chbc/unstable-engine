@@ -24,8 +24,8 @@ private:
 	const char* DEFAULT_SCENE_PATH		= "engine/scenes/Default.scene";
 	const char* DEFAULT_GUI_SCENE_PATH	= "engine/scenes/DefaultGui.gui";
 	const char* DEFAULT_ENTITY_PATH		= "engine/media/DefaultEntity.ent";
-	const char* DEFAULT_MATERIAL_PATH	= "engine/media/DefaultMaterial.mat";
-	const char* DEFAULT_SKYBOX_PATH		= "engine/media/Skybox.mesh";
+	const char* DEFAULT_MATERIAL_PATH	= "engine/media/materials/DefaultMaterial.mat";
+	const char* DEFAULT_SKYBOX_PATH		= "engine/media/meshes/Skybox.mesh";
 
 public:
 	EditorsController(ScenesManager* arg_scenesManager);

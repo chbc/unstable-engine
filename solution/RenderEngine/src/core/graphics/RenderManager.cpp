@@ -234,6 +234,14 @@ void RenderManager::addSkybox(SkyboxComponent* mesh)
 	this->skyboxRenderer->addMesh(mesh);
 }
 
+void RenderManager::reloadSkyboxMaterial(ABaseMaterial* newMaterial)
+{
+    if (this->skyboxRenderer)
+    {
+        this->skyboxRenderer->reloadMaterial(newMaterial);
+	}
+}
+
 void RenderManager::initGUIRenderer()
 {
     if (!this->guiRenderer)
@@ -409,6 +417,16 @@ void RenderManager::removeDestroyedEntities()
         if (this->guiRenderer->isEmpty())
             this->guiRenderer = nullptr;
     }
+
+    if (this->skyboxRenderer.get() != nullptr)
+    {
+        this->skyboxRenderer->removeDestroyedEntities();
+        if (this->skyboxRenderer->isEmpty())
+        {
+            this->skyboxRenderer = nullptr;
+			this->lightManager->clearIBLData();
+        }
+	}
 
     this->lightManager->removeDestroyedEntities();
 }

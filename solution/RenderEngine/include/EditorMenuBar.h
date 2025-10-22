@@ -15,12 +15,12 @@ private:
 	bool* isDemoEnabled;
 	EditorsController* controller;
 
-	const char* CUBE_MESH_PATH = "engine\\media\\Cube.mesh";
-	const char* SPHERE_MESH_PATH = "engine\\media\\Sphere.mesh";
-	const char* CONE_MESH_PATH = "engine\\media\\Cone.mesh";
-	const char* CYLINDER_MESH_PATH = "engine\\media\\Cylinder.mesh";
-	const char* TORUS_MESH_PATH = "engine\\media\\Torus.mesh";
-	const char* PLANE_MESH_PATH = "engine\\media\\Plane.mesh";
+	const char* CUBE_MESH_PATH		= "engine/media/meshes/Cube.mesh";
+	const char* SPHERE_MESH_PATH	= "engine/media/meshes/Sphere.mesh";
+	const char* CONE_MESH_PATH		= "engine/media/meshes/Cone.mesh";
+	const char* CYLINDER_MESH_PATH	= "engine/media/meshes/Cylinder.mesh";
+	const char* TORUS_MESH_PATH		= "engine/media/meshes/Torus.mesh";
+	const char* PLANE_MESH_PATH		= "engine/media/meshes/Plane.mesh";
 
 public:
 	EditorMenuBar(bool* demoEnabled, EditorsController* arg_controller);

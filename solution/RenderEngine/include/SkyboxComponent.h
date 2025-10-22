@@ -13,6 +13,9 @@ DECLARE_COMPONENT()
 
 public:
 	SkyboxComponent(Entity* entity);
+
+protected:
+	void onPropertyChanged() override;
 };
 
 } // namespace

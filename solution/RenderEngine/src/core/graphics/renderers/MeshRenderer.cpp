@@ -111,11 +111,8 @@ void MeshRenderer::loadShaderSetupItems()
 				this->shaderSetupItems[typeid(ShadowRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
 			}
 
-            if (lightManager->hasIBLData())
-            {
-                item = new IBLRendererShaderSetup{ this->shaderManager, this->graphicsWrapper };
-                this->shaderSetupItems[typeid(IBLRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
-            }
+            item = new IBLRendererShaderSetup{ this->shaderManager, this->graphicsWrapper };
+            this->shaderSetupItems[typeid(IBLRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
 		}
 		else
 		{

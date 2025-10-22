@@ -9,9 +9,9 @@ cylinder:
     MeshComponent:
       Enabled: 1
       Mesh:
-        FilePath: engine\media\Cylinder.mesh
+        FilePath: engine\media\meshes\Cylinder.mesh
         MeshName: Cylinder
-      Material: engine\media\DefaultMaterial.mat
+      Material: engine\media\materials\DefaultMaterial.mat
 _main_camera:
   Enabled: 1
   Components:
@@ -47,9 +47,9 @@ plane:
     MeshComponent:
       Enabled: 1
       Mesh:
-        FilePath: engine\media\Plane.mesh
+        FilePath: engine\media\meshes\Plane.mesh
         MeshName: Plane
-      Material: engine\media\DefaultMaterial.mat
+      Material: engine\media\materials\DefaultMaterial.mat
 sphere:
   Enabled: 1
   Components:
@@ -61,9 +61,9 @@ sphere:
     MeshComponent:
       Enabled: 1
       Mesh:
-        FilePath: engine\media\Sphere.mesh
+        FilePath: engine\media\meshes\Sphere.mesh
         MeshName: Sphere
-      Material: engine\media\DefaultMaterial.mat
+      Material: engine\media\materials\DefaultMaterial.mat
 cube:
   Enabled: 1
   Components:
@@ -75,9 +75,9 @@ cube:
     MeshComponent:
       Enabled: 1
       Mesh:
-        FilePath: engine\media\Cube.mesh
+        FilePath: engine\media\meshes\Cube.mesh
         MeshName: Cube
-      Material: engine\media\WhiteMaterial.mat
+      Material: engine\media\materials\WhiteMaterial.mat
   Entities:
     Guizmo:
       Enabled: 1
@@ -100,9 +100,9 @@ torus:
     MeshComponent:
       Enabled: 1
       Mesh:
-        FilePath: engine\media\Torus.mesh
+        FilePath: engine\media\meshes\Torus.mesh
         MeshName: Torus
-      Material: engine\media\DefaultMaterial.mat
+      Material: engine\media\materials\DefaultMaterial.mat
 cone:
   Enabled: 1
   Components:
@@ -114,6 +114,6 @@ cone:
     MeshComponent:
       Enabled: 1
       Mesh:
-        FilePath: engine\media\Cone.mesh
+        FilePath: engine\media\meshes\Cone.mesh
         MeshName: Cone
-      Material: engine\media\ColorCustomMaterial.mat
+      Material: engine\media\materials\ColorCustomMaterial.mat
