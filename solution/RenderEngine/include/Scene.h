@@ -24,7 +24,8 @@ private:
 
 private:
     Entity* createMeshEntity(const std::string& filePath, const char* meshName);
-    Entity* createMeshEntity(Model* model, ABaseMaterial* material, const char* meshName, Entity* parent = nullptr);
+    Entity* createMeshEntity(Model* model, const char* meshName, Entity* parent);
+    Entity* createMeshEntity(Model* model, ABaseMaterial* material, const char* meshName, Entity* parent);
     Entity* createPerspectiveCamera(float fov = 70.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr);
     Entity* createOrthoCamera(Entity* parent = nullptr);
     Entity* createSkybox(const std::string& meshFilePath, const std::string& entityName = "", Entity* parent = nullptr);

@@ -53,6 +53,13 @@ Entity* ScenesManager::getEntity(const std::string& name)
     return result;
 }
 
+Entity* ScenesManager::createMeshEntity(Model* model, const char* meshName, Entity* parent)
+{
+    Entity* result = this->scene->createMeshEntity(model, meshName, parent);
+    this->addToRenderer(result);
+    return result;
+}
+
 Entity* ScenesManager::createPerspectiveCamera(float fov, float near, float far, Entity* parent)
 {
     return this->scene->createPerspectiveCamera(fov, near, far, parent);

@@ -51,10 +51,14 @@ void MeshComponent::loadMaterial(const char* filePath)
     if (!this->lockMaterial)
     {
         AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-        assetsManager->releaseMaterial(this->material);
+        RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+        
+        renderManager->removeMesh(this);
 
+        ABaseMaterial* oldMaterial = this->material;
         this->material = assetsManager->loadMaterial(filePath);
-        this->reloadMeshInRenderer();
+
+        renderManager->addMesh(this);
     }
 }
 
@@ -115,9 +119,13 @@ void MeshComponent::onPropertyDeserialized()
 
 void MeshComponent::onPropertyChanged()
 {
+    RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+    renderManager->removeMesh(this);
+
 	ARenderableComponent::onPropertyChanged();
     this->bounds.setup(this->mesh->vertexData);
-    this->reloadMeshInRenderer();
+
+    renderManager->addMesh(this);
 }
 
 void MeshComponent::onClone()
@@ -126,13 +134,6 @@ void MeshComponent::onClone()
     {
         this->bounds.setup(this->mesh->vertexData);
     }
-}
-
-void MeshComponent::reloadMeshInRenderer()
-{
-    RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
-    renderManager->removeMesh(this);
-    renderManager->addMesh(this);
 }
 
 } // namespace

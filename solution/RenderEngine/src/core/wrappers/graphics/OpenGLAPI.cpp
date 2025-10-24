@@ -552,6 +552,8 @@ uint32_t OpenGLAPI::setupHdrFromCrossedImage(int width, int height, float* data,
 	}
 
 	glDeleteTextures(1, &tempTexture2D);
+	glDeleteFramebuffers(1, &srcFBO);
+	glDeleteFramebuffers(1, &dstFBO);
 
 	return result;
 }

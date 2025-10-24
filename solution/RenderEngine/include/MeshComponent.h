@@ -58,9 +58,6 @@ protected:
     virtual void onPropertyChanged() override;
     void onClone() override;
 
-private:
-    void reloadMeshInRenderer();
-
 friend class RenderManager;
 friend class Entity;
 friend class OpenGLAPI;
