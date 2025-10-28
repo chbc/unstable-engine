@@ -31,9 +31,11 @@ void SceneViewportGuizmos::onInit()
 	
 	this->guizmoEntity = new Entity("Guizmo");
 	this->guizmoEntity->addComponent<GuizmoComponent>();
+
+	ImGuizmo::AllowAxisFlip(false);
 }
 
-bool SceneViewportGuizmos::drawAndManipulate(bool cameraMoving, const glm::vec2& windowPos, const glm::vec2& windowSize, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
+bool SceneViewportGuizmos::drawAndManipulate(bool cameraMoving, const glm::vec2& windowPos, const glm::vec2& windowSize, glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
 	bool result = false;
 
@@ -73,6 +75,14 @@ bool SceneViewportGuizmos::drawAndManipulate(bool cameraMoving, const glm::vec2&
 			glm::value_ptr(identityMatrix), 20.0f
 		);
 	}
+
+	ImGuizmo::ViewManipulate
+	(
+		glm::value_ptr(viewMatrix), 10.0f,
+		ImVec2(windowPos.x + windowSize.x - 128.0f, windowPos.y),
+		ImVec2(128.0f, 128.0f),
+		0x10101010
+	);
 
 	return result;
 }
