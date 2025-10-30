@@ -36,6 +36,17 @@ T* Entity::getComponent()
         uint16_t id = this->getComponentId<T>();
         component = static_cast<T*>(componentsMap[id].get());
     }
+    else
+    {
+        for (Entity* child : this->childrenList)
+        {
+            component = child->getComponent<T>();
+            if (component)
+            {
+                break;
+            }
+		}
+    }
 
     return component;
 }

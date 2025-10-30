@@ -39,13 +39,23 @@ AEntityComponent* Entity::addComponent(const char* className)
 	return newComponent;
 }
 
-void Entity::addChild(Entity* child)
+Entity* Entity::addChild(Entity* child)
 {
-	this->children[child->getName()] = child;
+	return this->addChild(UPTR<Entity>{ child });
+}
+
+Entity* Entity::addChild(UPTR<Entity>& child)
+{
 	child->parent = this;
-	this->childrenList.push_back(child);
+	const char* childName = child->getName();
+	this->children[childName] = std::move(child);
+	
+	Entity* result = this->children[childName].get();
+	this->childrenList.push_back(result);
 
 	this->transform->propagateTransform();
+
+	return result;
 }
 
 void Entity::removeChild(Entity* child)
@@ -77,7 +87,7 @@ Entity* Entity::getChild(const std::string& name)
 	Entity* result{ nullptr };
 	if (this->children.count(name) > 0)
 	{
-		result = this->children[name];
+		result = this->children[name].get();
 	}
 	else
 	{

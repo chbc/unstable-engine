@@ -40,8 +40,8 @@ void GuizmoRenderer::addGuizmo(GuizmoComponent* guizmoComponent)
 
 		guizmoComponent->bounds.reset();
 
-		Entity* parentEntity = guizmoComponent->getEntity()->getParent();
-		parentEntity->getBounds(guizmoComponent->bounds);
+		Entity* entity = guizmoComponent->getEntity();
+		entity->getBounds(guizmoComponent->bounds);
 	}
 }
 
@@ -71,8 +71,8 @@ void GuizmoRenderer::render(CameraComponent* camera)
         this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
         this->graphicsWrapper->enableColorMeshSettings();
 
-		Entity* parentEntity = item->getEntity()->getParent();
-		TransformComponent* transform = parentEntity->getTransform();
+		Entity* entity = item->getEntity();
+		TransformComponent* transform = entity->getTransform();
 		const glm::mat4& modelMatrix = transform->getMatrix();
 		glm::mat4 resultMatrix = glm::translate(modelMatrix, item->bounds.center);
 		resultMatrix = glm::scale(resultMatrix, item->bounds.size);

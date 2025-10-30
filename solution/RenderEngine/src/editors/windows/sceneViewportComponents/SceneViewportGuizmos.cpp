@@ -28,9 +28,6 @@ void SceneViewportGuizmos::onInit()
 	messagesManager->addListener<SetGridEnabledEditorMessage>(this->gridEnabledAction.get());
 	this->selectedEntity = nullptr;
 	this->guizmoOperation = ImGuizmo::TRANSLATE;
-	
-	this->guizmoEntity = new Entity("Guizmo");
-	this->guizmoEntity->addComponent<GuizmoComponent>();
 
 	ImGuizmo::AllowAxisFlip(false);
 }
@@ -113,16 +110,18 @@ void SceneViewportGuizmos::onCleanUp()
 
 void SceneViewportGuizmos::onEntitySelected(void* data)
 {
-	this->guizmoEntity->removeFromParent();
+	if (this->selectedEntity)
+	{
+		this->selectedEntity->removeComponent<GuizmoComponent>();
+	}
 
 	EntitySelectionMessage* message = static_cast<EntitySelectionMessage*>(data);
 	this->selectedEntity = message->entity;
 
-	GuizmoComponent* guizmoComponent = nullptr;
-	if (this->selectedEntity != nullptr)
+	GuizmoComponent* guizmoComponent{ nullptr };
+	if (this->selectedEntity)
 	{
-		this->selectedEntity->addChild(this->guizmoEntity);
-		guizmoComponent = this->guizmoEntity->getComponent<GuizmoComponent>();
+		guizmoComponent = this->selectedEntity->addComponent<GuizmoComponent>();
 	}
 
 	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();

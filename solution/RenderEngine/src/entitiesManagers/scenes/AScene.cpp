@@ -70,7 +70,7 @@ Entity* AScene::createEntityFromFile(std::string filePath, Entity* parent)
 
     if (parent != nullptr)
     {
-        parent->addChild(result);
+        result = parent->addChild(result);
     }
     else
     {
@@ -98,6 +98,17 @@ Entity* AScene::duplicateEntity(Entity* entity)
 		resultTransform->setScale(entityTransform->getScale());
     }
 	return result;
+}
+
+void AScene::moveEntityToBeChild(const std::string& entityName, Entity* targetParent)
+{
+    if (this->entities.count(entityName) > 0)
+    {
+        UPTR<Entity>& result = this->entities[entityName];
+	    targetParent->addChild(std::move(result));
+
+        this->entities.erase(entityName);
+	}
 }
 
 void AScene::removeDestroyedEntities()

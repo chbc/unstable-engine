@@ -20,7 +20,6 @@ class SceneViewportGuizmos
 {
 private:
 	Entity* selectedEntity{ nullptr };
-	Entity* guizmoEntity{ nullptr };
 	SPTR<Action> selectionAction;
 	SPTR<Action> orientationModeAction;
 	SPTR<Action> gridEnabledAction;

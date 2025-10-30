@@ -61,28 +61,23 @@ void EditorSceneTree::drawScene(AScene* scene)
 		if (ImGui::CollapsingHeader(scene->label.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 		{
 			for (const auto& item : scene->entities)
+			{
 				this->drawEntityTree(item.second.get(), 0);
+				this->handleDragAndDrop(scene, item.second.get());
+			}
 		}
 	}
 }
 
 void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 {
-	if (entity->dontShowInEditorSceneTree || entity->hasComponent<GuizmoComponent>())
+	if (entity->dontShowInEditorSceneTree)
 	{
 		return;
 	}
 
 	const char* name = entity->getName();
 	size_t childrenCount = entity->getChildrenCount();
-
-	if (childrenCount == 1)
-	{
-		Entity* childEntity = entity->getChild(0);
-		childrenCount = childEntity->hasComponent<GuizmoComponent>() ? 0 : 1;
-	}
-
-	const ImGuiTreeNodeFlags BASE_FLAGS = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 
 	Entity* selectedEntity = this->controller->getSelectedEntity();
 
@@ -93,39 +88,11 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 			this->controller->setSelectedEntity(entity);
 		}
 
-		if (ImGui::BeginPopupContextItem())
-		{
-			this->controller->setSelectedEntity(entity);
-
-			ImGui::Text("[%s]", name);
-			if (!selectedEntity->isAsset())
-			{
-				if (ImGui::MenuItem("Save new Entity Asset"))
-				{
-					this->controller->saveEntity(selectedEntity);
-					ImGui::CloseCurrentPopup();
-				}
-			}
-			else if (!selectedEntity->isStored())
-			{
-				if (ImGui::MenuItem("Save Entity Asset"))
-				{
-					this->controller->saveEntity(selectedEntity);
-					ImGui::CloseCurrentPopup();
-				}
-			}
-			if (ImGui::MenuItem("Delete"))
-			{
-				selectedEntity->destroy();
-				this->controller->setSelectedEntity(nullptr);
-				ImGui::CloseCurrentPopup();
-			}
-			ImGui::EndPopup();
-		}
+		this->drawContextualMenu(selectedEntity, entity, name);
 	}
 	else
 	{
-		ImGuiTreeNodeFlags flags = BASE_FLAGS;
+		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 		if (entity == selectedEntity)
 		{
 			flags |= ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_Selected;
@@ -146,6 +113,61 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 			}
 			ImGui::TreePop();
 		}
+	}
+}
+
+void EditorSceneTree::drawContextualMenu(Entity* selectedEntity, Entity* entity, const char* name)
+{
+	if (ImGui::BeginPopupContextItem())
+	{
+		this->controller->setSelectedEntity(entity);
+
+		ImGui::Text("[%s]", name);
+		if (!selectedEntity->isAsset())
+		{
+			if (ImGui::MenuItem("Save new Entity Asset"))
+			{
+				this->controller->saveEntity(selectedEntity);
+				ImGui::CloseCurrentPopup();
+			}
+		}
+		else if (!selectedEntity->isStored())
+		{
+			if (ImGui::MenuItem("Save Entity Asset"))
+			{
+				this->controller->saveEntity(selectedEntity);
+				ImGui::CloseCurrentPopup();
+			}
+		}
+		if (ImGui::MenuItem("Delete"))
+		{
+			selectedEntity->destroy();
+			this->controller->setSelectedEntity(nullptr);
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
+}
+
+void EditorSceneTree::handleDragAndDrop(AScene* scene, Entity* entity)
+{
+	if (ImGui::BeginDragDropSource())
+	{
+		ImGui::SetDragDropPayload("ENTITY", &entity, sizeof(Entity*));
+		ImGui::Text("%s", entity->getName());
+		ImGui::EndDragDropSource();
+	}
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ENTITY"))
+		{
+			Entity* droppedEntity = *(Entity**)payload->Data;
+			if (droppedEntity != nullptr && droppedEntity != entity)
+			{
+				scene->moveEntityToBeChild(droppedEntity->getName(), entity);
+			}
+		}
+		ImGui::EndDragDropTarget();
 	}
 }
 

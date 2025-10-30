@@ -28,8 +28,10 @@ public:
 	void onEditorGUI() override;
 
 private:
-	void drawScene(class AScene* scene);
+	void drawScene(AScene* scene);
 	void drawEntityTree(Entity* entity, int index);
+	void drawContextualMenu(Entity* selectedEntity, Entity* entity, const char* name);
+	void handleDragAndDrop(AScene* scene, Entity* entity);
 };
 
 } // namespace

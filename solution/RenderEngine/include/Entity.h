@@ -34,7 +34,7 @@ private:
 	std::unordered_map<uint16_t, UPTR<AEntityComponent>> componentsMap;
     std::vector<SPTR<AEditorProperty>> editorProperties;
     Entity* parent{ nullptr };
-    std::unordered_map<std::string, Entity*> children;
+    std::unordered_map<std::string, UPTR<Entity>> children;
     std::vector<Entity*> childrenList;
     bool alive{ true };
     bool enabled{ true };
@@ -63,7 +63,8 @@ public:
 
     AEntityComponent* addComponent(const char* className);
 
-	SRE_API void addChild(Entity *child);
+	SRE_API Entity* addChild(Entity *child);
+    SRE_API Entity* addChild(UPTR<Entity>& child);
 	SRE_API void removeChild(Entity* child);
 	SRE_API inline size_t getChildrenCount() { return this->children.size(); }
 	SRE_API Entity *getChild(size_t index);
