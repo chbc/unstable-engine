@@ -69,6 +69,7 @@ public:
 	SRE_API inline size_t getChildrenCount() { return this->children.size(); }
 	SRE_API Entity *getChild(size_t index);
 	SRE_API Entity* getChild(const std::string& name);
+    SRE_API UPTR<Entity> moveChild(const std::string& name);
 	SRE_API inline Entity *getParent() { return this->parent; }
     SRE_API void removeFromParent();
 

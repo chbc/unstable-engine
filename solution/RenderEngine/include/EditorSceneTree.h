@@ -29,7 +29,7 @@ public:
 
 private:
 	void drawScene(AScene* scene);
-	void drawEntityTree(Entity* entity, int index);
+	void drawEntityTree(AScene* scene, Entity* entity, int index);
 	void drawContextualMenu(Entity* selectedEntity, Entity* entity, const char* name);
 	void handleDragAndDrop(AScene* scene, Entity* entity);
 };

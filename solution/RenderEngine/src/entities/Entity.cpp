@@ -104,6 +104,25 @@ Entity* Entity::getChild(const std::string& name)
 	return result;
 }
 
+UPTR<Entity> Entity::moveChild(const std::string& name)
+{
+	UPTR<Entity> result{ nullptr };
+
+	if (this->children.count(name) > 0)
+	{
+		result = std::move(this->children[name]);
+		this->children.erase(name);
+		auto it = std::find(this->childrenList.begin(), this->childrenList.end(), result.get());
+		if (it != this->childrenList.end())
+		{
+			this->childrenList.erase(it);
+		}
+		result->parent = nullptr;
+	}
+
+	return result;
+}
+
 void Entity::removeFromParent()
 {
 	if (this->parent != nullptr)

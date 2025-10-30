@@ -62,14 +62,13 @@ void EditorSceneTree::drawScene(AScene* scene)
 		{
 			for (const auto& item : scene->entities)
 			{
-				this->drawEntityTree(item.second.get(), 0);
-				this->handleDragAndDrop(scene, item.second.get());
+				this->drawEntityTree(scene, item.second.get(), 0);
 			}
 		}
 	}
 }
 
-void EditorSceneTree::drawEntityTree(Entity* entity, int index)
+void EditorSceneTree::drawEntityTree(AScene* scene, Entity* entity, int index)
 {
 	if (entity->dontShowInEditorSceneTree)
 	{
@@ -89,6 +88,7 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 		}
 
 		this->drawContextualMenu(selectedEntity, entity, name);
+		this->handleDragAndDrop(scene, entity);
 	}
 	else
 	{
@@ -105,11 +105,14 @@ void EditorSceneTree::drawEntityTree(Entity* entity, int index)
 			this->controller->setSelectedEntity(entity);
 		}
 
+		this->drawContextualMenu(selectedEntity, entity, name);
+		this->handleDragAndDrop(scene, entity);
+
 		if (open)
 		{
 			for (uint32_t i = 0; i < entity->getChildrenCount(); i++)
 			{
-				drawEntityTree(entity->getChild(i), i);
+				drawEntityTree(scene, entity->getChild(i), i);
 			}
 			ImGui::TreePop();
 		}
@@ -157,14 +160,24 @@ void EditorSceneTree::handleDragAndDrop(AScene* scene, Entity* entity)
 		ImGui::Text("%s", entity->getName());
 		ImGui::EndDragDropSource();
 	}
+
 	if (ImGui::BeginDragDropTarget())
 	{
 		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ENTITY"))
 		{
-			Entity* droppedEntity = *(Entity**)payload->Data;
-			if (droppedEntity != nullptr && droppedEntity != entity)
+			Entity* sourceEntity = *(Entity**)payload->Data;
+			if (sourceEntity != nullptr && sourceEntity != entity)
 			{
-				scene->moveEntityToBeChild(droppedEntity->getName(), entity);
+				Entity* parent = sourceEntity->getParent();
+				if (parent)
+				{
+					UPTR<Entity> movedEntity = parent->moveChild(sourceEntity->getName());
+					entity->addChild(std::move(movedEntity));
+				}
+				else
+				{
+					scene->moveEntityToBeChild(sourceEntity->getName(), entity);
+				}
 			}
 		}
 		ImGui::EndDragDropTarget();
