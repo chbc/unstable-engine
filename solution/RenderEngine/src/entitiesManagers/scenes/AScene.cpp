@@ -100,7 +100,7 @@ Entity* AScene::duplicateEntity(Entity* entity)
 	return result;
 }
 
-void AScene::moveEntityToBeChild(const std::string& entityName, Entity* targetParent)
+void AScene::moveEntityToChild(const std::string& entityName, Entity* targetParent)
 {
     if (this->entities.count(entityName) > 0)
     {
@@ -109,6 +109,20 @@ void AScene::moveEntityToBeChild(const std::string& entityName, Entity* targetPa
 
         this->entities.erase(entityName);
 	}
+}
+
+void AScene::moveEntityToRoot(Entity* entity)
+{
+    Entity* parent = entity->getParent();
+    if (parent != nullptr)
+    {
+        UPTR<Entity> movedEntity = parent->moveChild(entity->getName());
+		std::string entityName = movedEntity->getName();
+		this->resolveName(entityName);
+		movedEntity->name = entityName;
+        movedEntity->getTransform()->updateLocalValues();
+        this->entities[entityName] = std::move(movedEntity);
+    }
 }
 
 void AScene::removeDestroyedEntities()

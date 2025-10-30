@@ -60,6 +60,7 @@ void EditorSceneTree::drawScene(AScene* scene)
 	{
 		if (ImGui::CollapsingHeader(scene->label.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 		{
+			this->handleDropToRoot(scene);
 			for (const auto& item : scene->entities)
 			{
 				this->drawEntityTree(scene, item.second.get(), 0);
@@ -176,7 +177,27 @@ void EditorSceneTree::handleDragAndDrop(AScene* scene, Entity* entity)
 				}
 				else
 				{
-					scene->moveEntityToBeChild(sourceEntity->getName(), entity);
+					scene->moveEntityToChild(sourceEntity->getName(), entity);
+				}
+			}
+		}
+		ImGui::EndDragDropTarget();
+	}
+}
+
+void EditorSceneTree::handleDropToRoot(AScene* scene)
+{
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ENTITY"))
+		{
+			Entity* sourceEntity = *(Entity**)payload->Data;
+			if (sourceEntity != nullptr)
+			{
+				Entity* parent = sourceEntity->getParent();
+				if (parent)
+				{
+					scene->moveEntityToRoot(sourceEntity);
 				}
 			}
 		}

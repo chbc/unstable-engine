@@ -32,6 +32,7 @@ private:
 	void drawEntityTree(AScene* scene, Entity* entity, int index);
 	void drawContextualMenu(Entity* selectedEntity, Entity* entity, const char* name);
 	void handleDragAndDrop(AScene* scene, Entity* entity);
+	void handleDropToRoot(AScene* scene);
 };
 
 } // namespace

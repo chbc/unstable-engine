@@ -53,6 +53,8 @@ Entity* Entity::addChild(UPTR<Entity>& child)
 	Entity* result = this->children[childName].get();
 	this->childrenList.push_back(result);
 
+	const glm::mat4& transformMatrix = this->transform->getMatrix();
+	result->getTransform()->updateLocalValues(transformMatrix);
 	this->transform->propagateTransform();
 
 	return result;

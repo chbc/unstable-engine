@@ -30,7 +30,8 @@ protected:
     Entity* createEntity(std::string name = "", Entity* parent = nullptr, const std::string& className = "Entity");
 	Entity* createEntityFromFile(std::string filePath, Entity* parent = nullptr);
 	Entity* duplicateEntity(Entity* entity);
-	void moveEntityToBeChild(const std::string& entityName, Entity* targetParent);
+	void moveEntityToChild(const std::string& entityName, Entity* targetParent);
+	void moveEntityToRoot(Entity* entity);
     void removeDestroyedEntities();
     void onSceneLoaded();
 

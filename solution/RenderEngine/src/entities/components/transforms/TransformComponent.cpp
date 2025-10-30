@@ -199,6 +199,15 @@ void TransformComponent::onPropertyChanged()
 	AEntityComponent::onPropertyChanged();
 }
 
+void TransformComponent::updateLocalValues(const glm::mat4& parentMatrix)
+{
+	glm::mat4 localMatrix = glm::inverse(parentMatrix) * this->worldMatrix;
+	glm::vec3 skew;
+	glm::vec4 perspective;
+	glm::decompose(localMatrix, this->scale, glm::quat{ this->rotation }, this->position, skew, perspective);
+	this->eulerAngles = glm::degrees(glm::eulerAngles(glm::quat{ this->rotation }));
+}
+
 void TransformComponent::updateMatrix()
 {
 	glm::mat4 translationMatrix = glm::translate(glm::mat4{ 1.0 }, this->position);

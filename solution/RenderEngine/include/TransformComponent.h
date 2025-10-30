@@ -57,12 +57,14 @@ protected:
 	void onPropertyChanged() override;
 
 private:
+	void updateLocalValues(const glm::mat4& parentMatrix = glm::mat4{1.0f});
 	void updateMatrix();
 	void propagateTransform();
 
 friend class Entity;
 friend class TransformEditorProperty;
 friend class SceneViewportGuizmos;
+friend class AScene;
 };
 
 } // namespace
