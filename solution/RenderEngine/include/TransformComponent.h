@@ -35,6 +35,7 @@ public:
 	void setRotation(const glm::vec3& axis, float angle);
 	void setRotation(const glm::vec3& arg_eulerAngles);
 	void setRotation(const glm::quat& arg_rotation);
+	void setWorldMatrix(const glm::mat4& arg_worldMatrix);
 	void setLookAtRotation(const glm::vec3& targetPosition);
 	void rotate(const glm::vec3& axis, float angle);
 	void rotate(glm::vec3 arg_eulerAngles);
@@ -57,7 +58,7 @@ protected:
 	void onPropertyChanged() override;
 
 private:
-	void updateLocalValues(const glm::mat4& parentMatrix = glm::mat4{1.0f});
+	void updateLocalValues(const glm::mat4& arg_parentMatrix = glm::mat4{1.0f});
 	void updateMatrix();
 	void propagateTransform();
 

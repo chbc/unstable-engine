@@ -71,7 +71,6 @@ public:
 	SRE_API Entity* getChild(const std::string& name);
     SRE_API UPTR<Entity> moveChild(const std::string& name);
 	SRE_API inline Entity *getParent() { return this->parent; }
-    SRE_API void removeFromParent();
 
 	SRE_API TransformComponent *getTransform();
 

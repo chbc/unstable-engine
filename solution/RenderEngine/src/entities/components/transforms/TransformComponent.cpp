@@ -70,6 +70,13 @@ void TransformComponent::setRotation(const glm::quat& arg_rotation)
 	this->updateMatrix();
 }
 
+void TransformComponent::setWorldMatrix(const glm::mat4& arg_worldMatrix)
+{
+	this->worldMatrix = arg_worldMatrix;
+	this->updateLocalValues(this->parentMatrix);
+	this->propagateTransform();
+}
+
 void TransformComponent::setLookAtRotation(const glm::vec3& targetPosition)
 {
 	this->rotation = glm::mat4{ 1.0f };
@@ -199,13 +206,17 @@ void TransformComponent::onPropertyChanged()
 	AEntityComponent::onPropertyChanged();
 }
 
-void TransformComponent::updateLocalValues(const glm::mat4& parentMatrix)
+void TransformComponent::updateLocalValues(const glm::mat4& arg_parentMatrix)
 {
-	glm::mat4 localMatrix = glm::inverse(parentMatrix) * this->worldMatrix;
+	this->parentMatrix = arg_parentMatrix;
+	glm::mat4 localMatrix = glm::inverse(this->parentMatrix) * this->worldMatrix;
 	glm::vec3 skew;
 	glm::vec4 perspective;
-	glm::decompose(localMatrix, this->scale, glm::quat{ this->rotation }, this->position, skew, perspective);
-	this->eulerAngles = glm::degrees(glm::eulerAngles(glm::quat{ this->rotation }));
+	glm::quat dummyQuat;
+	glm::decompose(localMatrix, this->scale, dummyQuat, this->position, skew, perspective);
+	
+	this->eulerAngles = glm::degrees(glm::eulerAngles(dummyQuat));
+	this->rotation = glm::toMat4(dummyQuat);
 }
 
 void TransformComponent::updateMatrix()

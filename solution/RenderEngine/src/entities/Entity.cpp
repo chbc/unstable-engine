@@ -125,14 +125,6 @@ UPTR<Entity> Entity::moveChild(const std::string& name)
 	return result;
 }
 
-void Entity::removeFromParent()
-{
-	if (this->parent != nullptr)
-	{
-		this->parent->removeChild(this);
-	}
-}
-
 TransformComponent* Entity::getTransform()
 {
 	return this->transform;

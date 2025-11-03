@@ -50,12 +50,7 @@ bool SceneViewportGuizmos::drawAndManipulate(bool cameraMoving, const glm::vec2&
 
 		if (ImGuizmo::IsUsing())
 		{
-			glm::vec3 position{ 0.0f }, scale{ 0.0f }, rotation{ 0.0f };
-			MathUtils::decomposeTransform(entityMatrix, position, scale, rotation);
-
-			entityTransform->setPosition(position);
-			entityTransform->setScale(scale);
-			entityTransform->setRotation(glm::degrees(rotation));
+			entityTransform->setWorldMatrix(entityMatrix);
 
 			result = true;
 
