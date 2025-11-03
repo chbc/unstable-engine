@@ -148,7 +148,7 @@ void MultimediaManager::addGUIButton(GUIButtonComponent* guiButton)
 
 void MultimediaManager::removeDestroyedEntities()
 {
-	CollectionsUtils::removeIfEntityIsDestroyed(this->guiButtons);
+	CollectionsUtils::removeComponentIfEntityIsDestroyed(this->guiButtons);
 }
 
 void MultimediaManager::cleanUp()

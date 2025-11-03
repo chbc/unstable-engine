@@ -33,6 +33,7 @@ protected:
 	void moveEntityToChild(const std::string& entityName, Entity* targetParent);
 	void moveEntityToRoot(Entity* entity);
     void removeDestroyedEntities();
+    void removeDestroyedEntities(std::unordered_map<std::string, UPTR<Entity>>& entitiesMap);
     void onSceneLoaded();
 
 private:

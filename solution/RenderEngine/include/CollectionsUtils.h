@@ -10,7 +10,7 @@ namespace CollectionsUtils
 {
 
 template <typename T>
-bool removeIfEntityIsDestroyed(std::vector<T*>& items)
+bool removeComponentIfEntityIsDestroyed(std::vector<T*>& items)
 {
     bool result = false;
     typename std::vector<T*>::iterator it;
@@ -29,10 +29,25 @@ bool removeIfEntityIsDestroyed(std::vector<T*>& items)
     return result;
 }
 
-template <typename T1, typename T2>
-bool removeIfEntityIsDestroyed(std::unordered_map<T1, T2>& items)
+template <typename T1>
+void removeIfEntityIsDestroyed(std::vector<T1>& items)
 {
-    bool result = false;
+    typename std::vector<T1>::iterator it;
+
+    for (it = items.begin(); it != items.end();)
+    {
+        if (!(*it)->isAlive())
+        {
+            it = items.erase(it);
+        }
+        else
+            ++it;
+    }
+}
+
+template <typename T1, typename T2>
+void removeIfEntityIsDestroyed(std::unordered_map<T1, T2>& items)
+{
     typename std::unordered_map<T1, T2>::iterator it;
 
     for (it = items.begin(); it != items.end();)
@@ -40,13 +55,10 @@ bool removeIfEntityIsDestroyed(std::unordered_map<T1, T2>& items)
         if (!(*it).second->isAlive())
         {
             it = items.erase(it);
-            result = true;
         }
         else
             ++it;
     }
-
-    return result;
 }
 
 template <typename T>

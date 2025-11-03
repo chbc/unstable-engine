@@ -112,13 +112,13 @@ void LightManager::updateUniformBuffer()
 
 void LightManager::removeDestroyedEntities()
 {
-    bool lightRemoved = CollectionsUtils::removeIfEntityIsDestroyed(this->directionalLights);
+    bool lightRemoved = CollectionsUtils::removeComponentIfEntityIsDestroyed(this->directionalLights);
     if (lightRemoved)
     {
         this->updateDirectionalLightsUBO();
     }
 
-    lightRemoved = CollectionsUtils::removeIfEntityIsDestroyed(this->pointLights);
+    lightRemoved = CollectionsUtils::removeComponentIfEntityIsDestroyed(this->pointLights);
     if (lightRemoved)
     {
         this->updatePointLightsUBO();

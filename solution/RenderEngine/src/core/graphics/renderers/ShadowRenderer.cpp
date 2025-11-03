@@ -167,7 +167,7 @@ void ShadowRenderer::renderPointLightShadows()
 
 void ShadowRenderer::removeDestroyedEntities()
 {
-    CollectionsUtils::removeIfEntityIsDestroyed(this->items);
+    CollectionsUtils::removeComponentIfEntityIsDestroyed(this->items);
 }
 
 void ShadowRenderer::updateShadowMatrices(const glm::vec3 &lightPosition, float range)

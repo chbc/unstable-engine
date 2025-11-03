@@ -123,6 +123,7 @@ private:
     bool isStored() const;
     bool isSaved() const;
     Entity* clone();
+	void removeDestroyedChildren();
     AEditorProperty* findProperty(const std::string& title);
     static Entity* Create(std::string arg_name, const std::string& className);
     template <typename T> uint16_t getComponentId();

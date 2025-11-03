@@ -6,6 +6,7 @@
 #include "EditorMessages.h"
 #include "SingletonsManager.h"
 #include "BoolEditorProperty.h"
+#include "CollectionsUtils.h"
 
 namespace sre
 {
@@ -466,6 +467,17 @@ Entity* Entity::clone()
 	}
 
 	return result;
+}
+
+void Entity::removeDestroyedChildren()
+{
+	CollectionsUtils::removeIfEntityIsDestroyed(this->childrenList);
+	CollectionsUtils::removeIfEntityIsDestroyed(this->children);
+
+	for (auto& item : this->children)
+	{
+		item.second->removeDestroyedChildren();
+	}
 }
 
 AEditorProperty* Entity::findProperty(const std::string& title)

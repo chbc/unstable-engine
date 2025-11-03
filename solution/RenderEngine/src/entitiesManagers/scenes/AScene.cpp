@@ -128,6 +128,11 @@ void AScene::moveEntityToRoot(Entity* entity)
 void AScene::removeDestroyedEntities()
 {
     CollectionsUtils::removeIfEntityIsDestroyed(this->entities);
+
+    for (const auto& item : this->entities)
+    {
+        item.second->removeDestroyedChildren();
+	}
 }
 
 void AScene::onSceneLoaded()
