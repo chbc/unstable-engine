@@ -40,7 +40,7 @@ public:
 	void saveEntity(Entity* entity);
 	void loadFileFromBrowser(const std::string& filePath);
 	void importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, bool importMaterials, std::string& resultFilePath);
-	void copyFileToCurrentDirectory(const std::string& sourceFilePath, const std::string& destinationFileName = "");
+	void copyFileToCurrentDirectory(const std::string& sourceFilePath, const std::string& destinationFileName = "", bool startRenaming = false);
 	Entity* createMeshEntity(const std::string& filePath, const char* meshName);
 	void createDirectionalLight();
 	void createPointLight();
@@ -50,11 +50,13 @@ public:
 	void duplicateSelectedEntity();
 	void deleteFile(const char* filePath);
 	void duplicateFile(const std::string& filePath);
+	void renameFile(const std::string& oldFilePath, const std::string& newFileName);
 	void loadMaterialToEntity(Entity* entity, const std::string& materialFilePath);
 	void createScene();
 	void createStoredEntity();
 	void createMaterial();
-	void notifyRefreshFileIcons();
+	void notifyRefreshFileIcons() const;
+	void notifyFileRenaming(const std::string& fileName) const;
 	std::string getCurrentDirectory() const;
 	void setCurrentDirectory(const std::string& directory);
 	void tryLoadMaterialToEntity(Entity* entity, const std::string& entityPath);

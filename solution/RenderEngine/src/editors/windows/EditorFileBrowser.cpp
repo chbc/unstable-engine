@@ -12,11 +12,24 @@
 namespace sre
 {
 
+static int FilterFilenameCallback(ImGuiInputTextCallbackData* data)
+{
+	if (data->EventFlag == ImGuiInputTextFlags_CallbackCharFilter)
+	{
+		if (strchr("<>:\"/\\|?*", data->EventChar))
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
 EditorFileBrowser::EditorFileBrowser(EditorsController* arg_controller) 
 {
 	this->controller = arg_controller;
 	this->entitySelectionAction = SPTR<Action>(new Action([&](void* message) { this->onEntitySelected(message); }));
 	this->refreshIconsAction = SPTR<Action>(new Action([&](void* message) { this->refreshFileIcons(); }));
+	this->startRenamingFileAction = SPTR<Action>(new Action([&](void* message) { this->onStartRenamingFile(message); }));
 }
 
 void EditorFileBrowser::onInit()
@@ -31,6 +44,7 @@ void EditorFileBrowser::onInit()
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	messagesManager->addListener<EntitySelectionMessage>(this->entitySelectionAction.get());
 	messagesManager->addListener<RefreshFileIconsMessage>(this->refreshIconsAction.get());
+	messagesManager->addListener<RenameFileEditorMessage>(this->startRenamingFileAction.get());
 }
 
 void EditorFileBrowser::onEditorGUI()
@@ -52,9 +66,10 @@ void EditorFileBrowser::onEditorGUI()
 		
 		ImGui::PushID(item->filePath.c_str());
 
+		bool refresh = false;
 		bool directoryChanged = false;
 
-		this->showIcon(item, size);
+		this->drawIcon(item, size);
 
 		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 		{
@@ -62,6 +77,7 @@ void EditorFileBrowser::onEditorGUI()
 			switch (assetType)
 			{
 				case EAssetType::DIRECTORY:
+					refresh = true;
 					directoryChanged = true;
 					break;
 				case EAssetType::SCENE:
@@ -72,15 +88,21 @@ void EditorFileBrowser::onEditorGUI()
 		}
 
 		this->handleIconDrag(item, size);
+		this->handleFileRenaming();
 
 		ImGui::PopID();
 
-		ImGui::TextWrapped(item->fileName.c_str());
+		refresh = refresh || this->drawLabel(item);
+
 		ImGui::NextColumn();
 
-		if (directoryChanged)
+		if (refresh)
 		{
-			this->controller->setCurrentDirectory(item->filePath);
+			if (directoryChanged)
+			{
+				this->controller->setCurrentDirectory(item->filePath);
+			}
+
 			this->refreshFileIcons();
 			break;
 		}
@@ -99,6 +121,7 @@ void EditorFileBrowser::onCleanUp()
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	messagesManager->removeListener<EntitySelectionMessage>(this->entitySelectionAction.get());
 	messagesManager->removeListener<RefreshFileIconsMessage>(this->refreshIconsAction.get());
+	messagesManager->removeListener<RenameFileEditorMessage>(this->startRenamingFileAction.get());
 
 	this->externalFileDropHandler.onCleanUp();
 }
@@ -138,7 +161,7 @@ void EditorFileBrowser::showRootContentButtons()
 	}
 }
 
-void EditorFileBrowser::showIcon(FileIcon* icon, const ImVec2& size)
+void EditorFileBrowser::drawIcon(FileIcon* icon, const ImVec2& size)
 {
 	const ImVec4& HoveredColor = ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered);
 	ImVec4 IconColor = (icon == this->selectedItem) ? HoveredColor : ImVec4{ 0.0f, 0.0f, 0.0f, 0.0f };
@@ -150,6 +173,40 @@ void EditorFileBrowser::showIcon(FileIcon* icon, const ImVec2& size)
 		this->selectedItem = icon;
 	}
 	ImGui::PopStyleColor();
+}
+
+bool EditorFileBrowser::drawLabel(FileIcon* icon)
+{
+	bool result = false;
+	const char* labelText = icon->fileName.c_str();
+
+	if (this->itemToRename == icon->fileName)
+	{
+		char buffer[128];
+		std::strncpy(buffer, labelText, sizeof(buffer));
+		ImGuiInputTextFlags flags = ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCharFilter;
+		ImGui::SetKeyboardFocusHere();
+		if (ImGui::InputText("##RenameInput", buffer, IM_ARRAYSIZE(buffer), flags, FilterFilenameCallback))
+		{
+			result = true;
+			std::string oldFilePath{ icon->filePath };
+			std::string newFileName{ buffer };
+			this->itemToRename = "";
+			
+			this->controller->renameFile(oldFilePath, newFileName);
+		}
+
+		if (ImGui::IsItemDeactivated())
+		{
+			this->itemToRename = "";
+		}
+	}
+	else
+	{
+		ImGui::TextWrapped(labelText);
+	}
+
+	return result;
 }
 
 void EditorFileBrowser::handleDelete()
@@ -180,9 +237,26 @@ void EditorFileBrowser::handleIconDrag(FileIcon* icon, const ImVec2& size)
 	}
 }
 
+void EditorFileBrowser::handleFileRenaming()
+{
+	if (this->selectedItem)
+	{
+		if (ImGui::IsKeyPressed(ImGuiKey_F2))
+		{
+			this->itemToRename = this->selectedItem->fileName;
+		}
+	}
+}
+
 void EditorFileBrowser::onEntitySelected(void* data)
 {
 	this->selectedItem = nullptr;
+}
+
+void EditorFileBrowser::onStartRenamingFile(void* data)
+{
+	RenameFileEditorMessage* message = static_cast<RenameFileEditorMessage*>(data);
+	this->itemToRename = message->fileName;
 }
 
 } // namespace

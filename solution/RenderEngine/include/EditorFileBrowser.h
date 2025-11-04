@@ -23,10 +23,12 @@ private:
 	std::vector<UPTR<FileIcon>> fileIcons;
 	SPTR<Action> entitySelectionAction;
 	SPTR<Action> refreshIconsAction;
+	SPTR<Action> startRenamingFileAction;
 	EditorsController* controller{ nullptr };
 	std::string gameContentFolder;
 	std::string engineContentFolder;
 	FileIcon* selectedItem{ nullptr };
+	std::string itemToRename;
 
 public:
 	EditorFileBrowser(EditorsController* arg_controller);
@@ -38,11 +40,14 @@ public:
 private:
 	void setupColumns(const ImVec2& iconSize);
 	void showRootContentButtons();
-	void showIcon(FileIcon* icon, const ImVec2& size);
+	void drawIcon(FileIcon* icon, const ImVec2& size);
+	bool drawLabel(FileIcon* icon);
 	void handleDelete();
 	void handleDuplicate();
 	void handleIconDrag(FileIcon* icon, const ImVec2& size);
+	void handleFileRenaming();
 	void onEntitySelected(void* data);
+	void onStartRenamingFile(void* data);
 };
 
 } // namespace

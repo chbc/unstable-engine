@@ -96,4 +96,15 @@ struct RefreshFileIconsMessage : public BaseMessage
 	DECLARE_MESSAGE()
 };
 
+struct RenameFileEditorMessage : public BaseMessage
+{
+public:
+	std::string fileName;
+
+public:
+	RenameFileEditorMessage(const std::string& arg_fileName) : fileName(arg_fileName) {}
+
+	DECLARE_MESSAGE()
+};
+
 } // namespace

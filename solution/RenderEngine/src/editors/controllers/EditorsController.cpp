@@ -178,7 +178,7 @@ void EditorsController::importMesh(const char* sourceFilePath, const char* desti
 	messagesManager->notify(&message);
 }
 
-void EditorsController::copyFileToCurrentDirectory(const std::string& sourceFilePath, const std::string& destinationFileName)
+void EditorsController::copyFileToCurrentDirectory(const std::string& sourceFilePath, const std::string& destinationFileName, bool startRenaming)
 {
 	std::string resultDestinationFileName = destinationFileName;
 	if (resultDestinationFileName.empty())
@@ -192,6 +192,11 @@ void EditorsController::copyFileToCurrentDirectory(const std::string& sourceFile
 	FileUtils::copyFile(resultSourceFilePath, resultDestinationPath);
 
 	this->notifyRefreshFileIcons();
+
+	if (startRenaming)
+	{
+		this->notifyFileRenaming(FileUtils::getFileName(resultDestinationPath));
+	}
 }
 
 Entity* EditorsController::createMeshEntity(const std::string& filePath, const char* meshName)
@@ -253,6 +258,11 @@ void EditorsController::duplicateFile(const std::string& filePath)
 	FileUtils::duplicateFile(filePath);
 }
 
+void EditorsController::renameFile(const std::string& oldFilePath, const std::string& newFileName)
+{
+	FileUtils::renameFile(oldFilePath, newFileName);
+}
+
 void EditorsController::loadMaterialToEntity(Entity* entity, const std::string& materialFilePath)
 {
 	if (FileUtils::fileExists(materialFilePath))
@@ -269,23 +279,30 @@ void EditorsController::loadMaterialToEntity(Entity* entity, const std::string& 
 
 void EditorsController::createScene()
 {
-	this->copyFileToCurrentDirectory(DEFAULT_SCENE_PATH, "NewScene.scene");
+	this->copyFileToCurrentDirectory(DEFAULT_SCENE_PATH, "NewScene.scene", true);
 }
 
 void EditorsController::createStoredEntity()
 {
-	this->copyFileToCurrentDirectory(DEFAULT_ENTITY_PATH, "NewEntity.ent");
+	this->copyFileToCurrentDirectory(DEFAULT_ENTITY_PATH, "NewEntity.ent", true);
 }
 
 void EditorsController::createMaterial()
 {
-	this->copyFileToCurrentDirectory(DEFAULT_MATERIAL_PATH, "NewMaterial.mat");
+	this->copyFileToCurrentDirectory(DEFAULT_MATERIAL_PATH, "NewMaterial.mat", true);
 }
 
-void EditorsController::notifyRefreshFileIcons()
+void EditorsController::notifyRefreshFileIcons() const
 {
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
 	RefreshFileIconsMessage message;
+	messagesManager->notify(&message);
+}
+
+void EditorsController::notifyFileRenaming(const std::string& fileName) const
+{
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	RenameFileEditorMessage message{ fileName };
 	messagesManager->notify(&message);
 }
 

@@ -333,6 +333,17 @@ void copyFile(const std::string& sourceFilePath, const std::string& destinationF
 	FS::copy_file(FS::path{ sourceFilePath }, FS::path{ resultDestinationPath }, FS::copy_options::overwrite_existing);
 }
 
+void renameFile(const std::string& oldFilePath, const std::string& newFileName)
+{
+	FS::path oldPath{ oldFilePath };
+	FS::path directoryPath = oldPath.parent_path();
+	FS::path extension = oldPath.extension();
+	FS::path newPath = directoryPath / (newFileName + extension.string());
+	std::string newFilePath = newPath.string();
+	resolveFileNameConflict(newFilePath);
+	FS::rename(FS::path{ oldFilePath }, FS::path{ newFilePath });
+}
+
 void resolveFileNameConflict(std::string& filePath)
 {
 	FS::path systemPath{ filePath };
