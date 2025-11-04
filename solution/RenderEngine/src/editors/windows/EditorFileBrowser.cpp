@@ -12,18 +12,6 @@
 namespace sre
 {
 
-static int FilterFilenameCallback(ImGuiInputTextCallbackData* data)
-{
-	if (data->EventFlag == ImGuiInputTextFlags_CallbackCharFilter)
-	{
-		if (strchr("<>:\"/\\|?*", data->EventChar))
-		{
-			return 1;
-		}
-	}
-	return 0;
-}
-
 EditorFileBrowser::EditorFileBrowser(EditorsController* arg_controller) 
 {
 	this->controller = arg_controller;
@@ -178,32 +166,25 @@ void EditorFileBrowser::drawIcon(FileIcon* icon, const ImVec2& size)
 bool EditorFileBrowser::drawLabel(FileIcon* icon)
 {
 	bool result = false;
-	const char* labelText = icon->fileName.c_str();
+	std::string itemName = icon->fileName;
 
-	if (this->itemToRename == icon->fileName)
+	if (this->inputTextHandler.isRenaming(itemName))
 	{
-		char buffer[128];
-		std::strncpy(buffer, labelText, sizeof(buffer));
-		ImGuiInputTextFlags flags = ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_CallbackCharFilter;
-		ImGui::SetKeyboardFocusHere();
-		if (ImGui::InputText("##RenameInput", buffer, IM_ARRAYSIZE(buffer), flags, FilterFilenameCallback))
+		if (this->inputTextHandler.inputText(itemName))
 		{
 			result = true;
 			std::string oldFilePath{ icon->filePath };
-			std::string newFileName{ buffer };
-			this->itemToRename = "";
-			
-			this->controller->renameFile(oldFilePath, newFileName);
+			this->controller->renameFile(oldFilePath, itemName);
 		}
 
 		if (ImGui::IsItemDeactivated())
 		{
-			this->itemToRename = "";
+			this->inputTextHandler.setItemToRename("");
 		}
 	}
 	else
 	{
-		ImGui::TextWrapped(labelText);
+		ImGui::TextWrapped(itemName.c_str());
 	}
 
 	return result;
@@ -243,7 +224,7 @@ void EditorFileBrowser::handleFileRenaming()
 	{
 		if (ImGui::IsKeyPressed(ImGuiKey_F2))
 		{
-			this->itemToRename = this->selectedItem->fileName;
+			this->inputTextHandler.setItemToRename(this->selectedItem->fileName);
 		}
 	}
 }
@@ -256,7 +237,7 @@ void EditorFileBrowser::onEntitySelected(void* data)
 void EditorFileBrowser::onStartRenamingFile(void* data)
 {
 	RenameFileEditorMessage* message = static_cast<RenameFileEditorMessage*>(data);
-	this->itemToRename = message->fileName;
+	this->inputTextHandler.setItemToRename(message->fileName);
 }
 
 } // namespace

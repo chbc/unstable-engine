@@ -430,6 +430,7 @@
     <ClCompile Include="src\editors\properties\TextureEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\Vec2EditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\Vec3EditorProperty.cpp" />
+    <ClCompile Include="src\editors\windows\common\InputTextHandler.cpp" />
     <ClCompile Include="src\editors\windows\EditorFileBrowser.cpp" />
     <ClCompile Include="src\editors\windows\EditorSceneViewport.cpp" />
     <ClCompile Include="src\editors\windows\fileBrowserComponents\ExternalFileDropHandler.cpp" />
@@ -639,6 +640,7 @@
     <ClInclude Include="include\IBLRendererShaderSetup.h" />
     <ClInclude Include="include\ImGuiLib.h" />
     <ClInclude Include="include\ImportMeshPopup.h" />
+    <ClInclude Include="include\InputTextHandler.h" />
     <ClInclude Include="include\LightsUBO.h" />
     <ClInclude Include="include\ModelImportData.h" />
     <ClInclude Include="include\NormalTextureEditorProperty.h" />

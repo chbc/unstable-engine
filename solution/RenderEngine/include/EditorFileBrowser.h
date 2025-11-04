@@ -6,6 +6,7 @@
 #include "memory_aliases.h"
 #include "ExternalFileDropHandler.h"
 #include "FileBrowserContextMenu.h"
+#include "InputTextHandler.h"
 
 #include <vector>
 #include <functional>
@@ -28,7 +29,7 @@ private:
 	std::string gameContentFolder;
 	std::string engineContentFolder;
 	FileIcon* selectedItem{ nullptr };
-	std::string itemToRename;
+	InputTextHandler inputTextHandler;
 
 public:
 	EditorFileBrowser(EditorsController* arg_controller);

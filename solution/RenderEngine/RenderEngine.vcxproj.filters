@@ -492,6 +492,9 @@
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\CustomMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\editors\windows\common\InputTextHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1254,6 +1257,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\CustomMaterialComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InputTextHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
