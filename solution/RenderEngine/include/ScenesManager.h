@@ -31,8 +31,8 @@ public:
     SRE_API Entity* createMeshEntity(Model* model, const char* meshName, Entity* parent = nullptr);
     SRE_API Entity* createPerspectiveCamera(float fov = 70.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr);
     SRE_API Entity* createOrthoCamera(Entity* parent = nullptr);
-    SRE_API DirectionalLightComponent* createDirectionalLight(const std::string& name = "", Entity* parent = nullptr);
-    SRE_API PointLightComponent* createPointLight(const std::string& name = "", Entity* parent = nullptr);
+    SRE_API Entity* createDirectionalLight(const std::string& name = "", Entity* parent = nullptr);
+    SRE_API Entity* createPointLight(const std::string& name = "", Entity* parent = nullptr);
 	SRE_API Entity* createSkybox(const std::string& meshFilePath, const std::string& name = "", Entity* parent = nullptr);
     SRE_API Entity* createGUIImageEntity(const std::string& filePath, const std::string& name = "");
     SRE_API Entity* createGUIImageEntity(const std::string& filePath, const glm::vec2& normalizedSize, const std::string& name = "");

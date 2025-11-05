@@ -70,12 +70,12 @@ Entity* ScenesManager::createOrthoCamera(Entity* parent)
     return this->scene->createOrthoCamera(parent);
 }
 
-DirectionalLightComponent* ScenesManager::createDirectionalLight(const std::string& name, Entity* parent)
+Entity* ScenesManager::createDirectionalLight(const std::string& name, Entity* parent)
 {
     return this->scene->createDirectionalLight(name, parent);
 }
 
-PointLightComponent* ScenesManager::createPointLight(const std::string& name, Entity* parent)
+Entity* ScenesManager::createPointLight(const std::string& name, Entity* parent)
 {
     return this->scene->createPointLight(name, parent);
 }

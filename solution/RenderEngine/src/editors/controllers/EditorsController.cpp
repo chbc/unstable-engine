@@ -213,17 +213,20 @@ Entity* EditorsController::createMeshEntity(const std::string& filePath, const c
 
 void EditorsController::createDirectionalLight()
 {
-	this->scenesManager->createDirectionalLight();
+	Entity* newEntity = this->scenesManager->createDirectionalLight();
+	this->setSelectedEntity(newEntity);
 }
 
 void EditorsController::createPointLight()
 {
-	this->scenesManager->createPointLight();
+	Entity* newEntity = this->scenesManager->createPointLight();
+	this->setSelectedEntity(newEntity);
 }
 
 void EditorsController::createSkybox()
 {
-	this->scenesManager->createSkybox(DEFAULT_SKYBOX_PATH);
+	Entity* newEntity = this->scenesManager->createSkybox(DEFAULT_SKYBOX_PATH);
+	this->setSelectedEntity(newEntity);
 }
 
 void EditorsController::setSelectedEntity(Entity* entity)

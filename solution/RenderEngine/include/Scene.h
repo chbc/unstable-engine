@@ -30,8 +30,8 @@ private:
     Entity* createOrthoCamera(Entity* parent = nullptr);
     Entity* createSkybox(const std::string& meshFilePath, const std::string& entityName = "", Entity* parent = nullptr);
     void createMultiMeshEntity(Entity* entity, Model* model, ABaseMaterial* material);
-    DirectionalLightComponent* createDirectionalLight(const std::string& entityName = "", Entity* parent = nullptr);
-    PointLightComponent* createPointLight(const std::string& entityName = "", Entity* parent = nullptr);
+    Entity* createDirectionalLight(const std::string& entityName = "", Entity* parent = nullptr);
+    Entity* createPointLight(const std::string& entityName = "", Entity* parent = nullptr);
 
     void onRefreshMeshes();
 

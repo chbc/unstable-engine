@@ -98,20 +98,22 @@ void Scene::createMultiMeshEntity(Entity* entity, Model* model, ABaseMaterial* m
 }
 
 // light //
-DirectionalLightComponent *Scene::createDirectionalLight(const std::string& entityName, Entity* parent)
+Entity*Scene::createDirectionalLight(const std::string& entityName, Entity* parent)
 {
     std::string resultName = entityName.empty() ? "directional_light" : entityName;
     Entity *newEntity = this->createEntity(resultName, parent);
+    newEntity->addComponent<DirectionalLightComponent>();
 
-    return newEntity->addComponent<DirectionalLightComponent>();
+    return newEntity;
 }
 
-PointLightComponent *Scene::createPointLight(const std::string& entityName, Entity* parent)
+Entity*Scene::createPointLight(const std::string& entityName, Entity* parent)
 {
     std::string resultName = entityName.empty() ? "point_light" : entityName;
     Entity *newEntity = this->createEntity(resultName, parent);
+    newEntity->addComponent<PointLightComponent>();
 
-    return newEntity->addComponent<PointLightComponent>();
+    return newEntity;
 }
 
 void Scene::onRefreshMeshes()
