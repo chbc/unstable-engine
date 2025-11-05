@@ -76,7 +76,6 @@ void EditorFileBrowser::onEditorGUI()
 		}
 
 		this->handleIconDrag(item, size);
-		this->handleFileRenaming();
 
 		ImGui::PopID();
 
@@ -95,6 +94,8 @@ void EditorFileBrowser::onEditorGUI()
 			break;
 		}
 	}
+
+	this->handleFileRenaming();
 
 	this->contextMenu.onEditorGUI();
 

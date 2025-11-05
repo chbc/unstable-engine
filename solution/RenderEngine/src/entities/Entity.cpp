@@ -48,7 +48,7 @@ Entity* Entity::addChild(Entity* child)
 Entity* Entity::addChild(UPTR<Entity>& child)
 {
 	child->parent = this;
-	const char* childName = child->getName();
+	const std::string& childName = child->getName();
 	this->children[childName] = std::move(child);
 	
 	Entity* result = this->children[childName].get();
@@ -467,6 +467,15 @@ Entity* Entity::clone()
 	}
 
 	return result;
+}
+
+void Entity::rename(const std::string& newName)
+{
+	AEditorProperty* nameProperty = this->findProperty(this->name);
+	this->name = newName;
+	nameProperty->title = newName;
+
+	this->onPropertyChanged();
 }
 
 void Entity::removeDestroyedChildren()

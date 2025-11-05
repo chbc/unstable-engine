@@ -76,7 +76,7 @@ public:
 
 	SRE_API void destroy();
 	SRE_API inline bool isAlive() const { return this->alive; }
-    SRE_API const char* getName() const { return this->name.c_str(); }
+    SRE_API const std::string& getName() const { return this->name; }
 
     SRE_API void setEnabled(bool value, bool changeChildren = false);
     SRE_API bool isEnabled() const;
@@ -123,6 +123,7 @@ private:
     bool isStored() const;
     bool isSaved() const;
     Entity* clone();
+	void rename(const std::string& newName);
 	void removeDestroyedChildren();
     AEditorProperty* findProperty(const std::string& title);
     static Entity* Create(std::string arg_name, const std::string& className);

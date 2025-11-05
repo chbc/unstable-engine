@@ -39,16 +39,9 @@ void EditorSceneTree::onEditorGUI()
 	Entity* selectedEntity = this->controller->getSelectedEntity();
 	if (selectedEntity)
 	{
-		if (ImGui::IsKeyPressed(ImGuiKey_Delete, false))
-		{
-			selectedEntity->destroy();
-			this->controller->setSelectedEntity(nullptr);
-		}
-
-		if (ImGui::IsKeyPressed(ImGuiKey_D, false) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
-		{
-			this->controller->duplicateSelectedEntity();
-		}
+		this->handleDeleteItem(selectedEntity);
+		this->handleDuplicateItem(selectedEntity);
+		this->handleItemRenaming(selectedEntity);
 	}
 
 	ImGui::End();
@@ -76,20 +69,36 @@ void EditorSceneTree::drawEntityTree(AScene* scene, Entity* entity, int index)
 		return;
 	}
 
-	const char* name = entity->getName();
 	size_t childrenCount = entity->getChildrenCount();
 
 	Entity* selectedEntity = this->controller->getSelectedEntity();
 
+	std::string entityName = entity->name;
+
 	if (childrenCount == 0)
 	{
-		if (ImGui::Selectable(name, entity == selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
+		if (this->inputTextHandler.isRenaming(entityName))
 		{
-			this->controller->setSelectedEntity(entity);
-		}
+			if (this->inputTextHandler.inputText(entityName))
+			{
+				scene->renameEntity(entity, entityName);
+			}
 
-		this->drawContextualMenu(selectedEntity, entity, name);
-		this->handleDragAndDrop(scene, entity);
+			if (ImGui::IsItemDeactivated())
+			{
+				this->inputTextHandler.setItemToRename("");
+			}
+		}
+		else
+		{
+			if (ImGui::Selectable(entity->name.c_str(), entity == selectedEntity, ImGuiSelectableFlags_SpanAllColumns))
+			{
+				this->controller->setSelectedEntity(entity);
+			}
+
+			this->drawContextualMenu(selectedEntity, entity, entity->name);
+			this->handleDragAndDrop(scene, entity);
+		}
 	}
 	else
 	{
@@ -99,14 +108,14 @@ void EditorSceneTree::drawEntityTree(AScene* scene, Entity* entity, int index)
 			flags |= ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_Selected;
 		}
 
-		bool open = ImGui::TreeNodeEx(reinterpret_cast<void*>(entity), flags, name);
+		bool open = ImGui::TreeNodeEx(reinterpret_cast<void*>(entity), flags, entity->name.c_str());
 
 		if (ImGui::IsItemClicked())
 		{
 			this->controller->setSelectedEntity(entity);
 		}
 
-		this->drawContextualMenu(selectedEntity, entity, name);
+		this->drawContextualMenu(selectedEntity, entity, entity->name);
 		this->handleDragAndDrop(scene, entity);
 
 		if (open)
@@ -120,13 +129,13 @@ void EditorSceneTree::drawEntityTree(AScene* scene, Entity* entity, int index)
 	}
 }
 
-void EditorSceneTree::drawContextualMenu(Entity* selectedEntity, Entity* entity, const char* name)
+void EditorSceneTree::drawContextualMenu(Entity* selectedEntity, Entity* entity, const std::string& name)
 {
 	if (ImGui::BeginPopupContextItem())
 	{
 		this->controller->setSelectedEntity(entity);
 
-		ImGui::Text("[%s]", name);
+		ImGui::Text("[%s]", name.c_str());
 		if (!selectedEntity->isAsset())
 		{
 			if (ImGui::MenuItem("Save new Entity Asset"))
@@ -143,6 +152,19 @@ void EditorSceneTree::drawContextualMenu(Entity* selectedEntity, Entity* entity,
 				ImGui::CloseCurrentPopup();
 			}
 		}
+
+		if (ImGui::MenuItem("Duplicate"))
+		{
+			this->controller->duplicateSelectedEntity();
+			ImGui::CloseCurrentPopup();
+		}
+
+		if (ImGui::MenuItem("Rename", "F2"))
+		{
+			this->inputTextHandler.setItemToRename(selectedEntity->name);
+			ImGui::CloseCurrentPopup();
+		}
+
 		if (ImGui::MenuItem("Delete"))
 		{
 			selectedEntity->destroy();
@@ -202,6 +224,31 @@ void EditorSceneTree::handleDropToRoot(AScene* scene)
 			}
 		}
 		ImGui::EndDragDropTarget();
+	}
+}
+
+void EditorSceneTree::handleDeleteItem(Entity* selectedEntity)
+{
+	if (ImGui::IsKeyPressed(ImGuiKey_Delete, false))
+	{
+		selectedEntity->destroy();
+		this->controller->setSelectedEntity(nullptr);
+	}
+}
+
+void EditorSceneTree::handleDuplicateItem(Entity* selectedEntity)
+{
+	if (ImGui::IsKeyPressed(ImGuiKey_D, false) && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+	{
+		this->controller->duplicateSelectedEntity();
+	}
+}
+
+void EditorSceneTree::handleItemRenaming(Entity* selectedEntity)
+{
+	if (ImGui::IsKeyPressed(ImGuiKey_F2))
+	{
+		this->inputTextHandler.setItemToRename(selectedEntity->name);
 	}
 }
 

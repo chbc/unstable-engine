@@ -193,4 +193,16 @@ void AScene::onSceneSaved()
     this->label = this->name;
 }
 
+void AScene::renameEntity(Entity* entity, std::string& newName)
+{
+    this->resolveName(newName);
+
+    std::string oldName = entity->getName();
+	entity->rename(newName);
+
+    UPTR<Entity> movedEntity = std::move(this->entities[oldName]);
+    this->entities.erase(oldName);
+    this->entities[newName] = std::move(movedEntity);
+}
+
 } // namespace
