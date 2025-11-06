@@ -10,6 +10,8 @@
 #include "AssetsManager.h"
 #include "FileUtils.h"
 
+#include <map>
+
 namespace sre
 {
 
@@ -121,34 +123,21 @@ void Scene::onRefreshMeshes()
     AScene::onSceneLoaded();
 }
 
-Entity* Scene::raycast(const Ray& ray, Entity* parentEntity, float maxDistance)
+void Scene::raycast(const Ray& ray, std::map<float, Entity*>& result)
 {
-	Entity* result = nullptr;
-	float minDistance = maxDistance;
-
-    if (parentEntity)
-    {
-        result = parentEntity->raycastChildren(ray, maxDistance);
-    }
+    std::map<float, Entity*> foundEntities;
     
-    if (!result)
-    {
-	    for (const auto& item : this->entities)
-	    {
-		    Entity* entity = item.second.get();
-            float distance = 0;
-            if (entity->raycast(ray, distance))
-            {
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    result = entity;
-                }
-            }
-	    }
-    }
+	for (const auto& item : this->entities)
+	{
+		Entity* entity = item.second.get();
+        float distance = 0;
+        if (entity->raycast(ray, distance))
+        {
+            result[distance] = entity;
+        }
 
-	return result;
+        entity->raycastChildren(ray, result);
+	}
 }
 
 } // namespace

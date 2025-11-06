@@ -10,6 +10,7 @@
 #include "EntityTypes.h"
 #include "Bounds.h"
 
+#include <map>
 #include <unordered_map>
 #include <vector>
 #include <string>
@@ -94,7 +95,7 @@ public:
 	SRE_API void getBounds(Bounds& bounds) const;
 	SRE_API void setDontShowInEditorSceneTree(bool value);
     SRE_API bool raycast(const Ray& ray, float& distance);
-    SRE_API Entity* raycastChildren(const Ray& ray, float maxDistance);
+    SRE_API void raycastChildren(const Ray& ray, std::map<float, Entity*>& result);
 
 protected:
 	SRE_API virtual void onInit();

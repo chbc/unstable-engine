@@ -115,17 +115,46 @@ Entity* ScenesManager::createGUITextEntity(const std::string fontFile, const std
     return entity;
 }
 
-Entity* ScenesManager::raycastFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize, Entity* parentEntity, float maxDistance)
+Entity* ScenesManager::raycastFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize, Entity* selectedEntity)
 {
 	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 	CameraComponent* camera = renderManager->getCurrentCamera();
 	Ray ray = camera->getRayFromScreen(mousePosition, viewportSize);
-	return this->raycast(ray, parentEntity, maxDistance);
+	return this->raycast(ray, selectedEntity);
 }
 
-Entity* ScenesManager::raycast(const Ray& ray, Entity* parentEntity, float maxDistance)
+Entity* ScenesManager::raycast(const Ray& ray, Entity* selectedEntity)
 {
-	return this->scene->raycast(ray, parentEntity, maxDistance);
+    std::map<float, Entity*> foundEntities;
+	this->scene->raycast(ray, foundEntities);
+
+    Entity* result = nullptr;
+
+    if (!foundEntities.empty())
+    {
+        auto it = foundEntities.begin();
+        while (it != foundEntities.end())
+        {
+            Entity* entity = it->second;
+            it++;
+
+            if (entity == selectedEntity)
+            {
+                break;
+            }
+        }
+
+        if (it != foundEntities.end())
+        {
+            result = it->second;
+        }
+        else
+        {
+            result = foundEntities.begin()->second;
+        }
+    }
+
+    return result;
 }
 
 Scene* ScenesManager::getEditorScene()

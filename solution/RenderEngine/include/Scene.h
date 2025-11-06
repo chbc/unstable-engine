@@ -35,7 +35,7 @@ private:
 
     void onRefreshMeshes();
 
-	Entity* raycast(const Ray& ray, Entity* parentEntity, float maxDistance);
+	void raycast(const Ray& ray, std::map<float, Entity*>& result);
 
 friend class ScenesManager;
 friend class SceneLoader;

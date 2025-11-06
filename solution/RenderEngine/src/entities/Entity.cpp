@@ -215,22 +215,18 @@ bool Entity::raycast(const Ray& ray, float& distance)
 	return result;
 }
 
-Entity* Entity::raycastChildren(const Ray& ray, float maxDistance)
+void Entity::raycastChildren(const Ray& ray, std::map<float, Entity*>& result)
 {
-	Entity* result{ nullptr };
-
-	float minDistance = maxDistance;
 	for (Entity* item : this->childrenList)
 	{
 		float distance = 0;
-		if (item->raycast(ray, distance) && (distance < minDistance))
+		if (item->raycast(ray, distance))
 		{
-			result = item;
-			minDistance = distance;
+			result[distance] = item;
 		}
-	}
 
-	return result;
+		item->raycastChildren(ray, result);
+	}
 }
 
 bool Entity::isStored() const
