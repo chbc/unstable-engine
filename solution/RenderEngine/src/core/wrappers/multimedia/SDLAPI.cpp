@@ -223,34 +223,51 @@ void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons, SD
 			int axis = currentEvent.caxis.axis;
 			int value = currentEvent.caxis.value;
 
-			if ((value > CONTROLLER_DEAD_ZONE) || (value < -CONTROLLER_DEAD_ZONE))
+			switch (axis)
 			{
-				switch (axis)
-				{
-					case SDL_CONTROLLER_AXIS_LEFTX:
-						analogLeft.x = this->normalizeBidirectionalAxis(value);
-						break;
-					case SDL_CONTROLLER_AXIS_LEFTY:
-						analogLeft.y = this->normalizeBidirectionalAxis(value);
-						break;
-					case SDL_CONTROLLER_AXIS_RIGHTX:
-						analogRight.x = this->normalizeBidirectionalAxis(value);
-						break;
-					case SDL_CONTROLLER_AXIS_RIGHTY:
-						analogRight.y = this->normalizeBidirectionalAxis(value);
-						break;
-					case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
-						triggers.x = this->normalizeUnidirectionalAxis(value);
-						break;
-					case SDL_CONTROLLER_AXIS_TRIGGERRIGHT:
-						triggers.y = this->normalizeUnidirectionalAxis(value);
-						break;
-					default: break;
-				}
+				case SDL_CONTROLLER_AXIS_LEFTX:
+					analogLeft.x = this->normalizeBidirectionalAxis(value);
+					break;
+				case SDL_CONTROLLER_AXIS_LEFTY:
+					analogLeft.y = -this->normalizeBidirectionalAxis(value);
+					break;
+				case SDL_CONTROLLER_AXIS_RIGHTX:
+					analogRight.x = this->normalizeBidirectionalAxis(value);
+					break;
+				case SDL_CONTROLLER_AXIS_RIGHTY:
+					analogRight.y = -this->normalizeBidirectionalAxis(value);
+					break;
+				case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
+					triggers.x = this->normalizeUnidirectionalAxis(value);
+					break;
+				case SDL_CONTROLLER_AXIS_TRIGGERRIGHT:
+					triggers.y = this->normalizeUnidirectionalAxis(value);
+					break;
+				default: break;
 			}
 
 			break;
 		}
+
+		case SDL_CONTROLLERBUTTONDOWN:
+		{
+			ControllerInput* controller = Input::getController(currentEvent.cbutton.which);
+			ControllerButton button = static_cast<ControllerButton>(currentEvent.cbutton.button);
+			controller->addButtonPress(button);
+
+			break;
+		}
+
+		case SDL_CONTROLLERBUTTONUP:
+		{
+			ControllerInput* controller = Input::getController(currentEvent.cbutton.which);
+			ControllerButton button = static_cast<ControllerButton>(currentEvent.cbutton.button);
+			controller->removeButtonDown(button);
+
+			break;
+		}
+
+		break;
 
 		default: break;
 	}
@@ -295,13 +312,17 @@ void SDLAPI::releaseControllers()
 float SDLAPI::normalizeBidirectionalAxis(int value)
 {
 	float result = 0.0f;
-	if (value >= 0)
+
+	if ((value > CONTROLLER_DEAD_ZONE) || (value < -CONTROLLER_DEAD_ZONE))
 	{
-		result = static_cast<float>(value) / MAXSHORT;
-	}
-	else
-	{
-		result = static_cast<float>(value) / MINSHORT;
+		if (value >= 0)
+		{
+			result = static_cast<float>(value) / MAXSHORT;
+		}
+		else
+		{
+			result = static_cast<float>(value) / MINSHORT;
+		}
 	}
 
 	return result;
@@ -309,7 +330,14 @@ float SDLAPI::normalizeBidirectionalAxis(int value)
 
 float SDLAPI::normalizeUnidirectionalAxis(int value)
 {
-	return static_cast<float>(value) / MAXSHORT;
+	float result = 0.0f;
+
+	if ((value > CONTROLLER_DEAD_ZONE) || (value < -CONTROLLER_DEAD_ZONE))
+	{
+		result = static_cast<float>(value) / MAXSHORT;
+	}
+
+	return result;
 }
 
 bool SDLAPI::openFileDialog(const std::string& title, const char* filter, std::string& outFileName)

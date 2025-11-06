@@ -40,9 +40,9 @@ class SRE_API ControllerInput
 private:
 	std::set<ControllerButton> justPressedButtons;
 	std::set<ControllerButton> buttonsDown;
-	glm::vec2 analogLeft;
-	glm::vec2 analogRight;
-    glm::vec2 triggers;
+    glm::vec2 analogLeft{ 0.0f, 0.0f };
+	glm::vec2 analogRight{ 0.0f, 0.0f };
+    glm::vec2 triggers{ 0.0f, 0.0f };
 
 public:
     bool isButtonJustPressed(ControllerButton button) const;

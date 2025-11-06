@@ -37,12 +37,6 @@ void ControllerInput::removeButtonDown(ControllerButton button)
 void ControllerInput::clearTemporaryInput()
 {
 	this->justPressedButtons.clear();
-
-	this->analogLeft.x = 0.0f;
-	this->analogLeft.y = 0.0f;
-
-	this->analogRight.x = 0.0f;
-	this->analogRight.y = 0.0f;
 }
 
 } // namespace

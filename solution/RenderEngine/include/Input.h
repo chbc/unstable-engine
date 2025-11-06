@@ -36,11 +36,11 @@ public:
 	static glm::vec3 getMouseNormalizedPosition();
 	static const glm::ivec2& getMouseDeltaPosition();
 	static int getMouseWheel();
+	static ControllerInput* getController(int id);
 
 private:
 	static void addController(int id);
 	static void removeController(int id);
-	static ControllerInput* getController(int id);
 	static void addKey(Key key);
 	static void addMouseButton(MouseButton button);
 	static void removeKeyDown(Key key);

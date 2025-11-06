@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core_defines.h"
+
 #include <unordered_map>
 #include <functional>
 
@@ -17,7 +19,7 @@ private:
     static EntityComponentTypes* instance;
 
 public:
-    static EntityComponentTypes* getInstance();
+    SRE_API static EntityComponentTypes* getInstance();
 
     static void release();
 

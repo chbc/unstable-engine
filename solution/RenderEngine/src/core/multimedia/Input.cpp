@@ -71,6 +71,18 @@ int Input::getMouseWheel()
 	return MouseWheelDirection;
 }
 
+ControllerInput* Input::getController(int id)
+{
+	ControllerInput* result = nullptr;
+
+	if (controllers.count(id))
+	{
+		result = controllers[id].get();
+	}
+
+	return result;
+}
+
 void Input::addController(int id)
 {
 	controllers[id] = UPTR<ControllerInput>{ new ControllerInput };
@@ -79,11 +91,6 @@ void Input::addController(int id)
 void Input::removeController(int id)
 {
 	controllers.erase(id);
-}
-
-ControllerInput* Input::getController(int id)
-{
-	return controllers[id].get();
 }
 
 void Input::addKey(Key key)
