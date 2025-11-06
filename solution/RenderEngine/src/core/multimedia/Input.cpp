@@ -4,10 +4,11 @@
 namespace sre
 {
 
-std::unordered_map<Key, bool> Input::JustPressedKeys;
-std::unordered_map<MouseButton, bool> Input::JustPressedMouseButtons;
-std::unordered_map<Key, bool> Input::KeysDown;
-std::unordered_map<MouseButton, bool> Input::MouseButtonsDown;
+std::unordered_map<int, UPTR<ControllerInput>> Input::controllers;
+std::set<Key> Input::JustPressedKeys;
+std::set<MouseButton> Input::JustPressedMouseButtons;
+std::set<Key> Input::KeysDown;
+std::set<MouseButton> Input::MouseButtonsDown;
 glm::ivec2 Input::MousePosition{ 0 };
 glm::ivec2 Input::MouseDeltaPosition{ 0 };
 int Input::MouseWheelDirection{ 0 };
@@ -15,22 +16,22 @@ bool Input::CloseButton{ false };
 
 bool Input::isKeyJustPressed(Key key)
 {
-	return JustPressedKeys[key];
+	return (JustPressedKeys.count(key) > 0);
 }
 
 bool Input::isMouseButtonJustPressed(MouseButton button)
 {
-	return JustPressedMouseButtons[button];
+	return (JustPressedMouseButtons.count(button) > 0);
 }
 
 bool Input::isKeyDown(Key key)
 {
-	return KeysDown[key];
+	return (KeysDown.count(key) > 0);
 }
 
 bool Input::isMouseButtonDown(MouseButton button)
 {
-	return MouseButtonsDown[button];
+	return (MouseButtonsDown.count(button) > 0);
 }
 
 bool Input::isCloseButtonDown()
@@ -70,28 +71,41 @@ int Input::getMouseWheel()
 	return MouseWheelDirection;
 }
 
+void Input::addController(int id)
+{
+	controllers[id] = UPTR<ControllerInput>{ new ControllerInput };
+}
+
+void Input::removeController(int id)
+{
+	controllers.erase(id);
+}
+
+ControllerInput* Input::getController(int id)
+{
+	return controllers[id].get();
+}
+
 void Input::addKey(Key key)
 {
-	JustPressedKeys[key] = true;
-	KeysDown[key] = true;
+	JustPressedKeys.insert(key);
+	KeysDown.insert(key);
 }
 
 void Input::addMouseButton(MouseButton button)
 {
-	JustPressedMouseButtons[button] = true;
-	MouseButtonsDown[button] = true;
+	JustPressedMouseButtons.insert(button);
+	MouseButtonsDown.insert(button);
 }
 
 void Input::removeKeyDown(Key key)
 {
-	if (KeysDown[key])
-		KeysDown[key] = false;
+	KeysDown.erase(key);
 }
 
 void Input::removeMouseButtonDown(MouseButton button)
 {
-	if (MouseButtonsDown[button])
-		MouseButtonsDown[button] = false;
+	MouseButtonsDown.erase(button);
 }
 
 void Input::setMousePosition(int x, int y)
@@ -111,7 +125,7 @@ void Input::setMouseWheel(int direction)
 	MouseWheelDirection = direction;
 }
 
-void Input::clear()
+void Input::clearTemporaryInput()
 {
 	JustPressedKeys.clear();
 	JustPressedMouseButtons.clear();
@@ -119,6 +133,11 @@ void Input::clear()
 	MouseDeltaPosition.y = 0;
 	MouseWheelDirection = 0;
 	CloseButton = false;
+
+	for (auto& item : controllers)
+	{
+		item.second->clearTemporaryInput();
+	}
 }
 
 } // namespace

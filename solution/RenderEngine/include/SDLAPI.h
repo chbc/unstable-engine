@@ -1,13 +1,18 @@
 #pragma once
 
 #include "AMultimediaWrapper.h"
-#include <string>
-#include "ImGuiAPI.h"
 #include "memory_aliases.h"
+
+#include "ImGuiAPI.h"
+#include <string>
 #include <glm/vec2.hpp>
+#include <unordered_map>
 
 struct SDL_Window;
 union SDL_Event;
+
+struct _SDL_GameController;
+typedef struct _SDL_GameController SDL_GameController;
 
 namespace sre
 {
@@ -17,6 +22,8 @@ class SDLAPI : public AMultimediaWrapper
 private:
 	SDL_Window *window;
 	UPTR<ImGuiAPI> imGuiAPI;
+	std::unordered_map<int, SDL_GameController*> sdlControllers;
+	const int CONTROLLER_DEAD_ZONE = 8000;
 
 public:
 	SDLAPI() : window(nullptr), imGuiAPI(nullptr) { }
@@ -40,6 +47,9 @@ private:
 	void processInput(const std::vector<GUIButtonComponent*>& guiButtons, SDL_Event& currentEvent);
 	bool checkButtonPress(const std::vector<GUIButtonComponent*>& guiButtons, glm::vec2& pressPosition);
 	std::string getError();
+	void releaseControllers();
+	float normalizeBidirectionalAxis(int value);
+	float normalizeUnidirectionalAxis(int value);
 	static bool openFileDialog(const std::string& title, const char* filter, std::string& outFileName);
 	static bool saveFileDialog(const std::string& title, const char* filter, std::string& outFileName);
 	static bool internalFileDialog(const std::string& title, const char* filter, bool save, std::string& outFileName);

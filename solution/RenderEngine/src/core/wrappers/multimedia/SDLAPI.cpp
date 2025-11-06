@@ -20,7 +20,7 @@ namespace sre
 
 void SDLAPI::init()
 {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0)
 		throw this->getError();
 
     int imgFlags = IMG_INIT_PNG;
@@ -78,7 +78,7 @@ void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons)
 {
 	SDL_Event currentEvent;
 
-	Input::clear();
+	Input::clearTemporaryInput();
 	while (SDL_PollEvent(&currentEvent))
 	{
 		this->imGuiAPI->processEvent(&currentEvent);
@@ -189,17 +189,68 @@ void SDLAPI::processInput(const std::vector<GUIButtonComponent*>& guiButtons, SD
 			break;
 		}
 
-		/*
-		case SDL_WINDOWEVENT:
-			const SDL_WindowEvent& window = currentEvent.window;
-			if (window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+		case SDL_CONTROLLERDEVICEADDED:
+		{
+			SDL_JoystickID id = currentEvent.cdevice.which;
+			this->sdlControllers[id] = SDL_GameControllerOpen(id);
+			Input::addController(id);
+
+			SDL_Log("[MESSAGE] Controller added: (ID: %d)\n", id);
+			break;
+		}
+
+		case SDL_CONTROLLERDEVICEREMOVED:
+		{
+			SDL_JoystickID id = currentEvent.cdevice.which;
+			if (this->sdlControllers.count(id) > 0)
 			{
-				EngineValues::SCREEN_WIDTH = window.data1;
-				EngineValues::SCREEN_HEIGHT = window.data2;
-				EngineValues::updateAspectRatio();
+				SDL_GameControllerClose(this->sdlControllers[id]);
+				this->sdlControllers.erase(id);
+				Input::removeController(id);
+
+				SDL_Log("[MESSAGE] Controller disconnected: (ID: %d)\n", id);
 			}
 			break;
-		*/
+		}
+
+		case SDL_CONTROLLERAXISMOTION:
+		{
+			ControllerInput* controller = Input::getController(currentEvent.caxis.which);
+			glm::vec2& analogLeft = controller->analogLeft;
+			glm::vec2& analogRight = controller->analogRight;
+			glm::vec2& triggers = controller->triggers;
+
+			int axis = currentEvent.caxis.axis;
+			int value = currentEvent.caxis.value;
+
+			if ((value > CONTROLLER_DEAD_ZONE) || (value < -CONTROLLER_DEAD_ZONE))
+			{
+				switch (axis)
+				{
+					case SDL_CONTROLLER_AXIS_LEFTX:
+						analogLeft.x = this->normalizeBidirectionalAxis(value);
+						break;
+					case SDL_CONTROLLER_AXIS_LEFTY:
+						analogLeft.y = this->normalizeBidirectionalAxis(value);
+						break;
+					case SDL_CONTROLLER_AXIS_RIGHTX:
+						analogRight.x = this->normalizeBidirectionalAxis(value);
+						break;
+					case SDL_CONTROLLER_AXIS_RIGHTY:
+						analogRight.y = this->normalizeBidirectionalAxis(value);
+						break;
+					case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
+						triggers.x = this->normalizeUnidirectionalAxis(value);
+						break;
+					case SDL_CONTROLLER_AXIS_TRIGGERRIGHT:
+						triggers.y = this->normalizeUnidirectionalAxis(value);
+						break;
+					default: break;
+				}
+			}
+
+			break;
+		}
 
 		default: break;
 	}
@@ -230,6 +281,35 @@ bool SDLAPI::checkButtonPress(const std::vector<GUIButtonComponent*>& guiButtons
 std::string SDLAPI::getError()
 {
 	return "SDL Error: " + std::string(SDL_GetError());
+}
+
+void SDLAPI::releaseControllers()
+{
+	for (auto& item : this->sdlControllers)
+	{
+		SDL_GameControllerClose(item.second);
+	}
+	this->sdlControllers.clear();
+}
+
+float SDLAPI::normalizeBidirectionalAxis(int value)
+{
+	float result = 0.0f;
+	if (value >= 0)
+	{
+		result = static_cast<float>(value) / MAXSHORT;
+	}
+	else
+	{
+		result = static_cast<float>(value) / MINSHORT;
+	}
+
+	return result;
+}
+
+float SDLAPI::normalizeUnidirectionalAxis(int value)
+{
+	return static_cast<float>(value) / MAXSHORT;
 }
 
 bool SDLAPI::openFileDialog(const std::string& title, const char* filter, std::string& outFileName)

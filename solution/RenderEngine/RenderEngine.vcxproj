@@ -406,6 +406,7 @@
     <ClCompile Include="src\core\io\parsers\ComponentParser.cpp" />
     <ClCompile Include="src\core\io\parsers\EntityParser.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\SceneLoader.cpp" />
+    <ClCompile Include="src\core\multimedia\ControllerInput.cpp" />
     <ClCompile Include="src\core\multimedia\EngineValues.cpp" />
     <ClCompile Include="src\core\multimedia\Input.cpp" />
     <ClCompile Include="src\core\multimedia\textures\atlases\FontAtlas.cpp" />
@@ -611,6 +612,7 @@
     <ClInclude Include="include\AssetsManager.h" />
     <ClInclude Include="include\Bounds.h" />
     <ClInclude Include="include\ColorMeshData.h" />
+    <ClInclude Include="include\ControllerInput.h" />
     <ClInclude Include="include\CustomMaterial.h" />
     <ClInclude Include="include\CustomMaterialComponent.h" />
     <ClInclude Include="include\CustomRenderer.h" />
