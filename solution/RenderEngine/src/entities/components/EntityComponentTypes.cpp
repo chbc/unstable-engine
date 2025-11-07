@@ -20,4 +20,9 @@ void EntityComponentTypes::release()
 	delete instance;
 }
 
+const std::vector<const char*>& EntityComponentTypes::getClassNames() const
+{
+    return this->classNames;
+}
+
 }

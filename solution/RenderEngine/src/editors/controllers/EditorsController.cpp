@@ -33,6 +33,7 @@ void EditorsController::openScene()
 
 	if (!resultFilePath.empty())
 	{
+		this->selectedEntity = nullptr;
 		RenderEngine::getInstance()->loadScene(resultFilePath);
 	}
 }

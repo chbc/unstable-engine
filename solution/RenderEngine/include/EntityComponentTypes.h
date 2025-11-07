@@ -3,6 +3,7 @@
 #include "core_defines.h"
 
 #include <unordered_map>
+#include <vector>
 #include <functional>
 
 namespace sre
@@ -16,6 +17,7 @@ class EntityComponentTypes
 {
 private:
     std::unordered_map<size_t, CreateObjectFunc> typesMap;
+    std::vector<const char*> classNames{ "   " };
     static EntityComponentTypes* instance;
 
 public:
@@ -26,9 +28,13 @@ public:
     template<typename Type>
     void addType(const char* className)
     {
+        classNames.push_back(className);
+
         size_t key = std::hash<std::string>{}(className);
         typesMap[key] = [](Entity* entity) { return new Type(entity); };
     }
+
+    const std::vector<const char*>& getClassNames() const;
 
 friend class AEntityComponent;
 };

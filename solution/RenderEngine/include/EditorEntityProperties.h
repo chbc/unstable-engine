@@ -19,10 +19,15 @@ class EditorEntityProperties : public IEditorWindow
 {
 private:
 	EditorsController* controller{ nullptr };
+	bool addingComponent{ false };
+	int currentAddedComponent{ 0 };
 
 public:
 	EditorEntityProperties(EditorsController* arg_controller);
 	void onEditorGUI() override;
+
+private:
+	void drawAddComponentButton(Entity* selectedEntity);
 };
 
 } // namespace

@@ -447,30 +447,23 @@ void RenderManager::cleanUpMeshes()
     this->opaqueMeshRenderers.clear();
     this->translucentMeshRenderers.clear();
     this->customRenderers.clear();
+    this->skyboxRenderer.reset();
+    this->guizmoRenderer.reset();
 }
 
 void RenderManager::cleanUpGui()
 {
-	if (this->guiRenderer)
-	{
-		this->guiRenderer.reset();
-	}
+	this->guiRenderer.reset();
 }
 
 void RenderManager::cleanUpDebug()
 {
-    if (this->debugRenderer)
-    {
-        this->debugRenderer.reset();
-    }
+    this->debugRenderer.reset();
 }
 
 void RenderManager::cleanUpGuizmos()
 {
-	if (this->guizmoRenderer)
-	{
-		this->guizmoRenderer.reset();
-	}
+	this->guizmoRenderer.reset();
 }
 
 void RenderManager::setTargetFBO(uint32_t fbo)
