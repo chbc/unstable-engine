@@ -27,3 +27,5 @@ android/app/.externalNativeBuild/ndkBuild/release/armeabi-v7a/android_gradle_bui
 android/app/.externalNativeBuild/ndkBuild/release/armeabi-v7a/android_gradle_build_mini.json
 android/app/.externalNativeBuild/ndkBuild/release/armeabi-v7a/ndkBuild_build_command.txt
 android/app/.externalNativeBuild/ndkBuild/release/armeabi-v7a/ndkBuild_build_output.txt
+content/game/
+solution/MemoryTracker/lib/
