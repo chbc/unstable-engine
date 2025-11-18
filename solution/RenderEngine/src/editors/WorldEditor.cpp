@@ -21,10 +21,10 @@ WorldEditor::WorldEditor(ScenesManager* arg_scenesManager)
 {
     this->controller = UPTR<EditorsController>(new EditorsController{ this->scenesManager });
 	this->menuBar = UPTR<IEditorWindow>(new EditorMenuBar{ &this->showDemo, this->controller.get() });
-	this->windows[0] = UPTR<IEditorWindow>(new EditorSceneTree{ this->controller.get() });
-	this->windows[1] = UPTR<IEditorWindow>(new EditorEntityProperties{ this->controller.get() });
-    this->windows[2] = UPTR<IEditorWindow>(new EditorSceneViewport{ this->controller.get()});
-    this->windows[3] = UPTR<IEditorWindow>(new EditorFileBrowser{ this->controller.get() });
+	this->windows.emplace_back(UPTR<IEditorWindow>(new EditorSceneTree{ this->controller.get() }));
+	this->windows.emplace_back(UPTR<IEditorWindow>(new EditorEntityProperties{ this->controller.get() }));
+    this->windows.emplace_back(UPTR<IEditorWindow>(new EditorSceneViewport{ this->controller.get() }));
+    this->windows.emplace_back(UPTR<IEditorWindow>(new EditorFileBrowser{ this->controller.get() }));
     
     this->showPopupAction = SPTR<Action>(new Action([&](void* message) { this->onShowPopup(message); }));
 }
@@ -32,8 +32,10 @@ WorldEditor::WorldEditor(ScenesManager* arg_scenesManager)
 void WorldEditor::init()
 {
     this->menuBar->onInit();
-	for (const auto& item : this->windows)
-		item->onInit();
+    for (const auto& item : this->windows)
+    {
+        item->onInit();
+    }
 
     this->currentPopup.reset();
 
@@ -47,7 +49,9 @@ void WorldEditor::init()
 void WorldEditor::onUpdate(float elapsedTime)
 {
     for (const auto& item : this->windows)
+    {
         item->onUpdate(elapsedTime);
+    }
 }
 
 bool WorldEditor::onEditorGUI()
@@ -117,7 +121,9 @@ bool WorldEditor::onEditorGUI()
     this->menuBar->onEditorGUI();
 
     for (const auto& item : this->windows)
+    {
         item->onEditorGUI();
+    }
 
     if (this->currentPopup && this->currentPopup->isOpen())
     {
@@ -161,8 +167,10 @@ void WorldEditor::release()
     this->showDemo = false;
     this->wasShowingDemo = false;
 
-	for (const auto& item : this->windows)
-		item->onRelease();
+    for (const auto& item : this->windows)
+    {
+        item->onRelease();
+    }
 }
 
 } // namespace

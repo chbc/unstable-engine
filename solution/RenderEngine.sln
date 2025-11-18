@@ -19,8 +19,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleApplication", "Sample
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IBLMapCreator", "IBLCreator\IBLCreator.vcxproj", "{F16FE1F5-073D-4D0C-9556-242343AE1ED5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MemoryTracker", "MemoryTracker\MemoryTracker.vcxproj", "{43387F43-B58A-45DC-8486-37B9F7D293D2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -153,22 +151,6 @@ Global
 		{F16FE1F5-073D-4D0C-9556-242343AE1ED5}.Test|Win32.Build.0 = Debug|Win32
 		{F16FE1F5-073D-4D0C-9556-242343AE1ED5}.Test|x64.ActiveCfg = Debug|x64
 		{F16FE1F5-073D-4D0C-9556-242343AE1ED5}.Test|x64.Build.0 = Debug|x64
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Debug|Win32.ActiveCfg = Debug|Win32
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Debug|Win32.Build.0 = Debug|Win32
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Debug|x64.ActiveCfg = Debug|x64
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Debug|x64.Build.0 = Debug|x64
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Release|Win32.ActiveCfg = Release|Win32
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Release|Win32.Build.0 = Release|Win32
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Release|x64.ActiveCfg = Release|x64
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Release|x64.Build.0 = Release|x64
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Test_Debug|Win32.ActiveCfg = Debug|Win32
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Test_Debug|Win32.Build.0 = Debug|Win32
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Test_Debug|x64.ActiveCfg = Debug|x64
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Test_Debug|x64.Build.0 = Debug|x64
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Test|Win32.ActiveCfg = Debug|Win32
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Test|Win32.Build.0 = Debug|Win32
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Test|x64.ActiveCfg = Debug|x64
-		{43387F43-B58A-45DC-8486-37B9F7D293D2}.Test|x64.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

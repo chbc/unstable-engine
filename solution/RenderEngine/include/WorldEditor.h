@@ -21,7 +21,7 @@ class WorldEditor
 private:
 	ScenesManager* scenesManager{ nullptr };
 	UPTR<IEditorWindow> menuBar;
-	UPTR<IEditorWindow> windows[4];
+	VECTOR_UPTR<IEditorWindow> windows;
 	UPTR<EditorsController> controller;
 	UPTR<AEditorPopup> currentPopup;
 	SPTR<Action> showPopupAction;
