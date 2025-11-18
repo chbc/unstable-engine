@@ -1,5 +1,7 @@
 #include "AEditorPopup.h"
 
+#include "GuiWrapper.h"
+
 namespace sre
 {
 

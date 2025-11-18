@@ -1,6 +1,6 @@
 #include "InputTextEditorProperty.h"
 
-#include "imgui/imgui.h"
+#include "GuiWrapper.h"
 #include "imgui/misc/cpp/imgui_stdlib.h"
 #include "rapidyaml/rapidyaml.hpp"
 

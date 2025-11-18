@@ -11,6 +11,8 @@
 #include <vector>
 #include <functional>
 
+struct ImVec2;
+
 namespace sre
 {
 

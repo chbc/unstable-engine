@@ -5,7 +5,7 @@
 #include "SingletonsManager.h"
 #include "AtlasManager.h"
 
-#include "imgui/imgui.h"
+#include "GuiWrapper.h"
 #include "rapidyaml/rapidyaml.hpp"
 #include "glm/vec2.hpp"
 

@@ -1,3 +1,10 @@
+#define ENABLE_MEMORY_TRACKER
+
+#ifdef ENABLE_MEMORY_TRACKER
+    #include "MemoryTracker.h"
+    #define new new(__FILE__, __LINE__)
+#endif
+
 #include "RenderEngine.h"
 #include "EngineValues.h"
 #include "DefaultGameValues.h"
@@ -5,6 +12,8 @@
 #include "EditorStrategy.h"
 #include "SingletonsManager.h"
 #include "Log.h"
+
+#include <iostream>
 
 namespace sre
 {
@@ -20,6 +29,10 @@ RenderEngine::RenderEngine()
 	}
 
     instance = this;
+
+#ifdef ENABLE_MEMORY_TRACKER
+	GetMemoryTracker().initialize();
+#endif
 }
 
 RenderEngine* RenderEngine::getInstance()
@@ -154,6 +167,10 @@ void RenderEngine::release()
 
         SingletonsManager::getInstance()->release();
     }
+
+#ifdef ENABLE_MEMORY_TRACKER
+    GetMemoryTracker().reportLeaks();
+#endif
 }
 
 } // namespace

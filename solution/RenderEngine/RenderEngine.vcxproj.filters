@@ -1268,6 +1268,9 @@
     <ClInclude Include="include\ControllerInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\GuiWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\Entity.tpp" />

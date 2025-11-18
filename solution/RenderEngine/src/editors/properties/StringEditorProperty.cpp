@@ -1,6 +1,6 @@
 #include "StringEditorProperty.h"
 
-#include "imgui/imgui.h"
+#include "GuiWrapper.h"
 #include "rapidyaml/rapidyaml.hpp"
 
 namespace sre

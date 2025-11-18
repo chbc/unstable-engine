@@ -1,6 +1,6 @@
 #include "ImGuiLib.h"
 
-#include "imgui/imgui.h"
+#include "GuiWrapper.h"
 
 namespace sre
 {

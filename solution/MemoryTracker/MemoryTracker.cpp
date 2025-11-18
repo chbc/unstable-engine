@@ -1,96 +1,141 @@
 #include "MemoryTracker.h"
 
+#include <iostream>
+
 namespace ue
 {
 
-MemoryTracker& MemoryTracker::getInstance()
+void MemoryTracker::initialize()
 {
-	static MemoryTracker instance;
-	return instance;
+    for (size_t i = 0; i < preInitIndex; ++i)
+    {
+        const AllocationInfo& info = preInitAllocations[i];
+
+        if (info.pointer)
+        {
+            allocations.emplace(info.pointer, info);
+            totalAllocated += info.size;
+			allocationCount++;
+        }
+	}
+
+	preInitIndex = 0;
+    initialized = true;
 }
 
 void MemoryTracker::trackAllocation(void* pointer, size_t size, const char* file, int line)
 {
-    std::lock_guard<std::mutex> lock(mutex);
+    AllocationInfo allocInfo{ size, file, line, pointer };
 
-    if (pointer)
+    if (initialized)
     {
+        std::lock_guard<std::mutex> lock(mutex);
+
+        allocations.emplace(pointer, allocInfo);
+
         totalAllocated += size;
         allocationCount++;
 
-        allocations[pointer] = { size, file, line };
-
+        if (onNew)
+        {
+            onNew(pointer, size, file, line);
+        }
+    }
+    else if (preInitIndex < MAX_PRE_INIT_ALLOCATIONS)
+    {
         /*
-        std::cout << "Alocado: " << size << " bytes em "
-                  << file << ":" << line << " (Ponteiro: " << ptr << ")\n";
-                  */
-
-		this->onNew(pointer, size, file, line);
+        std::cout << "[MemoryTracker] Allocation " << preInitIndex << " | at: "
+			<< file << ":" << line << " (" << size << " bytes)\n";
+        */
+        preInitAllocations[preInitIndex] = allocInfo;
+        preInitIndex++;
+	}
+    else
+    {
+		throw "[MemoryTracker] Pre-initialization allocation limit exceeded!";
     }
 }
 
 void MemoryTracker::trackDeallocation(void* pointer)
 {
-    std::lock_guard<std::mutex> lock(mutex);
-
-    if (pointer)
+    if (initialized)
     {
-        auto it = allocations.find(pointer);
-        if (it != allocations.end())
-        {
-            AllocationInfo info = it->second;
+        std::lock_guard<std::mutex> lock(mutex);
 
-			this->onDelete(pointer, info.size, info.file, info.line);
+        if (pointer && (allocations.count(pointer) > 0))
+        {
+            AllocationInfo& info = allocations[pointer];
+
+            if (onDelete)
+            {
+                onDelete(pointer, info.size, info.file, info.line);
+            }
 
             totalAllocated -= info.size;
             allocationCount--;
-            allocations.erase(it);
+            allocations.erase(pointer);
+        }
+    }
+    else
+    {
+        for (size_t i = 0; i < preInitIndex; ++i)
+        {
+            if (preInitAllocations[i].pointer == pointer)
+            {
+                preInitAllocations[i].pointer = nullptr;
+            }
         }
     }
 }
 
-void MemoryTracker::getReport(std::map<void*, AllocationInfo>& resultAllocations) const
+void MemoryTracker::getReport(std::map<void*, AllocationInfo, std::less<void*>, UntrackedAllocator<MapPair>>& resultAllocations)
 {
 	resultAllocations = allocations;
 }
 
-/*
 void MemoryTracker::reportLeaks()
 {
     std::lock_guard<std::mutex> lock(mutex);
-
-    std::cout << "\n--- Relatório de Vazamento de Memória ---\n";
+    std::cout << "\n--- Memory Leak Report ---\n";
     if (allocations.empty()) {
-        std::cout << "Nenhum vazamento detectado. Memória total alocada e liberada com sucesso.\n";
+        std::cout << "No leaks detected. All allocated memory was successfully freed.\n";
     }
     else
     {
-        std::cout << "VAZAMENTOS DETECTADOS! " << allocations.size() << " alocações não liberadas:\n";
+        std::cout << "LEAKS DETECTED! " << allocations.size() << " unfreed allocations:\n";
+        /*
         size_t totalLeaked = 0;
         for (const auto& pair : allocations)
         {
             const AllocationInfo& info = pair.second;
-            std::cout << "  - Vazamento de " << info.size << " bytes em "
+            std::cout << "  - Leak of " << info.size << " bytes at "
                 << info.file << ":" << info.line
-                << " (Ponteiro: " << pair.first << ")\n";
+                << " (Pointer: " << pair.first << ")\n";
             totalLeaked += info.size;
         }
-        std::cout << "Total vazado: " << totalLeaked << " bytes.\n";
+        std::cout << "Total leaked: " << totalLeaked << " bytes.\n";
+        */
     }
-    std::cout << "Pico de alocação (contagem): " << allocationCount << " alocações ativas.\n";
-    std::cout << "Total atual alocado: " << totalAllocated << " bytes.\n";
-    std::cout << "-------------------------------------------\n";
+
+    std::cout << "Peak allocation (count): " << allocationCount << " active allocations.\n";
+    std::cout << "Current total allocated: " << totalAllocated << " bytes.\n";
+	std::cout << "-------------------------------------------\n";
 }
-*/
 
 } // namespace
+
+ue::MemoryTracker& GetMemoryTracker()
+{
+    static ue::MemoryTracker instance;
+    return instance;
+}
 
 void* operator new(size_t size, const char* file, int line)
 {
     void* ptr = malloc(size);
     if (ptr)
     {
-        ue::MemoryTracker::getInstance().trackAllocation(ptr, size, file, line);
+        GetMemoryTracker().trackAllocation(ptr, size, file, line);
     }
     else
     {
@@ -105,7 +150,7 @@ void* operator new[](size_t size, const char* file, int line)
     void* ptr = malloc(size);
     if (ptr)
     {
-        ue::MemoryTracker::getInstance().trackAllocation(ptr, size, file, line);
+        GetMemoryTracker().trackAllocation(ptr, size, file, line);
     }
     else
     {
@@ -120,7 +165,7 @@ void* operator new(size_t size)
     void* ptr = malloc(size);
     if (ptr)
     {
-        ue::MemoryTracker::getInstance().trackAllocation(ptr, size, "Unknown", 0);
+        GetMemoryTracker().trackAllocation(ptr, size, "Unknown", 0);
     }
     else
     {
@@ -135,7 +180,7 @@ void* operator new[](size_t size)
 
     if (ptr)
     {
-        ue::MemoryTracker::getInstance().trackAllocation(ptr, size, "Unknown", 0);
+        GetMemoryTracker().trackAllocation(ptr, size, "Unknown", 0);
     }
     else
     {
@@ -147,24 +192,24 @@ void* operator new[](size_t size)
 
 void operator delete(void* ptr) noexcept
 {
-    ue::MemoryTracker::getInstance().trackDeallocation(ptr);
+    GetMemoryTracker().trackDeallocation(ptr);
     free(ptr);
 }
 
 void operator delete[](void* ptr) noexcept
 {
-    ue::MemoryTracker::getInstance().trackDeallocation(ptr);
+    GetMemoryTracker().trackDeallocation(ptr);
     free(ptr);
 }
 
 void operator delete(void* ptr, size_t size) noexcept
 {
-    ue::MemoryTracker::getInstance().trackDeallocation(ptr);
+    GetMemoryTracker().trackDeallocation(ptr);
     free(ptr);
 }
 
 void operator delete[](void* ptr, size_t size) noexcept
 {
-    ue::MemoryTracker::getInstance().trackDeallocation(ptr);
+    GetMemoryTracker().trackDeallocation(ptr);
     free(ptr);
 }

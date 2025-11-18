@@ -1,6 +1,8 @@
 #include "ImportMeshPopup.h"
 #include "EditorsController.h"
 
+#include "GuiWrapper.h"
+
 namespace sre
 {
 

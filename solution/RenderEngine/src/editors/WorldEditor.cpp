@@ -11,7 +11,7 @@
 #include "EditorMessages.h"
 #include "MessagesManager.h"
 
-#include "imgui/imgui.h"
+#include "GuiWrapper.h"
 
 namespace sre
 {
