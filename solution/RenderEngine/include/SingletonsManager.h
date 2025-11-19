@@ -5,7 +5,6 @@
 
 #include <unordered_map>
 #include <string>
-#include <array>
 
 namespace sre
 {
@@ -15,8 +14,8 @@ constexpr size_t SINGLETONS_COUNT = 10;
 class SingletonsManager
 {
 private:
-    std::unordered_map<std::string, UPTR<ASingleton>> singletons;
-    std::array<ASingleton*, SINGLETONS_COUNT> singletonsArray;
+    std::unordered_map<std::size_t, UPTR<ASingleton>> singletons;
+    ASingleton* singletonsArray[SINGLETONS_COUNT];
     size_t arrayIndex = 0;
     static UPTR<SingletonsManager> instance;
 
@@ -35,12 +34,17 @@ public:
     template <typename T> T* get()
     {
         T* result = nullptr;
-        std::string type = typeid(T).name();
 
-        if (this->singletons.count(type) > 0)
-            result = static_cast<T *>(this->singletons[type].get());
+        size_t key = typeid(T).hash_code();
+
+        if (this->singletons.count(key) > 0)
+        {
+            result = static_cast<T*>(this->singletons[key].get());
+        }
         else
-            throw "Singleton not found: " + type;
+        {
+            throw "Singleton not found!";
+        }
 
         return result;
     }
@@ -53,10 +57,10 @@ private:
 
     template <typename T> T* add()
     {
-        std::string type = typeid(T).name();
-
         T* result = new T;
-        this->singletons[type] = UPTR<ASingleton>{ result };
+
+        size_t key = typeid(T).hash_code();
+        this->singletons[key] = UPTR<ASingleton>{ result };
         this->singletonsArray[arrayIndex] = result;
         arrayIndex++;
 
@@ -67,10 +71,10 @@ private:
     ConcretType* add()
     {
         ConcretType* result = nullptr;
-        std::string type = typeid(AbstractType).name();
+        size_t key = typeid(AbstractType).hash_code();
 
         result = new ConcretType;
-        this->singletons[type] = UPTR<ASingleton>{ result };
+        this->singletons[key] = UPTR<ASingleton>{ result };
         this->singletonsArray[arrayIndex] = result;
         arrayIndex++;
 
