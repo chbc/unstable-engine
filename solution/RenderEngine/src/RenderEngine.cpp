@@ -42,8 +42,8 @@ void RenderEngine::run()
         this->editorStrategy = UPTR<AExecutionStrategy>(new EditorStrategy);
         this->currentStrategy = this->editorStrategy.get();
 
-        std::string startUpScenePath = DefaultGameValues::get<std::string>("STARTUP_SCENE");
-        std::string startUpGuiScenePath = DefaultGameValues::get<std::string>("STARTUP_GUI_SCENE");
+        const std::string& startUpScenePath = DefaultGameValues::get<std::string>("STARTUP_SCENE");
+        const std::string& startUpGuiScenePath = DefaultGameValues::get<std::string>("STARTUP_GUI_SCENE");
         this->currentStrategy->loadScene(startUpScenePath.c_str());
 		this->currentStrategy->loadGuiScene(startUpGuiScenePath.c_str());
         this->currentStrategy->init(this);

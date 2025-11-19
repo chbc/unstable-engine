@@ -41,7 +41,7 @@ void SDLAPI::init()
 	if (this->window == NULL)
 		throw this->getError();
 
-	std::string iconPath = DefaultGameValues::get<std::string>("APPLICATION_ICON");
+	const std::string& iconPath = DefaultGameValues::get<std::string>("APPLICATION_ICON");
 	SDL_Surface* icon = IMG_Load(iconPath.c_str());
 	if (icon)
 	{

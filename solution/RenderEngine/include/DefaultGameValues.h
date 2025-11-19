@@ -1,4 +1,4 @@
-#ifndef _DEFAULT_GAME_VALUES_H_
+#pragma once
 
 #include "Blackboard.h"
 
@@ -12,7 +12,7 @@ private:
 
 public:
 	template <typename T>
-	static T get(const std::string& key)
+	static const T& get(const std::string& key)
 	{
 		return blackboard.get<T>(key);
 	}
@@ -32,5 +32,3 @@ friend class RenderEngine;
 };
 
 } // namespace
-
-#endif

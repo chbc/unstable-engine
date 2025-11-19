@@ -1,5 +1,4 @@
-#ifndef _ENGINE_VALUES_H_
-#define _ENGINE_VALUES_H_
+#pragma once
 
 #include "core_defines.h"
 
@@ -20,5 +19,3 @@ struct SRE_API EngineValues
 };
 
 } // namespace
-
-#endif

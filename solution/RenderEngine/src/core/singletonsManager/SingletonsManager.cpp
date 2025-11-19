@@ -70,6 +70,8 @@ void SingletonsManager::release()
     {
         ASingleton* item = this->singletonsArray[i];
         item->release();
+
+        this->singletonsArray[i] = nullptr;
     }
 
     this->singletons.clear();

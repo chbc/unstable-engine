@@ -1,5 +1,4 @@
-#ifndef _BLACKBOARD_H_
-#define _BLACKBOARD_H_
+#pragma once
 
 #include <unordered_map>
 #include <string>
@@ -15,7 +14,7 @@ private:
 
 public:
 	template <typename T>
-	T get(const std::string& key)
+	const T& get(const std::string& key)
 	{
 		T* value = static_cast<T*>(this->data[key].get());
 
@@ -33,5 +32,3 @@ public:
 };
 
 } // namespace
-
-#endif
