@@ -1,6 +1,9 @@
-// SHADOWS_DIRECTIONAL_H //
+// SHADOWS_DIRECTIONAL_IMPL //
 
-void Shadows_setFragPosDirectionalLightSpace(vec3 vertexPosition, int index)
+void Shadows_setupDirectionalLights(vec4 WorldPos)
 {
-    var_fragPosDirectionalLightSpace[index] = directionalLightSpaceMatrix[index] * vec4(vertexPosition, 1.0);
+	for (int i = 0; i < maxDirectionalLights; ++i)
+	{
+		var_fragPosDirectionalLightSpace[i] = directionalLightSpaceMatrix[i] * WorldPos;
+	}
 }

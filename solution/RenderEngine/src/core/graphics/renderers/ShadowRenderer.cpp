@@ -12,11 +12,13 @@
 namespace sre
 {
 
+ShadowRenderer::ShadowRenderer(ShaderManager* arg_shaderManager, AGraphicsWrapper* arg_graphicsWrapper)
+    : ABaseRenderer(arg_shaderManager, arg_graphicsWrapper)
+{ }
+
 void ShadowRenderer::init()
 {
     SingletonsManager *singletonsManager = SingletonsManager::getInstance();
-    this->graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
-    this->shaderManager = singletonsManager->get<ShaderManager>();
     this->lightManager = singletonsManager->get<LightManager>();
     textureCreator = singletonsManager->get<TextureCreator>();
 
@@ -44,7 +46,7 @@ void ShadowRenderer::setupDirectionalLightShader()
         item->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
 
         TransformComponent* transform = item->getTransform();
-        glm::vec3 position = glm::vec3(0.0f) - (transform->getForward() *  10.0f);
+        glm::vec3 position = glm::vec3(0.0f) - (transform->getForward() * 10.0f);
 
         glm::mat4 lightView = glm::lookAt
         (
@@ -81,11 +83,6 @@ void ShadowRenderer::setupPointLightShader()
     }
 }
 
-void ShadowRenderer::addItem(MeshComponent *item)
-{
-    this->items.push_back(item);
-}
-
 void ShadowRenderer::render()
 {
     this->graphicsWrapper->clearColorAndDepthBuffer();
@@ -111,7 +108,7 @@ void ShadowRenderer::renderDirectionalLightShadows()
         this->graphicsWrapper->clearDepthBuffer();
         this->shaderManager->setMat4(this->directionalLightDepthProgram, ShaderVariables::LIGHT_SPACE_MATRIX, &light->lightSpaceMatrix[0][0]);
 
-        for (MeshComponent *item : this->items)
+        for (MeshComponent *item : this->meshComponents)
         {
             TransformComponent *transform = item->getTransform();
             const glm::mat4& modelMatrix = transform->getMatrix();
@@ -149,7 +146,7 @@ void ShadowRenderer::renderPointLightShadows()
         this->shaderManager->setFloat(this->pointLightDepthProgram, ShaderVariables::FAR_PLANE, light->getRange());
         this->shaderManager->setVec3(this->pointLightDepthProgram, ShaderVariables::LIGHT_POSITION, &lightPosition[0]);
 
-        for (MeshComponent *item : this->items)
+        for (MeshComponent *item : this->meshComponents)
         {
             TransformComponent *transform = item->getTransform();
             glm::mat4 modelMatrix = transform->getMatrix();
@@ -163,11 +160,6 @@ void ShadowRenderer::renderPointLightShadows()
             this->graphicsWrapper->disableVertexPositions();
         }
     }
-}
-
-void ShadowRenderer::removeDestroyedEntities()
-{
-    CollectionsUtils::removeComponentIfEntityIsDestroyed(this->items);
 }
 
 void ShadowRenderer::updateShadowMatrices(const glm::vec3 &lightPosition, float range)

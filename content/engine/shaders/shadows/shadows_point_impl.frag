@@ -19,7 +19,7 @@ float Shadows_computePointLightShadow(int lightIndex)
     float bias = 0.15;
     int samples = 5;
 
-    float farPlane = pointLights[lightIndex].range;
+    float farPlane = pointLights[lightIndex].rangeAndIntensity.x;
 
     /* ###
     float viewDistance = length(var_toCameraVector);

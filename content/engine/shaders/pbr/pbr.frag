@@ -13,7 +13,6 @@ uniform sampler2D brdfLUT;
 uniform vec3 cameraPosition;
 
 // Properties
-uniform float shininess;
 uniform float normalFlipGreenChannel;
 
 // Varying variables
@@ -24,30 +23,6 @@ in vec3 Normal;
 out vec4 FragColor;
 
 const float PI = 3.14159265359;
-
-// UBO
-struct DirectionalLight
-{
-	vec4 direction;
-    vec4 color;
-};
-
-struct PointLight
-{
-	vec4 position;
-    vec4 color;
-	vec4 rangeAndIntensity;
-};
-
-layout (std140, binding = 0) uniform LightsBuffer
-{
-	DirectionalLight directionalLights[4];
-	PointLight pointLights[4];
-
-	vec4 ambientLightColor;
-    int maxDirectionalLights;
-    int maxPointLights;
-};
 
 vec3 getNormalFromMap()
 {
@@ -113,12 +88,23 @@ vec3 fresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness)
     return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
 }   
 // ----------------------------------------------------------------------------
+
+vec3 aces(vec3 x)
+{
+  const float a = 2.51;
+  const float b = 0.03;
+  const float c = 2.43;
+  const float d = 0.59;
+  const float e = 0.14;
+  return clamp((x * (a * x + b)) / (x * (c * x + d) + e), 0.0, 1.0);
+}
+
 void main()
 {		
     // material properties
     vec3 albedo = pow(texture(albedoTexture, TexCoords).rgb, vec3(2.2));
     float metallic = texture(metallicTexture, TexCoords).b;
-    float roughness = texture(roughnessTexture, TexCoords).g;
+    float roughness = max(texture(roughnessTexture, TexCoords).g, 0.05);
     float ao = texture(aoTexture, TexCoords).r;
        
     // input lighting data
@@ -133,6 +119,7 @@ void main()
 
     // reflectance equation
     vec3 Lo = vec3(0.0);
+	float shadow = 0.0;
 	
 	// Directional Lights
     for(int i = 0; i < maxDirectionalLights; ++i) 
@@ -141,7 +128,7 @@ void main()
 		vec3 toLight = -vec3(directionalLights[i].direction);
         vec3 L = normalize(toLight);
         vec3 H = normalize(V + L);
-        vec3 radiance = vec3(directionalLights[i].color);
+        vec3 radiance = vec3(directionalLights[i].color) * 5.0;
 
         // Cook-Torrance BRDF
         float NDF = DistributionGGX(N, H, roughness);   
@@ -168,6 +155,8 @@ void main()
 
         // add to outgoing radiance Lo
         Lo += (kD * albedo / PI + specular) * radiance * NdotL; // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
+		
+		// [DIRECTIONAL_SHADOWS] shadow += Shadows_computeDirectionalLightShadow(N, L, i);
     }
 	
 	// Point Lights
@@ -187,7 +176,7 @@ void main()
         float G   = GeometrySmith(N, V, L, roughness);
         vec3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);
         
-        vec3 numerator    = NDF * G * F * shininess;
+        vec3 numerator    = NDF * G * F;
         float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
         vec3 specular = numerator / denominator;
         
@@ -198,6 +187,8 @@ void main()
         float NdotL = max(dot(N, L), 0.0);        
 
         Lo += (kD * albedo / PI + specular) * radiance * NdotL; // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
+
+		// [POINT_SHADOWS] shadow += Shadows_computePointLightShadow(i);
     }
     
     // ambient lighting (we now use IBL as the ambient term)
@@ -216,12 +207,15 @@ void main()
     vec2 brdf  = texture(brdfLUT, vec2(max(dot(N, V), 0.0), roughness)).rg;
     vec3 specular = prefilteredColor * (F * brdf.x + brdf.y);
 
-    vec3 ambient = (kD * diffuse + specular) * ao;
+    vec3 ambient = (kD * diffuse + specular) * ao * ambientLightColor.rgb;
     
+	Lo *= clamp(1 - shadow, 0, 1);
+	
     vec3 color = ambient + Lo;
 
-    // HDR tonemapping
-    color = color / (color + vec3(1.0));
+	color *= 0.5; // XXX exposure
+	color = aces(color);
+
     // gamma correct
     color = pow(color, vec3(1.0/2.2)); 
 

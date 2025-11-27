@@ -99,7 +99,6 @@ namespace ShaderVariables
 
         MATERIAL_COLOR,
         OUTLINE_COLOR,
-        SHININESS,
 
         GUI_TEXTURE,
 		SCREEN_TEXTURE,
@@ -136,7 +135,6 @@ namespace ShaderVariables
         { LIGHT_POSITION,               "lightPosition"             },
         { MATERIAL_COLOR,               "materialColor"             },
         { OUTLINE_COLOR,                "outlineColor"              },
-        { SHININESS,                    "shininess"                 },
         { GUI_TEXTURE,                  "guiTexture"                },
         { SCREEN_TEXTURE,               "screenTexture"             },
         { DIFFUSE_TEXTURE,              "diffuseTexture"            },

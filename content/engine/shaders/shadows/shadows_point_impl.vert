@@ -1,6 +1,9 @@
-// SHADOWS_POINT_H //
+// SHADOWS_POINT_IMPL //
 
-void Shadows_setLightToFragmentVector(vec3 value, int index)
+void Shadows_setupPointLights(vec4 WorldPos)
 {
-    var_lightToFragmentVectors[index] = value;
+	for (int i = 0; i < maxPointLights; ++i)
+	{
+		var_lightToFragmentVectors[i] = (WorldPos - pointLights[i].position).xyz;
+	}
 }

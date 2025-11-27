@@ -19,8 +19,11 @@ uniform mat3 normalMatrix;
 void main()
 {
     TexCoords = vec2(uvOffset.x + (in_textureCoords.x * uvTiling.x), uvOffset.y + (in_textureCoords.y * uvTiling.y));
-    WorldPos = vec3(modelMatrix * vec4(in_position, 1.0));
+	WorldPos = vec3(modelMatrix * vec4(in_position, 1.0));
     Normal = normalMatrix * in_normal;   
 
     gl_Position =  projectionMatrix * viewMatrix * vec4(WorldPos, 1.0);
+	
+	// [DIRECTIONAL_SHADOWS] Shadows_setupDirectionalLights(vec4(WorldPos, 1.0));
+	// [POINT_SHADOWS] Shadows_setupPointLights(vec4(WorldPos, 1.0));
 }

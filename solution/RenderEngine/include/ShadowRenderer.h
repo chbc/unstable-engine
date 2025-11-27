@@ -1,16 +1,15 @@
 #pragma once
 
+#include "ABaseRenderer.h"
+
 #include <glm/gtc/matrix_transform.hpp>
-#include <vector>
 
 namespace sre
 {
 
-class ShadowRenderer
+class ShadowRenderer : public ABaseRenderer
 {
 private:
-    class ShaderManager* shaderManager;
-    class AGraphicsWrapper* graphicsWrapper;
     class LightManager* lightManager;
     class TextureCreator* textureCreator;
 
@@ -20,17 +19,15 @@ private:
     glm::mat4 shadowMatrices[6];
     const char *POINT_SHADOW_MATRICES_FORMAT = "pointShadowMatrices[%d]";
 
-    std::vector<class MeshComponent *> items;
-
 private:
+    ShadowRenderer(ShaderManager* arg_shaderManager, AGraphicsWrapper* arg_graphicsWrapper);
+
     void init();
     void setupPointLightShader();
     void setupDirectionalLightShader();
-    void addItem(MeshComponent *item);
     void render();
     void renderPointLightShadows();
     void renderDirectionalLightShadows();
-    void removeDestroyedEntities();
     void updateShadowMatrices(const glm::vec3 &lightPosition, float range);
 
 friend class RenderManager;

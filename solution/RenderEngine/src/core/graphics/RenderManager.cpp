@@ -87,6 +87,12 @@ void RenderManager::addMesh(MeshComponent* mesh)
 {
     if (mesh->isMaterialStandard())
     {
+        if (static_cast<Material*>(mesh->getMaterial())->getCastShadow())
+        {
+            this->initShadowRenderer();
+            this->shadowRenderer->addMesh(mesh);
+        }
+
         if (mesh->isOpaque())
         {
             this->addMesh(this->opaqueMeshRenderers, mesh);
@@ -94,12 +100,6 @@ void RenderManager::addMesh(MeshComponent* mesh)
         else
         {
             this->addMesh(this->translucentMeshRenderers, mesh);
-        }
-
-        if (static_cast<Material*>(mesh->getMaterial())->getCastShadow())
-        {
-            this->initShadowRenderer();
-            this->shadowRenderer->addItem(mesh);
         }
     }
     else
@@ -255,7 +255,7 @@ void RenderManager::initShadowRenderer()
 {
     if (!this->shadowRenderer)
     {
-        this->shadowRenderer = SPTR<ShadowRenderer>{ new ShadowRenderer };
+        this->shadowRenderer = SPTR<ShadowRenderer>{ new ShadowRenderer{this->shaderManager, this->graphicsWrapper} };
         this->shadowRenderer->init();
     }
 }
@@ -410,6 +410,8 @@ void RenderManager::removeDestroyedEntities()
 	}
 
     CollectionsUtils::removeIfRendererIsEmpty(this->customRenderers);
+
+    this->shadowRenderer->removeDestroyedEntities();
 
     if (this->guiRenderer.get() != nullptr)
     {

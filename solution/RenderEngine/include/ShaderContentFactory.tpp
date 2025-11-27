@@ -21,7 +21,12 @@ void ShaderContentFactory::createShaderContent
 
 	if (componentsBitset[EComponentId::PBR_MATERIAL])
 	{
-		this->loadPbrContent(vertexContentImpl, fragmentContentImpl);
+        this->loadPbrContent(vertexContentImpl, fragmentContentImpl);
+        if (this->lightData.hasAnyShadowCaster)
+        {
+            this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
+            this->loadShadowsContentImplementation(vertexContentImpl, fragmentContentImpl);
+        }
 	}
 	else
 	{
