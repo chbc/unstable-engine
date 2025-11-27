@@ -249,10 +249,21 @@ void ShaderContentFactory::loadAOMapContentImplementation(std::string &outVertex
     this->uncommentCode(outFragmentContent, "// [AO] ");
 }
 
-void ShaderContentFactory::loadPbrContent(std::string& outVertexContent, std::string& outFragmentContent)
+void ShaderContentFactory::loadPbrContentHeader(std::string& outVertexContent, std::string& outFragmentContent)
 {
-    FileUtils::loadContentFile(ShaderFiles::PBR_V, outVertexContent);
-	FileUtils::loadContentFile(ShaderFiles::PBR_F, outFragmentContent);
+    FileUtils::loadContentFile(ShaderFiles::PBR_H_V, outVertexContent);
+	FileUtils::loadContentFile(ShaderFiles::PBR_H_F, outFragmentContent);
+
+	std::string lightUboContent;
+	FileUtils::loadContentFile(ShaderFiles::LIGHTS_UBO, lightUboContent);
+	outVertexContent = outVertexContent + lightUboContent;
+	outFragmentContent = outFragmentContent + lightUboContent;
+}
+
+void ShaderContentFactory::loadPbrContentImplementation(std::string& outVertexContent, std::string& outFragmentContent)
+{
+    FileUtils::loadContentFile(ShaderFiles::PBR_IMPL_V, outVertexContent);
+    FileUtils::loadContentFile(ShaderFiles::PBR_IMPL_F, outFragmentContent);
 }
 
 void ShaderContentFactory::loadCustomContent(const std::unordered_map<EShaderComponent::Type, std::string>& shaderPaths,
@@ -273,33 +284,6 @@ void ShaderContentFactory::loadSecondTargetColorContentImplementation(std::strin
 
     outFragmentContent = content + outFragmentContent;
     this->uncommentCode(outFragmentContent, "// [SECOND_TARGET_COLOR]");
-}
-
-void ShaderContentFactory::loadLightsContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
-{
-    std::string vertexContent;
-    std::string fragmentContent;
-
-    FileUtils::loadContentFile(ShaderFiles::LIGHTS_H_V, vertexContent);
-    FileUtils::loadContentFile(ShaderFiles::LIGHTS_H_F, fragmentContent);
-
-    outVertexContent = vertexContent + outVertexContent;
-    outFragmentContent = fragmentContent + outFragmentContent;
-}
-
-void ShaderContentFactory::loadLightsContentImplementation(std::string &outVertexContent, std::string &outFragmentContent)
-{
-    std::string vertexContent;
-    std::string fragmentContent;
-
-    FileUtils::loadContentFile(ShaderFiles::LIGHTS_IMPL_V, vertexContent);
-    FileUtils::loadContentFile(ShaderFiles::LIGHTS_IMPL_F, fragmentContent);
-
-    this->uncommentCode(outVertexContent, "// [LIGHTS]");
-    this->uncommentCode(outFragmentContent, "// [LIGHTS]");
-
-    outVertexContent = vertexContent + outVertexContent;
-    outFragmentContent = fragmentContent + outFragmentContent;
 }
 
 void ShaderContentFactory::loadShadowsContentHeader(std::string &outVertexContent, std::string &outFragmentContent)

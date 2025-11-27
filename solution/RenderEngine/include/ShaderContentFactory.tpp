@@ -21,7 +21,8 @@ void ShaderContentFactory::createShaderContent
 
 	if (componentsBitset[EComponentId::PBR_MATERIAL])
 	{
-        this->loadPbrContent(vertexContentImpl, fragmentContentImpl);
+        this->loadPbrContentHeader(vertexContentHeader, fragmentContentHeader);
+        this->loadPbrContentImplementation(vertexContentImpl, fragmentContentImpl);
         if (this->lightData.hasAnyShadowCaster)
         {
             this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
@@ -39,16 +40,6 @@ void ShaderContentFactory::createShaderContent
                     case EComponentId::COLOR_MATERIAL:
                         this->loadColorContentHeader(vertexContentHeader, fragmentContentHeader);
                         this->loadColorContentImplementation(vertexContentImpl, fragmentContentImpl);
-                        break;
-                    case EComponentId::LIT_MATERIAL:
-                        this->loadLightsContentHeader(vertexContentHeader, fragmentContentHeader);
-                        this->loadLightsContentImplementation(vertexContentImpl, fragmentContentImpl);
-
-                        if (this->lightData.hasAnyShadowCaster)
-                        {
-                            this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
-                            this->loadShadowsContentImplementation(vertexContentImpl, fragmentContentImpl);
-                        }
                         break;
                     case EComponentId::DIFFUSE_MATERIAL:
                     case EComponentId::SPRITE_MATERIAL:

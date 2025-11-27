@@ -26,10 +26,7 @@ namespace ShaderFiles
     const std::string COLOR_V = BASE_FOLDER + "color/color.vert";
     const std::string COLOR_F = BASE_FOLDER + "color/color.frag";
 
-    const std::string LIGHTS_H_V    = BASE_FOLDER + "lights/lights_h.vert";
-    const std::string LIGHTS_IMPL_V = BASE_FOLDER + "lights/lights_impl.vert";
-    const std::string LIGHTS_H_F    = BASE_FOLDER + "lights/lights_h.frag";
-    const std::string LIGHTS_IMPL_F = BASE_FOLDER + "lights/lights_impl.frag";
+    const std::string LIGHTS_UBO = BASE_FOLDER + "lights/lights.ubo";
 
     const std::string POINT_SHADOW_DEPTH_V = BASE_FOLDER + "shadows/point_shadow_depth.vert";
     const std::string POINT_SHADOW_DEPTH_F = BASE_FOLDER + "shadows/point_shadow_depth.frag";
@@ -52,8 +49,10 @@ namespace ShaderFiles
     const std::string AMBIENT_OCCLUSION_H_F     = BASE_FOLDER + "ambientOcclusion/ambientOcclusion_h.frag";
     const std::string AMBIENT_OCCLUSION_IMPL_F  = BASE_FOLDER + "ambientOcclusion/ambientOcclusion_impl.frag";
 
-    const std::string PBR_V = BASE_FOLDER + "pbr/pbr.vert";
-    const std::string PBR_F = BASE_FOLDER + "pbr/pbr.frag";
+    const std::string PBR_H_V       = BASE_FOLDER + "pbr/pbr_h.vert";
+    const std::string PBR_IMPL_V    = BASE_FOLDER + "pbr/pbr_impl.vert";
+    const std::string PBR_H_F       = BASE_FOLDER + "pbr/pbr_h.frag";
+    const std::string PBR_IMPL_F    = BASE_FOLDER + "pbr/pbr_impl.frag";
 
     const std::string SECOND_TARGET_COLOR_F = BASE_FOLDER + "secondTarget/color.frag";
 
