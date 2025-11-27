@@ -15,11 +15,6 @@ namespace ShaderFiles
     const std::string BASE_FOLDER = "engine/shaders/";
 #endif
 
-    const std::string MAIN_H_V      = BASE_FOLDER + "main_h.vert";
-    const std::string MAIN_IMPL_V   = BASE_FOLDER + "main_impl.vert";
-    const std::string MAIN_H_F      = BASE_FOLDER + "main_h.frag";
-    const std::string MAIN_IMPL_F   = BASE_FOLDER + "main_impl.frag";
-
     const std::string GUI_V = BASE_FOLDER + "gui/gui.vert";
     const std::string GUI_F = BASE_FOLDER + "gui/gui.frag";
 
@@ -34,20 +29,6 @@ namespace ShaderFiles
 
     const std::string DIRECTIONAL_SHADOW_DEPTH_V = BASE_FOLDER + "shadows/directional_shadow_depth.vert";
     const std::string DIRECTIONAL_SHADOW_DEPTH_F = BASE_FOLDER + "shadows/directional_shadow_depth.frag";
-
-    const std::string DIFFUSE_H_F       = BASE_FOLDER + "diffuse/diffuse_h.frag";
-    const std::string DIFFUSE_IMPL_F    = BASE_FOLDER + "diffuse/diffuse_impl.frag";
-
-    const std::string NORMAL_H_V    = BASE_FOLDER + "normal/normal_h.vert";
-    const std::string NORMAL_IMPL_V = BASE_FOLDER + "normal/normal_impl.vert";
-    const std::string NORMAL_H_F    = BASE_FOLDER + "normal/normal_h.frag";
-    const std::string NORMAL_IMPL_F = BASE_FOLDER + "normal/normal_impl.frag";
-
-    const std::string SPECULAR_H_F      = BASE_FOLDER + "specular/specular_h.frag";
-    const std::string SPECULAR_IMPL_F   = BASE_FOLDER + "specular/specular_impl.frag";
-
-    const std::string AMBIENT_OCCLUSION_H_F     = BASE_FOLDER + "ambientOcclusion/ambientOcclusion_h.frag";
-    const std::string AMBIENT_OCCLUSION_IMPL_F  = BASE_FOLDER + "ambientOcclusion/ambientOcclusion_impl.frag";
 
     const std::string PBR_H_V       = BASE_FOLDER + "pbr/pbr_h.vert";
     const std::string PBR_IMPL_V    = BASE_FOLDER + "pbr/pbr_impl.vert";

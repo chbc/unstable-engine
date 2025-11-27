@@ -37,27 +37,6 @@ void ShaderContentFactory::createShaderContent
             {
                 switch (i)
                 {
-                    case EComponentId::COLOR_MATERIAL:
-                        this->loadColorContentHeader(vertexContentHeader, fragmentContentHeader);
-                        this->loadColorContentImplementation(vertexContentImpl, fragmentContentImpl);
-                        break;
-                    case EComponentId::DIFFUSE_MATERIAL:
-                    case EComponentId::SPRITE_MATERIAL:
-                        this->loadDiffuseContentHeader(vertexContentHeader, fragmentContentHeader);
-                        this->loadDiffuseContentImplementation(vertexContentImpl, fragmentContentImpl);
-                        break;
-                    case EComponentId::NORMAL_MATERIAL:
-                        this->loadNormalMapContentHeader(vertexContentHeader, fragmentContentHeader);
-                        this->loadNormalMapContentImplementation(vertexContentImpl, fragmentContentImpl);
-                        break;
-                    case EComponentId::SPECULAR_MATERIAL:
-                        this->loadSpecularMapContentHeader(vertexContentHeader, fragmentContentHeader);
-                        this->loadSpecularMapContentImplementation(vertexContentImpl, fragmentContentImpl);
-                        break;
-                    case EComponentId::AO_MATERIAL:
-                        this->loadAOMapContentHeader(vertexContentHeader, fragmentContentHeader);
-                        this->loadAOMapContentImplementation(vertexContentImpl, fragmentContentImpl);
-                        break;
                     case EComponentId::SECOND_TARGET_COLOR_MATERIAL:
                         this->loadSecondTargetColorContentImplementation(fragmentContentImpl);
                         break;
