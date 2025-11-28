@@ -12,9 +12,6 @@
 #include "LightRendererShaderSetup.h"
 #include "IBLRendererShaderSetup.h"
 #include "LitRendererComponent.h"
-#include "NormalRendererComponent.h"
-#include "SpecularRendererComponent.h"
-#include "AORendererComponent.h"
 #include "OutlineRendererComponent.h"
 #include "SpriteRendererComponent.h"
 #include "PBRRendererComponent.h"
@@ -41,27 +38,17 @@ MeshRenderer::MeshRenderer(ABaseMaterial* material, ShaderManager *shaderManager
                 case EComponentId::LIT_MATERIAL:
                     this->addComponent<LitRendererComponent>(this->shaderManager, this->graphicsWrapper, lightManager->hasAnyLight());
                     break;
-                case EComponentId::DIFFUSE_MATERIAL:
-                    this->addComponent<DiffuseRendererComponent>(this->shaderManager, this->graphicsWrapper);
-                    break;
-                case EComponentId::NORMAL_MATERIAL:
-                    this->addComponent<NormalRendererComponent>(this->shaderManager, this->graphicsWrapper);
-                    break;
-                case EComponentId::SPECULAR_MATERIAL:
-                    this->addComponent<SpecularRendererComponent>(this->shaderManager, this->graphicsWrapper);
-                    break;
-                case EComponentId::AO_MATERIAL:
-                    this->addComponent<AORendererComponent>(this->shaderManager, this->graphicsWrapper);
-                    break;
 				case EComponentId::PBR_MATERIAL:
 					this->addComponent<PBRRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
                 case EComponentId::SECOND_TARGET_COLOR_MATERIAL:
                     this->addComponent<OutlineRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
+                /*
                 case EComponentId::SPRITE_MATERIAL:
                     this->addComponent<SpriteRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
+                */
                 default: break;
             }
 
@@ -117,8 +104,6 @@ void MeshRenderer::loadShaderSetupItems()
 		else
 		{
 			this->removeComponent<LitRendererComponent>();
-			this->removeComponent<NormalRendererComponent>();
-			this->removeComponent<SpecularRendererComponent>();
 		}
     }
 }

@@ -1,3 +1,4 @@
+/*
 #include "SpriteRendererComponent.h"
 #include "MeshComponent.h"
 #include "Material.h"
@@ -20,3 +21,4 @@ void SpriteRendererComponent::setupShaderValues(MeshComponent* mesh, uint32_t pr
 }
 	
 } // namespace
+*/

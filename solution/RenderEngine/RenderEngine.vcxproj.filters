@@ -99,15 +99,6 @@
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\ColorMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\DiffuseMaterialComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\NormalMaterialComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\SpecularMaterialComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\entities\components\renderables\meshes\materials\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -165,22 +156,10 @@
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\litStates\LitRendererNoLightsState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\AORendererComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\ColorRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\DiffuseRendererComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\LitRendererComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\NormalRendererComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\SpecularRendererComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\graphics\renderers\MeshRenderer.cpp">
@@ -202,9 +181,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\graphics\renderers\postProcessingRendererComponents\OutlineRendererPPComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AmbientOcclusionMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPIState.cpp">
@@ -265,9 +241,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\editors\properties\MaterialEditorProperty.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AMaterialComponent.cpp">
@@ -331,9 +304,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\entities\components\renderables\meshes\materials\components\ABaseTextureMaterialComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\MaterialComponentTypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\editors\properties\Vec2EditorProperty.cpp">
@@ -496,6 +466,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\multimedia\ControllerInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\LitMaterialComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\MaterialComponentTypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -719,13 +695,7 @@
     <ClInclude Include="include\AMaterialComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AmbientOcclusionMaterialComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\AMultimediaWrapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AORendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\APostProcessingRendererComponent.h">
@@ -759,12 +729,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\core_defines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DiffuseMaterialComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DiffuseRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\DirectionalLightComponent.h">
@@ -848,12 +812,6 @@
     <ClInclude Include="include\MultimediaManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\NormalMaterialComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\NormalRendererComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\OpenGLAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -924,12 +882,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\SingletonsManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SpecularMaterialComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SpecularRendererComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\StringUtils.h">

@@ -1,6 +1,5 @@
+/*
 #pragma once
-
-#include "DiffuseRendererComponent.h"
 
 namespace sre
 {
@@ -16,3 +15,4 @@ friend class MeshRenderer;
 };
 	
 } // sre
+*/

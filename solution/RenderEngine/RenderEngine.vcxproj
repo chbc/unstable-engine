@@ -475,16 +475,11 @@
     <ClCompile Include="src\entities\components\buttons\GUIButtonComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\GUIImageComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\GUITextComponent.cpp" />
-    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\AmbientOcclusionMaterialComponent.cpp" />
-    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\DiffuseMaterialComponent.cpp" />
-    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\NormalMaterialComponent.cpp" />
-    <ClCompile Include="src\entities\components\renderables\meshes\materials\components\SpecularMaterialComponent.cpp" />
     <ClCompile Include="src\core\graphics\meshData\MeshData.cpp" />
     <ClCompile Include="src\core\multimedia\textures\atlases\Atlas.cpp" />
     <ClCompile Include="src\core\multimedia\textures\atlases\AtlasManager.cpp" />
     <ClCompile Include="src\core\multimedia\textures\Texture.cpp" />
     <ClCompile Include="src\entitiesManagers\scenes\GUIScene.cpp" />
-    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\AORendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\ColorRendererComponent.cpp" />
     <ClCompile Include="src\entities\components\cameras\CameraComponent.cpp" />
     <ClCompile Include="src\entities\components\lights\ALightComponent.cpp" />
@@ -504,11 +499,8 @@
     <ClCompile Include="src\entitiesManagers\scenes\Scene.cpp" />
     <ClCompile Include="src\core\graphics\LightManager.cpp" />
     <ClCompile Include="src\core\graphics\RenderManager.cpp" />
-    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\DiffuseRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renderers\GUIRenderer.cpp" />
-    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\NormalRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\renderers\MeshRenderer.cpp" />
-    <ClCompile Include="src\core\graphics\renderers\meshRendererComponents\SpecularRendererComponent.cpp" />
     <ClCompile Include="src\core\graphics\ShaderManager.cpp" />
     <ClCompile Include="src\core\graphics\shaders\ShaderContentFactory.cpp" />
     <ClCompile Include="src\core\multimedia\MultimediaManager.cpp" />
@@ -662,10 +654,8 @@
     <ClInclude Include="include\AImGuiAPIState.h" />
     <ClInclude Include="include\ALightComponent.h" />
     <ClInclude Include="include\AMaterialComponent.h" />
-    <ClInclude Include="include\AmbientOcclusionMaterialComponent.h" />
     <ClInclude Include="include\BaseMessage.h" />
     <ClInclude Include="include\AMultimediaWrapper.h" />
-    <ClInclude Include="include\AORendererComponent.h" />
     <ClInclude Include="include\APostProcessingRendererComponent.h" />
     <ClInclude Include="include\ASingleton.h" />
     <ClInclude Include="include\Atlas.h" />
@@ -681,8 +671,6 @@
     <ClInclude Include="include\ColorRendererComponent.h" />
     <ClInclude Include="include\core_defines.h" />
     <ClInclude Include="include\DefaultGameValues.h" />
-    <ClInclude Include="include\DiffuseMaterialComponent.h" />
-    <ClInclude Include="include\DiffuseRendererComponent.h" />
     <ClInclude Include="include\DirectionalLightComponent.h" />
     <ClInclude Include="include\DOFRendererComponent.h" />
     <ClInclude Include="include\EComponentId.h" />
@@ -727,8 +715,6 @@
     <ClInclude Include="include\MessagesManager.h" />
     <ClInclude Include="include\ModelLoader.h" />
     <ClInclude Include="include\MultimediaManager.h" />
-    <ClInclude Include="include\NormalMaterialComponent.h" />
-    <ClInclude Include="include\NormalRendererComponent.h" />
     <ClInclude Include="include\OpenGLAPI.h" />
     <ClInclude Include="include\OpenGLESAPI.h" />
     <ClInclude Include="include\OrbitMovementComponent.h" />
@@ -761,8 +747,6 @@
     <ClInclude Include="include\SingletonsManager.h" />
     <ClInclude Include="include\SkyboxComponent.h" />
     <ClInclude Include="include\SkyboxRenderer.h" />
-    <ClInclude Include="include\SpecularMaterialComponent.h" />
-    <ClInclude Include="include\SpecularRendererComponent.h" />
     <ClInclude Include="include\SpriteMaterialComponent.h" />
     <ClInclude Include="include\SpriteRendererComponent.h" />
     <ClInclude Include="include\StringEditorProperty.h" />
