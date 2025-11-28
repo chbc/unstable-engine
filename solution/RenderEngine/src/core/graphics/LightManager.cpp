@@ -9,11 +9,6 @@
 namespace sre
 {
 
-void LightManager::setAmbientLightColor(const glm::vec3 &ambientLightColor)
-{
-    this->ambientLightColor = ambientLightColor;
-}
-
 bool LightManager::hasAnyLight()
 {
     return (!this->directionalLights.empty() || !this->pointLights.empty());

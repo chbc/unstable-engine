@@ -22,14 +22,12 @@ class LightManager : public ASingleton
 private:
     std::vector<DirectionalLightComponent*> directionalLights;
     std::vector<PointLightComponent*> pointLights;
-    glm::vec3 ambientLightColor{ 0.15f };
 	class AGraphicsWrapper* graphicsWrapper{ nullptr };
     LightsUBO lightsUBO;
 	uint32_t ubo{ 0 };
     IBLData iblData;
 
 public:
-    void setAmbientLightColor(const glm::vec3 &ambientLightColor);
     bool hasAnyLight();
     bool hasAnyShadowCaster();
     inline const IBLData& getIBLData() { return iblData; }
