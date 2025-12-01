@@ -22,4 +22,9 @@ glm::vec3 ALightComponent::getColor()
     return this->color;
 }
 
+void ALightComponent::setupShadowData(uint32_t fbo, uint32_t textureId, uint32_t textureUnit)
+{
+	this->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, textureId, textureUnit });
+}
+
 } // namespace

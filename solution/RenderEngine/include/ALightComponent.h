@@ -1,5 +1,4 @@
-#ifndef _ALIGHT_COMPONENT_H_
-#define _ALIGHT_COMPONENT_H_
+#pragma once
 
 #include "AEntityComponent.h"
 #include <glm/vec3.hpp>
@@ -9,9 +8,6 @@
 namespace sre
 {
 
-/*!
-    Base class to handle lighting.
-*/
 class SRE_API ALightComponent : public AEntityComponent
 {
 private:
@@ -29,6 +25,7 @@ public:
 
 private:
     inline bool hasShadowData() { return (this->shadowData.get() != nullptr); }
+	void setupShadowData(uint32_t fbo, uint32_t textureId, uint32_t textureUnit);
 
 friend class LightManager;
 friend class ShadowRenderer;
@@ -36,5 +33,3 @@ friend class ShadowRendererShaderSetup;
 };
 
 } // namespace
-
-#endif

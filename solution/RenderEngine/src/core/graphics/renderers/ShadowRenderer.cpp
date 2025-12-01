@@ -43,19 +43,8 @@ void ShadowRenderer::setupDirectionalLightShader()
         Texture *texture = textureCreator->createShadowTexture(1024, 1024);
 
         uint32_t fbo = this->graphicsWrapper->generateDepthFrameBuffer(texture->getId());
-        item->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
-
-        TransformComponent* transform = item->getTransform();
-        glm::vec3 position = glm::vec3(0.0f) - (transform->getForward() * 10.0f);
-
-        glm::mat4 lightView = glm::lookAt
-        (
-            position,
-            glm::vec3(0.0f, 0.0f, 0.0f),
-            glm::vec3(0.0f, 1.0f, 0.0f)
-        );
-
-        item->lightSpaceMatrix = lightProjection * lightView;
+		item->setupShadowData(fbo, texture->getId(), texture->getUnit());
+        item->setupLightSpaceMatrix();
     }
 }
 
@@ -68,7 +57,7 @@ void ShadowRenderer::setupPointLightShader()
         Texture *texture = textureCreator->createCubemapTexture(1024, 1024);
 
         uint32_t fbo = this->graphicsWrapper->generateDepthFrameBuffer(texture->getId(), true);
-        item->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
+        item->setupShadowData(fbo, texture->getId(), texture->getUnit());
     }
 
     this->shaderManager->setupUniformLocation(this->pointLightDepthProgram, ShaderVariables::MODEL_MATRIX);

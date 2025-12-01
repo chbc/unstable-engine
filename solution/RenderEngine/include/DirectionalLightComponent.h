@@ -19,6 +19,9 @@ public:
 protected:
 	void onPropertyChanged() override;
 
+private:
+	void setupLightSpaceMatrix();
+
 friend class Entity;
 friend class ShadowRenderer;
 friend class ShadowRendererShaderSetup;

@@ -17,7 +17,11 @@ DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightCom
 	TransformComponent* transform = this->getTransform();
 	this->propertyChangedCallbackId = transform->addPropertyChangedCallback
 	(
-		[this]() { this->lightManager->updateDirectionalLightsUBO(); }
+		[this]()
+		{
+			this->lightManager->updateDirectionalLightsUBO();
+			this->setupLightSpaceMatrix();
+		}
 	);
 }
 
@@ -25,6 +29,22 @@ void DirectionalLightComponent::onPropertyChanged()
 {
 	AEntityComponent::onPropertyChanged();
 	this->lightManager->updateDirectionalLightsUBO();
+}
+
+void DirectionalLightComponent::setupLightSpaceMatrix()
+{
+	glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 20.0f);
+	TransformComponent* transform = this->getTransform();
+
+	glm::vec3 position = glm::vec3(0.0f) - (transform->getForward() * 10.0f);
+	glm::mat4 lightView = glm::lookAt
+	(
+		position,
+		glm::vec3(0.0f, 0.0f, 0.0f),
+		glm::vec3(0.0f, 1.0f, 0.0f)
+	);
+
+	this->lightSpaceMatrix = lightProjection * lightView;
 }
 
 } // namespace
