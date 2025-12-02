@@ -451,6 +451,7 @@ void RenderManager::cleanUpMeshes()
     this->customRenderers.clear();
     this->skyboxRenderer.reset();
     this->guizmoRenderer.reset();
+    this->shadowRenderer.reset();
 }
 
 void RenderManager::cleanUpGui()

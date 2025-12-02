@@ -36,7 +36,7 @@ MeshRenderer::MeshRenderer(ABaseMaterial* material, ShaderManager *shaderManager
                     this->addComponent<ColorRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
                 case EComponentId::LIT_MATERIAL:
-                    this->addComponent<LitRendererComponent>(this->shaderManager, this->graphicsWrapper, lightManager->hasAnyLight());
+                    this->addComponent<LitRendererComponent>(this->shaderManager, this->graphicsWrapper);
                     break;
 				case EComponentId::PBR_MATERIAL:
 					this->addComponent<PBRRendererComponent>(this->shaderManager, this->graphicsWrapper);
@@ -82,36 +82,21 @@ void MeshRenderer::loadShaderSetupItems()
     LightManager *lightManager = SingletonsManager::getInstance()->get<LightManager>();
     if (this->hasComponent<LitRendererComponent>())
     {
-		if (lightManager->hasAnyLight())
-		{
-			item = new LightRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
-			this->shaderSetupItems[typeid(LightRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
+		item = new LightRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
+		this->shaderSetupItems[typeid(LightRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
 
-			this->lightData.receivesLight = true;
-			this->lightData.directionalLightsCount = lightManager->directionalLights.size();
-			this->lightData.pointLightsCount = lightManager->pointLights.size();
-			this->lightData.hasAnyShadowCaster = lightManager->hasAnyShadowCaster();
+		item = new ShadowRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
+		this->shaderSetupItems[typeid(ShadowRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
 
-			if (this->lightData.hasAnyShadowCaster)
-			{
-				item = new ShadowRendererShaderSetup(this->shaderManager, this->graphicsWrapper);
-				this->shaderSetupItems[typeid(ShadowRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
-			}
-
-            item = new IBLRendererShaderSetup{ this->shaderManager, this->graphicsWrapper };
-            this->shaderSetupItems[typeid(IBLRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
-		}
-		else
-		{
-			this->removeComponent<LitRendererComponent>();
-		}
+        item = new IBLRendererShaderSetup{ this->shaderManager, this->graphicsWrapper };
+        this->shaderSetupItems[typeid(IBLRendererShaderSetup).name()] = UPTR<BaseRendererShaderSetup>(item);
     }
 }
 
 void MeshRenderer::loadShader(bool useBrightnessSegmentation, bool includeDepth)
 {
     this->program = this->shaderManager->loadShader(
-		this->componentsBitset, this->lightData, useBrightnessSegmentation, includeDepth
+		this->componentsBitset, useBrightnessSegmentation, includeDepth
 	);
 }
 

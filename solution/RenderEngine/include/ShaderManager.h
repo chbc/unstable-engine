@@ -4,7 +4,6 @@
 #include "memory_aliases.h"
 #include "ShaderContentFactory.h"
 #include "Shader.h"
-#include "ShaderLightData.h"
 #include "EShaderComponent.h"
 
 #include <bitset>
@@ -29,8 +28,7 @@ private:
     // main load function
     template <size_t SIZE> 
     uint32_t loadShader(
-		const std::bitset<SIZE> &componentsBitset, 
-		const ShaderLightData &lightData, 
+		const std::bitset<SIZE> &componentsBitset,
 		bool includeBrightnessSegmentation,
         bool includeDepth
 	)
@@ -40,7 +38,7 @@ private:
 
         ShaderContentFactory contentFactory;
         contentFactory.createShaderContent(
-			componentsBitset, vertexContent, fragmentContent, lightData, 
+			componentsBitset, vertexContent, fragmentContent, 
             includeBrightnessSegmentation, includeDepth
 		);
 
@@ -86,6 +84,7 @@ friend class RenderManager;
 friend class LightManager;
 friend class SingletonsManager;
 
+friend class ABaseRenderer;
 friend class MeshRenderer;
 friend class GUIRenderer;
 friend class DebugRenderer;

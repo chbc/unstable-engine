@@ -28,7 +28,6 @@ private:
     IBLData iblData;
 
 public:
-    bool hasAnyLight();
     bool hasAnyShadowCaster();
     inline const IBLData& getIBLData() { return iblData; }
 

@@ -35,6 +35,11 @@ void ABaseRenderer::removeDestroyedEntities()
         else
             ++it;
     }
+
+    if (this->meshComponents.empty())
+    {
+		this->shaderManager->releaseShader(this->program);
+	}
 }
 
 bool ABaseRenderer::removeMesh(MeshComponent* mesh)
@@ -54,6 +59,11 @@ bool ABaseRenderer::removeMesh(MeshComponent* mesh)
     {
         this->meshComponents.erase(it);
         result = true;
+    }
+
+    if (this->meshComponents.empty())
+    {
+        this->shaderManager->releaseShader(this->program);
     }
 
     return result;

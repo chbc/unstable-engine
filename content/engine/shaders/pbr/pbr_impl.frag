@@ -91,8 +91,7 @@ void main()
     F0 = mix(F0, albedo, metallic);
 
     // reflectance equation
-    vec3 Lo = vec3(0.0);
-	float shadow = 0.0;
+    vec3 resultLo = vec3(0.0);
 	
 	// Directional Lights
     for(int i = 0; i < maxDirectionalLights; ++i) 
@@ -127,9 +126,10 @@ void main()
         float NdotL = max(dot(N, L), 0.0);        
 
         // add to outgoing radiance Lo
-        Lo += (kD * albedo / PI + specular) * radiance * NdotL; // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
+        vec3 Lo = (kD * albedo / PI + specular) * radiance * NdotL; // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
 		
-		// [DIRECTIONAL_SHADOWS] shadow += Shadows_computeDirectionalLightShadow(N, L, i);
+		float shadow = Shadows_computeDirectionalLightShadow(N, L, i);
+		resultLo += Lo * (1 - shadow);
     }
 	
 	// Point Lights
@@ -159,9 +159,10 @@ void main()
             
         float NdotL = max(dot(N, L), 0.0);        
 
-        Lo += (kD * albedo / PI + specular) * radiance * NdotL; // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
+        vec3 Lo = (kD * albedo / PI + specular) * radiance * NdotL; // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
 
-		// [POINT_SHADOWS] shadow += Shadows_computePointLightShadow(i);
+		float shadow = Shadows_computePointLightShadow(i);
+		resultLo += Lo * (1 - shadow);
     }
     
     // ambient lighting (we now use IBL as the ambient term)
@@ -181,10 +182,8 @@ void main()
     vec3 specular = prefilteredColor * (F * brdf.x + brdf.y);
 
     vec3 ambient = (kD * diffuse + specular) * ao * ambientLightColor.rgb;
-    
-	Lo *= clamp(1 - shadow, 0, 1);
-	
-    vec3 color = ambient + Lo;
+
+    vec3 color = ambient + resultLo;
 
 	color *= 0.5; // XXX exposure
 	color = aces(color);

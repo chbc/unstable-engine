@@ -3,7 +3,6 @@
 #include "ABaseRenderer.h"
 
 #include "ColorRendererComponent.h"
-#include "ShaderLightData.h"
 #include "EComponentId.h"
 #include "memory_aliases.h"
 
@@ -26,7 +25,6 @@ private:
     std::unordered_map<size_t, UPTR<ColorRendererComponent>> componentsMap;
     std::unordered_map<std::string, UPTR<class BaseRendererShaderSetup>> shaderSetupItems;
     std::bitset<EComponentId::SIZE> componentsBitset;
-    ShaderLightData lightData;
 
 public:
     virtual ~MeshRenderer();

@@ -494,7 +494,6 @@
     <ClCompile Include="src\entities\components\transforms\TransformComponent.cpp" />
     <ClCompile Include="src\messages\EditorMessages.cpp" />
     <ClCompile Include="src\messages\EntityDestroyedMessage.cpp" />
-    <ClCompile Include="src\messages\RefreshMeshesMessage.cpp" />
     <ClCompile Include="src\RenderEngine.cpp" />
     <ClCompile Include="src\entitiesManagers\scenes\Scene.cpp" />
     <ClCompile Include="src\core\graphics\LightManager.cpp" />
@@ -640,7 +639,6 @@
     <ClInclude Include="include\NormalTextureEditorProperty.h" />
     <ClInclude Include="include\PanMovementComponent.h" />
     <ClInclude Include="include\Ray.h" />
-    <ClInclude Include="include\RefreshMeshesMessage.h" />
     <ClInclude Include="include\MaterialComponentTypes.h" />
     <ClInclude Include="include\MaterialLoader.h" />
     <ClInclude Include="include\Model.h" />
@@ -738,7 +736,6 @@
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\ShaderConstants.h" />
     <ClInclude Include="include\ShaderContentFactory.h" />
-    <ClInclude Include="include\ShaderLightData.h" />
     <ClInclude Include="include\ShaderManager.h" />
     <ClInclude Include="include\ShadowData.h" />
     <ClInclude Include="include\ShadowRenderer.h" />

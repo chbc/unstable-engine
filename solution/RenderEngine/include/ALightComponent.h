@@ -15,7 +15,7 @@ private:
     UPTR<ShadowData> shadowData;
 
 protected:
-	ALightComponent(Entity *entity);
+	ALightComponent(Entity *entity, bool useCubemap);
     class LightManager* lightManager{ nullptr };
 	size_t propertyChangedCallbackId{ 0 };
 
@@ -25,7 +25,7 @@ public:
 
 private:
     inline bool hasShadowData() { return (this->shadowData.get() != nullptr); }
-	void setupShadowData(uint32_t fbo, uint32_t textureId, uint32_t textureUnit);
+	void setupShadowData(bool useCubemap);
 
 friend class LightManager;
 friend class ShadowRenderer;

@@ -8,12 +8,9 @@ void ShaderContentFactory::createShaderContent
 (
     const std::bitset<SIZE> &componentsBitset, 
     std::string &outVertexContent, std::string &outFragmentContent,
-    const ShaderLightData &lightData,
     bool includeBrightnessSegmentation, bool includeDepth
 )
 {
-    this->lightData = lightData;
-
     std::string vertexContentHeader;
     std::string fragmentContentHeader;
     std::string vertexContentImpl;
@@ -23,11 +20,9 @@ void ShaderContentFactory::createShaderContent
 	{
         this->loadPbrContentHeader(vertexContentHeader, fragmentContentHeader);
         this->loadPbrContentImplementation(vertexContentImpl, fragmentContentImpl);
-        if (this->lightData.hasAnyShadowCaster)
-        {
-            this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
-            this->loadShadowsContentImplementation(vertexContentImpl, fragmentContentImpl);
-        }
+
+        this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
+        this->loadShadowsContentImplementation(vertexContentImpl, fragmentContentImpl);
 	}
 	else
 	{

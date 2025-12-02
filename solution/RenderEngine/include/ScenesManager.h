@@ -3,7 +3,6 @@
 #include "Scene.h"
 #include "GUIScene.h"
 #include "ASingleton.h"
-#include "RefreshMeshesMessage.h"
 
 namespace sre
 {
@@ -16,7 +15,6 @@ protected:
     UPTR<GUIScene> guiScene;
 
 private:
-    SPTR<Action> refreshMeshesAction;
     class RenderManager* renderManager{ nullptr };
 
 protected:

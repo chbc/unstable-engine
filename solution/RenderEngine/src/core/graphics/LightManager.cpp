@@ -5,14 +5,10 @@
 #include "AGraphicsWrapper.h"
 #include "AssetsManager.h"
 #include "Texture.h"
+#include "MessagesManager.h"
 
 namespace sre
 {
-
-bool LightManager::hasAnyLight()
-{
-    return (!this->directionalLights.empty() || !this->pointLights.empty());
-}
 
 bool LightManager::hasAnyShadowCaster()
 {

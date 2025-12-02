@@ -13,7 +13,7 @@ private:
     UPTR<LitRendererNoLightsState> state;
 
 protected:
-    LitRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper, bool hasLight);
+    LitRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
 
     virtual void onSceneLoaded(uint32_t program) override;
     virtual void setupShaderValues(class MeshComponent *mesh, uint32_t program) override;

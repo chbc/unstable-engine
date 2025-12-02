@@ -1,9 +1,9 @@
 #include "ShadowRenderer.h"
 #include "MeshComponent.h"
 #include "SingletonsManager.h"
-#include "TextureCreator.h"
 #include "LightManager.h"
 #include "ShaderManager.h"
+#include "MessagesManager.h"
 #include "AGraphicsWrapper.h"
 #include "Entity.h"
 #include "StringUtils.h"
@@ -20,13 +20,14 @@ void ShadowRenderer::init()
 {
     SingletonsManager *singletonsManager = SingletonsManager::getInstance();
     this->lightManager = singletonsManager->get<LightManager>();
-    textureCreator = singletonsManager->get<TextureCreator>();
 
-    if (this->lightManager->directionalLights.size() > 0)
-        this->setupDirectionalLightShader();
+    this->setupLigths();
+}
 
-    if (this->lightManager->pointLights.size() > 0)
-        this->setupPointLightShader();
+void ShadowRenderer::setupLigths()
+{
+    this->setupDirectionalLightShader();
+    this->setupPointLightShader();
 }
 
 void ShadowRenderer::setupDirectionalLightShader()
@@ -35,30 +36,11 @@ void ShadowRenderer::setupDirectionalLightShader()
 
     this->shaderManager->setupUniformLocation(this->directionalLightDepthProgram, ShaderVariables::LIGHT_SPACE_MATRIX);
     this->shaderManager->setupUniformLocation(this->directionalLightDepthProgram, ShaderVariables::MODEL_MATRIX);
-
-    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, 20.0f);
-
-    for (DirectionalLightComponent *item : this->lightManager->directionalLights)
-    {
-        Texture *texture = textureCreator->createShadowTexture(1024, 1024);
-
-        uint32_t fbo = this->graphicsWrapper->generateDepthFrameBuffer(texture->getId());
-		item->setupShadowData(fbo, texture->getId(), texture->getUnit());
-        item->setupLightSpaceMatrix();
-    }
 }
 
 void ShadowRenderer::setupPointLightShader()
 {
     this->pointLightDepthProgram = this->shaderManager->loadPointLightDepthShader();
-
-    for (PointLightComponent *item : this->lightManager->pointLights)
-    {
-        Texture *texture = textureCreator->createCubemapTexture(1024, 1024);
-
-        uint32_t fbo = this->graphicsWrapper->generateDepthFrameBuffer(texture->getId(), true);
-        item->setupShadowData(fbo, texture->getId(), texture->getUnit());
-    }
 
     this->shaderManager->setupUniformLocation(this->pointLightDepthProgram, ShaderVariables::MODEL_MATRIX);
     this->shaderManager->setupUniformLocation(this->pointLightDepthProgram, ShaderVariables::FAR_PLANE);
@@ -74,17 +56,20 @@ void ShadowRenderer::setupPointLightShader()
 
 void ShadowRenderer::render()
 {
-    this->graphicsWrapper->clearColorAndDepthBuffer();
+    if (!this->meshComponents.empty())
+    {
+        this->graphicsWrapper->clearColorAndDepthBuffer();
 
-    this->graphicsWrapper->setViewport(1024, 1024);
+        this->graphicsWrapper->setViewport(1024, 1024);
 
-    if (this->lightManager->pointLights.size() > 0)
-        this->renderPointLightShadows();
+        if (this->lightManager->pointLights.size() > 0)
+            this->renderPointLightShadows();
 
-    if (this->lightManager->directionalLights.size() > 0)
-        this->renderDirectionalLightShadows();
+        if (this->lightManager->directionalLights.size() > 0)
+            this->renderDirectionalLightShadows();
 
-    this->graphicsWrapper->unbindFrameBuffer();
+        this->graphicsWrapper->unbindFrameBuffer();
+    }
 }
 
 void ShadowRenderer::renderDirectionalLightShadows()
@@ -153,7 +138,7 @@ void ShadowRenderer::renderPointLightShadows()
 
 void ShadowRenderer::updateShadowMatrices(const glm::vec3 &lightPosition, float range)
 {
-    float aspect = 1024.0f / 1024.0f;
+    float aspect = 1.0; // 1024.0f / 1024.0f;
     float near = 0.1f;
     glm::mat4 projection = glm::perspective(glm::radians(90.0f), aspect, near, range);
 

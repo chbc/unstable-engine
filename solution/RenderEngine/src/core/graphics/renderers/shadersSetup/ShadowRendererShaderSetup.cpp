@@ -18,17 +18,14 @@ ShadowRendererShaderSetup::ShadowRendererShaderSetup(ShaderManager *shaderManage
 void ShadowRendererShaderSetup::onSceneLoaded(uint32_t program)
 {
     char variable[32];
-    for (uint32_t i = 0; i < this->lightManager->directionalLights.size(); i++)
+    for (uint32_t i = 0; i < MAX_LIGHTS; ++i)
     {
         std::sprintf(variable, DIRECTIONAL_SHADOW_MAPS_FORMAT, i);
         this->shaderManager->setupUniformLocation(program, variable);
 
         std::sprintf(variable, DIRECTIONAL_LIGHT_SPACE_FORMAT, i);
         this->shaderManager->setupUniformLocation(program, variable);
-    }
 
-    for (uint32_t i = 0; i < this->lightManager->pointLights.size(); i++)
-    {
         std::sprintf(variable, POINT_SHADOW_MAPS_FORMAT, i);
         this->shaderManager->setupUniformLocation(program, variable);
     }

@@ -8,7 +8,7 @@ namespace sre
 
 IMPLEMENT_COMPONENT(DirectionalLightComponent)
 
-DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightComponent(entity)
+DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightComponent(entity, false)
 {
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
 	this->lightManager = singletonsManager->get<LightManager>();
@@ -23,6 +23,8 @@ DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightCom
 			this->setupLightSpaceMatrix();
 		}
 	);
+
+	this->setupLightSpaceMatrix();
 }
 
 void DirectionalLightComponent::onPropertyChanged()

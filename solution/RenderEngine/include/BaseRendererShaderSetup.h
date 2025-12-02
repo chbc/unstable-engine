@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ShaderLightData.h"
 #include <glm/vec3.hpp>
 
 namespace sre

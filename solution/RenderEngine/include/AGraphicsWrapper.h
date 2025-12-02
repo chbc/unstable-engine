@@ -141,6 +141,7 @@ friend class IBLRendererShaderSetup;
 
 friend class LitRendererLightsState;
 
+friend class ALightComponent;
 friend class BloomRendererComponent;
 friend class SinglePassRendererComponent;
 friend class HDRRendererComponent;

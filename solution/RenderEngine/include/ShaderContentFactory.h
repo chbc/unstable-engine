@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ShaderLightData.h"
 #include "EShaderComponent.h"
 
 #include <unordered_map>
@@ -13,15 +12,11 @@ namespace sre
 class ShaderContentFactory
 {
 private:
-    ShaderLightData lightData;
-
-private:
     template <size_t SIZE>
     void createShaderContent
     (
         const std::bitset<SIZE> &componentsBitset, 
         std::string &outVertexContent, std::string &outFragmentContent, 
-        const ShaderLightData &lightData,
         bool includeBrightnessSegmentation, bool includeDepth
     );
     void createGUIShaderContent(std::string &outVertexContent, std::string &outFragmentContent);

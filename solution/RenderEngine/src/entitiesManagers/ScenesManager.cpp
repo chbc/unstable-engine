@@ -4,7 +4,6 @@
 #include "SceneLoader.h"
 #include "FileUtils.h"
 #include "SingletonsManager.h"
-#include "MessagesManager.h"
 #include "RenderManager.h"
 
 namespace sre
@@ -13,10 +12,6 @@ namespace sre
 void ScenesManager::init()
 {
     this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
-
-    Action* action = new Action{ [&](void* message) { this->onRefreshMeshes(); } };
-    this->refreshMeshesAction = SPTR<Action>(action);
-
     this->editorScene.reset(new Scene{ "_editor_scene", "" });
 }
 
@@ -183,15 +178,10 @@ void ScenesManager::update(float elapsedTime)
 
 void ScenesManager::loadScene(const char* scenePath)
 {
-    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-    messagesManager->removeListener<RefreshMeshesMessage>(this->refreshMeshesAction.get());
-
 	std::string sceneName = FileUtils::getFileName(scenePath);
     this->scene.reset(new Scene{ sceneName, scenePath });
     SceneLoader::load(this->scene.get());
     this->scene->onSceneLoaded();
-
-    messagesManager->addListener<RefreshMeshesMessage>(this->refreshMeshesAction.get());
 }
 
 void ScenesManager::loadGuiScene(const char* scenePath)
@@ -281,9 +271,6 @@ void ScenesManager::removeDestroyedEntities()
 
 void ScenesManager::preRelease()
 {
-    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-    messagesManager->removeListener<RefreshMeshesMessage>(this->refreshMeshesAction.get());
-
     this->scene.reset();
     this->guiScene.reset();
     this->editorScene.reset();

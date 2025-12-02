@@ -6,13 +6,10 @@
 namespace sre
 {
 
-LitRendererComponent::LitRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper, bool hasLight)
+LitRendererComponent::LitRendererComponent(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper)
     : ColorRendererComponent(shaderManager, graphicsWrapper)
 {
-    this->state = UPTR<LitRendererNoLightsState>
-    (
-        hasLight ? new LitRendererLightsState{} : new LitRendererNoLightsState{}
-    );
+    this->state = UPTR<LitRendererNoLightsState>(new LitRendererLightsState{});
 }
 
 void LitRendererComponent::onSceneLoaded(uint32_t program)

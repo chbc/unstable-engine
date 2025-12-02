@@ -10,7 +10,7 @@ namespace sre
 IMPLEMENT_COMPONENT(PointLightComponent)
 
 PointLightComponent::PointLightComponent(Entity *entity) 
-    : ALightComponent(entity), range(20.0f), intensity(2.0f)
+    : ALightComponent(entity, true), range(20.0f), intensity(2.0f)
 {
 	this->addEditorProperty(new FloatEditorProperty{ "Intensity", &this->intensity });
 	this->addEditorProperty(new FloatEditorProperty{ "Range", &this->range });

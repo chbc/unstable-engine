@@ -6,6 +6,6 @@ void main()
 
     gl_Position =  projectionMatrix * viewMatrix * vec4(WorldPos, 1.0);
 	
-	// [DIRECTIONAL_SHADOWS] Shadows_setupDirectionalLights(vec4(WorldPos, 1.0));
-	// [POINT_SHADOWS] Shadows_setupPointLights(vec4(WorldPos, 1.0));
+	Shadows_setupDirectionalLights(vec4(WorldPos, 1.0));
+	Shadows_setupPointLights(vec4(WorldPos, 1.0));
 }

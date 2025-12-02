@@ -24,7 +24,7 @@ protected:
 
 public:
     Texture* createShadowTexture(uint32_t width, uint32_t height);
-    Texture* createCubemapTexture(uint32_t width, uint32_t height);
+    Texture* createShadowCubemapTexture(uint32_t width, uint32_t height);
 	Texture* createEmptyTexture(uint32_t width, uint32_t height);
 	Texture* createEmptyFloatingPointTexture(uint32_t width, uint32_t height);
     SRE_API void saveFramebuffer();

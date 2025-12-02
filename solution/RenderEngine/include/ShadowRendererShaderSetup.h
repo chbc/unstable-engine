@@ -12,6 +12,7 @@ private:
     const char *POINT_SHADOW_MAPS_FORMAT        = "pointShadowMaps[%d]";
     const char *DIRECTIONAL_SHADOW_MAPS_FORMAT  = "directionalShadowMaps[%d]";
     const char *DIRECTIONAL_LIGHT_SPACE_FORMAT  = "directionalLightSpaceMatrix[%d]";
+	const uint32_t MAX_LIGHTS = 4;
 
 protected:
     ShadowRendererShaderSetup(ShaderManager *shaderManager, AGraphicsWrapper *graphicsWrapper);
