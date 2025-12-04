@@ -9,6 +9,7 @@ out vec3 Normal;
 // Uniform variables
 uniform vec2 uvOffset;
 uniform vec2 uvTiling;
+uniform mat4 directionalLightSpaceMatrix[4];
 
 // Matrices
 uniform mat4 projectionMatrix;
@@ -16,4 +17,11 @@ uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform mat3 normalMatrix;
 
+// Varying variables
+out vec3 var_lightToFragmentVectors[4];
+out vec4 var_fragPosDirectionalLightSpace[4];
+
+// Functions
+void Shadows_setupDirectionalLights(vec4 WorldPos);
+void Shadows_setupPointLights(vec4 WorldPos);
 void main();

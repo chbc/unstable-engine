@@ -5,14 +5,14 @@ Shaders:
 Components:
   CustomMaterialComponent:
     brdfLUT:
-      TextureMapType: 7
+      TextureMapType: 6
       FilePath: engine\media\hdr\mistyMorning\misty_morning_brdf.hdr
-    skyboxMap:
-      TextureMapType: 8
-      FilePath: engine\media\hdr\mistyMorning\misty_morning_hdr.hdr
     irradianceMap:
-      TextureMapType: 9
+      TextureMapType: 7
       FilePath: engine\media\hdr\mistyMorning\misty_morning_irradiance.hdr
     prefilterMap:
-      TextureMapType: 10
+      TextureMapType: 8
       FilePath: engine\media\hdr\mistyMorning\misty_morning_preFilter.hdr
+    skyboxMap:
+      TextureMapType: 9
+      FilePath: engine\media\hdr\mistyMorning\misty_morning_hdr.hdr

@@ -1,3 +1,19 @@
+void Shadows_setupDirectionalLights(vec4 WorldPos)
+{
+	for (int i = 0; i < maxDirectionalLights; ++i)
+	{
+		var_fragPosDirectionalLightSpace[i] = directionalLightSpaceMatrix[i] * WorldPos;
+	}
+}
+
+void Shadows_setupPointLights(vec4 WorldPos)
+{
+	for (int i = 0; i < maxPointLights; ++i)
+	{
+		var_lightToFragmentVectors[i] = (WorldPos - pointLights[i].position).xyz;
+	}
+}
+
 void main()
 {
     TexCoords = vec2(uvOffset.x + (in_textureCoords.x * uvTiling.x), uvOffset.y + (in_textureCoords.y * uvTiling.y));

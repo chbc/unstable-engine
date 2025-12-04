@@ -63,11 +63,11 @@ void PBRRendererComponent::preDraw(uint32_t program)
 	this->graphicsWrapper->enableVertexPositions();
 	this->graphicsWrapper->enableTexCoords();
 
-	this->graphicsWrapper->activateDiffuseTexture(this->albedoTextureId);
-	this->graphicsWrapper->activateNormalTexture(this->normalTextureId);
-	this->graphicsWrapper->activateMetallicTexture(this->metallicTextureId);
-	this->graphicsWrapper->activateRoughnessTexture(this->roughnessTextureId);
-	this->graphicsWrapper->activateAOTexture(this->aoTextureId);
+	this->graphicsWrapper->activateTexture(this->albedoTextureId, ETextureMap::DIFFUSE);
+	this->graphicsWrapper->activateTexture(this->normalTextureId, ETextureMap::NORMAL);
+	this->graphicsWrapper->activateTexture(this->metallicTextureId, ETextureMap::METALLIC);
+	this->graphicsWrapper->activateTexture(this->roughnessTextureId, ETextureMap::ROUGHNESS);
+	this->graphicsWrapper->activateTexture(this->aoTextureId, ETextureMap::AMBIENT_OCCLUSION);
 }
 
 void PBRRendererComponent::postDraw(uint32_t program)

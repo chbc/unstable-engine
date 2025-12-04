@@ -31,9 +31,6 @@ private:
     void loadCustomContent(const std::unordered_map<EShaderComponent::Type, std::string>& shaderPaths, std::unordered_map<EShaderComponent::Type, std::string>& outContents);
 
     void loadSecondTargetColorContentImplementation(std::string& outFragmentContent);
-
-    void loadShadowsContentHeader(std::string &outVertexContent, std::string &outFragmentContent);
-    void loadShadowsContentImplementation(std::string &outVertexContent, std::string &outFragmentContent);
 	
 	void loadBrightnessSegmentationContent(std::string& outFragmentContentHeader, std::string& outFragmentContentImpl);
     void loadDepthContent(std::string& outFragmentContentHeader, std::string& outFragmentContentImpl);

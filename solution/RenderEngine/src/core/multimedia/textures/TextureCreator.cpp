@@ -12,7 +12,8 @@ namespace sre
 void TextureCreator::init()
 {
     this->graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
-    this->shadowIndex = 0;
+    this->directionalShadowIndex = 0;
+	this->pointShadowIndex = 4;
 	this->emptyIndex = 0;
 }
 
@@ -24,28 +25,31 @@ void TextureCreator::preRelease()
     }
 }
 
-Texture* TextureCreator::createShadowTexture(uint32_t width, uint32_t height)
+Texture* TextureCreator::createDirectionalShadowTexture(uint32_t width, uint32_t height)
 {
-    std::string name{ "_shadow_map_" + std::to_string(this->shadowIndex) };
+	uint32_t unit = ETextureMap::COUNT + this->directionalShadowIndex;
+    std::string name{ "_shadow_map_" + std::to_string(unit) };
 
-    uint32_t id = this->graphicsWrapper->createEmptyTexture(width, height, ETextureMap::SHADOW + this->shadowIndex);
+    uint32_t id = this->graphicsWrapper->createEmptyTexture(width, height, unit);
 
-    Texture *result = new Texture{ id, width, height, ETextureMap::SHADOW, name, this->shadowIndex };
+    Texture *result = new Texture{ id, width, height, ETextureMap::COUNT, name, unit };
     this->createdTextures.emplace_back(result);
-    this->shadowIndex++;
+    this->directionalShadowIndex++;
 
     return result;
 }
 
-Texture* TextureCreator::createShadowCubemapTexture(uint32_t width, uint32_t height)
+Texture* TextureCreator::createPointShadowTexture(uint32_t width, uint32_t height)
 {
-    std::string name{ "_cube_map_" + std::to_string(this->shadowIndex) };
-    uint32_t id = this->graphicsWrapper->setupDepthCubemap(width, height, ETextureMap::SHADOW + this->shadowIndex);
+	uint32_t unit = ETextureMap::COUNT + this->pointShadowIndex;
+    std::string name{ "_cube_map_" + std::to_string(unit) };
 
-    Texture *result = new Texture{ id, width, height, ETextureMap::SHADOW, name, this->shadowIndex };
+    uint32_t id = this->graphicsWrapper->setupDepthCubemap(width, height, unit);
+
+    Texture *result = new Texture{ id, width, height, ETextureMap::COUNT, name, unit };
     this->createdTextures.emplace_back(result);
 
-    this->shadowIndex++;
+    this->pointShadowIndex++;
     return result;
 }
 

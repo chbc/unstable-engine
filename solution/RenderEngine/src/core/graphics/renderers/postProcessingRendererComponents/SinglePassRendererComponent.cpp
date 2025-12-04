@@ -51,7 +51,7 @@ void SinglePassRendererComponent::onPostRender(uint32_t targetFBO)
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();
-	this->graphicsWrapper->activateGUITexture(this->textureId);
+	this->graphicsWrapper->activateTexture(this->textureId, ETextureMap::GUI);
 
 	this->graphicsWrapper->drawElement(this->meshData->ebo, this->meshData->indices.size());
 

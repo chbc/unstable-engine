@@ -118,11 +118,6 @@ Entity*Scene::createPointLight(const std::string& entityName, Entity* parent)
     return newEntity;
 }
 
-void Scene::onRefreshMeshes()
-{
-    AScene::onSceneLoaded();
-}
-
 void Scene::raycast(const Ray& ray, std::map<float, Entity*>& result)
 {
     std::map<float, Entity*> foundEntities;

@@ -37,16 +37,6 @@ namespace ShaderFiles
 
     const std::string SECOND_TARGET_COLOR_F = BASE_FOLDER + "secondTarget/color.frag";
 
-    const std::string SHADOWS_DIRECTIONAL_H_V       = BASE_FOLDER + "shadows/shadows_directional_h.vert";
-    const std::string SHADOWS_DIRECTIONAL_H_F       = BASE_FOLDER + "shadows/shadows_directional_h.frag";
-    const std::string SHADOWS_DIRECTIONAL_IMPL_V    = BASE_FOLDER + "shadows/shadows_directional_impl.vert";
-    const std::string SHADOWS_DIRECTIONAL_IMPL_F    = BASE_FOLDER + "shadows/shadows_directional_impl.frag";
-
-    const std::string SHADOWS_POINT_H_V     = BASE_FOLDER + "shadows/shadows_point_h.vert";
-    const std::string SHADOWS_POINT_H_F     = BASE_FOLDER + "shadows/shadows_point_h.frag";
-    const std::string SHADOWS_POINT_IMPL_V  = BASE_FOLDER + "shadows/shadows_point_impl.vert";
-    const std::string SHADOWS_POINT_IMPL_F  = BASE_FOLDER + "shadows/shadows_point_impl.frag";
-
 	// Post processing
 	const std::string POST_PROCESSING_MAIN_V		= BASE_FOLDER + "postProcessing/main.vert";
 	const std::string POST_PROCESSING_MAIN_H_F		= BASE_FOLDER + "postProcessing/main_h.frag";

@@ -74,7 +74,7 @@ void BloomRendererComponent::onPostRender(uint32_t targetFBO)
 		this->shaderManager->setVec2(this->blurProgram, "textureSize", textureSize);
 		uint32_t textureId = firstIteration ? this->brightnessTextureId : this->blurTextureIds[!horizontal];
 		
-		this->graphicsWrapper->activateGUITexture(textureId);
+		this->graphicsWrapper->activateTexture(textureId, ETextureMap::GUI);
 
 		this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 		this->graphicsWrapper->enablePostProcessingSettings();
@@ -105,8 +105,8 @@ void BloomRendererComponent::onPostRender(uint32_t targetFBO)
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();
-	this->graphicsWrapper->activateGUITexture(this->initialPassTextureId);
-	this->graphicsWrapper->activateDiffuseTexture(this->blurTextureIds[0]);
+	this->graphicsWrapper->activateTexture(this->initialPassTextureId, ETextureMap::GUI);
+	this->graphicsWrapper->activateTexture(this->blurTextureIds[0], ETextureMap::DIFFUSE);
 
 	this->graphicsWrapper->drawElement(this->meshData->ebo, this->meshData->indices.size());
 

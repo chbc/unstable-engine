@@ -26,6 +26,8 @@ struct LightsUBO
 	glm::vec4 ambientLightColor{ 0.25f, 0.25f, 0.25f, 1.0f };
     int maxDirectionalLights{ 0 };
     int maxPointLights{ 0 };
+
+	glm::vec2 _padding{ 0.0f };
 };
 
 } // namespace sre

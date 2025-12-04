@@ -14,13 +14,13 @@ Components:
     Normal:
       TextureMapType: 2
       FilePath: engine\media\textures\pbr_default_normal.png
-      FlipGreenChannel: 1
+      FlipGreenChannel: 0
     Metallic:
-      TextureMapType: 5
+      TextureMapType: 3
       FilePath: engine\media\textures\pbr_default_occlusion_roughness_metallic.png
     Roughness:
-      TextureMapType: 6
+      TextureMapType: 4
       FilePath: engine\media\textures\pbr_default_occlusion_roughness_metallic.png
     Ambient Occlusion:
-      TextureMapType: 4
+      TextureMapType: 5
       FilePath: engine\media\textures\pbr_default_occlusion_roughness_metallic.png

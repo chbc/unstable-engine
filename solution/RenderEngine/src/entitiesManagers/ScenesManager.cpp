@@ -250,12 +250,6 @@ AScene* ScenesManager::getGuiScene()
     return this->guiScene.get();
 }
 
-void ScenesManager::onRefreshMeshes()
-{
-    this->renderManager->cleanUpMeshes();
-    this->scene->onRefreshMeshes();
-}
-
 void ScenesManager::removeDestroyedEntities()
 {
     if (this->scene)

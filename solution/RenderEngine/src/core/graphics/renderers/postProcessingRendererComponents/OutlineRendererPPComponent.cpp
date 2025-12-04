@@ -58,7 +58,7 @@ void OutlineRendererPPComponent::onPostRender(uint32_t targetFBO)
 	this->shaderManager->setInt(this->outlineProgram, ShaderVariables::SCREEN_TEXTURE, 0);
 
 	this->graphicsWrapper->bindFrameBuffer(this->outlinePassFBO);
-	this->graphicsWrapper->activateGUITexture(this->outlineTextureId);
+	this->graphicsWrapper->activateTexture(this->outlineTextureId, ETextureMap::GUI);
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();
@@ -73,8 +73,8 @@ void OutlineRendererPPComponent::onPostRender(uint32_t targetFBO)
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();
-	this->graphicsWrapper->activateGUITexture(this->initialPassTextureId);
-	this->graphicsWrapper->activateDiffuseTexture(this->outlineTextureId);
+	this->graphicsWrapper->activateTexture(this->initialPassTextureId, ETextureMap::GUI);
+	this->graphicsWrapper->activateTexture(this->outlineTextureId, ETextureMap::DIFFUSE);
 
 	this->graphicsWrapper->drawElement(this->meshData->ebo, this->meshData->indices.size());
 

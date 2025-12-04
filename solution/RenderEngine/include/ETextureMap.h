@@ -11,19 +11,20 @@ namespace ETextureMap
 enum Type : std::size_t
 {
     GUI = 0,
+
     DIFFUSE,
     NORMAL,
-    SPECULAR,
-    AMBIENT_OCCLUSION,
     METALLIC,
     ROUGHNESS,
-    IBL_BRDF_LUT,
-    SKYBOX,
+    AMBIENT_OCCLUSION,
+
+    IBL_BRDF_LUT,       // 6
     IBL_IRRADIANCE,
     IBL_PREFILTER,
-    SHADOW,
+
+    SKYBOX,
     CUSTOM,
-    EMPTY
+    COUNT
 };
 
 } // namespace

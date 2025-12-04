@@ -40,13 +40,6 @@ protected:
     void enableCubemapSettings() override;
     void activateTexture(uint32_t textureId, uint32_t unit) override;
     void activateCubeMapTexture(uint32_t textureId, uint32_t unit) override;
-    void activateGUITexture(uint32_t textureId) override;
-    void activateDiffuseTexture(uint32_t textureId) override;
-    void activateNormalTexture(uint32_t textureId) override;
-    void activateSpecularTexture(uint32_t textureId) override;
-    void activateAOTexture(uint32_t textureId) override;
-    void activateMetallicTexture(uint32_t textureId) override;
-    void activateRoughnessTexture(uint32_t textureId) override;
 
     void setupBufferSubData(MeshData2D* meshData) override;
 

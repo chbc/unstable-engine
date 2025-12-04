@@ -193,62 +193,6 @@ void ShaderContentFactory::loadSecondTargetColorContentImplementation(std::strin
     this->uncommentCode(outFragmentContent, "// [SECOND_TARGET_COLOR]");
 }
 
-void ShaderContentFactory::loadShadowsContentHeader(std::string &outVertexContent, std::string &outFragmentContent)
-{
-    std::string vertexContent;
-    std::string fragmentContent;
-
-    std::string directionalVertex;
-    std::string directionalFragment;
-
-    FileUtils::loadContentFile(ShaderFiles::SHADOWS_DIRECTIONAL_H_V, directionalVertex);
-    FileUtils::loadContentFile(ShaderFiles::SHADOWS_DIRECTIONAL_H_F, directionalFragment);
-
-    vertexContent += directionalVertex;
-    fragmentContent += directionalFragment;
-
-    std::string pointVertex;
-    std::string pointFragment;
-
-    FileUtils::loadContentFile(ShaderFiles::SHADOWS_POINT_H_V, pointVertex);
-    FileUtils::loadContentFile(ShaderFiles::SHADOWS_POINT_H_F, pointFragment);
-
-    vertexContent   += pointVertex;
-    fragmentContent += pointFragment;
-
-    outVertexContent += vertexContent;
-    outFragmentContent += fragmentContent;
-}
-
-void ShaderContentFactory::loadShadowsContentImplementation(std::string &outVertexContent, std::string &outFragmentContent)
-{
-	// Directional light shadows
-    std::string vertexContent;
-    std::string fragmentContent;
-
-    std::string directionalVertex;
-    std::string directionalFragment;
-
-    FileUtils::loadContentFile(ShaderFiles::SHADOWS_DIRECTIONAL_IMPL_V, directionalVertex);
-    FileUtils::loadContentFile(ShaderFiles::SHADOWS_DIRECTIONAL_IMPL_F, directionalFragment);
-
-    vertexContent += directionalVertex;
-    fragmentContent += directionalFragment;
-
-	// Point light shadows
-    std::string pointVertex;
-    std::string pointFragment;
-
-    FileUtils::loadContentFile(ShaderFiles::SHADOWS_POINT_IMPL_V, pointVertex);
-    FileUtils::loadContentFile(ShaderFiles::SHADOWS_POINT_IMPL_F, pointFragment);
-
-    vertexContent += pointVertex;
-    fragmentContent += pointFragment;
-
-    outVertexContent = vertexContent + outVertexContent;
-    outFragmentContent = fragmentContent + outFragmentContent;
-}
-
 void ShaderContentFactory::loadBrightnessSegmentationContent(std::string& outFragmentContentHeader, std::string& outFragmentContentImpl)
 {
 	std::string fragmentContent;

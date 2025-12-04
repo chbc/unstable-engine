@@ -20,9 +20,6 @@ void ShaderContentFactory::createShaderContent
 	{
         this->loadPbrContentHeader(vertexContentHeader, fragmentContentHeader);
         this->loadPbrContentImplementation(vertexContentImpl, fragmentContentImpl);
-
-        this->loadShadowsContentHeader(vertexContentHeader, fragmentContentHeader);
-        this->loadShadowsContentImplementation(vertexContentImpl, fragmentContentImpl);
 	}
 	else
 	{

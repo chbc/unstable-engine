@@ -42,13 +42,6 @@ protected:
     virtual void enableVertexTangents() =0;
     virtual void enableVertexBitangents() =0;
 	virtual void enableCubemapSettings() = 0;
-    virtual void activateGUITexture(uint32_t textureId) =0;
-    virtual void activateDiffuseTexture(uint32_t textureId) =0;
-    virtual void activateNormalTexture(uint32_t textureId) =0;
-    virtual void activateSpecularTexture(uint32_t textureId) =0;
-    virtual void activateAOTexture(uint32_t textureId) =0;
-	virtual void activateMetallicTexture(uint32_t textureId) = 0;
-	virtual void activateRoughnessTexture(uint32_t textureId) = 0;
 
     virtual void setupBufferSubData(MeshData2D* meshData) =0;
 

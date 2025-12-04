@@ -14,7 +14,7 @@ class TextureEditorProperty : public AEditorProperty
 DECLARE_PROPERTY()
 
 protected:
-	ETextureMap::Type textureMapType{ ETextureMap::EMPTY };
+	ETextureMap::Type textureMapType{ ETextureMap::GUI };
 	Texture** texture{ nullptr };
 	uint64_t id{ 0 };
 

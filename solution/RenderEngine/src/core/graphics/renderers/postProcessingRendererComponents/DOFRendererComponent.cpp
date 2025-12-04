@@ -59,8 +59,8 @@ void DOFRendererComponent::onPostRender(uint32_t targetFBO)
 
 	this->graphicsWrapper->bindVAO(this->meshData->vao, this->meshData->vbo);
 	this->graphicsWrapper->enablePostProcessingSettings();
-	this->graphicsWrapper->activateGUITexture(this->initialPassTextureId);
-	this->graphicsWrapper->activateDiffuseTexture(this->depthTextureId);
+	this->graphicsWrapper->activateTexture(this->initialPassTextureId, ETextureMap::GUI);
+	this->graphicsWrapper->activateTexture(this->depthTextureId, ETextureMap::DIFFUSE);
 
 	this->graphicsWrapper->drawElement(this->meshData->ebo, this->meshData->indices.size());
 

@@ -33,8 +33,6 @@ private:
     Entity* createDirectionalLight(const std::string& entityName = "", Entity* parent = nullptr);
     Entity* createPointLight(const std::string& entityName = "", Entity* parent = nullptr);
 
-    void onRefreshMeshes();
-
 	void raycast(const Ray& ray, std::map<float, Entity*>& result);
 
 friend class ScenesManager;

@@ -55,7 +55,6 @@ private:
     Entity* createMeshEntity(const std::string& filePath, const char* meshName);
     AScene* getScene();
     AScene* getGuiScene();
-    void onRefreshMeshes();
     void removeDestroyedEntities();
     void preRelease() override;
 

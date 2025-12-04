@@ -90,7 +90,7 @@ void GUIRenderer::setup(ABaseGUIComponent* guiComponent)
 
     this->graphicsWrapper->bindVAO(guiComponent->meshData->vao, guiComponent->meshData->vbo);
     this->graphicsWrapper->enableGUISettings();
-    this->graphicsWrapper->activateGUITexture(guiComponent->getTextureId());
+    this->graphicsWrapper->activateTexture(guiComponent->getTextureId(), ETextureMap::GUI);
 }
 
 void GUIRenderer::removeDestroyedEntities()

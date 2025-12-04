@@ -36,11 +36,11 @@ void ALightComponent::setupShadowData(bool useCubemap)
     Texture* texture{ nullptr };
     if (useCubemap)
     {
-        texture = textureCreator->createShadowCubemapTexture(1024, 1024);
+        texture = textureCreator->createPointShadowTexture(1024, 1024);
     }
     else
     {
-        texture = textureCreator->createShadowTexture(1024, 1024);
+        texture = textureCreator->createDirectionalShadowTexture(1024, 1024);
     }
     
     uint32_t fbo = graphicsWrapper->generateDepthFrameBuffer(texture->getId(), useCubemap);

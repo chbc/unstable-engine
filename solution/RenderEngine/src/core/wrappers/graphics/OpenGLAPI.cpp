@@ -276,48 +276,6 @@ void OpenGLAPI::activateCubeMapTexture(uint32_t textureId, uint32_t unit)
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureId);
 }
 
-void OpenGLAPI::activateGUITexture(uint32_t textureId)
-{
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, textureId);
-}
-
-void OpenGLAPI::activateDiffuseTexture(uint32_t textureId)
-{
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, textureId);
-}
-
-void OpenGLAPI::activateNormalTexture(uint32_t textureId)
-{
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, textureId);
-}
-
-void OpenGLAPI::activateSpecularTexture(uint32_t textureId)
-{
-	glActiveTexture(GL_TEXTURE3);
-	glBindTexture(GL_TEXTURE_2D, textureId);
-}
-
-void OpenGLAPI::activateAOTexture(uint32_t textureId)
-{
-	glActiveTexture(GL_TEXTURE4);
-	glBindTexture(GL_TEXTURE_2D, textureId);
-}
-
-void OpenGLAPI::activateMetallicTexture(uint32_t textureId)
-{
-	glActiveTexture(GL_TEXTURE5);
-	glBindTexture(GL_TEXTURE_2D, textureId);
-}
-
-void OpenGLAPI::activateRoughnessTexture(uint32_t textureId)
-{
-	glActiveTexture(GL_TEXTURE6);
-	glBindTexture(GL_TEXTURE_2D, textureId);
-}
-
 void OpenGLAPI::setLineWidth(float width)
 {
 	glLineWidth(width);
@@ -672,8 +630,6 @@ void OpenGLAPI::DEBUG_drawTriangle()
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, indices);
-	glDisableClientState(GL_VERTEX_ARRAY);
-
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
