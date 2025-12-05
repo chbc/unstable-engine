@@ -6,14 +6,6 @@ void Shadows_setupDirectionalLights(vec4 WorldPos)
 	}
 }
 
-void Shadows_setupPointLights(vec4 WorldPos)
-{
-	for (int i = 0; i < maxPointLights; ++i)
-	{
-		var_lightToFragmentVectors[i] = (WorldPos - pointLights[i].position).xyz;
-	}
-}
-
 void main()
 {
     TexCoords = vec2(uvOffset.x + (in_textureCoords.x * uvTiling.x), uvOffset.y + (in_textureCoords.y * uvTiling.y));
@@ -23,5 +15,4 @@ void main()
     gl_Position =  projectionMatrix * viewMatrix * vec4(WorldPos, 1.0);
 	
 	Shadows_setupDirectionalLights(vec4(WorldPos, 1.0));
-	Shadows_setupPointLights(vec4(WorldPos, 1.0));
 }

@@ -11,8 +11,8 @@ layout(binding = 7) uniform samplerCube irradianceMap;
 layout(binding = 8) uniform samplerCube prefilterMap;
 
 // Shadows
-layout(binding = 9) uniform sampler2D directionalShadowMaps[4];
-layout(binding = 13) uniform samplerCube pointShadowMaps[4];
+layout(binding = 11) uniform sampler2D directionalShadowMaps[4];
+layout(binding = 15) uniform samplerCube pointShadowMaps[4];
 
 // Uniform variables
 uniform vec3 cameraPosition;
@@ -20,7 +20,6 @@ uniform float normalFlipGreenChannel;
 
 // Varying variables
 in vec4 var_fragPosDirectionalLightSpace[4];
-in vec3 var_lightToFragmentVectors[4];
 
 in vec2 TexCoords;
 in vec3 WorldPos;
@@ -32,7 +31,6 @@ const float PI = 3.14159265359;
 
 // Functions
 float Shadows_computeDirectionalLightShadow(vec3 normal, vec3 toLightDirection, int lightIndex);
-float Shadows_computePointLightShadow(int lightIndex);
 
 vec3 getNormalFromMap();
 float DistributionGGX(vec3 N, vec3 H, float roughness);

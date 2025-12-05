@@ -22,7 +22,7 @@ enum Type : std::size_t
     IBL_IRRADIANCE,
     IBL_PREFILTER,
 
-    SKYBOX,
+    SKYBOX,             // 9
     CUSTOM,
     COUNT
 };

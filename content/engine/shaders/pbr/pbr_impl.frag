@@ -41,7 +41,7 @@ float Shadows_computePointLightShadow(int lightIndex)
 {
     float result = 0.0;
 
-    vec3 toFragmentVector = var_lightToFragmentVectors[lightIndex];
+    vec3 toFragmentVector = WorldPos - pointLights[lightIndex].position.xyz;
     float currentDepth = length(toFragmentVector);
 
     float bias = 0.15;
