@@ -27,12 +27,12 @@ void TextureCreator::preRelease()
 
 Texture* TextureCreator::createDirectionalShadowTexture(uint32_t width, uint32_t height)
 {
-	uint32_t unit = ETextureMap::COUNT + this->directionalShadowIndex;
+	uint32_t unit = ETextureMap::SHADOWS + this->directionalShadowIndex;
     std::string name{ "_shadow_map_" + std::to_string(unit) };
 
     uint32_t id = this->graphicsWrapper->createEmptyTexture(width, height, unit);
 
-    Texture *result = new Texture{ id, width, height, ETextureMap::COUNT, name, unit };
+    Texture *result = new Texture{ id, width, height, ETextureMap::SHADOWS, name, this->directionalShadowIndex };
     this->createdTextures.emplace_back(result);
     this->directionalShadowIndex++;
 
@@ -41,12 +41,12 @@ Texture* TextureCreator::createDirectionalShadowTexture(uint32_t width, uint32_t
 
 Texture* TextureCreator::createPointShadowTexture(uint32_t width, uint32_t height)
 {
-	uint32_t unit = ETextureMap::COUNT + this->pointShadowIndex;
+	uint32_t unit = ETextureMap::SHADOWS + this->pointShadowIndex;
     std::string name{ "_cube_map_" + std::to_string(unit) };
 
     uint32_t id = this->graphicsWrapper->setupDepthCubemap(width, height, unit);
 
-    Texture *result = new Texture{ id, width, height, ETextureMap::COUNT, name, unit };
+    Texture *result = new Texture{ id, width, height, ETextureMap::SHADOWS, name, this->pointShadowIndex };
     this->createdTextures.emplace_back(result);
 
     this->pointShadowIndex++;

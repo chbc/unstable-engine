@@ -24,7 +24,7 @@ enum Type : std::size_t
 
     SKYBOX,             // 9
     CUSTOM,
-    COUNT
+	SHADOWS            // 11 - 14 (directional) | 15 - 18 (point)
 };
 
 } // namespace

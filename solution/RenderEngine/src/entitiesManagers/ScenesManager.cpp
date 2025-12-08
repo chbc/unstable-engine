@@ -21,14 +21,11 @@ std::string ScenesManager::getMainSceneName()
     return result;
 }
 
-Entity* ScenesManager::createEntity(std::string name, Entity* parent)
-{
-    return this->scene->createEntity(name, parent);
-}
-
 Entity* ScenesManager::createEntityFromFile(std::string filePath, Entity* parent)
 {
-    return this->scene->createEntityFromFile(filePath, parent);
+    Entity* result = this->scene->createEntityFromFile(filePath, parent);
+	this->addToRenderer(result);
+    return result;
 }
 
 Entity* ScenesManager::duplicateEntity(Entity* entity)
@@ -67,12 +64,16 @@ Entity* ScenesManager::createOrthoCamera(Entity* parent)
 
 Entity* ScenesManager::createDirectionalLight(const std::string& name, Entity* parent)
 {
-    return this->scene->createDirectionalLight(name, parent);
+	Entity* result = this->scene->createDirectionalLight(name, parent);
+    this->addToRenderer(result);
+    return result;
 }
 
 Entity* ScenesManager::createPointLight(const std::string& name, Entity* parent)
 {
-    return this->scene->createPointLight(name, parent);
+    Entity* result = this->scene->createPointLight(name, parent);
+    this->addToRenderer(result);
+    return result;
 }
 
 Entity* ScenesManager::createSkybox(const std::string& meshFilePath, const std::string& name, Entity* parent)

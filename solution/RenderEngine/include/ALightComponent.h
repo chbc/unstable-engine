@@ -16,7 +16,6 @@ private:
 
 protected:
 	ALightComponent(Entity *entity, bool useCubemap);
-    class LightManager* lightManager{ nullptr };
 	size_t propertyChangedCallbackId{ 0 };
 
 public:

@@ -47,22 +47,26 @@ void RenderManager::addEntity(Entity *entity)
         SkyboxComponent* mesh = entity->getComponent<SkyboxComponent>();
         this->addSkybox(mesh);
     }
-	else if (entity->hasComponent<MeshComponent>())
+	
+    if (entity->hasComponent<MeshComponent>())
     {
         MeshComponent *mesh = entity->getComponent<MeshComponent>();
         this->addMesh(mesh);
     }
-    else if (entity->hasComponent<GUIImageComponent>())
+    
+    if (entity->hasComponent<GUIImageComponent>())
     {
         GUIImageComponent *guiComponent = entity->getComponent<GUIImageComponent>();
         this->addGUIImageComponent(guiComponent);
     }
-    else if (entity->hasComponent<GUITextComponent>())
+    
+    if (entity->hasComponent<GUITextComponent>())
     {
         GUITextComponent *guiComponent = entity->getComponent<GUITextComponent>();
         this->addGUITextComponent(guiComponent);
     }
-    else if (entity->hasComponent<CameraComponent>())
+
+    if (entity->hasComponent<CameraComponent>())
     {
         CameraComponent* newCamera = entity->getComponent<CameraComponent>();
         if ((this->applicationCamera == nullptr) || newCamera->isApplicationCamera && newCamera->isMainCamera)
@@ -75,6 +79,8 @@ void RenderManager::addEntity(Entity *entity)
             }
         }
     }
+
+	this->tryAddLight(entity);
     
     size_t size = entity->getChildrenCount();
     for (size_t i = 0; i < size; i++)
@@ -232,6 +238,21 @@ void RenderManager::addSkybox(SkyboxComponent* mesh)
 	}
 
 	this->skyboxRenderer->addMesh(mesh);
+}
+
+void RenderManager::tryAddLight(Entity* entity)
+{
+    if (entity->hasComponent<DirectionalLightComponent>())
+    {
+		DirectionalLightComponent* lightComponent = entity->getComponent<DirectionalLightComponent>();
+		this->lightManager->addDirectionalLight(lightComponent);
+    }
+    
+    if (entity->hasComponent<PointLightComponent>())
+    {
+        PointLightComponent* lightComponent = entity->getComponent<PointLightComponent>();
+        this->lightManager->addPointLight(lightComponent);
+    }
 }
 
 void RenderManager::reloadSkyboxMaterial(ABaseMaterial* newMaterial)

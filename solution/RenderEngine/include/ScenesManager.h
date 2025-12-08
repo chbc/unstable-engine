@@ -22,7 +22,6 @@ protected:
 
 public:
     SRE_API std::string getMainSceneName();
-	SRE_API Entity* createEntity(std::string name = "", Entity* parent = nullptr);
     SRE_API Entity* createEntityFromFile(std::string filePath, Entity* parent = nullptr);
 	SRE_API Entity* duplicateEntity(Entity* entity);
     SRE_API Entity* getEntity(const std::string& name);

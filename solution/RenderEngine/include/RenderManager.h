@@ -72,6 +72,7 @@ private:
 	void addGuizmoComponent(GuizmoComponent* guizmoComponent);
 	void addDebugBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color);
     void addSkybox(SkyboxComponent* mesh);
+    void tryAddLight(Entity* entity);
 	void reloadSkyboxMaterial(ABaseMaterial* newMaterial);
     void initGUIRenderer();
     void initShadowRenderer();

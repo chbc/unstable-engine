@@ -10,16 +10,13 @@ IMPLEMENT_COMPONENT(DirectionalLightComponent)
 
 DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightComponent(entity, false)
 {
-    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
-	this->lightManager = singletonsManager->get<LightManager>();
-	this->lightManager->addDirectionalLight(this);
-
 	TransformComponent* transform = this->getTransform();
 	this->propertyChangedCallbackId = transform->addPropertyChangedCallback
 	(
 		[this]()
 		{
-			this->lightManager->updateDirectionalLightsUBO();
+			LightManager* lightManager = SingletonsManager::getInstance()->get<LightManager>();
+			lightManager->updateDirectionalLightsUBO();
 			this->setupLightSpaceMatrix();
 		}
 	);
@@ -30,7 +27,8 @@ DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightCom
 void DirectionalLightComponent::onPropertyChanged()
 {
 	AEntityComponent::onPropertyChanged();
-	this->lightManager->updateDirectionalLightsUBO();
+	LightManager* lightManager = SingletonsManager::getInstance()->get<LightManager>();
+	lightManager->updateDirectionalLightsUBO();
 }
 
 void DirectionalLightComponent::setupLightSpaceMatrix()
