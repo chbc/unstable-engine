@@ -11,6 +11,8 @@
 namespace sre
 {
 
+uint32_t Entity::EntityIndex = 0;
+
 const char* Entity::BASE_CLASS_NAME = Entity::AddType<Entity>("Entity");
 
 Entity::Entity(std::string arg_name) : name(arg_name)
@@ -42,15 +44,16 @@ AEntityComponent* Entity::addComponent(const char* className)
 
 Entity* Entity::addChild(Entity* child)
 {
-	return this->addChild(UPTR<Entity>{ child });
+	Entity* result = this->addChild(UPTR<Entity>{ child });
+	return result;
 }
 
-Entity* Entity::addChild(UPTR<Entity>& child)
+Entity* Entity::addChild(UPTR<Entity> child)
 {
 	child->parent = this;
 	const std::string& childName = child->getName();
 	this->children[childName] = std::move(child);
-	
+
 	Entity* result = this->children[childName].get();
 	this->childrenList.push_back(result);
 
@@ -105,6 +108,12 @@ Entity* Entity::getChild(const std::string& name)
 	}
 
 	return result;
+}
+
+void Entity::moveChild(const std::string& name, Entity* targetEntity)
+{
+	UPTR<Entity> result = this->moveChild(name);
+	targetEntity->addChild(std::move(result));
 }
 
 UPTR<Entity> Entity::moveChild(const std::string& name)
@@ -459,7 +468,7 @@ Entity* Entity::clone()
 	for (Entity* item : this->childrenList)
 	{
 		Entity* childEntity = item->clone();
-		result->addChild(childEntity);
+		result->addChild(UPTR<Entity>{ childEntity });
 	}
 
 	return result;
@@ -500,6 +509,18 @@ AEditorProperty* Entity::findProperty(const std::string& title)
 	return result;
 }
 
+void Entity::resolveName(std::string& entityName)
+{
+	if (entityName.empty())
+	{
+		entityName = GenerateName();
+	}
+	else if (this->children.count(entityName) > 0)
+	{
+		entityName = Entity::GenerateName(entityName);
+	}
+}
+
 Entity* Entity::Create(std::string arg_name, const std::string& className)
 {
 	Entity* result{ nullptr };
@@ -517,6 +538,17 @@ Entity* Entity::Create(std::string arg_name, const std::string& className)
 	{
 		result = new Entity{ arg_name };
 	}
+
+	return result;
+}
+
+std::string Entity::GenerateName(const std::string& duplicateName)
+{
+	std::stringstream stream;
+	std::string baseName = duplicateName.empty() ? "entity" : duplicateName;
+	stream << baseName << "_" << EntityIndex;
+	std::string result = stream.str();
+	EntityIndex++;
 
 	return result;
 }

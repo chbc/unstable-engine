@@ -9,8 +9,6 @@
 
 namespace sre
 {
-uint32_t AScene::EntityIndex = 0;
-
 AScene::AScene(std::string arg_name, std::string arg_filePath) 
     : name(arg_name), label(arg_name), filePath(arg_filePath)
 {
@@ -42,18 +40,18 @@ Entity* AScene::getEntity(const std::string& entityName)
 
 Entity* AScene::createEntity(std::string name, Entity* parent, const std::string& className)
 {
-    Entity* result = nullptr;
-    this->resolveName(name);
+    this->resolveName(name, parent);
 
-    result = Entity::Create(name, className);
+    Entity* result = Entity::Create(name, className);
 
     if (parent != nullptr)
     {
-        parent->addChild(result);
+        result = parent->addChild(result);
     }
     else
     {
         this->entities[name] = UPTR<Entity>{ result };
+		result = this->entities[name].get();
     }
 
     return result;
@@ -63,7 +61,7 @@ Entity* AScene::createEntityFromFile(std::string filePath, Entity* parent)
 {
     Entity* result = nullptr;
 	std::string name = FileUtils::getFileName(filePath);
-    this->resolveName(name);
+    this->resolveName(name, parent);
 
     AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
     result = assetsManager->loadEntity(this, filePath.c_str(), name);
@@ -86,7 +84,7 @@ Entity* AScene::duplicateEntity(Entity* entity)
     if (entity != nullptr)
     {
         std::string name = entity->name;
-        this->resolveName(name);
+        this->resolveName(name, nullptr);
         result = entity->clone();
         result->name = name;
         this->entities[name] = UPTR<Entity>{ result };
@@ -118,7 +116,7 @@ void AScene::moveEntityToRoot(Entity* entity)
     {
         UPTR<Entity> movedEntity = parent->moveChild(entity->getName());
 		std::string entityName = movedEntity->getName();
-		this->resolveName(entityName);
+		this->resolveName(entityName, nullptr);
 		movedEntity->name = entityName;
         movedEntity->getTransform()->updateLocalValues();
         this->entities[entityName] = std::move(movedEntity);
@@ -160,27 +158,23 @@ void AScene::update(float elapsedTime)
     }
 }
 
-void AScene::resolveName(std::string& entityName)
+void AScene::resolveName(std::string& entityName, Entity* parent)
 {
-    if (entityName.empty())
+    if (parent != nullptr)
     {
-        entityName = this->generateEntityId();
-    }
-    else if (this->entities.count(entityName) > 0)
+        parent->resolveName(entityName);
+	}
+    else
     {
-        entityName = this->generateEntityId(entityName);
+        if (entityName.empty())
+        {
+            entityName = Entity::GenerateName();
+        }
+        else if (this->entities.count(entityName) > 0)
+        {
+            entityName = Entity::GenerateName(entityName);
+        }
     }
-}
-
-std::string AScene::generateEntityId(const std::string& duplicateName)
-{
-    std::stringstream stream;
-    std::string baseName = duplicateName.empty() ? "entity" : duplicateName;
-    stream << baseName << "_" << EntityIndex;
-    std::string result = stream.str();
-    EntityIndex++;
-
-    return result;
 }
 
 void AScene::onEntityChanged(void* data)
@@ -195,7 +189,7 @@ void AScene::onSceneSaved()
 
 void AScene::renameEntity(Entity* entity, std::string& newName)
 {
-    this->resolveName(newName);
+    this->resolveName(newName, nullptr);
 
     std::string oldName = entity->getName();
 	entity->rename(newName);

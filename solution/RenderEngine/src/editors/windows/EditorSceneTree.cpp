@@ -194,8 +194,7 @@ void EditorSceneTree::handleDragAndDrop(AScene* scene, Entity* entity)
 				Entity* parent = sourceEntity->getParent();
 				if (parent)
 				{
-					UPTR<Entity> movedEntity = parent->moveChild(sourceEntity->getName());
-					entity->addChild(std::move(movedEntity));
+					parent->moveChild(sourceEntity->getName(), entity);
 				}
 				else
 				{

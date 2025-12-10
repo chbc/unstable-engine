@@ -11,7 +11,6 @@ class AScene
 {
 protected:
     std::unordered_map<std::string, UPTR<Entity>> entities;
-    static uint32_t EntityIndex;
 
 private:
     std::string name;
@@ -33,14 +32,12 @@ protected:
 	void moveEntityToChild(const std::string& entityName, Entity* targetParent);
 	void moveEntityToRoot(Entity* entity);
     void removeDestroyedEntities();
-    void removeDestroyedEntities(std::unordered_map<std::string, UPTR<Entity>>& entitiesMap);
     void onSceneLoaded();
 
 private:
     void initEntities();
     void update(float elapsedTime);
-    void resolveName(std::string& entityName);
-    std::string generateEntityId(const std::string& duplicateName = "");
+    void resolveName(std::string& entityName, Entity* parent);
     void onEntityChanged(void* data);
     void onSceneSaved();
 	void renameEntity(Entity* entity, std::string& newName);

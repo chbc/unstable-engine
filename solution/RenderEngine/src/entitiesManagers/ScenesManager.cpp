@@ -21,6 +21,11 @@ std::string ScenesManager::getMainSceneName()
     return result;
 }
 
+Entity* ScenesManager::createEntity(std::string name, Entity* parent)
+{
+    return this->scene->createEntity(name, parent);
+}
+
 Entity* ScenesManager::createEntityFromFile(std::string filePath, Entity* parent)
 {
     Entity* result = this->scene->createEntityFromFile(filePath, parent);

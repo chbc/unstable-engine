@@ -48,6 +48,7 @@ private:
     bool componentsStored{ true };
     bool childrenStored{ true };
 	bool dontShowInEditorSceneTree{ false };
+    static uint32_t EntityIndex;
 
 protected:
 	TransformComponent* transform;
@@ -64,12 +65,13 @@ public:
 
     AEntityComponent* addComponent(const char* className);
 
-	SRE_API Entity* addChild(Entity *child);
-    SRE_API Entity* addChild(UPTR<Entity>& child);
+    SRE_API Entity* addChild(Entity* child);
+	SRE_API Entity* addChild(UPTR<Entity> child);
 	SRE_API void removeChild(Entity* child);
 	SRE_API inline size_t getChildrenCount() { return this->children.size(); }
 	SRE_API Entity *getChild(size_t index);
 	SRE_API Entity* getChild(const std::string& name);
+    SRE_API void moveChild(const std::string& name, Entity* targetEntity);
     SRE_API UPTR<Entity> moveChild(const std::string& name);
 	SRE_API inline Entity *getParent() { return this->parent; }
 
@@ -127,7 +129,9 @@ private:
 	void rename(const std::string& newName);
 	void removeDestroyedChildren();
     AEditorProperty* findProperty(const std::string& title);
+	void resolveName(std::string& entityName);
     static Entity* Create(std::string arg_name, const std::string& className);
+    static std::string GenerateName(const std::string& duplicateName = "");
     template <typename T> uint16_t getComponentId();
 
     friend class AScene;
