@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "AAsset.h"
 #include "AEntityComponent.h"
 #include "TransformComponent.h"
 #include "memory_aliases.h"
@@ -26,7 +27,7 @@ namespace sre
 #define IMPLEMENT_ENTITY(EntityClass) \
     const char* EntityClass::CLASS_NAME = Entity::AddType<EntityClass>(#EntityClass);
 
-class Entity
+class Entity : public AAsset
 {
 
 private:
@@ -40,7 +41,6 @@ private:
     bool alive{ true };
     bool enabled{ true };
     std::string name;
-    std::string filePath;
     bool propertiesSaved{ true };
     bool componentsSaved{ true };
     bool childrenSaved{ true };

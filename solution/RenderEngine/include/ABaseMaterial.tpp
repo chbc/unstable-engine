@@ -1,3 +1,5 @@
+// XXX REMOVER?
+
 #include <cassert>
 
 namespace sre

@@ -6,7 +6,7 @@
 namespace sre
 {
 
-ColorMeshData* GuizmoLoader::load(const std::string& type)
+ColorMeshData* GuizmoLoader::load(EGuizmoMesh type)
 {
 	return PrimitiveMeshFactory().createBoxLines(glm::vec4{ 1.0 });
 }

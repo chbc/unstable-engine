@@ -1,29 +1,24 @@
 #pragma once
 
+#include "AAsset.h"
 #include "MeshData.h"
 #include "memory_aliases.h"
 #include "core_defines.h"
 
-#include <string>
 #include <unordered_map>
 
 namespace sre
 {
 
-struct ABaseModel
+class ABaseModel : public AAsset
 {
-private:
-	std::string filePath;
-
 public:
 	ABaseModel(const char* arg_filePath);
-	const std::string& getFilePath();
+	virtual ~ABaseModel() = default;
 	virtual bool isEmpty() = 0;
-
-friend class AssetsManager;
 };
 
-struct Model : ABaseModel
+class Model : public ABaseModel
 {
 public:
 	// mesh name, mesh data
@@ -36,7 +31,7 @@ public:
 	bool isEmpty() override;
 };
 
-struct Model2D : ABaseModel
+class Model2D : public ABaseModel
 {
 public:
 	std::unordered_map<std::string, UPTR<MeshData2D>> meshes;

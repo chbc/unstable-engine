@@ -1,5 +1,4 @@
 #include "Entity.h"
-#include <sstream>
 #include "MessagesManager.h"
 #include "EntityDestroyedMessage.h"
 #include "MeshComponent.h"
@@ -8,6 +7,8 @@
 #include "BoolEditorProperty.h"
 #include "CollectionsUtils.h"
 
+#include <sstream>
+
 namespace sre
 {
 
@@ -15,7 +16,7 @@ uint32_t Entity::EntityIndex = 0;
 
 const char* Entity::BASE_CLASS_NAME = Entity::AddType<Entity>("Entity");
 
-Entity::Entity(std::string arg_name) : name(arg_name)
+Entity::Entity(std::string arg_name) : AAsset(""), name(arg_name)
 {
 	this->transform = this->addComponent<TransformComponent>();
 	this->addEditorProperty(new BoolEditorProperty{ arg_name.c_str(), &this->enabled});

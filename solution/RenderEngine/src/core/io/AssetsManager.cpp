@@ -1,10 +1,10 @@
 #include "AssetsManager.h"
+#include "EntityLoader.h"
 #include "MeshLoader.h"
 #include "MaterialLoader.h"
-#include "EntityLoader.h"
 #include "TextureLoader.h"
 #include "GuizmoLoader.h"
-#include "SingletonsManager.h"
+#include "Entity.h"
 #include "ABaseMaterial.h"
 #include "FileUtils.h"
 
@@ -14,29 +14,42 @@ namespace sre
 Entity* AssetsManager::loadEntity(AScene* scene, const char* filePath, std::string name)
 {
 	std::string relativePath = FileUtils::getContentRelativePath(filePath);
-	Entity* prototype = this->loadAsset<EntitiesMapType, EntityLoader, Entity>(this->entitiesMap, relativePath, name, scene);
-	Entity* result = prototype->clone();
+
+	const auto& loadFunction = [&]()
+	{
+		return EntityLoader().load(relativePath.c_str(), name, scene);
+	};
+	
+	AAsset* prototype = this->entitiesCollection.loadAsset(relativePath, loadFunction);
+	Entity* prototypeEntity = static_cast<Entity*>(prototype);
+	Entity* result = prototypeEntity->clone();
 	result->name = name;
 
 	return result;
 }
 
-void AssetsManager::releaseEntity(Entity* entity)
-{
-	this->releaseAsset(this->entitiesMap, entity);
-}
-
 Model* AssetsManager::loadModel(const std::string& filePath)
 {
 	std::string relativePath = FileUtils::getContentRelativePath(filePath);
-	Model* result = this->loadAsset<ModelsMapType, MeshLoader, Model>(this->modelsMap, relativePath);
+	const auto& loadFunction = [&]()
+	{
+		return MeshLoader().load(relativePath.c_str());
+	};
+
+	Model* result = static_cast<Model*>(this->modelsCollection.loadAsset(relativePath, loadFunction));
+
+	size_t meshCount = result->getMeshCount();
+	if (meshCount > 1)
+	{
+		this->modelsCollection.increaseReferences(relativePath, meshCount - 1);
+	}
+
 	return result;
 }
 
 MeshData* AssetsManager::loadMesh(const char* filePath, const char* meshName)
 {
-	std::string relativePath = FileUtils::getContentRelativePath(filePath);
-	Model* model = this->loadAsset<ModelsMapType, MeshLoader, Model>(this->modelsMap, relativePath);
+	Model* model = this->loadModel(filePath);
 	MeshData* result = model->getMesh(meshName);
 	return result;
 }
@@ -44,123 +57,162 @@ MeshData* AssetsManager::loadMesh(const char* filePath, const char* meshName)
 MeshData2D* AssetsManager::loadMesh2D()
 {
 	const char* GUI_PLANE_PATH = "../content/engine/media/GUIPlane.mesh";
-	Model2D* result = this->loadAsset<Models2DMapType, GUIMeshLoader, Model2D>(this->models2DMap, GUI_PLANE_PATH);
+	const auto& loadFunction = [&]()
+	{
+		return GUIMeshLoader().load(GUI_PLANE_PATH);
+	};
+
+	Model2D* result = static_cast<Model2D*>(this->models2DCollection.loadAsset(GUI_PLANE_PATH, loadFunction));
 	return result->getMesh("Plane");
 }
 
-void AssetsManager::releaseModel(const char* filePath)
-{
-	std::function<void(Model*)> releaseCallback = [&](Model* item) { MeshLoader().release(item); };
-	this->releaseAsset(this->modelsMap, filePath, releaseCallback);
-}
-
-void AssetsManager::releaseModel2D(Model2D* model)
-{
-	std::function<void(Model2D*)> releaseCallback = [&](Model2D* item) { GUIMeshLoader().release(item); };
-	this->releaseAsset(this->models2DMap, model, releaseCallback);
-}
-
-ABaseMaterial* AssetsManager::loadMaterial(const std::string& filePath)
+ABaseMaterial* AssetsManager::loadMaterial(const std::string& filePath, size_t referencesCount)
 {
 	std::string relativePath = FileUtils::getContentRelativePath(filePath);
-	ABaseMaterial* result = this->loadAsset<MaterialsMapType, MaterialLoader, ABaseMaterial>(this->materialsMap, relativePath);
-	return result;
-}
+	const auto& loadFunction = [&]()
+	{
+		return MaterialLoader().load(relativePath.c_str());
+	};
 
-void AssetsManager::releaseMaterial(ABaseMaterial* material)
-{
-	this->releaseAsset(this->materialsMap, material);
+	ABaseMaterial* result = static_cast<ABaseMaterial*>(this->materialsCollection.loadAsset(relativePath, loadFunction));
+	if (referencesCount > 1)
+	{
+		this->materialsCollection.increaseReferences(relativePath, referencesCount - 1);
+	}
+
+	return result;
 }
 
 Texture* AssetsManager::loadTexture(const char* filePath, ETextureMap::Type mapType)
 {
 	std::string relativePath = FileUtils::getContentRelativePath(filePath);
-	Texture* result = this->loadAsset<TexturesMapType, TextureLoader, Texture>(this->texturesMap, relativePath, mapType);
-	return result;
-}
+	const auto& loadFunction = [&]()
+	{
+		return TextureLoader().load(filePath, mapType);
+	};
 
-void AssetsManager::releaseTexture(Texture* texture)
-{
-	std::function<void(Texture*)> releaseCallback = [&](Texture* item) { TextureLoader().release(item); };
-	this->releaseAsset(this->texturesMap, texture, releaseCallback);
+	Texture* result = static_cast<Texture*>(this->texturesCollection.loadAsset(relativePath, loadFunction));
+	return result;
 }
 
 Texture* AssetsManager::loadIcon(const char* filePath)
 {
 	std::string relativePath = FileUtils::getContentRelativePath(filePath);
-	Texture* result = this->loadAsset<IconsMapType, TextureLoader, Texture>(this->iconsMap, relativePath, ETextureMap::GUI);
-	return result;
-}
+	const auto& loadFunction = [&]()
+	{
+		return TextureLoader().load(filePath, ETextureMap::GUI);
+	};
 
-void AssetsManager::releaseIcon(Texture* texture)
-{
-	std::function<void(Texture*)> releaseCallback = [&](Texture* item) { TextureLoader().release(item); };
-	this->releaseAsset(this->iconsMap, texture, releaseCallback);
+	Texture* result = static_cast<Texture*>(this->iconsCollection.loadAsset(relativePath, loadFunction));
+	return result;
 }
 
 ColorMeshData* AssetsManager::loadGuizmo(EGuizmoMesh type)
 {
-	std::string guizmoPath;
-	switch (type)
+	ColorMeshData* result{ nullptr };
+
+	if (this->guizmosCollection.count(type) > 0)
 	{
-		case EGuizmoMesh::Box:
-			guizmoPath = "BOX";
-			break;
-		case EGuizmoMesh::Sphere:
-			guizmoPath = "SPHERE";
-			break;
-		case EGuizmoMesh::SunRays:
-			guizmoPath = "SUN_RAYS";
-			break;
-		default: break;
+		result = this->guizmosCollection[type].get();
+	}
+	else
+	{
+		result = GuizmoLoader().load(type);
+		this->guizmosCollection[type] = UPTR<ColorMeshData>{ result };
 	}
 
-	ColorMeshData* result = this->loadAsset<GuizmosMapType, GuizmoLoader, ColorMeshData>(this->guizmosMap, guizmoPath.c_str());
 	return result;
+}
+
+void AssetsManager::releaseEntity(Entity* entity)
+{
+	this->entitiesCollection.releaseAsset(entity->getFilePath());
+}
+
+void AssetsManager::releaseModel(const char* filePath)
+{
+	const auto& releaseCallback = [&](AAsset* item)
+	{
+		MeshLoader().release(static_cast<Model*>(item));
+	};
+	this->modelsCollection.releaseAsset(filePath, releaseCallback);
+}
+
+void AssetsManager::releaseModel2D(Model2D* model)
+{
+	const auto& releaseCallback = [&](AAsset* item)
+	{
+		GUIMeshLoader().release(static_cast<Model2D*>(item));
+	};
+	this->models2DCollection.releaseAsset(model->getFilePath(), releaseCallback);
+}
+
+void AssetsManager::releaseMaterial(ABaseMaterial* material)
+{
+	this->materialsCollection.releaseAsset(material->getFilePath());
+}
+
+void AssetsManager::releaseTexture(Texture* texture)
+{
+	const auto& releaseCallback = [&](AAsset* item)
+	{
+		TextureLoader().release(static_cast<Texture*>(item));
+	};
+	this->texturesCollection.releaseAsset(texture->getFilePath(), releaseCallback);
+}
+
+void AssetsManager::releaseIcon(Texture* texture)
+{
+	const auto& releaseCallback = [&](AAsset* item)
+	{
+		TextureLoader().release(static_cast<Texture*>(item));
+	};
+	this->iconsCollection.releaseAsset(texture->getFilePath(), releaseCallback);
 }
 
 void AssetsManager::preRelease()
 {
 	// Entities
-	this->entitiesMap.clear();
+	this->entitiesCollection.clear();
 
 	// Models
-	for (auto& it = this->modelsMap.begin(); it != this->modelsMap.end();)
+	this->modelsCollection.clear([&](AAsset* asset)
 	{
-		MeshLoader().release((*it).second.second.get());
-		it = this->modelsMap.erase(it);
-	}
+		Model* modelAsset = static_cast<Model*>(asset);
+		MeshLoader().release(modelAsset);
+	});
 
 	// Models2D
-	for (auto& it = this->models2DMap.begin(); it != this->models2DMap.end();)
+	this->models2DCollection.clear([&](AAsset* asset)
 	{
-		GUIMeshLoader().release((*it).second.second.get());
-		it = this->models2DMap.erase(it);
-	}
+		Model2D* model2DAsset = static_cast<Model2D*>(asset);
+		GUIMeshLoader().release(model2DAsset);
+	});
 
 	// Materials
-	this->materialsMap.clear();
+	this->materialsCollection.clear();
 
 	// Textures
-	for (auto& it = this->texturesMap.begin(); it != this->texturesMap.end();)
+	this->texturesCollection.clear([&](AAsset* asset)
 	{
-		TextureLoader().release((*it).second.second.get());
-		it = this->texturesMap.erase(it);
-	}
+		Texture* textureAsset = static_cast<Texture*>(asset);
+		TextureLoader().release(textureAsset);
+	});
 
 	// Icons
-	for (auto& it = this->iconsMap.begin(); it != this->iconsMap.end();)
+	this->iconsCollection.clear([&](AAsset* asset)
 	{
-		TextureLoader().release((*it).second.second.get());
-		it = this->iconsMap.erase(it);
-	}
+		Texture* iconAsset = static_cast<Texture*>(asset);
+		TextureLoader().release(iconAsset);
+	});
 
 	// Guizmos
-	for (auto& it = this->guizmosMap.begin(); it != this->guizmosMap.end();)
+	for (const auto& it : this->guizmosCollection)
 	{
-		GuizmoLoader().release((*it).second.second.get());
-		it = this->guizmosMap.erase(it);
+		GuizmoLoader().release(it.second.get());
 	}
+
+	this->guizmosCollection.clear();
 }
 
 } // namespace

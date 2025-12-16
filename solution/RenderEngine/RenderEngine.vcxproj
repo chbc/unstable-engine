@@ -380,6 +380,8 @@
     <ClCompile Include="src\core\graphics\renderers\shadersSetup\IBLRendererShaderSetup.cpp" />
     <ClCompile Include="src\core\graphics\renderers\SkyboxRenderer.cpp" />
     <ClCompile Include="src\core\graphics\shaders\EShaderComponent.cpp" />
+    <ClCompile Include="src\core\io\assetsCollection\AAsset.cpp" />
+    <ClCompile Include="src\core\io\assetsCollection\AssetsCollection.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\GuizmoLoader.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\MaterialLoader.cpp" />
@@ -592,6 +594,8 @@
     <ClInclude Include="engine\core\wrappers\multimedia\SDLAPI.h" />
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
+    <ClInclude Include="include\AAsset.h" />
+    <ClInclude Include="include\AssetsCollection.h" />
     <ClInclude Include="include\ABaseGUIComponent.h" />
     <ClInclude Include="include\ABaseMaterial.h" />
     <ClInclude Include="include\ABaseRenderer.h" />

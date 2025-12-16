@@ -6,6 +6,7 @@
 #include "TransformComponent.h"
 #include "AssetsManager.h"
 #include "SingletonsManager.h"
+#include "Entity.h"
 
 namespace sre
 {

@@ -1,15 +1,15 @@
 #pragma once
 
+#include "AAsset.h"
 #include "ETextureMap.h"
 #include "core_defines.h"
 
 #include <stdint.h>
-#include <string>
 
 namespace sre
 {
 
-class SRE_API Texture
+class SRE_API Texture : public AAsset
 {
 private:
 	uint32_t id{ 0 };
@@ -17,7 +17,6 @@ private:
 	uint32_t height{ 0 };
 	ETextureMap::Type mapType{ ETextureMap::GUI };
 	uint32_t unit{ 0 };
-	std::string filePath;
 	bool flipGreenChannel{ false };
 
 public:
@@ -28,7 +27,6 @@ public:
 	uint32_t getHeight();
 	ETextureMap::Type getMapType();
     uint32_t getUnit();
-	const std::string &getFilePath();
 	bool getFlipGreenChannel() const;
 	void setFlipGreenChannel(bool newValue);
 

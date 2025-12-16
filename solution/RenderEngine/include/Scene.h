@@ -7,7 +7,7 @@
 namespace sre
 {
 
-struct Model;
+class Model;
 class ABaseMaterial;
 class DirectionalLightComponent;
 class PointLightComponent;

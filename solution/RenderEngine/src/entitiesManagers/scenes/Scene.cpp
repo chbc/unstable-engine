@@ -21,7 +21,7 @@ Entity* Scene::createMeshEntity(const std::string& filePath, const char* meshNam
 {
     AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
     Model* model = assetsManager->loadModel(filePath);
-	ABaseMaterial* material = assetsManager->loadMaterial(this->DEFAULT_MATERIAL_PATH);
+	ABaseMaterial* material = assetsManager->loadMaterial(this->DEFAULT_MATERIAL_PATH, model->getMeshCount());
 
     Entity* entity = this->createMeshEntity(model, material, meshName, nullptr);
     return entity;
@@ -30,7 +30,7 @@ Entity* Scene::createMeshEntity(const std::string& filePath, const char* meshNam
 Entity* Scene::createMeshEntity(Model* model, const char* meshName, Entity* parent)
 {
     AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-    ABaseMaterial* material = assetsManager->loadMaterial(this->DEFAULT_MATERIAL_PATH);
+    ABaseMaterial* material = assetsManager->loadMaterial(this->DEFAULT_MATERIAL_PATH, model->getMeshCount());
 	
     Entity* result = this->createMeshEntity(model, material, meshName, parent);
     return result;

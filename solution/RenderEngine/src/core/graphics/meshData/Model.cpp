@@ -4,19 +4,11 @@
 namespace sre
 {
 
-ABaseModel::ABaseModel(const char* arg_filePath)
-{
-	this->filePath = FileUtils::getContentRelativePath(arg_filePath);
-}
-
-const std::string& ABaseModel::getFilePath()
-{
-	return this->filePath;
-}
+ABaseModel::ABaseModel(const char* arg_filePath) : AAsset(FileUtils::getContentRelativePath(arg_filePath))
+{ }
 
 Model::Model(const char* arg_filePath) : ABaseModel(arg_filePath)
-{
-}
+{ }
 
 MeshData* Model::getMesh(const char* meshName)
 {

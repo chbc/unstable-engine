@@ -2,15 +2,14 @@
 #include "FileUtils.h"
 #include "StringEditorProperty.h"
 #include "AMaterialComponent.h"
-#include <cassert>
+#include "AAsset.h"
 
 namespace sre
 {
 
 ABaseMaterial::ABaseMaterial(const std::string& arg_filePath, EMaterialType arg_type)
-    : type(arg_type)
+    : AAsset(FileUtils::getContentRelativePath(arg_filePath)), type(arg_type)
 {
-	this->filePath = FileUtils::getContentRelativePath(arg_filePath);
     std::string typeString = (this->type == EMaterialType::STANDARD) ? "Standard" : "Custom";
     
     this->addEditorProperty(new StringEditorProperty{ "Material Type", typeString });
@@ -33,11 +32,6 @@ AMaterialComponent* ABaseMaterial::addComponent(const char* className)
 bool ABaseMaterial::isStandard()
 {
     return (this->type == EMaterialType::STANDARD);
-}
-
-const std::string& ABaseMaterial::getFilePath() const
-{
-	return this->filePath;
 }
 
 void ABaseMaterial::addEditorProperty(AEditorProperty* editorProperty)
