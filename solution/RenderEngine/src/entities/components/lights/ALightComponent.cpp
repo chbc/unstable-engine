@@ -13,8 +13,13 @@ ALightComponent::ALightComponent(Entity *entity, bool useCubemap)
     shadowData(UPTR<ShadowData>{nullptr})
 {
     this->addEditorProperty(new ColorEditorProperty{ "Color", this->color });
+}
 
-    this->setupShadowData(useCubemap);
+ALightComponent::~ALightComponent()
+{
+    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+    TextureCreator* textureCreator = singletonsManager->get<TextureCreator>();
+    textureCreator->deleteTexture(this->shadowData->textureId);
 }
 
 void ALightComponent::setColor(const glm::vec3 &color)
@@ -27,24 +32,9 @@ glm::vec3 ALightComponent::getColor()
     return this->color;
 }
 
-void ALightComponent::setupShadowData(bool useCubemap)
+void ALightComponent::updateShadowTextureUnit(uint32_t unit)
 {
-    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
-    TextureCreator* textureCreator = singletonsManager->get<TextureCreator>();
-	AGraphicsWrapper* graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
-
-    Texture* texture{ nullptr };
-    if (useCubemap)
-    {
-        texture = textureCreator->createPointShadowTexture(1024, 1024);
-    }
-    else
-    {
-        texture = textureCreator->createDirectionalShadowTexture(1024, 1024);
-    }
-    
-    uint32_t fbo = graphicsWrapper->generateDepthFrameBuffer(texture->getId(), useCubemap);
-	this->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
+	this->shadowData->textureUnit = unit;
 }
 
 } // namespace

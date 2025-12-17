@@ -16,4 +16,3 @@ Components:
     skyboxMap:
       TextureMapType: 9
       FilePath: engine\media\hdr\newportLoft\newport_loft_hdr.hdr
-	  

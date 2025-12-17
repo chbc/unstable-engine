@@ -56,7 +56,7 @@ void ShadowRenderer::setupPointLightShader()
 
 void ShadowRenderer::render()
 {
-    if (!this->meshComponents.empty())
+    if (!this->meshComponents.empty() && this->lightManager->hasAnyLight())
     {
         this->graphicsWrapper->clearColorAndDepthBuffer();
 

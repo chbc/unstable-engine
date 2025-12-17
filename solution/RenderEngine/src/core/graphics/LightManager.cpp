@@ -6,32 +6,36 @@
 #include "AssetsManager.h"
 #include "Texture.h"
 #include "MessagesManager.h"
+#include "TextureCreator.h"
 
 namespace sre
 {
-
-bool LightManager::hasAnyShadowCaster()
-{
-    return
-    (
-        (!this->directionalLights.empty() && this->directionalLights[0]->hasShadowData()) ||
-        (!this->pointLights.empty() && this->pointLights[0]->hasShadowData())
-    );
-}
 
 void LightManager::init()
 {
 	this->graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
 }
 
+size_t LightManager::getDirectionalLightsCount() const
+{
+	return this->directionalLights.size();
+}
+
+size_t LightManager::getPointLightsCount() const
+{
+    return this->pointLights.size();
+}
+
 void LightManager::addDirectionalLight(DirectionalLightComponent* item)
 {
+	this->setupShadowData(item, false);
     this->directionalLights.push_back(item);
 	this->updateDirectionalLightsUBO();
 }
 
 void LightManager::addPointLight(PointLightComponent* item)
 {
+	this->setupShadowData(item, true);
     this->pointLights.push_back(item);
 	this->updatePointLightsUBO();
 }
@@ -46,6 +50,8 @@ void LightManager::updateDirectionalLightsUBO()
         DirectionalLightComponent* light = this->directionalLights[i];
         this->lightsUBO.directionalLights[i].direction = glm::vec4{ light->getTransform()->getForward(), 0.0f };
         this->lightsUBO.directionalLights[i].color = glm::vec4{ light->getColor(), 1.0f };
+
+		light->updateShadowTextureUnit(ETextureMap::SHADOWS + i);
     }
 
     this->updateUniformBuffer();
@@ -63,9 +69,31 @@ void LightManager::updatePointLightsUBO()
         this->lightsUBO.pointLights[i].color = glm::vec4{ light->getColor(), 1.0f };
         this->lightsUBO.pointLights[i].rangeAndIntensity.x = light->getRange();
         this->lightsUBO.pointLights[i].rangeAndIntensity.y = light->getIntensity();
+
+		light->updateShadowTextureUnit(ETextureMap::SHADOWS + MAX_GROUP_LIGHTS + i);
     }
 
     this->updateUniformBuffer();
+}
+
+void LightManager::setupShadowData(ALightComponent* lightComponent, bool useCubemap)
+{
+    SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+    TextureCreator* textureCreator = singletonsManager->get<TextureCreator>();
+    AGraphicsWrapper* graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
+
+    Texture* texture{ nullptr };
+	uint32_t fbo{ 0 };
+    if (useCubemap)
+    {
+        texture = textureCreator->createPointShadowTexture(1024, 1024, fbo);
+    }
+    else
+    {
+        texture = textureCreator->createDirectionalShadowTexture(1024, 1024, fbo);
+    }
+
+    lightComponent->shadowData = UPTR<ShadowData>(new ShadowData{ fbo, texture->getId(), texture->getUnit() });
 }
 
 void LightManager::loadIBL(std::unordered_map<ETextureMap::Type, Texture*>& texturesMap)
