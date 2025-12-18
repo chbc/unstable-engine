@@ -10,6 +10,9 @@ namespace sre
 void FileBrowserPathButtons::onInit(EditorsController* arg_controller)
 {
 	this->controller = arg_controller;
+	this->gameButtons.clear();
+	this->engineButtons.clear();
+
 	this->gameButtons.push_back({ "Game", FileUtils::getContentAbsolutePath("game") });
 	this->engineButtons.push_back({ "Engine", FileUtils::getContentAbsolutePath("engine") });
 
