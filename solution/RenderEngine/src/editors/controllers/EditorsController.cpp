@@ -247,7 +247,10 @@ void EditorsController::duplicateSelectedEntity()
 {
 	if (this->selectedEntity)
 	{
-		Entity* newEntity = this->scenesManager->duplicateEntity(this->selectedEntity);
+		Entity* sourceEntity = this->selectedEntity;
+		this->setSelectedEntity(nullptr);
+
+		Entity* newEntity = this->scenesManager->duplicateEntity(sourceEntity);
 		this->setSelectedEntity(newEntity);
 	}
 }
