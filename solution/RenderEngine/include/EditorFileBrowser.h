@@ -7,6 +7,7 @@
 #include "ExternalFileDropHandler.h"
 #include "FileBrowserContextMenu.h"
 #include "InputTextHandler.h"
+#include "FileBrowserPathButtons.h"
 
 #include <vector>
 #include <functional>
@@ -26,10 +27,9 @@ private:
 	SPTR<Action> refreshIconsAction;
 	SPTR<Action> startRenamingFileAction;
 	EditorsController* controller{ nullptr };
-	std::string gameContentFolder;
-	std::string engineContentFolder;
 	FileIcon* selectedItem{ nullptr };
 	InputTextHandler inputTextHandler;
+	FileBrowserPathButtons pathButtons;
 
 public:
 	EditorFileBrowser(EditorsController* arg_controller);
@@ -40,7 +40,6 @@ public:
 
 private:
 	void setupColumns(const ImVec2& iconSize);
-	void showRootContentButtons();
 	void drawIcon(FileIcon* icon, const ImVec2& size);
 	bool drawLabel(FileIcon* icon);
 	void handleDelete();

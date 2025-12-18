@@ -318,6 +318,7 @@ std::string EditorsController::getCurrentDirectory() const
 void EditorsController::setCurrentDirectory(const std::string& directory)
 {
 	this->currentDirectory = directory;
+	this->notifyRefreshFileIcons();
 }
 
 void EditorsController::tryLoadMaterialToEntity(Entity* entity, const std::string& entityPath)

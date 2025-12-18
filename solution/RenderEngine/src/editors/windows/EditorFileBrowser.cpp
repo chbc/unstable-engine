@@ -22,9 +22,7 @@ EditorFileBrowser::EditorFileBrowser(EditorsController* arg_controller)
 
 void EditorFileBrowser::onInit()
 {
-	this->gameContentFolder = FileUtils::getContentAbsolutePath("game");
-	this->engineContentFolder = FileUtils::getContentAbsolutePath("engine");
-	this->controller->setCurrentDirectory(this->gameContentFolder);
+	this->pathButtons.onInit(this->controller);
 	this->refreshFileIcons();
 	this->externalFileDropHandler.onInit(this->controller, this);
 	this->contextMenu.onInit(this->controller);
@@ -38,7 +36,7 @@ void EditorFileBrowser::onInit()
 void EditorFileBrowser::onEditorGUI()
 {
 	ImGui::Begin("File Browser");
-	this->showRootContentButtons();
+	this->pathButtons.onEditorGUI();
 
 	const ImVec2 size{ 64, 64 };
 	this->setupColumns(size);
@@ -87,7 +85,7 @@ void EditorFileBrowser::onEditorGUI()
 		{
 			if (directoryChanged)
 			{
-				this->controller->setCurrentDirectory(item->filePath);
+				this->pathButtons.onFolderOpen(item->filePath);
 			}
 
 			this->refreshFileIcons();
@@ -131,23 +129,6 @@ void EditorFileBrowser::setupColumns(const ImVec2& iconSize)
 	}
 
 	ImGui::Columns(columns, 0, false);
-}
-
-void EditorFileBrowser::showRootContentButtons()
-{
-	if (ImGui::Button("Content", ImVec2{ 64, 16 }))
-	{
-		this->controller->setCurrentDirectory(this->gameContentFolder);
-		this->refreshFileIcons();
-	}
-
-	ImGui::SameLine();
-
-	if (ImGui::Button("Engine", ImVec2{ 64, 16 }))
-	{
-		this->controller->setCurrentDirectory(this->engineContentFolder);
-		this->refreshFileIcons();
-	}
 }
 
 void EditorFileBrowser::drawIcon(FileIcon* icon, const ImVec2& size)

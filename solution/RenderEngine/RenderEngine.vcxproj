@@ -370,6 +370,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\FileBrowserPathButtons.cpp" />
     <ClCompile Include="include\FontEditorProperty.h" />
     <ClCompile Include="src\core\graphics\meshData\Model.cpp" />
     <ClCompile Include="src\core\graphics\renderers\ABaseRenderer.cpp" />
@@ -618,6 +619,7 @@
     <ClInclude Include="include\EntityTypes.h" />
     <ClInclude Include="include\EShaderComponent.h" />
     <ClInclude Include="include\FileBrowserContextMenu.h" />
+    <ClInclude Include="include\FileBrowserPathButtons.h" />
     <ClInclude Include="include\FileIcon.h" />
     <ClInclude Include="include\BoolEditorProperty.h" />
     <ClInclude Include="include\ComponentParser.h" />
