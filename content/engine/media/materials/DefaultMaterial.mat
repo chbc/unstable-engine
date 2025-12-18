@@ -10,7 +10,7 @@ Components:
   PBRMaterialComponent:
     Albedo:
       TextureMapType: 1
-      FilePath: engine\media\textures\checker.jpg
+      FilePath: engine\media\textures\whiteTexture.png
     Normal:
       TextureMapType: 2
       FilePath: engine\media\textures\pbr_default_normal.png
