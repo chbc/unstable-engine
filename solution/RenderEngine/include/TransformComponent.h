@@ -48,6 +48,7 @@ public:
 	glm::vec3 getLocalScale() const;
 	inline const glm::vec3 getInternalMatrixPosition() const;
 	inline glm::vec3 getForward() const;
+	glm::vec3 getForwardView() const;
 	inline glm::vec3 getRight() const;
 	inline glm::vec3 getUp() const;
 	inline const glm::mat4& getMatrix() const;

@@ -141,6 +141,7 @@ void EditorsController::loadFileFromBrowser(const std::string& filePath)
 		case EAssetType::ENTITY:
 		{
 			Entity* entity = this->scenesManager->createEntityFromFile(filePath);
+			this->scenesManager->setupEntityInitialPosition(entity);
 			this->scenesManager->addToRenderer(entity);
 			this->tryLoadMaterialToEntity(entity, filePath);
 			break;
@@ -203,6 +204,7 @@ void EditorsController::copyFileToCurrentDirectory(const std::string& sourceFile
 Entity* EditorsController::createMeshEntity(const std::string& filePath, const char* meshName)
 {
 	Entity* newEntity = this->scenesManager->createMeshEntity(filePath, meshName);
+	this->scenesManager->setupEntityInitialPosition(newEntity);
 	this->setSelectedEntity(newEntity);
 
 	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
@@ -215,12 +217,14 @@ Entity* EditorsController::createMeshEntity(const std::string& filePath, const c
 void EditorsController::createDirectionalLight()
 {
 	Entity* newEntity = this->scenesManager->createDirectionalLight();
+	this->scenesManager->setupEntityInitialPosition(newEntity);
 	this->setSelectedEntity(newEntity);
 }
 
 void EditorsController::createPointLight()
 {
 	Entity* newEntity = this->scenesManager->createPointLight();
+	this->scenesManager->setupEntityInitialPosition(newEntity);
 	this->setSelectedEntity(newEntity);
 }
 

@@ -168,6 +168,15 @@ void ScenesManager::addToRenderer(Entity* entity)
 	this->renderManager->addEntity(entity);
 }
 
+void ScenesManager::setupEntityInitialPosition(Entity* entity)
+{
+    CameraComponent* camera = this->renderManager->getCurrentCamera();
+    glm::vec3 cameraPosition = camera->getTransform()->getPosition();
+    glm::vec3 forward = glm::normalize(camera->getTransform()->getForwardView());
+    glm::vec3 entityPosition = cameraPosition + forward * 5.0f;
+    entity->getTransform()->setPosition(entityPosition);
+}
+
 void ScenesManager::initEntities()
 {
     this->scene->initEntities();

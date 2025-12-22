@@ -164,6 +164,12 @@ glm::vec3 TransformComponent::getForward() const
 	return glm::normalize(result);
 }
 
+glm::vec3 TransformComponent::getForwardView() const
+{
+	glm::vec3 result{ -this->worldMatrix[2] };
+	return glm::normalize(result);
+}
+
 glm::vec3 TransformComponent::getRight() const
 {
 	glm::vec3 result{ this->worldMatrix[0].x, this->worldMatrix[0].y, this->worldMatrix[0].z };

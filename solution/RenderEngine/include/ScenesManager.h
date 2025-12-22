@@ -41,6 +41,7 @@ public:
     SRE_API Scene* getEditorScene();
 
 	void addToRenderer(Entity* entity);
+	void setupEntityInitialPosition(Entity* entity);
 
 private:
     void initEntities();
