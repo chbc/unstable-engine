@@ -40,12 +40,7 @@ void EditorMenuBar::onEditorGUI()
 		ImGui::EndMenuBar();
 	}
 
-	if (ImGui::IsKeyPressed(ImGuiKey_Escape, false) ||
-		ImGui::IsKeyPressed(ImGuiKey_Home, false)
-	)
-	{
-		exitEditor();
-	}
+	this->handleShortcuts();
 }
 
 void EditorMenuBar::drawFileGroup()
@@ -134,6 +129,34 @@ void EditorMenuBar::drawHelpGroup()
 
 		ImGui::MenuItem("About");
 		ImGui::EndMenu();
+	}
+}
+
+void EditorMenuBar::handleShortcuts()
+{
+	if (ImGui::IsKeyPressed(ImGuiKey_N, false) &&
+		ImGui::IsKeyDown(ImGuiKey_LeftCtrl)
+	)
+	{
+		this->controller->newScene();
+	}
+	else if (ImGui::IsKeyPressed(ImGuiKey_O, false) &&
+		ImGui::IsKeyDown(ImGuiKey_LeftCtrl)
+	)
+	{
+		this->controller->openScene();
+	}
+	else if (ImGui::IsKeyPressed(ImGuiKey_S, false) &&
+		ImGui::IsKeyDown(ImGuiKey_LeftCtrl)
+	)
+	{
+		this->controller->saveScene();
+	}
+	else if (ImGui::IsKeyPressed(ImGuiKey_Escape, false) ||
+		ImGui::IsKeyPressed(ImGuiKey_Home, false)
+	)
+	{
+		exitEditor();
 	}
 }
 

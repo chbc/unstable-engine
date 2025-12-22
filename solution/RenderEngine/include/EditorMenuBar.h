@@ -32,6 +32,7 @@ private:
 	void drawEditGroup();
 	void drawEntitiesGroup();
 	void drawHelpGroup();
+	void handleShortcuts();
 	void exitEditor();
 };
 
