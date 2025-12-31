@@ -1,5 +1,18 @@
+_main_camera:
+  _main_camera: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [0,5,5]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    CameraComponent:
+      Enabled: 1
+      Perspective: 1
+      Main Camera: 1
+      FOV: 90
 cylinder:
-  Enabled: 1
+  cylinder: 1
   Components:
     TransformComponent:
       Enabled: 1
@@ -12,32 +25,19 @@ cylinder:
         FilePath: engine\media\meshes\Cylinder.mesh
         MeshName: Cylinder
       Material: engine\media\materials\DefaultMaterial.mat
-_main_camera:
-  Enabled: 1
-  Components:
-    TransformComponent:
-      Enabled: 1
-      Position: [0,5,5]
-      Rotation: [0,0,0]
-      Scale: [1,1,1]
-    CameraComponent:
-      Enabled: 1
-      Perspective: 1
-      Main Camera: 1
-      FOV: 90
 directional_light:
-  Enabled: 1
+  directional_light: 1
   Components:
     TransformComponent:
       Enabled: 1
       Position: [0,0,0]
-      Rotation: [120,0,0]
+      Rotation: [120,45,0]
       Scale: [1,1,1]
     DirectionalLightComponent:
       Enabled: 1
       Color: [0.6,0.6,0.6]
 plane:
-  Enabled: 1
+  plane: 1
   Components:
     TransformComponent:
       Enabled: 1
@@ -50,22 +50,8 @@ plane:
         FilePath: engine\media\meshes\Plane.mesh
         MeshName: Plane
       Material: engine\media\materials\DefaultMaterial.mat
-sphere:
-  Enabled: 1
-  Components:
-    TransformComponent:
-      Enabled: 1
-      Position: [-1.5,0.5,0]
-      Rotation: [0,0,0]
-      Scale: [1,1,1]
-    MeshComponent:
-      Enabled: 1
-      Mesh:
-        FilePath: engine\media\meshes\Sphere.mesh
-        MeshName: Sphere
-      Material: engine\media\materials\DefaultMaterial.mat
 cube:
-  Enabled: 1
+  cube: 1
   Components:
     TransformComponent:
       Enabled: 1
@@ -78,33 +64,22 @@ cube:
         FilePath: engine\media\meshes\Cube.mesh
         MeshName: Cube
       Material: engine\media\materials\WhiteMaterial.mat
-  Entities:
-    Guizmo:
-      Enabled: 1
-      Components:
-        TransformComponent:
-          Enabled: 1
-          Position: [0,0,0]
-          Rotation: [0,0,0]
-          Scale: [1,1,1]
-        GuizmoComponent:
-          Enabled: 1
-torus:
-  Enabled: 1
+sphere:
+  sphere: 1
   Components:
     TransformComponent:
       Enabled: 1
-      Position: [3,0.5,0]
+      Position: [-1.5,0.5,0]
       Rotation: [0,0,0]
       Scale: [1,1,1]
     MeshComponent:
       Enabled: 1
       Mesh:
-        FilePath: engine\media\meshes\Torus.mesh
-        MeshName: Torus
+        FilePath: engine\media\meshes\Sphere.mesh
+        MeshName: Sphere
       Material: engine\media\materials\DefaultMaterial.mat
 cone:
-  Enabled: 1
+  cone: 1
   Components:
     TransformComponent:
       Enabled: 1
@@ -117,3 +92,17 @@ cone:
         FilePath: engine\media\meshes\Cone.mesh
         MeshName: Cone
       Material: engine\media\materials\ColorCustomMaterial.mat
+torus:
+  torus: 1
+  Components:
+    TransformComponent:
+      Enabled: 1
+      Position: [3,0.5,0]
+      Rotation: [0,0,0]
+      Scale: [1,1,1]
+    MeshComponent:
+      Enabled: 1
+      Mesh:
+        FilePath: engine\media\meshes\Torus.mesh
+        MeshName: Torus
+      Material: engine\media\materials\DefaultMaterial.mat
