@@ -6,7 +6,6 @@ namespace sre
 {
 
 class FontAtlas;
-struct MeshData2D;
 
 class FontEditorProperty : public AEditorProperty
 {
