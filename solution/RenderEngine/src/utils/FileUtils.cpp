@@ -123,7 +123,7 @@ void getFileAndIconPaths(std::string directoryPath, std::vector<std::string>& ic
 	for (const auto& item : FS::directory_iterator(directoryPath))
 	{
 		std::string iconName;
-		const auto& extension = item.path().extension();
+		FS::path extension = item.path().extension();
 		bool hasIcon = true;
 		FS::path iconPath;
 		if (item.is_directory())
@@ -146,7 +146,7 @@ void getFileAndIconPaths(std::string directoryPath, std::vector<std::string>& ic
 		{
 			iconName = "entity_icon";
 		}
-		else if ((extension == ".png") || (extension == "jpg") || (extension == "jpeg"))
+		else if ((extension == ".png") || (extension == ".jpg") || (extension == ".jpeg") || (extension == ".tga"))
 		{
 			iconPath = item.path();
 			hasIcon = false;
@@ -263,7 +263,7 @@ EAssetType getAssetType(const std::string& filePath)
 		{
 			result = EAssetType::ENTITY;
 		}
-		else if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
+		else if ((extension == ".png") || (extension == ".jpg") || (extension == ".jpeg") || (extension == ".tga"))
 		{
 			result = EAssetType::TEXTURE;
 		}
