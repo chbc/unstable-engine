@@ -35,8 +35,9 @@ int main(int argc, const char* args[])
 		FileUtils::initializeStoragePaths();
         ModelLoader().load(args[1], scaleFactor, importMaterials, modelData);
     }
-    catch (...)
+    catch (const std::string& message)
     {
+        std::cout << message << std::endl;
         return 1;
     }
 

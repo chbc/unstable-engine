@@ -163,8 +163,10 @@ void EditorsController::importMesh(const char* sourceFilePath, const char* desti
 	std::stringstream commandStream;
 	std::string toolPath = FileUtils::getToolsAbsolutePath("MeshConverter.exe");
 	int importMaterialsParam = importMaterials ? 1 : 0;
-	commandStream << toolPath << " " << sourceFilePath << " " << destinationPath
-		<< " " << scaleFactor << " " << importMaterialsParam;
+	commandStream << toolPath << " "
+		<< "\"" << sourceFilePath << "\"" << " "
+		<< "\"" << destinationPath << "\"" << " "
+		<< scaleFactor << " " << importMaterialsParam;
 	std::string command = commandStream.str();
 
 	system(command.c_str());
