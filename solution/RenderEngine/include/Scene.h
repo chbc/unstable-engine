@@ -38,6 +38,7 @@ private:
 friend class ScenesManager;
 friend class SceneLoader;
 friend class SceneViewportCamera;
+friend class EditorSceneViewport;
 };
 
 } // namespace

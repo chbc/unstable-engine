@@ -22,10 +22,8 @@ private:
 	Entity* selectedEntity{ nullptr };
 	SPTR<Action> selectionAction;
 	SPTR<Action> orientationModeAction;
-	SPTR<Action> gridEnabledAction;
 	ImGuizmo::OPERATION guizmoOperation{ 0u };
 	ImGuizmo::MODE guizmoMode{ 0u };
-	bool gridEnabled{ true };
 
 public:
 	SceneViewportGuizmos();
@@ -37,7 +35,6 @@ public:
 private:
 	void onEntitySelected(void* data);
 	void onOrientationModeChanged(void* message);
-	void onSetGridEnabled(void* message);
 };
 
 } // namespace

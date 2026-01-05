@@ -43,7 +43,7 @@ void SceneViewportCamera::onUpdate(float elapsedTime)
 		this->forceInitialMousePosition();
 	}
 }
- 
+
 void SceneViewportCamera::updateCameraPerspective(float newWidth, float newHeight)
 {
 	if ((newWidth != this->currentWindowWidth) || (newHeight != this->currentWindowHeight))

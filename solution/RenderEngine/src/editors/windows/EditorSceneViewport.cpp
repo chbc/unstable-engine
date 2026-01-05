@@ -7,6 +7,9 @@
 #include "RenderManager.h"
 #include "ScenesManager.h"
 #include "EditorsController.h"
+#include "MessagesManager.h"
+
+#include "MeshComponent.h"
 
 #include <imgui/imgui.h>
 
@@ -16,13 +19,16 @@ namespace sre
 uint32_t EditorSceneViewport::Fbo = 0;
 
 EditorSceneViewport::EditorSceneViewport(EditorsController* arg_controller) : controller(arg_controller)
-{ }
+{
+	this->gridEnabledAction = SPTR<Action>(new Action{ [&](void* message) { this->onSetGridEnabled(message); } });
+}
 
 void EditorSceneViewport::onInit()
 {
+	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
+
 	if (this->renderManager == nullptr)
 	{
-		SingletonsManager* singletonsManager = SingletonsManager::getInstance();
 
 		this->multimediaManager = singletonsManager->get<MultimediaManager>();
 		uint32_t width = static_cast<uint32_t>(EngineValues::SCREEN_WIDTH);
@@ -42,7 +48,18 @@ void EditorSceneViewport::onInit()
 
 		this->renderManager = singletonsManager->get<RenderManager>();
 		this->renderManager->setEditorCamera(this->sceneViewportCamera.getCameraComponent());
+
+		ScenesManager* scenesManager = singletonsManager->get<ScenesManager>();
+		Scene* editorScene = scenesManager->getEditorScene();
+		gridEntity = editorScene->createMeshEntity("engine/media/meshes/Plane.mesh", "_grid");
+		gridEntity->getTransform()->setScale({ 50.0f, 1.0f, 50.0f });
+		MeshComponent* gridMesh = gridEntity->getComponent<MeshComponent>();
+		gridMesh->loadMaterial("engine/media/materials/GridMaterial.mat");
+		this->renderManager->addEntity(gridEntity);
 	}
+
+	MessagesManager* messagesManager = singletonsManager->get<MessagesManager>();
+	messagesManager->addListener<SetGridEnabledEditorMessage>(this->gridEnabledAction.get());
 
 	this->renderManager->setTargetFBO(Fbo);
 	this->isWindowHovered = false;
@@ -107,6 +124,9 @@ void EditorSceneViewport::onEditorGUI()
 void EditorSceneViewport::onCleanUp()
 {
 	this->sceneViewportGuizmos.onCleanUp();
+	
+	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
+	messagesManager->removeListener<SetGridEnabledEditorMessage>(this->gridEnabledAction.get());
 }
 
 void EditorSceneViewport::onRelease()
@@ -158,6 +178,16 @@ void EditorSceneViewport::tryPickEntity(const glm::vec2& viewportSize, const glm
 		Entity* currentEntity = this->controller->getSelectedEntity();
 		Entity* pickedEntity = scenesManager->raycastFromScreen(resultMousePosition, viewportSize, currentEntity);
 		this->controller->setSelectedEntity(pickedEntity);
+	}
+}
+
+void EditorSceneViewport::onSetGridEnabled(void* message)
+{
+	SetGridEnabledEditorMessage* gridMessage = static_cast<SetGridEnabledEditorMessage*>(message);
+	if (this->gridEntity != nullptr)
+	{
+		bool enabled = this->gridEntity->isEnabled();
+		this->gridEntity->setEnabled(!enabled);
 	}
 }
 
