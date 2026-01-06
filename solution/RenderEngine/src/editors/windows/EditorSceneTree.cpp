@@ -108,6 +108,11 @@ void EditorSceneTree::drawEntityTree(AScene* scene, Entity* entity, int index)
 			flags |= ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_Selected;
 		}
 
+		if (selectedEntity && entity->getChild(selectedEntity->getName()))
+		{
+			ImGui::SetNextItemOpen(true, ImGuiCond_Always);
+		}
+
 		bool open = ImGui::TreeNodeEx(reinterpret_cast<void*>(entity), flags, entity->name.c_str());
 
 		if (ImGui::IsItemClicked())
