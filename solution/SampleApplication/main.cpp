@@ -1,4 +1,4 @@
-#ifdef DEBUG
+#ifdef CONSOLE_APP
 #include <iostream>
 #else
 #include <windows.h>
@@ -6,7 +6,7 @@
 
 #include "application/SampleApplication.h"
 
-#ifdef DEBUG
+#ifdef CONSOLE_APP
 int main(int argc, char* argv[])
 {
 	int result = 0;
