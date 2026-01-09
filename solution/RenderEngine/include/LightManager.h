@@ -3,7 +3,6 @@
 #include "DirectionalLightComponent.h"
 #include "PointLightComponent.h"
 #include "ASingleton.h"
-#include "LightsUBO.h"
 #include "IBLData.h"
 #include "ETextureMap.h"
 
@@ -23,10 +22,9 @@ private:
     std::vector<DirectionalLightComponent*> directionalLights;
     std::vector<PointLightComponent*> pointLights;
 	class AGraphicsWrapper* graphicsWrapper{ nullptr };
-    LightsUBO lightsUBO;
-	uint32_t ubo{ 0 };
     IBLData iblData;
-	const int MAX_GROUP_LIGHTS = 4;
+    
+    const int MAX_GROUP_LIGHTS = 4;
 
 protected:
     void init() override;
@@ -40,9 +38,8 @@ public:
 private:
     void addDirectionalLight(DirectionalLightComponent* item);
     void addPointLight(PointLightComponent* item);
-	void updateUniformBuffer();
     void updateDirectionalLightsUBO();
-	void updatePointLightsUBO();
+    void updatePointLightsUBO();
     void setupShadowData(ALightComponent* lightComponent, bool useCubemap);
     void loadIBL(std::unordered_map<ETextureMap::Type, Texture*>& texturesMap);
     void clearIBLData();

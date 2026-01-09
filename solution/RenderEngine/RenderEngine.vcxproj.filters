@@ -480,6 +480,9 @@
     <ClCompile Include="include\FileBrowserPathButtons.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\graphics\ubos\GlobalUniformsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1227,6 +1230,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\FileBrowserPathButtons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GlobalUniformsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UniformBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

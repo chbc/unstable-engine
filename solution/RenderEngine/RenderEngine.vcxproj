@@ -381,6 +381,7 @@
     <ClCompile Include="src\core\graphics\renderers\shadersSetup\IBLRendererShaderSetup.cpp" />
     <ClCompile Include="src\core\graphics\renderers\SkyboxRenderer.cpp" />
     <ClCompile Include="src\core\graphics\shaders\EShaderComponent.cpp" />
+    <ClCompile Include="src\core\graphics\ubos\GlobalUniformsManager.cpp" />
     <ClCompile Include="src\core\io\assetsCollection\AAsset.cpp" />
     <ClCompile Include="src\core\io\assetsCollection\AssetsCollection.cpp" />
     <ClCompile Include="src\core\io\assetsLoader\EntityLoader.cpp" />
@@ -769,6 +770,8 @@
     <ClInclude Include="include\SceneViewportCamera.h" />
     <ClInclude Include="include\ExternalFileDropHandler.h" />
     <ClInclude Include="include\STBIAPI.h" />
+    <ClInclude Include="include\GlobalUniformsManager.h" />
+    <ClInclude Include="include\UniformBuffer.h" />
     <ClInclude Include="thirdParties\imguizmo\ImGuizmo.h" />
     <ClInclude Include="thirdParties\imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="thirdParties\imgui\backends\imgui_impl_sdl2.h" />

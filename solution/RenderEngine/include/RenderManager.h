@@ -38,9 +38,10 @@ using CustomRendererMap = std::unordered_map<ABaseMaterial*, SPTR<CustomRenderer
 class RenderManager : ASingleton
 {
 private:
-    class ShaderManager       *shaderManager;
-    class AGraphicsWrapper    *graphicsWrapper;
-    class LightManager        *lightManager;
+    class ShaderManager         *shaderManager;
+    class AGraphicsWrapper      *graphicsWrapper;
+    class LightManager          *lightManager;
+	class GlobalUniformsManager *globalUniformsManager;
 
 	StandardRendererMap opaqueMeshRenderers;
     StandardRendererMap translucentMeshRenderers;

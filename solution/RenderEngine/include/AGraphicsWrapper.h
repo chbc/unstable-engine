@@ -21,8 +21,8 @@ protected:
     AGraphicsWrapper() {}
 
 public:
-    virtual void createUniformBuffer(uint32_t& id, size_t size, const void* data) = 0;
-	virtual void updateUniformBuffer(uint32_t id, size_t size, const void* data) = 0;
+    virtual void createUniformBuffer(uint32_t bindingPoint, uint32_t& id, size_t size, const void* data) = 0;
+	virtual void updateUniformBuffer(uint32_t bindingPoint, uint32_t id, size_t size, const void* data) = 0;
     virtual void deleteUniformBuffer(uint32_t id) = 0;
 	virtual void enableBackfaceCulling(bool enable) = 0;
 
@@ -111,6 +111,7 @@ protected:
 friend class RenderManager;
 friend class ShaderManager;
 friend class SingletonsManager;
+friend class GlobalUniformsManager;
 friend class TextureLoader;
 friend class HDRTextureLoader;
 friend class TextureCreator;

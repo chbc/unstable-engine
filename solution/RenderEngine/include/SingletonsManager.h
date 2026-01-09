@@ -9,7 +9,7 @@
 namespace sre
 {
 
-constexpr size_t SINGLETONS_COUNT = 10;
+constexpr size_t SINGLETONS_COUNT = 11;
 
 class SingletonsManager
 {
@@ -30,6 +30,13 @@ public:
 
         return instance.get();
     }
+
+    template <typename T>
+    static T* Get()
+    {
+        SingletonsManager* manager = SingletonsManager::getInstance();
+        return manager->get<T>();
+	}
 
     template <typename T> T* get()
     {

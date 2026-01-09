@@ -10,6 +10,7 @@
 #include "MessagesManager.h"
 #include "AtlasManager.h"
 #include "ScenesManager.h"
+#include "GlobalUniformsManager.h"
 
 namespace sre
 {
@@ -26,7 +27,7 @@ SingletonsManager::SingletonsManager()
 #endif
     this->add<ShaderManager>();
     this->add<LightManager>();
-
+	this->add<GlobalUniformsManager>();
     this->add<RenderManager>();
     this->add<AssetsManager>();
 

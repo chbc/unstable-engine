@@ -1,5 +1,4 @@
-#ifndef _A_SINGLETON_H_
-#define _A_SINGLETON_H_
+#pragma once
 
 namespace sre
 {
@@ -18,5 +17,3 @@ friend class SingletonsManager;
 };
 
 }
-
-#endif

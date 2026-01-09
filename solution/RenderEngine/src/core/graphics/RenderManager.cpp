@@ -23,6 +23,7 @@
 #include "ShadowRenderer.h"
 #include "SkyboxRenderer.h"
 #include "CollectionsUtils.h"
+#include "GlobalUniformsManager.h"
 
 namespace sre
 {
@@ -30,9 +31,10 @@ namespace sre
 void RenderManager::init()
 {
     SingletonsManager *singletonsManager = SingletonsManager::getInstance();
-    this->graphicsWrapper = singletonsManager->get<AGraphicsWrapper>();
-    this->lightManager      = singletonsManager->get<LightManager>();
-    this->shaderManager     = singletonsManager->get<ShaderManager>();
+    this->graphicsWrapper       = singletonsManager->get<AGraphicsWrapper>();
+    this->lightManager          = singletonsManager->get<LightManager>();
+    this->shaderManager         = singletonsManager->get<ShaderManager>();
+	this->globalUniformsManager = singletonsManager->get<GlobalUniformsManager>();
 }
 
 void RenderManager::preRelease()
@@ -321,6 +323,9 @@ CameraComponent* RenderManager::getCurrentCamera()
 
 void RenderManager::render()
 {
+    // ÙBOs update
+	this->globalUniformsManager->update();
+
     // Depth rendering
     if (this->shadowRenderer.get() != nullptr)
         this->shadowRenderer->render();

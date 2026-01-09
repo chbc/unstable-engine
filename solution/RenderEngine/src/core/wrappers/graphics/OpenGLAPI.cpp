@@ -22,7 +22,7 @@ namespace EAttribLocation
 	};
 }
 
-void OpenGLAPI::createUniformBuffer(uint32_t& id, size_t size, const void* data)
+void OpenGLAPI::createUniformBuffer(uint32_t bindingPoint, uint32_t& id, size_t size, const void* data)
 {
 	glGenBuffers(1, &id);
 
@@ -32,7 +32,7 @@ void OpenGLAPI::createUniformBuffer(uint32_t& id, size_t size, const void* data)
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void OpenGLAPI::updateUniformBuffer(uint32_t id, size_t size, const void* data)
+void OpenGLAPI::updateUniformBuffer(uint32_t bindingPoint, uint32_t id, size_t size, const void* data)
 {
 	glBindBuffer(GL_UNIFORM_BUFFER, id);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, size, data);

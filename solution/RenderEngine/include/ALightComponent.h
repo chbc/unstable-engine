@@ -31,6 +31,7 @@ private:
 friend class LightManager;
 friend class ShadowRenderer;
 friend class ShadowRendererShaderSetup;
+friend class GlobalUniformsManager;
 };
 
 } // namespace

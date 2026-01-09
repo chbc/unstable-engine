@@ -7,13 +7,15 @@
 #include "Texture.h"
 #include "MessagesManager.h"
 #include "TextureCreator.h"
+#include "GlobalUniformsManager.h"
+#include "LightsUBO.h"
 
 namespace sre
 {
 
 void LightManager::init()
 {
-	this->graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
+	this->graphicsWrapper = SingletonsManager::Get<AGraphicsWrapper>();
 }
 
 size_t LightManager::getDirectionalLightsCount() const
@@ -30,6 +32,7 @@ void LightManager::addDirectionalLight(DirectionalLightComponent* item)
 {
 	this->setupShadowData(item, false);
     this->directionalLights.push_back(item);
+
 	this->updateDirectionalLightsUBO();
 }
 
@@ -37,43 +40,44 @@ void LightManager::addPointLight(PointLightComponent* item)
 {
 	this->setupShadowData(item, true);
     this->pointLights.push_back(item);
+
 	this->updatePointLightsUBO();
 }
 
 void LightManager::updateDirectionalLightsUBO()
 {
+	LightsUBO& lightsUBO = SingletonsManager::Get<GlobalUniformsManager>()->editLightsUBO();
+
     int maxDirectionalLights = static_cast<int>(this->directionalLights.size());
-    this->lightsUBO.maxDirectionalLights = maxDirectionalLights;
+    lightsUBO .maxDirectionalLights = maxDirectionalLights;
 
     for (int i = 0; i < maxDirectionalLights; ++i)
     {
         DirectionalLightComponent* light = this->directionalLights[i];
-        this->lightsUBO.directionalLights[i].direction = glm::vec4{ light->getTransform()->getForward(), 0.0f };
-        this->lightsUBO.directionalLights[i].color = glm::vec4{ light->getColor(), 1.0f };
+        lightsUBO.directionalLights[i].direction = glm::vec4{ light->getTransform()->getForward(), 0.0f };
+        lightsUBO.directionalLights[i].color = glm::vec4{ light->getColor(), 1.0f };
 
-		light->updateShadowTextureUnit(ETextureMap::SHADOWS + i);
+        light->updateShadowTextureUnit(ETextureMap::SHADOWS + i);
     }
-
-    this->updateUniformBuffer();
 }
 
 void LightManager::updatePointLightsUBO()
 {
+    LightsUBO& lightsUBO = SingletonsManager::Get<GlobalUniformsManager>()->editLightsUBO();
+
     int maxPointLights = static_cast<int>(this->pointLights.size());
-    this->lightsUBO.maxPointLights = maxPointLights;
+    lightsUBO.maxPointLights = maxPointLights;
 
     for (int i = 0; i < maxPointLights; ++i)
     {
         PointLightComponent* light = this->pointLights[i];
-        this->lightsUBO.pointLights[i].position = glm::vec4{ light->getTransform()->getInternalMatrixPosition(), 0.0f };
-        this->lightsUBO.pointLights[i].color = glm::vec4{ light->getColor(), 1.0f };
-        this->lightsUBO.pointLights[i].rangeAndIntensity.x = light->getRange();
-        this->lightsUBO.pointLights[i].rangeAndIntensity.y = light->getIntensity();
+        lightsUBO.pointLights[i].position = glm::vec4{ light->getTransform()->getInternalMatrixPosition(), 0.0f };
+        lightsUBO.pointLights[i].color = glm::vec4{ light->getColor(), 1.0f };
+        lightsUBO.pointLights[i].rangeAndIntensity.x = light->getRange();
+        lightsUBO.pointLights[i].rangeAndIntensity.y = light->getIntensity();
 
-		light->updateShadowTextureUnit(ETextureMap::SHADOWS + MAX_GROUP_LIGHTS + i);
+        light->updateShadowTextureUnit(ETextureMap::SHADOWS + MAX_GROUP_LIGHTS + i);
     }
-
-    this->updateUniformBuffer();
 }
 
 void LightManager::setupShadowData(ALightComponent* lightComponent, bool useCubemap)
@@ -116,25 +120,12 @@ void LightManager::clearIBLData()
 	iblData.loaded = false;
 }
 
-void LightManager::updateUniformBuffer()
-{
-    size_t dataSize = sizeof(LightsUBO);
-    if (this->ubo == 0)
-    {
-        this->graphicsWrapper->createUniformBuffer(this->ubo, dataSize, &this->lightsUBO);
-    }
-    else
-    {
-        this->graphicsWrapper->updateUniformBuffer(this->ubo, dataSize, &this->lightsUBO);
-    }
-}
-
 void LightManager::removeDestroyedEntities()
 {
     bool lightRemoved = CollectionsUtils::removeComponentIfEntityIsDestroyed(this->directionalLights);
     if (lightRemoved)
     {
-        this->updateDirectionalLightsUBO();
+		this->updateDirectionalLightsUBO();
     }
 
     lightRemoved = CollectionsUtils::removeComponentIfEntityIsDestroyed(this->pointLights);
@@ -148,12 +139,6 @@ void LightManager::cleanUp()
 {
     this->directionalLights.clear();
     this->pointLights.clear();
-
-    if (this->ubo != 0)
-    {
-        this->graphicsWrapper->deleteUniformBuffer(this->ubo);
-		this->ubo = 0;
-    }
 }
 
 } // namespace
