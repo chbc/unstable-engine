@@ -608,6 +608,7 @@
     <ClInclude Include="include\ApplicationStrategy.h" />
     <ClInclude Include="include\AssetsManager.h" />
     <ClInclude Include="include\Bounds.h" />
+    <ClInclude Include="include\CameraUBO.h" />
     <ClInclude Include="include\ColorMeshData.h" />
     <ClInclude Include="include\ControllerInput.h" />
     <ClInclude Include="include\CustomMaterial.h" />

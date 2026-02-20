@@ -10,7 +10,7 @@ namespace sre
 {
 
 class Entity;
-struct Model;
+class Model;
 struct Model2D;
 struct MeshData;
 struct MeshData2D;

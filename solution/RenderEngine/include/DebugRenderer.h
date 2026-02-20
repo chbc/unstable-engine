@@ -11,7 +11,6 @@ namespace sre
 
 class AGraphicsWrapper;
 class ShaderManager;
-class CameraComponent;
 
 class DebugRenderer
 {
@@ -30,7 +29,7 @@ public:
 
 private:
 	void loadShader();
-	void render(CameraComponent* camera);
+	void render();
 
 friend class RenderManager;
 };

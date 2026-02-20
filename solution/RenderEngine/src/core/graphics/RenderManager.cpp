@@ -323,7 +323,14 @@ CameraComponent* RenderManager::getCurrentCamera()
 
 void RenderManager::render()
 {
-    // ÙBOs update
+    if (!this->currentCamera)
+    {
+        return;
+    }
+
+	this->currentCamera->updateView();
+
+    // UBOs update
 	this->globalUniformsManager->update();
 
     // Depth rendering
@@ -340,34 +347,29 @@ void RenderManager::render()
     this->graphicsWrapper->setViewport(EngineValues::SCREEN_WIDTH, EngineValues::SCREEN_HEIGHT);
     this->graphicsWrapper->clearColorAndDepthBuffer();
 
-    if (this->currentCamera != nullptr)
+    // Opaque meshes rendering
+    for (const auto& item : this->opaqueMeshRenderers)
     {
-        this->currentCamera->updateView();
-
-        // Opaque meshes rendering
-        for (const auto& item : this->opaqueMeshRenderers)
-        {
-            item.second->render();
-        }
-
-        // Custom meshes rendering
-        for (const auto& item : this->customRenderers)
-        {
-            item.second->render(this->currentCamera);
-        }
-
-        // Translucent meshes rendering
-        for (const auto& item : this->translucentMeshRenderers)
-        {
-            item.second->render();
-        }
-
-		// Skybox rendering
-        if (this->skyboxRenderer.get() != nullptr)
-        {
-			this->skyboxRenderer->render(this->currentCamera);
-		}
+        item.second->render();
     }
+
+    // Custom meshes rendering
+    for (const auto& item : this->customRenderers)
+    {
+        item.second->render(this->currentCamera);
+    }
+
+    // Translucent meshes rendering
+    for (const auto& item : this->translucentMeshRenderers)
+    {
+        item.second->render();
+    }
+
+	// Skybox rendering
+    if (this->skyboxRenderer.get() != nullptr)
+    {
+		this->skyboxRenderer->render();
+	}
 
 	// Post processing rendering
     if (this->postProcessingRenderer.get() != nullptr)
@@ -378,7 +380,7 @@ void RenderManager::render()
     // Debug rendering
     if (this->debugRenderer.get() != nullptr)
     {
-        this->debugRenderer->render(this->currentCamera);
+        this->debugRenderer->render();
     }
 
     // GUI rendering
@@ -394,7 +396,7 @@ void RenderManager::renderGuizmos()
 
 	if (this->guizmoRenderer.get() && this->currentCamera)
 	{
-		this->guizmoRenderer->render(this->currentCamera);
+		this->guizmoRenderer->render();
 	}
 
 	this->graphicsWrapper->enableDepthTest();

@@ -7,6 +7,8 @@
 #include "BoolEditorProperty.h"
 #include "FloatEditorProperty.h"
 #include "RenderManager.h"
+#include "GlobalUniformsManager.h"
+#include "CameraUBO.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -57,17 +59,13 @@ void CameraComponent::setMainCamera()
 
 void CameraComponent::updateView()
 {
-    this->view = glm::inverse(this->transform->getMatrix());
-}
+	GlobalUniformsManager* globalUniformsManager = SingletonsManager::Get<GlobalUniformsManager>();
+	CameraUBO& cameraUBO = globalUniformsManager->editCameraUBO();
 
-const glm::mat4& CameraComponent::getProjectionMatrix() const
-{
-    return this->projection;
-}
-
-const glm::mat4& CameraComponent::getViewMatrix() const
-{
-    return this->view;
+	this->view = glm::inverse(this->transform->getMatrix());
+    cameraUBO.viewMatrix = this->view;
+	cameraUBO.projectionMatrix = this->projection;
+	// cameraUBO.cameraPosition = glm::vec4{ this->transform->getPosition(), 1.0f };
 }
 
 Ray CameraComponent::getRayFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize) const

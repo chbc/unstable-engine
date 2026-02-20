@@ -21,7 +21,7 @@ public:
 
 private:
     virtual void onSceneLoaded(uint32_t program);
-    virtual void setupShaderValues(uint32_t program);
+    virtual void setupShaderValues(uint32_t program) {}
 
 friend class MeshRenderer;
 };

@@ -7,13 +7,13 @@ namespace sre
 {
 
 class AGraphicsWrapper;
-struct BuffersImpl;
 
 class GlobalUniformsManager : public ASingleton
 {
 private:
-	AGraphicsWrapper* graphicsWrapper{ nullptr };
+	struct BuffersImpl;
 	UPTR<BuffersImpl> buffersImpl;
+	AGraphicsWrapper* graphicsWrapper{ nullptr };
 
 public:
 	GlobalUniformsManager();
@@ -25,12 +25,15 @@ protected:
 
 private:
 	void update();
-	void updateBuffer(uint32_t bindingPoint, bool isDirty, uint32_t& id, size_t dataSize, void* data);
+	void updateBuffer(uint32_t bindingPoint, bool isDirty, uint32_t& id, 
+		size_t dataSize, const void* data, bool isDynamic);
 	struct LightsUBO& editLightsUBO();
+	struct CameraUBO& editCameraUBO();
 
 friend class SingletonsManager;
 friend class LightManager;
 friend class RenderManager;
+friend class CameraComponent;
 };
 
 } // namespace

@@ -22,17 +22,18 @@ namespace EAttribLocation
 	};
 }
 
-void OpenGLAPI::createUniformBuffer(uint32_t bindingPoint, uint32_t& id, size_t size, const void* data)
+void OpenGLAPI::createUniformBuffer(uint32_t bindingPoint, uint32_t& id, size_t size, const void* data, bool isDynamic)
 {
 	glGenBuffers(1, &id);
 
 	glBindBuffer(GL_UNIFORM_BUFFER, id);
-	glBufferData(GL_UNIFORM_BUFFER, size, data, GL_STATIC_DRAW);
-	glBindBufferBase(GL_UNIFORM_BUFFER, 0, id);
+	GLenum usage = isDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW;
+	glBufferData(GL_UNIFORM_BUFFER, size, data, usage);
+	glBindBufferBase(GL_UNIFORM_BUFFER, bindingPoint, id);
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void OpenGLAPI::updateUniformBuffer(uint32_t bindingPoint, uint32_t id, size_t size, const void* data)
+void OpenGLAPI::updateUniformBuffer(uint32_t id, size_t size, const void* data)
 {
 	glBindBuffer(GL_UNIFORM_BUFFER, id);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, size, data);
@@ -598,7 +599,7 @@ void OpenGLAPI::readFramebuffer(uint32_t width, uint32_t height, unsigned char* 
 	int rowSize = width * 3; // bpp
 	void* tempRow = new unsigned char[rowSize];
 
-	for (int i = 0; i < height / 2; ++i)
+	for (uint32_t i = 0; i < height / 2; ++i)
 	{
 		unsigned char* row1 = pixels + i * rowSize;
 		unsigned char* row2 = pixels + (height - 1 - i) * rowSize;
@@ -786,7 +787,7 @@ uint32_t OpenGLAPI::generateColorFrameBuffer(const std::vector<uint32_t>& textur
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
-	uint32_t texturesCount = textureIds.size();
+	uint32_t texturesCount = static_cast<uint32_t>(textureIds.size());
 	if (texturesCount > 1)
 		glDrawBuffers(texturesCount, &attachments[0]);
 
@@ -837,9 +838,9 @@ uint32_t OpenGLAPI::compileShader(const std::string & source, uint32_t mode)
 		std::string shaderType = "UNKNOWN";
 		switch (mode)
 		{
-		case GL_VERTEX_SHADER:      shaderType = "VERTEX_SHADER"; break;
-		case GL_FRAGMENT_SHADER:    shaderType = "FRAGMENT_SHADER"; break;
-		case GL_GEOMETRY_SHADER:    shaderType = "GEOMETRY_SHADER"; break;
+			case GL_VERTEX_SHADER:      shaderType = "VERTEX_SHADER"; break;
+			case GL_FRAGMENT_SHADER:    shaderType = "FRAGMENT_SHADER"; break;
+			case GL_GEOMETRY_SHADER:    shaderType = "GEOMETRY_SHADER"; break;
 		}
 
 		//= (mode == GL_VERTEX_SHADER) ? "VERTEX SHADER" : "FRAGMENT SHADER";

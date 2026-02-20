@@ -162,8 +162,10 @@ void ShaderContentFactory::loadPbrContentHeader(std::string& outVertexContent, s
 	FileUtils::loadContentFile(ShaderFiles::PBR_H_F, outFragmentContent);
 
 	std::string lightUboContent;
+	std::string cameraUboContent;
 	FileUtils::loadContentFile(ShaderFiles::LIGHTS_UBO, lightUboContent);
-	outVertexContent = outVertexContent + lightUboContent;
+	FileUtils::loadContentFile(ShaderFiles::CAMERA_UBO, cameraUboContent);
+	outVertexContent = outVertexContent + lightUboContent + cameraUboContent;
 	outFragmentContent = outFragmentContent + lightUboContent;
 }
 

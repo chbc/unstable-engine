@@ -11,7 +11,6 @@ namespace sre
 
 class AGraphicsWrapper;
 class ShaderManager;
-class CameraComponent;
 class GuizmoComponent;
 class AssetsManager;
 
@@ -33,7 +32,7 @@ public:
 private:
 	void addGuizmo(GuizmoComponent* guizmoComponent);
 	void loadShader();
-	void render(CameraComponent* camera);
+	void render();
 
 	void removeDestroyedEntities();
 

@@ -12,8 +12,6 @@ uniform vec2 uvTiling;
 uniform mat4 directionalLightSpaceMatrix[4];
 
 // Matrices
-uniform mat4 projectionMatrix;
-uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 uniform mat3 normalMatrix;
 

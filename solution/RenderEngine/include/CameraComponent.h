@@ -38,8 +38,8 @@ public:
 	void setOrthoProjection(float width, float height);
 	void setMainCamera();
 	void updateView();
-	inline const glm::mat4& getProjectionMatrix() const;
-	inline const glm::mat4& getViewMatrix() const;
+	inline const glm::mat4& getProjectionMatrix() const { return this->projection; }
+	inline const glm::mat4& getViewMatrix() { return this->view; }
 	Ray getRayFromScreen(const glm::vec2& mousePosition, const glm::vec2& viewportSize) const;
 
 protected:

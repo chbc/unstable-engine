@@ -22,8 +22,6 @@ void CustomRenderer::init()
 {
 	this->program = this->shaderManager->loadCustomShader(this->material->getShaderFilePaths());
 	this->shaderManager->setupAttributeLocation(this->program, ShaderVariables::IN_POSITION);
-	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::VIEW_MATRIX);
-	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::PROJECTION_MATRIX);
 	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::MODEL_MATRIX);
 
 	this->initTextures();
@@ -48,12 +46,6 @@ void CustomRenderer::initTextures()
 void CustomRenderer::render(CameraComponent* camera)
 {
 	this->shaderManager->enableShader(this->program);
-	
-	const glm::mat4& viewMatrix = camera->getViewMatrix();
-	const glm::mat4& projectionMatrix = camera->getProjectionMatrix();
-
-	this->shaderManager->setMat4(this->program, ShaderVariables::VIEW_MATRIX, &viewMatrix[0][0]);
-	this->shaderManager->setMat4(this->program, ShaderVariables::PROJECTION_MATRIX, &projectionMatrix[0][0]);
 
 	this->setupTextures();
 

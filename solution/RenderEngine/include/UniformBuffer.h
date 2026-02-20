@@ -9,14 +9,16 @@ class UniformBuffer
 private:
 	T data;
 	uint32_t id{ 0 };
+	bool dynamic{ false };
 	uint32_t bindingPoint{ 0 };
 	bool dirty{ false };
 
 public:
-	UniformBuffer(uint32_t arg_bindingPoint) : bindingPoint(arg_bindingPoint) { }
+	UniformBuffer(uint32_t arg_bindingPoint, bool arg_dynamic = false) 
+		: bindingPoint(arg_bindingPoint), dynamic(arg_dynamic) { }
 
 private:
-	T& getData()
+	const T& getData() const
 	{
 		return this->data;
 	}
@@ -29,12 +31,17 @@ private:
 
 	bool isDirty() const
 	{
-		return true;
+		return this->dirty;
 	}
 
 	void cleanDirtyFlag()
 	{
 		this->dirty = false;
+	}
+
+	bool isDynamic() const
+	{
+		return this->dynamic;
 	}
 
 friend class GlobalUniformsManager;

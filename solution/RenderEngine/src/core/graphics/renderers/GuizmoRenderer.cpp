@@ -50,21 +50,13 @@ void GuizmoRenderer::loadShader()
 {
     this->program = this->shaderManager->loadColorShader();
     this->shaderManager->setupAttributeLocation(this->program, ShaderVariables::IN_POSITION);
-    this->shaderManager->setupUniformLocation(this->program, ShaderVariables::VIEW_MATRIX);
-    this->shaderManager->setupUniformLocation(this->program, ShaderVariables::PROJECTION_MATRIX);
 	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::MATERIAL_COLOR);
 	this->shaderManager->setupUniformLocation(this->program, ShaderVariables::MODEL_MATRIX);
 }
 
-void GuizmoRenderer::render(CameraComponent* camera)
+void GuizmoRenderer::render()
 {
-    const glm::mat4& viewMatrix = camera->getViewMatrix();
-    const glm::mat4& projectionMatrix = camera->getProjectionMatrix();
-
 	this->shaderManager->enableShader(this->program);
-
-    this->shaderManager->setMat4(this->program, ShaderVariables::VIEW_MATRIX, &viewMatrix[0][0]);
-	this->shaderManager->setMat4(this->program, ShaderVariables::PROJECTION_MATRIX, &projectionMatrix[0][0]);
 
 	for (GuizmoComponent* item : this->guizmoComponents)
 	{

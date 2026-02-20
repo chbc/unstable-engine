@@ -1,10 +1,14 @@
-#version 330
+#version 420
 
 layout(location = 0) in vec3 in_position;
 
+layout (std140, binding = 1) uniform CameraBuffer
+{
+	mat4 projectionMatrix;
+	mat4 viewMatrix;
+};
+
 // Matrices
-uniform mat4 viewMatrix;
-uniform mat4 projectionMatrix;
 uniform mat4 modelMatrix;
 
 out vec3 worldPosition;

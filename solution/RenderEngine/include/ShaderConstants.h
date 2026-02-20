@@ -21,7 +21,8 @@ namespace ShaderFiles
     const std::string COLOR_V = BASE_FOLDER + "color/color.vert";
     const std::string COLOR_F = BASE_FOLDER + "color/color.frag";
 
-    const std::string LIGHTS_UBO = BASE_FOLDER + "lights/lights.ubo";
+    const std::string LIGHTS_UBO = BASE_FOLDER + "ubos/lights.ubo";
+	const std::string CAMERA_UBO = BASE_FOLDER + "ubos/camera.ubo";
 
     const std::string POINT_SHADOW_DEPTH_V = BASE_FOLDER + "shadows/point_shadow_depth.vert";
     const std::string POINT_SHADOW_DEPTH_F = BASE_FOLDER + "shadows/point_shadow_depth.frag";

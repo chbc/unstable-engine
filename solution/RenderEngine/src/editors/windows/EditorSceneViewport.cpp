@@ -55,7 +55,6 @@ void EditorSceneViewport::onInit()
 		gridEntity->getTransform()->setScale({ 50.0f, 1.0f, 50.0f });
 		MeshComponent* gridMesh = gridEntity->getComponent<MeshComponent>();
 		gridMesh->loadMaterial("engine/media/materials/GridMaterial.mat");
-		this->renderManager->addEntity(gridEntity);
 	}
 
 	MessagesManager* messagesManager = singletonsManager->get<MessagesManager>();

@@ -90,8 +90,6 @@ uint32_t ShaderManager::loadSkyboxShader()
     std::string vertexContent;
     std::string fragmentContent;
 
-    ShaderContentFactory contentFactory;
-
     return this->loadShader(vertexContent, fragmentContent);
 }
 
