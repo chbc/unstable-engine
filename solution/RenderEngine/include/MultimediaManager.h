@@ -41,6 +41,8 @@ public:
 	static bool saveFileDialog(const std::string& title, const char* filter, std::string& outFileName);
 	void setMousePosition(int x, int y);
 	void showMouseCursor(bool value);
+	uint32_t getLastFrameTime() const;
+	uint32_t getFrameProcessingTime() const;
 
 private:
 	void swapBuffers();
@@ -50,7 +52,6 @@ private:
 	void onFrameBegin();
     uint32_t stopTimer();
 	void delay();
-	uint32_t getLastFrameTime();
 	void* loadTexture(const std::string &filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp);
 	float* loadHdrTexture(const std::string& filePath, int* outWidth, int* outHeight, int* outBpp);
 	void saveTexture(unsigned char* pixels, const char* filePath, uint32_t width, uint32_t height);

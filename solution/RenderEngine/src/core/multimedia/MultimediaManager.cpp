@@ -45,62 +45,6 @@ glm::vec2 MultimediaManager::getNormalizedSize(const glm::vec2 &pixelSize)
 	return glm::vec2(pixelSize.x / EngineValues::SCREEN_WIDTH, pixelSize.y / EngineValues::SCREEN_HEIGHT);
 }
 
-void MultimediaManager::swapBuffers()
-{
-	this->multimediaWrapper->swapBuffers();
-}
-
-void MultimediaManager::setExecutionMode(EExecutionMode::Type mode)
-{
-	this->multimediaWrapper->setExecutionMode(mode);
-}
-
-void MultimediaManager::processInput()
-{
-	this->multimediaWrapper->processInput(this->guiButtons);
-}
-
-bool MultimediaManager::checkClosePressed()
-{
-	return Input::isCloseButtonDown();
-}
-
-void MultimediaManager::onFrameBegin()
-{
-	this->multimediaWrapper->onFrameBegin();
-	this->timer->start();
-}
-
-uint32_t MultimediaManager::stopTimer()
-{
-    return this->timer->stop();
-}
-
-void MultimediaManager::delay()
-{
-	this->timer->delay();
-}
-
-uint32_t MultimediaManager::getLastFrameTime()
-{
-    return this->timer->getLastFrameTime();
-}
-
-void *MultimediaManager::loadTexture(const std::string& filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp)
-{
-	return this->multimediaWrapper->loadTexture(filePath, outWidth, outHeight, outBpp);
-}
-
-float* MultimediaManager::loadHdrTexture(const std::string& filePath, int* outWidth, int* outHeight, int* outBpp)
-{
-	return this->hdrTexturesWrapper->load(filePath, outWidth, outHeight, outBpp);
-}
-
-void MultimediaManager::saveTexture(unsigned char* pixels, const char* filePath, uint32_t width, uint32_t height)
-{
-	this->multimediaWrapper->saveTexture(pixels, filePath, width, height);
-}
-
 void MultimediaManager::logMessage(const std::string& message) const
 {
 	this->multimediaWrapper->log("MESSAGE", message);
@@ -139,6 +83,67 @@ void MultimediaManager::setMousePosition(int x, int y)
 void MultimediaManager::showMouseCursor(bool value)
 {
 	this->multimediaWrapper->showMouseCursor(value);
+}
+
+uint32_t MultimediaManager::getLastFrameTime() const
+{
+	return this->timer->getLastFrameTime();
+}
+
+uint32_t MultimediaManager::getFrameProcessingTime() const
+{
+	return this->timer->getframeProcessingTime();
+}
+
+void MultimediaManager::swapBuffers()
+{
+	this->multimediaWrapper->swapBuffers();
+}
+
+void MultimediaManager::setExecutionMode(EExecutionMode::Type mode)
+{
+	this->multimediaWrapper->setExecutionMode(mode);
+}
+
+void MultimediaManager::processInput()
+{
+	this->multimediaWrapper->processInput(this->guiButtons);
+}
+
+bool MultimediaManager::checkClosePressed()
+{
+	return Input::isCloseButtonDown();
+}
+
+void MultimediaManager::onFrameBegin()
+{
+	this->multimediaWrapper->onFrameBegin();
+	this->timer->start();
+}
+
+uint32_t MultimediaManager::stopTimer()
+{
+    return this->timer->stop();
+}
+
+void MultimediaManager::delay()
+{
+	this->timer->delay();
+}
+
+void *MultimediaManager::loadTexture(const std::string& filePath, uint32_t *outWidth, uint32_t *outHeight, uint8_t *outBpp)
+{
+	return this->multimediaWrapper->loadTexture(filePath, outWidth, outHeight, outBpp);
+}
+
+float* MultimediaManager::loadHdrTexture(const std::string& filePath, int* outWidth, int* outHeight, int* outBpp)
+{
+	return this->hdrTexturesWrapper->load(filePath, outWidth, outHeight, outBpp);
+}
+
+void MultimediaManager::saveTexture(unsigned char* pixels, const char* filePath, uint32_t width, uint32_t height)
+{
+	this->multimediaWrapper->saveTexture(pixels, filePath, width, height);
 }
 
 void MultimediaManager::addGUIButton(GUIButtonComponent* guiButton)

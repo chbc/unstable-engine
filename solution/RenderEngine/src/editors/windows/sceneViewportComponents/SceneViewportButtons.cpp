@@ -4,11 +4,17 @@
 #include "MessagesManager.h"
 #include "AGraphicsWrapper.h"
 #include "EditorMessages.h"
+#include "MultimediaManager.h"
 
 #include <imgui/imgui.h>
 
 namespace sre
 {
+
+void SceneViewportButtons::onInit()
+{
+    this->multimediaManager = SingletonsManager::Get<MultimediaManager>();
+}
 
 void SceneViewportButtons::drawContent(const glm::vec2& windowPos, const glm::vec2& windowSize)
 {
@@ -29,6 +35,8 @@ void SceneViewportButtons::drawContent(const glm::vec2& windowPos, const glm::ve
 		this->drawBackfaceCullingItem();
 		ImGui::SameLine();
         this->drawGridItem();
+		ImGui::SameLine();
+		this->drawFrameTime();
     }
 
     ImGui::End();
@@ -98,6 +106,12 @@ void SceneViewportButtons::refreshBackfaceCulling()
 {
 	AGraphicsWrapper* graphicsWrapper = SingletonsManager::getInstance()->get<AGraphicsWrapper>();
 	graphicsWrapper->enableBackfaceCulling(this->backfaceCullingEnabled);
+}
+
+void SceneViewportButtons::drawFrameTime()
+{
+    uint32_t frameTime = this->multimediaManager->getFrameProcessingTime();
+	ImGui::Text("%d ms", frameTime);
 }
 
 } // namespace

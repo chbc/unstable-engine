@@ -64,6 +64,7 @@ void EditorSceneViewport::onInit()
 	this->isWindowHovered = false;
 
 	this->sceneViewportGuizmos.onInit();
+	this->sceneViewportButtons.onInit();
 }
 
 void EditorSceneViewport::onUpdate(float elapsedTime)

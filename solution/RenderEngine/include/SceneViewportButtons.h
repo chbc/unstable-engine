@@ -12,8 +12,10 @@ private:
 	int currentOrientationItem = 0;
 	bool backfaceCullingEnabled = true;
 	bool gridEnabled = true;
+	class MultimediaManager* multimediaManager;
 
 public:
+	void onInit();
 	void drawContent(const glm::vec2& windowPos, const glm::vec2& windowSize);
 
 private:
@@ -23,6 +25,7 @@ private:
 	void notifyOrientationChanged();
 	void notifyGridEnabledChanged();
 	void refreshBackfaceCulling();
+	void drawFrameTime();
 };
 
 } // namespace
