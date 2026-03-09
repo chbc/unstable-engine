@@ -25,6 +25,8 @@
 #include "CollectionsUtils.h"
 #include "GlobalUniformsManager.h"
 
+#include "ProfilingUtils.h"
+
 namespace sre
 {
 
@@ -333,14 +335,23 @@ void RenderManager::render()
     // UBOs update
 	this->globalUniformsManager->update();
 
-    // Depth rendering
-    if (this->shadowRenderer.get() != nullptr)
-        this->shadowRenderer->render();
+    {
+        // PROFILING_CPU_ZONE("Shadow Rendering", tracy::Color::DarkGrey);
+        // Depth rendering
+        if (this->shadowRenderer.get() != nullptr)
+        {
+            this->shadowRenderer->render();
+        }
+    }
 
     // Scene rendering
     uint32_t fbo = this->targetFBO;
+    /* XXX
     if (this->postProcessingRenderer.get() != nullptr)
+    {
         fbo = this->postProcessingRenderer->getFirstPassFBO();
+    }
+    */
     
     this->graphicsWrapper->bindFrameBuffer(fbo);
 
@@ -348,34 +359,42 @@ void RenderManager::render()
     this->graphicsWrapper->clearColorAndDepthBuffer();
 
     // Opaque meshes rendering
-    for (const auto& item : this->opaqueMeshRenderers)
     {
-        item.second->render();
-    }
+        // PROFILING_CPU_ZONE("Mesh Rendering", tracy::Color::LightBlue1);
+        for (const auto& item : this->opaqueMeshRenderers)
+        {
+            item.second->render();
+        }
 
-    // Custom meshes rendering
-    for (const auto& item : this->customRenderers)
-    {
-        item.second->render(this->currentCamera);
-    }
+        // Custom meshes rendering
+        for (const auto& item : this->customRenderers)
+        {
+            item.second->render(this->currentCamera);
+        }
 
-    // Translucent meshes rendering
-    for (const auto& item : this->translucentMeshRenderers)
-    {
-        item.second->render();
+        // Translucent meshes rendering
+        for (const auto& item : this->translucentMeshRenderers)
+        {
+            item.second->render();
+        }
     }
 
 	// Skybox rendering
-    if (this->skyboxRenderer.get() != nullptr)
     {
-		this->skyboxRenderer->render();
-	}
+        // PROFILING_CPU_ZONE("Skybox Rendering", tracy::Color::LightBlue2);
+        if (this->skyboxRenderer.get() != nullptr)
+        {
+            this->skyboxRenderer->render();
+        }
+    }
 
 	// Post processing rendering
+    /* XXX
     if (this->postProcessingRenderer.get() != nullptr)
     {
         this->postProcessingRenderer->onPostRender(this->targetFBO);
     }
+    */
 
     // Debug rendering
     if (this->debugRenderer.get() != nullptr)

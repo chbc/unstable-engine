@@ -483,6 +483,9 @@
     <ClCompile Include="src\core\graphics\ubos\GlobalUniformsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="thirdParties\tracy\TracyClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1236,6 +1239,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\UniformBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CameraUBO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ProfilingUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

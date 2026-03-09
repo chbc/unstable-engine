@@ -1,7 +1,5 @@
 #ifndef __ANDROID__
 
-#include <windows.h>
-
 #define GLEW_STATIC
 #include <GL/glew.h>
 

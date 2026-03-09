@@ -11,8 +11,6 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include <string>
-
 #include <windows.h>
 
 namespace sre
@@ -52,7 +50,9 @@ void SDLAPI::init()
 	void *context = SDL_GL_CreateContext(this->window);
 
 	if (context == NULL)
+	{
 		throw this->getError();
+	}
 
 	this->imGuiAPI = UPTR<ImGuiAPI>{ new ImGuiAPI };
 	this->imGuiAPI->init(this->window, context);
