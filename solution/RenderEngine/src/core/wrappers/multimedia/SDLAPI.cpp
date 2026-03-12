@@ -56,6 +56,8 @@ void SDLAPI::init()
 
 	this->imGuiAPI = UPTR<ImGuiAPI>{ new ImGuiAPI };
 	this->imGuiAPI->init(this->window, context);
+
+	SDL_GL_SetSwapInterval(0);
 }
 
 void SDLAPI::onFrameBegin()
