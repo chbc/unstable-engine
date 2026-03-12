@@ -26,6 +26,7 @@
 #include "GlobalUniformsManager.h"
 
 #include "ProfilingUtils.h"
+#include "OpenGLAPI.h"
 
 namespace sre
 {
@@ -334,9 +335,8 @@ void RenderManager::render()
 
     // UBOs update
 	this->globalUniformsManager->update();
-
     {
-        // PROFILING_CPU_ZONE("Shadow Rendering", tracy::Color::DarkGrey);
+        PROFILE_GPU_ZONE("Shadow Rendering", tracy::Color::Red);
         // Depth rendering
         if (this->shadowRenderer.get() != nullptr)
         {
@@ -360,7 +360,7 @@ void RenderManager::render()
 
     // Opaque meshes rendering
     {
-        // PROFILING_CPU_ZONE("Mesh Rendering", tracy::Color::LightBlue1);
+        PROFILE_GPU_ZONE("Mesh Rendering", tracy::Color::Orange);
         for (const auto& item : this->opaqueMeshRenderers)
         {
             item.second->render();
@@ -381,7 +381,7 @@ void RenderManager::render()
 
 	// Skybox rendering
     {
-        // PROFILING_CPU_ZONE("Skybox Rendering", tracy::Color::LightBlue2);
+        PROFILE_GPU_ZONE("Skybox Rendering", tracy::Color::Yellow);
         if (this->skyboxRenderer.get() != nullptr)
         {
             this->skyboxRenderer->render();

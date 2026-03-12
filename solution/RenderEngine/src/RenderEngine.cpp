@@ -53,36 +53,36 @@ void RenderEngine::run()
         uint32_t elapsedTime = 0;
         while (this->running)
         {
-            PROFILING_CPU_ZONE("Main Loop", tracy::Color::DarkGrey);
+            PROFILE_CPU_ZONE("Main Loop", tracy::Color::DarkGrey);
             {
-                PROFILING_CPU_ZONE("Begin Frame", tracy::Color::LightBlue1);
+                PROFILE_CPU_ZONE("Begin Frame", tracy::Color::LightBlue1);
                 elapsedTime = this->currentStrategy->beginFrame(this);
             }
             {
-                PROFILING_CPU_ZONE("Update", tracy::Color::LightBlue2);
+                PROFILE_CPU_ZONE("Update", tracy::Color::LightBlue2);
                 this->currentStrategy->update(this, elapsedTime * 0.001f);
             }
             {
-                PROFILING_CPU_ZONE("Render", tracy::Color::LightGreen);
+                PROFILE_CPU_ZONE("Render", tracy::Color::LightGreen);
                 this->currentStrategy->render(this);
             }
             {
-                PROFILING_CPU_ZONE("Swap Buffers", tracy::Color::Green);
+                PROFILE_CPU_ZONE("Swap Buffers", tracy::Color::Green);
                 this->currentStrategy->swapBuffers(this);
             }
             {
-                PROFILING_CPU_ZONE("End Frame", tracy::Color::LightPink1);
+                PROFILE_CPU_ZONE("End Frame", tracy::Color::LightPink1);
                 this->currentStrategy->endFrame(this);
             }
             {
-                PROFILING_CPU_ZONE("Dispatch End Actions", tracy::Color::LightPink4);
+                PROFILE_CPU_ZONE("Dispatch End Actions", tracy::Color::LightPink4);
                 this->dispatchEndFrameActions();
 			}
             {
-                PROFILING_CPU_ZONE("Waiting", tracy::Color::White);
+                PROFILE_CPU_ZONE("Waiting", tracy::Color::White);
                 this->currentStrategy->delay(this);
             }
-            PROFILING_FRAME_MARK;
+			ProfilingUtils::onFrameEnd();
         }
 
         this->onQuit();

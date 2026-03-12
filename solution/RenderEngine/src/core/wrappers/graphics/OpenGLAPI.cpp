@@ -5,6 +5,45 @@
 
 #include "OpenGLAPI.h"
 
+#ifdef TRACY_ENABLE
+
+#include "ProfilingUtils.h"
+#include <tracy/TracyOpenGL.hpp>
+
+#include <unordered_map>
+
+void ProfilingUtils::onFrameEnd()
+{
+	TracyGpuCollect;
+	FrameMark;
+}
+
+static std::unordered_map<const char*, tracy::SourceLocationData*> gpuZoneCache;
+
+GpuProfileScope::GpuProfileScope(const char* name, uint32_t color)
+{
+	tracy::SourceLocationData* srcloc = nullptr;
+	auto it = gpuZoneCache.find(name);
+	if (it != gpuZoneCache.end())
+	{
+		srcloc = it->second;
+	}
+	else
+	{
+		srcloc = new tracy::SourceLocationData{ name, TracyFunction,  TracyFile, (uint32_t)TracyLine, color };
+		gpuZoneCache[name] = srcloc;
+	}
+
+	new(_storage) tracy::GpuCtxScope(srcloc, true);
+}
+
+GpuProfileScope::~GpuProfileScope()
+{
+	((tracy::GpuCtxScope*)_storage)->~GpuCtxScope();
+}
+
+#endif // TRACY_ENABLE
+
 namespace sre
 {
 
@@ -60,6 +99,10 @@ void OpenGLAPI::init()
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
 		throw std::string("GLEW didn't init");
+
+#ifdef TRACY_ENABLE
+	TracyGpuContext;
+#endif
 
 	glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
 

@@ -1,35 +1,36 @@
 #pragma once
-
-#include <tracy/Tracy.hpp>
-#include <string>
+#include <cstdint>
 
 #ifdef TRACY_ENABLE
-    #define PROFILING_CPU_ZONE(name, color) ZoneScopedNC(name, color)
-    #define PROFILING_FRAME_MARK FrameMark
-#else
-    #define PROFILING_CPU_ZONE(name, color)
-    #define PROFILING_FRAME_MARK
-#endif
+#include <tracy/Tracy.hpp>
 
-namespace sre
-{
+#define PROFILE_CPU_ZONE(name, color) ZoneScopedNC(name, color)
+#define PROFILE_GPU_ZONE(name, color) GpuProfileScope tracyGpuScope(name, color)
 
 class ProfilingUtils
 {
 public:
-    static void PlotValue(const char* name, int64_t value)
-    {
-#ifdef TRACY_ENABLE
-        TracyPlot(name, value);
-#endif
-    }
-
-    static void Log(const std::string& message, uint32_t color = 0xFFFFFF)
-    {
-#ifdef TRACY_ENABLE
-        TracyMessageC(message.c_str(), message.size(), color);
-#endif
-    }
+	static void onFrameEnd();
 };
 
-} // namespace
+class GpuProfileScope
+{
+public:
+    GpuProfileScope(const char* name, uint32_t color);
+    ~GpuProfileScope();
+
+private:
+    alignas(16) char _storage[64];
+};
+
+#else
+    #define PROFILE_CPU_ZONE(name, color)
+    #define PROFILE_GPU_ZONE(name, color)
+
+class ProfilingUtils
+{
+public:
+    static void onFrameEnd() {}
+};
+
+#endif
