@@ -123,7 +123,7 @@ private:
     bool isAsset() const;
     bool isStored() const;
     bool isSaved() const;
-    Entity* clone();
+    Entity* clone(const std::string& cloneName);
 	void rename(const std::string& newName);
 	void removeDestroyedChildren();
     AEditorProperty* findProperty(const std::string& title);

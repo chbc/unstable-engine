@@ -22,7 +22,7 @@ Entity* AssetsManager::loadEntity(AScene* scene, const char* filePath, std::stri
 	
 	AAsset* prototype = this->entitiesCollection.loadAsset(relativePath, loadFunction);
 	Entity* prototypeEntity = static_cast<Entity*>(prototype);
-	Entity* result = prototypeEntity->clone();
+	Entity* result = prototypeEntity->clone(prototypeEntity->getName());
 	result->name = name;
 
 	return result;

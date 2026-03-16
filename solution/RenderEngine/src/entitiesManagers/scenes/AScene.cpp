@@ -85,8 +85,7 @@ Entity* AScene::duplicateEntity(Entity* entity)
     {
         std::string name = entity->name;
         this->resolveName(name, nullptr);
-        result = entity->clone();
-        result->name = name;
+        result = entity->clone(name);
         this->entities[name] = UPTR<Entity>{ result };
 
 		TransformComponent* resultTransform = result->getTransform();

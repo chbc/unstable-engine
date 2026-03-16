@@ -54,9 +54,11 @@ void EditorSceneTree::drawScene(AScene* scene)
 		if (ImGui::CollapsingHeader(scene->label.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 		{
 			this->handleDropToRoot(scene);
-			for (const auto& item : scene->entities)
+			size_t size = scene->entities.size();
+			for (size_t i = 0; i < size; ++i)
 			{
-				this->drawEntityTree(scene, item.second.get(), 0);
+				const auto& item = std::next(scene->entities.begin(), i);
+				this->drawEntityTree(scene, item->second.get(), 0);
 			}
 		}
 	}

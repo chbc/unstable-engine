@@ -433,10 +433,9 @@ bool Entity::isAsset() const
 	return !this->filePath.empty();
 }
 
-Entity* Entity::clone()
+Entity* Entity::clone(const std::string& cloneName)
 {
-	Entity* result = Create(this->name, this->getClassName());
-	result->name = this->name;
+	Entity* result = Create(cloneName, this->getClassName());
 	result->filePath = this->filePath;
 
 	// properties
@@ -467,7 +466,7 @@ Entity* Entity::clone()
 	// children
 	for (Entity* item : this->childrenList)
 	{
-		Entity* childEntity = item->clone();
+		Entity* childEntity = item->clone(item->getName());
 		result->addChild(UPTR<Entity>{ childEntity });
 	}
 
