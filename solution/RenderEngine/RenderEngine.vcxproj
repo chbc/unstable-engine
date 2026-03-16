@@ -610,6 +610,7 @@
     <ClCompile Include="src\utils\math\Bounds.cpp" />
     <ClCompile Include="src\utils\math\MathUtils.cpp" />
     <ClCompile Include="src\utils\math\Rect.cpp" />
+    <ClCompile Include="src\utils\StringUtils.cpp" />
     <ClCompile Include="thirdParties\imguizmo\ImGuizmo.cpp" />
     <ClCompile Include="thirdParties\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="thirdParties\imgui\backends\imgui_impl_sdl2.cpp" />

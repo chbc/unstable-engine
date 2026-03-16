@@ -29,6 +29,8 @@ namespace sre
 
 class Entity : public AAsset
 {
+protected:
+	TransformComponent* transform;
 
 private:
     static const char* BASE_CLASS_NAME;
@@ -38,9 +40,9 @@ private:
     Entity* parent{ nullptr };
     std::unordered_map<std::string, UPTR<Entity>> children;
     std::vector<Entity*> childrenList;
+    std::string name;
     bool alive{ true };
     bool enabled{ true };
-    std::string name;
     bool propertiesSaved{ true };
     bool componentsSaved{ true };
     bool childrenSaved{ true };
@@ -48,10 +50,6 @@ private:
     bool componentsStored{ true };
     bool childrenStored{ true };
 	bool dontShowInEditorSceneTree{ false };
-    static uint32_t EntityIndex;
-
-protected:
-	TransformComponent* transform;
 
 public:
     SRE_API Entity(std::string arg_name);
@@ -129,9 +127,9 @@ private:
 	void rename(const std::string& newName);
 	void removeDestroyedChildren();
     AEditorProperty* findProperty(const std::string& title);
-	void resolveName(std::string& entityName);
+	void resolveChildName(std::string& entityName);
     static Entity* Create(std::string arg_name, const std::string& className);
-    static std::string GenerateName(const std::string& duplicateName = "");
+    static void GenerateName(const std::unordered_map<std::string, UPTR<Entity>>& siblings, std::string& resultName);
     template <typename T> uint16_t getComponentId();
 
     friend class AScene;

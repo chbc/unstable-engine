@@ -6,13 +6,12 @@
 #include "SingletonsManager.h"
 #include "BoolEditorProperty.h"
 #include "CollectionsUtils.h"
+#include "StringUtils.h"
 
 #include <sstream>
 
 namespace sre
 {
-
-uint32_t Entity::EntityIndex = 0;
 
 const char* Entity::BASE_CLASS_NAME = Entity::AddType<Entity>("Entity");
 
@@ -510,16 +509,9 @@ AEditorProperty* Entity::findProperty(const std::string& title)
 	return result;
 }
 
-void Entity::resolveName(std::string& entityName)
+void Entity::resolveChildName(std::string& entityName)
 {
-	if (entityName.empty())
-	{
-		entityName = GenerateName();
-	}
-	else if (this->children.count(entityName) > 0)
-	{
-		entityName = Entity::GenerateName(entityName);
-	}
+	GenerateName(this->children, entityName);
 }
 
 Entity* Entity::Create(std::string arg_name, const std::string& className)
@@ -543,15 +535,21 @@ Entity* Entity::Create(std::string arg_name, const std::string& className)
 	return result;
 }
 
-std::string Entity::GenerateName(const std::string& duplicateName)
+void Entity::GenerateName(const std::unordered_map<std::string, UPTR<Entity>>& siblings, std::string& resultName)
 {
-	std::stringstream stream;
-	std::string baseName = duplicateName.empty() ? "entity" : duplicateName;
-	stream << baseName << "_" << EntityIndex;
-	std::string result = stream.str();
-	EntityIndex++;
+	resultName = !resultName.empty() ? resultName : BASE_CLASS_NAME;
 
-	return result;
+	auto it = siblings.find(resultName);
+	while (it != siblings.end())
+	{
+		std::string resultString;
+		int entityIndex = 0;
+		StringUtils::splitStringInt(resultName, resultString, entityIndex);
+		entityIndex++;
+
+		resultName = resultString + std::to_string(entityIndex);
+		it = siblings.find(resultName);
+	}
 }
 
 } // namespace

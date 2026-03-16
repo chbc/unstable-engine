@@ -162,18 +162,11 @@ void AScene::resolveName(std::string& entityName, Entity* parent)
 {
     if (parent != nullptr)
     {
-        parent->resolveName(entityName);
+        parent->resolveChildName(entityName);
 	}
     else
     {
-        if (entityName.empty())
-        {
-            entityName = Entity::GenerateName();
-        }
-        else if (this->entities.count(entityName) > 0)
-        {
-            entityName = Entity::GenerateName(entityName);
-        }
+        Entity::GenerateName(this->entities, entityName);
     }
 }
 
