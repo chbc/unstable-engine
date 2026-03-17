@@ -100,7 +100,7 @@ void RenderEngine::quit()
     this->running = false;
 }
 
-void RenderEngine::loadScene(std::string scenePath)
+void RenderEngine::loadScene(const std::string& scenePath)
 {
     std::function<void(void)> action = [=]
     {
@@ -111,7 +111,7 @@ void RenderEngine::loadScene(std::string scenePath)
     endFrameActions.emplace(action);
 }
 
-void RenderEngine::loadGuiScene(std::string guiScenePath)
+void RenderEngine::loadGuiScene(const std::string& guiScenePath)
 {
 	std::function<void(void)> action = [=]
 	{
@@ -153,11 +153,10 @@ void RenderEngine::changeStrategy(const EExecutionMode::Type mode)
     {
         this->currentStrategy->cleanUp();
         this->currentStrategy = (mode == EExecutionMode::APPLICATION) ? this->applicationStrategy.get() : this->editorStrategy.get();
+        this->currentStrategy->reloadScenes();
         this->currentStrategy->init(this);
     };
     endFrameActions.emplace(action);
-
-    // XXX this->loadScenes();
 }
 
 void RenderEngine::release()

@@ -79,6 +79,14 @@ void AExecutionStrategy::cleanUp()
     messagesManager->removeListener<EntityDestroyedMessage>(this->entityDestroyedAction.get());
 }
 
+void AExecutionStrategy::reloadScenes()
+{
+    this->renderManager->cleanUpMeshes();
+    this->renderManager->cleanUpGui();
+    this->scenesManager->reloadScenes();
+    this->renderManager->initPostProcessing();
+}
+
 void AExecutionStrategy::loadScene(const char* scenePath)
 {
     this->renderManager->cleanUpMeshes();

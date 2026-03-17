@@ -46,10 +46,11 @@ public:
 private:
     void initEntities();
     void update(float elapsedTime);
-    void loadScene(const char* scenePath);
-    void loadGuiScene(const char* scenePath);
-    void saveScene(std::string scenePath = "");
-    void saveGuiScene(std::string scenePath = "");
+    void reloadScenes();
+    void loadScene(const std::string& scenePath);
+    void loadGuiScene(const std::string& scenePath);
+    void saveScene(const std::string& scenePath = "");
+    void saveGuiScene(const std::string& scenePath = "");
     bool isSceneStored();
     bool isGuiSceneStored();
     bool isBaseSceneStored(AScene* baseScene);

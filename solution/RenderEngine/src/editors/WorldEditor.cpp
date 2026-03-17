@@ -152,6 +152,8 @@ void WorldEditor::cleanUp()
         this->currentPopup->close(false);
     }
 
+    this->controller->setSelectedEntity(nullptr);
+
     this->menuBar->onCleanUp();
     for (const auto& item : this->windows)
     {

@@ -38,6 +38,7 @@ protected:
 	virtual void release() {}
 
 private:
+	void reloadScenes();
 	void loadScene(const char* scenePath);
 	void loadGuiScene(const char* guiScenePath);
 	void onEntityDestroyed(void* data);

@@ -191,7 +191,13 @@ void ScenesManager::update(float elapsedTime)
     this->editorScene->update(elapsedTime);
 }
 
-void ScenesManager::loadScene(const char* scenePath)
+void ScenesManager::reloadScenes()
+{
+	this->loadScene(this->scene->filePath.c_str());
+	this->loadGuiScene(this->guiScene->filePath.c_str());
+}
+
+void ScenesManager::loadScene(const std::string& scenePath)
 {
 	std::string sceneName = FileUtils::getFileName(scenePath);
     this->scene.reset(new Scene{ sceneName, scenePath });
@@ -199,7 +205,7 @@ void ScenesManager::loadScene(const char* scenePath)
     this->scene->onSceneLoaded();
 }
 
-void ScenesManager::loadGuiScene(const char* scenePath)
+void ScenesManager::loadGuiScene(const std::string& scenePath)
 {
     std::string sceneName = FileUtils::getFileName(scenePath);
     this->guiScene.reset(new GUIScene{ sceneName, scenePath });
@@ -207,7 +213,7 @@ void ScenesManager::loadGuiScene(const char* scenePath)
     this->guiScene->onSceneLoaded();
 }
 
-void ScenesManager::saveScene(std::string scenePath)
+void ScenesManager::saveScene(const std::string& scenePath)
 {
     if (!scenePath.empty())
     {
@@ -219,7 +225,7 @@ void ScenesManager::saveScene(std::string scenePath)
     this->scene->onSceneSaved();
 }
 
-void ScenesManager::saveGuiScene(std::string scenePath)
+void ScenesManager::saveGuiScene(const std::string& scenePath)
 {
     if (!scenePath.empty())
     {

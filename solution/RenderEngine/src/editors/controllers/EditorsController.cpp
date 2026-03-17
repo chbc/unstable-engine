@@ -51,6 +51,7 @@ void EditorsController::openGui()
 
 void EditorsController::saveScene()
 {
+	this->setSelectedEntity(nullptr);
 	if (this->scenesManager->isSceneStored())
 	{
 		this->scenesManager->saveScene();
@@ -68,6 +69,7 @@ void EditorsController::saveScene()
 
 void EditorsController::saveGui()
 {
+	this->setSelectedEntity(nullptr);
 	if (this->scenesManager->isGuiSceneStored())
 	{
 		this->scenesManager->saveGuiScene();

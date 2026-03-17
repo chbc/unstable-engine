@@ -29,8 +29,8 @@ public:
     static RenderEngine* getInstance();
     void run();
     void quit();
-    void loadScene(std::string scenePath);
-    void loadGuiScene(std::string guiScenePath);
+    void loadScene(const std::string& scenePath);
+    void loadGuiScene(const std::string& guiScenePath);
 
 protected:
     virtual void onInit() =0;
