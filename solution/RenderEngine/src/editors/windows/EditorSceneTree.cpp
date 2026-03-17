@@ -145,7 +145,7 @@ void EditorSceneTree::drawContextualMenu(Entity* selectedEntity, Entity* entity,
 		ImGui::Text("[%s]", name.c_str());
 		if (!selectedEntity->isAsset())
 		{
-			if (ImGui::MenuItem("Save new Entity Asset"))
+			if (ImGui::MenuItem("Save as new Entity Asset"))
 			{
 				this->controller->saveEntity(selectedEntity);
 				ImGui::CloseCurrentPopup();
