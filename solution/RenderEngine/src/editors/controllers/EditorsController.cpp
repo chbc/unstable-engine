@@ -123,6 +123,7 @@ void EditorsController::saveEntity(Entity* entity)
 	{
 		filePath = this->currentDirectory + "/" + entity->getName() + ".ent";
 		FileUtils::resolveFileNameConflict(filePath);
+		filePath = FileUtils::getContentRelativePath(filePath);
 		entity->filePath = filePath;
 	}
 
