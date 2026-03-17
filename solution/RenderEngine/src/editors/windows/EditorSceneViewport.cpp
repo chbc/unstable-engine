@@ -27,6 +27,8 @@ void EditorSceneViewport::onInit()
 {
 	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
 
+	ScenesManager* scenesManager = singletonsManager->get<ScenesManager>();
+	Scene* editorScene = scenesManager->getEditorScene();
 	if (this->renderManager == nullptr)
 	{
 
@@ -49,12 +51,14 @@ void EditorSceneViewport::onInit()
 		this->renderManager = singletonsManager->get<RenderManager>();
 		this->renderManager->setEditorCamera(this->sceneViewportCamera.getCameraComponent());
 
-		ScenesManager* scenesManager = singletonsManager->get<ScenesManager>();
-		Scene* editorScene = scenesManager->getEditorScene();
-		gridEntity = editorScene->createMeshEntity("engine/media/meshes/Plane.mesh", "_grid");
-		gridEntity->getTransform()->setScale({ 50.0f, 1.0f, 50.0f });
-		MeshComponent* gridMesh = gridEntity->getComponent<MeshComponent>();
+		this->gridEntity = editorScene->createMeshEntity("engine/media/meshes/Plane.mesh", "_grid");
+		this->gridEntity->getTransform()->setScale({ 50.0f, 1.0f, 50.0f });
+		MeshComponent* gridMesh = this->gridEntity->getComponent<MeshComponent>();
 		gridMesh->loadMaterial("engine/media/materials/GridMaterial.mat");
+	}
+	else
+	{
+		this->renderManager->addEntity(this->gridEntity);
 	}
 
 	MessagesManager* messagesManager = singletonsManager->get<MessagesManager>();
