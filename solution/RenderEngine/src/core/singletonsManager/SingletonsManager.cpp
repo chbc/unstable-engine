@@ -11,6 +11,7 @@
 #include "AtlasManager.h"
 #include "ScenesManager.h"
 #include "GlobalUniformsManager.h"
+#include "PhysicsManager.h"
 
 namespace sre
 {
@@ -35,6 +36,7 @@ SingletonsManager::SingletonsManager()
     this->add<MessagesManager>();
     this->add<AtlasManager>();
     this->add<ScenesManager>();
+	this->add<PhysicsManager>();
 }
 
 bool SingletonsManager::isInitialized()

@@ -7,6 +7,7 @@
 #include "SingletonsManager.h"
 #include "EngineValues.h"
 #include "MeshComponent.h"
+#include "BoxColliderComponent.h"
 #include "AssetsManager.h"
 #include "FileUtils.h"
 
@@ -45,6 +46,7 @@ Entity* Scene::createMeshEntity(Model* model, ABaseMaterial* material, const cha
         result = this->createEntity(resultMeshName.c_str(), parent);
         MeshComponent* meshComponent = result->addComponent<MeshComponent>();
         meshComponent->load(model, material, resultMeshName.c_str());
+        result->addComponent<BoxColliderComponent>();
     }
     else
     {

@@ -9,7 +9,7 @@
 namespace sre
 {
 
-constexpr size_t SINGLETONS_COUNT = 11;
+constexpr size_t SINGLETONS_COUNT = 12;
 
 class SingletonsManager
 {

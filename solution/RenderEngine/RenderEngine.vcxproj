@@ -508,6 +508,7 @@
     <ClCompile Include="src\core\multimedia\Input.cpp" />
     <ClCompile Include="src\core\multimedia\textures\atlases\FontAtlas.cpp" />
     <ClCompile Include="src\core\multimedia\textures\TextureCreator.cpp" />
+    <ClCompile Include="src\core\physics\PhysicsManager.cpp" />
     <ClCompile Include="src\core\singletonsManager\SingletonsManager.cpp" />
     <ClCompile Include="src\core\wrappers\graphics\OpenGLESAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\gui\ImGuiAPI.cpp" />
@@ -544,6 +545,8 @@
     <ClCompile Include="src\entities\components\movements\OrbitMovementComponent.cpp" />
     <ClCompile Include="src\entities\components\EntityComponentTypes.cpp" />
     <ClCompile Include="src\entities\components\movements\PanMovementComponent.cpp" />
+    <ClCompile Include="src\entities\components\physics\BoxColliderComponent.cpp" />
+    <ClCompile Include="src\entities\components\physics\RigidbodyComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\ARenderableComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\guizmos\GuizmoComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\ABaseGUIComponent.cpp" />
@@ -703,6 +706,7 @@
     <ClInclude Include="include\ApplicationStrategy.h" />
     <ClInclude Include="include\AssetsManager.h" />
     <ClInclude Include="include\Bounds.h" />
+    <ClInclude Include="include\BoxColliderComponent.h" />
     <ClInclude Include="include\CameraUBO.h" />
     <ClInclude Include="include\ColorMeshData.h" />
     <ClInclude Include="include\ControllerInput.h" />
@@ -741,6 +745,7 @@
     <ClInclude Include="include\ModelImportData.h" />
     <ClInclude Include="include\NormalTextureEditorProperty.h" />
     <ClInclude Include="include\PanMovementComponent.h" />
+    <ClInclude Include="include\PhysicsManager.h" />
     <ClInclude Include="include\ProfilingUtils.h" />
     <ClInclude Include="include\Ray.h" />
     <ClInclude Include="include\MaterialComponentTypes.h" />
@@ -751,6 +756,7 @@
     <ClInclude Include="include\PBRMaterialComponent.h" />
     <ClInclude Include="include\PBRRendererComponent.h" />
     <ClInclude Include="include\ARenderableComponent.h" />
+    <ClInclude Include="include\RigidbodyComponent.h" />
     <ClInclude Include="include\ScenesManager.h" />
     <ClInclude Include="include\AGraphicsWrapper.h" />
     <ClInclude Include="include\AImGuiAPIState.h" />

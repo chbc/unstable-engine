@@ -68,7 +68,7 @@ void GuizmoRenderer::render()
 		TransformComponent* transform = entity->getTransform();
 		const glm::mat4& modelMatrix = transform->getMatrix();
 		glm::mat4 resultMatrix = glm::translate(modelMatrix, item->bounds.center);
-		resultMatrix = glm::scale(resultMatrix, item->bounds.size);
+		resultMatrix = glm::scale(resultMatrix, item->bounds.getSize());
 
 		this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &resultMatrix[0][0]);
 		this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &mesh->color[0]);

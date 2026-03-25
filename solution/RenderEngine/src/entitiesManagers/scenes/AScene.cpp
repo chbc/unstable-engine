@@ -4,6 +4,7 @@
 #include "RenderManager.h"
 #include "AssetsManager.h"
 #include "MessagesManager.h"
+#include "PhysicsManager.h"
 #include "EditorMessages.h"
 #include "FileUtils.h"
 
@@ -135,9 +136,11 @@ void AScene::removeDestroyedEntities()
 void AScene::onSceneLoaded()
 {
     RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+	PhysicsManager* physicsManager = SingletonsManager::getInstance()->get<PhysicsManager>();
     for (const auto& item : this->entities)
     {
         renderManager->addEntity(item.second.get());
+		physicsManager->addEntity(item.second.get());
     }
 }
 

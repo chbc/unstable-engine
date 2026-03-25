@@ -145,7 +145,7 @@ void EditorsController::loadFileFromBrowser(const std::string& filePath)
 		{
 			Entity* entity = this->scenesManager->createEntityFromFile(filePath);
 			this->scenesManager->setupEntityInitialPosition(entity);
-			this->scenesManager->addToRenderer(entity);
+			this->scenesManager->addToRendererAndPhysics(entity);
 			this->tryLoadMaterialToEntity(entity, filePath);
 			break;
 		}

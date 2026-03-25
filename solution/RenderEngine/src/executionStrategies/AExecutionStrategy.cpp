@@ -81,15 +81,12 @@ void AExecutionStrategy::cleanUp()
 
 void AExecutionStrategy::reloadScenes()
 {
-    this->renderManager->cleanUpMeshes();
-    this->renderManager->cleanUpGui();
     this->scenesManager->reloadScenes();
     this->renderManager->initPostProcessing();
 }
 
 void AExecutionStrategy::loadScene(const char* scenePath)
 {
-    this->renderManager->cleanUpMeshes();
     this->scenesManager->loadScene(scenePath);
     this->renderManager->initPostProcessing();
 }

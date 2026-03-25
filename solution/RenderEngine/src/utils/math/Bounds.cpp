@@ -17,20 +17,33 @@ void Bounds::setup(const std::vector<VertexData>& vertexData)
 	}
 
 	this->center = (minVertex + maxVertex) * 0.5f;
-	this->extents = (maxVertex - minVertex) * 0.5f;
-	this->size = this->extents * 2.0f;
-	this->min = minVertex;
-	this->max = maxVertex;
+	this->halfExtents = (maxVertex - minVertex) * 0.5f;
 
 	this->fixVertices();
+}
+
+bool Bounds::intersects(glm::vec3 position, glm::vec3 otherPosition, const Bounds& other)
+{
+	position = position + this->center;
+	otherPosition = otherPosition + other.center;
+
+	return
+	!(
+		((position.x + this->halfExtents.x) < (otherPosition.x - other.halfExtents.x)) ||
+		((position.x - this->halfExtents.x) > (otherPosition.x + other.halfExtents.x)) ||
+		((position.y + this->halfExtents.y) < (otherPosition.y - other.halfExtents.y)) ||
+		((position.y - this->halfExtents.y) > (otherPosition.y + other.halfExtents.y)) ||
+		((position.z + this->halfExtents.z) < (otherPosition.z - other.halfExtents.z)) ||
+		((position.z - this->halfExtents.z) > (otherPosition.z + other.halfExtents.z))
+	);
 }
 
 bool Bounds::intersects(const Ray& ray, const glm::mat4& worldMatrix, float& distance) const
 {
 	bool result = false;
 
-	glm::vec3 worldMin = this->min;
-	glm::vec3 worldMax = this->max;
+	glm::vec3 worldMin = this->center - this->halfExtents;
+	glm::vec3 worldMax = this->center + this->halfExtents;
 
 	worldMin = worldMatrix * glm::vec4{ worldMin, 1.0f };
 	worldMax = worldMatrix * glm::vec4{ worldMax, 1.0f };
@@ -52,41 +65,37 @@ bool Bounds::intersects(const Ray& ray, const glm::mat4& worldMatrix, float& dis
 
 void Bounds::add(const Bounds& other)
 {
-	this->min = glm::min(this->min, other.min);
-	this->max = glm::max(this->max, other.max);
-	this->center = (this->min + this->max) * 0.5f;
-	this->extents = (this->max - this->min) * 0.5f;
-	this->size = this->extents * 2.0f;
+	this->center += other.center;
+	this->halfExtents = glm::max(this->halfExtents, other.halfExtents);
 	this->fixVertices();
+}
+
+const glm::vec3 Bounds::getSize() const
+{
+	return (this->halfExtents * 2.0f);
 }
 
 void Bounds::reset()
 {
 	this->center = glm::vec3{ 0.0f };
-	this->extents = glm::vec3{ 0.0f };
-	this->size = glm::vec3{ 0.0f };
-	this->min = glm::vec3{ 0.0f };
-	this->max = glm::vec3{ 0.0f };
+	this->halfExtents = glm::vec3{ 0.0f };
 }
 
 void Bounds::fixVertices()
 {
-	if (this->max.x - this->min.x < 0.0001f)
+	if (halfExtents.x < 0.0001f)
 	{
-		this->max.x += 0.0001f;
-		this->min.x -= 0.0001f;
+		halfExtents.x = 0.0001f;
 	}
 
-	if (this->max.y - this->min.y < 0.0001f)
+	if (halfExtents.y < 0.0001f)
 	{
-		this->max.y += 0.0001f;
-		this->min.y -= 0.0001f;
+		halfExtents.y = 0.0001f;
 	}
 
-	if (this->max.z - this->min.z < 0.0001f)
+	if (halfExtents.z < 0.0001f)
 	{
-		this->max.z += 0.0001f;
-		this->min.z -= 0.0001f;
+		halfExtents.z = 0.0001f;
 	}
 }
 

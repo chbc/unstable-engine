@@ -35,7 +35,7 @@ struct MeshData2D;
 using StandardRendererMap = std::unordered_map<ABaseMaterial*, SPTR<MeshRenderer>, MaterialHash, MaterialEqual>;
 using CustomRendererMap = std::unordered_map<ABaseMaterial*, SPTR<CustomRenderer>, MaterialHash, MaterialEqual>;
 
-class RenderManager : ASingleton
+class RenderManager : public ASingleton
 {
 private:
     class ShaderManager         *shaderManager;

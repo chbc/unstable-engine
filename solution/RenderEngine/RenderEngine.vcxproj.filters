@@ -489,6 +489,15 @@
     <ClCompile Include="src\utils\StringUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\physics\PhysicsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\physics\BoxColliderComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entities\components\physics\RigidbodyComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entities\Entity.h">
@@ -1248,6 +1257,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ProfilingUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PhysicsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BoxColliderComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RigidbodyComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

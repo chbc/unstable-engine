@@ -5,6 +5,7 @@
 #include "FileUtils.h"
 #include "SingletonsManager.h"
 #include "RenderManager.h"
+#include "PhysicsManager.h"
 
 namespace sre
 {
@@ -12,6 +13,7 @@ namespace sre
 void ScenesManager::init()
 {
     this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+	this->physicsManager = SingletonsManager::getInstance()->get<PhysicsManager>();
     this->editorScene.reset(new Scene{ "_editor_scene", "" });
 }
 
@@ -29,14 +31,14 @@ Entity* ScenesManager::createEntity(std::string name, Entity* parent)
 Entity* ScenesManager::createEntityFromFile(std::string filePath, Entity* parent)
 {
     Entity* result = this->scene->createEntityFromFile(filePath, parent);
-	this->addToRenderer(result);
+	this->addToRendererAndPhysics(result);
     return result;
 }
 
 Entity* ScenesManager::duplicateEntity(Entity* entity)
 {
 	Entity* result = this->scene->duplicateEntity(entity);
-	this->addToRenderer(result);
+	this->addToRendererAndPhysics(result);
 	return result;
 }
 
@@ -53,7 +55,7 @@ Entity* ScenesManager::getEntity(const std::string& name)
 Entity* ScenesManager::createMeshEntity(Model* model, const char* meshName, Entity* parent)
 {
     Entity* result = this->scene->createMeshEntity(model, meshName, parent);
-    this->addToRenderer(result);
+    this->addToRendererAndPhysics(result);
     return result;
 }
 
@@ -70,49 +72,49 @@ Entity* ScenesManager::createOrthoCamera(Entity* parent)
 Entity* ScenesManager::createDirectionalLight(const std::string& name, Entity* parent)
 {
 	Entity* result = this->scene->createDirectionalLight(name, parent);
-    this->addToRenderer(result);
+    this->addToRendererAndPhysics(result);
     return result;
 }
 
 Entity* ScenesManager::createPointLight(const std::string& name, Entity* parent)
 {
     Entity* result = this->scene->createPointLight(name, parent);
-    this->addToRenderer(result);
+    this->addToRendererAndPhysics(result);
     return result;
 }
 
 Entity* ScenesManager::createSkybox(const std::string& meshFilePath, const std::string& name, Entity* parent)
 {
 	Entity* result = this->scene->createSkybox(meshFilePath, name, parent);
-	this->addToRenderer(result);
+	this->addToRendererAndPhysics(result);
     return result;
 }
 
 Entity* ScenesManager::createGUIImageEntity(const std::string& filePath, const std::string& name)
 {
     Entity* entity = this->guiScene->createGUIImageEntity(filePath, name);
-    this->addToRenderer(entity);
+    this->addToRendererAndPhysics(entity);
     return entity;
 }
 
 Entity* ScenesManager::createGUIImageEntity(const std::string& filePath, const glm::vec2& normalizedSize, const std::string& name)
 {
     Entity* entity = this->guiScene->createGUIImageEntity(filePath, normalizedSize, name);
-    this->addToRenderer(entity);
+    this->addToRendererAndPhysics(entity);
     return entity;
 }
 
 Entity* ScenesManager::createGUIImageEntityFromAtlas(const std::string& filePath, const std::string& imageId, const std::string& name)
 {
     Entity* entity = this->guiScene->createGUIImageEntityFromAtlas(filePath, imageId, name);
-    this->addToRenderer(entity);
+    this->addToRendererAndPhysics(entity);
     return entity;
 }
 
 Entity* ScenesManager::createGUITextEntity(const std::string fontFile, const std::string& name, uint32_t maxItems)
 {
     Entity* entity = this->guiScene->createGUITextEntity(fontFile, name, maxItems);
-    this->addToRenderer(entity);
+    this->addToRendererAndPhysics(entity);
     return entity;
 }
 
@@ -163,9 +165,10 @@ Scene* ScenesManager::getEditorScene()
     return this->editorScene.get();
 }
 
-void ScenesManager::addToRenderer(Entity* entity)
+void ScenesManager::addToRendererAndPhysics(Entity* entity)
 {
 	this->renderManager->addEntity(entity);
+	this->physicsManager->addEntity(entity);
 }
 
 void ScenesManager::setupEntityInitialPosition(Entity* entity)
@@ -189,6 +192,7 @@ void ScenesManager::update(float elapsedTime)
     this->scene->update(elapsedTime);
     this->guiScene->update(elapsedTime);
     this->editorScene->update(elapsedTime);
+	this->physicsManager->update(elapsedTime);
 }
 
 void ScenesManager::reloadScenes()
@@ -199,6 +203,9 @@ void ScenesManager::reloadScenes()
 
 void ScenesManager::loadScene(const std::string& scenePath)
 {
+    this->physicsManager->cleanUp();
+    this->renderManager->cleanUpMeshes();
+
 	std::string sceneName = FileUtils::getFileName(scenePath);
     this->scene.reset(new Scene{ sceneName, scenePath });
     SceneLoader::load(this->scene.get());
@@ -207,6 +214,8 @@ void ScenesManager::loadScene(const std::string& scenePath)
 
 void ScenesManager::loadGuiScene(const std::string& scenePath)
 {
+    this->renderManager->cleanUpGui();
+
     std::string sceneName = FileUtils::getFileName(scenePath);
     this->guiScene.reset(new GUIScene{ sceneName, scenePath });
     SceneLoader::load(this->guiScene.get());
@@ -256,7 +265,7 @@ bool ScenesManager::isBaseSceneStored(AScene* baseScene)
 Entity* ScenesManager::createMeshEntity(const std::string& filePath, const char* meshName)
 {
     Entity* entity = this->scene->createMeshEntity(filePath, meshName);
-    this->addToRenderer(entity);
+    this->addToRendererAndPhysics(entity);
 
     return entity;
 }

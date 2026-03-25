@@ -16,6 +16,7 @@ protected:
 
 private:
     class RenderManager* renderManager{ nullptr };
+	class PhysicsManager* physicsManager{ nullptr };
 
 protected:
     void init() override;
@@ -40,7 +41,7 @@ public:
     SRE_API Entity* raycast(const Ray& ray, Entity* selectedEntity = nullptr);
     SRE_API Scene* getEditorScene();
 
-	void addToRenderer(Entity* entity);
+	void addToRendererAndPhysics(Entity* entity);
 	void setupEntityInitialPosition(Entity* entity);
 
 private:
