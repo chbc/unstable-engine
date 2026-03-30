@@ -11,8 +11,8 @@ namespace sre
 
 IMPLEMENT_PROPERTY(FloatEditorProperty)
 
-FloatEditorProperty::FloatEditorProperty(const char* title, float* arg_values)
-	: AEditorProperty(title), value(arg_values)
+FloatEditorProperty::FloatEditorProperty(const char* title, float* arg_value)
+	: AEditorProperty(title), value(arg_value)
 { }
 
 void FloatEditorProperty::onDraw()

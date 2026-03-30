@@ -9,13 +9,14 @@ namespace sre
 {
 
 class Entity;
-class BoxColliderComponent;
+class AColliderComponent;
 class RigidbodyComponent;
+struct CollisionResult;
 
 class PhysicsManager : public ASingleton
 {
 private:
-	std::vector<BoxColliderComponent*> staticObjects;
+	std::vector<AColliderComponent*> staticObjects;
 	std::vector<RigidbodyComponent*> dynamicObjects;
 
 	static constexpr float GRAVITY{ -9.81f };
@@ -27,13 +28,17 @@ private:
 	void updateVelocities(float elapsedTime);
 	void updateCollisions(float elapsedTime);
 
-	bool checkCollision(BoxColliderComponent* objectA, BoxColliderComponent* objectB);
-	void resolvePosition(RigidbodyComponent* rigidbody, float elapsedTime);
+	bool checkCollision(AColliderComponent* objectA, AColliderComponent* objectB, CollisionResult& collisionResult) const;
+	bool checkCollision(AColliderComponent* objectA, AColliderComponent* objectB) const;
+	void resolveImpulse(RigidbodyComponent* rigidbody, const CollisionResult& collisionResult);
+	void resolvePosition(RigidbodyComponent* rigidbody, const CollisionResult& collisionResult);
 
 	void cleanUp();
 
 friend class ScenesManager;
 friend class AScene;
+friend class AColliderComponent;
+
 };
 
 } // namespace

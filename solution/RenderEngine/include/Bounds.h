@@ -19,7 +19,7 @@ public:
 public:
 	Bounds() = default;
 	void setup(const std::vector<VertexData>& vertexData);
-	bool intersects(glm::vec3 position, glm::vec3 otherPosition, const Bounds& other);
+	bool intersects(const glm::vec3 position, const glm::vec3 otherPosition, const Bounds& other);
 	bool intersects(const Ray& ray, const glm::mat4& worldMatrix, float& distance) const;
 	void add(const Bounds& other);
 	const glm::vec3 getSize() const;

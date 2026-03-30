@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AEntityComponent.h"
+#include "AColliderComponent.h"
 #include "Bounds.h"
 
 #include <glm/vec3.hpp>
@@ -8,7 +8,7 @@
 namespace sre
 {
 
-class SRE_API BoxColliderComponent : public AEntityComponent
+class SRE_API BoxColliderComponent : public AColliderComponent
 {
 DECLARE_COMPONENT()
 

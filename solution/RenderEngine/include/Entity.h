@@ -62,6 +62,7 @@ public:
     template <typename T> bool hasComponent();
 
     AEntityComponent* addComponent(const char* className);
+    SRE_API void removeComponent(AEntityComponent* component);
 
     SRE_API Entity* addChild(Entity* child);
 	SRE_API Entity* addChild(UPTR<Entity> child);

@@ -521,6 +521,7 @@
     <ClCompile Include="src\editors\properties\ColorEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\FloatEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\FontEditorProperty.cpp" />
+    <ClCompile Include="src\editors\properties\IntEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\MaterialEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\MeshEditorProperty.cpp" />
     <ClCompile Include="src\editors\properties\InputTextEditorProperty.cpp" />
@@ -545,8 +546,10 @@
     <ClCompile Include="src\entities\components\movements\OrbitMovementComponent.cpp" />
     <ClCompile Include="src\entities\components\EntityComponentTypes.cpp" />
     <ClCompile Include="src\entities\components\movements\PanMovementComponent.cpp" />
+    <ClCompile Include="src\entities\components\physics\AColliderComponent.cpp" />
     <ClCompile Include="src\entities\components\physics\BoxColliderComponent.cpp" />
     <ClCompile Include="src\entities\components\physics\RigidbodyComponent.cpp" />
+    <ClCompile Include="src\entities\components\physics\SphereColliderComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\ARenderableComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\guizmos\GuizmoComponent.cpp" />
     <ClCompile Include="src\entities\components\renderables\gui\ABaseGUIComponent.cpp" />
@@ -607,6 +610,7 @@
     <ClCompile Include="src\core\wrappers\graphics\OpenGLAPI.cpp" />
     <ClCompile Include="src\core\wrappers\multimedia\SDLAPI.cpp" />
     <ClCompile Include="src\tests\TestServicesProvider.cpp" />
+    <ClCompile Include="src\utils\CollisionUtils.cpp" />
     <ClCompile Include="src\utils\ImGuiLib.cpp" />
     <ClCompile Include="src\utils\Log.cpp" />
     <ClCompile Include="src\utils\FileUtils.cpp" />
@@ -708,6 +712,8 @@
     <ClInclude Include="include\Bounds.h" />
     <ClInclude Include="include\BoxColliderComponent.h" />
     <ClInclude Include="include\CameraUBO.h" />
+    <ClInclude Include="include\AColliderComponent.h" />
+    <ClInclude Include="include\CollisionUtils.h" />
     <ClInclude Include="include\ColorMeshData.h" />
     <ClInclude Include="include\ControllerInput.h" />
     <ClInclude Include="include\CustomMaterial.h" />
@@ -741,6 +747,7 @@
     <ClInclude Include="include\ImGuiLib.h" />
     <ClInclude Include="include\ImportMeshPopup.h" />
     <ClInclude Include="include\InputTextHandler.h" />
+    <ClInclude Include="include\IntEditorProperty.h" />
     <ClInclude Include="include\LightsUBO.h" />
     <ClInclude Include="include\ModelImportData.h" />
     <ClInclude Include="include\NormalTextureEditorProperty.h" />
@@ -854,6 +861,7 @@
     <ClInclude Include="include\SingletonsManager.h" />
     <ClInclude Include="include\SkyboxComponent.h" />
     <ClInclude Include="include\SkyboxRenderer.h" />
+    <ClInclude Include="include\SphereColliderComponent.h" />
     <ClInclude Include="include\SpriteMaterialComponent.h" />
     <ClInclude Include="include\SpriteRendererComponent.h" />
     <ClInclude Include="include\StringEditorProperty.h" />

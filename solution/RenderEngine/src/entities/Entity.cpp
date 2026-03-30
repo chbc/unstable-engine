@@ -42,6 +42,11 @@ AEntityComponent* Entity::addComponent(const char* className)
 	return newComponent;
 }
 
+void Entity::removeComponent(AEntityComponent* component)
+{
+	this->componentsMap.erase(component->getId());
+}
+
 Entity* Entity::addChild(Entity* child)
 {
 	Entity* result = this->addChild(UPTR<Entity>{ child });

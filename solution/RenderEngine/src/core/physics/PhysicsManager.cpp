@@ -1,17 +1,19 @@
 #include "PhysicsManager.h"
 #include "Entity.h"
+#include "SphereColliderComponent.h"
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
+#include "CollisionUtils.h"
 
 namespace sre
 {
 
 void PhysicsManager::addEntity(Entity* entity)
 {
-	BoxColliderComponent* collider = entity->getComponent<BoxColliderComponent>();
-	RigidbodyComponent* rigidbody = entity->getComponent<RigidbodyComponent>();
+	AColliderComponent* collider = entity->getComponent<AColliderComponent>();
 	if (collider)
 	{
+		RigidbodyComponent* rigidbody = entity->getComponent<RigidbodyComponent>();
 		if (rigidbody)
 		{
 			this->dynamicObjects.push_back(rigidbody);
@@ -51,30 +53,84 @@ void PhysicsManager::updateCollisions(float elapsedTime)
 {
 	for (RigidbodyComponent* rigidbody : this->dynamicObjects)
 	{
-		for (BoxColliderComponent* staticCollider : this->staticObjects)
+		for (AColliderComponent* staticCollider : this->staticObjects)
 		{
-			BoxColliderComponent* dynamicCollider = rigidbody->getEntity()->getComponent<BoxColliderComponent>();
-			if (this->checkCollision(dynamicCollider, staticCollider))
+			AColliderComponent* dynamicCollider = rigidbody->getEntity()->getComponent<AColliderComponent>();
+			CollisionResult collisionResult;
+			if (this->checkCollision(dynamicCollider, staticCollider, collisionResult))
 			{
-				this->resolvePosition(rigidbody, elapsedTime);
+				this->resolveImpulse(rigidbody, collisionResult);
+				this->resolvePosition(rigidbody, collisionResult);
 			}
 		}
 	}
 }
 
-bool PhysicsManager::checkCollision(BoxColliderComponent* colliderA, BoxColliderComponent* colliderB)
+bool PhysicsManager::checkCollision(AColliderComponent* colliderA, AColliderComponent* colliderB, CollisionResult& collisionResult) const
 {
-	return (colliderA && colliderB) ? colliderA->intersects(colliderB) : false;
+	bool result = false;
+
+	glm::vec3 positionA = colliderA->getTransform()->getPosition();
+	glm::vec3 positionB = colliderB->getTransform()->getPosition();
+
+	if ((colliderA->collisionType == ECollisionType::SPHERE) && (colliderB->collisionType == ECollisionType::SPHERE))
+	{
+		SphereColliderComponent* sphereColliderA = static_cast<SphereColliderComponent*>(colliderA);
+		SphereColliderComponent* sphereColliderB = static_cast<SphereColliderComponent*>(colliderB);
+
+		result = CollisionUtils::checkSphereSphere
+		(
+			positionA, sphereColliderA->radius, positionB, sphereColliderB->radius,	collisionResult
+		);
+	}
+	else if ((colliderA->collisionType == ECollisionType::SPHERE) && (colliderB->collisionType == ECollisionType::BOX))
+	{
+		SphereColliderComponent* sphereColliderA = static_cast<SphereColliderComponent*>(colliderA);
+		BoxColliderComponent* boxColliderB = static_cast<BoxColliderComponent*>(colliderB);
+		glm::vec3 originB = positionB + boxColliderB->bounds.center;
+
+		result = CollisionUtils::checkSphereBox
+		(
+			positionA, sphereColliderA->radius, originB, boxColliderB->bounds.halfExtents, collisionResult 
+		);
+	}
+
+	return result;
 }
 
-void PhysicsManager::resolvePosition(RigidbodyComponent* rigidbody, float elapsedTime)
+bool PhysicsManager::checkCollision(AColliderComponent* objectA, AColliderComponent* objectB) const
 {
+	CollisionResult result;
+	return this->checkCollision(objectA, objectB, result);
+}
+
+void PhysicsManager::resolveImpulse(RigidbodyComponent* rigidbody, const CollisionResult& collisionResult)
+{
+	float velocityAlongNormal = glm::dot(-rigidbody->velocity, collisionResult.normal);
+
+	if (velocityAlongNormal <= 0.0f)
+	{
+		float magnitude = -(1 + rigidbody->restitution) * velocityAlongNormal;
+		magnitude /= (1.0f / rigidbody->mass);
+
+		glm::vec3 impulse = magnitude * collisionResult.normal;
+		rigidbody->velocity -= (1.0f / rigidbody->mass) * impulse;
+	}
+}
+
+void PhysicsManager::resolvePosition(RigidbodyComponent* rigidbody, const CollisionResult& collisionResult)
+{
+	const float SLOP = 0.01f;
+	const float PERCENT = 0.2f;
+	
+	float depthResult = std::max(collisionResult.depth - SLOP, 0.0f);
+	float inverseMass = 1.0f / rigidbody->mass;
+	glm::vec3 correction = (depthResult / inverseMass) * PERCENT * collisionResult.normal;
+
 	TransformComponent* transform = rigidbody->getTransform();
 	glm::vec3 position = transform->getPosition();
-	position = position - (rigidbody->velocity * elapsedTime);
+	position = position - (inverseMass * correction);
 	transform->setPosition(position);
-	rigidbody->velocity = glm::vec3{ 0.0f };
-	rigidbody->acceleration = glm::vec3{ 0.0f };
 }
 
 void PhysicsManager::cleanUp()

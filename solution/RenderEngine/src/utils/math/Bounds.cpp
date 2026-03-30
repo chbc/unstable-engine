@@ -1,7 +1,6 @@
 #include "Bounds.h"
 #include "MeshData.h"
-
-#include <algorithm>
+#include "CollisionUtils.h"
 
 namespace sre
 {
@@ -22,19 +21,15 @@ void Bounds::setup(const std::vector<VertexData>& vertexData)
 	this->fixVertices();
 }
 
-bool Bounds::intersects(glm::vec3 position, glm::vec3 otherPosition, const Bounds& other)
+bool Bounds::intersects(const glm::vec3 position, const glm::vec3 otherPosition, const Bounds& other)
 {
-	position = position + this->center;
-	otherPosition = otherPosition + other.center;
-
-	return
-	!(
-		((position.x + this->halfExtents.x) < (otherPosition.x - other.halfExtents.x)) ||
-		((position.x - this->halfExtents.x) > (otherPosition.x + other.halfExtents.x)) ||
-		((position.y + this->halfExtents.y) < (otherPosition.y - other.halfExtents.y)) ||
-		((position.y - this->halfExtents.y) > (otherPosition.y + other.halfExtents.y)) ||
-		((position.z + this->halfExtents.z) < (otherPosition.z - other.halfExtents.z)) ||
-		((position.z - this->halfExtents.z) > (otherPosition.z + other.halfExtents.z))
+	CollisionResult collisionResult;
+	
+	glm::vec3 origin = position + this->center;
+	glm::vec3 otherOrigin = otherPosition + other.center;
+	return CollisionUtils::checkBoxBox
+	(
+		origin, this->halfExtents, otherOrigin, other.halfExtents, collisionResult
 	);
 }
 

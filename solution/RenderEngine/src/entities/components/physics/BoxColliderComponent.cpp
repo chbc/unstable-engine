@@ -5,9 +5,10 @@
 namespace sre
 {
 
-IMPLEMENT_COMPONENT(BoxColliderComponent)
+IMPLEMENT_CHILD_COMPONENT(BoxColliderComponent, AColliderComponent)
 
-BoxColliderComponent::BoxColliderComponent(Entity* entity) : AEntityComponent(entity)
+BoxColliderComponent::BoxColliderComponent(Entity* entity) 
+	: AColliderComponent(entity, ECollisionType::BOX)
 {
 	entity->getBounds(this->bounds);
 }
