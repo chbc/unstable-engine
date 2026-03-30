@@ -28,6 +28,7 @@ public:
 
 private:
 	void drawAddComponentButton(Entity* selectedEntity);
+	bool drawComponentContextualMenu(AEntityComponent* component);
 };
 
 } // namespace

@@ -40,7 +40,13 @@ void EditorEntityProperties::onEditorGUI()
 			std::string componentName = component.second->getClassName();
 			if (componentName != "GuizmoComponent")
 			{
-				if (ImGui::CollapsingHeader(componentName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+				bool isHeaderOpen = ImGui::CollapsingHeader(componentName.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+				if (this->drawComponentContextualMenu(component.second.get()))
+				{
+					break;
+				}
+
+				if (isHeaderOpen)
 				{
 					if (ImGui::BeginTable("Component Properties", 2, flags))
 					{
@@ -93,6 +99,26 @@ void EditorEntityProperties::drawAddComponentButton(Entity* selectedEntity)
 	{
 		this->addingComponent = false;
 	}
+}
+
+bool EditorEntityProperties::drawComponentContextualMenu(AEntityComponent* component)
+{
+	bool result = false;
+	if (ImGui::BeginPopupContextItem(component->getClassName()))
+	{
+		if (ImGui::MenuItem("Remove Component"))
+		{
+			Entity* entity = component->getEntity();
+			entity->removeComponent(component);
+			ImGui::CloseCurrentPopup();
+
+			result = true;
+		}
+
+		ImGui::EndPopup();
+	}
+
+	return result;
 }
 
 } // namespace
