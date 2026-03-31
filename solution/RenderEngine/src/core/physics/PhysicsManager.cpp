@@ -27,11 +27,28 @@ void PhysicsManager::addEntity(Entity* entity)
 
 void PhysicsManager::update(float elapsedTime)
 {
-	this->updateVelocities(elapsedTime);
-	this->updateCollisions(elapsedTime);
+	if (elapsedTime > 0.25f)
+	{
+		elapsedTime = 0.25f;
+	}
+
+	this->accumulator += elapsedTime;
+
+	while (accumulator >= TIME_STEP)
+	{
+		this->step(TIME_STEP);
+		this->accumulator -= TIME_STEP;
+	}
 }
 
-void PhysicsManager::updateVelocities(float elapsedTime)
+void PhysicsManager::step(float timeStep)
+{
+	this->updateVelocities(timeStep);
+	this->updateCollisions();
+
+}
+
+void PhysicsManager::updateVelocities(float timeStep)
 {
 	for (RigidbodyComponent* rigidbody : this->dynamicObjects)
 	{
@@ -39,17 +56,17 @@ void PhysicsManager::updateVelocities(float elapsedTime)
 		{
 			rigidbody->acceleration.y += GRAVITY;
 		}
-		rigidbody->velocity += rigidbody->acceleration * elapsedTime;
+		rigidbody->velocity += rigidbody->acceleration * timeStep;
 		rigidbody->acceleration = glm::vec3(0.0f);
 
 		TransformComponent* transform = rigidbody->getTransform();
 		glm::vec3 newPosition = transform->getPosition();
-		newPosition += rigidbody->velocity * elapsedTime;
+		newPosition += rigidbody->velocity * timeStep;
 		transform->setPosition(newPosition);
 	}
 }
 
-void PhysicsManager::updateCollisions(float elapsedTime)
+void PhysicsManager::updateCollisions()
 {
 	for (RigidbodyComponent* rigidbody : this->dynamicObjects)
 	{

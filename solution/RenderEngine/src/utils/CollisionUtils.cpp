@@ -40,14 +40,16 @@ bool checkSphereBox
 {
 	bool result = false;
 
-	glm::vec3 closestPoint = glm::clamp(positionA, originB - halfExtentsB, originB + halfExtentsB);
-	glm::vec3 direction = positionA - closestPoint;
-	float distance = glm::length(direction);
+	glm::vec3 closestPointB = glm::clamp(positionA, originB - halfExtentsB, originB + halfExtentsB);
+	glm::vec3 toObjectB = closestPointB - positionA;
+	float distanceSquared = glm::length2(toObjectB);
 
-	if (distance < radiusA)
+	if (distanceSquared < radiusA * radiusA)
 	{
-		collisionResult.normal = glm::normalize(direction);
+		result = true;
+		float distance = glm::sqrt(distanceSquared);
 		collisionResult.depth = radiusA - distance;
+		collisionResult.normal = (distance != 0.0f) ? toObjectB / distance : glm::vec3{ 0.0f, 1.0f, 0.0 };
 	}
 
 	return result;

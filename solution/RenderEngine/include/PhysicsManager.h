@@ -19,14 +19,17 @@ private:
 	std::vector<AColliderComponent*> staticObjects;
 	std::vector<RigidbodyComponent*> dynamicObjects;
 
+	float accumulator{ 0.0f };
 	static constexpr float GRAVITY{ -9.81f };
+	static constexpr float TIME_STEP = 1.0f / 60.0f;
 
 private:
 	void addEntity(Entity* entity);
 	void update(float elapsedTime);
+	void step(float timeStep);
 
-	void updateVelocities(float elapsedTime);
-	void updateCollisions(float elapsedTime);
+	void updateVelocities(float timeStep);
+	void updateCollisions();
 
 	bool checkCollision(AColliderComponent* objectA, AColliderComponent* objectB, CollisionResult& collisionResult) const;
 	bool checkCollision(AColliderComponent* objectA, AColliderComponent* objectB) const;
