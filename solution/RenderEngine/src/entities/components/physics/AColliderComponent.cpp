@@ -11,6 +11,11 @@ AColliderComponent::AColliderComponent(Entity* entity, ECollisionType arg_collis
 	: AEntityComponent(entity), collisionType(arg_collisionType)
 { }
 
+void AColliderComponent::setCollisionAction(const CollisionAction& action)
+{
+	this->collisionAction = action;
+}
+
 bool AColliderComponent::intersects(AColliderComponent* other, CollisionResult& result)
 {
 	PhysicsManager* physicsManager = SingletonsManager::Get<PhysicsManager>();
@@ -21,6 +26,14 @@ bool AColliderComponent::intersects(AColliderComponent* other)
 {
 	PhysicsManager* physicsManager = SingletonsManager::Get<PhysicsManager>();
 	return physicsManager->checkCollision(this, other);
+}
+
+void AColliderComponent::notifyCollision(AColliderComponent* other, const CollisionResult& result)
+{
+	if (this->collisionAction)
+	{
+		this->collisionAction(other, result);
+	}
 }
 
 } // namespace

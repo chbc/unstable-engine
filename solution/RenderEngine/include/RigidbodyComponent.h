@@ -20,6 +20,9 @@ private:
 
 public:
 	RigidbodyComponent(Entity* entity);
+	void setVelocity(const glm::vec3& newVelocity);
+	void applyForce(const glm::vec3& force);
+	const glm::vec3& getVelocity() const;
 
 friend class PhysicsManager;
 };

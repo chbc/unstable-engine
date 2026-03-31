@@ -76,6 +76,9 @@ void PhysicsManager::updateCollisions()
 			CollisionResult collisionResult;
 			if (this->checkCollision(dynamicCollider, staticCollider, collisionResult))
 			{
+				dynamicCollider->notifyCollision(staticCollider, collisionResult);
+				staticCollider->notifyCollision(dynamicCollider, collisionResult);
+
 				this->resolveImpulse(rigidbody, collisionResult);
 				this->resolvePosition(rigidbody, collisionResult);
 			}
