@@ -1,6 +1,7 @@
 #include "BoxColliderComponent.h"
 #include "TransformComponent.h"
 #include "Entity.h"
+#include "Vec3EditorProperty.h"
 
 namespace sre
 {
@@ -11,6 +12,8 @@ BoxColliderComponent::BoxColliderComponent(Entity* entity)
 	: AColliderComponent(entity, ECollisionType::BOX)
 {
 	entity->getBounds(this->bounds);
+	this->addEditorProperty(new Vec3EditorProperty("Center", &this->bounds.center));
+	this->addEditorProperty(new Vec3EditorProperty("Half Extents", &this->bounds.halfExtents, 0.5f));
 }
 
 bool BoxColliderComponent::intersects(BoxColliderComponent* other)
