@@ -45,7 +45,6 @@ void PhysicsManager::step(float timeStep)
 {
 	this->updateVelocities(timeStep);
 	this->updateCollisions();
-
 }
 
 void PhysicsManager::updateVelocities(float timeStep)
@@ -68,20 +67,46 @@ void PhysicsManager::updateVelocities(float timeStep)
 
 void PhysicsManager::updateCollisions()
 {
-	for (RigidbodyComponent* rigidbody : this->dynamicObjects)
+	for (int i = 0; i < this->dynamicObjects.size(); ++i)
 	{
-		for (AColliderComponent* staticCollider : this->staticObjects)
-		{
-			AColliderComponent* dynamicCollider = rigidbody->getEntity()->getComponent<AColliderComponent>();
-			CollisionResult collisionResult;
-			if (this->checkCollision(dynamicCollider, staticCollider, collisionResult))
-			{
-				dynamicCollider->notifyCollision(staticCollider, collisionResult);
-				staticCollider->notifyCollision(dynamicCollider, collisionResult);
+		RigidbodyComponent* rigidbodyA = this->dynamicObjects[i];
+		AColliderComponent* colliderA = rigidbodyA->getEntity()->getComponent<AColliderComponent>();
 
-				this->resolveImpulse(rigidbody, collisionResult);
-				this->resolvePosition(rigidbody, collisionResult);
-			}
+		this->updateDynamicCollisions(rigidbodyA, colliderA, i);
+		this->updateStaticCollisions(rigidbodyA, colliderA);
+	}
+}
+
+void PhysicsManager::updateDynamicCollisions(RigidbodyComponent* rigidbodyA, AColliderComponent* colliderA, int sourceIndex)
+{
+	for (int j = sourceIndex + 1; j < this->dynamicObjects.size(); ++j)
+	{
+		RigidbodyComponent* rigidbodyB = this->dynamicObjects[j];
+		AColliderComponent* colliderB = rigidbodyB->getEntity()->getComponent<AColliderComponent>();
+		CollisionResult collisionResult;
+		if (this->checkCollision(colliderA, colliderB, collisionResult))
+		{
+			colliderA->notifyCollision(colliderB, collisionResult);
+			colliderB->notifyCollision(colliderA, collisionResult);
+
+			this->resolveImpulses(rigidbodyA, rigidbodyB, collisionResult);
+			this->resolvePositions(rigidbodyA, rigidbodyB, collisionResult);
+		}
+	}
+}
+
+void PhysicsManager::updateStaticCollisions(RigidbodyComponent* rigidbody, AColliderComponent* dynamicCollider)
+{
+	for (AColliderComponent* staticCollider : this->staticObjects)
+	{
+		CollisionResult collisionResult;
+		if (this->checkCollision(dynamicCollider, staticCollider, collisionResult))
+		{
+			dynamicCollider->notifyCollision(staticCollider, collisionResult);
+			staticCollider->notifyCollision(dynamicCollider, collisionResult);
+
+			this->resolveImpulse(rigidbody, collisionResult);
+			this->resolvePosition(rigidbody, collisionResult);
 		}
 	}
 }
@@ -124,6 +149,21 @@ bool PhysicsManager::checkCollision(AColliderComponent* objectA, AColliderCompon
 	return this->checkCollision(objectA, objectB, result);
 }
 
+void PhysicsManager::resolveImpulses(RigidbodyComponent* rigidbodyA, RigidbodyComponent* rigidbodyB, const CollisionResult& collisionResult)
+{
+	float velocityAlongNormal = glm::dot(rigidbodyB->velocity - rigidbodyA->velocity, collisionResult.normal);
+	if (velocityAlongNormal <= 0.0f)
+	{
+		float restitution = std::min(rigidbodyA->restitution, rigidbodyB->restitution);
+		float magnitude = -(1 + restitution) * velocityAlongNormal;
+		magnitude /= (1.0f / rigidbodyA->mass) + (1.0f / rigidbodyB->mass);
+
+		glm::vec3 impulse = magnitude * collisionResult.normal;
+		rigidbodyA->velocity -= (1.0f / rigidbodyA->mass) * impulse;
+		rigidbodyB->velocity += (1.0f / rigidbodyB->mass) * impulse;
+	}
+}
+
 void PhysicsManager::resolveImpulse(RigidbodyComponent* rigidbody, const CollisionResult& collisionResult)
 {
 	float velocityAlongNormal = glm::dot(-rigidbody->velocity, collisionResult.normal);
@@ -136,6 +176,27 @@ void PhysicsManager::resolveImpulse(RigidbodyComponent* rigidbody, const Collisi
 		glm::vec3 impulse = magnitude * collisionResult.normal;
 		rigidbody->velocity -= (1.0f / rigidbody->mass) * impulse;
 	}
+}
+
+void PhysicsManager::resolvePositions(RigidbodyComponent* rigidbodyA, RigidbodyComponent* rigidbodyB, const CollisionResult& collisionResult)
+{
+	const float SLOP = 0.01f;
+	const float PERCENT = 0.2f;
+	
+	float depthResult = std::max(collisionResult.depth - SLOP, 0.0f);
+	float inverseMassA = 1.0f / rigidbodyA->mass;
+	float inverseMassB = 1.0f / rigidbodyB->mass;
+	glm::vec3 correction = (depthResult / (inverseMassA + inverseMassB)) * PERCENT * collisionResult.normal;
+
+	TransformComponent* transformA = rigidbodyA->getTransform();
+	glm::vec3 positionA = transformA->getPosition();
+	positionA -= inverseMassA * correction;
+	transformA->setPosition(positionA);
+
+	TransformComponent* transformB = rigidbodyB->getTransform();
+	glm::vec3 positionB = transformB->getPosition();
+	positionB += inverseMassB * correction;
+	transformB->setPosition(positionB);
 }
 
 void PhysicsManager::resolvePosition(RigidbodyComponent* rigidbody, const CollisionResult& collisionResult)
