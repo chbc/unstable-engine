@@ -297,7 +297,7 @@
     <ClCompile Include="src\executionStrategies\AExecutionStrategy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\messages\EntityDestroyedMessage.cpp">
+    <ClCompile Include="src\messages\EntityDestructionMessage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\io\assetsLoader\MaterialLoader.cpp">
@@ -1073,7 +1073,7 @@
     <ClInclude Include="include\EExecutionMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\EntityDestroyedMessage.h">
+    <ClInclude Include="include\EntityDestructionMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\MaterialLoader.h">
@@ -1290,6 +1290,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\CollisionUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Action.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

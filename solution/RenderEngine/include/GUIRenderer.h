@@ -34,7 +34,8 @@ private:
     void render();
     void setup(ABaseGUIComponent* guiComponent);
 
-    void removeDestroyedEntities();
+    void removeImage(GUIImageComponent* component);
+    void removeText(GUITextComponent* component);
 
     bool isEmpty();
 

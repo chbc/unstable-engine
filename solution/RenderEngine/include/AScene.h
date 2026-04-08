@@ -16,7 +16,7 @@ private:
     std::string name;
     std::string label;
     std::string filePath;
-    SPTR<Action> entityChangedAction;
+    Action entityChangedAction;
 
 protected:
     AScene(std::string arg_name, std::string arg_filePath);
@@ -31,7 +31,6 @@ protected:
 	Entity* duplicateEntity(Entity* entity);
 	void moveEntityToChild(const std::string& entityName, Entity* targetParent);
 	void moveEntityToRoot(Entity* entity);
-    void removeDestroyedEntities();
     void onSceneLoaded();
 
 private:
@@ -41,6 +40,7 @@ private:
     void onEntityChanged(void* data);
     void onSceneSaved();
 	void renameEntity(Entity* entity, std::string& newName);
+	void removeEntities(std::vector<Entity*>& entitiesToRemove);
 
 friend class ScenesManager;
 friend class EditorSceneTree;

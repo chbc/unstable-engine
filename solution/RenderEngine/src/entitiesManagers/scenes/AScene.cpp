@@ -13,11 +13,10 @@ namespace sre
 AScene::AScene(std::string arg_name, std::string arg_filePath) 
     : name(arg_name), label(arg_name), filePath(arg_filePath)
 {
-    Action* action = new Action{ [&](void* message) {this->onEntityChanged(message); } };
-    this->entityChangedAction = SPTR<Action>(action);
+    this->entityChangedAction = [&](void* message) {this->onEntityChanged(message); };
 
     MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-    messagesManager->addListener<EntityChangedEditorMessage>(this->entityChangedAction.get());
+    messagesManager->addListener<EntityChangedEditorMessage>(&this->entityChangedAction);
 }
 
 AScene::~AScene()
@@ -25,7 +24,7 @@ AScene::~AScene()
     this->entities.clear();
 
     MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-    messagesManager->removeListener<EntityChangedEditorMessage>(this->entityChangedAction.get());
+    messagesManager->removeListener<EntityChangedEditorMessage>(&this->entityChangedAction);
 }
 
 Entity* AScene::getEntity(const std::string& entityName)
@@ -123,16 +122,6 @@ void AScene::moveEntityToRoot(Entity* entity)
     }
 }
 
-void AScene::removeDestroyedEntities()
-{
-    CollectionsUtils::removeIfEntityIsDestroyed(this->entities);
-
-    for (const auto& item : this->entities)
-    {
-        item.second->removeDestroyedChildren();
-	}
-}
-
 void AScene::onSceneLoaded()
 {
     RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
@@ -192,6 +181,42 @@ void AScene::renameEntity(Entity* entity, std::string& newName)
     UPTR<Entity> movedEntity = std::move(this->entities[oldName]);
     this->entities.erase(oldName);
     this->entities[newName] = std::move(movedEntity);
+}
+
+void AScene::removeEntities(std::vector<Entity*>& entitiesToRemove)
+{
+    std::vector<Entity*>::iterator it;
+
+    for (it = entitiesToRemove.begin(); it != entitiesToRemove.end(); )
+    {
+		Entity* item = *it;
+        Entity* parent = item->getParent();
+        bool removed = false;
+        if (parent)
+        {
+            parent->removeChild(item);
+            it = entitiesToRemove.erase(it);
+            removed = true;
+        }
+        else
+        {
+            for (auto& entities : this->entities)
+            {
+                if (entities.second.get() == item)
+                {
+                    this->entities.erase(entities.first);
+                    it = entitiesToRemove.erase(it);
+                    removed = true;
+                    break;
+                }
+            }
+        }
+
+        if (!removed)
+        {
+            ++it;
+        }
+    }
 }
 
 } // namespace

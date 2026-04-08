@@ -596,7 +596,7 @@
     <ClCompile Include="src\entities\Entity.cpp" />
     <ClCompile Include="src\entities\components\transforms\TransformComponent.cpp" />
     <ClCompile Include="src\messages\EditorMessages.cpp" />
-    <ClCompile Include="src\messages\EntityDestroyedMessage.cpp" />
+    <ClCompile Include="src\messages\EntityDestructionMessage.cpp" />
     <ClCompile Include="src\RenderEngine.cpp" />
     <ClCompile Include="src\entitiesManagers\scenes\Scene.cpp" />
     <ClCompile Include="src\core\graphics\LightManager.cpp" />
@@ -699,6 +699,7 @@
     <ClInclude Include="engine\tests\TestServicesProvider.h" />
     <ClInclude Include="engine\core\singletonsManager\SingletonsManager.h" />
     <ClInclude Include="include\AAsset.h" />
+    <ClInclude Include="include\Action.h" />
     <ClInclude Include="include\AssetsCollection.h" />
     <ClInclude Include="include\ABaseGUIComponent.h" />
     <ClInclude Include="include\ABaseMaterial.h" />
@@ -735,7 +736,7 @@
     <ClInclude Include="include\EditorsController.h" />
     <ClInclude Include="include\EExecutionMode.h" />
     <ClInclude Include="include\EntityComponentTypes.h" />
-    <ClInclude Include="include\EntityDestroyedMessage.h" />
+    <ClInclude Include="include\EntityDestructionMessage.h" />
     <ClInclude Include="include\EntityParser.h" />
     <ClInclude Include="include\AExecutionStrategy.h" />
     <ClInclude Include="include\DebugRenderer.h" />

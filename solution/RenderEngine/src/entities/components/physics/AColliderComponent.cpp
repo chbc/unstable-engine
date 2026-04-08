@@ -28,6 +28,11 @@ bool AColliderComponent::intersects(AColliderComponent* other)
 	return physicsManager->checkCollision(this, other);
 }
 
+void AColliderComponent::onDestroy()
+{
+	this->collisionAction = nullptr;
+}
+
 void AColliderComponent::notifyCollision(AColliderComponent* other, const CollisionResult& result)
 {
 	if (this->collisionAction)

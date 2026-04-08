@@ -38,6 +38,9 @@ public:
 	bool intersects(AColliderComponent* other, CollisionResult& result);
 	bool intersects(AColliderComponent* other);
 
+protected:
+	virtual void onDestroy() override;
+
 private:
 	void notifyCollision(AColliderComponent* other, const CollisionResult& result);
 

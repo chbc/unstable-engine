@@ -4,8 +4,13 @@
 #include "GUIScene.h"
 #include "ASingleton.h"
 
+#include <functional>
+#include <vector>
+
 namespace sre
 {
+
+using Action = std::function<void(void*)>;
 
 class ScenesManager : public ASingleton
 {
@@ -15,8 +20,11 @@ protected:
     UPTR<GUIScene> guiScene;
 
 private:
+	std::vector<Entity*> entitiesToDestroy;
+    UPTR<Action> enqueueEntityToDestroyAction;
     class RenderManager* renderManager{ nullptr };
 	class PhysicsManager* physicsManager{ nullptr };
+    class MessagesManager* messagesManager{ nullptr };
 
 protected:
     void init() override;
@@ -58,7 +66,8 @@ private:
     Entity* createMeshEntity(const std::string& filePath, const char* meshName);
     AScene* getScene();
     AScene* getGuiScene();
-    void removeDestroyedEntities();
+	void onEntityEnqueuedToDestroy(void* data);
+    void onEndFrame();
     void preRelease() override;
 
 friend class AExecutionStrategy;

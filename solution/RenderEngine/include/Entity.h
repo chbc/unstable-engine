@@ -126,7 +126,7 @@ private:
     bool isSaved() const;
     Entity* clone(const std::string& cloneName);
 	void rename(const std::string& newName);
-	void removeDestroyedChildren();
+	void removeDestroyedChild();
     AEditorProperty* findProperty(const std::string& title);
 	void resolveChildName(std::string& entityName);
     static Entity* Create(std::string arg_name, const std::string& className);

@@ -24,6 +24,8 @@
 #include "SkyboxRenderer.h"
 #include "CollectionsUtils.h"
 #include "GlobalUniformsManager.h"
+#include "MessagesManager.h"
+#include "EntityDestructionMessage.h"
 
 #include "ProfilingUtils.h"
 #include "OpenGLAPI.h"
@@ -38,10 +40,15 @@ void RenderManager::init()
     this->lightManager          = singletonsManager->get<LightManager>();
     this->shaderManager         = singletonsManager->get<ShaderManager>();
 	this->globalUniformsManager = singletonsManager->get<GlobalUniformsManager>();
+	this->messagesManager       = singletonsManager->get<MessagesManager>();
+
+	this->entityDestroyedAction = [&](void* message) { this->onEntityDestroyed(message); };
+	this->messagesManager->addListener<EntityDestroyedMessage>(&this->entityDestroyedAction);
 }
 
 void RenderManager::preRelease()
 {
+    this->messagesManager->removeListener<EntityDestroyedMessage>(&this->entityDestroyedAction);
     this->cleanUp();
 }
 
@@ -181,6 +188,11 @@ void RenderManager::removeMesh(MeshComponent* mesh)
 		}
 	}
 
+    if (this->shadowRenderer)
+    {
+        this->shadowRenderer->removeMesh(mesh);
+    }
+
 	if (!meshRemoved)
 	{
 		for (auto& item : this->customRenderers)
@@ -192,6 +204,16 @@ void RenderManager::removeMesh(MeshComponent* mesh)
 			}
 		}
 	}
+
+    if (!meshRemoved && this->skyboxRenderer)
+    {
+		this->skyboxRenderer->removeMesh(mesh);
+        if (this->skyboxRenderer->isEmpty())
+        {
+            this->skyboxRenderer = nullptr;
+            this->lightManager->clearIBLData();
+        }
+    }
 
     CollectionsUtils::removeIfRendererIsEmpty(this->opaqueMeshRenderers);
     CollectionsUtils::removeIfRendererIsEmpty(this->translucentMeshRenderers);
@@ -436,48 +458,27 @@ void RenderManager::setupBufferSubData(MeshData2D* meshData)
     this->graphicsWrapper->setupBufferSubData(meshData);
 }
 
-void RenderManager::removeDestroyedEntities()
+void RenderManager::onEntityDestroyed(void* data)
 {
-    for (const auto& item : this->opaqueMeshRenderers)
+	MessagesManager* messagesManager = SingletonsManager::Get<MessagesManager>();
+	EntityDestroyedMessage* message = static_cast<EntityDestroyedMessage*>(data);
+	Entity* entity = message->entity;
+
+    if (entity->hasComponent<MeshComponent>())
     {
-        item.second->removeDestroyedEntities();
+        MeshComponent* meshComponent = entity->getComponent<MeshComponent>();
+        this->removeMesh(meshComponent);
     }
-
-    for (const auto& item : this->translucentMeshRenderers)
+    else if (entity->hasComponent<GUIImageComponent>())
     {
-        item.second->removeDestroyedEntities();
+        GUIImageComponent* guiComponent = entity->getComponent<GUIImageComponent>();
+        this->guiRenderer->removeImage(guiComponent);
     }
-
-    CollectionsUtils::removeIfRendererIsEmpty(this->opaqueMeshRenderers);
-    CollectionsUtils::removeIfRendererIsEmpty(this->translucentMeshRenderers);
-
-	for (const auto& item : this->customRenderers)
-	{
-		item.second->removeDestroyedEntities();
+    else if (entity->hasComponent<GUITextComponent>())
+    {
+        GUITextComponent* guiComponent = entity->getComponent<GUITextComponent>();
+        this->guiRenderer->removeText(guiComponent);
 	}
-
-    CollectionsUtils::removeIfRendererIsEmpty(this->customRenderers);
-
-    this->shadowRenderer->removeDestroyedEntities();
-
-    if (this->guiRenderer.get() != nullptr)
-    {
-        this->guiRenderer->removeDestroyedEntities();
-        if (this->guiRenderer->isEmpty())
-            this->guiRenderer = nullptr;
-    }
-
-    if (this->skyboxRenderer.get() != nullptr)
-    {
-        this->skyboxRenderer->removeDestroyedEntities();
-        if (this->skyboxRenderer->isEmpty())
-        {
-            this->skyboxRenderer = nullptr;
-			this->lightManager->clearIBLData();
-        }
-	}
-
-    this->lightManager->removeDestroyedEntities();
 }
 
 void RenderManager::cleanUp()

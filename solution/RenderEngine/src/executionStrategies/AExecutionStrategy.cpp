@@ -4,28 +4,17 @@
 #include "RenderManager.h"
 #include "MultimediaManager.h"
 #include "ScenesManager.h"
-#include "MessagesManager.h"
-#include "EntityDestroyedMessage.h"
 #include "Log.h"
 
 namespace sre
 {
 
-AExecutionStrategy::AExecutionStrategy() : entityDestroyed(false)
+AExecutionStrategy::AExecutionStrategy()
 {
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
     this->renderManager = singletonsManager->get<RenderManager>();
     this->multimediaManager = singletonsManager->get<MultimediaManager>();
     this->scenesManager = singletonsManager->get<ScenesManager>();
-}
-
-void AExecutionStrategy::init(RenderEngine* controller)
-{
-    Action* action = new Action{ [&](void* message) { this->onEntityDestroyed(message); } };
-    this->entityDestroyedAction = SPTR<Action>(action);
-
-    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-    messagesManager->addListener<EntityDestroyedMessage>(this->entityDestroyedAction.get());
 }
 
 uint32_t AExecutionStrategy::beginFrame(RenderEngine* controller)
@@ -51,15 +40,9 @@ void AExecutionStrategy::swapBuffers(RenderEngine* controller)
     this->multimediaManager->swapBuffers();
 }
 
-void AExecutionStrategy::endFrame(RenderEngine* controller)
+inline void AExecutionStrategy::endFrame(RenderEngine* controller)
 {
-    if (this->entityDestroyed)
-    {
-        this->entityDestroyed = false;
-        this->renderManager->removeDestroyedEntities();
-        this->multimediaManager->removeDestroyedEntities();
-        this->scenesManager->removeDestroyedEntities();
-    }
+	this->scenesManager->onEndFrame();
 }
 
 void AExecutionStrategy::delay(RenderEngine* controller)
@@ -71,12 +54,6 @@ void AExecutionStrategy::delay(RenderEngine* controller)
 #endif
 
     this->multimediaManager->delay();
-}
-
-void AExecutionStrategy::cleanUp()
-{
-    MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-    messagesManager->removeListener<EntityDestroyedMessage>(this->entityDestroyedAction.get());
 }
 
 void AExecutionStrategy::reloadScenes()
@@ -96,11 +73,6 @@ void AExecutionStrategy::loadGuiScene(const char* guiScenePath)
     this->multimediaManager->cleanUp();
     this->renderManager->cleanUpGui();
 	this->scenesManager->loadGuiScene(guiScenePath);
-}
-
-void AExecutionStrategy::onEntityDestroyed(void* data)
-{
-    this->entityDestroyed = true;
 }
 
 } // namespace

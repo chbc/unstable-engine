@@ -3,7 +3,6 @@
 #include "AGraphicsWrapper.h"
 #include "ShaderManager.h"
 #include "CameraComponent.h"
-#include "SkyboxComponent.h"
 #include "Entity.h"
 #include "CustomMaterial.h"
 #include "CustomMaterialComponent.h"

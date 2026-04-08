@@ -5,7 +5,7 @@
 
 namespace sre
 {
-IMPLEMENT_COMPONENT(SkyboxComponent)
+IMPLEMENT_CHILD_COMPONENT(SkyboxComponent, MeshComponent)
 
 SkyboxComponent::SkyboxComponent(Entity* entity) : MeshComponent(entity)
 { }

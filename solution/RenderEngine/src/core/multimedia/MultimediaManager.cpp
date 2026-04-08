@@ -9,6 +9,8 @@
 #include "SingletonsManager.h"
 #include "AGraphicsWrapper.h"
 #include "STBIAPI.h"
+#include "MessagesManager.h"
+#include "EntityDestructionMessage.h"
 
 #ifdef __ANDROID__
 #include "SDLAndroidAPI.h"
@@ -151,9 +153,22 @@ void MultimediaManager::addGUIButton(GUIButtonComponent* guiButton)
 	this->guiButtons.push_back(guiButton);
 }
 
-void MultimediaManager::removeDestroyedEntities()
+void MultimediaManager::onEntityDestroyed(void* data)
 {
-	CollectionsUtils::removeComponentIfEntityIsDestroyed(this->guiButtons);
+	MessagesManager* messagesManager = SingletonsManager::Get<MessagesManager>();
+	EntityDestroyedMessage* message = static_cast<EntityDestroyedMessage*>(data);
+	Entity* entity = message->entity;
+
+	if (entity->hasComponent<GUIButtonComponent>())
+	{
+		GUIButtonComponent* guiButton = entity->getComponent<GUIButtonComponent>();
+		auto it = std::find(this->guiButtons.begin(), this->guiButtons.end(), guiButton);
+
+		if (it != this->guiButtons.end())
+		{
+			this->guiButtons.erase(it);
+		}
+	}
 }
 
 void MultimediaManager::cleanUp()

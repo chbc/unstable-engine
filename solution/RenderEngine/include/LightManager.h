@@ -5,6 +5,7 @@
 #include "ASingleton.h"
 #include "IBLData.h"
 #include "ETextureMap.h"
+#include "Action.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -23,7 +24,7 @@ private:
     std::vector<PointLightComponent*> pointLights;
 	class AGraphicsWrapper* graphicsWrapper{ nullptr };
     IBLData iblData;
-    
+    Action* entitiesDestroyedAction{ nullptr };
     const int MAX_GROUP_LIGHTS = 4;
 
 protected:
@@ -43,7 +44,7 @@ private:
     void setupShadowData(ALightComponent* lightComponent, bool useCubemap);
     void loadIBL(std::unordered_map<ETextureMap::Type, Texture*>& texturesMap);
     void clearIBLData();
-    void removeDestroyedEntities();
+    void onEntityDestroyed(void* data);
     void cleanUp();
 
 friend class RenderManager;

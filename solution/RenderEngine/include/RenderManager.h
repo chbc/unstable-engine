@@ -35,13 +35,16 @@ struct MeshData2D;
 using StandardRendererMap = std::unordered_map<ABaseMaterial*, SPTR<MeshRenderer>, MaterialHash, MaterialEqual>;
 using CustomRendererMap = std::unordered_map<ABaseMaterial*, SPTR<CustomRenderer>, MaterialHash, MaterialEqual>;
 
+using Action = std::function<void(void*)>;
+
 class RenderManager : public ASingleton
 {
 private:
-    class ShaderManager         *shaderManager;
-    class AGraphicsWrapper      *graphicsWrapper;
-    class LightManager          *lightManager;
-	class GlobalUniformsManager *globalUniformsManager;
+    class ShaderManager* shaderManager;
+    class AGraphicsWrapper* graphicsWrapper;
+    class LightManager* lightManager;
+	class GlobalUniformsManager* globalUniformsManager;
+	class MessagesManager* messagesManager;
 
 	StandardRendererMap opaqueMeshRenderers;
     StandardRendererMap translucentMeshRenderers;
@@ -57,6 +60,8 @@ private:
     CameraComponent* editorCamera{ nullptr };
     CameraComponent* currentCamera{ nullptr };
     uint32_t targetFBO{ 0 };
+
+	Action entityDestroyedAction;
 
 protected:
     void init() override;
@@ -91,7 +96,7 @@ private:
     static void DEBUG_drawTriangle();
 
     void setupBufferSubData(MeshData2D* meshData);
-    void removeDestroyedEntities();
+    void onEntityDestroyed(void* data);
     void cleanUp();
     void cleanUpMeshes();
     void cleanUpGui();

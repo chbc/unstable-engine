@@ -93,32 +93,39 @@ void GUIRenderer::setup(ABaseGUIComponent* guiComponent)
     this->graphicsWrapper->activateTexture(guiComponent->getTextureId(), ETextureMap::GUI);
 }
 
-void GUIRenderer::removeDestroyedEntities()
+void GUIRenderer::removeImage(GUIImageComponent* component)
 {
-    std::list<GUIImageComponent *>::iterator imageIt;
+    std::list<GUIImageComponent*>::iterator it;
 
-    for (imageIt = this->imageComponents.begin(); imageIt != this->imageComponents.end(); )
+    for (it = this->imageComponents.begin(); it != this->imageComponents.end(); ++it)
     {
-        if (!(*imageIt)->getEntity()->isAlive())
+        if (*it == component)
         {
-            this->graphicsWrapper->deleteBuffers((*imageIt)->meshData);
-            imageIt = this->imageComponents.erase(imageIt);
+            break;
         }
-        else
-            ++imageIt;
     }
 
-    std::list<GUITextComponent*>::iterator textIt;
-
-    for (textIt = this->textComponents.begin(); textIt != this->textComponents.end(); )
+    if (it != this->imageComponents.end())
     {
-        if (!(*textIt)->getEntity()->isAlive())
+        this->imageComponents.erase(it);
+    }
+}
+
+void GUIRenderer::removeText(GUITextComponent* component)
+{
+    std::list<GUITextComponent*>::iterator it;
+
+    for (it = this->textComponents.begin(); it != this->textComponents.end(); ++it)
+    {
+        if (*it == component)
         {
-            this->graphicsWrapper->deleteBuffers((*textIt)->meshData);
-            textIt = this->textComponents.erase(textIt);
+            break;
         }
-        else
-            ++textIt;
+    }
+
+    if (it != this->textComponents.end())
+    {
+        this->textComponents.erase(it);
     }
 }
 

@@ -6,6 +6,8 @@
 #include "SingletonsManager.h"
 #include "RenderManager.h"
 #include "PhysicsManager.h"
+#include "MessagesManager.h"
+#include "EntityDestructionMessage.h"
 
 namespace sre
 {
@@ -15,6 +17,12 @@ void ScenesManager::init()
     this->renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 	this->physicsManager = SingletonsManager::getInstance()->get<PhysicsManager>();
     this->editorScene.reset(new Scene{ "_editor_scene", "" });
+
+	Action* action = new Action{ [&](void* message) { this->onEntityEnqueuedToDestroy(message); } };
+    this->enqueueEntityToDestroyAction = UPTR<Action>(action);
+
+    this->messagesManager = SingletonsManager::Get<MessagesManager>();
+    this->messagesManager->addListener<EnqueueEntityToDestroyMessage>(this->enqueueEntityToDestroyAction.get());
 }
 
 std::string ScenesManager::getMainSceneName()
@@ -280,16 +288,26 @@ AScene* ScenesManager::getGuiScene()
     return this->guiScene.get();
 }
 
-void ScenesManager::removeDestroyedEntities()
+void ScenesManager::onEntityEnqueuedToDestroy(void* data)
 {
-    if (this->scene)
-    {
-        this->scene->removeDestroyedEntities();
-    }
+	EnqueueEntityToDestroyMessage* message = static_cast<EnqueueEntityToDestroyMessage*>(data);
+	this->entitiesToDestroy.push_back(message->entity);
+}
 
-    if (guiScene)
+void ScenesManager::onEndFrame()
+{
+    if (!this->entitiesToDestroy.empty())
     {
-        this->guiScene->removeDestroyedEntities();
+        for (Entity* item : this->entitiesToDestroy)
+        {
+            EntityDestroyedMessage message{ item };
+            this->messagesManager->notify(&message);
+        }
+
+        this->scene->removeEntities(this->entitiesToDestroy);
+        this->guiScene->removeEntities(this->entitiesToDestroy);
+
+        this->entitiesToDestroy.clear();
     }
 }
 

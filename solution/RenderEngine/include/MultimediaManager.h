@@ -56,7 +56,7 @@ private:
 	float* loadHdrTexture(const std::string& filePath, int* outWidth, int* outHeight, int* outBpp);
 	void saveTexture(unsigned char* pixels, const char* filePath, uint32_t width, uint32_t height);
 	void addGUIButton(GUIButtonComponent* guiButton);
-	void removeDestroyedEntities();
+	void onEntityDestroyed(void* data);
 	void cleanUp();
 
 friend class AExecutionStrategy;

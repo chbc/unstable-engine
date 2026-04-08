@@ -6,15 +6,12 @@
 #include "memory_aliases.h"
 #include "InputTextHandler.h"
 
-#include <functional>
-
 namespace sre
 {
 
 class ScenesManager;
 class AScene;
 class Entity;
-using Action = std::function<void(void*)>;
 class EditorsController;
 
 class EditorSceneTree : public IEditorWindow
@@ -32,9 +29,9 @@ public:
 
 private:
 	void drawScene(AScene* scene);
-	void drawEntityTree(AScene* scene, Entity* entity, int index);
+	void drawEntityTree(AScene* scene, Entity* entity, int index, bool& entityMoved);
 	void drawContextualMenu(Entity* selectedEntity, Entity* entity, const std::string& name);
-	void handleDragAndDrop(AScene* scene, Entity* entity);
+	bool handleDragAndDrop(AScene* scene, Entity* entity);
 	void handleDropToRoot(AScene* scene);
 	void handleDeleteItem(Entity* selectedEntity);
 	void handleDuplicateItem(Entity* selectedEntity);

@@ -9,6 +9,8 @@
 #include "TextureCreator.h"
 #include "GlobalUniformsManager.h"
 #include "LightsUBO.h"
+#include "MessagesManager.h"
+#include "EntityDestructionMessage.h"
 
 namespace sre
 {
@@ -16,6 +18,10 @@ namespace sre
 void LightManager::init()
 {
 	this->graphicsWrapper = SingletonsManager::Get<AGraphicsWrapper>();
+
+    this->entitiesDestroyedAction = new Action{ [&](void* message) { this->onEntityDestroyed(message); } };
+	MessagesManager* messagesManager = SingletonsManager::Get<MessagesManager>();
+    messagesManager->addListener<EntityDestroyedMessage>(this->entitiesDestroyedAction);
 }
 
 size_t LightManager::getDirectionalLightsCount() const
@@ -120,18 +126,28 @@ void LightManager::clearIBLData()
 	iblData.loaded = false;
 }
 
-void LightManager::removeDestroyedEntities()
+void LightManager::onEntityDestroyed(void* data)
 {
-    bool lightRemoved = CollectionsUtils::removeComponentIfEntityIsDestroyed(this->directionalLights);
-    if (lightRemoved)
+    MessagesManager* messagesManager = SingletonsManager::Get<MessagesManager>();
+    EntityDestroyedMessage* message = static_cast<EntityDestroyedMessage*>(data);
+    Entity* entity = message->entity;
+    if (entity->hasComponent<DirectionalLightComponent>())
     {
-		this->updateDirectionalLightsUBO();
+		DirectionalLightComponent* component = entity->getComponent<DirectionalLightComponent>();
+		auto it = std::find(this->directionalLights.begin(), this->directionalLights.end(), component);
+        if (it != this->directionalLights.end())
+        {
+            this->directionalLights.erase(it);
+        }
     }
-
-    lightRemoved = CollectionsUtils::removeComponentIfEntityIsDestroyed(this->pointLights);
-    if (lightRemoved)
+    else if (entity->hasComponent<PointLightComponent>())
     {
-        this->updatePointLightsUBO();
+        PointLightComponent* component = entity->getComponent<PointLightComponent>();
+        auto it = std::find(this->pointLights.begin(), this->pointLights.end(), component);
+        if (it != this->pointLights.end())
+        {
+            this->pointLights.erase(it);
+        }
 	}
 }
 

@@ -1,6 +1,6 @@
 #include "Entity.h"
 #include "MessagesManager.h"
-#include "EntityDestroyedMessage.h"
+#include "EntityDestructionMessage.h"
 #include "MeshComponent.h"
 #include "EditorMessages.h"
 #include "SingletonsManager.h"
@@ -148,13 +148,11 @@ TransformComponent* Entity::getTransform()
 void Entity::destroy()
 {
 	this->alive = false;
-	this->enabled = false;
 	for (Entity* item : this->childrenList)
 		item->destroy();
 
-	MessagesManager* messagesManager = SingletonsManager::getInstance()->get<MessagesManager>();
-	EntityDestroyedMessage message{ this };
-	messagesManager->notify(&message);
+	EnqueueEntityToDestroyMessage message{ this };
+	SingletonsManager::Get<MessagesManager>()->notify(&message);
 }
 
 void Entity::setEnabled(bool value, bool changeChildren)
@@ -485,17 +483,6 @@ void Entity::rename(const std::string& newName)
 	nameProperty->title = newName;
 
 	this->onPropertyChanged();
-}
-
-void Entity::removeDestroyedChildren()
-{
-	CollectionsUtils::removeIfEntityIsDestroyed(this->childrenList);
-	CollectionsUtils::removeIfEntityIsDestroyed(this->children);
-
-	for (auto& item : this->children)
-	{
-		item.second->removeDestroyedChildren();
-	}
 }
 
 AEditorProperty* Entity::findProperty(const std::string& title)

@@ -58,13 +58,19 @@ void EditorSceneTree::drawScene(AScene* scene)
 			for (size_t i = 0; i < size; ++i)
 			{
 				const auto& item = std::next(scene->entities.begin(), i);
-				this->drawEntityTree(scene, item->second.get(), 0);
+				bool entityMoved = false;
+				this->drawEntityTree(scene, item->second.get(), 0, entityMoved);
+
+				if (entityMoved)
+				{
+					break;
+				}
 			}
 		}
 	}
 }
 
-void EditorSceneTree::drawEntityTree(AScene* scene, Entity* entity, int index)
+void EditorSceneTree::drawEntityTree(AScene* scene, Entity* entity, int index, bool& entityMoved)
 {
 	if (entity->dontShowInEditorSceneTree)
 	{
@@ -99,7 +105,7 @@ void EditorSceneTree::drawEntityTree(AScene* scene, Entity* entity, int index)
 			}
 
 			this->drawContextualMenu(selectedEntity, entity, entity->name);
-			this->handleDragAndDrop(scene, entity);
+			entityMoved |= this->handleDragAndDrop(scene, entity);
 		}
 	}
 	else
@@ -123,13 +129,13 @@ void EditorSceneTree::drawEntityTree(AScene* scene, Entity* entity, int index)
 		}
 
 		this->drawContextualMenu(selectedEntity, entity, entity->name);
-		this->handleDragAndDrop(scene, entity);
+		entityMoved |= this->handleDragAndDrop(scene, entity);
 
 		if (open)
 		{
 			for (uint32_t i = 0; i < entity->getChildrenCount(); i++)
 			{
-				drawEntityTree(scene, entity->getChild(i), i);
+				this->drawEntityTree(scene, entity->getChild(i), i, entityMoved);
 			}
 			ImGui::TreePop();
 		}
@@ -182,12 +188,14 @@ void EditorSceneTree::drawContextualMenu(Entity* selectedEntity, Entity* entity,
 	}
 }
 
-void EditorSceneTree::handleDragAndDrop(AScene* scene, Entity* entity)
+bool EditorSceneTree::handleDragAndDrop(AScene* scene, Entity* entity)
 {
+	bool result = false;
+
 	if (ImGui::BeginDragDropSource())
 	{
 		ImGui::SetDragDropPayload("ENTITY", &entity, sizeof(Entity*));
-		ImGui::Text("%s", entity->getName());
+		ImGui::Text("%s", entity->getName().c_str());
 		ImGui::EndDragDropSource();
 	}
 
@@ -207,10 +215,14 @@ void EditorSceneTree::handleDragAndDrop(AScene* scene, Entity* entity)
 				{
 					scene->moveEntityToChild(sourceEntity->getName(), entity);
 				}
+
+				result = true;
 			}
 		}
 		ImGui::EndDragDropTarget();
 	}
+
+	return result;
 }
 
 void EditorSceneTree::handleDropToRoot(AScene* scene)
