@@ -2,10 +2,10 @@
 
 #include "core_defines.h"
 #include "memory_aliases.h"
-#include <string>
-
 #include "AEditorProperty.h"
 #include "EntityComponentTypes.h"
+
+#include <string>
 
 namespace sre
 {
@@ -16,27 +16,20 @@ class TransformComponent;
 #define DECLARE_COMPONENT() \
     public: \
         static uint16_t ID; \
-        static const uint16_t* BASE_ID; \
+        static const uint16_t BASE_ID; \
         static const char* CLASS_NAME; \
         const char* getClassName() override { return CLASS_NAME; } \
         uint16_t getId() override { return ID; } \
-        void checkAndRefreshId() override { SetupChildId(); } \
-        static void SetupChildId()  \
-        {                           \
-            if (BASE_ID != nullptr) \
-            {                       \
-                ID = *BASE_ID;      \
-            }                       \
-        }
+        uint16_t getBaseId() override { return BASE_ID; }
 
 #define IMPLEMENT_COMPONENT(ComponentClass) \
-    const uint16_t* ComponentClass::BASE_ID = nullptr; \
+    const uint16_t ComponentClass::BASE_ID = 0; \
     uint16_t ComponentClass::ID = AEntityComponent::generateId<ComponentClass>(#ComponentClass); \
     const char* ComponentClass::CLASS_NAME = #ComponentClass;
 
 #define IMPLEMENT_CHILD_COMPONENT(ComponentClass, BaseComponentClass) \
-    const uint16_t* ComponentClass::BASE_ID = nullptr; \
-    uint16_t ComponentClass::ID = AEntityComponent::generateId<ComponentClass, BaseComponentClass>(#ComponentClass); \
+    const uint16_t ComponentClass::BASE_ID = BaseComponentClass::ID; \
+    uint16_t ComponentClass::ID = AEntityComponent::generateId<ComponentClass>(#ComponentClass); \
     const char* ComponentClass::CLASS_NAME = #ComponentClass;
 
 class SRE_API AEntityComponent
@@ -65,16 +58,6 @@ public:
         return Index++;
     }
 
-    template <typename Type, typename BaseType>
-    static uint16_t generateId(const char* className)
-    {
-        EntityComponentTypes* types = EntityComponentTypes::getInstance();
-        types->addType<Type>(className);
-        Type::BASE_ID = &BaseType::ID;
-
-        return 0;
-    }
-
     static AEntityComponent* Create(const char* className, Entity* entity);
     inline Entity* getEntity() { return this->entity; }
     TransformComponent* getTransform();
@@ -89,7 +72,7 @@ public:
 
 protected:
     virtual uint16_t getId() = 0;
-    virtual void checkAndRefreshId() = 0;
+    virtual uint16_t getBaseId() = 0;
 
     virtual void onInit() {}
     virtual void onEnable() {}

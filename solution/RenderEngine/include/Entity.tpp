@@ -1,3 +1,4 @@
+#include "Entity.h"
 namespace sre
 {
 
@@ -6,12 +7,10 @@ T* Entity::addComponent()
 {
     T* newComponent{ nullptr };
 
-    T::SetupChildId();
     assert(!this->hasComponent<T>());
 
     newComponent = new T{ this };
-    uint16_t id = this->getComponentId<T>();
-    this->componentsMap[id] = UPTR<T>{ newComponent };
+    this->componentsMap[T::ID] = UPTR<T>{ newComponent };
 
     return newComponent;
 }
@@ -21,8 +20,7 @@ void Entity::removeComponent()
 {
     if (this->hasComponent<T>())
     {
-        uint16_t id = getComponentId<T>();
-        componentsMap.erase(id);
+        componentsMap.erase(T::ID);
     }
 }
 
@@ -33,8 +31,7 @@ T* Entity::getComponent()
 
     if (this->hasComponent<T>())
     {
-        uint16_t id = this->getComponentId<T>();
-        component = static_cast<T*>(componentsMap[id].get());
+        component = static_cast<T*>(componentsMap[T::ID].get());
     }
     else
     {
@@ -49,6 +46,23 @@ T* Entity::getComponent()
     }
 
     return component;
+}
+
+template<typename T>
+T* Entity::getBaseComponent()
+{
+	T* result{ nullptr };
+
+    for (const auto& item : this->componentsMap)
+    {
+        if (item.second->getBaseId() == T::ID)
+        {
+            result = static_cast<T*>(item.second.get());
+            break;
+        }
+	}
+
+    return result;
 }
 
 template <typename T>
@@ -69,14 +83,7 @@ void Entity::getComponents(std::vector<T*>& result)
 template<typename T>
 bool Entity::hasComponent()
 {
-    uint16_t id = this->getComponentId<T>();
-    return (this->componentsMap.count(id) > 0);
-}
-
-template<typename T>
-uint16_t Entity::getComponentId()
-{
-    return T::ID;
+    return (this->componentsMap.count(T::ID) > 0);
 }
 
 } // namespace

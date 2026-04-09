@@ -58,6 +58,7 @@ public:
     template <typename T> T* addComponent();
     template <typename T> void removeComponent();
     template <typename T> T* getComponent();
+    template <typename T> T* getBaseComponent();
     template <typename T> void getComponents(std::vector<T*>& result);
     template <typename T> bool hasComponent();
 
@@ -126,12 +127,10 @@ private:
     bool isSaved() const;
     Entity* clone(const std::string& cloneName);
 	void rename(const std::string& newName);
-	void removeDestroyedChild();
     AEditorProperty* findProperty(const std::string& title);
 	void resolveChildName(std::string& entityName);
     static Entity* Create(std::string arg_name, const std::string& className);
     static void GenerateName(const std::unordered_map<std::string, UPTR<Entity>>& siblings, std::string& resultName);
-    template <typename T> uint16_t getComponentId();
 
     friend class AScene;
     friend class SceneLoader;
