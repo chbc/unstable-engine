@@ -10,7 +10,7 @@ namespace sre
 
 void PhysicsManager::addEntity(Entity* entity)
 {
-	AColliderComponent* collider = entity->getComponent<AColliderComponent>();
+	AColliderComponent* collider = entity->getBaseComponent<AColliderComponent>();
 	if (collider)
 	{
 		RigidbodyComponent* rigidbody = entity->getComponent<RigidbodyComponent>();
@@ -70,7 +70,7 @@ void PhysicsManager::updateCollisions()
 	for (int i = 0; i < this->dynamicObjects.size(); ++i)
 	{
 		RigidbodyComponent* rigidbodyA = this->dynamicObjects[i];
-		AColliderComponent* colliderA = rigidbodyA->getEntity()->getComponent<AColliderComponent>();
+		AColliderComponent* colliderA = rigidbodyA->getEntity()->getBaseComponent<AColliderComponent>();
 
 		this->updateDynamicCollisions(rigidbodyA, colliderA, i);
 		this->updateStaticCollisions(rigidbodyA, colliderA);
@@ -82,7 +82,7 @@ void PhysicsManager::updateDynamicCollisions(RigidbodyComponent* rigidbodyA, ACo
 	for (int j = sourceIndex + 1; j < this->dynamicObjects.size(); ++j)
 	{
 		RigidbodyComponent* rigidbodyB = this->dynamicObjects[j];
-		AColliderComponent* colliderB = rigidbodyB->getEntity()->getComponent<AColliderComponent>();
+		AColliderComponent* colliderB = rigidbodyB->getEntity()->getBaseComponent<AColliderComponent>();
 		CollisionResult collisionResult;
 		if (this->checkCollision(colliderA, colliderB, collisionResult))
 		{
