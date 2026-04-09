@@ -89,8 +89,11 @@ void PhysicsManager::updateDynamicCollisions(RigidbodyComponent* rigidbodyA, ACo
 			colliderA->notifyCollision(colliderB, collisionResult);
 			colliderB->notifyCollision(colliderA, collisionResult);
 
-			this->resolveImpulses(rigidbodyA, rigidbodyB, collisionResult);
-			this->resolvePositions(rigidbodyA, rigidbodyB, collisionResult);
+			if (colliderA->blocking && colliderB->blocking)
+			{
+				this->resolveImpulses(rigidbodyA, rigidbodyB, collisionResult);
+				this->resolvePositions(rigidbodyA, rigidbodyB, collisionResult);
+			}
 		}
 	}
 }
@@ -105,8 +108,11 @@ void PhysicsManager::updateStaticCollisions(RigidbodyComponent* rigidbody, AColl
 			dynamicCollider->notifyCollision(staticCollider, collisionResult);
 			staticCollider->notifyCollision(dynamicCollider, collisionResult);
 
-			this->resolveImpulse(rigidbody, collisionResult);
-			this->resolvePosition(rigidbody, collisionResult);
+			if (dynamicCollider->blocking && staticCollider->blocking)
+			{
+				this->resolveImpulse(rigidbody, collisionResult);
+				this->resolvePosition(rigidbody, collisionResult);
+			}
 		}
 	}
 }

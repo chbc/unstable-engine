@@ -28,6 +28,7 @@ DECLARE_COMPONENT()
 private:
 	CollisionAction collisionAction;
 	ECollisionType collisionType;
+	bool blocking{ true };
 
 public:
 	AColliderComponent(Entity* entity, ECollisionType arg_collisionType = ECollisionType::NONE);

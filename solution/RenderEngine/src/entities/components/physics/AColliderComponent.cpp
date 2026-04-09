@@ -1,6 +1,7 @@
 #include "AColliderComponent.h"
 #include "SingletonsManager.h"
 #include "PhysicsManager.h"
+#include "BoolEditorProperty.h"
 
 namespace sre
 {
@@ -9,7 +10,9 @@ IMPLEMENT_COMPONENT(AColliderComponent)
 
 AColliderComponent::AColliderComponent(Entity* entity, ECollisionType arg_collisionType) 
 	: AEntityComponent(entity), collisionType(arg_collisionType)
-{ }
+{
+	this->addEditorProperty(new BoolEditorProperty{ "Blocking", &this->blocking });
+}
 
 void AColliderComponent::setCollisionAction(const CollisionAction& action)
 {
