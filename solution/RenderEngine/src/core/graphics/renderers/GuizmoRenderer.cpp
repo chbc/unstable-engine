@@ -3,7 +3,9 @@
 #include "ShaderManager.h"
 #include "CameraComponent.h"
 #include "GuizmoComponent.h"
+#include "BoxColliderComponent.h"
 #include "TransformComponent.h"
+#include "MeshComponent.h"
 #include "AssetsManager.h"
 #include "SingletonsManager.h"
 #include "Entity.h"
@@ -27,23 +29,16 @@ GuizmoRenderer::~GuizmoRenderer()
 
 void GuizmoRenderer::addGuizmo(GuizmoComponent* guizmoComponent)
 {
-	this->guizmoComponents.clear();
+	this->guizmoComponents.push_back(guizmoComponent);
 
-	if (guizmoComponent != nullptr)
+	guizmoComponent->mesh = this->assetsManager->loadGuizmo(guizmoComponent->guizmoType);
+	if (guizmoComponent->mesh->ebo == 0)
 	{
-		this->guizmoComponents.push_back(guizmoComponent);
-
-		guizmoComponent->mesh = this->assetsManager->loadGuizmo(guizmoComponent->guizmoType);
-		if (guizmoComponent->mesh->ebo == 0)
-		{
-			this->graphicsWrapper->createBuffers(guizmoComponent->mesh);
-		}
-
-		guizmoComponent->bounds.reset();
-
-		Entity* entity = guizmoComponent->getEntity();
-		entity->getBounds(guizmoComponent->bounds);
+		this->graphicsWrapper->createBuffers(guizmoComponent->mesh);
 	}
+
+	Entity* entity = guizmoComponent->getEntity();
+	entity->getBounds(guizmoComponent->bounds);
 }
 
 void GuizmoRenderer::loadShader()
@@ -60,37 +55,67 @@ void GuizmoRenderer::render()
 
 	for (GuizmoComponent* item : this->guizmoComponents)
 	{
-		ColorMeshData* mesh = item->mesh;
-        this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
-        this->graphicsWrapper->enableColorMeshSettings();
+		this->renderMeshGuizmo(item);
 
-		Entity* entity = item->getEntity();
-		TransformComponent* transform = entity->getTransform();
-		const glm::mat4& modelMatrix = transform->getMatrix();
-		glm::mat4 resultMatrix = glm::translate(modelMatrix, item->bounds.center);
-		resultMatrix = glm::scale(resultMatrix, item->bounds.getSize());
-
-		this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &resultMatrix[0][0]);
-		this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &mesh->color[0]);
-		this->graphicsWrapper->drawElement(mesh->ebo, mesh->indices.size(), EDrawMode::LINES);
+		BoxColliderComponent* collider = item->getEntity()->getComponent<BoxColliderComponent>();
+		if (collider)
+		{
+			this->renderColliderGuizmo(item, collider);
+		}
 
 		this->graphicsWrapper->disableColorMeshSettings();
 	}
 }
 
-void GuizmoRenderer::removeDestroyedEntities()
+void GuizmoRenderer::renderMeshGuizmo(GuizmoComponent* guizmoComponent)
+{
+	Entity* entity = guizmoComponent->getEntity();
+	TransformComponent* transform = entity->getTransform();
+	const glm::mat4& modelMatrix = transform->getMatrix();
+	glm::mat4 resultMatrix = glm::translate(modelMatrix, guizmoComponent->bounds.center);
+	resultMatrix = glm::scale(resultMatrix, guizmoComponent->bounds.getSize());
+
+	ColorMeshData* mesh = guizmoComponent->mesh;
+	this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
+	this->graphicsWrapper->enableColorMeshSettings();
+
+	this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &resultMatrix[0][0]);
+	this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &mesh->color[0]);
+	this->graphicsWrapper->drawElement(mesh->ebo, mesh->indices.size(), EDrawMode::LINES);
+}
+
+void GuizmoRenderer::renderColliderGuizmo(GuizmoComponent* guizmoComponent, BoxColliderComponent* collider)
+{
+	Entity* entity = guizmoComponent->getEntity();
+	TransformComponent* transform = entity->getTransform();
+
+	Bounds bounds = collider->getBounds();
+	glm::vec3 position = transform->getPosition() + bounds.center;
+
+	glm::mat4 modelMatrix{ 1.0f };
+	modelMatrix = glm::translate(modelMatrix, position);
+	modelMatrix = glm::scale(modelMatrix, bounds.getSize());
+
+	ColorMeshData* mesh = guizmoComponent->mesh;
+	this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
+	this->graphicsWrapper->enableColorMeshSettings();
+
+	glm::vec4 color = glm::vec4{ 0.25f, 1.0f, 0.25f, 1.0f };
+	this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
+	this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &color[0]);
+	this->graphicsWrapper->drawElement(mesh->ebo, mesh->indices.size(), EDrawMode::LINES);
+}
+
+void GuizmoRenderer::removeGuizmo(GuizmoComponent* guizmoComponent)
 {
 	std::list<GuizmoComponent*>::iterator it;
-
-	for (it = this->guizmoComponents.begin(); it != this->guizmoComponents.end(); )
+	for (it = this->guizmoComponents.begin(); it != this->guizmoComponents.end(); ++it)
 	{
-		GuizmoComponent* item = *it;
-		if (!item->getEntity()->isAlive())
+		if (*it == guizmoComponent)
 		{
-			it = this->guizmoComponents.erase(it);
+			this->guizmoComponents.erase(it);
+			break;
 		}
-		else
-			++it;
 	}
 }
 

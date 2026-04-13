@@ -15,13 +15,15 @@ namespace sre
 {
 
 class Entity;
+class GuizmoComponent;
 
 class SceneViewportGuizmos
 {
 private:
-	Entity* selectedEntity{ nullptr };
 	SPTR<Action> selectionAction;
 	SPTR<Action> orientationModeAction;
+	Entity* selectedEntity{ nullptr };
+	GuizmoComponent* guizmoComponent{ nullptr };
 	ImGuizmo::OPERATION guizmoOperation{ 0u };
 	ImGuizmo::MODE guizmoMode{ 0u };
 

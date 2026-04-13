@@ -18,6 +18,7 @@ private:
 public:
 	BoxColliderComponent(Entity* entity);
 	bool intersects(BoxColliderComponent* other);
+	const Bounds& getBounds() const;
 
 friend class PhysicsManager;
 };

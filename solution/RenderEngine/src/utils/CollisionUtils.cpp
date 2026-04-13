@@ -55,24 +55,41 @@ bool checkSphereBox
 	return result;
 }
 
-bool checkBoxBox
-(
-	const glm::vec3& originA, const glm::vec3& halfExtentsA,
-	const glm::vec3& originB, const glm::vec3& halfExtentsB,
-	CollisionResult& collisionResult
+bool checkBoxBox(
+    const glm::vec3& originA, const glm::vec3& halfExtentsA,
+    const glm::vec3& originB, const glm::vec3& halfExtentsB,
+    CollisionResult& collisionResult
 )
 {
-	bool result =
-	!(
-		((originA.x + halfExtentsA.x) < (originB.x - halfExtentsB.x)) ||
-		((originA.x - halfExtentsA.x) > (originB.x + halfExtentsB.x)) ||
-		((originA.y + halfExtentsA.y) < (originB.y - halfExtentsB.y)) ||
-		((originA.y - halfExtentsA.y) > (originB.y + halfExtentsB.y)) ||
-		((originA.z + halfExtentsA.z) < (originB.z - halfExtentsB.z)) ||
-		((originA.z - halfExtentsA.z) > (originB.z + halfExtentsB.z))
-	);
+	bool result = false;
+    glm::vec3 distance = originB - originA;
 
-	return result;
+    float x_overlap = (halfExtentsA.x + halfExtentsB.x) - std::abs(distance.x);
+    float y_overlap = (halfExtentsA.y + halfExtentsB.y) - std::abs(distance.y);
+    float z_overlap = (halfExtentsA.z + halfExtentsB.z) - std::abs(distance.z);
+
+    if (!(x_overlap <= 0 || y_overlap <= 0 || z_overlap <= 0))
+	{
+		result = true;
+
+		if (x_overlap < y_overlap && x_overlap < z_overlap)
+		{
+			collisionResult.depth = x_overlap;
+			collisionResult.normal = glm::vec3(distance.x > 0 ? 1 : -1, 0, 0);
+		}
+		else if (y_overlap < z_overlap)
+		{
+			collisionResult.depth = y_overlap;
+			collisionResult.normal = glm::vec3(0, distance.y > 0 ? 1 : -1, 0);
+		}
+		else
+		{
+			collisionResult.depth = z_overlap;
+			collisionResult.normal = glm::vec3(0, 0, distance.z > 0 ? 1 : -1);
+		}
+    }
+
+    return result;
 }
 
 } // namespace CollectionsUtils

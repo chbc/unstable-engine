@@ -11,7 +11,7 @@ class AGraphicsWrapper;
 class GuizmoLoader
 {
 private:
-    ColorMeshData* load(EGuizmoMesh type);
+    ColorMeshData* load(EGuizmoType type);
     void release(ColorMeshData* mesh);
 
 friend class AssetsManager;

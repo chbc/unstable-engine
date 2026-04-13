@@ -24,4 +24,9 @@ bool BoxColliderComponent::intersects(BoxColliderComponent* other)
 	return this->bounds.intersects(position, otherPosition, other->bounds);
 }
 
+const Bounds& BoxColliderComponent::getBounds() const
+{
+	return this->bounds;
+}
+
 } // namespace

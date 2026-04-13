@@ -107,7 +107,7 @@ Texture* AssetsManager::loadIcon(const char* filePath)
 	return result;
 }
 
-ColorMeshData* AssetsManager::loadGuizmo(EGuizmoMesh type)
+ColorMeshData* AssetsManager::loadGuizmo(EGuizmoType type)
 {
 	ColorMeshData* result{ nullptr };
 

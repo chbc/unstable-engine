@@ -3,16 +3,18 @@
 #include "MeshData.h"
 #include "memory_aliases.h"
 
-#include <glm/vec3.hpp>
-#include <glm/vec4.hpp>
+#include <unordered_map>
+#include <glm/mat4x4.hpp>
 
 namespace sre
 {
 
 class AGraphicsWrapper;
 class ShaderManager;
-class GuizmoComponent;
 class AssetsManager;
+class GuizmoComponent;
+class Entity;
+class BoxColliderComponent;
 
 class GuizmoRenderer
 {
@@ -33,8 +35,9 @@ private:
 	void addGuizmo(GuizmoComponent* guizmoComponent);
 	void loadShader();
 	void render();
-
-	void removeDestroyedEntities();
+	void renderMeshGuizmo(GuizmoComponent* guizmoComponent);
+	void renderColliderGuizmo(GuizmoComponent* guizmoComponent, BoxColliderComponent* collider);
+	void removeGuizmo(GuizmoComponent* guizmoComponent);
 
 friend class RenderManager;
 };

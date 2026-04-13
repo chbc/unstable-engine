@@ -245,6 +245,14 @@ void RenderManager::addGuizmoComponent(GuizmoComponent* guizmoComponent)
 	this->guizmoRenderer->addGuizmo(guizmoComponent);
 }
 
+void RenderManager::removeGuizmoComponent(GuizmoComponent* guizmoComponent)
+{
+    if (this->guizmoRenderer)
+    {
+        this->guizmoRenderer->removeGuizmo(guizmoComponent);
+    }
+}
+
 void RenderManager::addDebugBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color)
 {
 	if (!this->debugRenderer)

@@ -6,9 +6,15 @@
 namespace sre
 {
 
-ColorMeshData* GuizmoLoader::load(EGuizmoMesh type)
+ColorMeshData* GuizmoLoader::load(EGuizmoType type)
 {
-	return PrimitiveMeshFactory().createBoxLines(glm::vec4{ 1.0 });
+	glm::vec4 color{ 1.0f, 1.0f, 1.0f, 1.0f };
+	if (type == EGuizmoType::Collision)
+	{
+		color = glm::vec4{ 0.25f, 1.0f, 0.25f, 1.0f };
+	}
+
+	return PrimitiveMeshFactory().createBoxLines(color);
 }
 
 void GuizmoLoader::release(ColorMeshData* mesh)

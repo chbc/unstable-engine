@@ -76,6 +76,7 @@ private:
     void addGUIImageComponent(GUIImageComponent* guiComponent);
     void addGUITextComponent(GUITextComponent* guiComponent);
 	void addGuizmoComponent(GuizmoComponent* guizmoComponent);
+	void removeGuizmoComponent(GuizmoComponent* guizmoComponent);
 	void addDebugBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color);
     void addSkybox(SkyboxComponent* mesh);
     void tryAddLight(Entity* entity);

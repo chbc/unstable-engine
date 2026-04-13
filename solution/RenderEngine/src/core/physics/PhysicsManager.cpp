@@ -145,6 +145,28 @@ bool PhysicsManager::checkCollision(AColliderComponent* colliderA, AColliderComp
 			positionA, sphereColliderA->radius, originB, boxColliderB->bounds.halfExtents, collisionResult 
 		);
 	}
+	else if ((colliderA->collisionType == ECollisionType::BOX) && (colliderB->collisionType == ECollisionType::SPHERE))
+	{
+		BoxColliderComponent* boxColliderA = static_cast<BoxColliderComponent*>(colliderA);
+		SphereColliderComponent* sphereColliderB = static_cast<SphereColliderComponent*>(colliderB);
+		glm::vec3 originA = positionA + boxColliderA->bounds.center;
+		result = CollisionUtils::checkSphereBox
+		(
+			positionB, sphereColliderB->radius, originA, boxColliderA->bounds.halfExtents, collisionResult
+		);
+		collisionResult.normal = -collisionResult.normal;
+	}
+	else if ((colliderA->collisionType == ECollisionType::BOX) && (colliderB->collisionType == ECollisionType::BOX))
+	{
+		BoxColliderComponent* boxColliderA = static_cast<BoxColliderComponent*>(colliderA);
+		BoxColliderComponent* boxColliderB = static_cast<BoxColliderComponent*>(colliderB);
+		glm::vec3 originA = positionA + boxColliderA->bounds.center;
+		glm::vec3 originB = positionB + boxColliderB->bounds.center;
+		result = CollisionUtils::checkBoxBox
+		(
+			originA, boxColliderA->bounds.halfExtents, originB, boxColliderB->bounds.halfExtents, collisionResult
+		);
+	}
 
 	return result;
 }

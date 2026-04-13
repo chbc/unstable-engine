@@ -92,22 +92,24 @@ void SceneViewportGuizmos::onCleanUp()
 
 void SceneViewportGuizmos::onEntitySelected(void* data)
 {
+	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 	if (this->selectedEntity)
 	{
+		if (this->guizmoComponent)
+		{
+			renderManager->removeGuizmoComponent(this->guizmoComponent);
+		}
 		this->selectedEntity->removeComponent<GuizmoComponent>();
 	}
 
 	EntitySelectionMessage* message = static_cast<EntitySelectionMessage*>(data);
 	this->selectedEntity = message->entity;
 
-	GuizmoComponent* guizmoComponent{ nullptr };
 	if (this->selectedEntity)
 	{
-		guizmoComponent = this->selectedEntity->addComponent<GuizmoComponent>();
+		this->guizmoComponent = this->selectedEntity->addComponent<GuizmoComponent>();
+		renderManager->addGuizmoComponent(guizmoComponent);
 	}
-
-	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
-	renderManager->addGuizmoComponent(guizmoComponent);
 }
 
 void SceneViewportGuizmos::onOrientationModeChanged(void* message)

@@ -20,7 +20,7 @@ struct ColorMeshData;
 
 class AScene;
 
-using GuizmosCollection = std::unordered_map<EGuizmoMesh, SPTR<ColorMeshData>>;
+using GuizmosCollection = std::unordered_map<EGuizmoType, SPTR<ColorMeshData>>;
 
 class SRE_API AssetsManager : public ASingleton
 {
@@ -41,7 +41,7 @@ public:
 	ABaseMaterial* loadMaterial(const std::string& filePath, size_t referencesCount = 1);
 	Texture* loadTexture(const char* filePath, ETextureMap::Type mapType);
 	Texture* loadIcon(const char* filePath);
-	ColorMeshData* loadGuizmo(EGuizmoMesh type);
+	ColorMeshData* loadGuizmo(EGuizmoType type);
 
 	void releaseEntity(Entity* entity);
 	void releaseModel(const char* filePath);
