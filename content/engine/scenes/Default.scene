@@ -28,3 +28,16 @@ Cube:
         Blocking: 1
         Center: [0,0,0]
         Half Extents: [0.5,0.50000006,0.50000006]
+_main_camera:
+  _main_camera: 1
+  Components:
+    - TransformComponent:
+        Enabled: 1
+        Position: [0,2,5]
+        Rotation: [0,0,0]
+        Scale: [1,1,1]
+    - CameraComponent:
+        Enabled: 1
+        Perspective: 1
+        Main Camera: 0
+        FOV: 70

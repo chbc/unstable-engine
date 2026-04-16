@@ -45,6 +45,8 @@ public:
 	void createDirectionalLight();
 	void createPointLight();
 	void createSkybox();
+	void createPerspectiveCamera();
+	void createOrthoCamera();
 	void setSelectedEntity(Entity* entity);
 	Entity* getSelectedEntity();
 	void duplicateSelectedEntity();

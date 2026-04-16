@@ -116,6 +116,14 @@ void EditorMenuBar::drawEntitiesGroup()
 			ImGui::EndMenu();
 		}
 
+		if (ImGui::BeginMenu("Cameras"))
+		{
+			MENU_ITEM("Perspective Camera", createPerspectiveCamera);
+			MENU_ITEM("Orthographic Camera", createOrthoCamera);
+
+			ImGui::EndMenu();
+		}
+
 		ImGui::EndMenu();
 	}
 }

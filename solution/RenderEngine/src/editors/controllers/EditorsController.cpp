@@ -239,6 +239,20 @@ void EditorsController::createSkybox()
 	this->setSelectedEntity(newEntity);
 }
 
+void EditorsController::createPerspectiveCamera()
+{
+	Entity* newEntity = this->scenesManager->createPerspectiveCamera();
+	this->scenesManager->setupEntityInitialPosition(newEntity);
+	this->setSelectedEntity(newEntity);
+}
+
+void EditorsController::createOrthoCamera()
+{
+	Entity* newEntity = this->scenesManager->createOrthoCamera();
+	this->scenesManager->setupEntityInitialPosition(newEntity);
+	this->setSelectedEntity(newEntity);
+}
+
 void EditorsController::setSelectedEntity(Entity* entity)
 {
 	this->selectedEntity = entity;
