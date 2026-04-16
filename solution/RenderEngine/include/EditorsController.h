@@ -2,6 +2,7 @@
 
 #include "memory_aliases.h"
 #include "FileIcon.h"
+#include "ECollisionType.h"
 
 #include <string>
 
@@ -41,7 +42,7 @@ public:
 	void loadFileFromBrowser(const std::string& filePath);
 	void importMesh(const char* sourceFilePath, const char* destinationPath, float scaleFactor, bool importMaterials, std::string& resultFilePath);
 	void copyFileToCurrentDirectory(const std::string& sourceFilePath, const std::string& destinationFileName = "", bool startRenaming = false);
-	Entity* createMeshEntity(const std::string& filePath, const char* meshName);
+	Entity* createMeshEntity(const std::string& filePath, const char* meshName, ECollisionType collisionType);
 	void createDirectionalLight();
 	void createPointLight();
 	void createSkybox();

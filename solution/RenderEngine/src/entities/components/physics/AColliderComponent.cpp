@@ -13,7 +13,7 @@ AColliderComponent::AColliderComponent(Entity* entity, ECollisionType arg_collis
 	: AEntityComponent(entity), collisionType(arg_collisionType)
 {
 	this->addEditorProperty(new BoolEditorProperty{ "Blocking", &this->blocking });
-	this->addEditorProperty(new Vec3EditorProperty("Center", &this->bounds.center));
+	this->addEditorProperty(new Vec3EditorProperty{ "Center", &this->bounds.center });
 }
 
 void AColliderComponent::setCollisionAction(const CollisionAction& action)

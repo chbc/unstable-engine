@@ -3,14 +3,13 @@
 #include "Scene.h"
 #include "GUIScene.h"
 #include "ASingleton.h"
+#include "Action.h"
+#include "ECollisionType.h"
 
-#include <functional>
 #include <vector>
 
 namespace sre
 {
-
-using Action = std::function<void(void*)>;
 
 class ScenesManager : public ASingleton
 {
@@ -35,7 +34,6 @@ public:
     SRE_API Entity* createEntityFromFile(std::string filePath, Entity* parent = nullptr);
 	SRE_API Entity* duplicateEntity(Entity* entity);
     SRE_API Entity* getEntity(const std::string& name);
-    SRE_API Entity* createMeshEntity(Model* model, const char* meshName, Entity* parent = nullptr);
     SRE_API Entity* createPerspectiveCamera(float fov = 70.0f, float near = 0.1f, float far = 1000.0f, Entity* parent = nullptr);
     SRE_API Entity* createOrthoCamera(Entity* parent = nullptr);
     SRE_API Entity* createDirectionalLight(const std::string& name = "", Entity* parent = nullptr);
@@ -63,7 +61,7 @@ private:
     bool isSceneStored();
     bool isGuiSceneStored();
     bool isBaseSceneStored(AScene* baseScene);
-    Entity* createMeshEntity(const std::string& filePath, const char* meshName);
+    Entity* createMeshEntity(const std::string& filePath, const char* meshName, ECollisionType collisionType);
     AScene* getScene();
     AScene* getGuiScene();
 	void onEntityEnqueuedToDestroy(void* data);

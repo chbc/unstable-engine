@@ -24,8 +24,6 @@ private:
 	AssetsManager* assetsManager{ nullptr };
 	uint32_t program{ 0 };
 	std::list<GuizmoComponent*> meshGuizmos;
-	std::list<GuizmoComponent*> boxColliderGuizmos;
-	std::list<GuizmoComponent*> sphereColliderGuizmos;
 
 private:
 	GuizmoRenderer(ShaderManager* shaderManager, AGraphicsWrapper* graphicsWrapper);
@@ -37,8 +35,6 @@ private:
 	void addGuizmos(Entity* entity);
 	void loadShader();
 	void render();
-	void renderMeshGuizmo(GuizmoComponent* guizmoComponent);
-	// void renderColliderGuizmo(GuizmoComponent* guizmoComponent, AColliderComponent* collider);
 	void removeGuizmos(Entity* entity);
 
 friend class RenderManager;

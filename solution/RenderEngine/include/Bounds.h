@@ -23,6 +23,7 @@ public:
 	bool intersects(const Ray& ray, const glm::mat4& worldMatrix, float& distance) const;
 	void add(const Bounds& other);
 	const glm::vec3 getSize() const;
+	float getRadius() const;
 	void reset();
 
 private:

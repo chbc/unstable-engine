@@ -35,31 +35,10 @@ void GuizmoRenderer::addGuizmos(Entity* entity)
 
 	for (GuizmoComponent* item : guizmoComponents)
 	{
-		switch (item->guizmoType)
-		{
-			case EGuizmoType::MESH:
-				this->meshGuizmos.push_back(item);
-				entity->getBounds(item->bounds);
-				break;
-
-			case EGuizmoType::BOX_COLLISION:
-				collider = entity->getBaseComponent<AColliderComponent>();
-				item->bounds = collider->getBounds();
-				this->boxColliderGuizmos.push_back(item);
-				break;
-
-			case EGuizmoType::SPHERE_COLLISION:
-				collider = entity->getBaseComponent<AColliderComponent>();
-				item->bounds = collider->getBounds();
-				this->sphereColliderGuizmos.push_back(item);
-				break;
-			default: break;
-		}
-
+		this->meshGuizmos.push_back(item);
 		if (item->mesh->ebo == 0)
 		{
 			this->graphicsWrapper->createBuffers(item->mesh);
-
 		}
 	}
 }
@@ -78,38 +57,42 @@ void GuizmoRenderer::render()
 
 	for (GuizmoComponent* item : this->meshGuizmos)
 	{
-		this->renderMeshGuizmo(item);
-	}
+		Entity* entity = item->getEntity();
+		TransformComponent* transform = entity->getTransform();
 
-	/*
-	for (GuizmoComponent* item : this->boxColliderGuizmos)
-	{
-		BoxColliderComponent* collider = item->getEntity()->getComponent<BoxColliderComponent>();
-		if (collider)
+		glm::mat4 resultMatrix{ 1.0f };
+
+		if (item->guizmoType == EGuizmoType::MESH)
 		{
-			this->renderColliderGuizmo(item, collider);
+			const glm::mat4& modelMatrix = transform->getMatrix();
+			resultMatrix = glm::translate(modelMatrix, item->bounds.center);
+			resultMatrix = glm::scale(resultMatrix, item->bounds.getSize());
 		}
+		else
+		{
+			glm::vec3 position = transform->getPosition() + item->bounds.center;
+			resultMatrix = glm::translate(resultMatrix, position);
+			if (item->guizmoType == EGuizmoType::SPHERE_COLLISION)
+			{
+				float radius = item->bounds.getRadius();
+				resultMatrix = glm::scale(resultMatrix, glm::vec3(radius));
+			}
+			else
+			{
+				resultMatrix = glm::scale(resultMatrix, item->bounds.getSize());
+			}
+		}
+
+		ColorMeshData* mesh = item->mesh;
+		this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
+		this->graphicsWrapper->enableColorMeshSettings();
+
+		this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &resultMatrix[0][0]);
+		this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &mesh->color[0]);
+		this->graphicsWrapper->drawElement(mesh->ebo, mesh->indices.size(), EDrawMode::LINES);
+
+		this->graphicsWrapper->disableColorMeshSettings();
 	}
-	*/
-}
-
-void GuizmoRenderer::renderMeshGuizmo(GuizmoComponent* guizmoComponent)
-{
-	Entity* entity = guizmoComponent->getEntity();
-	TransformComponent* transform = entity->getTransform();
-	const glm::mat4& modelMatrix = transform->getMatrix();
-	glm::mat4 resultMatrix = glm::translate(modelMatrix, guizmoComponent->bounds.center);
-	resultMatrix = glm::scale(resultMatrix, guizmoComponent->bounds.getSize());
-
-	ColorMeshData* mesh = guizmoComponent->mesh;
-	this->graphicsWrapper->bindVAO(mesh->vao, mesh->vbo);
-	this->graphicsWrapper->enableColorMeshSettings();
-
-	this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &resultMatrix[0][0]);
-	this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &mesh->color[0]);
-	this->graphicsWrapper->drawElement(mesh->ebo, mesh->indices.size(), EDrawMode::LINES);
-	
-	this->graphicsWrapper->disableColorMeshSettings();
 }
 
 /*
@@ -144,19 +127,7 @@ void GuizmoRenderer::removeGuizmos(Entity* entity)
 
 	for (GuizmoComponent* item : guizmoComponents)
 	{
-		switch (item->guizmoType)
-		{
-			case EGuizmoType::MESH:
-				this->meshGuizmos.remove(item);
-				break;
-			case EGuizmoType::BOX_COLLISION:
-				this->boxColliderGuizmos.remove(item);
-				break;
-			case EGuizmoType::SPHERE_COLLISION:
-				this->sphereColliderGuizmos.remove(item);
-				break;
-			default: break;
-		}
+		this->meshGuizmos.remove(item);
 	}
 }
 

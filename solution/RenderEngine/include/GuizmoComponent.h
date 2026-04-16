@@ -19,6 +19,9 @@ public:
 	GuizmoComponent(Entity* entity);
 	void loadMesh(EGuizmoType guizmoType);
 
+private:
+	void onColliderChanged();
+
 friend class GuizmoRenderer;
 };
 

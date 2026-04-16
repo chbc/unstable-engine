@@ -720,6 +720,7 @@
     <ClInclude Include="include\CustomMaterial.h" />
     <ClInclude Include="include\CustomMaterialComponent.h" />
     <ClInclude Include="include\CustomRenderer.h" />
+    <ClInclude Include="include\ECollisionType.h" />
     <ClInclude Include="include\EditorScene.h" />
     <ClInclude Include="include\EDrawMode.h" />
     <ClInclude Include="include\EGuizmoMesh.h" />

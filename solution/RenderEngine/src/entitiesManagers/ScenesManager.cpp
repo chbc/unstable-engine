@@ -8,6 +8,8 @@
 #include "PhysicsManager.h"
 #include "MessagesManager.h"
 #include "EntityDestructionMessage.h"
+#include "BoxColliderComponent.h"
+#include "SphereColliderComponent.h"
 
 namespace sre
 {
@@ -57,13 +59,6 @@ Entity* ScenesManager::getEntity(const std::string& name)
     if (result == nullptr)
         result = this->guiScene->getEntity(name);
 
-    return result;
-}
-
-Entity* ScenesManager::createMeshEntity(Model* model, const char* meshName, Entity* parent)
-{
-    Entity* result = this->scene->createMeshEntity(model, meshName, parent);
-    this->addToRendererAndPhysics(result);
     return result;
 }
 
@@ -270,9 +265,18 @@ bool ScenesManager::isBaseSceneStored(AScene* baseScene)
     return result;
 }
 
-Entity* ScenesManager::createMeshEntity(const std::string& filePath, const char* meshName)
+Entity* ScenesManager::createMeshEntity(const std::string& filePath, const char* meshName, ECollisionType collisionType)
 {
     Entity* entity = this->scene->createMeshEntity(filePath, meshName);
+    if (collisionType == ECollisionType::BOX)
+    {
+        entity->addComponent<BoxColliderComponent>();
+    }
+    else if (collisionType == ECollisionType::SPHERE)
+    {
+        entity->addComponent<SphereColliderComponent>();
+    }
+
     this->addToRendererAndPhysics(entity);
 
     return entity;

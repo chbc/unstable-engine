@@ -2,9 +2,7 @@
 
 #include "AEntityComponent.h"
 #include "Bounds.h"
-
-#include <glm/vec3.hpp>
-#include <functional>
+#include "ECollisionType.h"
 
 namespace sre
 {
@@ -13,13 +11,6 @@ class AColliderComponent;
 struct CollisionResult;
 
 using CollisionAction = std::function<void(AColliderComponent*, const CollisionResult&)>;
-
-enum class ECollisionType : uint16_t
-{
-	NONE,
-	BOX,
-	SPHERE
-};
 
 class SRE_API AColliderComponent : public AEntityComponent
 {

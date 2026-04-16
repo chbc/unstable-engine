@@ -35,18 +35,23 @@ void EditorEntityProperties::onEditorGUI()
 			ImGui::EndTable();
 		}
 
-		for (const auto& componentsList : entity->componentsMap)
+		for (const auto& componentsTuple : entity->componentsMap)
 		{
-			for (const auto& component : componentsList.second)
+			const auto& componentsList = componentsTuple.second;
+			for (int i = 0; i < componentsList.size(); ++i)
 			{
-				std::string componentName = component->getClassName();
-				if (componentName != "GuizmoComponent")
+				AEntityComponent* component = componentsList[i].get();
+				const char* componentName = component->getClassName();
+				if (std::strcmp(componentName, "GuizmoComponent") != 0)
 				{
-					bool isHeaderOpen = ImGui::CollapsingHeader(componentName.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
-					if (this->drawComponentContextualMenu(component.get()))
+					ImGui::PushID(i);
+					bool isHeaderOpen = ImGui::CollapsingHeader(componentName, ImGuiTreeNodeFlags_DefaultOpen);
+					if (this->drawComponentContextualMenu(component))
 					{
+						ImGui::PopID();
 						break;
 					}
+					ImGui::PopID();
 
 					if (isHeaderOpen)
 					{

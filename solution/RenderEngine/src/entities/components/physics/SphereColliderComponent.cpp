@@ -14,7 +14,7 @@ SphereColliderComponent::SphereColliderComponent(Entity* entity)
 
 float SphereColliderComponent::getRadius() const
 {
-	return this->bounds.halfExtents.x;
+	return this->bounds.getRadius();
 }
 
 } // namespace

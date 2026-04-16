@@ -70,6 +70,11 @@ const glm::vec3 Bounds::getSize() const
 	return (this->halfExtents * 2.0f);
 }
 
+float Bounds::getRadius() const
+{
+	return this->halfExtents.x;
+}
+
 void Bounds::reset()
 {
 	this->center = glm::vec3{ 0.0f };

@@ -152,7 +152,7 @@ void EditorsController::loadFileFromBrowser(const std::string& filePath)
 		case EAssetType::MESH:
 		{
 			std::string name = FileUtils::getFileName(filePath);
-			Entity* entity = this->createMeshEntity(filePath, name.c_str());
+			Entity* entity = this->createMeshEntity(filePath, name.c_str(), ECollisionType::NONE);
 			this->tryLoadMaterialToEntity(entity, filePath);
 			break;
 		}
@@ -206,9 +206,9 @@ void EditorsController::copyFileToCurrentDirectory(const std::string& sourceFile
 	}
 }
 
-Entity* EditorsController::createMeshEntity(const std::string& filePath, const char* meshName)
+Entity* EditorsController::createMeshEntity(const std::string& filePath, const char* meshName, ECollisionType collisionType)
 {
-	Entity* newEntity = this->scenesManager->createMeshEntity(filePath, meshName);
+	Entity* newEntity = this->scenesManager->createMeshEntity(filePath, meshName, collisionType);
 	this->scenesManager->setupEntityInitialPosition(newEntity);
 	this->setSelectedEntity(newEntity);
 

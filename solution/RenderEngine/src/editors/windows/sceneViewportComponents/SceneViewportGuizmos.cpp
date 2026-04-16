@@ -105,8 +105,7 @@ void SceneViewportGuizmos::onEntitySelected(void* data)
 
 	if (this->selectedEntity)
 	{
-		GuizmoComponent* component = this->selectedEntity->addComponent<GuizmoComponent>();
-		component->loadMesh(EGuizmoType::MESH);
+		this->addGuizmosToSelectedEntity();
 		renderManager->addGuizmos(this->selectedEntity);
 	}
 }

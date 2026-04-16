@@ -5,6 +5,7 @@
 #include "SingletonsManager.h"
 #include "EditorMessages.h"
 #include "EditorsController.h"
+#include "ECollisionType.h"
 
 #include "imgui.h"
 
@@ -17,10 +18,10 @@ namespace sre
 		this->controller->method();	\
 	}
 
-#define CREATE_MESH_ITEM(filePath, meshName)	\
+#define CREATE_MESH_ITEM(filePath, meshName, collisionType)	\
 	if (ImGui::MenuItem(meshName))	\
 	{								\
-		this->controller->createMeshEntity(filePath, meshName);	\
+		this->controller->createMeshEntity(filePath, meshName, collisionType);	\
 	}
 
 EditorMenuBar::EditorMenuBar(bool* demoEnabled, EditorsController* arg_controller)
@@ -90,13 +91,12 @@ void EditorMenuBar::drawEntitiesGroup()
 	{
 		if (ImGui::BeginMenu("Basic Shapes"))
 		{
-			CREATE_MESH_ITEM(CUBE_MESH_PATH, "Cube");
-			CREATE_MESH_ITEM(SPHERE_MESH_PATH, "Sphere");
-			CREATE_MESH_ITEM(CONE_MESH_PATH, "Cone");
-			CREATE_MESH_ITEM(CYLINDER_MESH_PATH, "Cylinder");
-			CREATE_MESH_ITEM(TORUS_MESH_PATH, "Torus");
-			CREATE_MESH_ITEM(PLANE_MESH_PATH, "Plane");
-
+			CREATE_MESH_ITEM(CUBE_MESH_PATH, "Cube", ECollisionType::BOX);
+			CREATE_MESH_ITEM(SPHERE_MESH_PATH, "Sphere", ECollisionType::SPHERE);
+			CREATE_MESH_ITEM(CONE_MESH_PATH, "Cone", ECollisionType::BOX);
+			CREATE_MESH_ITEM(CYLINDER_MESH_PATH, "Cylinder", ECollisionType::BOX);
+			CREATE_MESH_ITEM(TORUS_MESH_PATH, "Torus", ECollisionType::BOX);
+			CREATE_MESH_ITEM(PLANE_MESH_PATH, "Plane", ECollisionType::BOX);
 			ImGui::EndMenu();
 		}
 
