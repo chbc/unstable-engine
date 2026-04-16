@@ -5,8 +5,9 @@ namespace sre
 
 enum class EGuizmoType
 {
-	Mesh,
-	Collision
+	MESH,
+	BOX_COLLISION,
+	SPHERE_COLLISION
 };
 
 /*

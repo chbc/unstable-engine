@@ -12,7 +12,6 @@ BoxColliderComponent::BoxColliderComponent(Entity* entity)
 	: AColliderComponent(entity, ECollisionType::BOX)
 {
 	entity->getBounds(this->bounds);
-	this->addEditorProperty(new Vec3EditorProperty("Center", &this->bounds.center));
 	this->addEditorProperty(new Vec3EditorProperty("Half Extents", &this->bounds.halfExtents, 0.5f));
 }
 
@@ -22,11 +21,6 @@ bool BoxColliderComponent::intersects(BoxColliderComponent* other)
 	const glm::vec3& otherPosition = other->getTransform()->getPosition();
 
 	return this->bounds.intersects(position, otherPosition, other->bounds);
-}
-
-const Bounds& BoxColliderComponent::getBounds() const
-{
-	return this->bounds;
 }
 
 } // namespace

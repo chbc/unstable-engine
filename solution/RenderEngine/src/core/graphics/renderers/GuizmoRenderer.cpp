@@ -3,8 +3,8 @@
 #include "ShaderManager.h"
 #include "CameraComponent.h"
 #include "GuizmoComponent.h"
-#include "BoxColliderComponent.h"
 #include "TransformComponent.h"
+#include "AColliderComponent.h"
 #include "MeshComponent.h"
 #include "AssetsManager.h"
 #include "SingletonsManager.h"
@@ -27,18 +27,41 @@ GuizmoRenderer::~GuizmoRenderer()
 	}
 }
 
-void GuizmoRenderer::addGuizmo(GuizmoComponent* guizmoComponent)
+void GuizmoRenderer::addGuizmos(Entity* entity)
 {
-	this->guizmoComponents.push_back(guizmoComponent);
+	std::vector<GuizmoComponent*> guizmoComponents;
+	entity->getComponents<GuizmoComponent>(guizmoComponents);
+	AColliderComponent* collider = nullptr;
 
-	guizmoComponent->mesh = this->assetsManager->loadGuizmo(guizmoComponent->guizmoType);
-	if (guizmoComponent->mesh->ebo == 0)
+	for (GuizmoComponent* item : guizmoComponents)
 	{
-		this->graphicsWrapper->createBuffers(guizmoComponent->mesh);
-	}
+		switch (item->guizmoType)
+		{
+			case EGuizmoType::MESH:
+				this->meshGuizmos.push_back(item);
+				entity->getBounds(item->bounds);
+				break;
 
-	Entity* entity = guizmoComponent->getEntity();
-	entity->getBounds(guizmoComponent->bounds);
+			case EGuizmoType::BOX_COLLISION:
+				collider = entity->getBaseComponent<AColliderComponent>();
+				item->bounds = collider->getBounds();
+				this->boxColliderGuizmos.push_back(item);
+				break;
+
+			case EGuizmoType::SPHERE_COLLISION:
+				collider = entity->getBaseComponent<AColliderComponent>();
+				item->bounds = collider->getBounds();
+				this->sphereColliderGuizmos.push_back(item);
+				break;
+			default: break;
+		}
+
+		if (item->mesh->ebo == 0)
+		{
+			this->graphicsWrapper->createBuffers(item->mesh);
+
+		}
+	}
 }
 
 void GuizmoRenderer::loadShader()
@@ -53,18 +76,21 @@ void GuizmoRenderer::render()
 {
 	this->shaderManager->enableShader(this->program);
 
-	for (GuizmoComponent* item : this->guizmoComponents)
+	for (GuizmoComponent* item : this->meshGuizmos)
 	{
 		this->renderMeshGuizmo(item);
+	}
 
+	/*
+	for (GuizmoComponent* item : this->boxColliderGuizmos)
+	{
 		BoxColliderComponent* collider = item->getEntity()->getComponent<BoxColliderComponent>();
 		if (collider)
 		{
 			this->renderColliderGuizmo(item, collider);
 		}
-
-		this->graphicsWrapper->disableColorMeshSettings();
 	}
+	*/
 }
 
 void GuizmoRenderer::renderMeshGuizmo(GuizmoComponent* guizmoComponent)
@@ -82,9 +108,12 @@ void GuizmoRenderer::renderMeshGuizmo(GuizmoComponent* guizmoComponent)
 	this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &resultMatrix[0][0]);
 	this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &mesh->color[0]);
 	this->graphicsWrapper->drawElement(mesh->ebo, mesh->indices.size(), EDrawMode::LINES);
+	
+	this->graphicsWrapper->disableColorMeshSettings();
 }
 
-void GuizmoRenderer::renderColliderGuizmo(GuizmoComponent* guizmoComponent, BoxColliderComponent* collider)
+/*
+void GuizmoRenderer::renderColliderGuizmo(GuizmoComponent* guizmoComponent, AColliderComponent* collider)
 {
 	Entity* entity = guizmoComponent->getEntity();
 	TransformComponent* transform = entity->getTransform();
@@ -104,17 +133,29 @@ void GuizmoRenderer::renderColliderGuizmo(GuizmoComponent* guizmoComponent, BoxC
 	this->shaderManager->setMat4(this->program, ShaderVariables::MODEL_MATRIX, &modelMatrix[0][0]);
 	this->shaderManager->setVec4(this->program, ShaderVariables::MATERIAL_COLOR, &color[0]);
 	this->graphicsWrapper->drawElement(mesh->ebo, mesh->indices.size(), EDrawMode::LINES);
-}
 
-void GuizmoRenderer::removeGuizmo(GuizmoComponent* guizmoComponent)
+	this->graphicsWrapper->disableColorMeshSettings();
+}
+*/
+void GuizmoRenderer::removeGuizmos(Entity* entity)
 {
-	std::list<GuizmoComponent*>::iterator it;
-	for (it = this->guizmoComponents.begin(); it != this->guizmoComponents.end(); ++it)
+	std::vector<GuizmoComponent*> guizmoComponents;
+	entity->getComponents<GuizmoComponent>(guizmoComponents);
+
+	for (GuizmoComponent* item : guizmoComponents)
 	{
-		if (*it == guizmoComponent)
+		switch (item->guizmoType)
 		{
-			this->guizmoComponents.erase(it);
-			break;
+			case EGuizmoType::MESH:
+				this->meshGuizmos.remove(item);
+				break;
+			case EGuizmoType::BOX_COLLISION:
+				this->boxColliderGuizmos.remove(item);
+				break;
+			case EGuizmoType::SPHERE_COLLISION:
+				this->sphereColliderGuizmos.remove(item);
+				break;
+			default: break;
 		}
 	}
 }

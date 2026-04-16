@@ -327,6 +327,46 @@ ColorMeshData* PrimitiveMeshFactory::createBoxLines(const glm::vec4& color)
 	return this->createBoxLines(glm::vec3(0.0f), glm::vec3(1.0f), color);
 }
 
+ColorMeshData* PrimitiveMeshFactory::createSphereLines(float radius, const glm::vec4& color)
+{
+	std::vector<glm::vec3> vertices;
+	std::vector<uint32_t> indices;
+
+	int segments = 20;
+	const float angleStep = 2.0f * glm::pi<float>() / static_cast<float>(segments);
+
+	uint32_t offset = 0;
+
+	// XY
+	for (int i = 0; i < segments; i++)
+	{
+		float angle = i * angleStep;
+		vertices.push_back(glm::vec3(cos(angle) * radius, sin(angle) * radius, 0.0f));
+		indices.push_back(offset + i);
+		indices.push_back(offset + (i + 1) % segments);
+	}
+	offset += segments;
+
+	// XZ
+	for (int i = 0; i < segments; i++) {
+		float angle = i * angleStep;
+		vertices.push_back(glm::vec3(cos(angle) * radius, 0.0f, sin(angle) * radius));
+		indices.push_back(offset + i);
+		indices.push_back(offset + (i + 1) % segments);
+	}
+	offset += segments;
+
+	// YZ
+	for (int i = 0; i < segments; i++) {
+		float angle = i * angleStep;
+		vertices.push_back(glm::vec3(0.0f, cos(angle) * radius, sin(angle) * radius));
+		indices.push_back(offset + i);
+		indices.push_back(offset + (i + 1) % segments);
+	}
+
+	return new ColorMeshData{ vertices, indices, color };
+}
+
 MeshData2D* PrimitiveMeshFactory::createPlane2D(const glm::vec2& size, const float* texCoords)
 {
 	float planeVertices[] =

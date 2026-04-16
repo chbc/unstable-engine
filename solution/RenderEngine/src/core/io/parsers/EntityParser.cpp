@@ -43,17 +43,24 @@ void EntityParser::serializeComponents(c4::yml::NodeRef& entityNode, Entity* ent
 	}
 
 	c4::yml::NodeRef ComponentsNode = entityNode["Components"];
-	ComponentsNode |= ryml::MAP;
-	for (const auto& componentItem : entity->componentsMap)
+	ComponentsNode |= ryml::SEQ;
+
+	for (const auto& [id, componentsList] : entity->componentsMap)
 	{
-		AEntityComponent* component = componentItem.second.get();
-		std::string className = component->getClassName();
-		if (className != "GuizmoComponent")
+		for (const auto& component : componentsList)
 		{
-			if (!entity->isAsset() || !component->isStored())
+			AEntityComponent* componentPtr = component.get();
+			const char* className = componentPtr->getClassName();
+			if (std::strcmp(className, "GuizmoComponent") != 0)
 			{
-				c4::yml::NodeRef itemtNode = ComponentsNode[component->getClassName()];
-				ComponentParser::serialize(itemtNode, component);
+				if (!entity->isAsset() || !component->isStored())
+				{
+					c4::yml::NodeRef itemNode = ComponentsNode.append_child();
+					itemNode |= ryml::MAP;
+
+					c4::yml::NodeRef dataNode = itemNode[className];
+					ComponentParser::serialize(dataNode, componentPtr);
+				}
 			}
 		}
 	}

@@ -13,10 +13,11 @@ DECLARE_COMPONENT()
 
 private:
 	ColorMeshData* mesh{ nullptr };
-	EGuizmoType guizmoType{ EGuizmoType::Mesh };
+	EGuizmoType guizmoType{ EGuizmoType::MESH };
 
 public:
 	GuizmoComponent(Entity* entity);
+	void loadMesh(EGuizmoType guizmoType);
 
 friend class GuizmoRenderer;
 };

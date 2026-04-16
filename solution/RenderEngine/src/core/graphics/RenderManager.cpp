@@ -235,21 +235,21 @@ void RenderManager::addGUITextComponent(GUITextComponent*guiComponent)
     this->guiRenderer->addTextComponent(guiComponent);
 }
 
-void RenderManager::addGuizmoComponent(GuizmoComponent* guizmoComponent)
+void RenderManager::addGuizmos(Entity* entity)
 {
 	if (!this->guizmoRenderer)
 	{
 		this->guizmoRenderer = SPTR<GuizmoRenderer>{ new GuizmoRenderer{this->shaderManager, this->graphicsWrapper} };
 		this->guizmoRenderer->loadShader();
 	}
-	this->guizmoRenderer->addGuizmo(guizmoComponent);
+	this->guizmoRenderer->addGuizmos(entity);
 }
 
-void RenderManager::removeGuizmoComponent(GuizmoComponent* guizmoComponent)
+void RenderManager::removeGuizmos(Entity* entity)
 {
     if (this->guizmoRenderer)
     {
-        this->guizmoRenderer->removeGuizmo(guizmoComponent);
+        this->guizmoRenderer->removeGuizmos(entity);
     }
 }
 

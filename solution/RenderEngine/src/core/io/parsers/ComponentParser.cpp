@@ -21,9 +21,16 @@ void ComponentParser::serialize(c4::yml::NodeRef& componentNode, AEntityComponen
 
 void ComponentParser::deserialize(c4::yml::ConstNodeRef& componentNode, Entity* entity)
 {
-	std::ostringstream keyStream;
-	keyStream << componentNode.key();
-	std::string type = keyStream.str();
+	if (!componentNode.has_children())
+	{
+		return;
+	}
+
+	c4::yml::ConstNodeRef dataNode = componentNode.first_child();
+
+	std::string type;
+	c4::csubstr key = dataNode.key();
+	type.assign(key.str, key.len);
 
 	AEntityComponent* component = nullptr;
 	if (type == "TransformComponent")
@@ -35,10 +42,14 @@ void ComponentParser::deserialize(c4::yml::ConstNodeRef& componentNode, Entity* 
 		component = entity->addComponent(type.c_str());
 	}
 
-	for (const SPTR<AEditorProperty>& property : component->editorProperties)
+	for (const auto& property : component->editorProperties)
 	{
-		c4::yml::ConstNodeRef& propertyNode = componentNode[property->title.c_str()];
-		property->deserialize(propertyNode);
+		const char* propTitle = property->title.c_str();
+		if (dataNode.has_child(c4::to_csubstr(propTitle)))
+		{
+			c4::yml::ConstNodeRef propertyNode = dataNode[c4::to_csubstr(propTitle)];
+			property->deserialize(propertyNode);
+		}
 	}
 }
 

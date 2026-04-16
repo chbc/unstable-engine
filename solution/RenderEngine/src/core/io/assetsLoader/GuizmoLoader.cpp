@@ -8,13 +8,22 @@ namespace sre
 
 ColorMeshData* GuizmoLoader::load(EGuizmoType type)
 {
-	glm::vec4 color{ 1.0f, 1.0f, 1.0f, 1.0f };
-	if (type == EGuizmoType::Collision)
+	ColorMeshData* result = nullptr;
+	PrimitiveMeshFactory factory;
+	switch (type)
 	{
-		color = glm::vec4{ 0.25f, 1.0f, 0.25f, 1.0f };
+		case EGuizmoType::MESH:
+			result = factory.createBoxLines(glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f });
+			break;
+		case EGuizmoType::BOX_COLLISION:
+			result = factory.createBoxLines(glm::vec4{ 0.25f, 1.0f, 0.25f, 1.0f });
+			break;
+		case EGuizmoType::SPHERE_COLLISION:
+			result = factory.createSphereLines(0.5f, glm::vec4{ 0.25f, 1.0f, 0.25f, 1.0f });
+			break;
 	}
 
-	return PrimitiveMeshFactory().createBoxLines(color);
+	return result;
 }
 
 void GuizmoLoader::release(ColorMeshData* mesh)

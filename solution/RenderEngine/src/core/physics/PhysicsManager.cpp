@@ -131,7 +131,7 @@ bool PhysicsManager::checkCollision(AColliderComponent* colliderA, AColliderComp
 
 		result = CollisionUtils::checkSphereSphere
 		(
-			positionA, sphereColliderA->radius, positionB, sphereColliderB->radius,	collisionResult
+			positionA, sphereColliderA->getRadius(), positionB, sphereColliderB->getRadius(), collisionResult
 		);
 	}
 	else if ((colliderA->collisionType == ECollisionType::SPHERE) && (colliderB->collisionType == ECollisionType::BOX))
@@ -142,7 +142,7 @@ bool PhysicsManager::checkCollision(AColliderComponent* colliderA, AColliderComp
 
 		result = CollisionUtils::checkSphereBox
 		(
-			positionA, sphereColliderA->radius, originB, boxColliderB->bounds.halfExtents, collisionResult 
+			positionA, sphereColliderA->getRadius(), originB, boxColliderB->bounds.halfExtents, collisionResult
 		);
 	}
 	else if ((colliderA->collisionType == ECollisionType::BOX) && (colliderB->collisionType == ECollisionType::SPHERE))
@@ -152,7 +152,7 @@ bool PhysicsManager::checkCollision(AColliderComponent* colliderA, AColliderComp
 		glm::vec3 originA = positionA + boxColliderA->bounds.center;
 		result = CollisionUtils::checkSphereBox
 		(
-			positionB, sphereColliderB->radius, originA, boxColliderA->bounds.halfExtents, collisionResult
+			positionB, sphereColliderB->getRadius(), originA, boxColliderA->bounds.halfExtents, collisionResult
 		);
 		collisionResult.normal = -collisionResult.normal;
 	}

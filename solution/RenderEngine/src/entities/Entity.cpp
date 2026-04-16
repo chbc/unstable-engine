@@ -35,16 +35,30 @@ AEntityComponent* Entity::addComponent(const char* className)
 
 	newComponent = AEntityComponent::Create(className, this);
 	uint16_t id = newComponent->getId();
-	assert(this->componentsMap.count(id) == 0);
 
-	this->componentsMap.emplace(id, newComponent);
+	if (this->componentsMap.count(id) == 0)
+	{
+		this->componentsMap[id] = VECTOR_UPTR<AEntityComponent>();
+	}
+
+	this->componentsMap[id].emplace_back(newComponent);
 
 	return newComponent;
 }
 
 void Entity::removeComponent(AEntityComponent* component)
 {
-	this->componentsMap.erase(component->getId());
+	auto& components = this->componentsMap[component->getId()];
+	auto it = std::find_if
+	(
+		components.begin(), components.end(),
+		[component](const UPTR<AEntityComponent>& item) { return item.get() == component; }
+	);
+
+	if (it != components.end())
+	{
+		components.erase(it);
+	}
 }
 
 Entity* Entity::addChild(Entity* child)
@@ -202,14 +216,17 @@ bool Entity::raycast(const Ray& ray, float& distance)
 
 	if (this->hasComponent<MeshComponent>())
 	{
-		ARenderableComponent* renderableComponent = this->getComponent<MeshComponent>();
-		TransformComponent* transform = this->getTransform();
-		Bounds bounds = renderableComponent->getBounds();
-
-		const glm::mat4& modelMatrix = transform->getMatrix();
-		if (bounds.intersects(ray, modelMatrix, distance))
+		std::vector<MeshComponent*> meshComponents;
+		this->getComponents<MeshComponent>(meshComponents);
+		for (MeshComponent* item : meshComponents)
 		{
-			result = true;
+			Bounds bounds = item->getBounds();
+			const glm::mat4& modelMatrix = this->transform->getMatrix();
+			if (bounds.intersects(ray, modelMatrix, distance))
+			{
+				result = true;
+				break;
+			}
 		}
 	}
 	else
@@ -255,8 +272,13 @@ void Entity::onInit()
 {
     this->alive = true;
 
-    for (auto const &item : this->componentsMap)
-        item.second->onInit();
+	for (const auto& item : this->componentsMap)
+	{
+		for (const auto& component : item.second)
+		{
+			component->onInit();
+		}
+	}
 
 	for (Entity* item : this->childrenList)
 		item->onInit();
@@ -266,10 +288,13 @@ void Entity::onUpdate(float elapsedTime)
 {
 	if (this->enabled)
 	{
-		for (auto const& item : this->componentsMap)
+		for (const auto& item : this->componentsMap)
 		{
-			if (item.second->isEnabled())
-				item.second->onUpdate(elapsedTime);
+			for (const auto& component : item.second)
+			{
+				if (component->isEnabled())
+					component->onUpdate(elapsedTime);
+			}
 		}
 
 		for (Entity* item : this->childrenList)
@@ -338,19 +363,22 @@ void Entity::getBounds(Bounds& bounds, bool& baseEntity) const
 {
 	for (const auto& item : this->componentsMap)
 	{
-		if (item.second->isEnabled() && item.second->isRenderable())
+		for (const auto& component : item.second)
 		{
-			ARenderableComponent* renderableComponent = static_cast<ARenderableComponent*>(item.second.get());
-			const Bounds& componentBounds = renderableComponent->getBounds();
+			if (component->isEnabled() && component->isRenderable())
+			{
+				ARenderableComponent* renderableComponent = static_cast<ARenderableComponent*>(component.get());
+				const Bounds& componentBounds = renderableComponent->getBounds();
 
-			if (baseEntity)
-			{
-				bounds = componentBounds;
-				baseEntity = false;
-			}
-			else
-			{
-				bounds.add(componentBounds);
+				if (baseEntity)
+				{
+					bounds = componentBounds;
+					baseEntity = false;
+				}
+				else
+				{
+					bounds.add(componentBounds);
+				}
 			}
 		}
 	}
@@ -392,7 +420,10 @@ void Entity::setStored(bool value)
 
 	for (auto& item : this->componentsMap)
 	{
-		item.second->setStored(value);
+		for (auto& component : item.second)
+		{
+			component->setStored(value);
+		}
 	}
 
 	for (auto& item : this->childrenList)
@@ -451,19 +482,22 @@ Entity* Entity::clone(const std::string& cloneName)
 	// components
 	for (const auto& item : this->componentsMap)
 	{
-		AEntityComponent* resultComponent = nullptr;
-		std::string className = item.second->getClassName();
-		if (className == "TransformComponent")
+		for (const auto& component : item.second)
 		{
-			resultComponent = result->getComponent<TransformComponent>();
-		}
-		else
-		{
-			resultComponent = result->addComponent(item.second->getClassName());
-		}
+			AEntityComponent* resultComponent = nullptr;
+			std::string className = component->getClassName();
+			if (className == "TransformComponent")
+			{
+				resultComponent = result->getComponent<TransformComponent>();
+			}
+			else
+			{
+				resultComponent = result->addComponent(component->getClassName());
+			}
 
-		item.second->clone(resultComponent);
-		resultComponent->onClone();
+			component->clone(resultComponent);
+			resultComponent->onClone();
+		}
 	}
 
 	// children

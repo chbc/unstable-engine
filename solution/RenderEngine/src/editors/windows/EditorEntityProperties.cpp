@@ -35,28 +35,31 @@ void EditorEntityProperties::onEditorGUI()
 			ImGui::EndTable();
 		}
 
-		for (const auto& component : entity->componentsMap)
+		for (const auto& componentsList : entity->componentsMap)
 		{
-			std::string componentName = component.second->getClassName();
-			if (componentName != "GuizmoComponent")
+			for (const auto& component : componentsList.second)
 			{
-				bool isHeaderOpen = ImGui::CollapsingHeader(componentName.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
-				if (this->drawComponentContextualMenu(component.second.get()))
+				std::string componentName = component->getClassName();
+				if (componentName != "GuizmoComponent")
 				{
-					break;
-				}
-
-				if (isHeaderOpen)
-				{
-					if (ImGui::BeginTable("Component Properties", 2, flags))
+					bool isHeaderOpen = ImGui::CollapsingHeader(componentName.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+					if (this->drawComponentContextualMenu(component.get()))
 					{
-						for (const auto& property : component.second->editorProperties)
-						{
-							ImGui::TableNextRow();
-							property->draw();
-						}
+						break;
+					}
 
-						ImGui::EndTable();
+					if (isHeaderOpen)
+					{
+						if (ImGui::BeginTable("Component Properties", 2, flags))
+						{
+							for (const auto& property : component->editorProperties)
+							{
+								ImGui::TableNextRow();
+								property->draw();
+							}
+
+							ImGui::EndTable();
+						}
 					}
 				}
 			}
@@ -64,7 +67,6 @@ void EditorEntityProperties::onEditorGUI()
 
 		this->drawAddComponentButton(entity);
 	}
-
 
 	ImGui::End();
 }

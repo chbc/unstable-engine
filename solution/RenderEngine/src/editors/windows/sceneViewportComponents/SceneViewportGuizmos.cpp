@@ -5,6 +5,7 @@
 #include "MathUtils.h"
 #include "Entity.h"
 #include "GuizmoComponent.h"
+#include "AColliderComponent.h"
 
 #include <imgui/imgui.h>
 #include <imguizmo/ImGuizmo.h>
@@ -95,11 +96,8 @@ void SceneViewportGuizmos::onEntitySelected(void* data)
 	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
 	if (this->selectedEntity)
 	{
-		if (this->guizmoComponent)
-		{
-			renderManager->removeGuizmoComponent(this->guizmoComponent);
-		}
-		this->selectedEntity->removeComponent<GuizmoComponent>();
+		renderManager->removeGuizmos(this->selectedEntity);
+		this->selectedEntity->removeComponents<GuizmoComponent>();
 	}
 
 	EntitySelectionMessage* message = static_cast<EntitySelectionMessage*>(data);
@@ -107,8 +105,9 @@ void SceneViewportGuizmos::onEntitySelected(void* data)
 
 	if (this->selectedEntity)
 	{
-		this->guizmoComponent = this->selectedEntity->addComponent<GuizmoComponent>();
-		renderManager->addGuizmoComponent(guizmoComponent);
+		GuizmoComponent* component = this->selectedEntity->addComponent<GuizmoComponent>();
+		component->loadMesh(EGuizmoType::MESH);
+		renderManager->addGuizmos(this->selectedEntity);
 	}
 }
 
@@ -116,6 +115,28 @@ void SceneViewportGuizmos::onOrientationModeChanged(void* message)
 {
 	ChangeGuizmoModeMessage* orientationMessage = static_cast<ChangeGuizmoModeMessage*>(message);
 	this->guizmoMode = static_cast<ImGuizmo::MODE>(orientationMessage->mode);
+}
+
+void SceneViewportGuizmos::addGuizmosToSelectedEntity()
+{
+	GuizmoComponent* guizmoComponent = this->selectedEntity->addComponent<GuizmoComponent>();
+	guizmoComponent->loadMesh(EGuizmoType::MESH);
+
+	AColliderComponent* collider = this->selectedEntity->getBaseComponent<AColliderComponent>();
+	if (collider)
+	{
+		guizmoComponent = this->selectedEntity->addComponent<GuizmoComponent>();
+		switch (collider->getCollisionType())
+		{
+			case ECollisionType::BOX:
+				guizmoComponent->loadMesh(EGuizmoType::BOX_COLLISION);
+				break;
+			case ECollisionType::SPHERE:
+				guizmoComponent->loadMesh(EGuizmoType::SPHERE_COLLISION);
+				break;
+			default: break;
+		}
+	}
 }
 
 } // namespace

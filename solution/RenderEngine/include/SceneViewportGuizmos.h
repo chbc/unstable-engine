@@ -23,7 +23,6 @@ private:
 	SPTR<Action> selectionAction;
 	SPTR<Action> orientationModeAction;
 	Entity* selectedEntity{ nullptr };
-	GuizmoComponent* guizmoComponent{ nullptr };
 	ImGuizmo::OPERATION guizmoOperation{ 0u };
 	ImGuizmo::MODE guizmoMode{ 0u };
 
@@ -37,6 +36,7 @@ public:
 private:
 	void onEntitySelected(void* data);
 	void onOrientationModeChanged(void* message);
+	void addGuizmosToSelectedEntity();
 };
 
 } // namespace

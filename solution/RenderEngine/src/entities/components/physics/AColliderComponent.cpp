@@ -2,6 +2,7 @@
 #include "SingletonsManager.h"
 #include "PhysicsManager.h"
 #include "BoolEditorProperty.h"
+#include "Vec3EditorProperty.h"
 
 namespace sre
 {
@@ -12,6 +13,7 @@ AColliderComponent::AColliderComponent(Entity* entity, ECollisionType arg_collis
 	: AEntityComponent(entity), collisionType(arg_collisionType)
 {
 	this->addEditorProperty(new BoolEditorProperty{ "Blocking", &this->blocking });
+	this->addEditorProperty(new Vec3EditorProperty("Center", &this->bounds.center));
 }
 
 void AColliderComponent::setCollisionAction(const CollisionAction& action)
@@ -29,6 +31,16 @@ bool AColliderComponent::intersects(AColliderComponent* other)
 {
 	PhysicsManager* physicsManager = SingletonsManager::Get<PhysicsManager>();
 	return physicsManager->checkCollision(this, other);
+}
+
+const Bounds& AColliderComponent::getBounds() const
+{
+	return this->bounds;
+}
+
+ECollisionType AColliderComponent::getCollisionType() const
+{
+	return this->collisionType;
 }
 
 void AColliderComponent::onDestroy()

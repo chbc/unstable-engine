@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AEntityComponent.h"
+#include "Bounds.h"
 
 #include <glm/vec3.hpp>
 #include <functional>
@@ -25,6 +26,9 @@ class SRE_API AColliderComponent : public AEntityComponent
 
 DECLARE_COMPONENT()
 
+protected:
+	Bounds bounds;
+
 private:
 	CollisionAction collisionAction;
 	ECollisionType collisionType;
@@ -38,6 +42,8 @@ public:
 	void setCollisionAction(const CollisionAction& action);
 	bool intersects(AColliderComponent* other, CollisionResult& result);
 	bool intersects(AColliderComponent* other);
+	const Bounds& getBounds() const;
+	ECollisionType getCollisionType() const;
 
 protected:
 	virtual void onDestroy() override;

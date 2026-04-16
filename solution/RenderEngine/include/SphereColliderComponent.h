@@ -11,11 +11,9 @@ class SRE_API SphereColliderComponent : public AColliderComponent
 {
 DECLARE_COMPONENT()
 
-private:
-	float radius{ 0.5f };
-
 public:
 	SphereColliderComponent(Entity* entity);
+	float getRadius() const;
 
 friend class PhysicsManager;
 };

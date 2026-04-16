@@ -35,7 +35,7 @@ protected:
 private:
     static const char* BASE_CLASS_NAME;
 
-	std::unordered_map<uint16_t, UPTR<AEntityComponent>> componentsMap;
+	std::unordered_map<uint16_t, VECTOR_UPTR<AEntityComponent>> componentsMap;
     std::vector<SPTR<AEditorProperty>> editorProperties;
     Entity* parent{ nullptr };
     std::unordered_map<std::string, UPTR<Entity>> children;
@@ -56,11 +56,12 @@ public:
     SRE_API virtual ~Entity();
 
     template <typename T> T* addComponent();
-    template <typename T> void removeComponent();
+    template <typename T> void removeComponents();
     template <typename T> T* getComponent();
     template <typename T> T* getBaseComponent();
     template <typename T> void getComponents(std::vector<T*>& result);
     template <typename T> bool hasComponent();
+	template <typename T> bool hasBaseComponent();
 
     AEntityComponent* addComponent(const char* className);
     SRE_API void removeComponent(AEntityComponent* component);
