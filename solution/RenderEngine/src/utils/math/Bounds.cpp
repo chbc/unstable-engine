@@ -75,10 +75,11 @@ float Bounds::getRadius() const
 	return this->halfExtents.x;
 }
 
-void Bounds::reset()
+void Bounds::reset(float halfExtent)
 {
 	this->center = glm::vec3{ 0.0f };
-	this->halfExtents = glm::vec3{ 0.0f };
+	this->halfExtents = glm::vec3{ halfExtent };
+	this->fixVertices();
 }
 
 void Bounds::fixVertices()

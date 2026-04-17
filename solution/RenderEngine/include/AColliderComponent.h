@@ -27,7 +27,7 @@ private:
 
 public:
 	AColliderComponent(Entity* entity, ECollisionType arg_collisionType = ECollisionType::NONE);
-	virtual ~AColliderComponent() = default;
+	virtual ~AColliderComponent();
 
 public:
 	void setCollisionAction(const CollisionAction& action);
@@ -35,9 +35,6 @@ public:
 	bool intersects(AColliderComponent* other);
 	const Bounds& getBounds() const;
 	ECollisionType getCollisionType() const;
-
-protected:
-	virtual void onDestroy() override;
 
 private:
 	void notifyCollision(AColliderComponent* other, const CollisionResult& result);

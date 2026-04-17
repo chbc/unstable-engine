@@ -60,6 +60,7 @@ public:
     template <typename T> T* getComponent();
     template <typename T> T* getBaseComponent();
     template <typename T> void getComponents(std::vector<T*>& result);
+    template <typename T> void getBaseComponents(std::vector<T*>& result);
     template <typename T> bool hasComponent();
 	template <typename T> bool hasBaseComponent();
 

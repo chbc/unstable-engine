@@ -16,6 +16,11 @@ AColliderComponent::AColliderComponent(Entity* entity, ECollisionType arg_collis
 	this->addEditorProperty(new Vec3EditorProperty{ "Center", &this->bounds.center });
 }
 
+AColliderComponent::~AColliderComponent()
+{
+	this->collisionAction = nullptr;
+}
+
 void AColliderComponent::setCollisionAction(const CollisionAction& action)
 {
 	this->collisionAction = action;
@@ -41,11 +46,6 @@ const Bounds& AColliderComponent::getBounds() const
 ECollisionType AColliderComponent::getCollisionType() const
 {
 	return this->collisionType;
-}
-
-void AColliderComponent::onDestroy()
-{
-	this->collisionAction = nullptr;
 }
 
 void AColliderComponent::notifyCollision(AColliderComponent* other, const CollisionResult& result)

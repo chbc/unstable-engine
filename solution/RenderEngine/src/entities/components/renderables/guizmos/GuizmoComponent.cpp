@@ -12,42 +12,40 @@ IMPLEMENT_COMPONENT(GuizmoComponent)
 GuizmoComponent::GuizmoComponent(Entity* entity) : ARenderableComponent(entity)
 { }
 
-void GuizmoComponent::loadMesh(EGuizmoType guizmoType)
+GuizmoComponent::~GuizmoComponent()
+{
+	if (this->subjectCollider)
+	{
+		this->subjectCollider->removePropertyChangedCallback(this->colliderCallbackId);
+	}
+}
+
+void GuizmoComponent::loadMesh(EGuizmoType guizmoType, AColliderComponent* arg_subjectCollider)
 {
 	this->guizmoType = guizmoType;
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	this->mesh = assetsManager->loadGuizmo(this->guizmoType);
+	this->subjectCollider = arg_subjectCollider;
 
 	if (this->guizmoType == EGuizmoType::MESH)
 	{
 		this->getEntity()->getBounds(this->bounds);
-	}
-	else
-	{
-		AColliderComponent* collider = this->getEntity()->getBaseComponent<AColliderComponent>();
-		if (collider)
+		float maxHalfExtent = std::max(this->bounds.halfExtents.x, std::max(this->bounds.halfExtents.y, this->bounds.halfExtents.z));
+		if (maxHalfExtent < 0.001f)
 		{
-			this->bounds = collider->getBounds();
-			collider->addPropertyChangedCallback([this](){ this->onColliderChanged(); });
+			this->bounds.reset(0.1f);
 		}
+	}
+	else if (subjectCollider)
+	{
+		this->bounds = this->subjectCollider->getBounds();
+		this->colliderCallbackId = subjectCollider->addPropertyChangedCallback([this](){ this->onColliderChanged(); });
 	}
 }
 
 void GuizmoComponent::onColliderChanged()
 {
-	ARenderableComponent::onPropertyChanged();
-	if (this->guizmoType == EGuizmoType::MESH)
-	{
-		this->getEntity()->getBounds(this->bounds);
-	}
-	else
-	{
-		AColliderComponent* collider = this->getEntity()->getBaseComponent<AColliderComponent>();
-		if (collider)
-		{
-			this->bounds = collider->getBounds();
-		}
-	}
+	this->bounds = this->subjectCollider->getBounds();
 }
 
 } // namespace

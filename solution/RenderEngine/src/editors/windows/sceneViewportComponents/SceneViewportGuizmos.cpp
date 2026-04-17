@@ -93,20 +93,24 @@ void SceneViewportGuizmos::onCleanUp()
 
 void SceneViewportGuizmos::onEntitySelected(void* data)
 {
-	RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
-	if (this->selectedEntity)
-	{
-		renderManager->removeGuizmos(this->selectedEntity);
-		this->selectedEntity->removeComponents<GuizmoComponent>();
-	}
-
 	EntitySelectionMessage* message = static_cast<EntitySelectionMessage*>(data);
-	this->selectedEntity = message->entity;
 
-	if (this->selectedEntity)
+	if (this->selectedEntity != message->entity)
 	{
-		this->addGuizmosToSelectedEntity();
-		renderManager->addGuizmos(this->selectedEntity);
+		RenderManager* renderManager = SingletonsManager::getInstance()->get<RenderManager>();
+		if (this->selectedEntity)
+		{
+			renderManager->removeGuizmos(this->selectedEntity);
+			this->selectedEntity->removeComponents<GuizmoComponent>();
+		}
+
+		this->selectedEntity = message->entity;
+
+		if (this->selectedEntity)
+		{
+			this->addGuizmosToSelectedEntity();
+			renderManager->addGuizmos(this->selectedEntity);
+		}
 	}
 }
 
@@ -121,19 +125,23 @@ void SceneViewportGuizmos::addGuizmosToSelectedEntity()
 	GuizmoComponent* guizmoComponent = this->selectedEntity->addComponent<GuizmoComponent>();
 	guizmoComponent->loadMesh(EGuizmoType::MESH);
 
-	AColliderComponent* collider = this->selectedEntity->getBaseComponent<AColliderComponent>();
-	if (collider)
+	std::vector<AColliderComponent*> colliderComponents;
+	this->selectedEntity->getBaseComponents<AColliderComponent>(colliderComponents);
+	if (!colliderComponents.empty())
 	{
-		guizmoComponent = this->selectedEntity->addComponent<GuizmoComponent>();
-		switch (collider->getCollisionType())
+		for (AColliderComponent* collider : colliderComponents)
 		{
-			case ECollisionType::BOX:
-				guizmoComponent->loadMesh(EGuizmoType::BOX_COLLISION);
-				break;
-			case ECollisionType::SPHERE:
-				guizmoComponent->loadMesh(EGuizmoType::SPHERE_COLLISION);
-				break;
-			default: break;
+			GuizmoComponent* guizmoComponent = this->selectedEntity->addComponent<GuizmoComponent>();
+			switch (collider->getCollisionType())
+			{
+				case ECollisionType::BOX:
+					guizmoComponent->loadMesh(EGuizmoType::BOX_COLLISION, collider);
+					break;
+				case ECollisionType::SPHERE:
+					guizmoComponent->loadMesh(EGuizmoType::SPHERE_COLLISION, collider);
+					break;
+				default: break;
+			}
 		}
 	}
 }

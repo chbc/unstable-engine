@@ -24,7 +24,7 @@ public:
 	void add(const Bounds& other);
 	const glm::vec3 getSize() const;
 	float getRadius() const;
-	void reset();
+	void reset(float halfExtent = 0.0f);
 
 private:
 	void fixVertices();

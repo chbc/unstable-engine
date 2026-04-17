@@ -90,6 +90,26 @@ void Entity::getComponents(std::vector<T*>& result)
 }
 
 template<typename T>
+void Entity::getBaseComponents(std::vector<T*>& result)
+{
+    for (const auto& item : this->componentsMap)
+    {
+        auto& components = item.second;
+        for (const auto& component : components)
+        {
+            if (component->getBaseId() == T::ID)
+            {
+                result.push_back(static_cast<T*>(component.get()));
+            }
+        }
+    }
+    for (Entity* child : this->childrenList)
+    {
+        child->getBaseComponents<T>(result);
+	}
+}
+
+template<typename T>
 bool Entity::hasComponent()
 {
     return (this->componentsMap.count(T::ID) > 0);
