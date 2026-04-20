@@ -4,6 +4,6 @@ namespace sre
 {
 
 IMPLEMENT_MESSAGE(EnqueueEntityToDestroyMessage)
-IMPLEMENT_MESSAGE(EntityDestroyedMessage)
+IMPLEMENT_MESSAGE(EnqueueComponentToDestroyMessage)
 
 } // namespace

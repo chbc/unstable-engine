@@ -153,21 +153,13 @@ void MultimediaManager::addGUIButton(GUIButtonComponent* guiButton)
 	this->guiButtons.push_back(guiButton);
 }
 
-void MultimediaManager::onEntityDestroyed(void* data)
+void MultimediaManager::removeComponent(GUIButtonComponent* component)
 {
-	MessagesManager* messagesManager = SingletonsManager::Get<MessagesManager>();
-	EntityDestroyedMessage* message = static_cast<EntityDestroyedMessage*>(data);
-	Entity* entity = message->entity;
+	auto it = std::find(this->guiButtons.begin(), this->guiButtons.end(), component);
 
-	if (entity->hasComponent<GUIButtonComponent>())
+	if (it != this->guiButtons.end())
 	{
-		GUIButtonComponent* guiButton = entity->getComponent<GUIButtonComponent>();
-		auto it = std::find(this->guiButtons.begin(), this->guiButtons.end(), guiButton);
-
-		if (it != this->guiButtons.end())
-		{
-			this->guiButtons.erase(it);
-		}
+		this->guiButtons.erase(it);
 	}
 }
 

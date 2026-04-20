@@ -131,6 +131,7 @@ private:
 	void rename(const std::string& newName);
     AEditorProperty* findProperty(const std::string& title);
 	void resolveChildName(std::string& entityName);
+	void onDestroyed();
     static Entity* Create(std::string arg_name, const std::string& className);
     static void GenerateName(const std::unordered_map<std::string, UPTR<Entity>>& siblings, std::string& resultName);
 

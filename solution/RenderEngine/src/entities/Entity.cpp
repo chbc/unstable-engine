@@ -23,6 +23,11 @@ Entity::Entity(std::string arg_name) : AAsset(""), name(arg_name)
 
 Entity::~Entity()
 {
+	for (auto& pair : this->componentsMap)
+	{
+		pair.second.clear();
+	}
+
 	this->componentsMap.clear();
 	this->childrenList.clear();
 	this->children.clear();
@@ -57,6 +62,7 @@ void Entity::removeComponent(AEntityComponent* component)
 
 	if (it != components.end())
 	{
+		(*it)->onDestroyed();
 		components.erase(it);
 	}
 }
@@ -537,6 +543,20 @@ AEditorProperty* Entity::findProperty(const std::string& title)
 void Entity::resolveChildName(std::string& entityName)
 {
 	GenerateName(this->children, entityName);
+}
+
+void Entity::onDestroyed()
+{
+	for (Entity* item : this->childrenList)
+		item->onDestroyed();
+
+	for (const auto& item : this->componentsMap)
+	{
+		for (const auto& component : item.second)
+		{
+			component->onDestroyed();
+		}
+	}
 }
 
 Entity* Entity::Create(std::string arg_name, const std::string& className)

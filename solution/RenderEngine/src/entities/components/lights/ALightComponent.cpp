@@ -4,6 +4,7 @@
 #include "SingletonsManager.h"
 #include "TextureCreator.h"
 #include "AGraphicsWrapper.h"
+#include "LightManager.h"
 
 namespace sre
 {
@@ -20,6 +21,18 @@ ALightComponent::~ALightComponent()
     SingletonsManager* singletonsManager = SingletonsManager::getInstance();
     TextureCreator* textureCreator = singletonsManager->get<TextureCreator>();
     textureCreator->deleteTexture(this->shadowData->textureId);
+}
+
+void ALightComponent::onDestroyed()
+{
+    TransformComponent* transform = this->getTransform();
+    if (transform)
+    {
+        transform->removePropertyChangedCallback(this->propertyChangedCallbackId);
+    }
+
+	LightManager* lightManager = SingletonsManager::Get<LightManager>();
+    lightManager->removeComponent(this);
 }
 
 void ALightComponent::setColor(const glm::vec3 &color)

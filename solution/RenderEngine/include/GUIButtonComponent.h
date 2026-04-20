@@ -1,5 +1,4 @@
-#ifndef _GUI_BUTTON_COMPONENT_H_
-#define _GUI_BUTTON_COMPONENT_H_
+#pragma once
 
 #include "AEntityComponent.h"
 #include <glm/vec2.hpp>
@@ -30,6 +29,9 @@ public:
 	void setPivot(glm::vec2 pivot);
 	bool isPressed();
 
+protected:
+	virtual void onDestroyed() override;
+
 private:
 	bool isInside(const glm::vec2& pointPosition);
 	void setPressed(bool value);
@@ -45,5 +47,3 @@ private:
 };
 
 } // namespace
-
-#endif

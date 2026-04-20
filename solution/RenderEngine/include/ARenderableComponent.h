@@ -22,6 +22,9 @@ public:
 	const Bounds& getBounds() const;
 	void setRenderActionListener(RenderAction* renderActionListener);
 
+protected:
+	virtual void onDestroyed() override;
+
 private:
 	void notifyRenderAction(AGraphicsWrapper* graphicsWrapper, ShaderManager* shaderManager, uint32_t program);
 

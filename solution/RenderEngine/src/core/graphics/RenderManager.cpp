@@ -41,14 +41,10 @@ void RenderManager::init()
     this->shaderManager         = singletonsManager->get<ShaderManager>();
 	this->globalUniformsManager = singletonsManager->get<GlobalUniformsManager>();
 	this->messagesManager       = singletonsManager->get<MessagesManager>();
-
-	this->entityDestroyedAction = [&](void* message) { this->onEntityDestroyed(message); };
-	this->messagesManager->addListener<EntityDestroyedMessage>(&this->entityDestroyedAction);
 }
 
 void RenderManager::preRelease()
 {
-    this->messagesManager->removeListener<EntityDestroyedMessage>(&this->entityDestroyedAction);
     this->cleanUp();
 }
 
@@ -466,27 +462,29 @@ void RenderManager::setupBufferSubData(MeshData2D* meshData)
     this->graphicsWrapper->setupBufferSubData(meshData);
 }
 
-void RenderManager::onEntityDestroyed(void* data)
+void RenderManager::removeComponent(ARenderableComponent* component)
 {
-	MessagesManager* messagesManager = SingletonsManager::Get<MessagesManager>();
-	EntityDestroyedMessage* message = static_cast<EntityDestroyedMessage*>(data);
-	Entity* entity = message->entity;
-
-    if (entity->hasComponent<MeshComponent>())
+    MeshComponent* meshComponent = static_cast<MeshComponent*>(component);
+    if (meshComponent)
     {
-        MeshComponent* meshComponent = entity->getComponent<MeshComponent>();
         this->removeMesh(meshComponent);
     }
-    else if (entity->hasComponent<GUIImageComponent>())
+    else
     {
-        GUIImageComponent* guiComponent = entity->getComponent<GUIImageComponent>();
-        this->guiRenderer->removeImage(guiComponent);
+        GUIImageComponent* guiComponent = static_cast<GUIImageComponent*>(component);
+        if (guiComponent)
+        {
+            this->guiRenderer->removeImage(guiComponent);
+        }
+        else
+        {
+            GUITextComponent* guiTextComponent = static_cast<GUITextComponent*>(component);
+            if (guiTextComponent)
+            {
+                this->guiRenderer->removeText(guiTextComponent);
+            }
+		}
     }
-    else if (entity->hasComponent<GUITextComponent>())
-    {
-        GUITextComponent* guiComponent = entity->getComponent<GUITextComponent>();
-        this->guiRenderer->removeText(guiComponent);
-	}
 }
 
 void RenderManager::cleanUp()

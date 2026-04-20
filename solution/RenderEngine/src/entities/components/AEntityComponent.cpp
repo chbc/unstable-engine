@@ -2,6 +2,9 @@
 #include "Entity.h"
 #include "TransformComponent.h"
 #include "BoolEditorProperty.h"
+#include "EntityDestructionMessage.h"
+#include "SingletonsManager.h"
+#include "MessagesManager.h"
 
 namespace sre
 {
@@ -77,6 +80,12 @@ size_t AEntityComponent::addPropertyChangedCallback(const std::function<void()>&
 void AEntityComponent::removePropertyChangedCallback(size_t id)
 {
 	this->propertyChangedCallbacks.erase(id);
+}
+
+void AEntityComponent::destroy()
+{
+	EnqueueComponentToDestroyMessage message{ this };
+	SingletonsManager::Get<MessagesManager>()->notify(&message);
 }
 
 void AEntityComponent::onPropertySerialized()

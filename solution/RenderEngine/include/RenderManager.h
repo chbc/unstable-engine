@@ -14,6 +14,7 @@ namespace sre
 {
 
 class Entity;
+class ARenderableComponent;
 class MeshComponent;
 class GUIImageComponent;
 class GUITextComponent;
@@ -61,8 +62,6 @@ private:
     CameraComponent* currentCamera{ nullptr };
     uint32_t targetFBO{ 0 };
 
-	Action entityDestroyedAction;
-
 protected:
     void init() override;
     void preRelease() override;
@@ -97,7 +96,7 @@ private:
     static void DEBUG_drawTriangle();
 
     void setupBufferSubData(MeshData2D* meshData);
-    void onEntityDestroyed(void* data);
+    void removeComponent(ARenderableComponent* component);
     void cleanUp();
     void cleanUpMeshes();
     void cleanUpGui();
@@ -126,6 +125,7 @@ friend class EditorSceneViewport;
 friend class SceneViewportGuizmos;
 friend class WorldEditor;
 friend class ScenesManager;
+friend class ARenderableComponent;
 };
 
 } // namespace

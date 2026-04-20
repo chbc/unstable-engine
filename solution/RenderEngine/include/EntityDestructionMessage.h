@@ -8,6 +8,7 @@ namespace sre
 {
 
 class Entity;
+class AEntityComponent;
 
 struct SRE_API EnqueueEntityToDestroyMessage : public BaseMessage
 {
@@ -20,15 +21,15 @@ public:
 	EnqueueEntityToDestroyMessage(Entity* arg_entity) : entity(arg_entity) {}
 };
 
-struct SRE_API EntityDestroyedMessage : public BaseMessage
+struct SRE_API EnqueueComponentToDestroyMessage : public BaseMessage
 {
 	DECLARE_MESSAGE()
 
 public:
-	Entity* entity;
+	AEntityComponent* component{ nullptr };
 
 public:
-	EntityDestroyedMessage(Entity* arg_entity) : entity(arg_entity) {}
+	EnqueueComponentToDestroyMessage(AEntityComponent* arg_component) : component(arg_component) {}
 };
 
 } // namespace

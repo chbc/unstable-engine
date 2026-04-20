@@ -90,7 +90,8 @@ void EditorEntityProperties::drawAddComponentButton(Entity* selectedEntity)
 		EntityComponentTypes* componentTypes = EntityComponentTypes::getInstance();
 		const std::vector<const char*>& classNames = componentTypes->getClassNames();
 
-		if (ImGui::Combo("##Components", &this->currentAddedComponent, classNames.data(), classNames.size()))
+		int size = static_cast<int>(classNames.size());
+		if (ImGui::Combo("##Components", &this->currentAddedComponent, classNames.data(), size))
 		{
 			if (this->currentAddedComponent != 0)
 			{
@@ -115,8 +116,7 @@ bool EditorEntityProperties::drawComponentContextualMenu(AEntityComponent* compo
 	{
 		if (ImGui::MenuItem("Remove Component"))
 		{
-			Entity* entity = component->getEntity();
-			entity->removeComponent(component);
+			component->destroy();
 			ImGui::CloseCurrentPopup();
 
 			result = true;

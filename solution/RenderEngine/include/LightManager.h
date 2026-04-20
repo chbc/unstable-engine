@@ -45,6 +45,7 @@ private:
     void loadIBL(std::unordered_map<ETextureMap::Type, Texture*>& texturesMap);
     void clearIBLData();
     void onEntityDestroyed(void* data);
+	void removeComponent(ALightComponent* component);
     void cleanUp();
 
 friend class RenderManager;
@@ -54,6 +55,7 @@ friend class LightRendererShaderSetup;
 friend class ShadowRendererShaderSetup;
 friend class ShadowRenderer;
 friend class SkyboxRenderer;
+friend class ALightComponent;
 friend class DirectionalLightComponent;
 friend class PointLightComponent;
 };

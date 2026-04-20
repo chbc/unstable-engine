@@ -20,6 +20,7 @@ private:
 protected:
 	ALightComponent(Entity *entity, bool useCubemap);
 	virtual ~ALightComponent();
+    virtual void onDestroyed() override;
 
 public:
     void setColor(const glm::vec3 &color);

@@ -20,7 +20,9 @@ protected:
 
 private:
 	std::vector<Entity*> entitiesToDestroy;
-    UPTR<Action> enqueueEntityToDestroyAction;
+	std::vector<AEntityComponent*> componentsToDestroy;
+    Action entityToDestroyAction;
+    Action componentToDestroyAction;
     class RenderManager* renderManager{ nullptr };
 	class PhysicsManager* physicsManager{ nullptr };
     class MessagesManager* messagesManager{ nullptr };
@@ -65,6 +67,7 @@ private:
     AScene* getScene();
     AScene* getGuiScene();
 	void onEntityEnqueuedToDestroy(void* data);
+	void onComponentEnqueuedToDestroy(void* data);
     void onEndFrame();
     void preRelease() override;
 

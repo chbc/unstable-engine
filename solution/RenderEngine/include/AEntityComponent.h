@@ -69,6 +69,7 @@ public:
 	virtual bool isRenderable() const { return false; }
 	size_t addPropertyChangedCallback(const std::function<void()>& callback);
     void removePropertyChangedCallback(size_t id);
+    void destroy();
 
 protected:
     virtual uint16_t getId() = 0;
@@ -83,6 +84,7 @@ protected:
     virtual void onPropertyDeserialized();
     virtual void onPropertyChanged();
     void addEditorProperty(AEditorProperty* editorProperty);
+    virtual void onDestroyed() {}
 
 private:
     void clone(AEntityComponent* result);

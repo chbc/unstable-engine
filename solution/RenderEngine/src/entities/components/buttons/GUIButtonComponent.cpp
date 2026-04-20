@@ -36,6 +36,12 @@ bool GUIButtonComponent::isPressed()
 	return this->pressed;
 }
 
+void GUIButtonComponent::onDestroyed()
+{
+	MultimediaManager* multimediaManager = SingletonsManager::getInstance()->get<MultimediaManager>();
+	multimediaManager->removeComponent(this);
+}
+
 bool GUIButtonComponent::isInside(const glm::vec2& pointPosition)
 {
 	// 0 <-> -1

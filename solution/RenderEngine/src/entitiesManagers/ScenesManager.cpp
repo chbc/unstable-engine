@@ -20,11 +20,12 @@ void ScenesManager::init()
 	this->physicsManager = SingletonsManager::getInstance()->get<PhysicsManager>();
     this->editorScene.reset(new Scene{ "_editor_scene", "" });
 
-	Action* action = new Action{ [&](void* message) { this->onEntityEnqueuedToDestroy(message); } };
-    this->enqueueEntityToDestroyAction = UPTR<Action>(action);
+	this->entityToDestroyAction = [&](void* message) { this->onEntityEnqueuedToDestroy(message); };
+	this->componentToDestroyAction = [&](void* message) { this->onComponentEnqueuedToDestroy(message); };
 
     this->messagesManager = SingletonsManager::Get<MessagesManager>();
-    this->messagesManager->addListener<EnqueueEntityToDestroyMessage>(this->enqueueEntityToDestroyAction.get());
+    this->messagesManager->addListener<EnqueueEntityToDestroyMessage>(&entityToDestroyAction);
+    this->messagesManager->addListener<EnqueueComponentToDestroyMessage>(&componentToDestroyAction);
 }
 
 std::string ScenesManager::getMainSceneName()
@@ -298,15 +299,30 @@ void ScenesManager::onEntityEnqueuedToDestroy(void* data)
 	this->entitiesToDestroy.push_back(message->entity);
 }
 
+void ScenesManager::onComponentEnqueuedToDestroy(void* data)
+{
+	EnqueueComponentToDestroyMessage* message = static_cast<EnqueueComponentToDestroyMessage*>(data);
+	this->componentsToDestroy.push_back(message->component);
+}
+
 void ScenesManager::onEndFrame()
 {
+    if (!this->componentsToDestroy.empty())
+    {
+        for (AEntityComponent* item : this->componentsToDestroy)
+        {
+            Entity* entity = item->getEntity();
+            entity->removeComponent(item);
+        }
+        this->componentsToDestroy.clear();
+	}
+
     if (!this->entitiesToDestroy.empty())
     {
         for (Entity* item : this->entitiesToDestroy)
         {
-            EntityDestroyedMessage message{ item };
-            this->messagesManager->notify(&message);
-        }
+            item->onDestroyed();
+		}
 
         this->scene->removeEntities(this->entitiesToDestroy);
         this->guiScene->removeEntities(this->entitiesToDestroy);

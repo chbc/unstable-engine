@@ -21,6 +21,11 @@ void Entity::removeComponents()
 {
     if (this->hasComponent<T>())
     {
+		auto& components = this->componentsMap[T::ID];
+        for (const auto& component : components)
+        {
+            component->onDestroyed();
+		}
         componentsMap.erase(T::ID);
     }
 }
