@@ -44,7 +44,6 @@ private:
     void setupShadowData(ALightComponent* lightComponent, bool useCubemap);
     void loadIBL(std::unordered_map<ETextureMap::Type, Texture*>& texturesMap);
     void clearIBLData();
-    void onEntityDestroyed(void* data);
 	void removeComponent(ALightComponent* component);
     void cleanUp();
 

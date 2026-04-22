@@ -43,7 +43,6 @@ class RenderManager : public ASingleton
 private:
     class ShaderManager* shaderManager;
     class AGraphicsWrapper* graphicsWrapper;
-    class LightManager* lightManager;
 	class GlobalUniformsManager* globalUniformsManager;
 	class MessagesManager* messagesManager;
 
@@ -78,7 +77,6 @@ private:
 	void removeGuizmos(Entity* entity);
 	void addDebugBox(const glm::vec3& position, const glm::vec3& size, const glm::vec4& color);
     void addSkybox(SkyboxComponent* mesh);
-    void tryAddLight(Entity* entity);
 	void reloadSkyboxMaterial(ABaseMaterial* newMaterial);
     void initGUIRenderer();
     void initShadowRenderer();

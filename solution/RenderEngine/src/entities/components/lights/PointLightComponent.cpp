@@ -24,6 +24,9 @@ PointLightComponent::PointLightComponent(Entity *entity)
 			lightManager->updatePointLightsUBO();
 		}
 	);
+
+	LightManager* lightManager = SingletonsManager::Get<LightManager>();
+	lightManager->addPointLight(this);
 }
 
 void PointLightComponent::setRange(float range)

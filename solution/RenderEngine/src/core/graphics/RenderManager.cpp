@@ -37,7 +37,6 @@ void RenderManager::init()
 {
     SingletonsManager *singletonsManager = SingletonsManager::getInstance();
     this->graphicsWrapper       = singletonsManager->get<AGraphicsWrapper>();
-    this->lightManager          = singletonsManager->get<LightManager>();
     this->shaderManager         = singletonsManager->get<ShaderManager>();
 	this->globalUniformsManager = singletonsManager->get<GlobalUniformsManager>();
 	this->messagesManager       = singletonsManager->get<MessagesManager>();
@@ -88,8 +87,6 @@ void RenderManager::addEntity(Entity *entity)
         }
     }
 
-	this->tryAddLight(entity);
-    
     size_t size = entity->getChildrenCount();
     for (size_t i = 0; i < size; i++)
     {
@@ -207,7 +204,7 @@ void RenderManager::removeMesh(MeshComponent* mesh)
         if (this->skyboxRenderer->isEmpty())
         {
             this->skyboxRenderer = nullptr;
-            this->lightManager->clearIBLData();
+            SingletonsManager::Get<LightManager>()->clearIBLData();
         }
     }
 
@@ -269,21 +266,6 @@ void RenderManager::addSkybox(SkyboxComponent* mesh)
 	}
 
 	this->skyboxRenderer->addMesh(mesh);
-}
-
-void RenderManager::tryAddLight(Entity* entity)
-{
-    if (entity->hasComponent<DirectionalLightComponent>())
-    {
-		DirectionalLightComponent* lightComponent = entity->getComponent<DirectionalLightComponent>();
-		this->lightManager->addDirectionalLight(lightComponent);
-    }
-    
-    if (entity->hasComponent<PointLightComponent>())
-    {
-        PointLightComponent* lightComponent = entity->getComponent<PointLightComponent>();
-        this->lightManager->addPointLight(lightComponent);
-    }
 }
 
 void RenderManager::reloadSkyboxMaterial(ABaseMaterial* newMaterial)
@@ -499,7 +481,7 @@ void RenderManager::cleanUp()
 
 void RenderManager::cleanUpMeshes()
 {
-    this->lightManager->cleanUp();
+    SingletonsManager::Get<LightManager>()->cleanUp();
     this->opaqueMeshRenderers.clear();
     this->translucentMeshRenderers.clear();
     this->customRenderers.clear();

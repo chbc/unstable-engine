@@ -22,6 +22,9 @@ DirectionalLightComponent::DirectionalLightComponent(Entity *entity) : ALightCom
 	);
 
 	this->setupLightSpaceMatrix();
+
+	LightManager* lightManager = SingletonsManager::Get<LightManager>();
+	lightManager->addDirectionalLight(this);
 }
 
 void DirectionalLightComponent::onPropertyChanged()
