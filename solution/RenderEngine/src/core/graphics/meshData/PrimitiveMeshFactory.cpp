@@ -327,7 +327,7 @@ ColorMeshData* PrimitiveMeshFactory::createBoxLines(const glm::vec4& color)
 	return this->createBoxLines(glm::vec3(0.0f), glm::vec3(1.0f), color);
 }
 
-ColorMeshData* PrimitiveMeshFactory::createSphereLines(float radius, const glm::vec4& color)
+ColorMeshData* PrimitiveMeshFactory::createSphereLines(const glm::vec4& color)
 {
 	std::vector<glm::vec3> vertices;
 	std::vector<uint32_t> indices;
@@ -337,6 +337,7 @@ ColorMeshData* PrimitiveMeshFactory::createSphereLines(float radius, const glm::
 
 	uint32_t offset = 0;
 
+	float radius = 1.0f;
 	// XY
 	for (int i = 0; i < segments; i++)
 	{

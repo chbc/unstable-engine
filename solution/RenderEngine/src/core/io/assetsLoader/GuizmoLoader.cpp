@@ -19,7 +19,7 @@ ColorMeshData* GuizmoLoader::load(EGuizmoType type)
 			result = factory.createBoxLines(glm::vec4{ 0.25f, 1.0f, 0.25f, 1.0f });
 			break;
 		case EGuizmoType::SPHERE_COLLISION:
-			result = factory.createSphereLines(0.5f, glm::vec4{ 0.25f, 1.0f, 0.25f, 1.0f });
+			result = factory.createSphereLines(glm::vec4{ 0.25f, 1.0f, 0.25f, 1.0f });
 			break;
 	}
 
