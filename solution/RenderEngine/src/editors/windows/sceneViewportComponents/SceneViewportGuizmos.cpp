@@ -101,7 +101,7 @@ void SceneViewportGuizmos::onEntitySelected(void* data)
 		if (this->selectedEntity)
 		{
 			renderManager->removeGuizmos(this->selectedEntity);
-			this->selectedEntity->removeComponents<GuizmoComponent>();
+			this->selectedEntity->removeComponents<GuizmoComponent>(true);
 		}
 
 		this->selectedEntity = message->entity;
@@ -131,7 +131,8 @@ void SceneViewportGuizmos::addGuizmosToSelectedEntity()
 	{
 		for (AColliderComponent* collider : colliderComponents)
 		{
-			GuizmoComponent* guizmoComponent = this->selectedEntity->addComponent<GuizmoComponent>();
+			Entity* entity = collider->getEntity();
+			GuizmoComponent* guizmoComponent = entity->addComponent<GuizmoComponent>();
 			switch (collider->getCollisionType())
 			{
 				case ECollisionType::BOX:

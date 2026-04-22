@@ -17,8 +17,16 @@ T* Entity::addComponent()
 }
 
 template<typename T>
-void Entity::removeComponents()
+void Entity::removeComponents(bool includeChildren)
 {
+    if (includeChildren)
+    {
+        for (Entity* child : this->childrenList)
+        {
+            child->removeComponents<T>(true);
+	    }
+    }
+
     if (this->hasComponent<T>())
     {
 		auto& components = this->componentsMap[T::ID];

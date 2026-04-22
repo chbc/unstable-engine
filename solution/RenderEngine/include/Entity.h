@@ -56,7 +56,7 @@ public:
     SRE_API virtual ~Entity();
 
     template <typename T> T* addComponent();
-    template <typename T> void removeComponents();
+    template <typename T> void removeComponents(bool includeChildren = false);
     template <typename T> T* getComponent();
     template <typename T> T* getBaseComponent();
     template <typename T> void getComponents(std::vector<T*>& result);
