@@ -116,6 +116,7 @@ bool EditorEntityProperties::drawComponentContextualMenu(AEntityComponent* compo
 	{
 		if (ImGui::MenuItem("Remove Component"))
 		{
+			this->controller->setSelectedEntity(nullptr);
 			component->destroy();
 			ImGui::CloseCurrentPopup();
 
