@@ -1,6 +1,12 @@
-[submodule "solution/RenderEngine/thirdParties/imgui"]
-	path = solution/RenderEngine/thirdParties/imgui
+[submodule "dependencies/rapidyaml"]
+	path = dependencies/rapidyaml
+	url = https://github.com/biojppm/rapidyaml.git
+[submodule "dependencies/glm"]
+	path = dependencies/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "dependencies/imgui"]
+	path = dependencies/imgui
 	url = https://github.com/ocornut/imgui.git
-[submodule "solution/RenderEngine/thirdParties/imguizmo"]
-	path = solution/RenderEngine/thirdParties/imguizmo
+[submodule "dependencies/imguizmo"]
+	path = dependencies/imguizmo
 	url = https://github.com/CedricGuillemet/ImGuizmo.git
