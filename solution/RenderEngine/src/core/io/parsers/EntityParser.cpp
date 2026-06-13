@@ -8,14 +8,14 @@
 namespace sre
 {
 
-void EntityParser::serialize(c4::yml::NodeRef& entityNode, Entity* entity)
+void EntityParser::serialize(c4::yml::NodeRef entityNode, Entity* entity)
 {
 	serializeProperties(entityNode, entity);
 	serializeComponents(entityNode, entity);
 	serializeChildren(entityNode, entity);
 }
 
-void EntityParser::serializeProperties(c4::yml::NodeRef& entityNode, Entity* entity)
+void EntityParser::serializeProperties(c4::yml::NodeRef entityNode, Entity* entity)
 {
 	if (entity->isAsset() && entity->isPropertiesStored())
 	{
@@ -27,7 +27,7 @@ void EntityParser::serializeProperties(c4::yml::NodeRef& entityNode, Entity* ent
 	{
 		if (!entity->isAsset() || !property->isStored())
 		{
-			c4::yml::NodeRef& propertyNode = entityNode[property->title.c_str()];
+			c4::yml::NodeRef propertyNode = entityNode[property->title.c_str()];
 			property->serialize(propertyNode);
 		}
 	}
@@ -35,7 +35,7 @@ void EntityParser::serializeProperties(c4::yml::NodeRef& entityNode, Entity* ent
 	entity->setPropertiesSaved();
 }
 
-void EntityParser::serializeComponents(c4::yml::NodeRef& entityNode, Entity* entity)
+void EntityParser::serializeComponents(c4::yml::NodeRef entityNode, Entity* entity)
 {
 	if (entity->isAsset() && entity->isComponentsStored())
 	{
@@ -68,7 +68,7 @@ void EntityParser::serializeComponents(c4::yml::NodeRef& entityNode, Entity* ent
 	entity->setComponentsSaved();
 }
 
-void EntityParser::serializeChildren(c4::yml::NodeRef& entityNode, Entity* entity)
+void EntityParser::serializeChildren(c4::yml::NodeRef entityNode, Entity* entity)
 {
 	if (entity->isAsset() && entity->isChildrenStored())
 	{
@@ -90,7 +90,7 @@ void EntityParser::serializeChildren(c4::yml::NodeRef& entityNode, Entity* entit
 	entity->setChildrenSaved();
 }
 
-void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, AScene* scene, Entity* entity)
+void EntityParser::deserialize(c4::yml::ConstNodeRef entityNode, AScene* scene, Entity* entity)
 {
 	for (c4::yml::ConstNodeRef propertyNode : entityNode.children())
 	{
@@ -116,7 +116,7 @@ void EntityParser::deserialize(c4::yml::ConstNodeRef& entityNode, AScene* scene,
 	}
 }
 
-void EntityParser::deserializeComponents(c4::yml::ConstNodeRef& propertyNode, Entity* entity)
+void EntityParser::deserializeComponents(c4::yml::ConstNodeRef propertyNode, Entity* entity)
 {
 	for (c4::yml::ConstNodeRef componentNode : propertyNode.children())
 	{
@@ -124,7 +124,7 @@ void EntityParser::deserializeComponents(c4::yml::ConstNodeRef& propertyNode, En
 	}
 }
 
-void EntityParser::deserializeChildren(c4::yml::ConstNodeRef& propertyNode, AScene* scene, Entity* entity)
+void EntityParser::deserializeChildren(c4::yml::ConstNodeRef propertyNode, AScene* scene, Entity* entity)
 {
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	for (c4::yml::ConstNodeRef entityNode : propertyNode.children())

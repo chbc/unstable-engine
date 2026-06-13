@@ -57,7 +57,7 @@ void AssetsCollection::clear(const std::function<void(AAsset*)>& releaseCallback
 {
 	if (releaseCallback)
 	{
-		for (auto& it = this->assetsMap.begin(); it != this->assetsMap.end();)
+		for (auto it = this->assetsMap.begin(); it != this->assetsMap.end();)
 		{
 			if (releaseCallback != nullptr)
 			{

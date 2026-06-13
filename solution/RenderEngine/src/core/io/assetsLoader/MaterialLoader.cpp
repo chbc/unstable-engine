@@ -17,7 +17,7 @@ void MaterialLoader::save(ABaseMaterial* material, const std::string& filePath)
 	root |= ryml::MAP;
 	for (const SPTR<AEditorProperty>& property : material->editorProperties)
 	{
-		c4::yml::NodeRef& propertyNode = root[property->title.c_str()];
+		c4::yml::NodeRef propertyNode = root[property->title.c_str()];
 		property->serialize(propertyNode);
 	}
 
@@ -55,7 +55,7 @@ ABaseMaterial* sre::MaterialLoader::load(const std::string& filePath)
 	return result;
 }
 
-void MaterialLoader::saveComponents(Material* material, c4::yml::NodeRef& componentsNode)
+void MaterialLoader::saveComponents(Material* material, c4::yml::NodeRef componentsNode)
 {
 	componentsNode |= ryml::MAP;
 	for (const auto& componentItem : material->componentsMap)
@@ -66,26 +66,26 @@ void MaterialLoader::saveComponents(Material* material, c4::yml::NodeRef& compon
 	}
 }
 
-void MaterialLoader::serializeComponent(c4::yml::NodeRef& componentNode, AMaterialComponent* component)
+void MaterialLoader::serializeComponent(c4::yml::NodeRef componentNode, AMaterialComponent* component)
 {
 	componentNode |= ryml::MAP;
 	for (const SPTR<AEditorProperty>& property : component->editorProperties)
 	{
-		c4::yml::NodeRef& propertyNode = componentNode[property->title.c_str()];
+		c4::yml::NodeRef propertyNode = componentNode[property->title.c_str()];
 		property->serialize(propertyNode);
 	}
 }
 
-ABaseMaterial* MaterialLoader::loadStandardMaterial(const std::string& filePath, c4::yml::ConstNodeRef& root)
+ABaseMaterial* MaterialLoader::loadStandardMaterial(const std::string& filePath, c4::yml::ConstNodeRef root)
 {
 	Material* result = new Material{ filePath };
 	for (auto& property : result->editorProperties)
 	{
-		c4::yml::ConstNodeRef& propertyNode = root[property->title.c_str()];
+		c4::yml::ConstNodeRef propertyNode = root[property->title.c_str()];
 		property->deserialize(propertyNode);
 	}
 
-	c4::yml::ConstNodeRef& componentsNode = root["Components"];
+	c4::yml::ConstNodeRef componentsNode = root["Components"];
 	for (c4::yml::ConstNodeRef componentNode : componentsNode.children())
 	{
 		this->deserializeComponent(componentNode, result);
@@ -94,10 +94,10 @@ ABaseMaterial* MaterialLoader::loadStandardMaterial(const std::string& filePath,
 	return result;
 }
 
-ABaseMaterial* MaterialLoader::loadCustomMaterial(const std::string& filePath, c4::yml::ConstNodeRef& root)
+ABaseMaterial* MaterialLoader::loadCustomMaterial(const std::string& filePath, c4::yml::ConstNodeRef root)
 {
 	// Shaders
-	c4::yml::ConstNodeRef& shadersNode = root["Shaders"];
+	c4::yml::ConstNodeRef shadersNode = root["Shaders"];
 	ShaderPathsMap shaderPaths;
 	for (c4::yml::ConstNodeRef itemNode : shadersNode.children())
 	{
@@ -139,7 +139,7 @@ ABaseMaterial* MaterialLoader::loadCustomMaterial(const std::string& filePath, c
 	CustomMaterial* result = new CustomMaterial{ filePath, shaderPaths };
 	if (root.has_child("Components"))
 	{
-		c4::yml::ConstNodeRef& componentsNode = root["Components"];
+		c4::yml::ConstNodeRef componentsNode = root["Components"];
 		for (c4::yml::ConstNodeRef componentNode : componentsNode.children())
 		{
 			this->deserializeCustomComponent(componentNode, result);
@@ -149,7 +149,7 @@ ABaseMaterial* MaterialLoader::loadCustomMaterial(const std::string& filePath, c
 	return result;
 }
 
-void MaterialLoader::deserializeComponent(c4::yml::ConstNodeRef& componentNode, ABaseMaterial* material)
+void MaterialLoader::deserializeComponent(c4::yml::ConstNodeRef componentNode, ABaseMaterial* material)
 {
 	std::ostringstream keyStream;
 	keyStream << componentNode.key();
@@ -167,19 +167,19 @@ void MaterialLoader::deserializeComponent(c4::yml::ConstNodeRef& componentNode, 
 
 	for (const SPTR<AEditorProperty>& property : component->editorProperties)
 	{
-		c4::yml::ConstNodeRef& propertyNode = componentNode[property->title.c_str()];
+		c4::yml::ConstNodeRef propertyNode = componentNode[property->title.c_str()];
 		property->deserialize(propertyNode);
 	}
 }
 
-void MaterialLoader::deserializeCustomComponent(c4::yml::ConstNodeRef& componentNode, ABaseMaterial* material)
+void MaterialLoader::deserializeCustomComponent(c4::yml::ConstNodeRef componentNode, ABaseMaterial* material)
 {
 	std::ostringstream keyStream;
 	keyStream << componentNode.key();
 	std::string type = keyStream.str();
 
 	CustomMaterialComponent* component = static_cast<CustomMaterialComponent*>(material->addComponent(type.c_str()));
-	for (c4::yml::ConstNodeRef& propertyNode : componentNode.children())
+	for (c4::yml::ConstNodeRef propertyNode : componentNode.children())
 	{
 		std::ostringstream uniformStream;
 		uniformStream << propertyNode.key();

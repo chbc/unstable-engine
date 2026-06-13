@@ -4,7 +4,7 @@
 
 #include "imgui.h"
 #include "imgui_internal.h"
-#include "rapidyaml.hpp"
+#include "ryml.hpp"
 
 namespace sre
 {
@@ -65,14 +65,14 @@ void Vec2EditorProperty::onDraw()
 	}
 }
 
-void Vec2EditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
+void Vec2EditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	propertyNode |= c4::yml::SEQ | c4::yml::CONTAINER_STYLE;
 	propertyNode.append_child() << this->value->x;
 	propertyNode.append_child() << this->value->y;
 }
 
-void Vec2EditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
+void Vec2EditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
 	propertyNode[0] >> this->value->x;
 	propertyNode[1] >> this->value->y;

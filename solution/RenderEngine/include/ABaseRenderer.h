@@ -1,7 +1,7 @@
 #pragma once
 
 #include <list>
-
+#include <cstdint>
 
 namespace sre
 {

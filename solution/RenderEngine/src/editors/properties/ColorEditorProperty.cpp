@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 #include <glm/gtc/type_ptr.hpp>
-#include "rapidyaml.hpp"
+#include "ryml.hpp"
 
 namespace sre
 {
@@ -36,7 +36,7 @@ void ColorEditorProperty::onDraw()
 	}
 }
 
-void ColorEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
+void ColorEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	propertyNode |= c4::yml::SEQ | c4::yml::CONTAINER_STYLE;
 	propertyNode.append_child() << this->value[0];
@@ -49,7 +49,7 @@ void ColorEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
 	}
 }
 
-void ColorEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
+void ColorEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
 	for (size_t i = 0; i < propertyNode.num_children(); ++i)
 	{

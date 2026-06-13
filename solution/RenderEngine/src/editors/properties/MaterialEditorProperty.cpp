@@ -6,7 +6,7 @@
 #include "MaterialLoader.h"
 
 #include "imgui.h"
-#include "rapidyaml.hpp"
+#include "ryml.hpp"
 
 namespace sre
 {
@@ -77,12 +77,12 @@ void MaterialEditorProperty::drawSubProperties()
 	}
 }
 
-void MaterialEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
+void MaterialEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	propertyNode << (*this->value)->filePath;
 }
 
-void MaterialEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
+void MaterialEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
 	std::string filePath;
 	propertyNode >> filePath;

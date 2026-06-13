@@ -2,7 +2,7 @@
 #include "FileUtils.h"
 
 #define RYML_SINGLE_HDR_DEFINE_NOW
-#include "rapidyaml/rapidyaml.hpp"
+#include "ryml.hpp"
 
 namespace sre
 {
@@ -34,7 +34,7 @@ void MaterialSaver::save(MaterialImportData& modelData, const std::string& fileP
 	FileUtils::saveContentFile(filePath, content);
 }
 
-void MaterialSaver::saveComponents(const MaterialImportData& materialData, c4::yml::NodeRef& componentsNode, const std::string& filePath)
+void MaterialSaver::saveComponents(const MaterialImportData& materialData, c4::yml::NodeRef componentsNode, const std::string& filePath)
 {
 	componentsNode |= ryml::MAP;
 	c4::yml::NodeRef componentNode = componentsNode["LitMaterialComponent"];
@@ -66,7 +66,7 @@ void MaterialSaver::saveComponents(const MaterialImportData& materialData, c4::y
 	this->setupMissingMaterialTextures(materialData, pbrNode);
 }
 
-void MaterialSaver::setupMissingMaterialTextures(const MaterialImportData& material, c4::yml::NodeRef& pbrNode)
+void MaterialSaver::setupMissingMaterialTextures(const MaterialImportData& material, c4::yml::NodeRef pbrNode)
 {
 	std::unordered_map<ETextureMap::Type, std::string> defaultTextures =
 	{

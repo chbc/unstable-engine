@@ -1,8 +1,8 @@
 #include "InputTextEditorProperty.h"
 
-#include "imgui/imgui.h"
+#include "imgui.h"
 #include "imgui/misc/cpp/imgui_stdlib.h"
-#include "rapidyaml/rapidyaml.hpp"
+#include "ryml.hpp"
 
 #include "Log.h"
 
@@ -21,13 +21,13 @@ void InputTextEditorProperty::onDraw()
 	}
 }
 
-void InputTextEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
+void InputTextEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	propertyNode |= ryml::MAP;
 	propertyNode["Text"] << *this->text;
 }
 
-void InputTextEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
+void InputTextEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
 	propertyNode["FilePath"] >> *this->text;
 }

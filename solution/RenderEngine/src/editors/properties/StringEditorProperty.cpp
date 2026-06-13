@@ -1,7 +1,7 @@
 #include "StringEditorProperty.h"
 
-#include "imgui/imgui.h"
-#include "rapidyaml/rapidyaml.hpp"
+#include "imgui.h"
+#include "ryml.hpp"
 
 namespace sre
 {
@@ -15,12 +15,12 @@ void StringEditorProperty::onDraw()
 	ImGui::Text(this->text.c_str());
 }
 
-void StringEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
+void StringEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	propertyNode << this->text;
 }
 
-void StringEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
+void StringEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
 	propertyNode >> this->text;
 }

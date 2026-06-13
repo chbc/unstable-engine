@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rapidyaml.hpp"
+#include "ryml.hpp"
 
 namespace sre
 {

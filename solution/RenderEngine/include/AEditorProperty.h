@@ -19,8 +19,8 @@ class AEditorProperty;
 #define DECLARE_PROPERTY() \
 	protected: \
 		virtual void onDraw() override; \
-		virtual void onSerialize(c4::yml::NodeRef& propertyNode) override; \
-		virtual void onDeserialize(c4::yml::ConstNodeRef& propertyNode) override; \
+		virtual void onSerialize(c4::yml::NodeRef propertyNode) override; \
+		virtual void onDeserialize(c4::yml::ConstNodeRef propertyNode) override; \
 		virtual void copy(AEditorProperty* destination) override;
 
 #define IMPLEMENT_PROPERTY(PropertyClass) \
@@ -52,16 +52,16 @@ public:
 	virtual ~AEditorProperty() { }
 
 	virtual void draw();
-	virtual void serialize(c4::yml::NodeRef& propertyNode);
-	virtual void deserialize(c4::yml::ConstNodeRef& propertyNode);
+	virtual void serialize(c4::yml::NodeRef propertyNode);
+	virtual void deserialize(c4::yml::ConstNodeRef propertyNode);
 	bool isSaved();
 	bool isStored() const;
 	void setStored(bool value);
 
 protected:
 	virtual void onDraw() = 0;
-	virtual void onSerialize(c4::yml::NodeRef& propertyNode) = 0;
-	virtual void onDeserialize(c4::yml::ConstNodeRef& propertyNode) = 0;
+	virtual void onSerialize(c4::yml::NodeRef propertyNode) = 0;
+	virtual void onDeserialize(c4::yml::ConstNodeRef propertyNode) = 0;
 	void onPropertyChanged();
 	virtual void copy(AEditorProperty* destination) = 0;
 

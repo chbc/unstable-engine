@@ -3,7 +3,7 @@
 #include "AssetsManager.h"
 #include "Texture.h"
 
-#include "rapidyaml.hpp"
+#include "ryml.hpp"
 #include "imgui.h"
 
 namespace sre
@@ -24,14 +24,14 @@ void TextureEditorProperty::onDraw()
 	this->handleTextureDragAndDrop();
 }
 
-void TextureEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
+void TextureEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	propertyNode |= ryml::MAP;
 	propertyNode["TextureMapType"] << static_cast<int>(this->textureMapType);
 	propertyNode["FilePath"] << (*this->texture)->getFilePath();
 }
 
-void TextureEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
+void TextureEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
 	std::string fileName;
 	int mapType = 0;

@@ -2,7 +2,7 @@
 #include "Texture.h"
 
 #include "imgui.h"
-#include "rapidyaml.hpp"
+#include "ryml.hpp"
 
 namespace sre
 {
@@ -21,13 +21,13 @@ void NormalTextureEditorProperty::onDraw()
 	TextureEditorProperty::onDraw();
 }
 
-void NormalTextureEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
+void NormalTextureEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	TextureEditorProperty::onSerialize(propertyNode);
 	propertyNode["FlipGreenChannel"] << this->flipGreenChannel;
 }
 
-void NormalTextureEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
+void NormalTextureEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
 	TextureEditorProperty::onDeserialize(propertyNode);
 	propertyNode["FlipGreenChannel"] >> this->flipGreenChannel;

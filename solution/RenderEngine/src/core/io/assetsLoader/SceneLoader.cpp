@@ -22,7 +22,7 @@ void SceneLoader::save(AScene* scene)
 	FileUtils::saveContentFile(scene->filePath, content);
 }
 
-void SceneLoader::serializeEntity(AScene* scene, c4::yml::NodeRef& entityNode, Entity* entity)
+void SceneLoader::serializeEntity(AScene* scene, c4::yml::NodeRef entityNode, Entity* entity)
 {
 	entityNode |= ryml::MAP;
 

@@ -4,7 +4,7 @@
 
 // XXX MOVER IMGUI PRA UM WRAPPER
 #include "imgui.h"
-#include "rapidyaml.hpp"
+#include "ryml.hpp"
 
 namespace sre
 {
@@ -23,12 +23,12 @@ void BoolEditorProperty::onDraw()
 	}
 }
 
-void BoolEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
+void BoolEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	propertyNode << *value;
 }
 
-void BoolEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
+void BoolEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
 	propertyNode >> *value;
 }

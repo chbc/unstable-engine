@@ -3,8 +3,8 @@
 #include "SingletonsManager.h"
 #include "AtlasManager.h"
 
-#include "imgui/imgui.h"
-#include "rapidyaml/rapidyaml.hpp"
+#include "imgui.h"
+#include "ryml.hpp"
 #include "glm/vec2.hpp"
 
 namespace sre
@@ -31,13 +31,13 @@ void FontEditorProperty::onDraw()
 	ImGui::Text(this->filePath.c_str());
 }
 
-void FontEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
+void FontEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	propertyNode |= ryml::MAP;
 	propertyNode["FilePath"] << (*this->fontAtlas)->getFilePath();
 }
 
-void FontEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
+void FontEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
 	propertyNode["FilePath"] >> this->filePath;
 

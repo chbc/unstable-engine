@@ -1,5 +1,5 @@
 #define RYML_SINGLE_HDR_DEFINE_NOW
-#include "rapidyaml.hpp"
+#include "ryml.hpp"
 
 #include "ComponentParser.h"
 #include "TransformComponent.h"
@@ -8,18 +8,18 @@
 namespace sre
 {
 
-void ComponentParser::serialize(c4::yml::NodeRef& componentNode, AEntityComponent* component)
+void ComponentParser::serialize(c4::yml::NodeRef componentNode, AEntityComponent* component)
 {
 	componentNode |= ryml::MAP;
 
 	for (const SPTR<AEditorProperty>& property : component->editorProperties)
 	{
-		c4::yml::NodeRef& propertyNode = componentNode[property->title.c_str()];
+		c4::yml::NodeRef propertyNode = componentNode[property->title.c_str()];
 		property->serialize(propertyNode);
 	}
 }
 
-void ComponentParser::deserialize(c4::yml::ConstNodeRef& componentNode, Entity* entity)
+void ComponentParser::deserialize(c4::yml::ConstNodeRef componentNode, Entity* entity)
 {
 	if (!componentNode.has_children())
 	{

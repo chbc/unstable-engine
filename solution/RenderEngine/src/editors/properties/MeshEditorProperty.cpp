@@ -5,7 +5,7 @@
 
 // XXX MOVER IMGUI PRA UM WRAPPER
 #include "imgui.h"
-#include "rapidyaml.hpp"
+#include "ryml.hpp"
 
 #include <sstream>
 
@@ -23,14 +23,14 @@ void MeshEditorProperty::onDraw()
 	ImGui::Text(ss.str().c_str());
 }
 
-void MeshEditorProperty::onSerialize(c4::yml::NodeRef& propertyNode)
+void MeshEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	propertyNode |= ryml::MAP;
 	propertyNode["FilePath"] << *this->modelPath;
 	propertyNode["MeshName"] << (*this->value)->name;
 }
 
-void MeshEditorProperty::onDeserialize(c4::yml::ConstNodeRef& propertyNode)
+void MeshEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
 	std::string filePath;
 	std::string meshName;

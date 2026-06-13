@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 
 #include "OpenGLAPI.h"
+#include <cstring>
 
 #ifdef TRACY_ENABLE
 

@@ -20,7 +20,7 @@ class SceneLoader
 {
 private:
 	static void save(AScene* scene);
-	static void serializeEntity(AScene* scene, c4::yml::NodeRef& entityNode, Entity* entity);
+	static void serializeEntity(AScene* scene, c4::yml::NodeRef entityNode, Entity* entity);
 	static void load(AScene* scene);
 
 friend class EditorsController;

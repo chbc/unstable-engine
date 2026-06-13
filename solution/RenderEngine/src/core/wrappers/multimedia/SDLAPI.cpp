@@ -11,7 +11,12 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include <windows.h>
+
+#include <climits>
+
+#if defined(_WIN32)
+	#include <windows.h>
+#endif
 
 namespace sre
 {
@@ -319,11 +324,11 @@ float SDLAPI::normalizeBidirectionalAxis(int value)
 	{
 		if (value >= 0)
 		{
-			result = static_cast<float>(value) / MAXSHORT;
+			result = static_cast<float>(value) / SHRT_MAX;
 		}
 		else
 		{
-			result = static_cast<float>(value) / MINSHORT;
+			result = static_cast<float>(value) / SHRT_MIN;
 		}
 	}
 
@@ -336,7 +341,7 @@ float SDLAPI::normalizeUnidirectionalAxis(int value)
 
 	if ((value > CONTROLLER_DEAD_ZONE) || (value < -CONTROLLER_DEAD_ZONE))
 	{
-		result = static_cast<float>(value) / MAXSHORT;
+		result = static_cast<float>(value) / SHRT_MAX;
 	}
 
 	return result;
@@ -354,6 +359,9 @@ bool SDLAPI::saveFileDialog(const std::string& title, const char* filter, std::s
 
 bool SDLAPI::internalFileDialog(const std::string& title, const char* filter, bool save, std::string& outFileName)
 {
+	bool result = false;
+
+#if defined(_WIN32)	
 	OPENFILENAME ofn;
 	TCHAR szFile[260] = { 0 };
 
@@ -369,8 +377,6 @@ bool SDLAPI::internalFileDialog(const std::string& title, const char* filter, bo
 	ofn.lpstrInitialDir = NULL;
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
-	bool result = false;
-
 	if (save)
 	{
 		ofn.lpstrFile[0] = '\0';
@@ -385,6 +391,7 @@ bool SDLAPI::internalFileDialog(const std::string& title, const char* filter, bo
 		outFileName = ofn.lpstrFile;
 		result = true;
 	}
+#endif
 
 	return result;
 }

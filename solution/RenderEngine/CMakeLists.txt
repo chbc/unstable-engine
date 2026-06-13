@@ -1,5 +1,7 @@
 file(GLOB_RECURSE ENGINE_SOURCES "*.cpp" "*.h")
 
+set(CMAKE_CXX_STANDARD 17)
+
 add_library(RenderEngine ${ENGINE_SOURCES})
 
 target_include_directories(RenderEngine PUBLIC
@@ -12,7 +14,8 @@ target_link_libraries(RenderEngine PRIVATE PkgConfig::SDL2_IMAGE)
 
 target_link_libraries(RenderEngine
     PUBLIC
-    rapidyaml
+    ryml
+    c4core
     imgui
     imguizmo
     glm

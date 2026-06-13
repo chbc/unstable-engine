@@ -36,7 +36,7 @@ void sre::AEditorProperty::draw()
 	ImGui::PopID();
 }
 
-void sre::AEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
+void sre::AEditorProperty::serialize(c4::yml::NodeRef propertyNode)
 {
     this->onSerialize(propertyNode);
 
@@ -48,7 +48,7 @@ void sre::AEditorProperty::serialize(c4::yml::NodeRef& propertyNode)
     this->onValueSerializedCallback();
 }
 
-void sre::AEditorProperty::deserialize(c4::yml::ConstNodeRef& propertyNode)
+void sre::AEditorProperty::deserialize(c4::yml::ConstNodeRef propertyNode)
 {
     this->stored = false;
     this->onDeserialize(propertyNode);
