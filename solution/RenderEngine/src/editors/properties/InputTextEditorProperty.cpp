@@ -1,7 +1,7 @@
 #include "InputTextEditorProperty.h"
 
 #include "imgui.h"
-#include "imgui/misc/cpp/imgui_stdlib.h"
+#include "misc/cpp/imgui_stdlib.h"
 #include "ryml.hpp"
 
 #include "Log.h"

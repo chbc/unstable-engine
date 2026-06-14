@@ -5,14 +5,21 @@
 
 #include <glm/mat4x4.hpp>
 
-namespace ImGuizmo
-{
-	enum OPERATION : int;
-	enum MODE : int;
-}
-
 namespace sre
 {
+
+enum class EGuizmoOperation
+{
+	TRANSLATE,
+	ROTATE,
+	SCALE
+};
+
+enum class EGuizmoMode
+{
+	LOCAL,
+	WORLD
+};
 
 class Entity;
 class GuizmoComponent;
@@ -23,8 +30,8 @@ private:
 	SPTR<Action> selectionAction;
 	SPTR<Action> orientationModeAction;
 	Entity* selectedEntity{ nullptr };
-	ImGuizmo::OPERATION guizmoOperation{ 0u };
-	ImGuizmo::MODE guizmoMode{ 0u };
+	EGuizmoOperation guizmoOperation{ EGuizmoOperation::TRANSLATE };
+	EGuizmoMode guizmoMode{ EGuizmoMode::LOCAL };
 
 public:
 	SceneViewportGuizmos();

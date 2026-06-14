@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Vec3EditorProperty.h"
 
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/matrix_decompose.hpp>
 #include <glm/gtx/quaternion.hpp>

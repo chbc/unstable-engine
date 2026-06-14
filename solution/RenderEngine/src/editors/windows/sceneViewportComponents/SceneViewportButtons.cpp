@@ -6,7 +6,7 @@
 #include "EditorMessages.h"
 #include "MultimediaManager.h"
 
-#include <imgui/imgui.h>
+#include "imgui.h"
 
 namespace sre
 {

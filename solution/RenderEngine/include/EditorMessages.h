@@ -76,7 +76,7 @@ struct ChangeGuizmoModeMessage : public BaseMessage
 	DECLARE_MESSAGE()
 
 public:
-	int mode{ 0 };
+	uint8_t mode{ 0 };
 	ChangeGuizmoModeMessage(int arg_mode) : mode(arg_mode) { }
 };
 

@@ -2,6 +2,7 @@
 #include "TransformComponent.h"
 
 #include "glm/vec2.hpp"
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/rotate_vector.hpp>
 
 namespace sre

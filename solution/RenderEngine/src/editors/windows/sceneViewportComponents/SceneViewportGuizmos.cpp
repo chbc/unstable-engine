@@ -7,13 +7,37 @@
 #include "GuizmoComponent.h"
 #include "AColliderComponent.h"
 
-#include <imgui/imgui.h>
-#include <imguizmo/ImGuizmo.h>
+#include "imgui.h"
+#include "ImGuizmo.h"
+
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/rotate_vector.hpp>
+
 
 namespace sre
 {
 
+ImGuizmo::OPERATION toImGuizmoOperation(sre::EGuizmoOperation operation)
+{
+	switch (operation)
+	{
+		case EGuizmoOperation::TRANSLATE: return ImGuizmo::TRANSLATE;
+		case EGuizmoOperation::ROTATE: return ImGuizmo::ROTATE;
+		case EGuizmoOperation::SCALE: return ImGuizmo::SCALE;
+		default: return ImGuizmo::TRANSLATE;
+	}
+}
+
+ImGuizmo::MODE toImGuizmoMode(sre::EGuizmoMode mode)
+{
+	switch (mode)
+	{
+		case EGuizmoMode::LOCAL: return ImGuizmo::LOCAL;
+		case EGuizmoMode::WORLD: return ImGuizmo::WORLD;
+		default: return ImGuizmo::LOCAL;
+	}
+}
+	
 SceneViewportGuizmos::SceneViewportGuizmos()
 {
 	this->selectionAction = SPTR<Action>(new Action{ [&](void* message) { this->onEntitySelected(message); } });
@@ -26,7 +50,7 @@ void SceneViewportGuizmos::onInit()
 	messagesManager->addListener<EntitySelectionMessage>(this->selectionAction.get());
 	messagesManager->addListener<ChangeGuizmoModeMessage>(this->orientationModeAction.get());
 	this->selectedEntity = nullptr;
-	this->guizmoOperation = ImGuizmo::TRANSLATE;
+	this->guizmoOperation = EGuizmoOperation::TRANSLATE;
 
 	ImGuizmo::AllowAxisFlip(false);
 }
@@ -44,8 +68,10 @@ bool SceneViewportGuizmos::drawAndManipulate(bool cameraMoving, const glm::vec2&
 		TransformComponent* entityTransform = this->selectedEntity->getTransform();
 		glm::mat4 entityMatrix = entityTransform->getMatrix();
 
+		ImGuizmo::OPERATION operation = toImGuizmoOperation(this->guizmoOperation);
+		ImGuizmo::MODE mode = toImGuizmoMode(this->guizmoMode);
 		ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
-			this->guizmoOperation, this->guizmoMode, glm::value_ptr(entityMatrix));
+			operation, mode, glm::value_ptr(entityMatrix));
 
 		if (ImGuizmo::IsUsing())
 		{
@@ -72,15 +98,15 @@ void SceneViewportGuizmos::processGuizmoOperationSelection()
 {
 	if (ImGui::IsKeyPressed(ImGuiKey_W))
 	{
-		this->guizmoOperation = ImGuizmo::TRANSLATE;
+		this->guizmoOperation = EGuizmoOperation::TRANSLATE;
 	}
 	else if (ImGui::IsKeyPressed(ImGuiKey_E))
 	{
-		this->guizmoOperation = ImGuizmo::ROTATE;
+		this->guizmoOperation = EGuizmoOperation::ROTATE;
 	}
 	else if (ImGui::IsKeyPressed(ImGuiKey_R))
 	{
-		this->guizmoOperation = ImGuizmo::SCALE;
+		this->guizmoOperation = EGuizmoOperation::SCALE;
 	}
 }
 
@@ -117,7 +143,7 @@ void SceneViewportGuizmos::onEntitySelected(void* data)
 void SceneViewportGuizmos::onOrientationModeChanged(void* message)
 {
 	ChangeGuizmoModeMessage* orientationMessage = static_cast<ChangeGuizmoModeMessage*>(message);
-	this->guizmoMode = static_cast<ImGuizmo::MODE>(orientationMessage->mode);
+	this->guizmoMode = static_cast<EGuizmoMode>(orientationMessage->mode);
 }
 
 void SceneViewportGuizmos::addGuizmosToSelectedEntity()

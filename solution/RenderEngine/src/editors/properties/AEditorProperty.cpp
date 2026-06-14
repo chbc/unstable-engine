@@ -1,5 +1,6 @@
 #include "AEditorProperty.h"
 #include "imgui.h"
+#include "ryml.hpp"
 
 bool sre::AEditorProperty::isSaved()
 {

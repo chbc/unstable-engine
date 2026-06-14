@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <filesystem>
+#include <algorithm>
 
 namespace FS = std::filesystem;
 
