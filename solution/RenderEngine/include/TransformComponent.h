@@ -46,12 +46,37 @@ public:
 	glm::vec3 getLocalPosition() const;
 	glm::quat getLocalRotation() const;
 	glm::vec3 getLocalScale() const;
-	inline const glm::vec3 getInternalMatrixPosition() const;
-	inline glm::vec3 getForward() const;
+
+	inline const glm::vec3 getInternalMatrixPosition() const
+	{
+		return glm::vec3(this->worldMatrix[3]);
+	}
+
+	inline glm::vec3 getForward() const
+	{
+		glm::vec3 result{ this->worldMatrix[2] };
+		return glm::normalize(result);
+	}
+
 	glm::vec3 getForwardView() const;
-	inline glm::vec3 getRight() const;
-	inline glm::vec3 getUp() const;
-	inline const glm::mat4& getMatrix() const;
+
+	inline glm::vec3 getRight() const
+	{
+		glm::vec3 result{ this->worldMatrix[0].x, this->worldMatrix[0].y, this->worldMatrix[0].z };
+		return glm::normalize(result);
+	}
+
+	inline glm::vec3 getUp() const
+	{
+		glm::vec3 result{ this->worldMatrix[1] };
+		return glm::normalize(result);
+	}
+
+	inline const glm::mat4& getMatrix() const
+	{
+		return this->worldMatrix;
+	}
+
 	void getValues(TransformComponent* resultTransform) const;
 
 protected:

@@ -24,6 +24,7 @@ private:
 
 public:
     RenderEngine();
+    virtual ~RenderEngine() { }
 
 public:
     static RenderEngine* getInstance();
