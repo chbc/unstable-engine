@@ -24,11 +24,11 @@ void sre::AEditorProperty::draw()
 	ImGui::TableNextColumn();
     if (this->saved)
     {
-        ImGui::Text(this->title.c_str());
+        ImGui::Text("%s", this->title.c_str());
     }
     else
     {
-        ImGui::TextColored(ImColor{ 0.75f, 0.5f, 0.0f }, this->title.c_str());
+        ImGui::TextColored(ImColor{ 0.75f, 0.5f, 0.0f }, "%s", this->title.c_str());
     }
 	ImGui::TableNextColumn();
 

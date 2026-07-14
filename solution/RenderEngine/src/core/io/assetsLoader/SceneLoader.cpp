@@ -3,6 +3,8 @@
 #include "AScene.h"
 #include "EntityParser.h"
 
+#include <c4/yml/std/string.hpp>
+
 namespace sre
 {
 

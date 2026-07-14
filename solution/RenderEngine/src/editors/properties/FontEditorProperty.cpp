@@ -2,9 +2,9 @@
 #include "FontAtlas.h"
 #include "SingletonsManager.h"
 #include "AtlasManager.h"
+#include "RYMLLib.h"
 
 #include "imgui.h"
-#include "ryml.hpp"
 #include "glm/vec2.hpp"
 
 namespace sre
@@ -28,19 +28,19 @@ void FontEditorProperty::onDraw()
 	ImVec2 uv2{ uv1.x + item->uv.size.x, uv1.y + item->uv.size.y };
 	ImGui::Image(texture->getId(), ImVec2{16.0f, 16.0f}, uv1, uv2);
 
-	ImGui::Text(this->filePath.c_str());
+	ImGui::Text("%s", this->filePath.c_str());
 }
 
 void FontEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	propertyNode |= ryml::MAP;
-	propertyNode["FilePath"] << (*this->fontAtlas)->getFilePath();
+	std::string filePath = (*this->fontAtlas)->getFilePath();
+	propertyNode["FilePath"] << RYMLLib::toC4Substr(filePath);
 }
 
 void FontEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
-	propertyNode["FilePath"] >> this->filePath;
-
+	RYMLLib::readString(propertyNode["FilePath"], this->filePath);
 	SingletonsManager* singletonsManager = SingletonsManager::getInstance();
 	*this->fontAtlas = singletonsManager->get<AtlasManager>()->getFont(filePath);
 }

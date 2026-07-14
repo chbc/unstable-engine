@@ -3,7 +3,7 @@
 #include "AssetsManager.h"
 #include "Texture.h"
 
-#include "ryml.hpp"
+#include "RYMLLib.h"
 #include "imgui.h"
 
 namespace sre
@@ -28,20 +28,24 @@ void TextureEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	propertyNode |= ryml::MAP;
 	propertyNode["TextureMapType"] << static_cast<int>(this->textureMapType);
-	propertyNode["FilePath"] << (*this->texture)->getFilePath();
+
+	std::string filePath = (*this->texture)->getFilePath();
+	propertyNode["FilePath"] << RYMLLib::toC4Substr(filePath);
 }
 
 void TextureEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
-	std::string fileName;
+	c4::substr fileName;
 	int mapType = 0;
 	propertyNode["TextureMapType"] >> mapType;
 	propertyNode["FilePath"] >> fileName;
 
 	this->textureMapType = static_cast<ETextureMap::Type>(mapType);
-
+	
+	std::string fileNameStr(fileName.str, fileName.size());
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
-	*this->texture = assetsManager->loadTexture(fileName.c_str(), this->textureMapType);
+
+	*this->texture = assetsManager->loadTexture(fileNameStr.c_str(), this->textureMapType);
 	this->id = static_cast<uint64_t>((*this->texture)->getId());
 }
 

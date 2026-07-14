@@ -1,7 +1,7 @@
 #include "StringEditorProperty.h"
 
 #include "imgui.h"
-#include "ryml.hpp"
+#include "RYMLLib.h"
 
 namespace sre
 {
@@ -12,17 +12,18 @@ StringEditorProperty::StringEditorProperty(const std::string& title, const std::
 
 void StringEditorProperty::onDraw()
 {
-	ImGui::Text(this->text.c_str());
+	ImGui::Text("%s", this->text.c_str());
 }
 
 void StringEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
-	propertyNode << this->text;
+	c4::substr textSubstr = RYMLLib::toC4Substr(this->text);
+	propertyNode.val() = textSubstr;
 }
 
 void StringEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
-	propertyNode >> this->text;
+	RYMLLib::readString(propertyNode, this->text);
 }
 
 void StringEditorProperty::copy(AEditorProperty* destination)

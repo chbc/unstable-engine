@@ -6,6 +6,8 @@
 #include "ColorMaterialComponent.h"
 #include "CustomMaterialComponent.h"
 
+#include <c4/yml/std/string.hpp>
+
 namespace sre
 {
 
@@ -96,7 +98,6 @@ ABaseMaterial* MaterialLoader::loadStandardMaterial(const std::string& filePath,
 
 ABaseMaterial* MaterialLoader::loadCustomMaterial(const std::string& filePath, c4::yml::ConstNodeRef root)
 {
-	// Shaders
 	c4::yml::ConstNodeRef shadersNode = root["Shaders"];
 	ShaderPathsMap shaderPaths;
 	for (c4::yml::ConstNodeRef itemNode : shadersNode.children())
@@ -120,7 +121,7 @@ ABaseMaterial* MaterialLoader::loadCustomMaterial(const std::string& filePath, c
 		}
 	}
 
-	/*
+	/* JÁ TAVA COMENTADO
 	// Textures
 	c4::yml::ConstNodeRef &texturesNode = root["Textures"];
 	TexturesMap texturesMap;

@@ -4,6 +4,8 @@
 #include "AScene.h"
 #include "EntityParser.h"
 
+#include <c4/yml/std/string.hpp>
+
 namespace sre
 {
 
@@ -37,16 +39,19 @@ Entity* EntityLoader::load(const char* filePath, std::string name, AScene* scene
 {
 	std::string fileContent;
 	FileUtils::loadContentFile(filePath, fileContent);
+	c4::substr bufferSubstr = RYMLLib::toC4Substr(fileContent);
 
-	c4::yml::Tree tree = c4::yml::parse_in_place(c4::to_substr(fileContent));
+	c4::yml::Tree tree = c4::yml::parse_in_place(bufferSubstr);
 	c4::yml::ConstNodeRef root = tree.crootref();
-	std::string className{ "Entity" };
+	char entityName[] = "Entity";
+	c4::substr className = entityName;
 	if (root.has_child("Class"))
 	{
 		root["Class"] >> className;
 	}
 
-	Entity* result = Entity::Create(name, className.c_str());
+	std::string classNameStr(className.str, className.len);
+	Entity* result = Entity::Create(name, classNameStr);
 	result->filePath = FileUtils::getContentRelativePath(filePath);
 	EntityParser::deserialize(root, scene, result);
 	result->setStored(true);

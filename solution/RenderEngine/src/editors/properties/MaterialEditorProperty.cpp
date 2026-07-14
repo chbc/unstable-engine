@@ -6,7 +6,7 @@
 #include "MaterialLoader.h"
 
 #include "imgui.h"
-#include "ryml.hpp"
+#include "RYMLLib.h"
 
 namespace sre
 {
@@ -25,7 +25,7 @@ void MaterialEditorProperty::draw()
 
 void MaterialEditorProperty::onDraw()
 {
-	ImGui::Text((*this->value)->filePath.c_str());
+	ImGui::Text("%s", (*this->value)->filePath.c_str());
 
 	if (ImGui::BeginPopupContextItem("Save Material"))
 	{
@@ -79,13 +79,13 @@ void MaterialEditorProperty::drawSubProperties()
 
 void MaterialEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
-	propertyNode << (*this->value)->filePath;
+	propertyNode.val() = RYMLLib::toC4Substr((*this->value)->filePath);
 }
 
 void MaterialEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
 	std::string filePath;
-	propertyNode >> filePath;
+	RYMLLib::readString(propertyNode, filePath);
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	*this->value = assetsManager->loadMaterial(filePath.c_str());

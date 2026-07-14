@@ -3,9 +3,8 @@
 #include "AssetsManager.h"
 #include "MeshData.h"
 
-// XXX MOVER IMGUI PRA UM WRAPPER
 #include "imgui.h"
-#include "ryml.hpp"
+#include "RYMLLib.h"
 
 #include <sstream>
 
@@ -20,14 +19,14 @@ void MeshEditorProperty::onDraw()
 {
 	std::stringstream ss;
 	ss << *this->modelPath << " (" << (*this->value)->name << ")";
-	ImGui::Text(ss.str().c_str());
+	ImGui::Text("%s", ss.str().c_str());
 }
 
 void MeshEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 {
 	propertyNode |= ryml::MAP;
-	propertyNode["FilePath"] << *this->modelPath;
-	propertyNode["MeshName"] << (*this->value)->name;
+	propertyNode["FilePath"] << RYMLLib::toC4Substr(*this->modelPath);
+	propertyNode["MeshName"] << RYMLLib::toC4Substr((*this->value)->name);
 }
 
 void MeshEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
@@ -35,8 +34,8 @@ void MeshEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 	std::string filePath;
 	std::string meshName;
 
-	propertyNode["FilePath"] >> filePath;
-	propertyNode["MeshName"] >> meshName;
+	RYMLLib::readString(propertyNode["FilePath"], filePath);
+	RYMLLib::readString(propertyNode["MeshName"], meshName);
 
 	AssetsManager* assetsManager = SingletonsManager::getInstance()->get<AssetsManager>();
 	*this->value = assetsManager->loadMesh(filePath.c_str(), meshName.c_str());

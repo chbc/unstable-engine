@@ -8,6 +8,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+
 # Encontrar dependências globais
 find_package(OpenGL REQUIRED)
 find_package(SDL2 REQUIRED)
@@ -16,9 +19,6 @@ find_package(assimp REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SDL2_IMAGE REQUIRED IMPORTED_TARGET SDL2_image)
-
-set(RYML_WITH_STD_STRING ON CACHE BOOL "Build ryml with std::string support" FORCE)
-set(C4CORE_WITH_STD_STRING ON CACHE BOOL "Build c4core with std::string support" FORCE)
 
 add_subdirectory(dependencies/rapidyaml)
 add_subdirectory(dependencies/glm)
