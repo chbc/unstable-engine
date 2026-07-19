@@ -7,7 +7,7 @@
 namespace sre
 {
 
-struct SRE_API EngineValues
+struct EngineValues
 {
 	static std::string APPLICATION_NAME;
 

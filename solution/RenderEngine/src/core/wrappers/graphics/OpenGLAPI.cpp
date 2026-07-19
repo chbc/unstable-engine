@@ -1,6 +1,5 @@
 #ifndef __ANDROID__
 
-#define GLEW_STATIC
 #include <GL/glew.h>
 
 #include "OpenGLAPI.h"

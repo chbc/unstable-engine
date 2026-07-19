@@ -32,3 +32,4 @@ android/app/.externalNativeBuild/ndkBuild/release/armeabi-v7a/ndkBuild_build_com
 android/app/.externalNativeBuild/ndkBuild/release/armeabi-v7a/ndkBuild_build_output.txt
 content/game/
 solution/MemoryTracker/lib/
+build/

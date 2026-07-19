@@ -11,7 +11,7 @@
 namespace sre
 {
 
-class SRE_API RenderEngine
+class RenderEngine
 {
 private:
     bool running{ true };
@@ -23,24 +23,24 @@ private:
     static RenderEngine* instance;
 
 public:
-    RenderEngine();
-    virtual ~RenderEngine() { }
+    SRE_API RenderEngine();
+    SRE_API virtual ~RenderEngine() { }
 
 public:
-    static RenderEngine* getInstance();
-    void run();
-    void quit();
-    void loadScene(const std::string& scenePath);
-    void loadGuiScene(const std::string& guiScenePath);
+    SRE_API static RenderEngine* getInstance();
+    SRE_API void run();
+    SRE_API void quit();
+    SRE_API void loadScene(const std::string& scenePath);
+    SRE_API void loadGuiScene(const std::string& guiScenePath);
 
 protected:
-    virtual void onInit() =0;
-    virtual void onInitEditor() {}
-    virtual void onUpdate(float elapsedTime) {}
-    virtual void onGUI() {}
-    virtual void onEditorGUI() {}
-    virtual void onQuit() {}
-    virtual void onError(const std::string& message);
+    SRE_API virtual void onInit() =0;
+    SRE_API virtual void onInitEditor() {}
+    SRE_API virtual void onUpdate(float elapsedTime) {}
+    SRE_API virtual void onGUI() {}
+    SRE_API virtual void onEditorGUI() {}
+    SRE_API virtual void onQuit() {}
+    SRE_API virtual void onError(const std::string& message);
 
 private:
     void loadSystems();

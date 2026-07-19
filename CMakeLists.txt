@@ -9,16 +9,38 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 
-# Encontrar dependências globais
+foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} ${CMAKE_BUILD_TYPE})
+    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_SOURCE_DIR}/bin)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_SOURCE_DIR}/lib)
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_SOURCE_DIR}/lib)
+endforeach()
+
+set(CMAKE_BUILD_TYPE_RELEASE_STR "Release")
+set(CMAKE_MAP_IMPORTED_CONFIG_DEBUG Release)
+
 find_package(OpenGL REQUIRED)
-find_package(SDL2 REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(assimp REQUIRED)
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(SDL2_IMAGE REQUIRED IMPORTED_TARGET SDL2_image)
+if(WIN32)
+    find_package(SDL2 CONFIG REQUIRED)
+    find_package(SDL2_image CONFIG REQUIRED)
+else()
+    find_package(SDL2 REQUIRED)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(SDL2_IMAGE REQUIRED IMPORTED_TARGET SDL2_image)
+	
+	add_library(SDL2_image::SDL2_image ALIAS PkgConfig::SDL2_IMAGE)
+endif()
+
+if(WIN32)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+    add_definitions(-DNOMINMAX)
+endif()
 
 add_subdirectory(dependencies/rapidyaml)
 add_subdirectory(dependencies/glm)
@@ -43,6 +65,7 @@ target_link_libraries(imgui PUBLIC
 )
 
 add_subdirectory(dependencies/imguizmo)
+target_include_directories(imguizmo PUBLIC dependencies/imgui)
 
 add_subdirectory(solution/RenderEngine)
 add_subdirectory(solution/SampleApplication)

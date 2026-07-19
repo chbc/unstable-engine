@@ -12,7 +12,7 @@
 namespace sre
 {
 
-class SRE_API Input
+class Input
 {
 private:
 	static std::unordered_map<int, UPTR<ControllerInput>> controllers;
@@ -26,17 +26,17 @@ private:
 	static bool CloseButton;
 
 public:
-	static bool isKeyJustPressed(Key key);
-	static bool isMouseButtonJustPressed(MouseButton button);
-	static bool isKeyDown(Key key);
-	static bool isMouseButtonDown(MouseButton button);
-	static bool isCloseButtonDown();
-	static bool isMouseMoving();
-	static const glm::ivec2& getMousePixelCoordPosition();
-	static glm::vec3 getMouseNormalizedPosition();
-	static const glm::ivec2& getMouseDeltaPosition();
-	static int getMouseWheel();
-	static ControllerInput* getController(int id);
+	SRE_API static bool isKeyJustPressed(Key key);
+	SRE_API static bool isMouseButtonJustPressed(MouseButton button);
+	SRE_API static bool isKeyDown(Key key);
+	SRE_API static bool isMouseButtonDown(MouseButton button);
+	SRE_API static bool isCloseButtonDown();
+	SRE_API static bool isMouseMoving();
+	SRE_API static const glm::ivec2& getMousePixelCoordPosition();
+	SRE_API static glm::vec3 getMouseNormalizedPosition();
+	SRE_API static const glm::ivec2& getMouseDeltaPosition();
+	SRE_API static int getMouseWheel();
+	SRE_API static ControllerInput* getController(int id);
 
 private:
 	static void addController(int id);

@@ -1,0 +1,13 @@
+Pré-requisitos:
+- CMake 
+
+Windows
+git clone https://github.com/microsoft/vcpkg
+cd vcpkg
+.\bootstrap-vcpkg.bat
+
+.\vcpkg install sdl2:x64-windows sdl2-image:x64-windows glew:x64-windows assimp:x64-windows
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+.\rebuild.ps1
