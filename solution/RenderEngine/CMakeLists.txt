@@ -7,8 +7,12 @@ file(GLOB_RECURSE ENGINE_SOURCES
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(RenderEngine SHARED ${ENGINE_SOURCES})
-target_compile_definitions(RenderEngine PRIVATE SRE_DLL_EXPORT)
+if(WIN32)
+    add_library(RenderEngine SHARED ${ENGINE_SOURCES})
+    target_compile_definitions(RenderEngine PRIVATE SRE_DLL_EXPORT)
+else()
+    add_library(RenderEngine ${ENGINE_SOURCES})
+endif()
 
 target_include_directories(RenderEngine PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -19,7 +23,6 @@ target_link_libraries(RenderEngine PUBLIC
     OpenGL::GL
     SDL2::SDL2
     SDL2_image::SDL2_image
-	PNG::PNG
     GLEW::GLEW
     assimp::assimp
     ryml::ryml
