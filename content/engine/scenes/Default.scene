@@ -20,9 +20,9 @@ Cube:
     - MeshComponent:
         Enabled: 1
         Mesh:
-          FilePath: engine\media\meshes\Cube.mesh
+          FilePath: engine/media/meshes/Cube.mesh
           MeshName: Cube
-        Material: engine\media\materials\DefaultMaterial.mat
+        Material: engine/media/materials/DefaultMaterial.mat
     - BoxColliderComponent:
         Enabled: 1
         Blocking: 1

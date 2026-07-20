@@ -1,18 +1,18 @@
 Material Type: Custom
 Shaders:
-  Vertex: engine\shaders\cubemap\background.vert
-  Fragment: engine\shaders\cubemap\background.frag
+  Vertex: engine/shaders/cubemap/background.vert
+  Fragment: engine/shaders/cubemap/background.frag
 Components:
   CustomMaterialComponent:
     brdfLUT:
       TextureMapType: 6
-      FilePath: engine\media\hdr\mistyMorning\misty_morning_brdf.hdr
+      FilePath: engine/media/hdr/mistyMorning/misty_morning_brdf.hdr
     irradianceMap:
       TextureMapType: 7
-      FilePath: engine\media\hdr\mistyMorning\misty_morning_irradiance.hdr
+      FilePath: engine/media/hdr/mistyMorning/misty_morning_irradiance.hdr
     prefilterMap:
       TextureMapType: 8
-      FilePath: engine\media\hdr\mistyMorning\misty_morning_preFilter.hdr
+      FilePath: engine/media/hdr/mistyMorning/misty_morning_preFilter.hdr
     skyboxMap:
       TextureMapType: 9
-      FilePath: engine\media\hdr\mistyMorning\misty_morning_hdr.hdr
+      FilePath: engine/media/hdr/mistyMorning/misty_morning_hdr.hdr

@@ -1,4 +1,4 @@
 Material Type: Custom
 Shaders:
-  Vertex: engine\customShaders\grid.vert
-  Fragment: engine\customShaders\grid.frag
+  Vertex: engine/customShaders/grid.vert
+  Fragment: engine/customShaders/grid.frag
