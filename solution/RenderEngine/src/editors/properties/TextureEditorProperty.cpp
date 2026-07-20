@@ -35,7 +35,7 @@ void TextureEditorProperty::onSerialize(c4::yml::NodeRef propertyNode)
 
 void TextureEditorProperty::onDeserialize(c4::yml::ConstNodeRef propertyNode)
 {
-	c4::substr fileName;
+	c4::csubstr fileName;
 	int mapType = 0;
 	propertyNode["TextureMapType"] >> mapType;
 	propertyNode["FilePath"] >> fileName;

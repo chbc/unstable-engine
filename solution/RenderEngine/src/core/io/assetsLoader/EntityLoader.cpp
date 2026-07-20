@@ -44,7 +44,7 @@ Entity* EntityLoader::load(const char* filePath, std::string name, AScene* scene
 	c4::yml::Tree tree = c4::yml::parse_in_place(bufferSubstr);
 	c4::yml::ConstNodeRef root = tree.crootref();
 	char entityName[] = "Entity";
-	c4::substr className = entityName;
+	c4::csubstr className = entityName;
 	if (root.has_child("Class"))
 	{
 		root["Class"] >> className;
