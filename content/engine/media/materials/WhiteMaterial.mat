@@ -10,17 +10,17 @@ Components:
   PBRMaterialComponent:
     Albedo:
       TextureMapType: 1
-      FilePath: engine\media\textures\pbr_default_albedo.png
+      FilePath: engine/media/textures/pbr_default_albedo.png
     Normal:
       TextureMapType: 2
-      FilePath: engine\media\textures\pbr_default_normal.png
+      FilePath: engine/media/textures/pbr_default_normal.png
       FlipGreenChannel: 1
     Metallic:
       TextureMapType: 5
-      FilePath: engine\media\textures\pbr_default_occlusion_roughness_metallic.png
+      FilePath: engine/media/textures/pbr_default_occlusion_roughness_metallic.png
     Roughness:
       TextureMapType: 6
-      FilePath: engine\media\textures\pbr_default_occlusion_roughness_metallic.png
+      FilePath: engine/media/textures/pbr_default_occlusion_roughness_metallic.png
     Ambient Occlusion:
       TextureMapType: 4
-      FilePath: engine\media\textures\pbr_default_occlusion_roughness_metallic.png
+      FilePath: engine/media/textures/pbr_default_occlusion_roughness_metallic.png
