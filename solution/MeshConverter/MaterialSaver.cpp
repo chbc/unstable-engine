@@ -2,7 +2,7 @@
 #include "FileUtils.h"
 
 #define RYML_SINGLE_HDR_DEFINE_NOW
-#include "ryml.hpp"
+#include "RYMLLib.h"
 
 namespace sre
 {
@@ -55,7 +55,7 @@ void MaterialSaver::saveComponents(const MaterialImportData& materialData, c4::y
 		
 		std::string texturePath = FileUtils::getBasePath(filePath) + "\\" + item.second;
 		texturePath = FileUtils::getContentRelativePath(texturePath);
-		propertyNode["FilePath"] << texturePath;
+		propertyNode["FilePath"] << RYMLLib::toC4Substr(texturePath);
 
 		if (item.first == ETextureMap::NORMAL)
 		{
@@ -87,7 +87,9 @@ void MaterialSaver::setupMissingMaterialTextures(const MaterialImportData& mater
 
 			propertyNode |= ryml::MAP;
 			propertyNode["TextureMapType"] << static_cast<int>(item.first);
-			propertyNode["FilePath"] << item.second;
+			
+			std::string path = item.second;
+			propertyNode["FilePath"] << RYMLLib::toC4Substr(path);
 		}
 	}
 }

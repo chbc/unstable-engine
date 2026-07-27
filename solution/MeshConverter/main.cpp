@@ -5,9 +5,7 @@
 #include <fstream>
 #include <filesystem>
 
-#ifdef DEBUG
-    #include <iostream>
-#endif
+#include <iostream>
 
 using namespace sre;
 namespace FS = std::filesystem;
@@ -20,9 +18,7 @@ int main(int argc, const char* args[])
 {
 	if ((argc < 2) || (argc > 5))
     {
-#ifdef DEBUG
         std::cout << "Usage: MeshConverter.exe [source_file] [destination_path] [scale_factor] [import_materials]" << std::endl;
-#endif
         return 1;
     }
 

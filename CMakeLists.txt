@@ -70,4 +70,5 @@ add_subdirectory(dependencies/imguizmo)
 target_include_directories(imguizmo PUBLIC dependencies/imgui)
 
 add_subdirectory(solution/RenderEngine)
+add_subdirectory(solution/MeshConverter)
 add_subdirectory(solution/SampleApplication)
